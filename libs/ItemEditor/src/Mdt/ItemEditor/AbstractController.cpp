@@ -42,7 +42,7 @@ namespace Mdt{ namespace ItemEditor{
 
 AbstractController::AbstractController(QObject* parent)
  : QObject(parent),
-   pvInsertLocation(InsertAtBeginning),
+   mInsertLocation(InsertAtBeginning),
    mRelationList(this)
 {
   mRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
@@ -53,7 +53,7 @@ AbstractController::AbstractController(QObject* parent)
 
 void AbstractController::setInsertLocation(AbstractController::InsertLocation il)
 {
-  pvInsertLocation = il;
+  mInsertLocation = il;
 }
 
 int AbstractController::rowCount() const
@@ -272,7 +272,8 @@ bool AbstractController::setCurrentRow(int row)
   if(row == currentRow()){
     return true;
   }
-  if(!ControllerStatePermission::canChangeCurrentRow(pvControllerState)){
+//   if(!ControllerStatePermission::canChangeCurrentRow(mControllerState)){
+  if(!canChangeCurrentRow()){
     return false;
   }
   /**
@@ -315,8 +316,9 @@ void AbstractController::toLast()
 
 bool AbstractController::submit()
 {
-  if(!ControllerStatePermission::canSubmit(pvControllerState)){
-    qDebug() << "AbstractController: connot submit in state " << (int)pvControllerState;
+//   if(!ControllerStatePermission::canSubmit(mControllerState)){
+  if(!canSubmit()){
+    qDebug() << "AbstractController: connot submit in state " << (int)mControllerState;
     return false;
   }
   if(!submitDataToModel()){
@@ -331,7 +333,8 @@ bool AbstractController::submit()
 
 void AbstractController::revert()
 {
-  if(!ControllerStatePermission::canRevert(pvControllerState)){
+//   if(!ControllerStatePermission::canRevert(mControllerState)){
+  if(!canRevert()){
     return;
   }
   revertDataFromModel();
@@ -342,14 +345,15 @@ bool AbstractController::insert()
   auto *model = modelForView();
   Q_ASSERT(model != nullptr);
 
-  if(!ControllerStatePermission::canInsert(pvControllerState)){
+//   if(!ControllerStatePermission::canInsert(mControllerState)){
+  if(!canInsert()){
     return false;
   }
   ///disableDynamicFilters();
   setControllerState(ControllerState::Inserting);
   qDebug() << "AC: insert into " << model;
   bool ok = false;
-  switch(pvInsertLocation){
+  switch(mInsertLocation){
     case InsertAtBeginning:
       ok = mRowChangeEventDispatcher->insertRowAtBeginning();
       break;
@@ -373,7 +377,8 @@ bool AbstractController::remove()
   auto *model = modelForView();
   Q_ASSERT(model != nullptr);
 
-  if(!ControllerStatePermission::canRemove(pvControllerState)){
+//   if(!ControllerStatePermission::canRemove(mControllerState)){
+  if(!canRemove()){
     return false;
   }
   int row = currentRow();
@@ -382,6 +387,11 @@ bool AbstractController::remove()
   }
 
   return model->removeRow(row);
+}
+
+void AbstractController::setControllerStatePermission(const ControllerStatePermission& permission)
+{
+  mControllerStatePermission = permission;
 }
 
 void AbstractController::registerModel(QAbstractItemModel* model)
@@ -446,11 +456,11 @@ void AbstractController::updateRowState(RowState rs)
 
 void AbstractController::setControllerState(ControllerState state)
 {
-  if(state != pvControllerState){
-    pvControllerState = state;
+  if(state != mControllerState){
+    mControllerState = state;
     emit controllerStateChanged(state);
   }else{ /// \todo ??
-    pvControllerState = state;
+    mControllerState = state;
   }
 }
 

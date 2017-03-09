@@ -22,8 +22,14 @@
 #define MDT_ITEM_EDITOR_CONTROLLER_STATE_PERMISSION_H
 
 #include "ControllerState.h"
+#include <memory>
+#include <type_traits>
+
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
+
+  class AbstractControllerStatePermission;
 
   /*! \brief Check which actions are possible or not for a given state
    *
@@ -34,29 +40,74 @@ namespace Mdt{ namespace ItemEditor{
   {
    public:
 
+    /*! \brief Contruct a null ControllerStatePermission
+     */
+    //ControllerStatePermission() = default;
+    ControllerStatePermission();
+    
+    ~ControllerStatePermission();
+
+    /*! \brief Copy construct a ControllerStatePermission from other
+     */
+    ControllerStatePermission(const ControllerStatePermission & other);
+
+    /*! \brief Assign other to this ControllerStatePermission
+     */
+    ControllerStatePermission & operator=(const ControllerStatePermission & other);
+
+    /*! \brief Move construct a ControllerStatePermission from other
+     */
+    ControllerStatePermission(ControllerStatePermission && other);
+
+    /*! \brief Assign other to this ControllerStatePermission
+     */
+    ControllerStatePermission & operator=(ControllerStatePermission && other);
+
+    /*! \brief Construct a ControllerStatePermission with a concrete implementation
+     *
+     * \pre Impl must be a subclass of AbstractControllerStatePermission
+     */
+    template<typename Impl>
+    static ControllerStatePermission make()
+    {
+      static_assert( std::is_base_of<AbstractControllerStatePermission, Impl>::value, "Type Impl must be a subclass of Mdt::ItemEditor::AbstractControllerStatePermission" );
+      return ControllerStatePermission( std::make_shared<Impl>() );
+    }
+
     /*! \brief Check if it is allowed to change current row for state
      */
-    static bool canChangeCurrentRow(ControllerState state);
+    bool canChangeCurrentRow(ControllerState state) const;
 
     /*! \brief Check if it is allowed to insert for state
      */
-    static bool canInsert(ControllerState state);
+    bool canInsert(ControllerState state) const;
 
     /*! \brief Check if it is possible to submit for state
      */
-    static bool canSubmit(ControllerState state);
+    bool canSubmit(ControllerState state) const;
 
     /*! \brief Check if it is possible to revert for state
      */
-    static bool canRevert(ControllerState state);
+    bool canRevert(ControllerState state) const;
 
     /*! \brief Check if it is possible to remove for state
      */
-    static bool canRemove(ControllerState state);
+    bool canRemove(ControllerState state) const;
 
     /*! \brief Check if it is possible to select data from database
      */
-    static bool canSelect(ControllerState state);
+    bool canSelect(ControllerState state) const;
+
+  private:
+
+    template<typename Impl>
+    ControllerStatePermission(const std::shared_ptr<Impl> & impl)
+     : mImpl(impl)
+    {
+      qDebug() << "+ ControllerStatePermission(impl): " << this;
+    }
+
+    std::shared_ptr<const AbstractControllerStatePermission> mImpl;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

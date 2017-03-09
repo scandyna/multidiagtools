@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "RowChangeEventDispatcher.h"
-#include "ControllerStatePermission.h"
+// #include "ControllerStatePermission.h"
 
 namespace Mdt{ namespace ItemEditor{
 

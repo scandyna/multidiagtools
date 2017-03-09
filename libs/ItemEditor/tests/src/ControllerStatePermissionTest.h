@@ -18,46 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractActionContainer.h"
+#ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_PERMISSION_TEST_H
+#define MDT_ITEM_EDITOR_CONTROLLER_STATE_PERMISSION_TEST_H
 
-namespace Mdt{ namespace ItemEditor{
+#include "TestBase.h"
 
-AbstractActionContainer::AbstractActionContainer(QObject* parent)
- : QObject(parent)
+class ControllerStatePermissionTest : public TestBase
 {
-}
+  Q_OBJECT
 
-void AbstractActionContainer::setControllerStatePermission(const ControllerStatePermission & permission)
-{
-  mControllerStatePermission = permission;
-}
+ private slots:
 
-void AbstractActionContainer::setRowState(RowState rs)
-{
-  const bool changed = (rs != mRowState);
-  mRowState = rs;
-  if( changed && !mActionsDisabled ){
-    updateEnableState();
-  }
-}
+  void initTestCase();
+  void cleanupTestCase();
 
-void AbstractActionContainer::setControllerState(ControllerState state)
-{
-  const bool changed = (state != mControllerState);
-  mControllerState = state;
-  if( changed && !mActionsDisabled ){
-    updateEnableState();
-  }
-}
+  void constructTest();
+  void copyTest();
+};
 
-void AbstractActionContainer::setActionsDisabled(bool disable)
-{
-  mActionsDisabled = disable;
-  if(disable){
-    disableAllActions();
-  }else{
-    updateEnableState();
-  }
-}
-
-}} // namespace Mdt{ namespace ItemEditor{
+#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_PERMISSION_TEST_H

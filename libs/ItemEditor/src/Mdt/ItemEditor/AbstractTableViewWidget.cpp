@@ -192,10 +192,11 @@ void AbstractTableViewWidget::createInsertActionIfNot()
   if(mInsertAction == nullptr){
     mInsertAction = new InsertAction(this);
     Q_ASSERT(abstractController() != nullptr);
+    mInsertAction->setControllerStatePermission(abstractController()->controllerStatePermission());
     connect(mInsertAction, &InsertAction::insertTriggered, abstractController(), &AbstractController::insert);
+    registerActions(mInsertAction);
   }
   Q_ASSERT(mInsertAction != nullptr);
-  registerActions(mInsertAction);
 }
 
 void AbstractTableViewWidget::createRemoveActionIfNot()
@@ -203,10 +204,11 @@ void AbstractTableViewWidget::createRemoveActionIfNot()
   if(mRemoveAction == nullptr){
     mRemoveAction = new RemoveAction(this);
     Q_ASSERT(abstractController() != nullptr);
+    mRemoveAction->setControllerStatePermission(abstractController()->controllerStatePermission());
     connect(mRemoveAction, &RemoveAction::removeTriggered, abstractController(), &AbstractController::remove);
+    registerActions(mRemoveAction);
   }
   Q_ASSERT(mRemoveAction != nullptr);
-  registerActions(mRemoveAction); /// \todo What wenn multiple calls ?
 }
 
 void AbstractTableViewWidget::createEditionActionsIfNot()
@@ -214,6 +216,7 @@ void AbstractTableViewWidget::createEditionActionsIfNot()
   if(mEditionActions == nullptr){
     mEditionActions = new EditionActions(this);
     Q_ASSERT(abstractController() != nullptr);
+    mEditionActions->setControllerStatePermission(abstractController()->controllerStatePermission());
     connect(mEditionActions, &EditionActions::submitTriggered, abstractController(), &AbstractController::submit);
     connect(mEditionActions, &EditionActions::revertTriggered, abstractController(), &AbstractController::revert);
     registerActions(mEditionActions);
@@ -225,10 +228,12 @@ void AbstractTableViewWidget::createResizeToContentsActionIfNot()
 {
   if(mResizeToContentsAction == nullptr){
     mResizeToContentsAction = new ResizeToContentsAction(this);
+    Q_ASSERT(abstractController() != nullptr);
+    mResizeToContentsAction->setControllerStatePermission(abstractController()->controllerStatePermission());
     connect(mResizeToContentsAction, &ResizeToContentsAction::resizeToContentsTriggered, this, &AbstractTableViewWidget::resizeViewToContents);
+    registerActions(mResizeToContentsAction);
   }
   Q_ASSERT(mResizeToContentsAction != nullptr);
-  registerActions(mResizeToContentsAction);
 }
 
 

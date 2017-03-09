@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "EditionActions.h"
-#include "ControllerStatePermission.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -42,8 +41,8 @@ void EditionActions::updateEnableState()
     disableAllActions();
     return;
   }
-  mSubmitAction->setEnabled( ControllerStatePermission::canSubmit(controllerState()) );
-  mRevertAction->setEnabled( ControllerStatePermission::canRevert(controllerState()) );
+  mSubmitAction->setEnabled( canSubmit() );
+  mRevertAction->setEnabled( canRevert() );
 }
 
 void EditionActions::disableAllActions()

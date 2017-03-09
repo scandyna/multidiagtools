@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "RemoveAction.h"
-#include "ControllerStatePermission.h"
+// #include "ControllerStatePermission.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -38,7 +38,8 @@ void RemoveAction::updateEnableState()
     disableAllActions();
     return;
   }
-  mRemoveAction->setEnabled( ControllerStatePermission::canRemove(controllerState()) );
+//   mRemoveAction->setEnabled( ControllerStatePermission::canRemove(controllerState()) );
+  mRemoveAction->setEnabled( canRemove() );
 }
 
 void RemoveAction::disableAllActions()

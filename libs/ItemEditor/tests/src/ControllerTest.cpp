@@ -27,6 +27,7 @@
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
+#include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
@@ -66,33 +67,34 @@ void ControllerTest::cleanupTestCase()
 
 void ControllerTest::statePermissionTest()
 {
-  using Mdt::ItemEditor::ControllerState;
-  using Mdt::ItemEditor::ControllerStatePermission;
+//   using Mdt::ItemEditor::ControllerState;
+//   using Mdt::ItemEditor::ControllerStatePermission;
+  auto permission = ControllerStatePermission::make<AbstractControllerStatePermission>();
 
   // Current row change
-  QVERIFY(ControllerStatePermission::canChangeCurrentRow(ControllerState::Visualizing));
-  QVERIFY(!ControllerStatePermission::canChangeCurrentRow(ControllerState::Editing));
-  QVERIFY(!ControllerStatePermission::canChangeCurrentRow(ControllerState::Inserting));
+  QVERIFY(permission.canChangeCurrentRow(ControllerState::Visualizing));
+  QVERIFY(!permission.canChangeCurrentRow(ControllerState::Editing));
+  QVERIFY(!permission.canChangeCurrentRow(ControllerState::Inserting));
   // Insert
-  QVERIFY(ControllerStatePermission::canInsert(ControllerState::Visualizing));
-  QVERIFY(!ControllerStatePermission::canInsert(ControllerState::Editing));
-  QVERIFY(!ControllerStatePermission::canInsert(ControllerState::Inserting));
+  QVERIFY(permission.canInsert(ControllerState::Visualizing));
+  QVERIFY(!permission.canInsert(ControllerState::Editing));
+  QVERIFY(!permission.canInsert(ControllerState::Inserting));
   // Submit
-  QVERIFY(!ControllerStatePermission::canSubmit(ControllerState::Visualizing));
-  QVERIFY(ControllerStatePermission::canSubmit(ControllerState::Editing));
-  QVERIFY(!ControllerStatePermission::canSubmit(ControllerState::Inserting));
+  QVERIFY(!permission.canSubmit(ControllerState::Visualizing));
+  QVERIFY(permission.canSubmit(ControllerState::Editing));
+  QVERIFY(!permission.canSubmit(ControllerState::Inserting));
   // Revert
-  QVERIFY(!ControllerStatePermission::canRevert(ControllerState::Visualizing));
-  QVERIFY(ControllerStatePermission::canRevert(ControllerState::Editing));
-  QVERIFY(!ControllerStatePermission::canRevert(ControllerState::Inserting));
+  QVERIFY(!permission.canRevert(ControllerState::Visualizing));
+  QVERIFY(permission.canRevert(ControllerState::Editing));
+  QVERIFY(!permission.canRevert(ControllerState::Inserting));
   // Remove
-  QVERIFY(ControllerStatePermission::canRemove(ControllerState::Visualizing));
-  QVERIFY(!ControllerStatePermission::canRemove(ControllerState::Editing));
-  QVERIFY(ControllerStatePermission::canRemove(ControllerState::Inserting));
+  QVERIFY(permission.canRemove(ControllerState::Visualizing));
+  QVERIFY(!permission.canRemove(ControllerState::Editing));
+  QVERIFY(permission.canRemove(ControllerState::Inserting));
   // Select
-  QVERIFY(ControllerStatePermission::canSelect(ControllerState::Visualizing));
-  QVERIFY(!ControllerStatePermission::canSelect(ControllerState::Editing));
-  QVERIFY(!ControllerStatePermission::canSelect(ControllerState::Inserting));
+  QVERIFY(permission.canSelect(ControllerState::Visualizing));
+  QVERIFY(!permission.canSelect(ControllerState::Editing));
+  QVERIFY(!permission.canSelect(ControllerState::Inserting));
 }
 
 void ControllerTest::basicStateTest()

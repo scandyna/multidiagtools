@@ -19,85 +19,100 @@
  **
  ****************************************************************************/
 #include "ControllerStatePermission.h"
+#include "AbstractControllerStatePermission.h"
+
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
-bool ControllerStatePermission::canChangeCurrentRow(ControllerState state)
+ControllerStatePermission::ControllerStatePermission()
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      return false;
-    case ControllerState::Inserting:
-      return false;
-  }
-  return false;
+  qDebug() << "+ ControllerStatePermission: " << this;
 }
 
-bool ControllerStatePermission::canInsert(ControllerState state)
+ControllerStatePermission::~ControllerStatePermission()
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      return false;
-    case ControllerState::Inserting:
-      return true;
-  }
-  return false;
+  qDebug() << "- ControllerStatePermission: " << this;
 }
 
-bool ControllerStatePermission::canSubmit(ControllerState state)
+ControllerStatePermission::ControllerStatePermission(const ControllerStatePermission & other)
+ : mImpl(other.mImpl)
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return false;
-    case ControllerState::Editing:
-      return true;
-    case ControllerState::Inserting:
-      return true;
-  }
-  return false;
+  qDebug() << "+ CPY ControllerStatePermission: " << this;
 }
 
-bool ControllerStatePermission::canRevert(ControllerState state)
+ControllerStatePermission & ControllerStatePermission::operator=(const ControllerStatePermission& other)
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return false;
-    case ControllerState::Editing:
-      return true;
-    case ControllerState::Inserting:
-      return false;
-  }
-  return false;
+  qDebug() << "= & ControllerStatePermission: " << this;
+  mImpl = other.mImpl;
+  return *this;
 }
 
-bool ControllerStatePermission::canRemove(ControllerState state)
+ControllerStatePermission::ControllerStatePermission(ControllerStatePermission&& other)
+ : mImpl(other.mImpl)
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      return false;
-    case ControllerState::Inserting:
-      return true;
-  }
-  return false;
+  qDebug() << "+ MOVE ControllerStatePermission: " << this;
 }
 
-bool ControllerStatePermission::canSelect(ControllerState state)
+ControllerStatePermission& ControllerStatePermission::operator=(ControllerStatePermission&& other)
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      return false;
-    case ControllerState::Inserting:
-      return false;
+  qDebug() << "= && ControllerStatePermission: " << this;
+  mImpl = other.mImpl;
+  return *this;
+}
+
+bool ControllerStatePermission::canChangeCurrentRow(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->canChangeCurrentRow(state);
+  }else{
+    return false;
   }
-  return false;
+}
+
+bool ControllerStatePermission::canInsert(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->canInsert(state);
+  }else{
+    return false;
+  }
+}
+
+bool ControllerStatePermission::canSubmit(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->canSubmit(state);
+  }else{
+    return false;
+  }
+}
+
+bool ControllerStatePermission::canRevert(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->canRevert(state);
+  }else{
+    return false;
+  }
+}
+
+bool ControllerStatePermission::canRemove(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->canRemove(state);
+  }else{
+    return false;
+  }
+}
+
+bool ControllerStatePermission::canSelect(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->canSelect(state);
+  }else{
+    return false;
+  }
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

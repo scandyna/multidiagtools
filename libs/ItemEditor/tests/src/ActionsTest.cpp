@@ -28,18 +28,19 @@
 #include "Mdt/ItemEditor/RemoveAction.h"
 #include "Mdt/ItemEditor/ResizeToContentsAction.h"
 #include "Mdt/ItemEditor/ControllerState.h"
+#include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
+#include "Mdt/ItemEditor/ControllerStatePermission.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
 #include <QStringListModel>
 #include <QTableView>
 #include <QPointer>
 #include <QAction>
+#include <memory>
 
 #include <QDebug>
 
-namespace ItemEditor = Mdt::ItemEditor;
-using ItemEditor::RowState;
-using ItemEditor::ControllerState;
+using namespace Mdt::ItemEditor;
 
 void ActionsTest::initTestCase()
 {
@@ -194,11 +195,7 @@ void ActionsTest::abstractActionContainerTest()
 
 void ActionsTest::navigationActionsTest()
 {
-  using Mdt::ItemEditor::NavigationActions;
-  using Mdt::ItemEditor::RowState;
-  using Mdt::ItemEditor::ControllerState;
-
-  NavigationActions *actions = new NavigationActions(nullptr);
+  std::unique_ptr<NavigationActions> actions(new NavigationActions(nullptr));
   QPointer<QAction> toFirst = actions->toFirst();
   QPointer<QAction> toPrevious = actions->toPrevious();
   QPointer<QAction> toNext = actions->toNext();
@@ -207,6 +204,14 @@ void ActionsTest::navigationActionsTest()
   /*
    * Initial state
    */
+  QVERIFY(!toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(!toNext->isEnabled());
+  QVERIFY(!toLast->isEnabled());
+  /*
+   * Set controller state permissions
+   */
+  actions->setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
   QVERIFY(!toFirst->isEnabled());
   QVERIFY(!toPrevious->isEnabled());
   QVERIFY(!toNext->isEnabled());
@@ -324,7 +329,7 @@ void ActionsTest::navigationActionsTest()
   /*
    * Clear
    */
-  delete actions;
+  actions.reset();
   QVERIFY(toFirst.isNull());
   QVERIFY(toPrevious.isNull());
   QVERIFY(toNext.isNull());
@@ -333,11 +338,7 @@ void ActionsTest::navigationActionsTest()
 
 void ActionsTest::editionActionsTest()
 {
-  using Mdt::ItemEditor::EditionActions;
-  using Mdt::ItemEditor::RowState;
-  using Mdt::ItemEditor::ControllerState;
-
-  EditionActions *actions = new EditionActions(nullptr);
+  std::unique_ptr<EditionActions> actions(new EditionActions(nullptr));
   QPointer<QAction> submitAction = actions->submitAction();
   QPointer<QAction> revertAction = actions->revertAction();
   RowState rs;
@@ -346,6 +347,10 @@ void ActionsTest::editionActionsTest()
    */
   QVERIFY(!submitAction->isEnabled());
   QVERIFY(!revertAction->isEnabled());
+  /*
+   * Set controller state permissions
+   */
+  actions->setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
   /*
    * Check controller state
    */
@@ -396,23 +401,24 @@ void ActionsTest::editionActionsTest()
   /*
    * Clear
    */
-  delete actions;
+  actions.reset();
   QVERIFY(submitAction.isNull());
   QVERIFY(revertAction.isNull());
 }
 
 void ActionsTest::insertActionTest()
 {
-  using Mdt::ItemEditor::InsertAction;
-  using Mdt::ItemEditor::ControllerState;
-
-  auto *action = new InsertAction(nullptr);
+  std::unique_ptr<InsertAction> action(new InsertAction(nullptr));
   QPointer<QAction> insertAction = action->insertAction();
   /*
    * Initial state
    */
   /// \todo Define a initial state (also in controller) and enable
 //   QVERIFY(!insertAction->isEnabled());
+  /*
+   * Set controller state permissions
+   */
+  action->setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
   /*
    * Change controller state
    */
@@ -423,7 +429,7 @@ void ActionsTest::insertActionTest()
   /*
    * Clear
    */
-  delete action;
+  action.reset();
   QVERIFY(insertAction.isNull());
 
   QFAIL("Initial state not clear");
@@ -431,17 +437,17 @@ void ActionsTest::insertActionTest()
 
 void ActionsTest::removeActionTest()
 {
-  using ItemEditor::RemoveAction;
-  using ItemEditor::RowState;
-  using ItemEditor::ControllerState;
-
   RowState rs;
-  auto *action = new RemoveAction(nullptr);
+  std::unique_ptr<RemoveAction> action(new RemoveAction(nullptr));
   QPointer<QAction> removeAction = action->removeAction();
   /*
    * Initial state
    */
   QVERIFY(!removeAction->isEnabled());
+  /*
+   * Set controller state permissions
+   */
+  action->setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
   /*
    * Check controller state
    */
@@ -486,16 +492,14 @@ void ActionsTest::removeActionTest()
   /*
    * Clear
    */
-  delete action;
+  action.reset();
   QVERIFY(removeAction.isNull());
 }
 
 void ActionsTest::resizeToContentsTest()
 {
-  using ItemEditor::ResizeToContentsAction;
-
   RowState rs;
-  auto *action = new ResizeToContentsAction(nullptr);
+  std::unique_ptr<ResizeToContentsAction> action(new ResizeToContentsAction(nullptr));
   QPointer<QAction> resizeToContentsAction = action->resizeToContentsAction();
   /*
    * Initial state
@@ -503,6 +507,10 @@ void ActionsTest::resizeToContentsTest()
   QVERIFY(resizeToContentsAction != nullptr);
   QVERIFY(!resizeToContentsAction->isEnabled());
   /*
+   * Set controller state permissions
+   */
+  action->setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
+  /*
    * Check controller state
    */
   // Set a valid row state
@@ -546,7 +554,7 @@ void ActionsTest::resizeToContentsTest()
   /*
    * Clear
    */
-  delete action;
+  action.reset();
   QVERIFY(resizeToContentsAction.isNull());
 }
 

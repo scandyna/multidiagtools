@@ -38,6 +38,7 @@ endfunction()
 
 addItemEditorTest("ItemSelectionModelTest")
 addItemEditorTest("RowChangeTest")
+addItemEditorTest("ControllerStatePermissionTest")
 addItemEditorTest("ActionsTest")
 addItemEditorTest("ItemDelegateTest")
 addItemEditorTest("ItemViewTest")

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "InsertAction.h"
-#include "ControllerStatePermission.h"
 #include <QIcon>
 
 namespace Mdt{ namespace ItemEditor{
@@ -34,7 +33,7 @@ InsertAction::InsertAction(QObject* parent)
 
 void InsertAction::updateEnableState()
 {
-  mAction->setEnabled( ControllerStatePermission::canInsert(controllerState()) );
+  mAction->setEnabled( canInsert() );
 }
 
 void InsertAction::disableAllActions()

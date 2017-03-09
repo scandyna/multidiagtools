@@ -116,6 +116,7 @@ void AbstractWindow::setMainController(AbstractController* controller)
       disconnect(oldController, &AbstractController::rowStateChanged, mNavigationActions, &NavigationActions::setRowState);
       disconnect(oldController, &AbstractController::controllerStateChanged, mNavigationActions, &NavigationActions::setControllerState);
     }
+    mNavigationActions->setControllerStatePermission(controller->controllerStatePermission());
     connect(mNavigationActions, &NavigationActions::toFirstTriggered, controller, &AbstractController::toFirst);
     connect(mNavigationActions, &NavigationActions::toPreviousTriggered, controller, &AbstractController::toPrevious);
     connect(mNavigationActions, &NavigationActions::toNextTriggered, controller, &AbstractController::toNext);
@@ -133,6 +134,7 @@ void AbstractWindow::setMainController(AbstractController* controller)
       disconnect(oldController, &AbstractController::rowStateChanged, mEditionActions, &EditionActions::setRowState);
       disconnect(oldController, &AbstractController::controllerStateChanged, mEditionActions, &EditionActions::setControllerState);
     }
+    mEditionActions->setControllerStatePermission(controller->controllerStatePermission());
     connect(mEditionActions, &EditionActions::submitTriggered, controller, &AbstractController::submit);
     connect(mEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
     connect(controller, &AbstractController::rowStateChanged, mEditionActions, &EditionActions::setRowState);
@@ -146,6 +148,7 @@ void AbstractWindow::setMainController(AbstractController* controller)
       disconnect(mInsertAction, &InsertAction::insertTriggered, oldController, &AbstractController::insert);
       disconnect(oldController, &AbstractController::controllerStateChanged, mInsertAction, &InsertAction::setControllerState);
     }
+    mInsertAction->setControllerStatePermission(controller->controllerStatePermission());
     connect(mInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
     connect(controller, &AbstractController::controllerStateChanged, mInsertAction, &InsertAction::setControllerState);
     mInsertAction->setControllerState(controller->controllerState());
@@ -158,6 +161,7 @@ void AbstractWindow::setMainController(AbstractController* controller)
       disconnect(oldController, &AbstractController::rowStateChanged, mRemoveAction, &RemoveAction::setRowState);
       disconnect(oldController, &AbstractController::controllerStateChanged, mRemoveAction, &RemoveAction::setControllerState);
     }
+    mRemoveAction->setControllerStatePermission(controller->controllerStatePermission());
     connect(mRemoveAction, &RemoveAction::removeTriggered, controller, &AbstractController::remove);
     connect(controller, &AbstractController::rowStateChanged, mRemoveAction, &RemoveAction::setRowState);
     connect(controller, &AbstractController::controllerStateChanged, mRemoveAction, &RemoveAction::setControllerState);

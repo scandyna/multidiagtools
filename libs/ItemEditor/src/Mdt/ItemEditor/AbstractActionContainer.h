@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 
 #include "RowState.h"
 #include "ControllerState.h"
+#include "ControllerStatePermission.h"
 #include <QObject>
 
 namespace Mdt{ namespace ItemEditor{
@@ -50,6 +51,10 @@ namespace Mdt{ namespace ItemEditor{
     // Move disabled
     AbstractActionContainer(AbstractActionContainer &&) = delete;
     AbstractActionContainer & operator=(AbstractActionContainer &&) = delete;
+
+    /*! \brief Set controller state permission
+     */
+    void setControllerStatePermission(const ControllerStatePermission & permission);
 
     /*! \brief Get row count
      */
@@ -84,6 +89,48 @@ namespace Mdt{ namespace ItemEditor{
     ControllerState controllerState() const
     {
       return mControllerState;
+    }
+
+    /*! \brief Check if it is allowed to change current row for current state
+     */
+    bool canChangeCurrentRow() const
+    {
+      return mControllerStatePermission.canChangeCurrentRow(mControllerState);
+    }
+
+    /*! \brief Check if it is allowed to insert for current state
+     */
+    bool canInsert() const
+    {
+      return mControllerStatePermission.canInsert(mControllerState);
+    }
+
+    /*! \brief Check if it is possible to submit for current state
+     */
+    bool canSubmit() const
+    {
+      return mControllerStatePermission.canSubmit(mControllerState);
+    }
+
+    /*! \brief Check if it is possible to revert for current state
+     */
+    bool canRevert() const
+    {
+      return mControllerStatePermission.canRevert(mControllerState);
+    }
+
+    /*! \brief Check if it is possible to remove for current state
+     */
+    bool canRemove() const
+    {
+      return mControllerStatePermission.canRemove(mControllerState);
+    }
+
+    /*! \brief Check if it is possible to select data from database for current state
+     */
+    bool canSelect() const
+    {
+      return mControllerStatePermission.canSelect(mControllerState);
     }
 
    public slots:
@@ -139,6 +186,7 @@ namespace Mdt{ namespace ItemEditor{
     RowState mRowState;
 //     RowState mPreviousRowState;
     ControllerState mControllerState = ControllerState::Visualizing;
+    ControllerStatePermission mControllerStatePermission;
 //     ControllerState mPreviousControllerState = ControllerState::Visualizing;
   };
 

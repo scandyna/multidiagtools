@@ -21,6 +21,8 @@
 #include "WidgetMapperController.h"
 #include "DataWidgetMapper.h"
 
+#include "AbstractControllerStatePermission.h"
+
 // #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
@@ -29,6 +31,7 @@ WidgetMapperController::WidgetMapperController(QObject* parent)
  : AbstractItemModelController(parent),
    mWidgetMapper(new DataWidgetMapper(this))
 {
+  setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
   connect(this, &WidgetMapperController::currentRowChanged, mWidgetMapper, &DataWidgetMapper::setCurrentRow);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionStarted, this, &WidgetMapperController::onDataEditionStarted);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionDone, this, &WidgetMapperController::onDataEditionDone);
