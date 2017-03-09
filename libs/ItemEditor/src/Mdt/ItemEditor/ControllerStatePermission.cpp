@@ -21,45 +21,7 @@
 #include "ControllerStatePermission.h"
 #include "AbstractControllerStatePermission.h"
 
-#include <QDebug>
-
 namespace Mdt{ namespace ItemEditor{
-
-ControllerStatePermission::ControllerStatePermission()
-{
-  qDebug() << "+ ControllerStatePermission: " << this;
-}
-
-ControllerStatePermission::~ControllerStatePermission()
-{
-  qDebug() << "- ControllerStatePermission: " << this;
-}
-
-ControllerStatePermission::ControllerStatePermission(const ControllerStatePermission & other)
- : mImpl(other.mImpl)
-{
-  qDebug() << "+ CPY ControllerStatePermission: " << this;
-}
-
-ControllerStatePermission & ControllerStatePermission::operator=(const ControllerStatePermission& other)
-{
-  qDebug() << "= & ControllerStatePermission: " << this;
-  mImpl = other.mImpl;
-  return *this;
-}
-
-ControllerStatePermission::ControllerStatePermission(ControllerStatePermission&& other)
- : mImpl(other.mImpl)
-{
-  qDebug() << "+ MOVE ControllerStatePermission: " << this;
-}
-
-ControllerStatePermission& ControllerStatePermission::operator=(ControllerStatePermission&& other)
-{
-  qDebug() << "= && ControllerStatePermission: " << this;
-  mImpl = other.mImpl;
-  return *this;
-}
 
 bool ControllerStatePermission::canChangeCurrentRow(ControllerState state) const
 {

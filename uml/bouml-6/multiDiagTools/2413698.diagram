@@ -20,6 +20,10 @@ classcanvas 130946 class_ref 3668354 // AbstractActionContainer
   classdiagramsettings member_max_width 0 end
   xyz 41.75 164.25 2012
 end
+classcanvas 131714 class_ref 3870722 // ControllerStatePermission
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 553 453 2012
+end
 relationcanvas 128258 relation_ref 3070850 // <directional composition>
   geometry VH unfixed
   decenter_begin 509

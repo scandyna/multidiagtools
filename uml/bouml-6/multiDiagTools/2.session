@@ -2,24 +2,32 @@ window_sizes 1280 963 323 951 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2707074 // AbstractController
-    968 911 100 23 0 23
+    951 911 100 23 0 23
   classdiagram_ref 3175298 // AbstractItemModelController
     968 911 100 7 0 0
   classdiagram_ref 2760962 // TableViewController
     120 98 100 21 0 0
   classdiagram_ref 3148674 // Overview
     966 903 100 22 0 0
-  active  classdiagram_ref 2827266 // DataWidgetMapper
-    951 911 100 7 0 0
+  classdiagram_ref 2414338 // State
+    120 98 100 4 0 0
+  active  classdiagram_ref 2807170 // Permissions
+    951 911 100 18 0 0
 end
 show_stereotypes
-selected attribute_ref 2995074 // PreviousStyleSheet
+selected classdiagram_ref 2807170 // Permissions
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
-  classview_ref 1761794 // StyleSheet
-  class_ref 3198082 // MappedWidget
+  class_ref 3870338 // AbstractControllerStatePermission
+  operation_ref 5433474 // ControllerStatePermission
+  operation_ref 5433858 // canInsert
+  class_ref 3614722 // AbstractSqlItemViewController
+  attribute_ref 3380226 // ControllerStatePermission
+  operation_ref 5433602 // setControllerStatePermission
+  operation_ref 5433730 // canInsert
+  classview_ref 1465474 // EditorWidget
   
   package_ref 430082 // Dsp
   

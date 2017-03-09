@@ -4,13 +4,4 @@ classcanvas 128002 class_ref 2684930 // ControllerState
   classdiagramsettings member_max_width 0 end
   xyz 433 35 2000
 end
-classcanvas 128258 class_ref 3103490 // ControllerStatePermission
-  classdiagramsettings member_max_width 0 end
-  xyz 39 46 2000
-end
-relationcanvas 128386 relation_ref 3474306 // <dependency>
-  from ref 128258 z 2001 to ref 128002
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 end

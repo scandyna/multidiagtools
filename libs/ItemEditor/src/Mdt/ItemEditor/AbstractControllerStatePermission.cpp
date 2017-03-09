@@ -20,19 +20,7 @@
  ****************************************************************************/
 #include "AbstractControllerStatePermission.h"
 
-#include <QDebug>
-
 namespace Mdt{ namespace ItemEditor{
-
-AbstractControllerStatePermission::AbstractControllerStatePermission()
-{
-  qDebug() << " + AbstractControllerStatePermission";
-}
-
-AbstractControllerStatePermission::~AbstractControllerStatePermission()
-{
-  qDebug() << " - AbstractControllerStatePermission";
-}
 
 bool AbstractControllerStatePermission::canChangeCurrentRow(ControllerState state) const
 {

@@ -37,15 +37,6 @@
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
 
-// namespace ItemEditor = Mdt::ItemEditor;
-// namespace ItemModel = Mdt::ItemModel;
-// using ItemEditor::TableViewController;
-// using ItemEditor::ControllerState;
-// using ItemModel::VariantTableModel;
-// using ItemModel::FilterColumn;
-// using ItemModel::ParentModelColumn;
-// using ItemModel::PrimaryKey;
-
 void TableViewControllerTest::initTestCase()
 {
 }

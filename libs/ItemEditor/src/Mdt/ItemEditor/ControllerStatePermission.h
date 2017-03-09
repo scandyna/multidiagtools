@@ -25,8 +25,6 @@
 #include <memory>
 #include <type_traits>
 
-#include <QDebug>
-
 namespace Mdt{ namespace ItemEditor{
 
   class AbstractControllerStatePermission;
@@ -42,26 +40,27 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Contruct a null ControllerStatePermission
      */
-    //ControllerStatePermission() = default;
-    ControllerStatePermission();
-    
-    ~ControllerStatePermission();
+    ControllerStatePermission() = default;
+
+    /*! \brief Destruct this ControllerStatePermission
+     */
+    ~ControllerStatePermission() = default;
 
     /*! \brief Copy construct a ControllerStatePermission from other
      */
-    ControllerStatePermission(const ControllerStatePermission & other);
+    ControllerStatePermission(const ControllerStatePermission & other) = default;
 
     /*! \brief Assign other to this ControllerStatePermission
      */
-    ControllerStatePermission & operator=(const ControllerStatePermission & other);
+    ControllerStatePermission & operator=(const ControllerStatePermission & other) = default;
 
     /*! \brief Move construct a ControllerStatePermission from other
      */
-    ControllerStatePermission(ControllerStatePermission && other);
+    ControllerStatePermission(ControllerStatePermission && other) = default;
 
     /*! \brief Assign other to this ControllerStatePermission
      */
-    ControllerStatePermission & operator=(ControllerStatePermission && other);
+    ControllerStatePermission & operator=(ControllerStatePermission && other) = default;
 
     /*! \brief Construct a ControllerStatePermission with a concrete implementation
      *
@@ -104,7 +103,6 @@ namespace Mdt{ namespace ItemEditor{
     ControllerStatePermission(const std::shared_ptr<Impl> & impl)
      : mImpl(impl)
     {
-      qDebug() << "+ ControllerStatePermission(impl): " << this;
     }
 
     std::shared_ptr<const AbstractControllerStatePermission> mImpl;

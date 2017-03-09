@@ -37,11 +37,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    AbstractControllerStatePermission();
+    AbstractControllerStatePermission() = default;
 
     /*! \brief Destructor
      */
-    virtual ~AbstractControllerStatePermission();
+    virtual ~AbstractControllerStatePermission() = default;
 
     // Copy disabled
     AbstractControllerStatePermission(const AbstractControllerStatePermission &) = delete;

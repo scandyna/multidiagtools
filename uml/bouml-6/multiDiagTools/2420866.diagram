@@ -20,6 +20,10 @@ classcanvas 129922 class_ref 3668354 // AbstractActionContainer
   classdiagramsettings member_max_width 0 end
   xyz 415.5 164.25 2012
 end
+classcanvas 130562 class_ref 3870722 // ControllerStatePermission
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 78 323 2017
+end
 relationcanvas 128258 relation_ref 853890 // <generalisation>
   geometry VHV unfixed
   from ref 128002 z 2007 to point 207 125

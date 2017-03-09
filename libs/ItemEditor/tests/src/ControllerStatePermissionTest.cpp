@@ -44,31 +44,6 @@ class PermissionTestClass : public AbstractControllerStatePermission
 {
  public:
 
-  PermissionTestClass()
-  {
-    qDebug() << "+PermissionTestClass";
-  }
-
-  ~PermissionTestClass()
-  {
-    qDebug() << "-PermissionTestClass";
-  }
-  PermissionTestClass(const PermissionTestClass &)
-  {
-    qDebug() << "+CPY PermissionTestClass";
-  }
-  PermissionTestClass & operator=(const PermissionTestClass &)
-  {
-    qDebug() << "=CPY PermissionTestClass";
-  }
-  PermissionTestClass(PermissionTestClass &&)
-  {
-    qDebug() << "+MOVE PermissionTestClass";
-  }
-  PermissionTestClass & operator=(const PermissionTestClass &&)
-  {
-    qDebug() << "=MOVE PermissionTestClass";
-  }
   bool canChangeCurrentRow(ControllerState) const override
   {
     return true;
@@ -102,32 +77,27 @@ void ControllerStatePermissionTest::constructTest()
 
 void ControllerStatePermissionTest::copyTest()
 {
-  qDebug() << "TEST: p1";
   auto p1 = ControllerStatePermission::make<PermissionTestClass>();
   QVERIFY(p1.canChangeCurrentRow(ControllerState::Visualizing));
   QVERIFY(!p1.canInsert(ControllerState::Visualizing));
   /*
    * Copy construct
    */
-  qDebug() << "TEST: p2 = p1";
   auto p2 = p1;
   QVERIFY(p2.canChangeCurrentRow(ControllerState::Visualizing));
   QVERIFY(!p2.canInsert(ControllerState::Visualizing));
   /*
    * Copy assign
    */
-  qDebug() << "TEST: p3";
   ControllerStatePermission p3;
   // Make shure p3 is used before assign
   QVERIFY(!p3.canChangeCurrentRow(ControllerState::Visualizing));
-  qDebug() << "TEST: p3 = p1";
   p3 = p1;
   QVERIFY(p3.canChangeCurrentRow(ControllerState::Visualizing));
   QVERIFY(!p3.canInsert(ControllerState::Visualizing));
   /*
    * Move construct
    */
-  qDebug() << "TEST: p4";
   auto p4 = std::move( ControllerStatePermission::make<PermissionTestClass>() );
   QVERIFY(p4.canChangeCurrentRow(ControllerState::Visualizing));
   QVERIFY(!p4.canInsert(ControllerState::Visualizing));
@@ -137,7 +107,6 @@ void ControllerStatePermissionTest::copyTest()
   ControllerStatePermission p5;
   // Make shure p3 is used before assign
   QVERIFY(!p5.canChangeCurrentRow(ControllerState::Visualizing));
-  qDebug() << "TEST: p5";
   p5 = std::move( ControllerStatePermission::make<PermissionTestClass>() );
   QVERIFY(p5.canChangeCurrentRow(ControllerState::Visualizing));
   QVERIFY(!p5.canInsert(ControllerState::Visualizing));

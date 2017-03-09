@@ -2,60 +2,64 @@ format 211
 
 classcanvas 128002 class_ref 3068802 // AbstractEditorWidget
   classdiagramsettings member_max_width 0 end
-  xyz 435.1 168.75 2000
+  xyz 254.1 168.75 2000
 end
 classcanvas 128130 class_ref 3118082 // AbstractTableViewWidget
   classdiagramsettings member_max_width 0 end
-  xyz 221.2 296.25 2006
+  xyz 40.1 296.05 2006
 end
 classcanvas 128386 class_ref 316162 // QWidget
   classdiagramsettings member_max_width 0 end
-  xyz 670 41.15 2006
+  xyz 489.4 41.45 2006
 end
 classcanvas 128642 class_ref 3104130 // TableViewWidget
   classdiagramsettings member_max_width 0 end
-  xyz 248.2 383.65 2012
+  xyz 67.1 443.45 2012
 end
 classcanvas 128898 class_ref 3068674 // AbstractSqlFormWidget
   classdiagramsettings member_max_width 0 end
-  xyz 621 168.75 2000
+  xyz 443.75 168.75 2000
 end
 classcanvas 129026 class_ref 3068930 // StandardSqlTableWidget
   classdiagramsettings member_max_width 0 end
-  xyz 421.15 383.65 2000
+  xyz 240.75 383.15 2000
 end
 classcanvas 129154 class_ref 3088770 // AbstractFormWidget
   classdiagramsettings member_max_width 0 end
-  xyz 437.1 296.25 2006
+  xyz 256.1 296.05 2006
 end
 classcanvas 129538 class_ref 3089410 // StandardSqlEditorLayoutWidget
   classdiagramsettings member_max_width 0 end
-  xyz 40.7 723 2000
+  xyz 40.5 783.8 2000
 end
 classcanvas 129922 class_ref 3648002 // AbstractController
   classdiagramsettings member_max_width 0 end
-  xyz 68.5 597.65 2000
+  xyz 457.4 657.85 2000
 end
 classcanvas 130050 class_ref 3634434 // AbstractItemModelController
   classdiagramsettings member_max_width 0 end
-  xyz 39.45 470.05 2006
+  xyz 421.05 530.55 2006
 end
 classcanvas 130306 class_ref 3138178 // TableViewController
   classdiagramsettings member_max_width 0 end
-  xyz 68.45 383.65 2018
+  xyz 450.05 443.45 2018
 end
 classcanvas 130690 class_ref 3614594 // AbstractSqlController
   classdiagramsettings member_max_width 0 end
-  xyz 635 470.05 2006
+  xyz 658.45 530.55 2006
 end
 classcanvas 130946 class_ref 2927362 // SqlTableViewController
   classdiagramsettings member_max_width 0 end
-  xyz 631 383.65 2012
+  xyz 657.8 443.45 2012
+end
+classcanvas 133634 class_ref 3870722 // ControllerStatePermission
+  classdiagramsettings member_max_width 0 end
+  xyz 630.05 657.85 2006
 end
 relationcanvas 128514 relation_ref 3441794 // <generalisation>
   geometry VHV unfixed
-  from ref 128002 z 2007 to point 507.1 127.3
-  line 132098 z 2007 to point 701.7 127.3
+  from ref 128002 z 2007 to point 326 127
+  line 132098 z 2007 to point 520 127
   line 132226 z 2007 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -72,39 +76,42 @@ relationcanvas 129410 relation_ref 3457026 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130178 relation_ref 4025474 // <generalisation>
-  decenter_begin 482
+  decenter_begin 512
   from ref 130050 z 2007 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 4011778 // <generalisation>
-  decenter_begin 474
-  decenter_end 482
+  decenter_begin 517
+  decenter_end 512
   from ref 130306 z 2019 to ref 130050
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 4025730 // <directional composition>
-  decenter_begin 577
-  decenter_end 577
+  decenter_begin 422
+  decenter_end 422
   from ref 128642 z 2019 to ref 130306
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 4025346 // <generalisation>
   geometry VHV unfixed
-  from ref 130690 z 2007 to point 708 555.2
-  line 132354 z 2007 to point 131.7 555.2
+  decenter_begin 523
+  from ref 130690 z 2007 to point 734 616
+  line 132354 z 2007 to point 520 616
   line 132482 z 2007 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131074 relation_ref 3983106 // <generalisation>
+  decenter_end 523
   from ref 130946 z 2013 to ref 130690
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131842 relation_ref 4039938 // <generalisation>
+  decenter_begin 478
   from ref 128898 z 2007 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -116,9 +123,14 @@ relationcanvas 133122 relation_ref 4230274 // <generalisation>
 end
 relationcanvas 133250 relation_ref 4230402 // <generalisation>
   geometry VHV unfixed
-  from ref 128130 z 2007 to point 306.2 254.4
-  line 133378 z 2007 to point 507.1 254.4
+  from ref 128130 z 2007 to point 125 254
+  line 133378 z 2007 to point 326 254
   line 133506 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133762 relation_ref 4299266 // <directional composition>
+  from ref 129922 z 2007 to ref 133634
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
