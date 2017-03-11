@@ -8,8 +8,10 @@ set(SOURCES_FILES
     src/main.cpp
     src/ClientModel.cpp
     src/ClientWidget.cpp
+    src/ClientListWidget.cpp
     src/AddressModel.cpp
     src/AddressWidget.cpp
+    src/MainWidget.cpp
 )
 
 # Headers directories

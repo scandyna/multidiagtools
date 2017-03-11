@@ -59,6 +59,39 @@ void TableViewControllerTest::cleanupTestCase()
 //   QVERIFY(controller.primaryKey().isNull());
 // }
 
+void TableViewControllerTest::statePermissionTest()
+{
+  TableViewController controller;
+  auto permission = controller.controllerStatePermission();
+
+  // Current row change
+  QVERIFY(permission.canChangeCurrentRow(ControllerState::Visualizing));
+  QVERIFY(!permission.canChangeCurrentRow(ControllerState::Editing));
+  QVERIFY(!permission.canChangeCurrentRow(ControllerState::Inserting));
+  // Insert
+  QVERIFY(permission.canInsert(ControllerState::Visualizing));
+  QVERIFY(!permission.canInsert(ControllerState::Editing));
+  QVERIFY(!permission.canInsert(ControllerState::Inserting));
+  // Submit
+  QVERIFY(!permission.canSubmit(ControllerState::Visualizing));
+  QVERIFY(permission.canSubmit(ControllerState::Editing));
+  QVERIFY(!permission.canSubmit(ControllerState::Inserting));
+  // Revert
+  QVERIFY(!permission.canRevert(ControllerState::Visualizing));
+  QVERIFY(permission.canRevert(ControllerState::Editing));
+  QVERIFY(!permission.canRevert(ControllerState::Inserting));
+  // Remove
+  QVERIFY(permission.canRemove(ControllerState::Visualizing));
+  QVERIFY(!permission.canRemove(ControllerState::Editing));
+  QVERIFY(permission.canRemove(ControllerState::Inserting));
+  // Select
+  QVERIFY(permission.canSelect(ControllerState::Visualizing));
+  QVERIFY(!permission.canSelect(ControllerState::Editing));
+  QVERIFY(!permission.canSelect(ControllerState::Inserting));
+
+  QFAIL("Not complete - Check also Insert");
+}
+
 void TableViewControllerTest::setModelTest()
 {
   VariantTableModel tableModel;
@@ -159,6 +192,31 @@ void TableViewControllerTest::primaryKeyVisibilityTest()
   controller.setPrimaryKeyHidden(false);
   QVERIFY(!view.isColumnHidden(0));
   QVERIFY(!view.isColumnHidden(1));
+  QVERIFY(!view.isColumnHidden(2));
+}
+
+void TableViewControllerTest::primaryKeyVisibilityChangeModelTest()
+{
+  /*
+   * Setup controller
+   */
+  QTableView view;
+  TableViewController controller;
+  controller.setView(&view);
+  controller.setPrimaryKey({0,1});
+  controller.setPrimaryKeyHidden(true);
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(1, 3);
+  controller.setModel(&model);
+  /*
+   * Check that primary key is hidden
+   * (This did not work)
+   */
+  QVERIFY( view.isColumnHidden(0));
+  QVERIFY( view.isColumnHidden(1));
   QVERIFY(!view.isColumnHidden(2));
 }
 

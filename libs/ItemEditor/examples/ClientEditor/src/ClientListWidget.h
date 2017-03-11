@@ -18,31 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
-#define MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
+#ifndef CLIENT_LIST_WIDGET_H
+#define CLIENT_LIST_WIDGET_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "Mdt/ItemEditor/TableViewWidget.h"
 
-class QAbstractItemView;
+class ClientModel;
 
-class ItemViewPrivateContainerTest : public QObject
+/*! \brief Table view based widget to list clients
+ */
+class ClientListWidget : public Mdt::ItemEditor::TableViewWidget
 {
-  Q_OBJECT
+ Q_OBJECT
 
- private slots:
+ public:
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void setModelThenViewTest();
-  void setViewThenModelTest();
-  void setProxyModelThenModelTest();  // Crash detetced at 20170311
-  void delegateLifeTimeTest();
-  void selectionModelLifeTimeTest();
-  void changeModelTest();
-  void changeViewTest();
+  explicit ClientListWidget(QWidget* parent = nullptr);
 };
 
-
-#endif // MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
+#endif // #ifndef CLIENT_LIST_WIDGET_H

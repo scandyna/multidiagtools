@@ -580,15 +580,15 @@ namespace Mdt{ namespace ItemEditor{
      */
     void rowStateChanged(Mdt::ItemEditor::RowState rs);
 
-    /*! \brief Emitted whenever controller state changed
-     */
-    void controllerStateChanged(Mdt::ItemEditor::ControllerState newState);
-
     /*! \brief Emitted whenever current row changed
      *
      * This signal is typically used for widget mappers
      */
     void currentRowChanged(int row);
+
+    /*! \brief Emitted whenever controller state changed
+     */
+    void controllerStateChanged(Mdt::ItemEditor::ControllerState newState);
 
     /*! \brief Emitted whenever primary key changed
      */
@@ -735,6 +735,12 @@ namespace Mdt{ namespace ItemEditor{
      * It will also emit rowStateChanged() and currentRowChanged().
      */
     void updateRowState(Mdt::ItemEditor::RowState rs);
+
+//     /*! \brief Actions to perform when primary key's source model changed
+//      *
+//      * Main goal is to call primaryKeyChangedEvent()
+//      */
+//     void onPrimaryKeySourceModelChanged();
 
    private:
 

@@ -28,6 +28,7 @@ using namespace Mdt::ItemEditor;
 ClientWidget::ClientWidget(QWidget* parent)
  : AbstractFormWidget(parent)
 {
+  setObjectName("ClientWidget");
   setModel(new ClientModel(this));
   setupUi(this);
   auto *ctlr = controller();

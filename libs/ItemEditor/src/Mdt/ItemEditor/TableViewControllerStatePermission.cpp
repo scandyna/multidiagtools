@@ -18,31 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
-#define MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
+#include "TableViewControllerStatePermission.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemEditor{
 
-class QAbstractItemView;
-
-class ItemViewPrivateContainerTest : public QObject
+bool TableViewControllerStatePermission::canInsert(ControllerState state) const
 {
-  Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void setModelThenViewTest();
-  void setViewThenModelTest();
-  void setProxyModelThenModelTest();  // Crash detetced at 20170311
-  void delegateLifeTimeTest();
-  void selectionModelLifeTimeTest();
-  void changeModelTest();
-  void changeViewTest();
-};
+  switch(state){
+    case ControllerState::Visualizing:
+      return true;
+    case ControllerState::Editing:
+      return false;
+    case ControllerState::Inserting:
+      return true;
+  }
+  return false;
+}
 
 
-#endif // MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
+}} // namespace Mdt{ namespace ItemEditor{

@@ -110,8 +110,10 @@ void AbstractController::setPrimaryKeyEnabled(bool enable)
     return;
   }
   if(enable){
+//     connect(pkModel, &PrimaryKeyProxyModel::sourceModelChanged, this, &AbstractController::onPrimaryKeySourceModelChanged);
     appendProxyModel(new PrimaryKeyProxyModel(this));
   }else{
+    primaryKeyChangedEvent(getPrimaryKey(), PrimaryKey());
     deleteFirstProxyModelOfType<PrimaryKeyProxyModel>();
   }
 }
@@ -405,6 +407,7 @@ void AbstractController::registerModel(QAbstractItemModel* model)
   model = modelForView();
   emit modelForViewChanged(model);
   setModelToView(model);
+  primaryKeyChangedEvent( PrimaryKey(), getPrimaryKey() );
 }
 
 void AbstractController::modelSetToView()
@@ -442,7 +445,7 @@ void AbstractController::onDataEditionDone()
 
 void AbstractController::onRowsRemoved()
 {
-  qDebug() << "AbstractController: rows removed , rows: " << rowCount();
+  qDebug() << "AC: rows removed , rows: " << rowCount();
   if(controllerState() == ControllerState::Inserting){
     setControllerState(ControllerState::Visualizing);
   }
@@ -450,9 +453,15 @@ void AbstractController::onRowsRemoved()
 
 void AbstractController::updateRowState(RowState rs)
 {
+  qDebug() << "AC::updateRowState()";
   emit currentRowChanged(rs.currentRow());
   emit rowStateChanged(rs);
 }
+
+// void AbstractController::onPrimaryKeySourceModelChanged()
+// {
+//   primaryKeyChangedEvent( PrimaryKey(), getPrimaryKey() );
+// }
 
 void AbstractController::setControllerState(ControllerState state)
 {

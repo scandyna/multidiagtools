@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "Mdt/Application.h"
+#include "MainWidget.h"
+
 #include "Mdt/ItemModel/RelationFilterExpression.h"
 #include "Mdt/ItemEditor/StandardWindow.h"
 #include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
@@ -39,23 +41,25 @@ int main(int argc, char **argv)
     return 1;
   }
   // Setup Client widget
-  auto *clientWidget = new ClientWidget;
-  // Setup Address widget
-  auto *addressWidget = new AddressWidget;
-  // Setup editor widget
-  auto *editorWidget = new StandardEditorLayoutWidget;
-  editorWidget->setMainWidget(clientWidget);
-  editorWidget->addChildWidget(addressWidget, "Addresses");
-  // Setup relation
-  ParentModelColumn clientId(0);
-  FilterColumn addressClientId(1);
-  clientWidget->controller()->addChildController(addressWidget->controller(), addressClientId == clientId);
+//   auto *clientWidget = new ClientWidget;
+//   // Setup Address widget
+//   auto *addressWidget = new AddressWidget;
+//   // Setup editor widget
+//   auto *editorWidget = new StandardEditorLayoutWidget;
+//   editorWidget->setMainWidget(clientWidget);
+//   editorWidget->addChildWidget(addressWidget, "Addresses");
+//   // Setup relation
+//   ParentModelColumn clientId(0);
+//   FilterColumn addressClientId(1);
+//   clientWidget->controller()->addChildController(addressWidget->controller(), addressClientId == clientId);
+
   // Setup main window
   StandardWindow mainWindow;
-  mainWindow.setCentralWidget(editorWidget);
-  mainWindow.setMainController(clientWidget->controller());
+  auto *mainWidget = new MainWidget;
+  mainWindow.setCentralWidget(mainWidget);
+  mainWindow.setMainController(mainWidget->mainController());
   mainWindow.setWindowTitle("Client editor");
-  mainWindow.show();
+  mainWindow.showMaximized();
 
 //   /// \todo to debug
 //   TableViewWidget clientWidget2;

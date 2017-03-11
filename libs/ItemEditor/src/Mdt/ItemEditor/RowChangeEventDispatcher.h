@@ -66,7 +66,7 @@ namespace Mdt{ namespace ItemEditor{
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
    *
    * Example of events chain when model was set to controller, or model was repopulated:
-   *  - AbstractController calls RowChangeEventDispatcher::setModel()
+   *  - AbstractController calls RowChangeEventDispatcher::setModel() (case of setting a new model)
    *  - RowChangeEventDispatcher::rowStateUpdated() -> AbstractController::updateRowState()
    *  - AbstractController::currentRowChanged() -> ItemSelectionModel::updateCurrentRow()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()

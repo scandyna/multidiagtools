@@ -37,11 +37,13 @@ class TableViewControllerTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
+  void statePermissionTest();
 //   void basicStateTest();
   void setModelTest();
 //   void primaryKeyTest();
 //   void foreignKeyTest();
   void primaryKeyVisibilityTest();
+  void primaryKeyVisibilityChangeModelTest(); // Bug discovered at 20170311
   void foreignKeyVisibilityTest();
   void currentRowChangeTest();
   void viewCurrentRowChangeBenchmark();

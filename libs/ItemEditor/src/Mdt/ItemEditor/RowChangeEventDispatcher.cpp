@@ -21,6 +21,8 @@
 #include "RowChangeEventDispatcher.h"
 // #include "ControllerStatePermission.h"
 
+#include <QDebug>
+
 namespace Mdt{ namespace ItemEditor{
 
 RowChangeEventDispatcher::RowChangeEventDispatcher(QObject *parent)
@@ -110,6 +112,7 @@ void RowChangeEventDispatcher::onModelReset()
   /*
    * We must allways signal when a model was reset.
    */
+  qDebug() << "RCEvD:emit rowStateUpdated()";
   emit rowStateUpdated(mRowState);
 }
 
@@ -124,6 +127,11 @@ void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int
    * If insertion was called outside of our controller, we must:
    * - Not update current row if insertion occured after current row
    * - Update current row to point to the same data if insertion occured before current row
+   */
+  /** \todo
+   * If PK is enabled, also check that calculated current row matches PK data.
+   * If not (for example because of filter/sorting)
+   * search the row that contains the PK data.
    */
   if(mInsertingFromController){
     mRowState.setCurrentRow(last);

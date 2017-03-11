@@ -31,11 +31,17 @@ class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelContr
 
   explicit ItemModelControllerTester(QObject* parent = nullptr);
 
+  int primaryKeyChangedEventCount() const;
+  void clearPrimaryKeyChangedEventCount();
+
  private:
 
   void setModelToView(QAbstractItemModel *model) override;
   bool submitDataToModel() override;
   void revertDataFromModel() override;
+  void primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey& oldPrimaryKey, const Mdt::ItemModel::PrimaryKey& newPrimaryKey) override;
+
+  int mPrimaryKeyChangedEventCount = 0;
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ITEM_MODEL_CONTROLLER_TESTER_H

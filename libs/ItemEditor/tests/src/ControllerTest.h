@@ -21,13 +21,9 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H
 #define MDT_ITEM_EDITOR_CONTROLLER_TEST_H
 
-#include "ItemViewTestEditTriggers.h"
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
 
-class QAbstractItemView;
-
-class ControllerTest : public QObject
+class ControllerTest : public TestBase
 {
   Q_OBJECT
 
@@ -40,6 +36,8 @@ class ControllerTest : public QObject
   void basicStateTest();
   void setModelTest();
   void setModelSignalTest();
+  void modelSizeChangedTest();
+  void modelSizeChangedSignalsTest();
   void setModelRowCountTest();
   void setModelRowCountSignalTest();
   void addRemoveProxyModelWithoutSourceModelTest();
@@ -49,16 +47,6 @@ class ControllerTest : public QObject
   void filterCheckModelSignalTest();
   void primaryKeyTest();
   void foreignKeyTest();
-
-//   void controllerListTest();
-
- private:
-
-  // Helper function for editing in a QAbstractItemView
-  void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
-  void editText(QAbstractItemView & view, const QModelIndex & editingIndex, const QString & str);
-  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
-  void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H

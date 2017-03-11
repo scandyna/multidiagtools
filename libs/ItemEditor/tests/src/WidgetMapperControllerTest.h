@@ -33,6 +33,7 @@ class WidgetMapperControllerTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
+  void statePermissionTest();
   void setModelTest();
   void currentRowChangedTest();
   void editTest();

@@ -18,31 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
-#define MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
+#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_STATE_PERMISSION_H
+#define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_STATE_PERMISSION_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "AbstractControllerStatePermission.h"
 
-class QAbstractItemView;
+namespace Mdt{ namespace ItemEditor{
 
-class ItemViewPrivateContainerTest : public QObject
-{
-  Q_OBJECT
+  /*! \brief Controller state permission implementation for WidgetMapperController
+   */
+  class WidgetMapperControllerStatePermission : public AbstractControllerStatePermission
+  {
+   public:
 
- private slots:
+    
+  };
 
-  void initTestCase();
-  void cleanupTestCase();
+}} // namespace Mdt{ namespace ItemEditor{
 
-  void setModelThenViewTest();
-  void setViewThenModelTest();
-  void setProxyModelThenModelTest();  // Crash detetced at 20170311
-  void delegateLifeTimeTest();
-  void selectionModelLifeTimeTest();
-  void changeModelTest();
-  void changeViewTest();
-};
-
-
-#endif // MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_STATE_PERMISSION_H

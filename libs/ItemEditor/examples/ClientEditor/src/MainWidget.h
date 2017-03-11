@@ -18,31 +18,32 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
-#define MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
+#ifndef MAIN_WIDGET_H
+#define MAIN_WIDGET_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "Mdt/ItemEditor/AbstractController.h"
 
-class QAbstractItemView;
+#include <QWidget>
 
-class ItemViewPrivateContainerTest : public QObject
+#include <QSplitter>
+#include <QPointer>
+
+class MainWidget : public QSplitter
 {
-  Q_OBJECT
+ Q_OBJECT
 
- private slots:
+ public:
 
-  void initTestCase();
-  void cleanupTestCase();
+  explicit MainWidget(QWidget* parent = nullptr);
 
-  void setModelThenViewTest();
-  void setViewThenModelTest();
-  void setProxyModelThenModelTest();  // Crash detetced at 20170311
-  void delegateLifeTimeTest();
-  void selectionModelLifeTimeTest();
-  void changeModelTest();
-  void changeViewTest();
+  Mdt::ItemEditor::AbstractController *mainController() const
+  {
+    return mMainController;
+  }
+
+ private:
+
+  QPointer<Mdt::ItemEditor::AbstractController> mMainController;
 };
 
-
-#endif // MDT_ITEM_EDITOR_ITEM_VIEW_PRIVATE_CONTAINER_TEST_H
+#endif // #ifndef MAIN_WIDGET_H

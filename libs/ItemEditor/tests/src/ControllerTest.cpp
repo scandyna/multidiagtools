@@ -21,8 +21,6 @@
 #include "ControllerTest.h"
 #include "ItemModelControllerTester.h"
 #include "PrimaryKeyChangedSignalSpy.h"
-#include "ItemViewTestEdit.h"
-#include "Mdt/Application.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
@@ -32,6 +30,7 @@
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
 #include <QSignalSpy>
+#include <QStringList>
 #include <QStringListModel>
 #include <QSortFilterProxyModel>
 #include <QTableView>
@@ -45,13 +44,6 @@
 
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
-
-// namespace ItemModel = Mdt::ItemModel;
-// namespace ItemEditor = Mdt::ItemEditor;
-// using ItemModel::VariantTableModel;
-// using ItemEditor::ControllerState;
-// using ItemEditor::TableViewController;
-// using ItemEditor::WidgetMapperController;
 
 void ControllerTest::initTestCase()
 {
@@ -67,8 +59,6 @@ void ControllerTest::cleanupTestCase()
 
 void ControllerTest::statePermissionTest()
 {
-//   using Mdt::ItemEditor::ControllerState;
-//   using Mdt::ItemEditor::ControllerStatePermission;
   auto permission = ControllerStatePermission::make<AbstractControllerStatePermission>();
 
   // Current row change
@@ -116,49 +106,271 @@ void ControllerTest::setModelTest()
   QVERIFY(controller.model() == nullptr);
   QVERIFY(controller.sourceModel() == nullptr);
   QVERIFY(controller.modelForView() == nullptr);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
   /*
-   * Set a model
+   * Set a empty model
    */
-  QStringListModel model1;
-  controller.setModel(&model1);
-  QCOMPARE(controller.model(), &model1);
-  QCOMPARE(controller.sourceModel(), &model1);
-  QCOMPARE(controller.modelForView(), &model1);
-
-  QFAIL("Not complete");
+  VariantTableModel tableModel;
+  controller.setModel(&tableModel);
+  QVERIFY(controller.model() == &tableModel);
+  QVERIFY(controller.sourceModel() == &tableModel);
+  QVERIFY(controller.modelForView() == &tableModel);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Set a populated model
+   */
+  QStringListModel listModel;
+  listModel.setStringList( QStringList({"A","B","C"}) );
+  controller.setModel(&listModel);
+  QVERIFY(controller.model() == &listModel);
+  QVERIFY(controller.sourceModel() == &listModel);
+  QVERIFY(controller.modelForView() == &listModel);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Set a empty model
+   */
+  QCOMPARE(tableModel.rowCount(), 0);
+  controller.setModel(&tableModel);
+  QVERIFY(controller.model() == &tableModel);
+  QVERIFY(controller.sourceModel() == &tableModel);
+  QVERIFY(controller.modelForView() == &tableModel);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
 }
 
 void ControllerTest::setModelSignalTest()
 {
   ItemModelControllerTester controller;
   QVariantList arguments;
-  QSignalSpy sourceModelSpy(&controller, &ItemModelControllerTester::sourceModelChanged);
-  QSignalSpy ModelForViewSpy(&controller, &ItemModelControllerTester::modelForViewChanged);
-  QVERIFY(sourceModelSpy.isValid());
-  QVERIFY(ModelForViewSpy.isValid());
+  RowState rs;
+  QSignalSpy sourceModelChangedSpy(&controller, &ItemModelControllerTester::sourceModelChanged);
+  QSignalSpy modelForViewChangedSpy(&controller, &ItemModelControllerTester::modelForViewChanged);
+  QSignalSpy rowStateChangedSpy(&controller, &ItemModelControllerTester::rowStateChanged);
+  QSignalSpy currentRowChangedSpy(&controller, &ItemModelControllerTester::currentRowChanged);
+  QVERIFY(sourceModelChangedSpy.isValid());
+  QVERIFY(modelForViewChangedSpy.isValid());
+  QVERIFY(rowStateChangedSpy.isValid());
+  QVERIFY(currentRowChangedSpy.isValid());
   /*
    * Initial state
    */
-  QCOMPARE(sourceModelSpy.count(), 0);
-  QCOMPARE(ModelForViewSpy.count(), 0);
+  QCOMPARE(sourceModelChangedSpy.count(), 0);
+  QCOMPARE(modelForViewChangedSpy.count(), 0);
+  QCOMPARE(rowStateChangedSpy.count(), 0);
+  QCOMPARE(currentRowChangedSpy.count(), 0);
   /*
-   * Set a model
+   * Set a empty model
    */
-  QStringListModel model1;
-  controller.setModel(&model1);
-  // Check source model signal
-  QCOMPARE(sourceModelSpy.count(), 1);
-  arguments = sourceModelSpy.takeFirst();
+  VariantTableModel tableModel;
+  controller.setModel(&tableModel);
+  // Check sourceModelChanged
+  QCOMPARE(sourceModelChangedSpy.count(), 1);
+  arguments = sourceModelChangedSpy.takeFirst();
   QCOMPARE(arguments.size(), 1);
-  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
-  // Check model for view signal
-  QCOMPARE(ModelForViewSpy.count(), 1);
-  arguments = ModelForViewSpy.takeFirst();
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &tableModel);
+  // Check modelForViewChanged
+  QCOMPARE(modelForViewChangedSpy.count(), 1);
+  arguments = modelForViewChangedSpy.takeFirst();
   QCOMPARE(arguments.size(), 1);
-  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
-  
-  
-  QFAIL("Not complete");
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &tableModel);
+  // Check rowStateChanged
+  QCOMPARE(rowStateChangedSpy.count(), 0);
+  // Check currentRowChanged
+  QCOMPARE(currentRowChangedSpy.count(), 0);
+  /*
+   * Set a populated model
+   */
+  QStringListModel listModel;
+  listModel.setStringList( QStringList({"A","B","C"}) );
+  controller.setModel(&listModel);
+  // Check sourceModelChanged
+  QCOMPARE(sourceModelChangedSpy.count(), 1);
+  arguments = sourceModelChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &listModel);
+  // Check modelForViewChanged
+  QCOMPARE(modelForViewChangedSpy.count(), 1);
+  arguments = modelForViewChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &listModel);
+  // Check rowStateChanged
+  QCOMPARE(rowStateChangedSpy.count(), 1);
+  arguments = rowStateChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  rs = arguments.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 3);
+  QCOMPARE(rs.currentRow(), 0);
+  // Check currentRowChanged
+  QCOMPARE(currentRowChangedSpy.count(), 1);
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).toInt(), 0);
+  /*
+   * Set same model again
+   */
+  controller.setModel(&listModel);
+  QCOMPARE(sourceModelChangedSpy.count(), 0);
+  QCOMPARE(modelForViewChangedSpy.count(), 0);
+  QCOMPARE(rowStateChangedSpy.count(), 0);
+  QCOMPARE(currentRowChangedSpy.count(), 0);
+  /*
+   * Set a empty model
+   */
+  QCOMPARE(tableModel.rowCount(), 0);
+  controller.setModel(&tableModel);
+  // Check sourceModelChanged
+  QCOMPARE(sourceModelChangedSpy.count(), 1);
+  arguments = sourceModelChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &tableModel);
+  // Check modelForViewChanged
+  QCOMPARE(modelForViewChangedSpy.count(), 1);
+  arguments = modelForViewChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &tableModel);
+  // Check rowStateChanged
+  QCOMPARE(rowStateChangedSpy.count(), 1);
+  arguments = rowStateChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  rs = arguments.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
+  // Check currentRowChanged
+  QCOMPARE(currentRowChangedSpy.count(), 1);
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).toInt(), -1);
+}
+
+void ControllerTest::modelSizeChangedTest()
+{
+  ItemModelControllerTester controller;
+  /*
+   * Set a empty model
+   */
+  VariantTableModel tableModel;
+  controller.setModel(&tableModel);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Resize the model
+   * (reset signal from model)
+   */
+  tableModel.resize(3, 2);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Insert rows
+   */
+  // At beginning
+  tableModel.prependRow();
+  QCOMPARE(controller.rowCount(), 4);
+  QCOMPARE(controller.currentRow(), 1);
+  // At end
+  tableModel.appendRow();
+  QCOMPARE(controller.rowCount(), 5);
+  QCOMPARE(controller.currentRow(), 1);
+  /*
+   * Remove rows
+   */
+  // At beginning
+  tableModel.removeFirstRow();
+  QCOMPARE(controller.rowCount(), 4);
+  QCOMPARE(controller.currentRow(), 0);
+  // At end
+  tableModel.removeLastRow();
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+}
+
+void ControllerTest::modelSizeChangedSignalsTest()
+{
+  ItemModelControllerTester controller;
+  QVariantList arguments;
+  RowState rs;
+  QSignalSpy rowStateChangedSpy(&controller, &ItemModelControllerTester::rowStateChanged);
+  QSignalSpy currentRowChangedSpy(&controller, &ItemModelControllerTester::currentRowChanged);
+  QVERIFY(rowStateChangedSpy.isValid());
+  QVERIFY(currentRowChangedSpy.isValid());
+
+  /*
+   * Set a empty model
+   */
+  VariantTableModel tableModel;
+  controller.setModel(&tableModel);
+  QCOMPARE(rowStateChangedSpy.count(), 0);
+  QCOMPARE(currentRowChangedSpy.count(), 0);
+  /*
+   * Resize the model
+   * (reset signal from model)
+   */
+  tableModel.resize(3, 2);
+  // Check rowStateChanged
+  QCOMPARE(rowStateChangedSpy.count(), 1);
+  arguments = rowStateChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  rs = arguments.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 3);
+  QCOMPARE(rs.currentRow(), 0);
+  // Check currentRowChanged
+  QCOMPARE(currentRowChangedSpy.count(), 1);
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).toInt(), 0);
+  /*
+   * Insert rows
+   */
+  // At beginning
+  tableModel.prependRow();
+  // Check rowStateChanged
+  QCOMPARE(rowStateChangedSpy.count(), 1);
+  arguments = rowStateChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  rs = arguments.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 4);
+  QCOMPARE(rs.currentRow(), 1);
+  // Check currentRowChanged
+  QCOMPARE(currentRowChangedSpy.count(), 1);
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).toInt(), 1);
+  // At end
+  tableModel.appendRow();
+  // Check rowStateChanged
+  QCOMPARE(rowStateChangedSpy.count(), 1);
+  arguments = rowStateChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  rs = arguments.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 1);
+  // Check currentRowChanged
+  QCOMPARE(currentRowChangedSpy.count(), 0);
+  /*
+   * Remove rows
+   */
+  // At beginning
+  tableModel.removeFirstRow();
+  // Check rowStateChanged
+  QCOMPARE(rowStateChangedSpy.count(), 1);
+  arguments = rowStateChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  rs = arguments.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 4);
+  QCOMPARE(rs.currentRow(), 0);
+  // Check currentRowChanged
+  QCOMPARE(currentRowChangedSpy.count(), 1);
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).toInt(), 0);
+  // At end
+  tableModel.removeLastRow();
+  // Check rowStateChanged
+  QCOMPARE(rowStateChangedSpy.count(), 1);
+  arguments = rowStateChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  rs = arguments.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 3);
+  QCOMPARE(rs.currentRow(), 1);
+  // Check currentRowChanged
+  QCOMPARE(currentRowChangedSpy.count(), 0);
 }
 
 void ControllerTest::setModelRowCountTest()
@@ -389,12 +601,12 @@ void ControllerTest::primaryKeyTest()
 {
   PrimaryKey pk;
   ItemModelControllerTester controller;
-//   PrimaryKeyChangedSignalSpy pkChangedSpy(&controller);
   /*
    * Initial state
    */
   QVERIFY(!controller.isPrimaryKeyEnabled());
   QVERIFY(controller.getPrimaryKey().isNull());
+  QCOMPARE(controller.primaryKeyChangedEventCount(), 0);
   /*
    * Set primary key
    * (Must also enable primary key support)
@@ -403,9 +615,8 @@ void ControllerTest::primaryKeyTest()
   QVERIFY(controller.isPrimaryKeyEnabled());
   QCOMPARE(controller.getPrimaryKey().columnCount(), 1);
   QCOMPARE(controller.getPrimaryKey().greatestColumn(), 1);
-//   QCOMPARE(pkChangedSpy.count(), 1);
-//   pk = pkChangedSpy.takeFirst();
-//   QCOMPARE(pk.greatestColumn(), 1);
+  QCOMPARE(controller.primaryKeyChangedEventCount(), 1);
+  controller.clearPrimaryKeyChangedEventCount();
   /*
    * Check some flags
    */
@@ -414,14 +625,21 @@ void ControllerTest::primaryKeyTest()
   controller.setPrimaryKeyItemsEnabled(false);
   QVERIFY(!controller.getPrimaryKeyProxyModel()->isPrimaryKeyItemsEnabled());
   /*
+   * Set model
+   */
+  VariantTableModel model;
+  model.resize(1, 3);
+  controller.setModel(&model);
+  QCOMPARE(controller.primaryKeyChangedEventCount(), 1);
+  controller.clearPrimaryKeyChangedEventCount();
+  /*
    * Disable primary key support
    */
   QVERIFY(!controller.getPrimaryKey().isNull());
   controller.setPrimaryKeyEnabled(false);
   QVERIFY(controller.getPrimaryKey().isNull());
-  
-  
-  QFAIL("Not complete");
+  QCOMPARE(controller.primaryKeyChangedEventCount(), 1);
+  controller.clearPrimaryKeyChangedEventCount();
 }
 
 void ControllerTest::foreignKeyTest()
@@ -483,31 +701,6 @@ void ControllerTest::foreignKeyTest()
 //   list.clear();
 //   QVERIFY(list.isEmpty());
 // }
-
-/*
- * Helper functions
- */
-
-void ControllerTest::beginEditing(QAbstractItemView& view, const QModelIndex& index, BeginEditTrigger trigger)
-{
-  ItemViewTestEdit::beginEditing(view, index, trigger);
-}
-
-void ControllerTest::editText(QAbstractItemView& view, const QModelIndex& editingIndex, const QString& str)
-{
-  ItemViewTestEdit::editText(view, editingIndex, str);
-}
-
-void ControllerTest::endEditing(QAbstractItemView& view, const QModelIndex& editingIndex, EndEditTrigger trigger)
-{
-  ItemViewTestEdit::endEditing(view, editingIndex, trigger);
-}
-
-void ControllerTest::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str,
-                            BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
-{
-  ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
-}
 
 /*
  * Main

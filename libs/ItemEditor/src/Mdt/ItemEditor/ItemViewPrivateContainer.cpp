@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -39,6 +39,9 @@ void ItemViewPrivateContainer::setModel(QAbstractItemModel*const model)
 {
   Q_ASSERT(model != nullptr);
 
+  if(model == mSelectionModel->model()){
+    return;
+  }
   mSelectionModel->setModel(model);
   setModelToView();
   /*

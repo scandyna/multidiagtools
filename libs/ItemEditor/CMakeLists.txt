@@ -20,11 +20,13 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/AbstractController.cpp
     src/Mdt/ItemEditor/AbstractItemModelController.cpp
     src/Mdt/ItemEditor/ItemViewPrivateContainer.cpp
+    src/Mdt/ItemEditor/TableViewControllerStatePermission.cpp
     src/Mdt/ItemEditor/TableViewController.cpp
     src/Mdt/ItemEditor/MappedWidgetList.cpp
     src/Mdt/ItemEditor/WidgetEditablePropertyMap.cpp
     src/Mdt/ItemEditor/WidgetStyleSheet.cpp
     src/Mdt/ItemEditor/DataWidgetMapper.cpp
+    src/Mdt/ItemEditor/WidgetMapperControllerStatePermission.cpp
     src/Mdt/ItemEditor/WidgetMapperController.cpp
     src/Mdt/ItemEditor/AbstractControllerRelation.cpp
     src/Mdt/ItemEditor/ControllerRelationImplBase.cpp

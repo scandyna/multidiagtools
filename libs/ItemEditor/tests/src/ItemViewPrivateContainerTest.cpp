@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,16 +22,14 @@
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/ItemViewPrivateContainer.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
+#include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemEditor/EventCatchItemDelegate.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
 #include <QTableView>
 #include <QPointer>
 
-namespace ItemEditor = Mdt::ItemEditor;
-using Mdt::ItemModel::VariantTableModel;
-using ItemEditor::EventCatchItemDelegate;
-using ItemEditor::ItemSelectionModel;
-using ItemEditor::ItemViewPrivateContainer;
+using namespace Mdt::ItemModel;
+using namespace Mdt::ItemEditor;
 
 void ItemViewPrivateContainerTest::initTestCase()
 {
@@ -45,7 +43,7 @@ void ItemViewPrivateContainerTest::cleanupTestCase()
  * Tests
  */
 
-void ItemViewPrivateContainerTest::setModelViewTest()
+void ItemViewPrivateContainerTest::setModelThenViewTest()
 {
   VariantTableModel model;
   QTableView view;
@@ -81,7 +79,7 @@ void ItemViewPrivateContainerTest::setModelViewTest()
   QVERIFY(container.itemDelegate() == delegate);
 }
 
-void ItemViewPrivateContainerTest::setViewModelTest()
+void ItemViewPrivateContainerTest::setViewThenModelTest()
 {
   VariantTableModel model;
   QTableView view;
@@ -116,6 +114,36 @@ void ItemViewPrivateContainerTest::setViewModelTest()
   // Check item delegate
   QVERIFY(view.itemDelegate() == container.proxyItemDelegate());
   QVERIFY(container.itemDelegate() == delegate);
+}
+
+void ItemViewPrivateContainerTest::setProxyModelThenModelTest()
+{
+  VariantTableModel model;
+  PrimaryKeyProxyModel proxyModel;
+  QTableView view;
+  ItemViewPrivateContainer container;
+  auto *delegate = view.itemDelegate();
+
+  /*
+   * Set proxy model
+   */
+  container.setModel(&proxyModel);
+  QVERIFY(container.model() == &proxyModel);
+  QVERIFY(container.selectionModel()->model() == &proxyModel);
+  /*
+   * Set view
+   */
+  container.setView(&view);
+  QVERIFY(container.view() == &view);
+  /*
+   * Set source model to proxy model
+   * (TableViewController is in charge of setting the model again, here we do it explicitly)
+   * This produced the crash detetcetd at 20170311
+   */
+  proxyModel.setSourceModel(&model);
+  container.setModel(&proxyModel);
+  QVERIFY(container.model() == &proxyModel);
+  QVERIFY(container.selectionModel()->model() == &proxyModel);
 }
 
 void ItemViewPrivateContainerTest::delegateLifeTimeTest()

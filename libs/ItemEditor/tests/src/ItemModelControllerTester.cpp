@@ -38,3 +38,18 @@ bool ItemModelControllerTester::submitDataToModel()
 void ItemModelControllerTester::revertDataFromModel()
 {
 }
+
+int ItemModelControllerTester::primaryKeyChangedEventCount() const
+{
+  return mPrimaryKeyChangedEventCount;
+}
+
+void ItemModelControllerTester::clearPrimaryKeyChangedEventCount()
+{
+  mPrimaryKeyChangedEventCount = 0;
+}
+
+void ItemModelControllerTester::primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey& /*oldPrimaryKey*/, const Mdt::ItemModel::PrimaryKey& /*newPrimaryKey*/)
+{
+  ++mPrimaryKeyChangedEventCount;
+}
