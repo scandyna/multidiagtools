@@ -31,6 +31,13 @@ class FilterControllerRelationTest : public TestBase
 
   void initTestCase();
   void cleanupTestCase();
+
+  void setControllersTest();
+  void filterConditionTest();
+  void parentControllerCurrentRowTest();
+  void filterTest();
+  void filterTableViewTest();
+
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_FILTER_CONTROLLER_RELATION_TEST_H

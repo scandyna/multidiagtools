@@ -22,6 +22,18 @@
 #define MDT_ITEM_EDITOR_FILTER_CONTROLLER_RELATION_H
 
 #include "AbstractControllerRelation.h"
+#include "Mdt/ItemModel/RelationFilterExpression.h"
+#include <QPointer>
+#include <memory>
+
+class QAbstractItemModel;
+
+namespace Mdt{ namespace ItemModel{
+
+  class RelationFilterProxyModel;
+  class RelationKey;
+
+}} // namespace Mdt{ namespace ItemModel{
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -37,14 +49,52 @@ namespace Mdt{ namespace ItemEditor{
    public:
 
     /*! \brief Constructor
-     *
-     * \pre \a parentController must be a valid pointer
      */
-    explicit FilterControllerRelation(AbstractController* parentController, QObject* parent = nullptr);
+    explicit FilterControllerRelation(QObject* parent = nullptr);
+
+    /*! \brief Destructor
+     */
+    ~FilterControllerRelation();
+
+    /*! \brief Set relation filter
+     *
+     * \pre \a conditions must be a valid relation filter expression
+     */
+    void setRelationFilter(const Mdt::ItemModel::RelationFilterExpression & conditions);
+
+    /*! \brief Set relation filter from parent controller's primary key and child controller's foreign key
+     *
+     * \pre child controller must allready been set
+     * \pre parent controller must have a non null primary key set
+     * \pre child controller must have a non null foreign key set
+     * \pre Both primary of parent controller and foreign key of child controller must have the same count of columns, and max 4
+     */
+    void setRelationFilterFromPkFk();
+
+    /*! \internal Access relation filter proxy model
+     *
+     * \note When this relation is deleted, the returned pointer becomes dangling.
+     *       This method is used for unit tests.
+     */
+    Mdt::ItemModel::RelationFilterProxyModel *relationFilterModel() const
+    {
+      return mProxyModel.get();
+    }
 
    private:
 
-    
+    /*! \brief Set relation filter from relation key
+     */
+    void setFilterFromRelationKey(const Mdt::ItemModel::RelationKey & key);
+
+    void parentControllerChangedEvent(AbstractController* controller) override;
+    void childControllerAboutToChangeEvent(AbstractController* oldController) override;
+    void childControllerChangedEvent(AbstractController* controller) override;
+    void parentControllerModelChangedEvent(QAbstractItemModel* model) override;
+//     void childControllerModelChangedEvent(QAbstractItemModel* model) override;
+
+    std::unique_ptr<Mdt::ItemModel::RelationFilterProxyModel> mProxyModel;
+    QMetaObject::Connection mParentControllerCurrentRowChangedConnection;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

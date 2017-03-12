@@ -19,14 +19,94 @@
  **
  ****************************************************************************/
 #include "FilterControllerRelation.h"
+#include "AbstractController.h"
+#include "Mdt/ItemModel/RelationFilterProxyModel.h"
+#include "Mdt/ItemModel/RelationKey.h"
+
+#include <QDebug>
+
+using namespace Mdt::ItemModel;
 
 namespace Mdt{ namespace ItemEditor{
 
-FilterControllerRelation::FilterControllerRelation(AbstractController* parentController, QObject* parent)
- : AbstractControllerRelation(parentController, parent)
+FilterControllerRelation::FilterControllerRelation(QObject* parent)
+ : AbstractControllerRelation(parent),
+   mProxyModel(new RelationFilterProxyModel)
 {
-
 }
 
+FilterControllerRelation::~FilterControllerRelation()
+{
+  if(childController() != nullptr){
+    childController()->removeProxyModel(mProxyModel.get());
+  }
+}
+
+void FilterControllerRelation::setRelationFilter(const ItemModel::RelationFilterExpression& conditions)
+{
+  Q_ASSERT(!conditions.isNull());
+
+  mProxyModel->setFilter(conditions);
+}
+
+void FilterControllerRelation::setRelationFilterFromPkFk()
+{
+  Q_ASSERT(childController() != nullptr);
+  Q_ASSERT(!parentController()->getPrimaryKey().isNull());
+  Q_ASSERT(!childController()->getForeignKey().isNull());
+  Q_ASSERT(parentController()->getPrimaryKey().columnCount() == childController()->getForeignKey().columnCount());
+
+  Mdt::ItemModel::RelationKey key;
+  key.setKey( parentController()->getPrimaryKey(), childController()->getForeignKey() );
+  setFilterFromRelationKey(key);
+}
+
+void FilterControllerRelation::setFilterFromRelationKey(const ItemModel::RelationKey& key)
+{
+  Q_ASSERT(!key.isNull());
+
+  mProxyModel->setFilter(key);
+}
+
+void FilterControllerRelation::parentControllerChangedEvent(AbstractController* controller)
+{
+  Q_ASSERT(controller != nullptr);
+
+  disconnect(mParentControllerCurrentRowChangedConnection);
+  mParentControllerCurrentRowChangedConnection = 
+    connect(controller, &AbstractController::currentRowChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
+  mProxyModel->setParentModelMatchRow( controller->currentRow() );
+}
+
+void FilterControllerRelation::childControllerAboutToChangeEvent(AbstractController* oldController)
+{
+  Q_ASSERT(oldController != nullptr);
+
+  oldController->removeProxyModel(mProxyModel.get());
+}
+
+void FilterControllerRelation::childControllerChangedEvent(AbstractController* controller)
+{
+  Q_ASSERT(controller != nullptr);
+
+  controller->prependProxyModel(mProxyModel.get());
+  mProxyModel->setSourceModel(controller->sourceModel());
+}
+
+void FilterControllerRelation::parentControllerModelChangedEvent(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  qDebug() << "FCR: new parent model: " << model;
+  mProxyModel->setParentModel(model);
+}
+
+// void FilterControllerRelation::childControllerModelChangedEvent(QAbstractItemModel* model)
+// {
+//   Q_ASSERT(model != nullptr);
+// 
+//   qDebug() << "FCR: new child model: " << model;
+//   mProxyModel->setSourceModel(model);
+// }
 
 }} // namespace Mdt{ namespace ItemEditor{

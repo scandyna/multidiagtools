@@ -23,13 +23,115 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-AbstractControllerRelation::AbstractControllerRelation(AbstractController *parentController, QObject* parent)
+AbstractControllerRelation::AbstractControllerRelation(QObject* parent)
  : QObject(parent)
 {
-  Q_ASSERT(parentController != nullptr);
+}
+
+AbstractControllerRelation::AbstractControllerRelation(AbstractController *parentController, QObject* parent)
+ : QObject(parent),
+   mParentController(parentController)
+{
+  Q_ASSERT(!mParentController.isNull());
+
+//   Q_ASSERT(parentController != nullptr);
 
   connect(parentController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::setParentControllerState);
 }
+
+void AbstractControllerRelation::setParentController(AbstractController* controller)
+{
+  if(controller == mParentController){
+    return;
+  }
+
+  if(!mParentController.isNull()){
+    parentControllerAboutToChangeEvent(mParentController);
+  }
+
+  mParentController = controller;
+  Q_ASSERT(!mParentController.isNull());
+
+  if(mParentController->modelForView() != nullptr){
+    parentControllerModelChangedEvent(mParentController->modelForView());
+  }
+  disconnect(mParentControllerModelChangedConnection);
+  mParentControllerModelChangedConnection = 
+    connect( mParentController, &AbstractController::modelForViewChanged, this, &AbstractControllerRelation::parentControllerModelChangedEvent );
+
+  parentControllerChangedEvent(mParentController);
+}
+
+void AbstractControllerRelation::setChildController(AbstractController* controller)
+{
+  if(controller == mChildController){
+    return;
+  }
+
+  if(!mChildController.isNull()){
+    childControllerAboutToChangeEvent(mChildController);
+  }
+
+  mChildController = controller;
+  Q_ASSERT(!mChildController.isNull());
+
+  if(mChildController->modelForView() != nullptr){
+    childControllerModelChangedEvent(mChildController->modelForView());
+  }
+  disconnect(mChildControllerModelChangedConnection);
+  mChildControllerModelChangedConnection = 
+    connect( mChildController, &AbstractController::modelForViewChanged, this, &AbstractControllerRelation::childControllerModelChangedEvent );
+  
+  childControllerChangedEvent(mChildController);
+}
+
+AbstractController* AbstractControllerRelation::parentController() const
+{
+  return mParentController;
+}
+
+AbstractController* AbstractControllerRelation::childController() const
+{
+  return mChildController;
+}
+
+QAbstractItemModel* AbstractControllerRelation::parentControllerModel() const
+{
+  return mParentController->modelForView();
+}
+
+QAbstractItemModel* AbstractControllerRelation::childControllerModel() const
+{
+  if(mChildController.isNull()){
+    return nullptr;
+  }
+  return mChildController->modelForView();
+}
+
+void AbstractControllerRelation::parentControllerAboutToChangeEvent(AbstractController*)
+{
+}
+
+void AbstractControllerRelation::parentControllerChangedEvent(AbstractController*)
+{
+}
+
+void AbstractControllerRelation::childControllerAboutToChangeEvent(AbstractController*)
+{
+}
+
+void AbstractControllerRelation::childControllerChangedEvent(AbstractController*)
+{
+}
+
+void AbstractControllerRelation::parentControllerModelChangedEvent(QAbstractItemModel*)
+{
+}
+
+void AbstractControllerRelation::childControllerModelChangedEvent(QAbstractItemModel*)
+{
+}
+
 
 void AbstractControllerRelation::registerAbstractChildController(AbstractController* controller)
 {

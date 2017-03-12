@@ -22,6 +22,9 @@
 #define MDT_ITEM_EDITOR_ABSTRACT_CONTROLLER_RELATION_TEST_CLASS_H
 
 #include "Mdt/ItemEditor/AbstractControllerRelation.h"
+#include <QPointer>
+
+class QAbstractItemModel;
 
 class AbstractControllerRelationTestClass : public Mdt::ItemEditor::AbstractControllerRelation
 {
@@ -29,11 +32,29 @@ class AbstractControllerRelationTestClass : public Mdt::ItemEditor::AbstractCont
 
  public:
 
-  explicit AbstractControllerRelationTestClass(Mdt::ItemEditor::AbstractController* parentController, QObject* parent = nullptr);
+  explicit AbstractControllerRelationTestClass(QObject* parent = nullptr);
+  Mdt::ItemEditor::AbstractController *storedOldParentController() const;
+  Mdt::ItemEditor::AbstractController *storedOldChildController() const;
+  Mdt::ItemEditor::AbstractController *storedParentController() const;
+  Mdt::ItemEditor::AbstractController *storedChildController() const;
+  QAbstractItemModel *parentControllerStoredModel() const;
+  QAbstractItemModel *childControllerStoredModel() const;
 
  private:
 
-  
+  void parentControllerAboutToChangeEvent(Mdt::ItemEditor::AbstractController* oldController) override;
+  void parentControllerChangedEvent(Mdt::ItemEditor::AbstractController* controller) override;
+  void childControllerAboutToChangeEvent(Mdt::ItemEditor::AbstractController* oldController) override;
+  void childControllerChangedEvent(Mdt::ItemEditor::AbstractController* controller) override;
+  void parentControllerModelChangedEvent(QAbstractItemModel* model) override;
+  void childControllerModelChangedEvent(QAbstractItemModel* model) override;
+
+  QPointer<Mdt::ItemEditor::AbstractController> mOldParentController;
+  QPointer<Mdt::ItemEditor::AbstractController> mOldChildController;
+  QPointer<Mdt::ItemEditor::AbstractController> mParentController;
+  QPointer<Mdt::ItemEditor::AbstractController> mChildController;
+  QPointer<QAbstractItemModel> mParentModel;
+  QPointer<QAbstractItemModel> mChildModel;
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_CONTROLLER_RELATION_TEST_CLASS_H

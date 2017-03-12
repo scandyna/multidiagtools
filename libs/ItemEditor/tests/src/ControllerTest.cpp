@@ -59,7 +59,8 @@ void ControllerTest::cleanupTestCase()
 
 void ControllerTest::statePermissionTest()
 {
-  auto permission = ControllerStatePermission::make<AbstractControllerStatePermission>();
+  ItemModelControllerTester controller;
+  auto permission = controller.controllerStatePermission();
 
   // Current row change
   QVERIFY(permission.canChangeCurrentRow(ControllerState::Visualizing));
@@ -673,6 +674,16 @@ void ControllerTest::foreignKeyTest()
   controller.setForeignKeyEnabled(false);
   QVERIFY(controller.getForeignKey().isNull());
 
+  QFAIL("Not complete");
+}
+
+void ControllerTest::currentRowTest()
+{
+  QFAIL("Not complete");
+}
+
+void ControllerTest::currentRowSignalsTest()
+{
   QFAIL("Not complete");
 }
 

@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "NavigationControllerRelationTest.h"
+#include "ItemModelControllerTester.h"
 #include "Mdt/ItemEditor/NavigationControllerRelation.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 

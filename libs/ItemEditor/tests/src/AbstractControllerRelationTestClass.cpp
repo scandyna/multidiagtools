@@ -19,10 +19,78 @@
  **
  ****************************************************************************/
 #include "AbstractControllerRelationTestClass.h"
+#include "Mdt/ItemEditor/AbstractController.h"
+#include <QAbstractItemModel>
 
 using namespace Mdt::ItemEditor;
 
-AbstractControllerRelationTestClass::AbstractControllerRelationTestClass(AbstractController* parentController, QObject* parent)
- : AbstractControllerRelation(parentController, parent)
+AbstractControllerRelationTestClass::AbstractControllerRelationTestClass(QObject* parent)
+ : AbstractControllerRelation(parent)
 {
+}
+
+AbstractController* AbstractControllerRelationTestClass::storedOldParentController() const
+{
+  return mOldParentController;
+}
+
+AbstractController* AbstractControllerRelationTestClass::storedOldChildController() const
+{
+  return mOldChildController;
+}
+
+AbstractController* AbstractControllerRelationTestClass::storedParentController() const
+{
+  return mParentController;
+}
+
+AbstractController* AbstractControllerRelationTestClass::storedChildController() const
+{
+  return mChildController;
+}
+
+QAbstractItemModel* AbstractControllerRelationTestClass::parentControllerStoredModel() const
+{
+  return mParentModel;
+}
+
+QAbstractItemModel* AbstractControllerRelationTestClass::childControllerStoredModel() const
+{
+  return mChildModel;
+}
+
+void AbstractControllerRelationTestClass::parentControllerAboutToChangeEvent(AbstractController* oldController)
+{
+  mOldParentController = oldController;
+  Q_ASSERT(!mOldParentController.isNull());
+}
+
+void AbstractControllerRelationTestClass::parentControllerChangedEvent(AbstractController* controller)
+{
+  mParentController = controller;
+  Q_ASSERT(!mParentController.isNull());
+}
+
+void AbstractControllerRelationTestClass::childControllerAboutToChangeEvent(AbstractController* oldController)
+{
+  mOldChildController = oldController;
+  Q_ASSERT(!mOldChildController.isNull());
+}
+
+void AbstractControllerRelationTestClass::childControllerChangedEvent(AbstractController* controller)
+{
+  mChildController = controller;
+  Q_ASSERT(!mChildController.isNull());
+}
+
+void AbstractControllerRelationTestClass::parentControllerModelChangedEvent(QAbstractItemModel* model)
+{
+  mParentModel = model;
+  Q_ASSERT(!mParentModel.isNull());
+}
+
+void AbstractControllerRelationTestClass::childControllerModelChangedEvent(QAbstractItemModel* model)
+{
+  mChildModel = model;
+  Q_ASSERT(!mChildModel.isNull());
 }

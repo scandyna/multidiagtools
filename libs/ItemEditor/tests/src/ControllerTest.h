@@ -47,6 +47,8 @@ class ControllerTest : public TestBase
   void filterCheckModelSignalTest();
   void primaryKeyTest();
   void foreignKeyTest();
+  void currentRowTest();
+  void currentRowSignalsTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H

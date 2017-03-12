@@ -19,10 +19,15 @@
  **
  ****************************************************************************/
 #include "ItemModelControllerTester.h"
+#include "Mdt/ItemEditor/ControllerStatePermission.h"
+#include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
+
+using namespace Mdt::ItemEditor;
 
 ItemModelControllerTester::ItemModelControllerTester(QObject* parent)
  : AbstractItemModelController(parent)
 {
+  setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
 }
 
 void ItemModelControllerTester::setModelToView(QAbstractItemModel* /*model*/)

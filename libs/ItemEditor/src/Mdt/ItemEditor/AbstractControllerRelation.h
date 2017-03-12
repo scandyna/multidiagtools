@@ -23,6 +23,9 @@
 
 #include "ControllerState.h"
 #include <QObject>
+#include <QPointer>
+
+class QAbstractItemModel;
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -37,9 +40,14 @@ namespace Mdt{ namespace ItemEditor{
    public:
 
     /*! \brief Constructor
+     */
+    explicit AbstractControllerRelation(QObject *parent = nullptr);
+
+    /*! \brief Constructor
      *
      * \pre \a parentController must be a valid pointer
      */
+    [[deprecated]]
     explicit AbstractControllerRelation(AbstractController *parentController, QObject *parent = nullptr);
 
     // Copy disabled
@@ -49,15 +57,73 @@ namespace Mdt{ namespace ItemEditor{
     AbstractControllerRelation(AbstractControllerRelation &&) = delete;
     AbstractControllerRelation & operator=(AbstractControllerRelation &&) = delete;
 
-   protected:
+    /*! \brief Set parent controller
+     *
+     * \pre \a controller must be a valid pointer
+     */
+    void setParentController(AbstractController *controller);
+
+    /*! \brief Set child controller
+     *
+     * \pre \a controller must be a valid pointer
+     */
+    void setChildController(AbstractController *controller);
 
     /*! \brief Get parent controller
      */
-    virtual AbstractController *abstractParentController() const = 0;
+    AbstractController *parentController() const;
+
+    /*! \brief Get child controller
+     *
+     * Returns a nullptr until child controller was set.
+     */
+    AbstractController *childController() const;
+
+    /*! \brief Get parent controller's model
+     *
+     * Can return a nullptr if parent controller has no model set.
+     */
+    QAbstractItemModel *parentControllerModel() const;
+
+    /*! \brief Get child controller's model
+     * Can return a nullptr if child controller was not set,
+     *  or it has no model set.
+     */
+    QAbstractItemModel *childControllerModel() const;
+
+   protected:
+
+    /*! \brief Called each time parent controller is about to leave this relation
+     */
+    virtual void parentControllerAboutToChangeEvent(AbstractController *oldController);
+
+    /*! \brief Called each time parent controller changed
+     */
+    virtual void parentControllerChangedEvent(AbstractController *controller);
+
+    /*! \brief Called each time child controller is about to leave this relation
+     */
+    virtual void childControllerAboutToChangeEvent(AbstractController *oldController);
+
+    /*! \brief Called each time child controller changed
+     */
+    virtual void childControllerChangedEvent(AbstractController *controller);
+
+    /*! \brief Called each time parent controller's model changes to a non null model
+     */
+    virtual void parentControllerModelChangedEvent(QAbstractItemModel *model);
+
+    /*! \brief Called each time child controller's model changes to a non null model
+     */
+    virtual void childControllerModelChangedEvent(QAbstractItemModel *model);
+
+    /*! \brief Get parent controller
+     */
+    virtual AbstractController *abstractParentController() const {};
 
     /*! \brief Get child controller
      */
-    virtual AbstractController *abstractChildController() const = 0;
+    virtual AbstractController *abstractChildController() const {};
 
     /*! \brief Register child controller
      */
@@ -83,6 +149,10 @@ namespace Mdt{ namespace ItemEditor{
 
  private:
 
+    QPointer<AbstractController> mParentController;
+    QPointer<AbstractController> mChildController;
+    QMetaObject::Connection mParentControllerModelChangedConnection;
+    QMetaObject::Connection mChildControllerModelChangedConnection;
     QMetaObject::Connection mChildControllerStateChagedConnection;
   };
 

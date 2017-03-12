@@ -282,6 +282,7 @@ bool AbstractController::setCurrentRow(int row)
   }
 //   if(!ControllerStatePermission::canChangeCurrentRow(mControllerState)){
   if(!canChangeCurrentRow()){
+    qDebug() << "AC: cannot change current row in state " << (int)controllerState();
     return false;
   }
   /**
