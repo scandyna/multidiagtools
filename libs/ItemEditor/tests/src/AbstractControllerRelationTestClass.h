@@ -18,20 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ClientListWidget.h"
-#include <QComboBox>
+#ifndef MDT_ITEM_EDITOR_ABSTRACT_CONTROLLER_RELATION_TEST_CLASS_H
+#define MDT_ITEM_EDITOR_ABSTRACT_CONTROLLER_RELATION_TEST_CLASS_H
 
-ClientListWidget::ClientListWidget(QWidget* parent)
- : TableViewWidget(parent)
+#include "Mdt/ItemEditor/AbstractControllerRelation.h"
+
+class AbstractControllerRelationTestClass : public Mdt::ItemEditor::AbstractControllerRelation
 {
-  setObjectName("ClientListWidget");
-  addResizeToContentsActionToTopBar();
-  auto ctrl = controller();
-  ctrl->setPrimaryKey({0});
-  ctrl->setPrimaryKeyHidden(true);
+ Q_OBJECT
 
-  auto *cb = new QComboBox;
-  cb->addItem("Filter");
-  cb->addItem("Navigate");
-  addWidgetToTopArea(cb);
-}
+ public:
+
+  explicit AbstractControllerRelationTestClass(Mdt::ItemEditor::AbstractController* parentController, QObject* parent = nullptr);
+
+ private:
+
+  
+};
+
+#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_CONTROLLER_RELATION_TEST_CLASS_H

@@ -267,6 +267,12 @@ void AbstractController::addChildController(AbstractController* controller)
   mRelationList.addChildController(controller);
 }
 
+void AbstractController::setNavigationController(AbstractController* controller)
+{
+  Q_ASSERT(controller != nullptr);
+
+}
+
 bool AbstractController::setCurrentRow(int row)
 {
   Q_ASSERT(row >= -1);

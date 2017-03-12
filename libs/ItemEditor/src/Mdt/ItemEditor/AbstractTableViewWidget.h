@@ -67,6 +67,15 @@ namespace Mdt{ namespace ItemEditor{
      */
     QToolBar *addToolBarToBottomArea();
 
+    /*! \brief Add a widget to the top area
+     *
+     * This AbstractTableViewWidget takes the ownersgip of \a widget
+     *  (it will delete it when this is deleted)
+     *
+     * \pre \a widget must be a valid pointer
+     */
+    void addWidgetToTopArea(QWidget *widget);
+
     /*! \brief Add insert action to top area
      */
     void addInsertActionToTopArea();

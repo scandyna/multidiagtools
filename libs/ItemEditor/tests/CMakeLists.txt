@@ -9,6 +9,7 @@ enable_testing()
 set(SOURCES_FILES
   src/TestBase.cpp
   src/ItemModelControllerTester.cpp
+  src/AbstractControllerRelationTestClass.cpp
   src/PrimaryKeyChangedSignalSpy.cpp
   src/ItemViewTestEdit.cpp
   src/TestTableEditionWidget.cpp
@@ -50,6 +51,8 @@ addItemEditorTest("ItemViewPrivateContainerTest")
 addItemEditorTest("TableViewControllerTest")
 addItemEditorTest("WidgetMapperControllerTest")
 addItemEditorTest("ControllerRelationTest")
+addItemEditorTest("FilterControllerRelationTest")
+addItemEditorTest("NavigationControllerRelationTest")
 addItemEditorTest("WindowTest")
 
 addItemEditorTest("StandardWidgetsTest")

@@ -18,20 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ClientListWidget.h"
-#include <QComboBox>
+#ifndef MDT_ITEM_EDITOR_FILTER_CONTROLLER_RELATION_H
+#define MDT_ITEM_EDITOR_FILTER_CONTROLLER_RELATION_H
 
-ClientListWidget::ClientListWidget(QWidget* parent)
- : TableViewWidget(parent)
-{
-  setObjectName("ClientListWidget");
-  addResizeToContentsActionToTopBar();
-  auto ctrl = controller();
-  ctrl->setPrimaryKey({0});
-  ctrl->setPrimaryKeyHidden(true);
+#include "AbstractControllerRelation.h"
 
-  auto *cb = new QComboBox;
-  cb->addItem("Filter");
-  cb->addItem("Navigate");
-  addWidgetToTopArea(cb);
-}
+namespace Mdt{ namespace ItemEditor{
+
+  /*! \brief Relation between a parent controller and a child controller
+   *
+   * FilterControllerRelation does not own any controller,
+   *  deleting them is the responsability of the user of this class.
+   */
+  class FilterControllerRelation : public AbstractControllerRelation
+  {
+   Q_OBJECT
+
+   public:
+
+    /*! \brief Constructor
+     *
+     * \pre \a parentController must be a valid pointer
+     */
+    explicit FilterControllerRelation(AbstractController* parentController, QObject* parent = nullptr);
+
+   private:
+
+    
+  };
+
+}} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_FILTER_CONTROLLER_RELATION_H

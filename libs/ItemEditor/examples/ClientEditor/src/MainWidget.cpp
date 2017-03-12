@@ -48,6 +48,7 @@ MainWidget::MainWidget(QWidget* parent)
   setStretchFactor(0, 1);
   setStretchFactor(1, 4);
 
-  mMainController = clientWidget->controller();
+//   mMainController = clientWidget->controller();
+  mMainController = clientListWidget->controller();
   Q_ASSERT(!mMainController.isNull());
 }

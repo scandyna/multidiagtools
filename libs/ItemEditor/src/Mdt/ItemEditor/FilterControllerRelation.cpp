@@ -18,20 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ClientListWidget.h"
-#include <QComboBox>
+#include "FilterControllerRelation.h"
 
-ClientListWidget::ClientListWidget(QWidget* parent)
- : TableViewWidget(parent)
+namespace Mdt{ namespace ItemEditor{
+
+FilterControllerRelation::FilterControllerRelation(AbstractController* parentController, QObject* parent)
+ : AbstractControllerRelation(parentController, parent)
 {
-  setObjectName("ClientListWidget");
-  addResizeToContentsActionToTopBar();
-  auto ctrl = controller();
-  ctrl->setPrimaryKey({0});
-  ctrl->setPrimaryKeyHidden(true);
 
-  auto *cb = new QComboBox;
-  cb->addItem("Filter");
-  cb->addItem("Navigate");
-  addWidgetToTopArea(cb);
 }
+
+
+}} // namespace Mdt{ namespace ItemEditor{

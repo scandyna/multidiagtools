@@ -506,6 +506,17 @@ namespace Mdt{ namespace ItemEditor{
      */
     void addChildController(AbstractController *controller);
 
+    /*! \brief Set navigation controller
+     *
+     * Once this controller will become a child of \a controller ,
+     *  current row will be ajusted regarding current row of \a controller.
+     *
+     * \note Because \a controller can be shared with several objects,
+     *        this controller does not take ownership of it (it will not delete it).
+     * \pre \a controller must be a valid pointer
+     */
+    void setNavigationController(AbstractController *controller);
+
     /*! \brief Get last error
      */
     Mdt::Error lastError() const

@@ -76,6 +76,14 @@ QToolBar* AbstractTableViewWidget::addToolBarToBottomArea()
   return bar;
 }
 
+void AbstractTableViewWidget::addWidgetToTopArea(QWidget* widget)
+{
+  Q_ASSERT(widget != nullptr);
+
+  createTopEditBarIfNot();
+  mTopEditBar->addWidget(widget);
+}
+
 void AbstractTableViewWidget::addInsertActionToTopArea()
 {
   createInsertActionIfNot();
