@@ -21,11 +21,13 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_LIST_H
 #define MDT_ITEM_EDITOR_CONTROLLER_LIST_H
 
-// #include "ControllerRelation.h"
+#include "AbstractControllerRelation.h"
 #include <QPointer>
 #include <vector>
 
 namespace Mdt{ namespace ItemEditor{
+
+  class AbstractController;
 
   /*! \brief Container of controller relations
    *
@@ -42,7 +44,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief STL-style const iterator
      */
-    typedef typename std::vector<RelationImpl*>::const_iterator const_iterator;
+    typedef typename std::vector<AbstractControllerRelation*>::const_iterator const_iterator;
 
     /*! \brief Construct a relation list
      *
@@ -75,47 +77,67 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Add a child controller
      *
-     * \pre \a controller must be a valid pointer
-     * \pre \a conditions must be a valid relation filter expression
-     */
-    template<typename T>
-    void addChildController(Controller *controller, const T & conditions)
-    {
-      Q_ASSERT(controller != nullptr);
-      auto *relation = new RelationImpl(mParentController);
-      relation->setChildController(controller);
-      relation->setRelationFilter(conditions);
-      mList.push_back(relation);
-    }
-
-    /*! \brief Add a child controller
+     * This method will set parent parent controller
+     *  (the one passed in the contructor)
+     *  and \a controller as child controller the created relation.
+     *  The crreated relation is returned to finish setup.
      *
      * \pre \a controller must be a valid pointer
-     * \pre parent controller must have a non null primary key set
-     * \pre \a controller must have a non null foreign key set
-     * \pre Both primary of parent controller and foreign key of \a controller must have the same count of columns, and max 4
      */
-    void addChildController(Controller *controller)
+    template<typename RelationType>
+    RelationType *addChildController(AbstractController *controller)
     {
       Q_ASSERT(controller != nullptr);
-      Q_ASSERT(!mParentController->getPrimaryKey().isNull());
-      Q_ASSERT(!controller->getForeignKey().isNull());
-      Q_ASSERT(mParentController->getPrimaryKey().columnCount() == controller->getForeignKey().columnCount());
-      auto *relation = new RelationImpl(mParentController);
+      auto relation = new RelationType;
+      relation->setParentController(mParentController);
       relation->setChildController(controller);
-      relation->setRelationFilterFromPkFk();
       mList.push_back(relation);
+      return relation;
     }
 
-    /*! \brief Set parent controller's model to all child controllers
-     */
-    void setParentControllerModelToChildControllers()
-    {
-      for(auto *relation : mList){
-        Q_ASSERT(relation != nullptr);
-        relation->setParentControllerModelToChildController();
-      }
-    }
+//     /*! \brief Add a child controller
+//      *
+//      * \pre \a controller must be a valid pointer
+//      * \pre \a conditions must be a valid relation filter expression
+//      */
+//     template<typename T>
+//     void addChildController(Controller *controller, const T & conditions)
+//     {
+//       Q_ASSERT(controller != nullptr);
+//       auto *relation = new RelationImpl(mParentController);
+//       relation->setChildController(controller);
+//       relation->setRelationFilter(conditions);
+//       mList.push_back(relation);
+//     }
+
+//     /*! \brief Add a child controller
+//      *
+//      * \pre \a controller must be a valid pointer
+//      * \pre parent controller must have a non null primary key set
+//      * \pre \a controller must have a non null foreign key set
+//      * \pre Both primary of parent controller and foreign key of \a controller must have the same count of columns, and max 4
+//      */
+//     void addChildController(Controller *controller)
+//     {
+//       Q_ASSERT(controller != nullptr);
+//       Q_ASSERT(!mParentController->getPrimaryKey().isNull());
+//       Q_ASSERT(!controller->getForeignKey().isNull());
+//       Q_ASSERT(mParentController->getPrimaryKey().columnCount() == controller->getForeignKey().columnCount());
+//       auto *relation = new RelationImpl(mParentController);
+//       relation->setChildController(controller);
+//       relation->setRelationFilterFromPkFk();
+//       mList.push_back(relation);
+//     }
+
+//     /*! \brief Set parent controller's model to all child controllers
+//      */
+//     void setParentControllerModelToChildControllers()
+//     {
+//       for(auto *relation : mList){
+//         Q_ASSERT(relation != nullptr);
+//         relation->setParentControllerModelToChildController();
+//       }
+//     }
 
     /*! \brief Get count of child controllers
      */
@@ -151,7 +173,7 @@ namespace Mdt{ namespace ItemEditor{
    private:
 
     QPointer<Controller> mParentController;
-    std::vector<RelationImpl*> mList;
+    std::vector<AbstractControllerRelation*> mList;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

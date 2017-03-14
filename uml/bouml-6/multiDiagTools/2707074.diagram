@@ -2,39 +2,39 @@ format 211
 
 classcanvas 128386 class_ref 2706434 // NavigationActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 522.5 880.5 2006
+  xyz 40.5 856.5 2006
 end
 classcanvas 128642 class_ref 2713474 // EditionActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 731.5 880.5 2011
+  xyz 490.5 856.5 2011
 end
 classcanvas 132482 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 481 754 2047
+  xyz 673 730 2047
 end
 classcanvas 132610 class_ref 3145090 // RowChangeEventDispatcher
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 247 754 2053
+  xyz 439 730 2053
 end
 classcanvas 133250 class_ref 3594882 // ProxyModelContainer
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 273 42 2000
+  xyz 41 346 2000
 end
 classcanvas 136706 class_ref 3648002 // AbstractController
   classdiagramsettings member_max_width 0 end
-  xyz 42 129 2000
+  xyz 234 40 2000
 end
 classcanvas 137090 class_ref 3823106 // PrimaryKeyProxyModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 40.5 880.5 2005
+  xyz 249.5 856.5 2005
 end
 classcanvas 137218 class_ref 3823234 // ForeignKeyProxyModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 281.5 880.5 2000
+  xyz 677.5 856.5 2000
 end
 classcanvas 137346 class_ref 3870722 // ControllerStatePermission
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 690 402 2059
+  xyz 882 346 2059
 end
 relationcanvas 132738 relation_ref 3561602 // <unidirectional association>
   from ref 132610 z 2054 to ref 132482
@@ -47,7 +47,7 @@ relationcanvas 136834 relation_ref 4068482 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 136962 relation_ref 4068610 // <directional composition>
-  decenter_end 470
+  decenter_begin 505
   from ref 136706 z 2001 to ref 133250
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

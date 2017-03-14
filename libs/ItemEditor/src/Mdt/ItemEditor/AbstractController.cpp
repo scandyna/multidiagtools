@@ -21,6 +21,7 @@
 #include "AbstractController.h"
 #include "RowChangeEventDispatcher.h"
 #include "ControllerStatePermission.h"
+#include "FilterControllerRelation.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 
@@ -235,7 +236,7 @@ void AbstractController::setFilterEnabled(bool enable)
   }else{
     deleteFirstProxyModelOfType<FilterProxyModel>();
   }
-  mRelationList.setParentControllerModelToChildControllers(); /// \todo Needed ?
+//   mRelationList.setParentControllerModelToChildControllers(); /// \todo Needed ?
 }
 
 bool AbstractController::isFilterEnabled() const
@@ -254,7 +255,9 @@ void AbstractController::addChildController(AbstractController *controller, cons
 {
   Q_ASSERT(controller != nullptr);
 
-  mRelationList.addChildController(controller, conditions);
+  auto *relation = mRelationList.addChildController<FilterControllerRelation>(controller);
+  relation->setRelationFilter(conditions);
+//   mRelationList.addChildController(controller, conditions);
 }
 
 void AbstractController::addChildController(AbstractController* controller)
@@ -264,7 +267,10 @@ void AbstractController::addChildController(AbstractController* controller)
   Q_ASSERT(!controller->getForeignKey().isNull());
   Q_ASSERT(getPrimaryKey().columnCount() == controller->getForeignKey().columnCount());
 
-  mRelationList.addChildController(controller);
+  auto *relation = mRelationList.addChildController<FilterControllerRelation>(controller);
+  relation->setRelationFilterFromPkFk();
+
+//   mRelationList.addChildController(controller);
 }
 
 void AbstractController::setNavigationController(AbstractController* controller)
@@ -282,7 +288,7 @@ bool AbstractController::setCurrentRow(int row)
   }
 //   if(!ControllerStatePermission::canChangeCurrentRow(mControllerState)){
   if(!canChangeCurrentRow()){
-    qDebug() << "AC: cannot change current row in state " << (int)controllerState();
+//     qDebug() << "AC: cannot change current row in state " << (int)controllerState();
     return false;
   }
   /**
@@ -460,7 +466,7 @@ void AbstractController::onRowsRemoved()
 
 void AbstractController::updateRowState(RowState rs)
 {
-  qDebug() << "AC::updateRowState()";
+//   qDebug() << "AC::updateRowState()";
   emit currentRowChanged(rs.currentRow());
   emit rowStateChanged(rs);
 }

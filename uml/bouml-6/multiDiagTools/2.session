@@ -1,33 +1,32 @@
-window_sizes 1280 963 323 951 911 0
+window_sizes 1280 963 359 915 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 2707074 // AbstractController
-    951 911 100 23 0 23
-  classdiagram_ref 3175298 // AbstractItemModelController
-    968 911 100 7 0 0
-  classdiagram_ref 2760962 // TableViewController
-    120 98 100 21 0 0
-  classdiagram_ref 3148674 // Overview
-    966 903 100 22 0 0
-  classdiagram_ref 2414338 // State
+  classdiagram_ref 3041922 // RowChangeEvent
     120 98 100 4 0 0
-  active  classdiagram_ref 2807170 // Permissions
-    951 911 100 18 0 0
+  classdiagram_ref 2767746 // EventDispatcher
+    120 98 100 23 0 0
+  active  classdiagram_ref 3261570 // AbstractControllerRelation
+    915 911 100 22 0 90
+  classdiagram_ref 3208834 // ControllerRelationList
+    915 911 100 21 0 0
+  classdiagram_ref 3208706 // ControllerRelation
+    120 98 100 8 252 499
+  classdiagram_ref 3353858 // FilterControllerRelation
+    120 98 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2807170 // Permissions
+selected classdiagram_ref 2761218 // ControllerOverview
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
-  class_ref 3870338 // AbstractControllerStatePermission
-  operation_ref 5433474 // ControllerStatePermission
-  operation_ref 5433858 // canInsert
+  
+  package_ref 516098 // ItemModel
   class_ref 3614722 // AbstractSqlItemViewController
-  attribute_ref 3380226 // ControllerStatePermission
-  operation_ref 5433602 // setControllerStatePermission
-  operation_ref 5433730 // canInsert
-  classview_ref 1465474 // EditorWidget
+  class_ref 3877762 // ControllerRelationType
+  classview_ref 1689474 // SqlController
+  classview_ref 1689602 // SqlRelation
+  classview_ref 1564290 // Where
   
   package_ref 430082 // Dsp
   

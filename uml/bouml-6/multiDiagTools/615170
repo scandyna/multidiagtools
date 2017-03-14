@@ -1,6 +1,6 @@
 format 211
 "ClientEditor" // Mdt::ItemEditor::Examples::ClientEditor
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   // class settings
   
@@ -154,6 +154,38 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 4066690 // <generalisation>
 	  b parent class_ref 3540482 // VariantTableModel
+      end
+    end
+
+    class 3877250 "ClientListWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4338306 // <generalisation>
+	relation 4312322 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4338306 // <generalisation>
+	  b parent class_ref 3104130 // TableViewWidget
+      end
+
+      classrelation 4338434 // <directional composition>
+	relation 4312450 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4338434 // <directional composition>
+	  b parent class_ref 3661698 // ClientModel
       end
     end
   end

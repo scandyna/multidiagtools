@@ -56,6 +56,21 @@ classcanvas 149250 class_ref 3749250 // AbstractControllerRelation
   color lightred
   xyz 397 42 2000
 end
+classcanvas 149890 class_ref 3877378 // FilterControllerRelation
+  classdiagramsettings member_max_width 0 end
+  color lightred
+  xyz 623 356 2006
+end
+classcanvas 150146 class_ref 3877506 // NavigationControllerRelation
+  classdiagramsettings member_max_width 0 end
+  color lightred
+  xyz 572 393 2012
+end
+classcanvas 150402 class_ref 3877634 // SqlFilterControllerRelation
+  classdiagramsettings member_max_width 0 end
+  color lightred
+  xyz 608 483 2006
+end
 relationcanvas 138882 relation_ref 4005122 // <directional composition>
   decenter_begin 522
   from ref 128258 z 3011 to point 120 160
@@ -107,6 +122,21 @@ relationcanvas 146434 relation_ref 4102146 // <directional composition>
 end
 relationcanvas 149506 relation_ref 4157570 // <generalisation>
   from ref 138370 z 3011 to ref 149250
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 150018 relation_ref 4312578 // <generalisation>
+  from ref 149890 z 2007 to ref 149250
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 150274 relation_ref 4312706 // <generalisation>
+  from ref 150146 z 2013 to ref 149250
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 150530 relation_ref 4312834 // <generalisation>
+  from ref 150402 z 2007 to ref 149250
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

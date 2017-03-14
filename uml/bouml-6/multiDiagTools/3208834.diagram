@@ -20,6 +20,10 @@ classcanvas 130050 class_ref 3708546 // ControllerRelation
   classdiagramsettings member_max_width 0 end
   xyz 41 354 2000
 end
+classcanvas 130306 class_ref 3749250 // AbstractControllerRelation
+  classdiagramsettings member_max_width 0 end
+  xyz 307 358 3011
+end
 relationcanvas 129922 relation_ref 4005122 // <directional composition>
   from ref 128130 z 3006 to ref 129794
   no_role_a no_role_b
@@ -28,6 +32,11 @@ end
 relationcanvas 130178 relation_ref 4095362 // <generalisation>
   decenter_begin 489
   from ref 130050 z 3006 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 4157570 // <generalisation>
+  from ref 129794 z 3012 to ref 130306
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

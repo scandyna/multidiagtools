@@ -21,7 +21,7 @@
 #include "RowChangeEventDispatcher.h"
 // #include "ControllerStatePermission.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -112,7 +112,7 @@ void RowChangeEventDispatcher::onModelReset()
   /*
    * We must allways signal when a model was reset.
    */
-  qDebug() << "RCEvD:emit rowStateUpdated()";
+//   qDebug() << "RCEvD:emit rowStateUpdated()";
   emit rowStateUpdated(mRowState);
 }
 

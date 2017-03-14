@@ -1,0 +1,19 @@
+format 211
+
+classcanvas 128002 class_ref 3877634 // SqlFilterControllerRelation
+  classdiagramsettings member_max_width 0 end
+  xyz 67 490 2000
+end
+classcanvas 128130 class_ref 3749250 // AbstractControllerRelation
+  classdiagramsettings member_max_width 0 end
+  xyz 36 41 2006
+end
+note 128386 "The type of child controller model is known when relation is created.
+So, impl subclass can simply cast (evt. qobject_cast as assertion)"
+  xyzwh 40 720 2000 408 130
+relationcanvas 128258 relation_ref 4312834 // <generalisation>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

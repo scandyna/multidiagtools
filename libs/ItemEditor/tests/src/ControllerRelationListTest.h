@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_TEST_H
-#define MDT_ITEM_EDITOR_CONTROLLER_RELATION_TEST_H
+#ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_LIST_TEST_H
+#define MDT_ITEM_EDITOR_CONTROLLER_RELATION_LIST_TEST_H
 
 #include "TestBase.h"
 
-class ControllerRelationTest : public TestBase
+class ControllerRelationListTest : public TestBase
 {
   Q_OBJECT
 
@@ -32,19 +32,7 @@ class ControllerRelationTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void setControllersTest();
-  void setModelToControllersFirstTest();
-  void setModelToControllersAfterTest();
-
-//   void relationListSetModelToControllersFirstTest();
-//   void relationListSetModelToControllersAfterTest();
-  void relationListFilterConditionTest();
-
-//   void relationListBasicSetGetTest();
-
-  void controllerAddChildControllerTest();
-  void controllerChangeModelForViewTest();
-  void controllerRelationFilterTest();
+  void addChildControllerTest();
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_LIST_TEST_H
