@@ -37,10 +37,8 @@ namespace Mdt{ namespace ItemEditor{
    public:
 
     /*! \brief Constructor
-     *
-     * \pre \a parentController must be a valid pointer
      */
-    explicit NavigationControllerRelation(AbstractController* parentController, QObject* parent = nullptr);
+    explicit NavigationControllerRelation(QObject* parent = nullptr);
 
    private:
 

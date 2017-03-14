@@ -47,8 +47,8 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \pre \a parentController must be a valid pointer
      */
-    [[deprecated]]
-    explicit AbstractControllerRelation(AbstractController *parentController, QObject *parent = nullptr);
+//     [[deprecated]]
+//     explicit AbstractControllerRelation(AbstractController *parentController, QObject *parent = nullptr);
 
     // Copy disabled
     AbstractControllerRelation(const AbstractControllerRelation &) = delete;
@@ -119,15 +119,15 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Get parent controller
      */
-    virtual AbstractController *abstractParentController() const {};
+//     virtual AbstractController *abstractParentController() const {};
 
     /*! \brief Get child controller
      */
-    virtual AbstractController *abstractChildController() const {};
+//     virtual AbstractController *abstractChildController() const {};
 
     /*! \brief Register child controller
      */
-    void registerAbstractChildController(AbstractController *controller);
+//     void registerAbstractChildController(AbstractController *controller);
 
     /*! \brief Parent controller's state changed event
      */

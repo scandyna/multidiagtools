@@ -22,8 +22,8 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-NavigationControllerRelation::NavigationControllerRelation(AbstractController* parentController, QObject* parent)
- : AbstractControllerRelation(parentController, parent)
+NavigationControllerRelation::NavigationControllerRelation(QObject* parent)
+ : AbstractControllerRelation(parent)
 {
 }
 

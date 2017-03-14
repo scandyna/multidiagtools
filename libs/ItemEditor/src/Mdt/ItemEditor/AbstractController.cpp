@@ -257,7 +257,6 @@ void AbstractController::addChildController(AbstractController *controller, cons
 
   auto *relation = mRelationList.addChildController<FilterControllerRelation>(controller);
   relation->setRelationFilter(conditions);
-//   mRelationList.addChildController(controller, conditions);
 }
 
 void AbstractController::addChildController(AbstractController* controller)
@@ -269,8 +268,6 @@ void AbstractController::addChildController(AbstractController* controller)
 
   auto *relation = mRelationList.addChildController<FilterControllerRelation>(controller);
   relation->setRelationFilterFromPkFk();
-
-//   mRelationList.addChildController(controller);
 }
 
 void AbstractController::setNavigationController(AbstractController* controller)

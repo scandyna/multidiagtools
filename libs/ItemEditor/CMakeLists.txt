@@ -29,10 +29,6 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/WidgetMapperControllerStatePermission.cpp
     src/Mdt/ItemEditor/WidgetMapperController.cpp
     src/Mdt/ItemEditor/AbstractControllerRelation.cpp
-    src/Mdt/ItemEditor/ControllerRelationImplBase.cpp
-    
-    src/Mdt/ItemEditor/ControllerRelation.cpp
-    
     src/Mdt/ItemEditor/FilterControllerRelation.cpp
     src/Mdt/ItemEditor/NavigationControllerRelation.cpp
     src/Mdt/ItemEditor/ControllerRelationList.cpp

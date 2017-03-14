@@ -1,9 +1,5 @@
 format 211
 
-classcanvas 128130 class_ref 3627906 // ControllerRelationImplBase
-  classdiagramsettings member_max_width 0 end
-  xyz 665 488 2006
-end
 classcanvas 128386 class_ref 3681922 // SqlControllerRelation
   classdiagramsettings member_max_width 0 end
   xyz 794 842 2006
@@ -15,10 +11,6 @@ end
 classcanvas 129410 class_ref 3614594 // AbstractSqlController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 985 842 2006
-end
-classcanvas 131074 class_ref 3708546 // ControllerRelation
-  classdiagramsettings member_max_width 0 end
-  xyz 317 874 2012
 end
 classcanvas 131842 class_ref 3735810 // RelationKeyCopier
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
@@ -40,43 +32,6 @@ relationcanvas 129538 relation_ref 4025346 // <generalisation>
 end
 relationcanvas 129922 relation_ref 4067970 // <unidirectional association>
   from ref 128386 z 2007 to ref 129410
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131202 relation_ref 4095362 // <generalisation>
-  geometry VHV unfixed
-  from ref 131074 z 2013 to point 534 800
-  line 134402 z 2013 to point 870 800
-  line 134530 z 2013 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131330 relation_ref 4095490 // <unidirectional association>
-  decenter_begin 523
-  from ref 131074 z 2013 to ref 128898
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131458 relation_ref 4102018 // <generalisation>
-  decenter_begin 523
-  from ref 128386 z 2007 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 132226 relation_ref 4143746 // <directional composition>
-  decenter_begin 523
-  from ref 131074 z 2013 to ref 131842
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 132866 relation_ref 4144002 // <directional composition>
-  from ref 131074 z 2013 to ref 132610
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 134146 relation_ref 4157570 // <generalisation>
-  decenter_end 505
-  from ref 128130 z 2007 to ref 133378
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

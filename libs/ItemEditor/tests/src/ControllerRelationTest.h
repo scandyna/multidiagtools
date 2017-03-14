@@ -36,14 +36,7 @@ class ControllerRelationTest : public TestBase
   void setModelToControllersFirstTest();
   void setModelToControllersAfterTest();
 
-//   void relationListSetModelToControllersFirstTest();
-//   void relationListSetModelToControllersAfterTest();
-  void relationListFilterConditionTest();
-
-//   void relationListBasicSetGetTest();
-
   void controllerAddChildControllerTest();
-  void controllerChangeModelForViewTest();
   void controllerRelationFilterTest();
 };
 

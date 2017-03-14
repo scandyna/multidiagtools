@@ -25,7 +25,6 @@
 #include "Mdt/ItemModel/RelationKey.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include "Mdt/ItemModel/ForeignKey.h"
-#include "Mdt/ItemEditor/ControllerRelation.h"
 #include "Mdt/ItemEditor/ControllerRelationList.h"
 #include <QSignalSpy>
 #include <QStringListModel>
@@ -85,7 +84,7 @@ void ControllerRelationListTest::addChildControllerTest()
   /*
    * Setup relation list
    */
-  ControllerRelationList<AbstractController, AbstractControllerRelationTestClass> relationList(&parentController);
+  ControllerRelationList relationList(&parentController);
   QCOMPARE(relationList.childControllerCount(), 0);
   QVERIFY(relationList.cbegin() == relationList.cend());
   // Add first child controller

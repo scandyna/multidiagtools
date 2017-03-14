@@ -24,7 +24,6 @@
 #include "RowState.h"
 #include "ControllerState.h"
 #include "ControllerStatePermission.h"
-#include "ControllerRelation.h"
 #include "ControllerRelationList.h"
 #include "Mdt/ItemModel/ProxyModelContainer.h"
 #include "Mdt/ItemModel/FilterProxyModel.h"
@@ -792,7 +791,8 @@ namespace Mdt{ namespace ItemEditor{
 //     Mdt::ItemModel::PrimaryKey mPrimaryKey;
 //     Mdt::ItemModel::ForeignKey mForeignKey;
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
-    ControllerRelationList<AbstractController, ControllerRelation> mRelationList;
+//     ControllerRelationList<AbstractController, ControllerRelation> mRelationList;
+    ControllerRelationList mRelationList;
     Mdt::Error mLastError;
   };
 

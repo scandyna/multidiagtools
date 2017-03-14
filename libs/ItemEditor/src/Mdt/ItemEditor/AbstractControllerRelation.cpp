@@ -28,16 +28,16 @@ AbstractControllerRelation::AbstractControllerRelation(QObject* parent)
 {
 }
 
-AbstractControllerRelation::AbstractControllerRelation(AbstractController *parentController, QObject* parent)
- : QObject(parent),
-   mParentController(parentController)
-{
-  Q_ASSERT(!mParentController.isNull());
-
-//   Q_ASSERT(parentController != nullptr);
-
-  connect(parentController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::setParentControllerState);
-}
+// AbstractControllerRelation::AbstractControllerRelation(AbstractController *parentController, QObject* parent)
+//  : QObject(parent),
+//    mParentController(parentController)
+// {
+//   Q_ASSERT(!mParentController.isNull());
+// 
+// //   Q_ASSERT(parentController != nullptr);
+// 
+//   connect(parentController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::setParentControllerState);
+// }
 
 void AbstractControllerRelation::setParentController(AbstractController* controller)
 {
@@ -60,6 +60,8 @@ void AbstractControllerRelation::setParentController(AbstractController* control
     connect( mParentController, &AbstractController::modelForViewChanged, this, &AbstractControllerRelation::parentControllerModelChangedEvent );
 
   parentControllerChangedEvent(mParentController);
+  
+//   connect(parentController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::setParentControllerState);
 }
 
 void AbstractControllerRelation::setChildController(AbstractController* controller)
@@ -133,14 +135,14 @@ void AbstractControllerRelation::childControllerModelChangedEvent(QAbstractItemM
 }
 
 
-void AbstractControllerRelation::registerAbstractChildController(AbstractController* controller)
-{
-  Q_ASSERT(controller != nullptr);
-
-  disconnect(mChildControllerStateChagedConnection);
-  mChildControllerStateChagedConnection = 
-    connect(controller, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::setChildControllerState);
-}
+// void AbstractControllerRelation::registerAbstractChildController(AbstractController* controller)
+// {
+//   Q_ASSERT(controller != nullptr);
+// 
+//   disconnect(mChildControllerStateChagedConnection);
+//   mChildControllerStateChagedConnection = 
+//     connect(controller, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::setChildControllerState);
+// }
 
 void AbstractControllerRelation::parentControllerStateChangedEvent(ControllerState)
 {

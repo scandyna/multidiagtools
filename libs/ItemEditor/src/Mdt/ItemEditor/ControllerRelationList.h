@@ -33,11 +33,7 @@ namespace Mdt{ namespace ItemEditor{
    *
    * Controllers are only referenced in this list,
    *  they will never be destroyed.
-   *
-   * \tparam Controller Must be AbstractController or subclass
-   * \tparam RelationImpl Specifi implementation of ControllerRelation
    */
-  template<typename Controller, typename RelationImpl>
   class ControllerRelationList
   {
    public:
@@ -50,23 +46,11 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \pre \a parentController must be a valid pointer
      */
-    explicit ControllerRelationList(Controller *parentController)
-     : mParentController(parentController)
-    {
-      Q_ASSERT(!mParentController.isNull());
-      /*
-       * parentController is not yet completely constructed,
-       * so we only reference it in this constructor,
-       * and avoid using it now.
-       */
-    }
+    explicit ControllerRelationList(AbstractController *parentController);
 
     /*! \brief Clear created relations
      */
-    ~ControllerRelationList()
-    {
-      clearRelations();
-    }
+    ~ControllerRelationList();
 
     // Disable copy
     ControllerRelationList(const ControllerRelationList &) = delete;
@@ -95,50 +79,6 @@ namespace Mdt{ namespace ItemEditor{
       return relation;
     }
 
-//     /*! \brief Add a child controller
-//      *
-//      * \pre \a controller must be a valid pointer
-//      * \pre \a conditions must be a valid relation filter expression
-//      */
-//     template<typename T>
-//     void addChildController(Controller *controller, const T & conditions)
-//     {
-//       Q_ASSERT(controller != nullptr);
-//       auto *relation = new RelationImpl(mParentController);
-//       relation->setChildController(controller);
-//       relation->setRelationFilter(conditions);
-//       mList.push_back(relation);
-//     }
-
-//     /*! \brief Add a child controller
-//      *
-//      * \pre \a controller must be a valid pointer
-//      * \pre parent controller must have a non null primary key set
-//      * \pre \a controller must have a non null foreign key set
-//      * \pre Both primary of parent controller and foreign key of \a controller must have the same count of columns, and max 4
-//      */
-//     void addChildController(Controller *controller)
-//     {
-//       Q_ASSERT(controller != nullptr);
-//       Q_ASSERT(!mParentController->getPrimaryKey().isNull());
-//       Q_ASSERT(!controller->getForeignKey().isNull());
-//       Q_ASSERT(mParentController->getPrimaryKey().columnCount() == controller->getForeignKey().columnCount());
-//       auto *relation = new RelationImpl(mParentController);
-//       relation->setChildController(controller);
-//       relation->setRelationFilterFromPkFk();
-//       mList.push_back(relation);
-//     }
-
-//     /*! \brief Set parent controller's model to all child controllers
-//      */
-//     void setParentControllerModelToChildControllers()
-//     {
-//       for(auto *relation : mList){
-//         Q_ASSERT(relation != nullptr);
-//         relation->setParentControllerModelToChildController();
-//       }
-//     }
-
     /*! \brief Get count of child controllers
      */
     int childControllerCount() const
@@ -162,17 +102,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Remove all relations
      */
-    void clearRelations()
-    {
-      for(auto relation : mList){
-        delete relation;
-      }
-      mList.clear();
-    }
+    void clearRelations();
 
    private:
 
-    QPointer<Controller> mParentController;
+    QPointer<AbstractController> mParentController;
     std::vector<AbstractControllerRelation*> mList;
   };
 

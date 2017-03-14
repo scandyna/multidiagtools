@@ -6,16 +6,18 @@ diagrams
   classdiagram_ref 2767746 // EventDispatcher
     120 98 100 23 0 0
   active  classdiagram_ref 3261570 // AbstractControllerRelation
-    915 911 100 22 0 90
+    915 911 100 22 0 0
   classdiagram_ref 3208834 // ControllerRelationList
     915 911 100 21 0 0
   classdiagram_ref 3208706 // ControllerRelation
     120 98 100 8 252 499
   classdiagram_ref 3353858 // FilterControllerRelation
     120 98 100 4 0 0
+  classdiagram_ref 3148674 // Overview
+    120 98 100 22 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2761218 // ControllerOverview
+selected class_ref 3749250 // AbstractControllerRelation
 open
   
   package_ref 409858 // principes
@@ -23,6 +25,7 @@ open
   
   package_ref 516098 // ItemModel
   class_ref 3614722 // AbstractSqlItemViewController
+  class_ref 3681922 // SqlControllerRelation
   class_ref 3877762 // ControllerRelationType
   classview_ref 1689474 // SqlController
   classview_ref 1689602 // SqlRelation

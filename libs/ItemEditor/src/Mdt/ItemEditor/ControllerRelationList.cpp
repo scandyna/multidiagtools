@@ -19,7 +19,32 @@
  **
  ****************************************************************************/
 #include "ControllerRelationList.h"
+#include "AbstractController.h"
 
 namespace Mdt{ namespace ItemEditor{
+
+ControllerRelationList::ControllerRelationList(AbstractController* parentController)
+  : mParentController(parentController)
+{
+  Q_ASSERT(!mParentController.isNull());
+  /*
+    * parentController is not yet completely constructed,
+    * so we only reference it in this constructor,
+    * and avoid using it now.
+    */
+}
+
+ControllerRelationList::~ControllerRelationList()
+{
+  clearRelations();
+}
+
+void ControllerRelationList::clearRelations()
+{
+  for(auto relation : mList){
+    delete relation;
+  }
+  mList.clear();
+}
 
 }} // namespace Mdt{ namespace ItemEditor{
