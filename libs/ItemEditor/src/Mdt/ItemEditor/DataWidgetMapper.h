@@ -235,6 +235,7 @@ namespace Mdt{ namespace ItemEditor{
     int mCurrentRow;
     bool mUpdatingMappedWidget;
     bool mEditingState;
+    bool mSubmittingFromMapper = false;
     QPointer<QAbstractItemModel> mModel;
     QPointer<QAbstractItemDelegate> mDelegate;
     MappedWidgetList mMappedWidgetList;

@@ -47,6 +47,7 @@ class DataWidgetMapperTest : public TestBase
   void itemEnabledFlagTest();
   void itemEnabledEditableFlagTest();
   void formatRoleTest();
+  void editionDoneTest();
 
 //   void setModelTest();
   void setCurrentRowWidgetTest();

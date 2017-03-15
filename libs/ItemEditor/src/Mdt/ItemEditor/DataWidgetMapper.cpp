@@ -29,6 +29,7 @@
 #include <QMetaObject>
 #include <QMetaMethod>
 #include <QMetaProperty>
+#include <QScopedValueRollback>
 
 // #include <QDebug>
 
@@ -128,6 +129,7 @@ void DataWidgetMapper::setCurrentRow(int row)
 {
   bool rowHasChanged = (row != mCurrentRow);
 
+//   qDebug() << "DWM::setCurrentRow(" << row << "): editing: " << mEditingState;
   mCurrentRow = row;
   if(!mEditingState){
     updateAllMappedWidgets();
@@ -140,6 +142,10 @@ void DataWidgetMapper::setCurrentRow(int row)
 bool DataWidgetMapper::submit()
 {
   Q_ASSERT(!mModel.isNull());
+  Q_ASSERT(!mSubmittingFromMapper);
+
+  QScopedValueRollback<bool> submittingFromMapperGuard(mSubmittingFromMapper);
+  mSubmittingFromMapper = true;
 
   if(!commitAllMappedWidgetsData()){
     return false;
@@ -147,6 +153,7 @@ bool DataWidgetMapper::submit()
   if(!mModel->submit()){
     return false;
   }
+
   mEditingState = false;
   emit dataEditionDone();
 
@@ -189,6 +196,19 @@ void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QMo
     if(columnRange.containsColumn(column)){
       updateMappedWidget(mw.widget(), column);
     }
+  }
+  /*
+   * If we are submitting from mapper,
+   * we only go out from editing mode when all widgets data have been set to model
+   * and model's submit successfully returned.
+   *
+   * Otherwise, data has changed from a other editor,
+   * and we have no control, we must simply go out from editing mode
+   * and signal this once.
+   */
+  if(mEditingState && !mSubmittingFromMapper){
+    mEditingState = false;
+    emit dataEditionDone();
   }
 }
 

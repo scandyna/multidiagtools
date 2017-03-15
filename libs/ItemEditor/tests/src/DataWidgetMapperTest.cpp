@@ -995,6 +995,48 @@ void DataWidgetMapperTest::formatRoleTest()
   QVERIFY(editor0.styleSheet().isEmpty());
 }
 
+void DataWidgetMapperTest::editionDoneTest()
+{
+  DataWidgetMapper mapper;
+  VariantTableModel model;
+  QLineEdit editor0;
+  QLineEdit editor1;
+  QSignalSpy editDoneSpy(&mapper, &DataWidgetMapper::dataEditionDone);
+  QVERIFY(editDoneSpy.isValid());
+  /*
+   * Setup model and mapper
+   */
+  model.resize(1, 2);
+  mapper.setModel(&model);
+  mapper.addMapping(&editor0, 0);
+  mapper.addMapping(&editor1, 1);
+  mapper.setCurrentRow(0);
+  QCOMPARE(mapper.currentRow(), 0);
+  /*
+   * Start editing then submit from data widget mapper
+   */
+  editDoneSpy.clear();
+  editor0.setText("A");
+  editor1.setText("1");
+  QVERIFY(mapper.submit());
+  QCOMPARE(editDoneSpy.count(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("1"));
+  /*
+   * Start editing then change data directly in model
+   *
+   * DataWidgetMapper cannot do anything when data changed from model,
+   * it must simply display the new content and discard editing mode.
+   * (Bug discovered 20170315)
+   */
+  editDoneSpy.clear();
+  editor0.setText("B");
+  QVERIFY(setModelData(model, 0, 0, "C"));
+  QCOMPARE(editDoneSpy.count(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("C"));
+  QCOMPARE(editor0.text(), QString("C"));
+}
+
 // void DataWidgetMapperTest::setModelTest()
 // {
 //   DataWidgetMapper mapper;
