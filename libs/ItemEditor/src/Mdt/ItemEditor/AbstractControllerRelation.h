@@ -43,13 +43,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     explicit AbstractControllerRelation(QObject *parent = nullptr);
 
-    /*! \brief Constructor
-     *
-     * \pre \a parentController must be a valid pointer
-     */
-//     [[deprecated]]
-//     explicit AbstractControllerRelation(AbstractController *parentController, QObject *parent = nullptr);
-
     // Copy disabled
     AbstractControllerRelation(const AbstractControllerRelation &) = delete;
     AbstractControllerRelation & operator=(const AbstractControllerRelation &) = delete;
@@ -117,17 +110,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual void childControllerModelChangedEvent(QAbstractItemModel *model);
 
-    /*! \brief Get parent controller
-     */
-//     virtual AbstractController *abstractParentController() const {};
-
-    /*! \brief Get child controller
-     */
-//     virtual AbstractController *abstractChildController() const {};
-
-    /*! \brief Register child controller
-     */
-//     void registerAbstractChildController(AbstractController *controller);
 
     /*! \brief Parent controller's state changed event
      */
@@ -141,11 +123,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set parent controller state
      */
-    void setParentControllerState(Mdt::ItemEditor::ControllerState newState);
+    void onParentControllerStateChanged(Mdt::ItemEditor::ControllerState newState);
 
     /*! \brief Set child controller state
      */
-    void setChildControllerState(Mdt::ItemEditor::ControllerState newState);
+    void onChildControllerStateChanged(Mdt::ItemEditor::ControllerState newState);
 
  private:
 
@@ -153,6 +135,7 @@ namespace Mdt{ namespace ItemEditor{
     QPointer<AbstractController> mChildController;
     QMetaObject::Connection mParentControllerModelChangedConnection;
     QMetaObject::Connection mChildControllerModelChangedConnection;
+    QMetaObject::Connection mParentControllerStateChagedConnection;
     QMetaObject::Connection mChildControllerStateChagedConnection;
   };
 

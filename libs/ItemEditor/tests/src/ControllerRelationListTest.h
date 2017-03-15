@@ -33,6 +33,8 @@ class ControllerRelationListTest : public TestBase
   void cleanupTestCase();
 
   void addChildControllerTest();
+  void submitTest();
+  void revertTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_LIST_TEST_H

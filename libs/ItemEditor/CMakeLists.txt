@@ -5,9 +5,11 @@ project(multidiagtools)
 
 # List of source files
 set(SOURCES_FILES
+    src/Mdt/ItemEditor/Debug.cpp
     src/Mdt/ItemEditor/ItemDelegateProxy.cpp
     src/Mdt/ItemEditor/EventCatchItemDelegate.cpp
     src/Mdt/ItemEditor/ItemSelectionModel.cpp
+    src/Mdt/ItemEditor/ControllerState.cpp
     src/Mdt/ItemEditor/RowChangeEventDispatcher.cpp
     src/Mdt/ItemEditor/AbstractActionContainer.cpp
     src/Mdt/ItemEditor/NavigationActions.cpp

@@ -79,6 +79,14 @@ namespace Mdt{ namespace ItemEditor{
       return relation;
     }
 
+    /*! \brief Submit data to model for all child controller
+     */
+    bool submitForEachChild();
+
+    /*! \brief Revert data from model for each child controller
+     */
+    void revertForEachChild();
+
     /*! \brief Get count of child controllers
      */
     int childControllerCount() const

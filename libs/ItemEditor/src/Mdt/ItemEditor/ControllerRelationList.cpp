@@ -39,6 +39,25 @@ ControllerRelationList::~ControllerRelationList()
   clearRelations();
 }
 
+bool ControllerRelationList::submitForEachChild()
+{
+  for(auto *relation : mList){
+    Q_ASSERT(relation->childController() != nullptr);
+    if(!relation->childController()->submit()){
+      return false;
+    }
+  }
+  return true;
+}
+
+void ControllerRelationList::revertForEachChild()
+{
+  for(auto *relation : mList){
+    Q_ASSERT(relation->childController() != nullptr);
+    relation->childController()->revert();
+  }
+}
+
 void ControllerRelationList::clearRelations()
 {
   for(auto relation : mList){

@@ -18,23 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "NavigationControllerRelation.h"
-#include "AbstractController.h"
+#include "ControllerState.h"
+#include <QByteArray>
+// #include <QLatin1String>
 
 namespace Mdt{ namespace ItemEditor{
 
-NavigationControllerRelation::NavigationControllerRelation(QObject* parent)
- : AbstractControllerRelation(parent)
+QByteArray controllerStateText(ControllerState state)
 {
-}
-
-void NavigationControllerRelation::childControllerChangedEvent(AbstractController* controller)
-{
-  Q_ASSERT(controller != nullptr);
-
-  disconnect(mCurrentRowChangeConnection);
-  mCurrentRowChangeConnection = 
-    connect(parentController(), &AbstractController::currentRowChanged, controller, &AbstractController::setCurrentRow);
+  switch(state){
+    case ControllerState::Visualizing:
+      return QByteArray("Visualizing");
+    case ControllerState::Editing:
+      return QByteArray("Editing");
+    case ControllerState::Inserting:
+      return QByteArray("Inserting");
+  }
+  return QByteArray();
 }
 
 

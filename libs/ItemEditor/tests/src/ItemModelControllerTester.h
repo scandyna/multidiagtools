@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_ITEM_MODEL_CONTROLLER_TESTER_H
 
 #include "Mdt/ItemEditor/AbstractItemModelController.h"
+#include <QVariant>
 
 class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelController
 {
@@ -34,6 +35,17 @@ class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelContr
   int primaryKeyChangedEventCount() const;
   void clearPrimaryKeyChangedEventCount();
 
+  void startEditing();
+  void stopEditing();
+
+  int dataSubmitToModelCount() const;
+  void clearDataSubmitToModelCount();
+  int dataRevertFromModelCount() const;
+  void clearDataRevertFromModelCount();
+
+  /// \todo Wrong: must simulate a editor with a cache (use, f.ex., a QMap<column,data>) - then, set to model (or revert) in submitDataToModel() and revertDataFromModel()
+//   bool setModelData(int column, const QVariant & data);
+
  private:
 
   void setModelToView(QAbstractItemModel *model) override;
@@ -42,6 +54,8 @@ class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelContr
   void primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey& oldPrimaryKey, const Mdt::ItemModel::PrimaryKey& newPrimaryKey) override;
 
   int mPrimaryKeyChangedEventCount = 0;
+  int mDataSubmitToModelCount = 0;
+  int mDataRevertFromModelCount = 0;
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ITEM_MODEL_CONTROLLER_TESTER_H

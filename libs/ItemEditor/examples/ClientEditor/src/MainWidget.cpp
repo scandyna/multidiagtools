@@ -41,6 +41,7 @@ MainWidget::MainWidget(QWidget* parent)
   // Setup relation
 //   clientListWidget->controller()->addChildController(clientWidget->controller(), ChildModelColumn(0) == ParentModelColumn(0));
   clientWidget->controller()->addChildController(addressWidget->controller());
+  clientWidget->controller()->setNavigationController(clientListWidget->controller());
 
   clientListWidget->setModel(clientWidget->controller()->model());
   addWidget(clientListWidget);
@@ -48,7 +49,7 @@ MainWidget::MainWidget(QWidget* parent)
   setStretchFactor(0, 1);
   setStretchFactor(1, 4);
 
-  mMainController = clientWidget->controller();
-//   mMainController = clientListWidget->controller();
+//   mMainController = clientWidget->controller();
+  mMainController = clientListWidget->controller();
   Q_ASSERT(!mMainController.isNull());
 }

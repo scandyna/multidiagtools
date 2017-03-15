@@ -100,6 +100,84 @@ void ControllerRelationListTest::addChildControllerTest()
   QCOMPARE(relationList.childControllerCount(), 2);
 }
 
+void ControllerRelationListTest::submitTest()
+{
+  /*
+   * Setup parent model and controller
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(1, 1);
+  ItemModelControllerTester parentController;
+  parentController.setModel(&parentModel);
+  /*
+   * Setup child model and controller
+   */
+  VariantTableModel childModel;
+  childModel.resize(1, 1);
+  ItemModelControllerTester childController;
+  childController.setModel(&childModel);
+  /*
+   * Setup relation list
+   */
+  ControllerRelationList relationList(&parentController);
+  relationList.addChildController<AbstractControllerRelationTestClass>(&childController);
+  /*
+   * Edit in child controller and submit
+   */
+  childController.startEditing();
+  childController.clearDataSubmitToModelCount();
+  QVERIFY(relationList.submitForEachChild());
+  QCOMPARE(childController.dataSubmitToModelCount(), 1);
+
+  /*
+   * Edit then submit in child controller
+   */
+
+
+  QFAIL("Not complete");
+}
+
+void ControllerRelationListTest::revertTest()
+{
+  /*
+   * Setup parent model and controller
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(1, 1);
+  ItemModelControllerTester parentController;
+  parentController.setModel(&parentModel);
+  /*
+   * Setup child model and controller
+   */
+  VariantTableModel childModel;
+  childModel.resize(1, 1);
+  ItemModelControllerTester childController;
+  childController.setModel(&childModel);
+  /*
+   * Setup relation list
+   */
+  ControllerRelationList relationList(&parentController);
+  relationList.addChildController<AbstractControllerRelationTestClass>(&childController);
+  /*
+   * Edit in child controller and revert
+   */
+  childController.startEditing();
+  childController.clearDataRevertFromModelCount();
+  relationList.revertForEachChild();
+  QCOMPARE(childController.dataRevertFromModelCount(), 1);
+  /*
+   * Edit then revert in parent controller
+   */
+
+
+  /*
+   * Edit then revert in child controller
+   */
+
+  QFAIL("Not complete");
+
+}
+
 /*
  * Main
  */

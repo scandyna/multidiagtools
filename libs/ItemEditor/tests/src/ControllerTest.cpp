@@ -94,7 +94,7 @@ void ControllerTest::basicStateTest()
    * Initial state
    */
   ItemModelControllerTester controller;
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   ///QVERIFY(controller.primaryKey().isNull());
 }
 

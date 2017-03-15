@@ -21,6 +21,8 @@
 #include "ItemModelControllerTester.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
+#include <QAbstractItemModel>
+#include <QModelIndex>
 
 using namespace Mdt::ItemEditor;
 
@@ -28,20 +30,6 @@ ItemModelControllerTester::ItemModelControllerTester(QObject* parent)
  : AbstractItemModelController(parent)
 {
   setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
-}
-
-void ItemModelControllerTester::setModelToView(QAbstractItemModel* /*model*/)
-{
-  modelSetToView();
-}
-
-bool ItemModelControllerTester::submitDataToModel()
-{
-  return false;
-}
-
-void ItemModelControllerTester::revertDataFromModel()
-{
 }
 
 int ItemModelControllerTester::primaryKeyChangedEventCount() const
@@ -53,6 +41,62 @@ void ItemModelControllerTester::clearPrimaryKeyChangedEventCount()
 {
   mPrimaryKeyChangedEventCount = 0;
 }
+
+void ItemModelControllerTester::startEditing()
+{
+  onDataEditionStarted();
+}
+
+void ItemModelControllerTester::stopEditing()
+{
+  onDataEditionDone();
+}
+
+int ItemModelControllerTester::dataSubmitToModelCount() const
+{
+  return mDataSubmitToModelCount;
+}
+
+void ItemModelControllerTester::clearDataSubmitToModelCount()
+{
+  mDataSubmitToModelCount = 0;
+}
+
+int ItemModelControllerTester::dataRevertFromModelCount() const
+{
+  return mDataRevertFromModelCount;
+}
+
+void ItemModelControllerTester::clearDataRevertFromModelCount()
+{
+  mDataRevertFromModelCount = 0;
+}
+
+// bool ItemModelControllerTester::setModelData(int column, const QVariant& data)
+// {
+//   auto *model = sourceModel();
+//   Q_ASSERT(model != nullptr);
+//   const auto index = model->index(currentRow(), column);
+//   Q_ASSERT(index.isValid());
+//   return model->setData(index, data);
+// }
+
+void ItemModelControllerTester::setModelToView(QAbstractItemModel* /*model*/)
+{
+  modelSetToView();
+}
+
+bool ItemModelControllerTester::submitDataToModel()
+{
+  ++mDataSubmitToModelCount;
+  return true;
+}
+
+void ItemModelControllerTester::revertDataFromModel()
+{
+  ++mDataRevertFromModelCount;
+}
+
 
 void ItemModelControllerTester::primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey& /*oldPrimaryKey*/, const Mdt::ItemModel::PrimaryKey& /*newPrimaryKey*/)
 {

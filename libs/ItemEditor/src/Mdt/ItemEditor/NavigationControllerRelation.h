@@ -42,7 +42,9 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    
+    void childControllerChangedEvent(AbstractController* controller) override;
+
+    QMetaObject::Connection mCurrentRowChangeConnection;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

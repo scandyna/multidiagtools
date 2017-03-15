@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_TEST_BASE_H
 
 #include "Mdt/Application.h"
+#include "Mdt/ItemEditor/ControllerState.h"
 #include "ItemViewTestEditTriggers.h"
 #include <QObject>
 #include <QtTest/QtTest>
@@ -58,6 +59,12 @@ class TestBase : public QObject
   static void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 
 };
+
+namespace Mdt{ namespace ItemEditor{
+
+  char *toString(ControllerState state);
+
+}} // namespace Mdt{ namespace ItemEditor{
 
 #define MDT_ITEM_EDITOR_TEST_MAIN_IMPL(TestClass, debugEnv) \
 int main(int argc, char **argv) \

@@ -18,24 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "NavigationControllerRelation.h"
-#include "AbstractController.h"
+#include "Debug.h"
+#include <QDebugStateSaver>
 
 namespace Mdt{ namespace ItemEditor{
 
-NavigationControllerRelation::NavigationControllerRelation(QObject* parent)
- : AbstractControllerRelation(parent)
-{
-}
-
-void NavigationControllerRelation::childControllerChangedEvent(AbstractController* controller)
-{
-  Q_ASSERT(controller != nullptr);
-
-  disconnect(mCurrentRowChangeConnection);
-  mCurrentRowChangeConnection = 
-    connect(parentController(), &AbstractController::currentRowChanged, controller, &AbstractController::setCurrentRow);
-}
-
-
 }} // namespace Mdt{ namespace ItemEditor{
+
+QDebug operator<<(QDebug debug, Mdt::ItemEditor::ControllerState state)
+{
+  QDebugStateSaver ds(debug);
+  debug.nospace() << Mdt::ItemEditor::controllerStateText(state);
+
+  return debug;
+}

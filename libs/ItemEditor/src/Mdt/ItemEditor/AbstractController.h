@@ -111,6 +111,8 @@ namespace Mdt{ namespace ItemEditor{
    */
   class AbstractController : public QObject
   {
+   friend class AbstractControllerRelation;
+
    Q_OBJECT
 
    public:
@@ -600,8 +602,8 @@ namespace Mdt{ namespace ItemEditor{
      */
     void controllerStateChanged(Mdt::ItemEditor::ControllerState newState);
 
-    /*! \brief Emitted whenever primary key changed
-     */
+//     /*! \brief Emitted whenever primary key changed
+//      */
 //     void primaryKeyChanged(const Mdt::ItemModel::PrimaryKey & pk);
 
    protected:
@@ -635,12 +637,12 @@ namespace Mdt{ namespace ItemEditor{
      */
     void registerModel(QAbstractItemModel *model);
 
-    /*! \brief Get model
-     *
-     * Returns the model set with registerModel(),
-     *  or a nullptr if no one was set,
-     *  or model was delete elsewhere in application.
-     */
+//     /*! \brief Get model
+//      *
+//      * Returns the model set with registerModel(),
+//      *  or a nullptr if no one was set,
+//      *  or model was delete elsewhere in application.
+//      */
 //     [[deprecated]]
 //     QAbstractItemModel *registeredModel() const
 //     {
@@ -712,10 +714,16 @@ namespace Mdt{ namespace ItemEditor{
    protected slots:
 
     /*! \brief Actions to perform once editing started
+     *
+     * Subclass implementing a concrete controller
+     *  should call this method whenever the user starts editing.
      */
     void onDataEditionStarted();
 
     /*! \brief Actions to perform once editing ended
+     *
+     * Subclass implementing a concrete controller
+     *  should call this method whenever edition was done.
      */
     void onDataEditionDone();
 

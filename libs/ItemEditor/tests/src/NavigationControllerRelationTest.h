@@ -31,6 +31,9 @@ class NavigationControllerRelationTest : public TestBase
 
   void initTestCase();
   void cleanupTestCase();
+
+  void setControllersTest();
+  void setCurrentRowTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_NAVIGATION_CONTROLLER_RELATION_TEST_H

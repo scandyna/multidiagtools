@@ -30,6 +30,7 @@
 #include <QDialog>
 #include <QGridLayout>
 #include <QLabel>
+#include <QByteArray>
 #include <QDebug>
 
 void TestBase::displayWidget(QWidget* widget)
@@ -202,3 +203,16 @@ void TestBase::edit(QAbstractItemView& view, const QModelIndex& index, const QSt
 {
   ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
 }
+
+namespace Mdt{ namespace ItemEditor{
+
+char* toString(ControllerState state)
+{
+  // bring QTest::toString overloads into scope:
+  using QTest::toString;
+  // delegate char* handling to QTest::toString(QByteArray):
+  return toString( controllerStateText(state) );
+//   return toString( QByteArray("ControllerState(") + controllerStateText(state) + QByteArray(")") );
+}
+
+}} // namespace Mdt{ namespace ItemEditor{

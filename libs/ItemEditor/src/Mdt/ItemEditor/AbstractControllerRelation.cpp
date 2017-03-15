@@ -28,17 +28,6 @@ AbstractControllerRelation::AbstractControllerRelation(QObject* parent)
 {
 }
 
-// AbstractControllerRelation::AbstractControllerRelation(AbstractController *parentController, QObject* parent)
-//  : QObject(parent),
-//    mParentController(parentController)
-// {
-//   Q_ASSERT(!mParentController.isNull());
-// 
-// //   Q_ASSERT(parentController != nullptr);
-// 
-//   connect(parentController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::setParentControllerState);
-// }
-
 void AbstractControllerRelation::setParentController(AbstractController* controller)
 {
   if(controller == mParentController){
@@ -59,9 +48,11 @@ void AbstractControllerRelation::setParentController(AbstractController* control
   mParentControllerModelChangedConnection = 
     connect( mParentController, &AbstractController::modelForViewChanged, this, &AbstractControllerRelation::parentControllerModelChangedEvent );
 
+  disconnect(mParentControllerStateChagedConnection);
+  mParentControllerStateChagedConnection =
+    connect( mParentController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::onParentControllerStateChanged );
+
   parentControllerChangedEvent(mParentController);
-  
-//   connect(parentController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::setParentControllerState);
 }
 
 void AbstractControllerRelation::setChildController(AbstractController* controller)
@@ -83,7 +74,11 @@ void AbstractControllerRelation::setChildController(AbstractController* controll
   disconnect(mChildControllerModelChangedConnection);
   mChildControllerModelChangedConnection = 
     connect( mChildController, &AbstractController::modelForViewChanged, this, &AbstractControllerRelation::childControllerModelChangedEvent );
-  
+
+  disconnect(mChildControllerStateChagedConnection);
+  mChildControllerStateChagedConnection =
+    connect( mChildController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::onChildControllerStateChanged );
+
   childControllerChangedEvent(mChildController);
 }
 
@@ -135,14 +130,6 @@ void AbstractControllerRelation::childControllerModelChangedEvent(QAbstractItemM
 }
 
 
-// void AbstractControllerRelation::registerAbstractChildController(AbstractController* controller)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   disconnect(mChildControllerStateChagedConnection);
-//   mChildControllerStateChagedConnection = 
-//     connect(controller, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::setChildControllerState);
-// }
 
 void AbstractControllerRelation::parentControllerStateChangedEvent(ControllerState)
 {
@@ -152,14 +139,22 @@ void AbstractControllerRelation::childControllerStateChangedEvent(ControllerStat
 {
 }
 
-void AbstractControllerRelation::setParentControllerState(ControllerState newState)
+void AbstractControllerRelation::onParentControllerStateChanged(ControllerState newState)
 {
-
+  if(!mChildController.isNull()){
+    if(mChildController->controllerState() != newState){
+      mChildController->setControllerState(newState);
+    }
+  }
 }
 
-void AbstractControllerRelation::setChildControllerState(ControllerState newState)
+void AbstractControllerRelation::onChildControllerStateChanged(ControllerState newState)
 {
-
+  if(!mParentController.isNull()){
+    if(mParentController->controllerState() != newState){
+      mParentController->setControllerState(newState);
+    }
+  }
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

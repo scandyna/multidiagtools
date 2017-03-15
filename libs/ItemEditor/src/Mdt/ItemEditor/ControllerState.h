@@ -23,6 +23,8 @@
 
 #include <QMetaType>
 
+class QByteArray;
+
 namespace Mdt{ namespace ItemEditor{
 
   /*! \brief State of item editor controller
@@ -35,6 +37,12 @@ namespace Mdt{ namespace ItemEditor{
   };
 
   /// \todo Add ModelNotSet (or NoModelSet) state ?
+
+  /*! \brief Get text version of \a state
+   *
+   * \sa operator<<(QDebug, Mdt::ItemEditor::ControllerState)
+   */
+  QByteArray controllerStateText(ControllerState state);
 
 }} // namespace Mdt{ namespace ItemEditor{
 

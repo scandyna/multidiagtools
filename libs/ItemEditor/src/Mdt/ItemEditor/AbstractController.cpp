@@ -21,6 +21,7 @@
 #include "AbstractController.h"
 #include "RowChangeEventDispatcher.h"
 #include "ControllerStatePermission.h"
+#include "NavigationControllerRelation.h"
 #include "FilterControllerRelation.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
@@ -29,7 +30,7 @@
 
 #include <QAbstractItemModel>
 
-#include <QDebug>
+#include "Debug.h"
 
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::FilterProxyModel;
@@ -274,6 +275,7 @@ void AbstractController::setNavigationController(AbstractController* controller)
 {
   Q_ASSERT(controller != nullptr);
 
+  controller->mRelationList.addChildController<NavigationControllerRelation>(this);
 }
 
 bool AbstractController::setCurrentRow(int row)
@@ -328,9 +330,12 @@ void AbstractController::toLast()
 
 bool AbstractController::submit()
 {
-//   if(!ControllerStatePermission::canSubmit(mControllerState)){
   if(!canSubmit()){
-    qDebug() << "AbstractController: connot submit in state " << (int)mControllerState;
+    qDebug() << "AbstractController: connot submit in state " << controllerStateText(mControllerState);
+    return false;
+  }
+  if(!mRelationList.submitForEachChild()){
+    qDebug() << "AbstractController: submit failed for a child controller";
     return false;
   }
   if(!submitDataToModel()){
@@ -345,10 +350,10 @@ bool AbstractController::submit()
 
 void AbstractController::revert()
 {
-//   if(!ControllerStatePermission::canRevert(mControllerState)){
   if(!canRevert()){
     return;
   }
+  mRelationList.revertForEachChild();
   revertDataFromModel();
 }
 
@@ -481,6 +486,7 @@ void AbstractController::setControllerState(ControllerState state)
   }else{ /// \todo ??
     mControllerState = state;
   }
+  qDebug() << "AC " << this << ": new state: " << mControllerState;
 }
 
 FilterProxyModel* AbstractController::filterModel() const
