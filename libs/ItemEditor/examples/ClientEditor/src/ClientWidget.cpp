@@ -21,6 +21,7 @@
 #include "ClientWidget.h"
 #include "ClientModel.h"
 #include "Mdt/ItemModel/FormatProxyModel.h"
+#include "Mdt/ItemEditor/WidgetMapperController.h"
 
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
@@ -31,13 +32,13 @@ ClientWidget::ClientWidget(QWidget* parent)
   setObjectName("ClientWidget");
   setModel(new ClientModel(this));
   setupUi(this);
-  auto *ctlr = controller();
-  ctlr->setPrimaryKey({0});
-  ctlr->setPrimaryKeyEditable(false);
-  ctlr->setPrimaryKeyItemsEnabled(false);
-  ctlr->addMapping(fld_Id, 0);
-  ctlr->addMapping(fld_Name, 1);
-  ctlr->setInsertLocation(WidgetMapperController::InsertAtEnd);
+  auto *ctrl = controller();
+  ctrl->setPrimaryKey({0});
+  ctrl->setPrimaryKeyEditable(false);
+  ctrl->setPrimaryKeyItemsEnabled(false);
+  ctrl->addMapping(fld_Id, 0);
+  ctrl->addMapping(fld_Name, 1);
+  ctrl->setInsertLocation(WidgetMapperController::InsertAtEnd);
   /*
    * Setup formatting
    */
@@ -46,4 +47,11 @@ ClientWidget::ClientWidget(QWidget* parent)
   formatModel->setTextFontForColumn(1, QFont("Times", 14));
   formatModel->setTextColorForColumn(1, QColor(0,0,255));
   appendProxyModel(formatModel);
+
+  connect(ctrl, &WidgetMapperController::controllerStateChanged, this, &ClientWidget::onControllerStateChanged);
+}
+
+void ClientWidget::onControllerStateChanged(ControllerState state)
+{
+  fld_State->setText( controllerStateText(state) );
 }

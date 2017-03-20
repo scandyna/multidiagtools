@@ -23,6 +23,8 @@
 
 #include "Mdt/ItemEditor/TableViewWidget.h"
 
+class QLabel;
+
 /*! \brief Table view based widget to edit addresses
  */
 class AddressWidget : public Mdt::ItemEditor::TableViewWidget
@@ -32,6 +34,14 @@ class AddressWidget : public Mdt::ItemEditor::TableViewWidget
  public:
 
   explicit AddressWidget(QWidget* parent = nullptr);
+
+ public slots:
+
+  void onControllerStateChanged(Mdt::ItemEditor::ControllerState state);
+
+ private:
+
+  QLabel *mStateLabel;
 };
 
 #endif // #ifndef ADDRESS_WIDGET_H

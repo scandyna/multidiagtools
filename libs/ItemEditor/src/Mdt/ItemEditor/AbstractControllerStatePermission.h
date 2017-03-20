@@ -30,6 +30,18 @@ namespace Mdt{ namespace ItemEditor{
    * Implements permissions regarding controller state for all actions.
    *  While implementing a concrete controller, which needs other permission for certain action,
    *  subclass AbstractControllerStatePermission.
+   *
+   * A controller will check if it can do a action calling a can method
+   *  (for example canChangeCurrentRow() ).
+   *
+   * Actions (see AbstractActionContainer) will set their enable state calling a is..ActionEnabled method
+   *  (for example isChangeCurrentRowActionEnabled() ).
+   *
+   * For common cases, a can method and a is..ActionEnabled method will return the same result.
+   *  When many controllers are related (parent/child relations), this can change.
+   *  For example, if we start editing in a parent controller,
+   *  we not want the submit action be enabled in the child controller (this is not intuitive),
+   *  but submit must be possible in the child controller.
    */
   class AbstractControllerStatePermission
   {

@@ -22,6 +22,7 @@
 #include "AddressModel.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemModel/FormatProxyModel.h"
+#include <QLabel>
 
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
@@ -59,4 +60,14 @@ AddressWidget::AddressWidget(QWidget* parent)
   font.setBold(true);
   formatModel->setTextFontForColumn(2, font);
   appendProxyModel(formatModel);
+
+  addWidgetToTopArea(new QLabel("State: "));
+  mStateLabel = new QLabel;
+  addWidgetToTopArea(mStateLabel);
+  connect(ctrl, &TableViewController::controllerStateChanged, this, &AddressWidget::onControllerStateChanged);
+}
+
+void AddressWidget::onControllerStateChanged(Mdt::ItemEditor::ControllerState state)
+{
+  mStateLabel->setText( controllerStateText(state) );
 }

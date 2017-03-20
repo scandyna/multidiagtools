@@ -113,11 +113,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Parent controller's state changed event
      */
-    virtual void parentControllerStateChangedEvent(ControllerState newState);
+    virtual void parentControllerStateChangedEvent(ControllerState parentState);
 
     /*! \brief Child controller's state changed event
      */
-    virtual void childControllerStateChangedEvent(ControllerState newState);
+    virtual void childControllerStateChangedEvent(ControllerState childState);
 
    private slots:
 
@@ -130,6 +130,8 @@ namespace Mdt{ namespace ItemEditor{
     void onChildControllerStateChanged(Mdt::ItemEditor::ControllerState newState);
 
  private:
+
+//     bool mustUpdateParentControllerState(ControllerState state) const;
 
     QPointer<AbstractController> mParentController;
     QPointer<AbstractController> mChildController;

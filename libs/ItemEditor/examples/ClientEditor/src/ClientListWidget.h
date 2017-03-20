@@ -22,8 +22,10 @@
 #define CLIENT_LIST_WIDGET_H
 
 #include "Mdt/ItemEditor/TableViewWidget.h"
+#include "Mdt/ItemEditor/ControllerState.h"
 
 class ClientModel;
+class QLabel;
 
 /*! \brief Table view based widget to list clients
  */
@@ -34,6 +36,14 @@ class ClientListWidget : public Mdt::ItemEditor::TableViewWidget
  public:
 
   explicit ClientListWidget(QWidget* parent = nullptr);
+
+ public slots:
+
+  void onControllerStateChanged(Mdt::ItemEditor::ControllerState state);
+
+ private:
+
+  QLabel *mStateLabel;
 };
 
 #endif // #ifndef CLIENT_LIST_WIDGET_H

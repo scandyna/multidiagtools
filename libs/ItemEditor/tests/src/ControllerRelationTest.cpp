@@ -30,6 +30,7 @@
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ControllerRelationList.h"
+#include "Mdt/ItemEditor/ControllerRelationStateMapper.h"
 #include <QSignalSpy>
 #include <QStringListModel>
 #include <QTableView>
@@ -229,6 +230,26 @@ void ControllerRelationTest::setModelToControllersAfterTest()
   QCOMPARE(childController.modelForView(), &childModel);
 }
 
+void ControllerRelationTest::stateMapperTest()
+{
+  /*
+   * Get child controller state for parent controller state
+   */
+  
+  /*
+   * Get parent controller state for child controller state
+   */
+  
+  // Parent controller Editing
+  QCOMPARE(ControllerRelationStateMapper::childControllerState(ControllerState::Editing), ControllerState::ParentEditing);
+  QCOMPARE(ControllerRelationStateMapper::parentControllerState(ControllerState::ParentEditing), ControllerState::Editing);
+  // Child controller Editing
+  QCOMPARE(ControllerRelationStateMapper::parentControllerState(ControllerState::Editing), ControllerState::ChildEditing);
+  QCOMPARE(ControllerRelationStateMapper::childControllerState(ControllerState::ChildEditing), ControllerState::Editing);
+  
+  QFAIL("Not complete");
+}
+
 void ControllerRelationTest::changeParentControllerStateTest()
 {
   /*
@@ -254,12 +275,17 @@ void ControllerRelationTest::changeParentControllerStateTest()
   QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
   QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
   /*
-   * Edit
+   * Start editing from parent controller
    */
-  /// \todo Fix in which state child controller must be
   parentController.startEditing();
   QCOMPARE(parentController.controllerState(), ControllerState::Editing);
-  QCOMPARE(childController.controllerState(), ControllerState::Editing);
+  QCOMPARE(childController.controllerState(), ControllerState::ParentEditing);
+  /*
+   * Stop editing
+   */
+  QVERIFY(parentController.submit());
+  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
 
   QFAIL("Not complete");
 }
@@ -289,12 +315,17 @@ void ControllerRelationTest::changeChildControllerStateTest()
   QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
   QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
   /*
-   * Edit
+   * Start editing from child controller
    */
-  /// \todo Fix in which state parent controller must be
   childController.startEditing();
-  QCOMPARE(parentController.controllerState(), ControllerState::Editing);
+  QCOMPARE(parentController.controllerState(), ControllerState::ChildEditing);
   QCOMPARE(childController.controllerState(), ControllerState::Editing);
+  /*
+   * Stop editing
+   */
+  QVERIFY(childController.submit());
+  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
 
   QFAIL("Not complete");
 }

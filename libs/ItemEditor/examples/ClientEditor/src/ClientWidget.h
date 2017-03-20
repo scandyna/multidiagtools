@@ -35,6 +35,10 @@ class ClientWidget : public Mdt::ItemEditor::AbstractFormWidget, Ui::ClientWidge
   /*! \brief Constructor
    */
   explicit ClientWidget(QWidget* parent = nullptr);
+
+ public slots:
+
+  void onControllerStateChanged(Mdt::ItemEditor::ControllerState state);
 };
 
 #endif // #ifndef CLIENT_WIDGET_H

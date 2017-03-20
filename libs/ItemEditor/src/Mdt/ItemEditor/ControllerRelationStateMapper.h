@@ -18,34 +18,28 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ClientListWidget.h"
-#include "Mdt/ItemEditor/TableViewController.h"
-#include <QLabel>
-// #include <QComboBox>
+#ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_STATE_MAPPER_H
+#define MDT_ITEM_EDITOR_CONTROLLER_RELATION_STATE_MAPPER_H
 
-using namespace Mdt::ItemEditor;
+#include "ControllerState.h"
 
-ClientListWidget::ClientListWidget(QWidget* parent)
- : TableViewWidget(parent)
-{
-  setObjectName("ClientListWidget");
-  addResizeToContentsActionToTopBar();
-  auto ctrl = controller();
-  ctrl->setPrimaryKey({0});
-  ctrl->setPrimaryKeyHidden(true);
+namespace Mdt{ namespace ItemEditor{
 
-//   auto *cb = new QComboBox;
-//   cb->addItem("Filter");
-//   cb->addItem("Navigate");
-//   addWidgetToTopArea(cb);
+  /*! \brief Mapping between state of a parent controller and a child controller
+   */
+  class ControllerRelationStateMapper
+  {
+   public:
 
-  addWidgetToTopArea(new QLabel("State: "));
-  mStateLabel = new QLabel;
-  addWidgetToTopArea(mStateLabel);
-  connect(ctrl, &TableViewController::controllerStateChanged, this, &ClientListWidget::onControllerStateChanged);
-}
+    /*! \brief Get parent controller state for given child controller state
+     */
+    static ControllerState parentControllerState(ControllerState childControllerState);
 
-void ClientListWidget::onControllerStateChanged(Mdt::ItemEditor::ControllerState state)
-{
-  mStateLabel->setText( controllerStateText(state) );
-}
+    /*! \brief Get child controller state for given parent controller state
+     */
+    static ControllerState childControllerState(ControllerState parentControllerState);
+  };
+
+}} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_STATE_MAPPER_H

@@ -33,6 +33,10 @@ QByteArray controllerStateText(ControllerState state)
       return QByteArray("Editing");
     case ControllerState::Inserting:
       return QByteArray("Inserting");
+    case ControllerState::ChildEditing:
+      return QByteArray("ChildEditing");
+    case ControllerState::ParentEditing:
+      return QByteArray("ParentEditing");
   }
   return QByteArray();
 }

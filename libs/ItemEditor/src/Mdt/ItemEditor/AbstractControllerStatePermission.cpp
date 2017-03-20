@@ -31,6 +31,10 @@ bool AbstractControllerStatePermission::canChangeCurrentRow(ControllerState stat
       return false;
     case ControllerState::Inserting:
       return false;
+    case ControllerState::ChildEditing:
+      return false;
+    case ControllerState::ParentEditing:
+      return true;
   }
   return false;
 }
@@ -43,6 +47,10 @@ bool AbstractControllerStatePermission::canInsert(ControllerState state) const
     case ControllerState::Editing:
       return false;
     case ControllerState::Inserting:
+      return true;
+    case ControllerState::ChildEditing:
+      return false;
+    case ControllerState::ParentEditing:
       return true;
   }
   return false;
@@ -57,6 +65,10 @@ bool AbstractControllerStatePermission::canSubmit(ControllerState state) const
       return true;
     case ControllerState::Inserting:
       return true;
+    case ControllerState::ChildEditing:
+      return true;
+    case ControllerState::ParentEditing:
+      return true;
   }
   return false;
 }
@@ -69,6 +81,10 @@ bool AbstractControllerStatePermission::canRevert(ControllerState state) const
     case ControllerState::Editing:
       return true;
     case ControllerState::Inserting:
+      return false;
+    case ControllerState::ChildEditing:
+      return true;
+    case ControllerState::ParentEditing:
       return false;
   }
   return false;
@@ -83,6 +99,10 @@ bool AbstractControllerStatePermission::canRemove(ControllerState state) const
       return false;
     case ControllerState::Inserting:
       return true;
+    case ControllerState::ChildEditing:
+      return false;
+    case ControllerState::ParentEditing:
+      return true;
   }
   return false;
 }
@@ -95,6 +115,10 @@ bool AbstractControllerStatePermission::canSelect(ControllerState state) const
     case ControllerState::Editing:
       return false;
     case ControllerState::Inserting:
+      return false;
+    case ControllerState::ChildEditing:
+      return false;
+    case ControllerState::ParentEditing:
       return false;
   }
   return false;

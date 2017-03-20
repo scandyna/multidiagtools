@@ -18,26 +18,40 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TableViewControllerStatePermission.h"
+#include "ControllerRelationStateMapper.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-bool TableViewControllerStatePermission::canInsert(ControllerState state) const
+ControllerState ControllerRelationStateMapper::parentControllerState(ControllerState childControllerState)
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
+  switch(childControllerState){
     case ControllerState::Editing:
-      return false;
-    case ControllerState::Inserting:
-      return true;
+      return ControllerState::ChildEditing;
     case ControllerState::ChildEditing:
-      return false;
+      return ControllerState::Editing;
     case ControllerState::ParentEditing:
-      return true;
+      return ControllerState::Editing;
+    case ControllerState::Inserting:
+    case ControllerState::Visualizing:
+      break;
   }
-  return false;
+  return childControllerState;
 }
 
+ControllerState ControllerRelationStateMapper::childControllerState(ControllerState parentControllerState)
+{
+  switch(parentControllerState){
+    case ControllerState::Editing:
+      return ControllerState::ParentEditing;
+    case ControllerState::ChildEditing:
+      return ControllerState::Editing;
+    case ControllerState::ParentEditing:
+      return ControllerState::Editing;
+    case ControllerState::Inserting:
+    case ControllerState::Visualizing:
+      break;
+  }
+  return parentControllerState;
+}
 
 }} // namespace Mdt{ namespace ItemEditor{

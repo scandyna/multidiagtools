@@ -20,6 +20,9 @@
  ****************************************************************************/
 #include "AbstractControllerRelation.h"
 #include "AbstractController.h"
+#include "ControllerRelationStateMapper.h"
+
+#include "Debug.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -129,8 +132,6 @@ void AbstractControllerRelation::childControllerModelChangedEvent(QAbstractItemM
 {
 }
 
-
-
 void AbstractControllerRelation::parentControllerStateChangedEvent(ControllerState)
 {
 }
@@ -139,22 +140,34 @@ void AbstractControllerRelation::childControllerStateChangedEvent(ControllerStat
 {
 }
 
-void AbstractControllerRelation::onParentControllerStateChanged(ControllerState newState)
+void AbstractControllerRelation::onParentControllerStateChanged(ControllerState parentState)
 {
   if(!mChildController.isNull()){
-    if(mChildController->controllerState() != newState){
-      mChildController->setControllerState(newState);
+    const auto state = ControllerRelationStateMapper::childControllerState(parentState);
+    qDebug() << "ACR: new parent state: " << parentState << " -> child state: " << state;
+    if(mChildController->controllerState() != state){
+      mChildController->setControllerState(state);
     }
   }
 }
 
-void AbstractControllerRelation::onChildControllerStateChanged(ControllerState newState)
+void AbstractControllerRelation::onChildControllerStateChanged(ControllerState childState)
 {
   if(!mParentController.isNull()){
-    if(mParentController->controllerState() != newState){
-      mParentController->setControllerState(newState);
+    const auto state = ControllerRelationStateMapper::parentControllerState(childState);
+    qDebug() << "ACR: new child state: " << childState << " -> parent state: " << state;
+    if(mParentController->controllerState() != state ){
+      mParentController->setControllerState(state);
     }
   }
 }
+
+// bool AbstractControllerRelation::mustUpdateParentControllerState(ControllerState state) const
+// {
+//   Q_ASSERT(!mChildController.isNull());
+// 
+//   return ( (state != mParentController->controllerState()) );
+// //   return ( (state != ControllerState::ChildEditing) && (state != mParentController->controllerState()) );
+// }
 
 }} // namespace Mdt{ namespace ItemEditor{

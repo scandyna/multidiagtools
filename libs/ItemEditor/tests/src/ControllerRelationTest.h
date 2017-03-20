@@ -35,8 +35,11 @@ class ControllerRelationTest : public TestBase
   void setControllersTest();
   void setModelToControllersFirstTest();
   void setModelToControllersAfterTest();
+
+  void stateMapperTest();
   void changeParentControllerStateTest();
   void changeChildControllerStateTest();
+
   void submitRevertStateTest();
   void submitRevertDataTest();
 
