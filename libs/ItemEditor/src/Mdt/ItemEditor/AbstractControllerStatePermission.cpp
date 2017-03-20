@@ -85,6 +85,15 @@ bool AbstractControllerStatePermission::canSubmit(ControllerState state) const
 
 bool AbstractControllerStatePermission::isSubmitActionEnabled(ControllerState state) const
 {
+  switch(state){
+    case ControllerState::ParentEditing:
+      return false;
+    case ControllerState::Visualizing:
+    case ControllerState::Editing:
+    case ControllerState::Inserting:
+    case ControllerState::ChildEditing:
+      break;
+  }
   return canSubmit(state);
 }
 
@@ -100,13 +109,22 @@ bool AbstractControllerStatePermission::canRevert(ControllerState state) const
     case ControllerState::ChildEditing:
       return true;
     case ControllerState::ParentEditing:
-      return false;
+      return true;
   }
   return false;
 }
 
 bool AbstractControllerStatePermission::isRevertActionEnabled(ControllerState state) const
 {
+  switch(state){
+    case ControllerState::ParentEditing:
+      return false;
+    case ControllerState::Visualizing:
+    case ControllerState::Editing:
+    case ControllerState::Inserting:
+    case ControllerState::ChildEditing:
+      break;
+  }
   return canRevert(state);
 }
 

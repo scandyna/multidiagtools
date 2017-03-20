@@ -65,43 +65,68 @@ void TableViewControllerTest::statePermissionTest()
   auto permission = controller.controllerStatePermission();
 
   // Current row change
-  QVERIFY(permission.canChangeCurrentRow(ControllerState::Visualizing));
+  QVERIFY( permission.canChangeCurrentRow(ControllerState::Visualizing));
+  QVERIFY( permission.isChangeCurrentRowActionEnabled(ControllerState::Visualizing));
   QVERIFY(!permission.canChangeCurrentRow(ControllerState::Editing));
+  QVERIFY(!permission.isChangeCurrentRowActionEnabled(ControllerState::Editing));
   QVERIFY(!permission.canChangeCurrentRow(ControllerState::Inserting));
+  QVERIFY(!permission.isChangeCurrentRowActionEnabled(ControllerState::Inserting));
   QVERIFY(!permission.canChangeCurrentRow(ControllerState::ChildEditing));
-  QVERIFY(permission.canChangeCurrentRow(ControllerState::ParentEditing));
+  QVERIFY(!permission.isChangeCurrentRowActionEnabled(ControllerState::ChildEditing));
+  QVERIFY( permission.canChangeCurrentRow(ControllerState::ParentEditing));
+  QVERIFY( permission.isChangeCurrentRowActionEnabled(ControllerState::ParentEditing));
   // Submit
   QVERIFY(!permission.canSubmit(ControllerState::Visualizing));
-  QVERIFY(permission.canSubmit(ControllerState::Editing));
+  QVERIFY(!permission.isSubmitActionEnabled(ControllerState::Visualizing));
+  QVERIFY( permission.canSubmit(ControllerState::Editing));
+  QVERIFY( permission.isSubmitActionEnabled(ControllerState::Editing));
 //   QVERIFY(!permission.canSubmit(ControllerState::Inserting));
-  QVERIFY(permission.canSubmit(ControllerState::ChildEditing));
-  QVERIFY(!permission.canSubmit(ControllerState::ParentEditing));
+//   QVERIFY(!permission.isInsertActionEnabled(ControllerState::Inserting));
+  QVERIFY( permission.canSubmit(ControllerState::ChildEditing));
+  QVERIFY( permission.isSubmitActionEnabled(ControllerState::ChildEditing));
+  QVERIFY( permission.canSubmit(ControllerState::ParentEditing));
+  QVERIFY(!permission.isSubmitActionEnabled(ControllerState::ParentEditing));
   // Revert
   QVERIFY(!permission.canRevert(ControllerState::Visualizing));
-  QVERIFY(permission.canRevert(ControllerState::Editing));
+  QVERIFY(!permission.isRevertActionEnabled(ControllerState::Visualizing));
+  QVERIFY( permission.canRevert(ControllerState::Editing));
+  QVERIFY( permission.isRevertActionEnabled(ControllerState::Editing));
   QVERIFY(!permission.canRevert(ControllerState::Inserting));
-  QVERIFY(permission.canRevert(ControllerState::ChildEditing));
-  QVERIFY(!permission.canRevert(ControllerState::ParentEditing));
+  QVERIFY(!permission.isRevertActionEnabled(ControllerState::Inserting));
+  QVERIFY( permission.canRevert(ControllerState::ChildEditing));
+  QVERIFY( permission.isRevertActionEnabled(ControllerState::ChildEditing));
+  QVERIFY( permission.canRevert(ControllerState::ParentEditing));
+  QVERIFY(!permission.isRevertActionEnabled(ControllerState::ParentEditing));
   // Insert
-  QVERIFY(permission.canInsert(ControllerState::Visualizing));
+  QVERIFY( permission.canInsert(ControllerState::Visualizing));
+  QVERIFY( permission.isInsertActionEnabled(ControllerState::Visualizing));
   QVERIFY(!permission.canInsert(ControllerState::Editing));
+  QVERIFY(!permission.isInsertActionEnabled(ControllerState::Editing));
 //   QVERIFY(!permission.canInsert(ControllerState::Inserting));
+//   QVERIFY(!permission.isInsertActionEnabled(ControllerState::Inserting));
   QVERIFY(!permission.canInsert(ControllerState::ChildEditing));
-  QVERIFY(permission.canInsert(ControllerState::ParentEditing));
+  QVERIFY(!permission.isInsertActionEnabled(ControllerState::ChildEditing));
+  QVERIFY( permission.canInsert(ControllerState::ParentEditing));
+  QVERIFY( permission.isInsertActionEnabled(ControllerState::ParentEditing));
   // Remove
-  QVERIFY(permission.canRemove(ControllerState::Visualizing));
+  QVERIFY( permission.canRemove(ControllerState::Visualizing));
+  QVERIFY( permission.isRemoveActionEnabled(ControllerState::Visualizing));
   QVERIFY(!permission.canRemove(ControllerState::Editing));
-  QVERIFY(permission.canRemove(ControllerState::Inserting));
+  QVERIFY(!permission.isRemoveActionEnabled(ControllerState::Editing));
+  QVERIFY( permission.canRemove(ControllerState::Inserting));
+  QVERIFY( permission.isRemoveActionEnabled(ControllerState::Inserting));
   QVERIFY(!permission.canRemove(ControllerState::ChildEditing));
-  QVERIFY(permission.canRemove(ControllerState::ParentEditing));
+  QVERIFY(!permission.isRemoveActionEnabled(ControllerState::ChildEditing));
+  QVERIFY( permission.canRemove(ControllerState::ParentEditing));
+  QVERIFY( permission.isRemoveActionEnabled(ControllerState::ParentEditing));
   // Select
-  QVERIFY(permission.canSelect(ControllerState::Visualizing));
-  QVERIFY(!permission.canSelect(ControllerState::Editing));
-  QVERIFY(!permission.canSelect(ControllerState::Inserting));
-  QVERIFY(!permission.canSelect(ControllerState::ChildEditing));
-  QVERIFY(!permission.canSelect(ControllerState::ParentEditing));
+//   QVERIFY(permission.canSelect(ControllerState::Visualizing));
+//   QVERIFY(!permission.canSelect(ControllerState::Editing));
+//   QVERIFY(!permission.canSelect(ControllerState::Inserting));
+//   QVERIFY(!permission.canSelect(ControllerState::ChildEditing));
+//   QVERIFY(!permission.canSelect(ControllerState::ParentEditing));
 
-  QFAIL("Not complete - Check also Insert");
+  QFAIL("Not complete - Check also Insert + Select");
 }
 
 void TableViewControllerTest::setModelTest()
