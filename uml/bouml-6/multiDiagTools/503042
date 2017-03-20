@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 176
+  revision 184
   modified_by 2 "philippe"
   // class settings
   
@@ -2485,6 +2485,185 @@ ${inlines}
     end
   end
 
+  classview 1774850 "ModelWrapper"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3360642 "ModelWrapper"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 3890818 "AbstractModelWrapper"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5482882 "~AbstractModelWrapper"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 5483010 "submit"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5483138 "lastError"
+	abstract cpp_virtual public return_type class_ref 182402 // Error
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3890946 "SqlTableModelWrapper"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4358530 // <unidirectional association>
+	relation 4332546 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4358530 // <unidirectional association>
+	  b parent class_ref 174210 // QSqlTableModel
+      end
+
+      classrelation 4358658 // <generalisation>
+	relation 4332674 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4358658 // <generalisation>
+	  b parent class_ref 3890818 // AbstractModelWrapper
+      end
+
+      operation 5483650 "submit"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5483778 "lastError"
+	cpp_virtual public return_type class_ref 182402 // Error
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3891202 "SqlQueryModelWrapper"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4358786 // <generalisation>
+	relation 4332802 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4358786 // <generalisation>
+	  b parent class_ref 3890818 // AbstractModelWrapper
+      end
+
+      operation 5483906 "lastError"
+	cpp_virtual public return_type class_ref 182402 // Error
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4358914 // <unidirectional association>
+	relation 4332930 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4358914 // <unidirectional association>
+	  b parent class_ref 174338 // QSqlQueryModel
+      end
+    end
+  end
+
   classview 1768322 "ControllerState"
     
     classdiagramsettings member_max_width 0 end
@@ -2560,6 +2739,28 @@ ${items}};
 	mysql_decl ""
 	MysqlColumn
       end
+
+      attribute 3400066 "ChildEditing"
+	public explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3400194 "ParentEditing"
+	public explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     classdiagram 2807170 "Permissions"
@@ -2603,6 +2804,18 @@ ${inlines}
 	
 	
       end
+
+      operation 5490946 "isInsertActionEnabled"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
     end
 
     class 3870466 "TableViewControllerStatePermission"
@@ -2626,6 +2839,22 @@ ${inlines}
 	    classrelation_ref 4324866 // <generalisation>
 	  b parent class_ref 3870338 // AbstractControllerStatePermission
       end
+
+      operation 5484418 "canInsert"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 3870594 "WidgetMapperControllerStatePermission"
@@ -2648,6 +2877,22 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 4324994 // <generalisation>
 	  b parent class_ref 3870338 // AbstractControllerStatePermission
+      end
+
+      operation 5484290 "canInsert"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -2706,6 +2951,22 @@ ${inlines}
       end
 
       operation 5426562 "canInsert"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5491074 "isInsertActionEnabled"
 	public explicit_return_type "bool"
 	nparams 1
 	  param in name "state" type class_ref 2684930 // ControllerState
@@ -3231,6 +3492,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4365570 // <directional composition>
+	relation 4339586 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4365570 // <directional composition>
+	  b parent class_ref 3890818 // AbstractModelWrapper
       end
     end
 
@@ -4224,6 +4494,11 @@ ${inlines}
       mysql_decl ""
       
     end
+
+    classdiagram 3367426 "Controller2overview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size A4
+    end
   end
 
   classview 1676418 "Relation"
@@ -4398,6 +4673,30 @@ ${inlines}
 	
       end
 
+      operation 5476098 "childControllerAboutToChangeEvent"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 1
+	  param in name "oldController" type class_ref 3648002 // AbstractController
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5476226 "childControllerChangedEvent"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 1
+	  param in name "controller" type class_ref 3648002 // AbstractController
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
       operation 5454210 "unregisterChildController"
 	abstract cpp_virtual protected explicit_return_type "void"
 	nparams 1
@@ -4434,32 +4733,6 @@ ${inlines}
 	
       end
 
-      operation 5239554 "setParentControllerState"
-	stereotype "slot"
-	abstract cpp_virtual protected explicit_return_type ""
-	nparams 1
-	  param in name "state" type class_ref 2684930 // ControllerState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 5239810 "setChildControllerState"
-	stereotype "slot"
-	abstract cpp_virtual protected explicit_return_type ""
-	nparams 1
-	  param in name "state" type class_ref 2684930 // ControllerState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
       operation 5246722 "abstractParentController"
 	abstract cpp_virtual protected return_type class_ref 3648002 // AbstractController
 	nparams 0
@@ -4482,15 +4755,25 @@ ${inlines}
 	
       end
 
-      operation 5246978 "registerAbstractChildController"
-	protected explicit_return_type "void"
+      operation 5239554 "onParentControllerStateChanged"
+	stereotype "slot"
+	abstract cpp_virtual private explicit_return_type ""
 	nparams 1
-	  param in name "controller" type class_ref 3648002 // AbstractController
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
+	
+	
+	
+	
+      end
+
+      operation 5239810 "onChildControllerStateChanged"
+	stereotype "slot"
+	abstract cpp_virtual private explicit_return_type ""
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -4634,24 +4917,8 @@ ${inlines}
 	  b parent class_ref 3749250 // AbstractControllerRelation
       end
 
-      operation 5454978 "registerChildController"
-	cpp_virtual private explicit_return_type "void"
-	nparams 1
-	  param in name "controller" type class_ref 3648002 // AbstractController
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5455106 "unregisterChildController"
-	cpp_virtual private explicit_return_type "void"
+      operation 5476354 "childControllerChangedEvent"
+	cpp_virtual protected explicit_return_type "void"
 	nparams 1
 	  param in name "controller" type class_ref 3648002 // AbstractController
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -4952,6 +5219,58 @@ ${inlines}
       end
     end
 
+    classdiagram 3360898 "ControllerRelationStateMapper"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3891330 "ControllerRelationStateMapper"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5484034 "parentControllerState"
+	class_operation public return_type class_ref 2684930 // ControllerState
+	nparams 1
+	  param in name "childControllerState" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5484162 "childControllerState"
+	class_operation public return_type class_ref 2684930 // ControllerState
+	nparams 1
+	  param in name "parentControllerState" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     classdiagram 3208706 "ControllerRelation"
       classdiagramsettings member_max_width 0 end
       size C
@@ -4979,7 +5298,6 @@ ${inlines}
 	    classrelation_ref 4093954 // <unidirectional association>
 	  b parent class_ref 3614594 // AbstractSqlController
       end
-
     end
 
     class 3601538 "ControllerRelationItemList"
@@ -5782,7 +6100,7 @@ ${inlines}
 	
       end
 
-      operation 5433730 "canInsert"
+      operation 5433730 "isInsertActionEnabled"
 	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};

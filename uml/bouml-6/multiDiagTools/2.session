@@ -5,35 +5,36 @@ diagrams
     120 98 100 4 0 0
   classdiagram_ref 2767746 // EventDispatcher
     120 98 100 23 0 0
-  active  classdiagram_ref 3261570 // AbstractControllerRelation
+  classdiagram_ref 3261570 // AbstractControllerRelation
     915 911 100 22 0 0
   classdiagram_ref 3208834 // ControllerRelationList
     915 911 100 21 0 0
-  classdiagram_ref 3208706 // ControllerRelation
-    120 98 100 8 252 499
   classdiagram_ref 3353858 // FilterControllerRelation
     120 98 100 4 0 0
   classdiagram_ref 3148674 // Overview
-    120 98 100 22 0 0
+    915 911 100 22 0 0
+  classdiagram_ref 3353986 // NavigationControllerRelation
+    915 911 100 4 0 0
+  classdiagram_ref 3360898 // ControllerRelationStateMapper
+    915 911 100 4 0 0
+  classdiagram_ref 2761218 // ControllerOverview
+    120 98 100 23 0 219
+  active  classdiagram_ref 2807170 // Permissions
+    915 911 100 18 0 0
 end
 show_stereotypes
-selected class_ref 3749250 // AbstractControllerRelation
+selected operation_ref 5433730 // isInsertActionEnabled
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   
   package_ref 516098 // ItemModel
-  class_ref 3614722 // AbstractSqlItemViewController
-  class_ref 3681922 // SqlControllerRelation
-  class_ref 3877762 // ControllerRelationType
-  classview_ref 1689474 // SqlController
-  classview_ref 1689602 // SqlRelation
+  class_ref 3668354 // AbstractActionContainer
   classview_ref 1564290 // Where
   
   package_ref 430082 // Dsp
-  
-  package_ref 134786 // Qt
+  class_ref 174338 // QSqlQueryModel
   class_ref 3788930 // callable_context
 end
 end

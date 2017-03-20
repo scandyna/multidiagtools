@@ -61,6 +61,11 @@ classcanvas 150402 class_ref 3877634 // SqlFilterControllerRelation
   color lightred
   xyz 845.5 166.5 2006
 end
+classcanvas 151426 class_ref 3891330 // ControllerRelationStateMapper
+  classdiagramsettings member_max_width 0 end
+  color lightred
+  xyz 153 275 2030
+end
 relationcanvas 141570 relation_ref 4067970 // <unidirectional association>
   from ref 141058 z 2025 to ref 134146
   no_role_a no_role_b

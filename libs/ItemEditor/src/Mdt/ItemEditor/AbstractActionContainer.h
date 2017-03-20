@@ -91,46 +91,46 @@ namespace Mdt{ namespace ItemEditor{
       return mControllerState;
     }
 
-    /*! \brief Check if it is allowed to change current row for current state
+    /*! \brief Check if changing current row action is enabled for state
      */
-    bool canChangeCurrentRow() const
+    bool isChangeCurrentRowActionEnabled() const
     {
-      return mControllerStatePermission.canChangeCurrentRow(mControllerState);
+      return mControllerStatePermission.isChangeCurrentRowActionEnabled(mControllerState);
     }
 
-    /*! \brief Check if it is allowed to insert for current state
+    /*! \brief Check if insert action is enabled for state
      */
-    bool canInsert() const
+    bool isInsertActionEnabled() const
     {
-      return mControllerStatePermission.canInsert(mControllerState);
+      return mControllerStatePermission.isInsertActionEnabled(mControllerState);
     }
 
-    /*! \brief Check if it is possible to submit for current state
+    /*! \brief Check if submit action is enabled for state
      */
-    bool canSubmit() const
+    bool isSubmitActionEnabled() const
     {
-      return mControllerStatePermission.canSubmit(mControllerState);
+      return mControllerStatePermission.isSubmitActionEnabled(mControllerState);
     }
 
-    /*! \brief Check if it is possible to revert for current state
+    /*! \brief Check if revert action is enabled for state
      */
-    bool canRevert() const
+    bool isRevertActionEnabled() const
     {
-      return mControllerStatePermission.canRevert(mControllerState);
+      return mControllerStatePermission.isRevertActionEnabled(mControllerState);
     }
 
-    /*! \brief Check if it is possible to remove for current state
+    /*! \brief Check if remove action is enabled for state
      */
-    bool canRemove() const
+    bool isRemoveActionEnabled() const
     {
-      return mControllerStatePermission.canRemove(mControllerState);
+      return mControllerStatePermission.isRemoveActionEnabled(mControllerState);
     }
 
-    /*! \brief Check if it is possible to select data from database for current state
+    /*! \brief Check if select action is enabled for state
      */
-    bool canSelect() const
+    bool isSelectActionEnabled() const
     {
-      return mControllerStatePermission.canSelect(mControllerState);
+      return mControllerStatePermission.isSelectActionEnabled(mControllerState);
     }
 
    public slots:

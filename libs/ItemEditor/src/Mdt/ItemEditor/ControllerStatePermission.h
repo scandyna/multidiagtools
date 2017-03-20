@@ -33,6 +33,8 @@ namespace Mdt{ namespace ItemEditor{
    *
    * ControllerStatePermission is the central part that contains the logic to decide
    *  what is possible or not in a certain state.
+   *
+   * \sa AbstractControllerStatePermission
    */
   class ControllerStatePermission
   {
@@ -77,25 +79,49 @@ namespace Mdt{ namespace ItemEditor{
      */
     bool canChangeCurrentRow(ControllerState state) const;
 
+    /*! \brief Check if changing current row action is enabled for state
+     */
+    bool isChangeCurrentRowActionEnabled(ControllerState state) const;
+
     /*! \brief Check if it is allowed to insert for state
      */
     bool canInsert(ControllerState state) const;
+
+    /*! \brief Check if insert action is enabled for state
+     */
+    bool isInsertActionEnabled(ControllerState state) const;
 
     /*! \brief Check if it is possible to submit for state
      */
     bool canSubmit(ControllerState state) const;
 
+    /*! \brief Check if submit action is enabled for state
+     */
+    bool isSubmitActionEnabled(ControllerState state) const;
+
     /*! \brief Check if it is possible to revert for state
      */
     bool canRevert(ControllerState state) const;
+
+    /*! \brief Check if revert action is enabled for state
+     */
+    bool isRevertActionEnabled(ControllerState state) const;
 
     /*! \brief Check if it is possible to remove for state
      */
     bool canRemove(ControllerState state) const;
 
+    /*! \brief Check if remove action is enabled for state
+     */
+    bool isRemoveActionEnabled(ControllerState state) const;
+
     /*! \brief Check if it is possible to select data from database
      */
     bool canSelect(ControllerState state) const;
+
+    /*! \brief Check if select action is enabled for state
+     */
+    bool isSelectActionEnabled(ControllerState state) const;
 
   private:
 

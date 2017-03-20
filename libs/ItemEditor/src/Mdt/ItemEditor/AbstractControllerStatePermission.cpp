@@ -39,6 +39,11 @@ bool AbstractControllerStatePermission::canChangeCurrentRow(ControllerState stat
   return false;
 }
 
+bool AbstractControllerStatePermission::isChangeCurrentRowActionEnabled(ControllerState state) const
+{
+  return canChangeCurrentRow(state);
+}
+
 bool AbstractControllerStatePermission::canInsert(ControllerState state) const
 {
   switch(state){
@@ -54,6 +59,11 @@ bool AbstractControllerStatePermission::canInsert(ControllerState state) const
       return true;
   }
   return false;
+}
+
+bool AbstractControllerStatePermission::isInsertActionEnabled(ControllerState state) const
+{
+  return canInsert(state);
 }
 
 bool AbstractControllerStatePermission::canSubmit(ControllerState state) const
@@ -73,6 +83,11 @@ bool AbstractControllerStatePermission::canSubmit(ControllerState state) const
   return false;
 }
 
+bool AbstractControllerStatePermission::isSubmitActionEnabled(ControllerState state) const
+{
+  return canSubmit(state);
+}
+
 bool AbstractControllerStatePermission::canRevert(ControllerState state) const
 {
   switch(state){
@@ -88,6 +103,11 @@ bool AbstractControllerStatePermission::canRevert(ControllerState state) const
       return false;
   }
   return false;
+}
+
+bool AbstractControllerStatePermission::isRevertActionEnabled(ControllerState state) const
+{
+  return canRevert(state);
 }
 
 bool AbstractControllerStatePermission::canRemove(ControllerState state) const
@@ -107,6 +127,11 @@ bool AbstractControllerStatePermission::canRemove(ControllerState state) const
   return false;
 }
 
+bool AbstractControllerStatePermission::isRemoveActionEnabled(ControllerState state) const
+{
+  return canRemove(state);
+}
+
 bool AbstractControllerStatePermission::canSelect(ControllerState state) const
 {
   switch(state){
@@ -122,6 +147,11 @@ bool AbstractControllerStatePermission::canSelect(ControllerState state) const
       return false;
   }
   return false;
+}
+
+bool AbstractControllerStatePermission::isSelectActionEnabled(ControllerState state) const
+{
+  return canSelect(state);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

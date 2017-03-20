@@ -41,8 +41,8 @@ void EditionActions::updateEnableState()
     disableAllActions();
     return;
   }
-  mSubmitAction->setEnabled( canSubmit() );
-  mRevertAction->setEnabled( canRevert() );
+  mSubmitAction->setEnabled( isSubmitActionEnabled() );
+  mRevertAction->setEnabled( isRevertActionEnabled() );
 }
 
 void EditionActions::disableAllActions()

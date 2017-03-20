@@ -2,30 +2,29 @@ format 211
 
 classcanvas 128386 class_ref 3681922 // SqlControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 794 842 2006
+  xyz 42 639 2006
 end
 classcanvas 128898 class_ref 3648002 // AbstractController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 999 930 2000
+  xyz 239 551 2000
 end
 classcanvas 129410 class_ref 3614594 // AbstractSqlController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 985 842 2006
+  xyz 229 639 2006
 end
 classcanvas 131842 class_ref 3735810 // RelationKeyCopier
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 41 930 2000
+  xyz 361 767 2000
 end
 classcanvas 132610 class_ref 3594754 // RelationFilterProxyModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 396 1066 2012
+  xyz 40 767 2012
 end
 classcanvas 133378 class_ref 3749250 // AbstractControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 600 41 2000
+  xyz 40.5 40.5 2000
 end
 relationcanvas 129538 relation_ref 4025346 // <generalisation>
-  decenter_begin 523
   from ref 129410 z 2007 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -36,8 +35,7 @@ relationcanvas 129922 relation_ref 4067970 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 134274 relation_ref 4164098 // <directional composition>
-  from ref 132610 z 2013 to point 160 1088
-  line 134786 z 2013 to ref 131842
+  from ref 132610 z 2013 to ref 131842
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

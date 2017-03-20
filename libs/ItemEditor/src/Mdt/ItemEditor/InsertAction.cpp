@@ -33,7 +33,7 @@ InsertAction::InsertAction(QObject* parent)
 
 void InsertAction::updateEnableState()
 {
-  mAction->setEnabled( canInsert() );
+  mAction->setEnabled( isInsertActionEnabled() );
 }
 
 void InsertAction::disableAllActions()

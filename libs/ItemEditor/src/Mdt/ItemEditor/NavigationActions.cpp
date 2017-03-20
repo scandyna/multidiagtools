@@ -49,7 +49,7 @@ void NavigationActions::updateEnableState()
   int n = rowCount();
   int row = currentRow();
 
-  if(!canChangeCurrentRow()){
+  if(!isChangeCurrentRowActionEnabled()){
     disableAllActions();
     return;
   }

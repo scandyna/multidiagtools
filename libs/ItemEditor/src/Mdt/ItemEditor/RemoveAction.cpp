@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "RemoveAction.h"
-// #include "ControllerStatePermission.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -38,8 +37,7 @@ void RemoveAction::updateEnableState()
     disableAllActions();
     return;
   }
-//   mRemoveAction->setEnabled( ControllerStatePermission::canRemove(controllerState()) );
-  mRemoveAction->setEnabled( canRemove() );
+  mRemoveAction->setEnabled( isRemoveActionEnabled() );
 }
 
 void RemoveAction::disableAllActions()

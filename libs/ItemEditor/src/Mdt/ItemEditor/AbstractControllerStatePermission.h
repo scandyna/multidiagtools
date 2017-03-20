@@ -42,6 +42,8 @@ namespace Mdt{ namespace ItemEditor{
    *  For example, if we start editing in a parent controller,
    *  we not want the submit action be enabled in the child controller (this is not intuitive),
    *  but submit must be possible in the child controller.
+   *
+   * \sa ControllerStatePermission
    */
   class AbstractControllerStatePermission
   {
@@ -66,25 +68,49 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual bool canChangeCurrentRow(ControllerState state) const;
 
+    /*! \brief Check if changing current row action is enabled for state
+     */
+    virtual bool isChangeCurrentRowActionEnabled(ControllerState state) const;
+
     /*! \brief Check if it is allowed to insert for state
      */
     virtual bool canInsert(ControllerState state) const;
+
+    /*! \brief Check if insert action is enabled for state
+     */
+    virtual bool isInsertActionEnabled(ControllerState state) const;
 
     /*! \brief Check if it is possible to submit for state
      */
     virtual bool canSubmit(ControllerState state) const;
 
+    /*! \brief Check if submit action is enabled for state
+     */
+    virtual bool isSubmitActionEnabled(ControllerState state) const;
+
     /*! \brief Check if it is possible to revert for state
      */
     virtual bool canRevert(ControllerState state) const;
+
+    /*! \brief Check if revert action is enabled for state
+     */
+    virtual bool isRevertActionEnabled(ControllerState state) const;
 
     /*! \brief Check if it is possible to remove for state
      */
     virtual bool canRemove(ControllerState state) const;
 
+    /*! \brief Check if remove action is enabled for state
+     */
+    virtual bool isRemoveActionEnabled(ControllerState state) const;
+
     /*! \brief Check if it is possible to select data from database
      */
     virtual bool canSelect(ControllerState state) const;
+
+    /*! \brief Check if select action is enabled for state
+     */
+    virtual bool isSelectActionEnabled(ControllerState state) const;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

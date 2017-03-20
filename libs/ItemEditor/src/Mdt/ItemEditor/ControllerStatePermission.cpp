@@ -32,10 +32,28 @@ bool ControllerStatePermission::canChangeCurrentRow(ControllerState state) const
   }
 }
 
+bool ControllerStatePermission::isChangeCurrentRowActionEnabled(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->isChangeCurrentRowActionEnabled(state);
+  }else{
+    return false;
+  }
+}
+
 bool ControllerStatePermission::canInsert(ControllerState state) const
 {
   if(mImpl){
     return mImpl->canInsert(state);
+  }else{
+    return false;
+  }
+}
+
+bool ControllerStatePermission::isInsertActionEnabled(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->isInsertActionEnabled(state);
   }else{
     return false;
   }
@@ -50,10 +68,28 @@ bool ControllerStatePermission::canSubmit(ControllerState state) const
   }
 }
 
+bool ControllerStatePermission::isSubmitActionEnabled(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->isSubmitActionEnabled(state);
+  }else{
+    return false;
+  }
+}
+
 bool ControllerStatePermission::canRevert(ControllerState state) const
 {
   if(mImpl){
     return mImpl->canRevert(state);
+  }else{
+    return false;
+  }
+}
+
+bool ControllerStatePermission::isRevertActionEnabled(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->isRevertActionEnabled(state);
   }else{
     return false;
   }
@@ -68,10 +104,28 @@ bool ControllerStatePermission::canRemove(ControllerState state) const
   }
 }
 
+bool ControllerStatePermission::isRemoveActionEnabled(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->isRemoveActionEnabled(state);
+  }else{
+    return false;
+  }
+}
+
 bool ControllerStatePermission::canSelect(ControllerState state) const
 {
   if(mImpl){
     return mImpl->canSelect(state);
+  }else{
+    return false;
+  }
+}
+
+bool ControllerStatePermission::isSelectActionEnabled(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->isSelectActionEnabled(state);
   }else{
     return false;
   }
