@@ -482,11 +482,11 @@ void AbstractController::setControllerState(ControllerState state)
 {
   if(state != mControllerState){
     mControllerState = state;
+    qDebug() << "AC " << this << ": new state: " << mControllerState;
     emit controllerStateChanged(state);
   }else{ /// \todo ??
     mControllerState = state;
   }
-  qDebug() << "AC " << this << ": new state: " << mControllerState;
 }
 
 FilterProxyModel* AbstractController::filterModel() const

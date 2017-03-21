@@ -70,7 +70,7 @@ bool AbstractControllerStatePermission::canSubmit(ControllerState state) const
 {
   switch(state){
     case ControllerState::Visualizing:
-      return false;
+      return true;
     case ControllerState::Editing:
       return true;
     case ControllerState::Inserting:
@@ -89,6 +89,7 @@ bool AbstractControllerStatePermission::isSubmitActionEnabled(ControllerState st
     case ControllerState::ParentEditing:
       return false;
     case ControllerState::Visualizing:
+      return false;
     case ControllerState::Editing:
     case ControllerState::Inserting:
     case ControllerState::ChildEditing:

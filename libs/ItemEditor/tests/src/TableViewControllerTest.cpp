@@ -76,7 +76,7 @@ void TableViewControllerTest::statePermissionTest()
   QVERIFY( permission.canChangeCurrentRow(ControllerState::ParentEditing));
   QVERIFY( permission.isChangeCurrentRowActionEnabled(ControllerState::ParentEditing));
   // Submit
-  QVERIFY(!permission.canSubmit(ControllerState::Visualizing));
+  QVERIFY( permission.canSubmit(ControllerState::Visualizing));
   QVERIFY(!permission.isSubmitActionEnabled(ControllerState::Visualizing));
   QVERIFY( permission.canSubmit(ControllerState::Editing));
   QVERIFY( permission.isSubmitActionEnabled(ControllerState::Editing));

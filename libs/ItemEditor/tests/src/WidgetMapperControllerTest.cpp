@@ -85,7 +85,7 @@ void WidgetMapperControllerTest::statePermissionTest()
   QVERIFY( permission.canInsert(ControllerState::ParentEditing));
   QVERIFY( permission.isInsertActionEnabled(ControllerState::ParentEditing));
   // Submit
-  QVERIFY(!permission.canSubmit(ControllerState::Visualizing));
+  QVERIFY( permission.canSubmit(ControllerState::Visualizing));
   QVERIFY(!permission.isSubmitActionEnabled(ControllerState::Visualizing));
   QVERIFY( permission.canSubmit(ControllerState::Editing));
   QVERIFY( permission.isSubmitActionEnabled(ControllerState::Editing));

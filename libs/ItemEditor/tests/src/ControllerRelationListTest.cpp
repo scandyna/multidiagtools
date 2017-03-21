@@ -175,7 +175,104 @@ void ControllerRelationListTest::revertTest()
    */
 
   QFAIL("Not complete");
+}
 
+void ControllerRelationListTest::editSubmitRevertParentChildStateTest()
+{
+  /*
+   * Setup parent model and controller
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(1, 1);
+  ItemModelControllerTester parentController;
+  parentController.setModel(&parentModel);
+  /*
+   * Setup child model and controller
+   */
+  VariantTableModel childModel;
+  childModel.resize(1, 1);
+  ItemModelControllerTester childController;
+  childController.setModel(&childModel);
+  /*
+   * Setup relation
+   *
+   * parentController
+   *       |
+   *       ---> childController
+   */
+  ControllerRelationList relationList(&parentController);
+  relationList.addChildController<AbstractControllerRelationTestClass>(&childController);
+  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
+  /*
+   * Begin editing from parent controller
+   */
+  // Begin editing
+  parentController.startEditing();
+  QCOMPARE(parentController.controllerState(), ControllerState::Editing);
+  QCOMPARE(childController.controllerState(), ControllerState::ParentEditing);
+  // Submit from parent controller
+  QVERIFY(relationList.submitForEachChild());
+  QVERIFY(parentController.submit());
+  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
+  // Begin editing
+  parentController.startEditing();
+  QCOMPARE(parentController.controllerState(), ControllerState::Editing);
+  QCOMPARE(childController.controllerState(), ControllerState::ParentEditing);
+  // Revert from parent controller
+  relationList.revertForEachChild();
+  parentController.revert();
+  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
+  /*
+   * Begin editing from child controller
+   */
+  // Begin editing
+  childController.startEditing();
+  QCOMPARE(parentController.controllerState(), ControllerState::ChildEditing);
+  QCOMPARE(childController.controllerState(), ControllerState::Editing);
+  // Submit from parent controller
+  QVERIFY(relationList.submitForEachChild());
+  QVERIFY(parentController.submit());
+  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
+  // Begin editing
+  childController.startEditing();
+  QCOMPARE(parentController.controllerState(), ControllerState::ChildEditing);
+  QCOMPARE(childController.controllerState(), ControllerState::Editing);
+  // Submit from child controller
+  QVERIFY(childController.submit());
+  /** \todo
+   * Here, all should return to Visualizing .
+   * If we start editing from parent controller, then from child controller:
+   *  - Start editing from parent controller:
+   *     -> parentController : Editing
+   *     -> childController  : ParentEditing
+   *  - Start editing from childController:
+   *     -> parentController : Editing ? ChildEditing ?
+   *     -> childController  : Editing ?
+   *  - Submit from child controller:
+   *     -> parentController : Editing
+   *     -> childController  : Visualizing
+   */
+  
+  // Begin editing
+  childController.startEditing();
+  QCOMPARE(parentController.controllerState(), ControllerState::ChildEditing);
+  QCOMPARE(childController.controllerState(), ControllerState::Editing);
+  // Revert from parent controller
+  relationList.revertForEachChild();
+  parentController.revert();
+  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
+
+  QFAIL("Not complete");
+}
+
+void ControllerRelationListTest::editSubmitRevertTopMiddleChildStateTest()
+{
+  QFAIL("Not complete");
 }
 
 /*
