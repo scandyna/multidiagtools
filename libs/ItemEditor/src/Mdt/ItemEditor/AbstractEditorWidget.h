@@ -26,8 +26,6 @@
 #include <QPointer>
 
 class QToolBar;
-// class QVBoxLayout;
-// class QHBoxLayout;
 class QAbstractProxyModel;
 
 namespace Mdt{ namespace ItemEditor{
@@ -38,6 +36,7 @@ namespace Mdt{ namespace ItemEditor{
   class InsertAction;
   class RemoveAction;
   class EditionActions;
+  class NavigationActions;
 
   /*! \brief Base class to create a editor widget
    *
@@ -136,17 +135,33 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setInsertActionText(const QString & text);
 
+    /*! \brief Add remove action to top area
+     */
+    void addRemoveActionToTopArea();
+
     /*! \brief Add remove action to bottom area
      */
-    void addRemoveActionToBottomBar();
+    void addRemoveActionToBottomArea();
 
     /*! \brief Set remove action text
      */
     void setRemoveActionText(const QString & text);
 
+    /*! \brief Add edition actions to top area
+     */
+    void addEditionActionsToTopArea();
+
     /*! \brief Add edition actions to bottom area
      */
     void addEditionActionsToBottomArea();
+
+    /*! \brief Add navigation actions to top area
+     */
+    void addNavigationActionsToTopArea();
+
+    /*! \brief Add navigation actions to bottom area
+     */
+    void addNavigationActionsToBottomArea();
 
     /*! \brief Register actions
      *
@@ -188,18 +203,24 @@ namespace Mdt{ namespace ItemEditor{
 
     void createTopEditBarIfNot();
     void createBottomEditBarIfNot();
+    void createTopNavigationBarIfNot();
+    void createBottomNavigationBarIfNot();
     void createTopCustomWidgetsBarIfNot();
     void createInsertActionIfNot();
     void createRemoveActionIfNot();
     void createEditionActionsIfNot();
+    void createNavigationActionsIfNot();
 
     AbstractEditorLayout *mMainLayout;
     QToolBar *mTopEditBar = nullptr;
     QToolBar *mBottomEditBar = nullptr;
+    QToolBar *mTopNavigationBar = nullptr;
+    QToolBar *mBottomNavigationBar = nullptr;
     QToolBar *mTopCustomWidgetsBar = nullptr;
     InsertAction *mInsertAction = nullptr;
     RemoveAction *mRemoveAction = nullptr;
     EditionActions *mEditionActions = nullptr;
+    NavigationActions *mNavigationActions = nullptr;
 
 //     AbstractController *pvController;
   };

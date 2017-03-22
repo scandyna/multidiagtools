@@ -24,6 +24,8 @@
 #include "ui_ClientWidget.h"
 #include "Mdt/ItemEditor/AbstractFormWidget.h"
 
+class QLabel;
+
 /*! \brief Client edition widget
  */
 class ClientWidget : public Mdt::ItemEditor::AbstractFormWidget, Ui::ClientWidget
@@ -39,6 +41,10 @@ class ClientWidget : public Mdt::ItemEditor::AbstractFormWidget, Ui::ClientWidge
  public slots:
 
   void onControllerStateChanged(Mdt::ItemEditor::ControllerState state);
+
+ private:
+
+  QLabel *mStateLabel;
 };
 
 #endif // #ifndef CLIENT_WIDGET_H

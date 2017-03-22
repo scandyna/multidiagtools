@@ -23,6 +23,7 @@
 #include "Mdt/ItemModel/FormatProxyModel.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include <QWidget>
+#include <QLabel>
 
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
@@ -51,10 +52,20 @@ ClientWidget::ClientWidget(QWidget* parent)
   formatModel->setTextColorForColumn(1, QColor(0,0,255));
   appendProxyModel(formatModel);
 
+  addNavigationActionsToTopArea();
+  addEditionActionsToTopArea();
+  addInsertActionToTopArea();
+  setInsertActionText(tr("New client"));
+  addRemoveActionToTopArea();
+  setRemoveActionText(tr("Remove client"));
+
+  addWidgetToTopArea(new QLabel("State: "));
+  mStateLabel = new QLabel;
+  addWidgetToTopArea(mStateLabel);
   connect(ctrl, &WidgetMapperController::controllerStateChanged, this, &ClientWidget::onControllerStateChanged);
 }
 
 void ClientWidget::onControllerStateChanged(ControllerState state)
 {
-  fld_State->setText( controllerStateText(state) );
+  mStateLabel->setText( controllerStateText(state) );
 }

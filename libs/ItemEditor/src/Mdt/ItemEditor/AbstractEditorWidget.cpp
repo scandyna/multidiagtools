@@ -24,8 +24,7 @@
 #include "InsertAction.h"
 #include "RemoveAction.h"
 #include "EditionActions.h"
-#include <QHBoxLayout>
-#include <QVBoxLayout>
+#include "NavigationActions.h"
 #include <QToolBar>
 #include <QAction>
 
@@ -90,7 +89,14 @@ void AbstractEditorWidget::setInsertActionText(const QString& text)
   mInsertAction->insertAction()->setText(text);
 }
 
-void AbstractEditorWidget::addRemoveActionToBottomBar()
+void AbstractEditorWidget::addRemoveActionToTopArea()
+{
+  createRemoveActionIfNot();
+  createTopEditBarIfNot();
+  mTopEditBar->addAction(mRemoveAction->removeAction());
+}
+
+void AbstractEditorWidget::addRemoveActionToBottomArea()
 {
   createRemoveActionIfNot();
   createBottomEditBarIfNot();
@@ -103,12 +109,40 @@ void AbstractEditorWidget::setRemoveActionText(const QString& text)
   mRemoveAction->removeAction()->setText(text);
 }
 
+void AbstractEditorWidget::addEditionActionsToTopArea()
+{
+  createEditionActionsIfNot();
+  createTopEditBarIfNot();
+  mTopEditBar->addAction(mEditionActions->submitAction());
+  mTopEditBar->addAction(mEditionActions->revertAction());
+}
+
 void AbstractEditorWidget::addEditionActionsToBottomArea()
 {
   createEditionActionsIfNot();
   createBottomEditBarIfNot();
   mBottomEditBar->addAction(mEditionActions->submitAction());
   mBottomEditBar->addAction(mEditionActions->revertAction());
+}
+
+void AbstractEditorWidget::addNavigationActionsToTopArea()
+{
+  createNavigationActionsIfNot();
+  createTopNavigationBarIfNot();
+  mTopNavigationBar->addAction(mNavigationActions->toFirst());
+  mTopNavigationBar->addAction(mNavigationActions->toPrevious());
+  mTopNavigationBar->addAction(mNavigationActions->toNext());
+  mTopNavigationBar->addAction(mNavigationActions->toLast());
+}
+
+void AbstractEditorWidget::addNavigationActionsToBottomArea()
+{
+  createNavigationActionsIfNot();
+  createBottomNavigationBarIfNot();
+  mBottomNavigationBar->addAction(mNavigationActions->toFirst());
+  mBottomNavigationBar->addAction(mNavigationActions->toPrevious());
+  mBottomNavigationBar->addAction(mNavigationActions->toNext());
+  mBottomNavigationBar->addAction(mNavigationActions->toLast());
 }
 
 void AbstractEditorWidget::registerActions(AbstractActionContainer* actions)
@@ -161,6 +195,22 @@ void AbstractEditorWidget::createBottomEditBarIfNot()
   mBottomEditBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
 
+void AbstractEditorWidget::createTopNavigationBarIfNot()
+{
+  if(mTopNavigationBar == nullptr){
+    mTopNavigationBar = addToolBarToTopArea();
+  }
+  Q_ASSERT(mTopNavigationBar != nullptr);
+}
+
+void AbstractEditorWidget::createBottomNavigationBarIfNot()
+{
+  if(mBottomNavigationBar == nullptr){
+    mBottomNavigationBar = addToolBarToBottomArea();
+  }
+  Q_ASSERT(mBottomNavigationBar != nullptr);
+}
+
 void AbstractEditorWidget::createTopCustomWidgetsBarIfNot()
 {
   if(mTopCustomWidgetsBar == nullptr){
@@ -204,6 +254,21 @@ void AbstractEditorWidget::createEditionActionsIfNot()
     registerActions(mEditionActions);
   }
   Q_ASSERT(mEditionActions != nullptr);
+}
+
+void AbstractEditorWidget::createNavigationActionsIfNot()
+{
+  if(mNavigationActions == nullptr){
+    mNavigationActions = new NavigationActions(this);
+    Q_ASSERT(abstractController() != nullptr);
+    mNavigationActions->setControllerStatePermission(abstractController()->controllerStatePermission());
+    connect(mNavigationActions, &NavigationActions::toFirstTriggered, abstractController(), &AbstractController::toFirst);
+    connect(mNavigationActions, &NavigationActions::toPreviousTriggered, abstractController(), &AbstractController::toPrevious);
+    connect(mNavigationActions, &NavigationActions::toNextTriggered, abstractController(), &AbstractController::toNext);
+    connect(mNavigationActions, &NavigationActions::toLastTriggered, abstractController(), &AbstractController::toLast);
+    registerActions(mNavigationActions);
+  }
+  Q_ASSERT(mNavigationActions != nullptr);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

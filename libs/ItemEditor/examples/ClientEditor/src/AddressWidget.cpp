@@ -33,10 +33,11 @@ AddressWidget::AddressWidget(QWidget* parent)
   auto *model = new AddressModel(this);
   setModel(model);
   addResizeToContentsActionToTopBar();
+  addNavigationActionsToTopArea();
   addEditionActionsToBottomArea();
   addInsertActionToBottomArea();
   setInsertActionText(tr("Add address"));
-  addRemoveActionToBottomBar();
+  addRemoveActionToBottomArea();
   setRemoveActionText(tr("Remove addresse"));
   auto ctrl = controller();
   ctrl->setInsertLocation(TableViewController::InsertAtEnd);
