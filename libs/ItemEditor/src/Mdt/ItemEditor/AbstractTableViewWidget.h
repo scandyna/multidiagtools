@@ -28,16 +28,12 @@
 class QTableView;
 class QAbstractItemModel;
 class QToolBar;
-class QVBoxLayout;
 class QHBoxLayout;
 
 namespace Mdt{ namespace ItemEditor{
 
   class AbstractController;
   class AbstractActionContainer;
-  class InsertAction;
-  class RemoveAction;
-  class EditionActions;
   class ResizeToContentsAction;
 
   /*! \brief Common base for QTableView based editor
@@ -58,47 +54,6 @@ namespace Mdt{ namespace ItemEditor{
     {
       return mView;
     }
-
-    /*! \brief Add a tool bar to the top area
-     */
-    QToolBar *addToolBarToTopArea();
-
-    /*! \brief Add a tool bar to the bottom area
-     */
-    QToolBar *addToolBarToBottomArea();
-
-    /*! \brief Add a widget to the top area
-     *
-     * This AbstractTableViewWidget takes the ownersgip of \a widget
-     *  (it will delete it when this is deleted)
-     *
-     * \pre \a widget must be a valid pointer
-     */
-    void addWidgetToTopArea(QWidget *widget);
-
-    /*! \brief Add insert action to top area
-     */
-    void addInsertActionToTopArea();
-
-    /*! \brief Add insert action to bottom area
-     */
-    void addInsertActionToBottomArea();
-
-    /*! \brief Set insert action text
-     */
-    void setInsertActionText(const QString & text);
-
-    /*! \brief Add remove action to bottom area
-     */
-    void addRemoveActionToBottomBar();
-
-    /*! \brief Set remove action text
-     */
-    void setRemoveActionText(const QString & text);
-
-    /*! \brief Add edition actions to bottom area
-     */
-    void addEditionActionsToBottomArea();
 
     /*! \brief Add resize to contents action to top area
      */
@@ -127,26 +82,11 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    void createTopBarLayoutIfNot();
-    void createBottomBarLayoutIfNot();
     void createTopToolsBarIfNot();
-    void createTopEditBarIfNot();
-    void createBottomEditBarIfNot();
-    void createInsertActionIfNot();
-    void createRemoveActionIfNot();
-    void createEditionActionsIfNot();
     void createResizeToContentsActionIfNot();
 
     QTableView *mView;
-    QVBoxLayout *mMainLayout;
-    QHBoxLayout *mTopBarLayout = nullptr;
-    QHBoxLayout *mBottomBarLayout = nullptr;
     QToolBar *mTopToolsBar = nullptr;
-    QToolBar *mTopEditBar = nullptr;
-    QToolBar *mBottomEditBar = nullptr;
-    InsertAction *mInsertAction = nullptr;
-    RemoveAction *mRemoveAction = nullptr;
-    EditionActions *mEditionActions = nullptr;
     ResizeToContentsAction *mResizeToContentsAction = nullptr;
   };
 

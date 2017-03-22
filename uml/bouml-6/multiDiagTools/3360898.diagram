@@ -63,7 +63,7 @@ end
 relationcanvas 129794 relation_ref 4299010 // <generalisation>
   geometry VHV unfixed
   from ref 129666 z 2007 to point 174 504
-  line 129922 z 2007 to point 518 504
+  line 129922 z 2007 to point 520 504
   line 130050 z 2007 to ref 129282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

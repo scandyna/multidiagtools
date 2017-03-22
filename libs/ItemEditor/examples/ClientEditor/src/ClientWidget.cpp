@@ -22,6 +22,7 @@
 #include "ClientModel.h"
 #include "Mdt/ItemModel/FormatProxyModel.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
+#include <QWidget>
 
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
@@ -31,7 +32,9 @@ ClientWidget::ClientWidget(QWidget* parent)
 {
   setObjectName("ClientWidget");
   setModel(new ClientModel(this));
-  setupUi(this);
+  auto *centralWidget = new QWidget;
+  setupUi(centralWidget);
+  setCentralWidget(centralWidget);
   auto *ctrl = controller();
   ctrl->setPrimaryKey({0});
   ctrl->setPrimaryKeyEditable(false);

@@ -54,6 +54,7 @@ addItemEditorTest("ControllerRelationTest")
 addItemEditorTest("ControllerRelationListTest")
 addItemEditorTest("FilterControllerRelationTest")
 addItemEditorTest("NavigationControllerRelationTest")
+addItemEditorTest("AbstractEditorLayoutTest")
 addItemEditorTest("WindowTest")
 
 addItemEditorTest("StandardWidgetsTest")

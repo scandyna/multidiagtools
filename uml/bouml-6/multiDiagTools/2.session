@@ -1,4 +1,4 @@
-window_sizes 1280 963 359 915 911 0
+window_sizes 1280 963 404 870 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 3041922 // RowChangeEvent
@@ -17,24 +17,38 @@ diagrams
     915 911 100 4 0 0
   classdiagram_ref 3360898 // ControllerRelationStateMapper
     915 911 100 4 0 0
-  classdiagram_ref 2761218 // ControllerOverview
-    120 98 100 23 0 219
-  active  classdiagram_ref 2807170 // Permissions
+  classdiagram_ref 2807170 // Permissions
     915 911 100 18 0 0
+  classdiagram_ref 3181826 // Overview
+    120 98 100 18 0 0
+  active  classdiagram_ref 3181954 // AbstractEditorWidget
+    870 911 100 18 0 0
+  classdiagram_ref 3182082 // TableViewWidget
+    1004 911 100 8 12 0
+  classdiagram_ref 3195266 // FormWidget
+    120 98 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 5433730 // isInsertActionEnabled
+selected classdiagram_ref 2413698 // NavigationActions
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   
   package_ref 516098 // ItemModel
-  class_ref 3668354 // AbstractActionContainer
+  classview_ref 1774850 // ModelWrapper
+  classview_ref 1287042 // Controller
+  classview_ref 1286786 // Actions
+  class_ref 3910914 // AbstractEditorLayout
+  operation_ref 5102338 // addInsertActionToTopArea
+  operation_ref 5102466 // addInsertActionToBottomArea
+  operation_ref 5504386 // setCentralWidget
+  operation_ref 5105538 // registerActions
   classview_ref 1564290 // Where
   
   package_ref 430082 // Dsp
-  class_ref 174338 // QSqlQueryModel
+  
+  package_ref 134786 // Qt
   class_ref 3788930 // callable_context
 end
 end

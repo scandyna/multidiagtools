@@ -37,6 +37,7 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/ControllerRelationList.cpp
     src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp
     
+    src/Mdt/ItemEditor/AbstractEditorLayout.cpp
     src/Mdt/ItemEditor/AbstractEditorWidget.cpp
     
     src/Mdt/ItemEditor/AbstractFormWidget.cpp

@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 196
+  revision 197
   modified_by 2 "philippe"
   // class settings
   
@@ -7305,6 +7305,196 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    classdiagram 3393538 "Layouts"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size A4
+    end
+
+    class 3911042 "QLayoutItem"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3911170 "QLayout"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4378626 // <generalisation>
+	relation 4352642 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4378626 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 4378754 // <generalisation>
+	relation 4352770 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4378754 // <generalisation>
+	  b parent class_ref 3911042 // QLayoutItem
+      end
+    end
+
+    class 3911298 "QBoxLayout"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4378882 // <generalisation>
+	relation 4352898 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4378882 // <generalisation>
+	  b parent class_ref 3911170 // QLayout
+      end
+    end
+
+    class 3911426 "QHBoxLayout"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4379010 // <generalisation>
+	relation 4353026 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4379010 // <generalisation>
+	  b parent class_ref 3911298 // QBoxLayout
+      end
+    end
+
+    class 3911554 "QVBoxLayout"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4379138 // <generalisation>
+	relation 4353154 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4379138 // <generalisation>
+	  b parent class_ref 3911298 // QBoxLayout
+      end
+    end
+
+    class 3911682 "QFormLayout"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4379266 // <generalisation>
+	relation 4353282 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4379266 // <generalisation>
+	  b parent class_ref 3911170 // QLayout
+      end
+    end
+
+    class 3911810 "QGridLayout"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4379394 // <generalisation>
+	relation 4353410 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4379394 // <generalisation>
+	  b parent class_ref 3911170 // QLayout
+      end
+    end
+
+    class 3911938 "QStackedLayout"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4379522 // <generalisation>
+	relation 4353538 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4379522 // <generalisation>
+	  b parent class_ref 3911170 // QLayout
       end
     end
   end

@@ -2,89 +2,91 @@ format 211
 
 classcanvas 128130 class_ref 3118082 // AbstractTableViewWidget
   classdiagramsettings member_max_width 0 end
-  xyz 200.05 302.6 2006
+  xyz 609.15 461.45 2006
 end
 classcanvas 128386 class_ref 3104130 // TableViewWidget
   classdiagramsettings member_max_width 0 end
-  xyz 228.05 635.15 2012
+  xyz 241.45 682.05 2012
 end
 classcanvas 128642 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 348.7 41.45 2006
+  xyz 710.5 41.45 2006
 end
 classcanvas 128898 class_ref 3648002 // AbstractController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1281.5 168.75 2006
+  xyz 68.8 1012.95 2006
 end
 classcanvas 129154 class_ref 3634434 // AbstractItemModelController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1111.15 296.05 2012
+  xyz 35.8 885.65 2012
 end
 classcanvas 129410 class_ref 3138178 // TableViewController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1140.15 651.15 2018
+  xyz 64.8 698.05 2018
 end
 classcanvas 129922 class_ref 3614594 // AbstractSqlController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1271.5 738.25 2012
+  xyz 269.85 885.65 2012
 end
 classcanvas 130178 class_ref 2927362 // SqlTableViewController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1267.5 825.35 2018
+  xyz 269.2 798.55 2018
 end
 classcanvas 131074 class_ref 3104258 // SqlTableViewWidget
   classdiagramsettings member_max_width 0 end
-  xyz 42.05 776.35 2024
+  xyz 598.15 749.55 2024
 end
 classcanvas 131970 class_ref 3654530 // LocalBarXyZ
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 998.2 2000
+  xyz 40.5 1138.9 2000
 end
 classcanvas 132610 class_ref 3068802 // AbstractEditorWidget
   classdiagramsettings member_max_width 0 end
-  xyz 256.05 123.1 2012
+  xyz 555.15 126.5 2012
 end
 note 133506 "Helper methods for tool bars:
  - Could be a widget that has a central widget and a tp+bottom tool bar
    (Yes, like a QWindow..)
  - Example: EditorWidget: has top/bottom tool bars + central widget"
-  xyzwh 610.9 382.95 2000 561 99
+  xyzwh 912.4 483.45 2000 561 99
 relationcanvas 128514 relation_ref 3492482 // <generalisation>
-  decenter_begin 488
-  decenter_end 490
-  from ref 128386 z 2013 to ref 128130
+  geometry VHV unfixed
+  decenter_begin 510
+  decenter_end 513
+  from ref 128386 z 2013 to point 399 643
+  line 134274 z 2013 to point 741 643
+  line 134402 z 2013 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 4025474 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 517
-  from ref 129154 z 2013 to point 1210 254
-  line 133250 z 2013 to point 1344 254
-  line 133378 z 2013 to ref 128898
+  from ref 129154 z 2013 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129538 relation_ref 4011778 // <generalisation>
-  decenter_begin 525
-  decenter_end 517
   from ref 129410 z 2019 to ref 129154
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129666 relation_ref 4025730 // <directional composition>
-  decenter_begin 545
-  decenter_end 577
+  decenter_begin 532
+  decenter_end 555
   from ref 128386 z 2019 to ref 129410
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 4025346 // <generalisation>
-  from ref 129922 z 2013 to ref 128898
+  geometry VHV unfixed
+  decenter_begin 523
+  from ref 129922 z 2013 to point 345 971
+  line 134018 z 2013 to point 131 971
+  line 134146 z 2013 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130306 relation_ref 3983106 // <generalisation>
+  decenter_end 523
   from ref 130178 z 2019 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -97,26 +99,25 @@ relationcanvas 131202 relation_ref 3475074 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131330 relation_ref 3492610 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 508
-  decenter_end 490
-  from ref 131074 z 2025 to point 184 596
-  line 133762 z 2025 to point 379 596
-  line 133890 z 2025 to ref 128130
+  decenter_begin 512
+  decenter_end 513
+  from ref 131074 z 2025 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132738 relation_ref 3441794 // <generalisation>
+  decenter_begin 509
   from ref 132610 z 2013 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132866 relation_ref 4230402 // <generalisation>
-  decenter_begin 490
+  decenter_begin 513
+  decenter_end 509
   from ref 128130 z 2013 to ref 132610
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-line 133634 -_-_
+line 133634 -_-_ decenter_begin 535 decenter_end 524
   from ref 133506 z 2007 to ref 128130
 end
