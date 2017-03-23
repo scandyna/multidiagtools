@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 188
+  revision 191
   modified_by 2 "philippe"
   // class settings
   
@@ -2966,6 +2966,70 @@ ${inlines}
 	
       end
 
+      operation 5527682 "canEdit"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5527938 "canEditPrimaryKey"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5527810 "canEditForeignKey"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5528066 "canClose"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 5504130 "make"
 	class_operation public return_type class_ref 3870722 // ControllerStatePermission
 	nparams 0
@@ -2984,10 +3048,10 @@ ${inlines}
 
     classdiagram 3387010 "StateMachine"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
-    class 3904386 "AbstractControllerStateMachine"
+    class 3904386 "AbstractControllerStateChain"
       abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -3001,10 +3065,136 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 5504258 "~AbstractControllerStateMachine"
+      attribute 3420162 "CurrentState"
+	private type class_ref 2684930 // ControllerState
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5504258 "~AbstractControllerStateChain"
 	abstract cpp_virtual public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 5526402 "currentState"
+	public return_type class_ref 2684930 // ControllerState
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5525634 "onDataEditionStarted"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5525762 "onDataEditionDone"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5525890 "submit"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5526018 "revert"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5526146 "insert"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5526274 "remove"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5526530 "onDataEditionStartedFromParent"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5526658 "onDataEditionDoneFromParent"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5526786 "submitFromParent"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -3033,11 +3223,11 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 4372098 // <directional composition>
-	  b parent class_ref 3904386 // AbstractControllerStateMachine
+	  b parent class_ref 3904386 // AbstractControllerStateChain
       end
 
-      attribute 3406722 "Impl"
-	private type class_ref 3904386 // AbstractControllerStateMachine
+      attribute 3406722 "ChainImpl"
+	private type class_ref 3904386 // AbstractControllerStateChain
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3046,6 +3236,172 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      classrelation 4393346 // <directional composition>
+	relation 4367362 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4393346 // <directional composition>
+	  b parent class_ref 3870722 // ControllerStatePermission
+      end
+
+      attribute 3426690 "Permissions"
+	private type class_ref 3870722 // ControllerStatePermission
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5527042 "canInsert"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5527170 "onDataEditionStarted"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5527298 "onDataEditionStartedFromParent"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5527426 "make"
+	class_operation public return_type class_ref 2684674 // ControllerStateMachine
+	nparams 1
+	  param in name "permission" type class_ref 3870722 // ControllerStatePermission
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5528322 "stateChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "newState" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5526914 "currentState"
+	private return_type class_ref 2684930 // ControllerState
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 3406594 "ControllerStatePermissionProxyModel"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 3924994 "ControllerStatePermissionProxyModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4393474 // <generalisation>
+	relation 4367490 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4393474 // <generalisation>
+	  b parent class_ref 1752450 // QIdentityProxyModel
+      end
+
+      operation 5528194 "flags"
+	public explicit_return_type "int"
+	nparams 1
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4393602 // <directional composition>
+	relation 4367618 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4393602 // <directional composition>
+	  b parent class_ref 2684674 // ControllerStateMachine
       end
     end
   end
@@ -6240,6 +6596,98 @@ ${inlines}
 	
       end
 
+      operation 5518338 "actionCount"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5518466 "actionAt"
+	public return_type class_ref 693250 // QAction
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5518722 "cbegin"
+	public explicit_return_type "const_iterator"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5518850 "cend"
+	public explicit_return_type "const_iterator"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5518594 "actionList"
+	public return_type class_ref 3668226 // ActionList
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5518210 "addAction"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "action" type class_ref 693250 // QAction
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 5103490 "updateEnableState"
 	abstract cpp_virtual protected explicit_return_type "void"
 	nparams 0
@@ -6278,6 +6726,83 @@ ${inlines}
 	    classrelation_ref 4331778 // <directional composition>
 	  b parent class_ref 3870722 // ControllerStatePermission
       end
+
+      classrelation 4386690 // <directional composition>
+	relation 4360706 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4386690 // <directional composition>
+	  b parent class_ref 3668226 // ActionList
+      end
+    end
+
+    classdiagram 3201922 "ActionList"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 3668226 "ActionList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4386562 // <directional composition>
+	relation 4360578 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 4386562 // <directional composition>
+	  b parent class_ref 693250 // QAction
+      end
+
+      classrelation 4386818 // <directional composition>
+	relation 4360834 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4386818 // <directional composition>
+	  b parent class_ref 3918466 // QVector
+      end
+
+      operation 5518978 "cbegin"
+	public explicit_return_type "const_iterator"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5519106 "cend"
+	public explicit_return_type "const_iterator"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 2413698 "NavigationActions"
@@ -6306,42 +6831,6 @@ ${inlines}
 "
 	    classrelation_ref 3089026 // <directional composition>
 	  b parent class_ref 693250 // QAction
-      end
-
-      attribute 2590722 "RowCount"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2590850 "CurrentRow"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2597634 "State"
-	private type class_ref 2684930 // ControllerState
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
       end
 
       attribute 2570114 "ToFirst"
@@ -7018,27 +7507,6 @@ ${inlines}
 	
 	
       end
-    end
-
-    classdiagram 3201922 "ActionList"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 3668226 "ActionList"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
     end
 
     class 3668482 "ActionContainerTester"
@@ -8070,7 +8538,7 @@ ${inlines}
 
     classdiagram 3195266 "FormWidget"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B-Landscape
     end
 
     class 3088770 "AbstractFormWidget"

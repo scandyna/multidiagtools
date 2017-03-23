@@ -66,6 +66,23 @@ bool AbstractControllerStatePermission::isInsertActionEnabled(ControllerState st
   return canInsert(state);
 }
 
+bool AbstractControllerStatePermission::canEdit(ControllerState state) const
+{
+  switch(state){
+    case ControllerState::Visualizing:
+      return true;
+    case ControllerState::Editing:
+      return true;
+    case ControllerState::Inserting:
+      return true;
+    case ControllerState::ChildEditing:
+      return false;
+    case ControllerState::ParentEditing:
+      return false;
+  }
+  return false;
+}
+
 bool AbstractControllerStatePermission::canSubmit(ControllerState state) const
 {
   switch(state){

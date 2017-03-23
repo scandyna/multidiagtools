@@ -19,6 +19,9 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/ResizeToContentsAction.cpp
     src/Mdt/ItemEditor/AbstractControllerStatePermission.cpp
     src/Mdt/ItemEditor/ControllerStatePermission.cpp
+    src/Mdt/ItemEditor/ControllerStatePermissionProxyModel.cpp
+    src/Mdt/ItemEditor/AbstractControllerStateChain.cpp
+    src/Mdt/ItemEditor/ControllerStateMachine.cpp
     src/Mdt/ItemEditor/AbstractController.cpp
     src/Mdt/ItemEditor/AbstractItemModelController.cpp
     src/Mdt/ItemEditor/ItemViewPrivateContainer.cpp

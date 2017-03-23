@@ -2,11 +2,11 @@ format 211
 
 classcanvas 128002 class_ref 3749250 // AbstractControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 36 41 2000
+  xyz 36 42 2000
 end
 classcanvas 128130 class_ref 3877378 // FilterControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 67 490 2006
+  xyz 51 514 2006
 end
 relationcanvas 128258 relation_ref 4312578 // <generalisation>
   from ref 128130 z 2007 to ref 128002

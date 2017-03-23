@@ -80,6 +80,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual bool isInsertActionEnabled(ControllerState state) const;
 
+    /*! \brief Check if it is possible to edit for state
+     */
+    virtual bool canEdit(ControllerState state) const;
+
     /*! \brief Check if it is possible to submit for state
      */
     virtual bool canSubmit(ControllerState state) const;

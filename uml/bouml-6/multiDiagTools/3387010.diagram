@@ -1,15 +1,36 @@
 format 211
 
-classcanvas 128002 class_ref 3904386 // AbstractControllerStateMachine
+classcanvas 128002 class_ref 3904386 // AbstractControllerStateChain
   classdiagramsettings member_max_width 0 end
-  xyz 328 42 2000
+  xyz 546 276 2000
 end
 classcanvas 128130 class_ref 2684674 // ControllerStateMachine
   classdiagramsettings member_max_width 0 end
-  xyz 39 42 2000
+  xyz 41 320 2000
+end
+note 128770 "Event setters that will calculate next state"
+  xyzwh 40.5 648.5 2000 343 65
+classcanvas 128898 class_ref 3870722 // ControllerStatePermission
+  classdiagramsettings member_max_width 0 end
+  xyz 50 42 2000
+end
+classcanvas 129154 class_ref 3870338 // AbstractControllerStatePermission
+  classdiagramsettings member_max_width 0 end
+  xyz 536 112 2006
 end
 relationcanvas 128642 relation_ref 4346114 // <directional composition>
   from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 4367362 // <directional composition>
+  from ref 128130 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 4299138 // <directional composition>
+  decenter_end 457
+  from ref 128898 z 2007 to ref 129154
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

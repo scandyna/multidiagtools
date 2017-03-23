@@ -91,6 +91,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     bool isInsertActionEnabled(ControllerState state) const;
 
+    /*! \brief Check if it is possible to edit for state
+     */
+    bool canEdit(ControllerState state) const;
+
     /*! \brief Check if it is possible to submit for state
      */
     bool canSubmit(ControllerState state) const;

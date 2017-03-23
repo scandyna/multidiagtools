@@ -59,6 +59,15 @@ bool ControllerStatePermission::isInsertActionEnabled(ControllerState state) con
   }
 }
 
+bool ControllerStatePermission::canEdit(ControllerState state) const
+{
+  if(mImpl){
+    return mImpl->canEdit(state);
+  }else{
+    return false;
+  }
+}
+
 bool ControllerStatePermission::canSubmit(ControllerState state) const
 {
   if(mImpl){
