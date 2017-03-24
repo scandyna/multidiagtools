@@ -29,7 +29,8 @@
 #include "Mdt/ItemEditor/ResizeToContentsAction.h"
 #include "Mdt/ItemEditor/ControllerState.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
-#include "Mdt/ItemEditor/ControllerStatePermission.h"
+#include "Mdt/ItemEditor/AbstractControllerStateChain.h"
+#include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
 #include <QStringListModel>
@@ -37,8 +38,6 @@
 #include <QPointer>
 #include <QAction>
 #include <memory>
-
-#include <QDebug>
 
 using namespace Mdt::ItemEditor;
 
@@ -77,9 +76,15 @@ void ActionsTest::abstractActionContainerTest()
   QCOMPARE(act.stateChangedCount(), 0);
   QVERIFY(!act.disableForced());
   /*
+   * Set controller state machine
+   */
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(&act);
+  act.setControllerStateMachine(stateMachine);
+  QCOMPARE(act.controllerState(), ControllerState::Visualizing);
+  /*
    * Check setters and getters
    */
-  // Check row state vilidity
+  // Check row state validity
   rs.setRowCount(20);
   rs.setCurrentRow(20);
   act.setRowState(rs);
@@ -88,21 +93,21 @@ void ActionsTest::abstractActionContainerTest()
   act.setRowState(rs);
   QVERIFY(act.rowStateIsValid());
   // Check other states
-  act.setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   QCOMPARE(act.rowCount(), 20);
   QCOMPARE(act.currentRow(), 10);
   QVERIFY(!act.rowStateIsNull());
-  QVERIFY(act.controllerState() == ControllerState::Editing);
+  QCOMPARE(act.controllerState(), ControllerState::Editing);
   /*
    * Go back to initial state
    */
   rs.clear();
   act.setRowState(rs);
-  act.setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   act.resetStateChangedCount();
   QCOMPARE(act.rowCount(), 0);
   QCOMPARE(act.currentRow(), -1);
-  QVERIFY(act.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(act.controllerState(), ControllerState::Visualizing);
   QCOMPARE(act.stateChangedCount(), 0);
   QVERIFY(!act.disableForced());
   /*
@@ -118,18 +123,18 @@ void ActionsTest::abstractActionContainerTest()
   act.setRowState(rs);
   QCOMPARE(act.stateChangedCount(), 2);
   // Change controller state
-  act.setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   QCOMPARE(act.stateChangedCount(), 3);
   /*
    * Go back to initial state
    */
   rs.clear();
   act.setRowState(rs);
-  act.setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   act.resetStateChangedCount();
   QCOMPARE(act.rowCount(), 0);
   QCOMPARE(act.currentRow(), -1);
-  QVERIFY(act.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(act.controllerState(), ControllerState::Visualizing);
   QCOMPARE(act.stateChangedCount(), 0);
   QVERIFY(!act.disableForced());
   /*
@@ -149,20 +154,20 @@ void ActionsTest::abstractActionContainerTest()
   act.setRowState(rs);
   QCOMPARE(act.stateChangedCount(), 2);
   // Change controller state
-  act.setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   QCOMPARE(act.stateChangedCount(), 3);
-  act.setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   QCOMPARE(act.stateChangedCount(), 3);
   /*
    * Go back to initial state
    */
   rs.clear();
   act.setRowState(rs);
-  act.setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   act.resetStateChangedCount();
   QCOMPARE(act.rowCount(), 0);
   QCOMPARE(act.currentRow(), -1);
-  QVERIFY(act.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(act.controllerState(), ControllerState::Visualizing);
   QCOMPARE(act.stateChangedCount(), 0);
   QVERIFY(!act.disableForced());
   /*
@@ -184,7 +189,7 @@ void ActionsTest::abstractActionContainerTest()
   QVERIFY(act.disableForced());
   QCOMPARE(act.stateChangedCount(), 0);
   // Change controller state - must not call updateEnableState()
-  act.setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY(act.disableForced());
   QCOMPARE(act.stateChangedCount(), 0);
   // Clear forcing disabled - Must call updateEnableState()
@@ -209,9 +214,10 @@ void ActionsTest::navigationActionsTest()
   QVERIFY(!toNext->isEnabled());
   QVERIFY(!toLast->isEnabled());
   /*
-   * Set controller state permissions
+   * Set controller state machine
    */
-  actions->setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(actions.get());
+  actions->setControllerStateMachine(stateMachine);
   QVERIFY(!toFirst->isEnabled());
   QVERIFY(!toPrevious->isEnabled());
   QVERIFY(!toNext->isEnabled());
@@ -297,7 +303,7 @@ void ActionsTest::navigationActionsTest()
   /*
    * Check in editing state
    */
-  actions->setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY(!toFirst->isEnabled());
   QVERIFY(!toPrevious->isEnabled());
   QVERIFY(!toNext->isEnabled());
@@ -313,7 +319,7 @@ void ActionsTest::navigationActionsTest()
   /*
    * Go to visualizing state
    */
-  actions->setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   QVERIFY(!toFirst->isEnabled());
   QVERIFY(!toPrevious->isEnabled());
   QVERIFY(toNext->isEnabled());
@@ -348,9 +354,10 @@ void ActionsTest::editionActionsTest()
   QVERIFY(!submitAction->isEnabled());
   QVERIFY(!revertAction->isEnabled());
   /*
-   * Set controller state permissions
+   * Set controller state machine
    */
-  actions->setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(actions.get());
+  actions->setControllerStateMachine(stateMachine);
   /*
    * Check controller state
    */
@@ -359,17 +366,17 @@ void ActionsTest::editionActionsTest()
   rs.setCurrentRow(0);
   actions->setRowState(rs);
   // Visualizing state
-  actions->setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   QVERIFY(!submitAction->isEnabled());
   QVERIFY(!revertAction->isEnabled());
   // Editing state
-  actions->setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY(submitAction->isEnabled());
   QVERIFY(revertAction->isEnabled());
   /*
    * Check setting row sate in Editing state
    */
-  actions->setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   // Set valid row state
   rs.setRowCount(2);
   rs.setCurrentRow(0);
@@ -385,7 +392,7 @@ void ActionsTest::editionActionsTest()
   /*
    * Check setting row sate in Visualizing state
    */
-  actions->setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   // Set valid row state
   rs.setRowCount(2);
   rs.setCurrentRow(0);
@@ -416,15 +423,16 @@ void ActionsTest::insertActionTest()
   /// \todo Define a initial state (also in controller) and enable
 //   QVERIFY(!insertAction->isEnabled());
   /*
-   * Set controller state permissions
+   * Set controller state machine
    */
-  action->setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(action.get());
+  action->setControllerStateMachine(stateMachine);
   /*
    * Change controller state
    */
-  action->setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   QVERIFY(insertAction->isEnabled());
-  action->setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY(!insertAction->isEnabled());
   /*
    * Clear
@@ -445,9 +453,10 @@ void ActionsTest::removeActionTest()
    */
   QVERIFY(!removeAction->isEnabled());
   /*
-   * Set controller state permissions
+   * Set controller state machine
    */
-  action->setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(action.get());
+  action->setControllerStateMachine(stateMachine);
   /*
    * Check controller state
    */
@@ -456,15 +465,15 @@ void ActionsTest::removeActionTest()
   rs.setCurrentRow(0);
   action->setRowState(rs);
   // Visualizing state
-  action->setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   QVERIFY(removeAction->isEnabled());
   // Editing state
-  action->setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY(!removeAction->isEnabled());
   /*
    * Check setting row sate in Editing state
    */
-  action->setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   // Set valid row state
   rs.setRowCount(2);
   rs.setCurrentRow(0);
@@ -478,7 +487,7 @@ void ActionsTest::removeActionTest()
   /*
    * Check setting row sate in Visualizing state
    */
-  action->setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   // Set valid row state
   rs.setRowCount(2);
   rs.setCurrentRow(0);
@@ -507,9 +516,10 @@ void ActionsTest::resizeToContentsTest()
   QVERIFY(resizeToContentsAction != nullptr);
   QVERIFY(!resizeToContentsAction->isEnabled());
   /*
-   * Set controller state permissions
+   * Set controller state machine
    */
-  action->setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(action.get());
+  action->setControllerStateMachine(stateMachine);
   /*
    * Check controller state
    */
@@ -518,15 +528,15 @@ void ActionsTest::resizeToContentsTest()
   rs.setCurrentRow(0);
   action->setRowState(rs);
   // Visualizing state
-  action->setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   QVERIFY(resizeToContentsAction->isEnabled());
   // Editing state
-  action->setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY(!resizeToContentsAction->isEnabled());
   /*
    * Check setting row sate in Editing state
    */
-  action->setControllerState(ControllerState::Editing);
+  stateMachine->forceCurrentState(ControllerState::Editing);
   // Set valid row state
   rs.setRowCount(2);
   rs.setCurrentRow(0);
@@ -540,7 +550,7 @@ void ActionsTest::resizeToContentsTest()
   /*
    * Check setting row sate in Visualizing state
    */
-  action->setControllerState(ControllerState::Visualizing);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
   // Set valid row state
   rs.setRowCount(2);
   rs.setCurrentRow(0);

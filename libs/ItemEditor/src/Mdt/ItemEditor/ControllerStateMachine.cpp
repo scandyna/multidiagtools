@@ -77,6 +77,48 @@ bool ControllerStateMachine::canSelect() const
   return mPermissionImpl->canSelect( mCurrentState );
 }
 
+bool ControllerStateMachine::isChangeCurrentRowActionEnabled() const
+{
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->isChangeCurrentRowActionEnabled(mCurrentState);
+}
+
+bool ControllerStateMachine::isInsertActionEnabled() const
+{
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->isInsertActionEnabled(mCurrentState);
+}
+
+bool ControllerStateMachine::isSubmitActionEnabled() const
+{
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->isSubmitActionEnabled(mCurrentState);
+}
+
+bool ControllerStateMachine::isRevertActionEnabled() const
+{
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->isRevertActionEnabled(mCurrentState);
+}
+
+bool ControllerStateMachine::isRemoveActionEnabled() const
+{
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->isRemoveActionEnabled(mCurrentState);
+}
+
+bool ControllerStateMachine::isSelectActionEnabled() const
+{
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->isSelectActionEnabled(mCurrentState);
+}
+
 void ControllerStateMachine::onDataEditionStarted()
 {
 

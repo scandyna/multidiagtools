@@ -23,10 +23,15 @@
 
 #include "RowState.h"
 #include "ControllerState.h"
+
 #include "ControllerStatePermission.h"
+
 #include <QObject>
+#include <QPointer>
 
 namespace Mdt{ namespace ItemEditor{
+
+  class ControllerStateMachine;
 
   /*! \brief Base class to create action containers
    *
@@ -51,6 +56,12 @@ namespace Mdt{ namespace ItemEditor{
     // Move disabled
     AbstractActionContainer(AbstractActionContainer &&) = delete;
     AbstractActionContainer & operator=(AbstractActionContainer &&) = delete;
+
+    /*! \brief Set controller state machine
+     *
+     * \pre \a stateMachine must be a valid pointer
+     */
+    void setControllerStateMachine(const ControllerStateMachine * const stateMachine);
 
     /*! \brief Set controller state permission
      */
@@ -86,52 +97,52 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Get controller state
      */
-    ControllerState controllerState() const
-    {
-      return mControllerState;
-    }
+    ControllerState controllerState() const;
+//     {
+//       return mControllerState;
+//     }
 
     /*! \brief Check if changing current row action is enabled for state
      */
-    bool isChangeCurrentRowActionEnabled() const
-    {
-      return mControllerStatePermission.isChangeCurrentRowActionEnabled(mControllerState);
-    }
+    bool isChangeCurrentRowActionEnabled() const;
+//     {
+//       return mControllerStatePermission.isChangeCurrentRowActionEnabled(mControllerState);
+//     }
 
     /*! \brief Check if insert action is enabled for state
      */
-    bool isInsertActionEnabled() const
-    {
-      return mControllerStatePermission.isInsertActionEnabled(mControllerState);
-    }
+    bool isInsertActionEnabled() const;
+//     {
+//       return mControllerStatePermission.isInsertActionEnabled(mControllerState);
+//     }
 
     /*! \brief Check if submit action is enabled for state
      */
-    bool isSubmitActionEnabled() const
-    {
-      return mControllerStatePermission.isSubmitActionEnabled(mControllerState);
-    }
+    bool isSubmitActionEnabled() const;
+//     {
+//       return mControllerStatePermission.isSubmitActionEnabled(mControllerState);
+//     }
 
     /*! \brief Check if revert action is enabled for state
      */
-    bool isRevertActionEnabled() const
-    {
-      return mControllerStatePermission.isRevertActionEnabled(mControllerState);
-    }
+    bool isRevertActionEnabled() const;
+//     {
+//       return mControllerStatePermission.isRevertActionEnabled(mControllerState);
+//     }
 
     /*! \brief Check if remove action is enabled for state
      */
-    bool isRemoveActionEnabled() const
-    {
-      return mControllerStatePermission.isRemoveActionEnabled(mControllerState);
-    }
+    bool isRemoveActionEnabled() const;
+//     {
+//       return mControllerStatePermission.isRemoveActionEnabled(mControllerState);
+//     }
 
     /*! \brief Check if select action is enabled for state
      */
-    bool isSelectActionEnabled() const
-    {
-      return mControllerStatePermission.isSelectActionEnabled(mControllerState);
-    }
+    bool isSelectActionEnabled() const;
+//     {
+//       return mControllerStatePermission.isSelectActionEnabled(mControllerState);
+//     }
 
    public slots:
 
@@ -175,6 +186,12 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual void disableAllActions() = 0;
 
+   private slots:
+
+    /*! \brief Actions to perform when controller state changed
+     */
+    void onControllerStateChanged();
+
    private:
 
 //     bool stateHasChanged() const
@@ -184,9 +201,11 @@ namespace Mdt{ namespace ItemEditor{
 
     bool mActionsDisabled = false;
     RowState mRowState;
+    QPointer<const ControllerStateMachine> mControllerStateMachine;
+    QMetaObject::Connection mControllerStateChangedConnection;
 //     RowState mPreviousRowState;
-    ControllerState mControllerState = ControllerState::Visualizing;
-    ControllerStatePermission mControllerStatePermission;
+//     ControllerState mControllerState = ControllerState::Visualizing;
+//     ControllerStatePermission mControllerStatePermission;
 //     ControllerState mPreviousControllerState = ControllerState::Visualizing;
   };
 

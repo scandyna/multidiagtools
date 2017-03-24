@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "AbstractActionContainer.h"
+#include "ControllerStateMachine.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -27,9 +28,76 @@ AbstractActionContainer::AbstractActionContainer(QObject* parent)
 {
 }
 
+void AbstractActionContainer::setControllerStateMachine(const ControllerStateMachine*const stateMachine)
+{
+  Q_ASSERT(stateMachine != nullptr);
+
+  mControllerStateMachine = stateMachine;
+  disconnect(mControllerStateChangedConnection);
+  mControllerStateChangedConnection = 
+    connect(mControllerStateMachine, &ControllerStateMachine::currentStateChanged, this, &AbstractActionContainer::onControllerStateChanged);
+  onControllerStateChanged();
+}
+
 void AbstractActionContainer::setControllerStatePermission(const ControllerStatePermission & permission)
 {
-  mControllerStatePermission = permission;
+//   mControllerStatePermission = permission;
+}
+
+ControllerState AbstractActionContainer::controllerState() const
+{
+  if(mControllerStateMachine.isNull()){
+    return ControllerState::Visualizing;  /// \todo Fix which state should be returned
+  }
+  return mControllerStateMachine->currentState();
+}
+
+bool AbstractActionContainer::isChangeCurrentRowActionEnabled() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->isChangeCurrentRowActionEnabled();
+}
+
+bool AbstractActionContainer::isInsertActionEnabled() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->isInsertActionEnabled();
+}
+
+bool AbstractActionContainer::isSubmitActionEnabled() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->isSubmitActionEnabled();
+}
+
+bool AbstractActionContainer::isRevertActionEnabled() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->isRevertActionEnabled();
+}
+
+bool AbstractActionContainer::isRemoveActionEnabled() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->isRemoveActionEnabled();
+}
+
+bool AbstractActionContainer::isSelectActionEnabled() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->isSelectActionEnabled();
 }
 
 void AbstractActionContainer::setRowState(RowState rs)
@@ -43,11 +111,11 @@ void AbstractActionContainer::setRowState(RowState rs)
 
 void AbstractActionContainer::setControllerState(ControllerState state)
 {
-  const bool changed = (state != mControllerState);
-  mControllerState = state;
-  if( changed && !mActionsDisabled ){
-    updateEnableState();
-  }
+//   const bool changed = (state != mControllerState);
+// //   mControllerState = state;
+//   if( changed && !mActionsDisabled ){
+//     updateEnableState();
+//   }
 }
 
 void AbstractActionContainer::setActionsDisabled(bool disable)
@@ -56,6 +124,15 @@ void AbstractActionContainer::setActionsDisabled(bool disable)
   if(disable){
     disableAllActions();
   }else{
+    updateEnableState();
+  }
+}
+
+void AbstractActionContainer::onControllerStateChanged()
+{
+  Q_ASSERT(!mControllerStateMachine.isNull());
+
+  if(!mActionsDisabled){
     updateEnableState();
   }
 }

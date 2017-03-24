@@ -97,6 +97,30 @@ namespace Mdt{ namespace ItemEditor{
      */
     bool canSelect() const;
 
+    /*! \brief Check if changing current row action is enabled for current state
+     */
+    bool isChangeCurrentRowActionEnabled() const;
+
+    /*! \brief Check if insert action is enabled for current state
+     */
+    bool isInsertActionEnabled() const;
+
+    /*! \brief Check if submit action is enabled for current state
+     */
+    bool isSubmitActionEnabled() const;
+
+    /*! \brief Check if revert action is enabled for current state
+     */
+    bool isRevertActionEnabled() const;
+
+    /*! \brief Check if remove action is enabled for current state
+     */
+    bool isRemoveActionEnabled() const;
+
+    /*! \brief Check if select action is enabled for current state
+     */
+    bool isSelectActionEnabled() const;
+
     /*! \brief Data edition started event
      */
     void onDataEditionStarted();

@@ -22,8 +22,9 @@
 #define MDT_ITEM_EDITOR_ACTIONS_TEST_H
 
 #include "Mdt/ItemEditor/AbstractActionContainer.h"
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
+// #include <QObject>
+// #include <QtTest/QtTest>
 
 /*
  * Test class for AbstractActionContainer
@@ -68,7 +69,7 @@ class ActionContainerTester : public Mdt::ItemEditor::AbstractActionContainer
   bool mDisableForced = false;
 };
 
-class ActionsTest : public QObject
+class ActionsTest : public TestBase
 {
   Q_OBJECT
 
