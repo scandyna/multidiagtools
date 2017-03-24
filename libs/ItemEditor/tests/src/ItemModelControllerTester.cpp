@@ -19,10 +19,9 @@
  **
  ****************************************************************************/
 #include "ItemModelControllerTester.h"
-#include "ControllerStateMachineTestClass.h"
-#include "ControllerStateChainTestClass.h"
-#include "Mdt/ItemEditor/ControllerStatePermission.h"
+#include "Mdt/ItemEditor/AbstractControllerStateChain.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
+#include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QAbstractItemModel>
 #include <QModelIndex>
 
@@ -31,7 +30,7 @@ using namespace Mdt::ItemEditor;
 ItemModelControllerTester::ItemModelControllerTester(QObject* parent)
  : AbstractItemModelController(parent)
 {
-  setControllerStateMachine( ControllerStateMachineTestClass::make<ControllerStateChainTestClass, AbstractControllerStatePermission>() );
+  setControllerStateMachine( ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(this) );
 //   setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
 }
 

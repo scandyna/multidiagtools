@@ -23,10 +23,15 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-bool ControllerStateMachine::isNull() const
-{
-  return ( (!mChainImpl) || mPermission.isNull() );
-}
+// ControllerStateMachine::ControllerStateMachine(QObject* parent)
+//  : QObject(parent)
+// {
+// }
+
+// bool ControllerStateMachine::isNull() const
+// {
+//   return ( (!mChainImpl) || mPermission.isNull() );
+// }
 
 bool ControllerStateMachine::canChangeCurrentRow() const
 {
@@ -87,6 +92,13 @@ bool ControllerStateMachine::canSelect() const
 void ControllerStateMachine::onDataEditionStarted()
 {
 
+}
+
+void ControllerStateMachine::forceCurrentState(ControllerState state)
+{
+  Q_ASSERT(mChainImpl);
+
+//   mChainImpl->forceCurrentState(state);
 }
 
 ControllerState ControllerStateMachine::currentState() const

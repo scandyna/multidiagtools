@@ -23,6 +23,7 @@
 
 #include "ControllerState.h"
 #include "ControllerStatePermission.h"
+#include <QObject>
 #include <memory>
 #include <type_traits>
 
@@ -45,40 +46,50 @@ namespace Mdt{ namespace ItemEditor{
    *  - Deducing next state regarding current state and the event,
    *     which is driven by AbstractControllerStateChain (or a subclass of it).
    */
-  class ControllerStateMachine
+  class ControllerStateMachine : public QObject
   {
+   Q_OBJECT
+
    public:
 
-    /*! \brief Contruct a null ControllerStateMachine
-     */
-    ControllerStateMachine() = default;
+//     /*! \brief Contruct a null ControllerStateMachine
+//      */
+//     explicit ControllerStateMachine(QObject *parent = nullptr);
+
+    // Default constructor disabled
+    ControllerStateMachine() = delete;
 
     /*! \brief Destruct this ControllerStateMachine
      */
     ~ControllerStateMachine() = default;
 
-    /*! \brief Copy construct a ControllerStateMachine from other
-     */
-    ControllerStateMachine(const ControllerStateMachine & other) = default;
+//     /*! \brief Copy construct a ControllerStateMachine from other
+//      */
+    // Copy disabled
+    ControllerStateMachine(const ControllerStateMachine & other) = delete;
+    ControllerStateMachine & operator=(const ControllerStateMachine & other) = delete;
+    // Move disabled
+    ControllerStateMachine(ControllerStateMachine && other) = delete;
+    ControllerStateMachine & operator=(ControllerStateMachine && other) = delete;
 
-    /*! \brief Assign other to this ControllerStateMachine
-     */
-    ControllerStateMachine & operator=(const ControllerStateMachine & other) = default;
+//     /*! \brief Assign other to this ControllerStateMachine
+//      */
+//     
 
-    /*! \brief Move construct a ControllerStateMachine from other
-     */
-    ControllerStateMachine(ControllerStateMachine && other) = default;
+//     /*! \brief Move construct a ControllerStateMachine from other
+//      */
+//     
+// 
+//     /*! \brief Assign other to this ControllerStateMachine
+//      */
+//     
 
-    /*! \brief Assign other to this ControllerStateMachine
-     */
-    ControllerStateMachine & operator=(ControllerStateMachine && other) = default;
-
-    /*! \brief Check if this state machine is null
-     *
-     * Returns true unless this instance contains
-     *  a implementation of state chain and state permissions.
-     */
-    bool isNull() const;
+//     /*! \brief Check if this state machine is null
+//      *
+//      * Returns true unless this instance contains
+//      *  a implementation of state chain and state permissions.
+//      */
+//     bool isNull() const;
 
     /*! \brief Access internal state chain
      *
@@ -134,20 +145,27 @@ namespace Mdt{ namespace ItemEditor{
      * \pre PermissionImpl must be a subclass of AbstractControllerStatePermission
      */
     template<typename ChainImpl, typename PermissionImpl>
-    static ControllerStateMachine make()
+    static ControllerStateMachine *makeNew(QObject *parent = nullptr)
     {
       static_assert( std::is_base_of<AbstractControllerStateChain, ChainImpl>::value, "Type ChainImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStateChain" );
       static_assert( std::is_base_of<AbstractControllerStatePermission, PermissionImpl>::value, "Type PermissionImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStatePermission" );
-      return ControllerStateMachine( std::make_shared<ChainImpl>() , ControllerStatePermission::make<PermissionImpl>() );
+      return new ControllerStateMachine( std::make_shared<ChainImpl>() , ControllerStatePermission::make<PermissionImpl>(), parent );
     }
+
+    /*! \internal Force current state
+     *
+     * This method is used for unit tests.
+     */
+    void forceCurrentState(ControllerState state);
 
   private:
 
     ControllerState currentState() const;
 
     template<typename ChainImpl>
-    ControllerStateMachine(const std::shared_ptr<ChainImpl> & chainImpl, const ControllerStatePermission & permission)
-     : mChainImpl(chainImpl),
+    ControllerStateMachine(const std::shared_ptr<ChainImpl> & chainImpl, const ControllerStatePermission & permission, QObject *parent)
+     : QObject(parent),
+       mChainImpl(chainImpl),
        mPermission(permission)
     {
     }

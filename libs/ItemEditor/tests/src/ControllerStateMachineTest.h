@@ -33,7 +33,7 @@ class ControllerStateMachineTest : public TestBase
   void cleanupTestCase();
 
   void constructTest();
-  void copyTest();
+//   void copyTest();
   void currentStateChangedSignalTest();
   void getterBenschmark();
 };

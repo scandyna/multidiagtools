@@ -29,13 +29,13 @@ ControllerStatePermissionProxyModel::ControllerStatePermissionProxyModel(QObject
 {
 }
 
-void ControllerStatePermissionProxyModel::setStateMachine(const ControllerStateMachine& stateMachine)
+void ControllerStatePermissionProxyModel::setStateMachine(const ControllerStateMachine * const stateMachine)
 {
-  Q_ASSERT(stateMachine.stateChain() != nullptr);
+  Q_ASSERT(stateMachine != nullptr);
 
   mStateMachine = stateMachine;
   disconnect(mStateChangedConnection);
-  mStateChangedConnection = connect(mStateMachine.stateChain(), &AbstractControllerStateChain::currentStateChanged, this, &ControllerStatePermissionProxyModel::onCurrentStateChanged);
+//   mStateChangedConnection = connect(mStateMachine.stateChain(), &AbstractControllerStateChain::currentStateChanged, this, &ControllerStatePermissionProxyModel::onCurrentStateChanged);
 }
 
 Qt::ItemFlags ControllerStatePermissionProxyModel::flags(const QModelIndex& index) const

@@ -34,9 +34,9 @@ ControllerState AbstractControllerStateChain::dataEditionStartedState(Controller
   }
 }
 
-void AbstractControllerStateChain::forceCurrentState(ControllerState state)
+void AbstractControllerStateChain::signalCurrentStateChanged() const
 {
-  mCurrentState = state;
+  emit currentStateChanged();
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

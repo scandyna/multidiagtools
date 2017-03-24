@@ -24,6 +24,7 @@
 #include "ControllerStateMachine.h"
 #include <QIdentityProxyModel>
 #include <QMetaObject>
+#include <QPointer>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -41,9 +42,9 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set controller state machine
      *
-     * \pre \a stateMachine must have valid implemtations
+     * \pre \a stateMachine must be a valid pointer
      */
-    void setStateMachine(const ControllerStateMachine & stateMachine);
+    void setStateMachine(const ControllerStateMachine * const stateMachine);
 
     /*! \brief
      */
@@ -55,7 +56,7 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    ControllerStateMachine mStateMachine;
+    QPointer<const ControllerStateMachine> mStateMachine;
     QMetaObject::Connection mStateChangedConnection;
   };
 

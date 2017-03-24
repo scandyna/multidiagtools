@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "AbstractController.h"
+#include "ControllerStateMachine.h"
 #include "RowChangeEventDispatcher.h"
 #include "ControllerStatePermission.h"
 #include "NavigationControllerRelation.h"
@@ -51,6 +52,11 @@ AbstractController::AbstractController(QObject* parent)
   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
 //   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsInserted, this, &AbstractController::onRowsInserted);
   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsRemoved, this, &AbstractController::onRowsRemoved);
+}
+
+ControllerStateMachine* AbstractController::controllerStateMachine() const
+{
+  return mControllerStateMachine;
 }
 
 void AbstractController::setInsertLocation(AbstractController::InsertLocation il)
@@ -406,9 +412,10 @@ bool AbstractController::remove()
   return model->removeRow(row);
 }
 
-void AbstractController::setControllerStateMachine(const ControllerStateMachine & stateMachine)
+void AbstractController::setControllerStateMachine(ControllerStateMachine *stateMachine)
 {
-  Q_ASSERT(!stateMachine.isNull());
+  Q_ASSERT(stateMachine != nullptr);
+  Q_ASSERT(stateMachine->parent() == this);
 
   mControllerStateMachine = stateMachine;
 }

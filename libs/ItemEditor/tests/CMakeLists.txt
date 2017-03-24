@@ -8,8 +8,6 @@ enable_testing()
 
 set(SOURCES_FILES
   src/TestBase.cpp
-  src/ControllerStateChainTestClass.cpp
-  src/ControllerStateMachineTestClass.cpp
   src/ItemModelControllerTester.cpp
   src/AbstractControllerRelationTestClass.cpp
   src/ControllerStateChangedSignalSpy.cpp

@@ -23,7 +23,6 @@
 
 #include "RowState.h"
 #include "ControllerState.h"
-#include "ControllerStateMachine.h"
 
 #include "ControllerStatePermission.h"
 
@@ -52,6 +51,7 @@ namespace Mdt{ namespace ItemModel{
 namespace Mdt{ namespace ItemEditor{
 
   class RowChangeEventDispatcher;
+  class ControllerStateMachine;
 
   /*! \brief Common base for controllers
    *
@@ -149,10 +149,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Get controller state machine
      */
-    ControllerStateMachine controllerStateMachine() const
-    {
-      return mControllerStateMachine;
-    }
+    ControllerStateMachine *controllerStateMachine() const;
 
     /*! \brief Get controller state permission
      */
@@ -630,12 +627,13 @@ namespace Mdt{ namespace ItemEditor{
      *
      * This method should be called once, early in the initialization, like this:
      * \code
-     * setControllerStateMachine( ControllerStateMachine::make<MyStateChain, MyPermission>() );
+     * setControllerStateMachine( ControllerStateMachine::makeNew<MyStateChain, MyPermission>() );
      * \endcode
      *
-     * \pre \a stateMachine must have a implementation of state chain and permissions
+     * \note \a stateMachine is owned by this controller.
+     * \pre \a stateMachine must have this as parent
      */
-    void setControllerStateMachine(const ControllerStateMachine & stateMachine);
+    void setControllerStateMachine(ControllerStateMachine *stateMachine);
 
     /*! \brief Set controller state permission
      *
@@ -823,7 +821,7 @@ namespace Mdt{ namespace ItemEditor{
     void updateModelForViewIfChanged(QAbstractItemModel *oldModelForView);
 
     ControllerState mControllerState = ControllerState::Visualizing;
-    ControllerStateMachine mControllerStateMachine;
+    QPointer<ControllerStateMachine> mControllerStateMachine;
     
     ControllerStatePermission mControllerStatePermission;
     RowChangeEventDispatcher *mRowChangeEventDispatcher;

@@ -64,19 +64,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual ControllerState dataEditionStartedState(ControllerState currentState) const;
 
+    void signalCurrentStateChanged() const;
+
    signals:
 
     /*! \brief Emitted whenever current state changed
      */
-    void currentStateChanged();
-
-   protected:
-
-    /*! \internal Force current state
-     *
-     * This method is used for unit tests.
-     */
-    void forceCurrentState(ControllerState state);
+    void currentStateChanged() const;
 
    private:
 
