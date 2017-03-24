@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "ControllerStateMachine.h"
 #include "AbstractControllerStateChain.h"
+#include "AbstractControllerStatePermission.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -33,12 +34,16 @@ namespace Mdt{ namespace ItemEditor{
 //   return ( (!mChainImpl) || mPermission.isNull() );
 // }
 
+ControllerStateMachine::~ControllerStateMachine()
+{
+}
+
 bool ControllerStateMachine::canChangeCurrentRow() const
 {
   if(!mChainImpl){
     return false;
   }
-  return mPermission.canChangeCurrentRow( currentState() );
+  return mPermission->canChangeCurrentRow( currentState() );
 }
 
 bool ControllerStateMachine::canInsert() const
@@ -46,7 +51,7 @@ bool ControllerStateMachine::canInsert() const
   if(!mChainImpl){
     return false;
   }
-  return mPermission.canInsert( currentState() );
+  return mPermission->canInsert( currentState() );
 }
 
 bool ControllerStateMachine::canEdit() const
@@ -54,7 +59,7 @@ bool ControllerStateMachine::canEdit() const
   if(!mChainImpl){
     return false;
   }
-  return mPermission.canEdit( currentState() );
+  return mPermission->canEdit( currentState() );
 }
 
 bool ControllerStateMachine::canSubmit() const
@@ -62,7 +67,7 @@ bool ControllerStateMachine::canSubmit() const
   if(!mChainImpl){
     return false;
   }
-  return mPermission.canSubmit( currentState() );
+  return mPermission->canSubmit( currentState() );
 }
 
 bool ControllerStateMachine::canRevert() const
@@ -70,7 +75,7 @@ bool ControllerStateMachine::canRevert() const
   if(!mChainImpl){
     return false;
   }
-  return mPermission.canRevert( currentState() );
+  return mPermission->canRevert( currentState() );
 }
 
 bool ControllerStateMachine::canRemove() const
@@ -78,7 +83,7 @@ bool ControllerStateMachine::canRemove() const
   if(!mChainImpl){
     return false;
   }
-  return mPermission.canRemove( currentState() );
+  return mPermission->canRemove( currentState() );
 }
 
 bool ControllerStateMachine::canSelect() const
@@ -86,7 +91,7 @@ bool ControllerStateMachine::canSelect() const
   if(!mChainImpl){
     return false;
   }
-  return mPermission.canSelect( currentState() );
+  return mPermission->canSelect( currentState() );
 }
 
 void ControllerStateMachine::onDataEditionStarted()

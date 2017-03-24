@@ -22,7 +22,9 @@
 #define MDT_ITEM_EDITOR_CONTROLLER_STATE_MACHINE_H
 
 #include "ControllerState.h"
-#include "ControllerStatePermission.h"
+
+// #include "ControllerStatePermission.h"
+
 #include <QObject>
 #include <memory>
 #include <type_traits>
@@ -30,6 +32,7 @@
 namespace Mdt{ namespace ItemEditor{
 
   class AbstractControllerStateChain;
+  class AbstractControllerStatePermission;
 
   /*! \brief Synchronous state machine for a item editor controller
    *
@@ -52,56 +55,19 @@ namespace Mdt{ namespace ItemEditor{
 
    public:
 
-//     /*! \brief Contruct a null ControllerStateMachine
-//      */
-//     explicit ControllerStateMachine(QObject *parent = nullptr);
-
     // Default constructor disabled
     ControllerStateMachine() = delete;
 
     /*! \brief Destruct this ControllerStateMachine
      */
-    ~ControllerStateMachine() = default;
+    ~ControllerStateMachine();
 
-//     /*! \brief Copy construct a ControllerStateMachine from other
-//      */
     // Copy disabled
     ControllerStateMachine(const ControllerStateMachine & other) = delete;
     ControllerStateMachine & operator=(const ControllerStateMachine & other) = delete;
     // Move disabled
     ControllerStateMachine(ControllerStateMachine && other) = delete;
     ControllerStateMachine & operator=(ControllerStateMachine && other) = delete;
-
-//     /*! \brief Assign other to this ControllerStateMachine
-//      */
-//     
-
-//     /*! \brief Move construct a ControllerStateMachine from other
-//      */
-//     
-// 
-//     /*! \brief Assign other to this ControllerStateMachine
-//      */
-//     
-
-//     /*! \brief Check if this state machine is null
-//      *
-//      * Returns true unless this instance contains
-//      *  a implementation of state chain and state permissions.
-//      */
-//     bool isNull() const;
-
-    /*! \brief Access internal state chain
-     *
-     * Return a nullptr unless this state machine was constructed
-     *  (or copied, or moved) with a implemetation.
-     *
-     * \note Getting internal chain is recommanded only to make signal/slot connection
-     */
-    const AbstractControllerStateChain *stateChain() const
-    {
-      return mChainImpl.get();
-    }
 
     /*! \brief Check if it is allowed to change current row for current state
      */
@@ -149,7 +115,7 @@ namespace Mdt{ namespace ItemEditor{
     {
       static_assert( std::is_base_of<AbstractControllerStateChain, ChainImpl>::value, "Type ChainImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStateChain" );
       static_assert( std::is_base_of<AbstractControllerStatePermission, PermissionImpl>::value, "Type PermissionImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStatePermission" );
-      return new ControllerStateMachine( std::make_shared<ChainImpl>() , ControllerStatePermission::make<PermissionImpl>(), parent );
+      return new ControllerStateMachine( std::make_unique<const ChainImpl>() , std::make_unique<const AbstractControllerStatePermission>(), parent );
     }
 
     /*! \internal Force current state
@@ -163,15 +129,15 @@ namespace Mdt{ namespace ItemEditor{
     ControllerState currentState() const;
 
     template<typename ChainImpl>
-    ControllerStateMachine(const std::shared_ptr<ChainImpl> & chainImpl, const ControllerStatePermission & permission, QObject *parent)
+    ControllerStateMachine(std::unique_ptr<const ChainImpl> chainImpl, std::unique_ptr<const AbstractControllerStatePermission> permission, QObject *parent)
      : QObject(parent),
-       mChainImpl(chainImpl),
-       mPermission(permission)
+       mChainImpl( std::move(chainImpl) ),
+       mPermission( std::move(permission) )
     {
     }
 
-    std::shared_ptr<const AbstractControllerStateChain> mChainImpl;
-    ControllerStatePermission mPermission;
+    std::unique_ptr<const AbstractControllerStateChain> mChainImpl;
+    std::unique_ptr<const AbstractControllerStatePermission> mPermission;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
