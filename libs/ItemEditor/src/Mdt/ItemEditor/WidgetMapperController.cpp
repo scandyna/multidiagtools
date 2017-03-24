@@ -32,7 +32,6 @@ WidgetMapperController::WidgetMapperController(QObject* parent)
  : AbstractItemModelController(parent),
    mWidgetMapper(new DataWidgetMapper(this))
 {
-//   setControllerStatePermission( ControllerStatePermission::make<WidgetMapperControllerStatePermission>() );
   setControllerStateMachine( ControllerStateMachine::makeNew<AbstractControllerStateChain, WidgetMapperControllerStatePermission>(this) );
   connect(this, &WidgetMapperController::currentRowChanged, mWidgetMapper, &DataWidgetMapper::setCurrentRow);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionStarted, this, &WidgetMapperController::onDataEditionStarted);

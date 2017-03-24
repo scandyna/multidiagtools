@@ -416,7 +416,6 @@ bool AbstractController::insert()
   auto *model = modelForView();
   Q_ASSERT(model != nullptr);
 
-//   if(!ControllerStatePermission::canInsert(mControllerState)){
   if(!canInsert()){
     return false;
   }
@@ -448,7 +447,6 @@ bool AbstractController::remove()
   auto *model = modelForView();
   Q_ASSERT(model != nullptr);
 
-//   if(!ControllerStatePermission::canRemove(mControllerState)){
   if(!canRemove()){
     return false;
   }
@@ -466,13 +464,7 @@ void AbstractController::setControllerStateMachine(ControllerStateMachine *state
   Q_ASSERT(stateMachine->parent() == this);
 
   mControllerStateMachine = stateMachine;
-//   connect(stateMachine, &ControllerStateMachine::currentStateChanged, this, &AbstractController::controllerStateChanged);
 }
-
-// void AbstractController::setControllerStatePermission(const ControllerStatePermission& permission)
-// {
-//   mControllerStatePermission = permission;
-// }
 
 void AbstractController::registerModel(QAbstractItemModel* model)
 {

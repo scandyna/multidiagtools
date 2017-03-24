@@ -114,17 +114,13 @@ void AbstractWindow::setMainController(AbstractController* controller)
       disconnect(mNavigationActions, &NavigationActions::toNextTriggered, oldController, &AbstractController::toNext);
       disconnect(mNavigationActions, &NavigationActions::toLastTriggered, oldController, &AbstractController::toLast);
       disconnect(oldController, &AbstractController::rowStateChanged, mNavigationActions, &NavigationActions::setRowState);
-//       disconnect(oldController, &AbstractController::controllerStateChanged, mNavigationActions, &NavigationActions::setControllerState);
     }
-//     mNavigationActions->setControllerStatePermission(controller->controllerStatePermission());
     mNavigationActions->setControllerStateMachine(controller->controllerStateMachine());
     connect(mNavigationActions, &NavigationActions::toFirstTriggered, controller, &AbstractController::toFirst);
     connect(mNavigationActions, &NavigationActions::toPreviousTriggered, controller, &AbstractController::toPrevious);
     connect(mNavigationActions, &NavigationActions::toNextTriggered, controller, &AbstractController::toNext);
     connect(mNavigationActions, &NavigationActions::toLastTriggered, controller, &AbstractController::toLast);
     connect(controller, &AbstractController::rowStateChanged, mNavigationActions, &NavigationActions::setRowState);
-//     connect(controller, &AbstractController::controllerStateChanged, mNavigationActions, &NavigationActions::setControllerState);
-//     mNavigationActions->setControllerState(controller->controllerState());
     mNavigationActions->setRowState(controller->rowState());
   }
   // Connect edition actions
@@ -133,28 +129,20 @@ void AbstractWindow::setMainController(AbstractController* controller)
       disconnect(mEditionActions, &EditionActions::submitTriggered, oldController, &AbstractController::submit);
       disconnect(mEditionActions, &EditionActions::revertTriggered, oldController, &AbstractController::revert);
       disconnect(oldController, &AbstractController::rowStateChanged, mEditionActions, &EditionActions::setRowState);
-//       disconnect(oldController, &AbstractController::controllerStateChanged, mEditionActions, &EditionActions::setControllerState);
     }
-//     mEditionActions->setControllerStatePermission(controller->controllerStatePermission());
     mEditionActions->setControllerStateMachine(controller->controllerStateMachine());
     connect(mEditionActions, &EditionActions::submitTriggered, controller, &AbstractController::submit);
     connect(mEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
     connect(controller, &AbstractController::rowStateChanged, mEditionActions, &EditionActions::setRowState);
-//     connect(controller, &AbstractController::controllerStateChanged, mEditionActions, &EditionActions::setControllerState);
-//     mEditionActions->setControllerState(controller->controllerState());
     mEditionActions->setRowState(controller->rowState());
   }
   // Connect insert action
   if(mInsertAction != nullptr){
     if(oldController != nullptr){
       disconnect(mInsertAction, &InsertAction::insertTriggered, oldController, &AbstractController::insert);
-//       disconnect(oldController, &AbstractController::controllerStateChanged, mInsertAction, &InsertAction::setControllerState);
     }
-//     mInsertAction->setControllerStatePermission(controller->controllerStatePermission());
     mInsertAction->setControllerStateMachine(controller->controllerStateMachine());
     connect(mInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
-//     connect(controller, &AbstractController::controllerStateChanged, mInsertAction, &InsertAction::setControllerState);
-//     mInsertAction->setControllerState(controller->controllerState());
     mInsertAction->setRowState(controller->rowState());
   }
   // Connect remove actions
@@ -162,14 +150,10 @@ void AbstractWindow::setMainController(AbstractController* controller)
     if(oldController != nullptr){
       disconnect(mRemoveAction, &RemoveAction::removeTriggered, oldController, &AbstractController::remove);
       disconnect(oldController, &AbstractController::rowStateChanged, mRemoveAction, &RemoveAction::setRowState);
-//       disconnect(oldController, &AbstractController::controllerStateChanged, mRemoveAction, &RemoveAction::setControllerState);
     }
-//     mRemoveAction->setControllerStatePermission(controller->controllerStatePermission());
     mRemoveAction->setControllerStateMachine(controller->controllerStateMachine());
     connect(mRemoveAction, &RemoveAction::removeTriggered, controller, &AbstractController::remove);
     connect(controller, &AbstractController::rowStateChanged, mRemoveAction, &RemoveAction::setRowState);
-//     connect(controller, &AbstractController::controllerStateChanged, mRemoveAction, &RemoveAction::setControllerState);
-//     mRemoveAction->setControllerState(controller->controllerState());
     mRemoveAction->setRowState(controller->rowState());
   }
 }

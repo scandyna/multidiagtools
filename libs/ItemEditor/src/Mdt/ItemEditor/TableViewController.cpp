@@ -36,7 +36,6 @@ TableViewController::TableViewController(QObject* parent)
  : AbstractItemModelController(parent),
    mContainer(new ItemViewPrivateContainer)
 {
-//   setControllerStatePermission( ControllerStatePermission::make<TableViewControllerStatePermission>() );
   setControllerStateMachine( ControllerStateMachine::makeNew<AbstractControllerStateChain, TableViewControllerStatePermission>(this) );
   connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionStarted, this, &TableViewController::onDataEditionStarted);
   connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionDone, this, &TableViewController::onDataEditionDone);
