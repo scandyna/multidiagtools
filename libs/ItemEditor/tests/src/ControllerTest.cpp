@@ -29,6 +29,7 @@
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
+#include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QSignalSpy>
 #include <QStringList>
 #include <QStringListModel>
@@ -60,32 +61,49 @@ void ControllerTest::cleanupTestCase()
 void ControllerTest::statePermissionTest()
 {
   ItemModelControllerTester controller;
-  auto permission = controller.controllerStatePermission();
+  auto *stateMachine = controller.controllerStateMachine();
+  QVERIFY(stateMachine != nullptr);
 
-  // Current row change
-  QVERIFY(permission.canChangeCurrentRow(ControllerState::Visualizing));
-  QVERIFY(!permission.canChangeCurrentRow(ControllerState::Editing));
-  QVERIFY(!permission.canChangeCurrentRow(ControllerState::Inserting));
-  // Insert
-  QVERIFY(permission.canInsert(ControllerState::Visualizing));
-  QVERIFY(!permission.canInsert(ControllerState::Editing));
-  QVERIFY(!permission.canInsert(ControllerState::Inserting));
-  // Submit
-  QVERIFY(!permission.canSubmit(ControllerState::Visualizing));
-  QVERIFY(permission.canSubmit(ControllerState::Editing));
-  QVERIFY(!permission.canSubmit(ControllerState::Inserting));
-  // Revert
-  QVERIFY(!permission.canRevert(ControllerState::Visualizing));
-  QVERIFY(permission.canRevert(ControllerState::Editing));
-  QVERIFY(!permission.canRevert(ControllerState::Inserting));
-  // Remove
-  QVERIFY(permission.canRemove(ControllerState::Visualizing));
-  QVERIFY(!permission.canRemove(ControllerState::Editing));
-  QVERIFY(permission.canRemove(ControllerState::Inserting));
-  // Select
-  QVERIFY(permission.canSelect(ControllerState::Visualizing));
-  QVERIFY(!permission.canSelect(ControllerState::Editing));
-  QVERIFY(!permission.canSelect(ControllerState::Inserting));
+  // Visualizing state
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
+  QVERIFY( controller.canChangeCurrentRow());
+  QVERIFY( controller.canSubmit());
+  QVERIFY( controller.canRevert());
+  QVERIFY( controller.canRemove());
+  // Editing state
+  stateMachine->forceCurrentState(ControllerState::Editing);
+  QVERIFY(!controller.canChangeCurrentRow());
+  QVERIFY( controller.canSubmit());
+  QVERIFY( controller.canRevert());
+  QVERIFY(!controller.canRemove());
+  // ParentEditing state
+  stateMachine->forceCurrentState(ControllerState::ParentEditing);
+  QVERIFY( controller.canChangeCurrentRow());
+  QVERIFY( controller.canSubmit());
+  QVERIFY( controller.canRevert());
+  QVERIFY( controller.canRemove());
+  // ChildEditing state
+  stateMachine->forceCurrentState(ControllerState::ChildEditing);
+  QVERIFY(!controller.canChangeCurrentRow());
+  QVERIFY( controller.canSubmit());
+  QVERIFY( controller.canRevert());
+  QVERIFY(!controller.canRemove());
+  // Inserting state
+  stateMachine->forceCurrentState(ControllerState::Inserting);
+  QVERIFY(!controller.canChangeCurrentRow());
+  QVERIFY(!controller.canSubmit());
+  QVERIFY(!controller.canRevert());
+  QVERIFY( controller.canRemove());
+//   // Insert
+//   QVERIFY(permission.canInsert(ControllerState::Visualizing));
+//   QVERIFY(!permission.canInsert(ControllerState::Editing));
+//   QVERIFY(!permission.canInsert(ControllerState::Inserting));
+//   // Select
+//   QVERIFY(permission.canSelect(ControllerState::Visualizing));
+//   QVERIFY(!permission.canSelect(ControllerState::Editing));
+//   QVERIFY(!permission.canSelect(ControllerState::Inserting));
+
+  QFAIL("Fix which operations are permitted");
 }
 
 void ControllerTest::basicStateTest()

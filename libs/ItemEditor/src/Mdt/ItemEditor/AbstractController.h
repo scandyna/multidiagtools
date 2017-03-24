@@ -24,7 +24,7 @@
 #include "RowState.h"
 #include "ControllerState.h"
 
-#include "ControllerStatePermission.h"
+// #include "ControllerStatePermission.h"
 
 #include "ControllerRelationList.h"
 #include "Mdt/ItemModel/ProxyModelContainer.h"
@@ -142,56 +142,56 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Get controller state
      */
-    ControllerState controllerState() const
-    {
-      return mControllerState;
-    }
+    ControllerState controllerState() const;
+//     {
+//       return mControllerState;
+//     }
 
     /*! \brief Get controller state machine
      */
     ControllerStateMachine *controllerStateMachine() const;
 
-    /*! \brief Get controller state permission
-     */
-    ControllerStatePermission controllerStatePermission() const
-    {
-      return mControllerStatePermission;
-    }
+//     /*! \brief Get controller state permission
+//      */
+//     ControllerStatePermission controllerStatePermission() const
+//     {
+//       return mControllerStatePermission;
+//     }
 
     /*! \brief Check if it is allowed to change current row for current controller state
      */
-    bool canChangeCurrentRow() const
-    {
-      return mControllerStatePermission.canChangeCurrentRow(mControllerState);
-    }
+    bool canChangeCurrentRow() const;
+//     {
+//       return mControllerStatePermission.canChangeCurrentRow(mControllerState);
+//     }
 
     /*! \brief Check if it is allowed to insert for current controller state
      */
-    bool canInsert() const
-    {
-      return mControllerStatePermission.canInsert(mControllerState);
-    }
+    bool canInsert() const;
+//     {
+//       return mControllerStatePermission.canInsert(mControllerState);
+//     }
 
     /*! \brief Check if it is possible to submit for current controller state
      */
-    bool canSubmit() const
-    {
-      return mControllerStatePermission.canSubmit(mControllerState);
-    }
+    bool canSubmit() const;
+//     {
+//       return mControllerStatePermission.canSubmit(mControllerState);
+//     }
 
     /*! \brief Check if it is possible to revert for current controller state
      */
-    bool canRevert() const
-    {
-      return mControllerStatePermission.canRevert(mControllerState);
-    }
+    bool canRevert() const;
+//     {
+//       return mControllerStatePermission.canRevert(mControllerState);
+//     }
 
     /*! \brief Check if it is possible to remove for current controller state
      */
-    bool canRemove() const
-    {
-      return mControllerStatePermission.canRemove(mControllerState);
-    }
+    bool canRemove() const;
+//     {
+//       return mControllerStatePermission.canRemove(mControllerState);
+//     }
 
     /*! \brief Set insert location
      */
@@ -635,22 +635,22 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setControllerStateMachine(ControllerStateMachine *stateMachine);
 
-    /*! \brief Set controller state permission
-     *
-     * This controller will use \a permission to know which action is permitted in current controller state.
-     *  Subclass that implements a concrete controller must pass a instance of ControllerStatePermission
-     *  that has the expected implementation.
-     *
-     *
-     * By default, this abstract controller has a null instance of ControllerStatePermission
-     *  (a isntance that has no implementation, and that gives no permissions at all).
-     *
-     * This method should be called once, early in the initialization, like this:
-     * \code
-     * setControllerStatePermission( ControllerStatePermission::make<MyConcreteControllerStatePermission>() );
-     * \endcode
-     */
-    void setControllerStatePermission(const ControllerStatePermission & permission);
+//     /*! \brief Set controller state permission
+//      *
+//      * This controller will use \a permission to know which action is permitted in current controller state.
+//      *  Subclass that implements a concrete controller must pass a instance of ControllerStatePermission
+//      *  that has the expected implementation.
+//      *
+//      *
+//      * By default, this abstract controller has a null instance of ControllerStatePermission
+//      *  (a isntance that has no implementation, and that gives no permissions at all).
+//      *
+//      * This method should be called once, early in the initialization, like this:
+//      * \code
+//      * setControllerStatePermission( ControllerStatePermission::make<MyConcreteControllerStatePermission>() );
+//      * \endcode
+//      */
+//     void setControllerStatePermission(const ControllerStatePermission & permission);
 
     /*! \brief Register model
      *
@@ -820,10 +820,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void updateModelForViewIfChanged(QAbstractItemModel *oldModelForView);
 
-    ControllerState mControllerState = ControllerState::Visualizing;
+//     ControllerState mControllerState = ControllerState::Visualizing;
     QPointer<ControllerStateMachine> mControllerStateMachine;
     
-    ControllerStatePermission mControllerStatePermission;
+//     ControllerStatePermission mControllerStatePermission;
     RowChangeEventDispatcher *mRowChangeEventDispatcher;
     InsertLocation mInsertLocation;
 //     Mdt::ItemModel::PrimaryKey mPrimaryKey;

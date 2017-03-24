@@ -2,27 +2,27 @@ format 211
 
 classcanvas 128002 class_ref 3904386 // AbstractControllerStateChain
   classdiagramsettings member_max_width 0 end
-  xyz 897.4 132.9 2000
+  xyz 897.8 132.8 2000
 end
 classcanvas 128130 class_ref 2684674 // ControllerStateMachine
   classdiagramsettings member_max_width 0 end
-  xyz 418.2 124.9 2000
+  xyz 418.4 124.8 2000
 end
 classcanvas 128898 class_ref 3870722 // ControllerStatePermission
   classdiagramsettings member_max_width 0 end
-  xyz 39.9 435.2 2000
+  xyz 39.7 434.7 2000
 end
 classcanvas 129154 class_ref 3870338 // AbstractControllerStatePermission
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 521.2 528.25 2006
+  xyz 521.4 528.25 2006
 end
 classcanvas 129410 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 606.2 40.55 2005
+  xyz 606.4 40.35 2005
 end
 classcanvas 130178 class_ref 2684930 // ControllerState
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 268.55 227.9 2011
+  xyz 268.35 227.8 2011
 end
 relationcanvas 128642 relation_ref 4346114 // <directional composition>
   from ref 128130 z 2001 to ref 128002

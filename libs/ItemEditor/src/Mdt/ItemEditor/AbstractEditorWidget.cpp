@@ -153,7 +153,8 @@ void AbstractEditorWidget::registerActions(AbstractActionContainer* actions)
   Q_ASSERT(controller != nullptr);
 
   connect(controller, &AbstractController::rowStateChanged, actions, &AbstractActionContainer::setRowState);
-  connect(controller, &AbstractController::controllerStateChanged, actions, &AbstractActionContainer::setControllerState);
+  actions->setRowState(controller->rowState());
+//   connect(controller, &AbstractController::controllerStateChanged, actions, &AbstractActionContainer::setControllerState);
 }
 
 void AbstractEditorWidget::prependProxyModel(QAbstractProxyModel* proxyModel)
@@ -224,7 +225,8 @@ void AbstractEditorWidget::createInsertActionIfNot()
   if(mInsertAction == nullptr){
     mInsertAction = new InsertAction(this);
     Q_ASSERT(abstractController() != nullptr);
-    mInsertAction->setControllerStatePermission(abstractController()->controllerStatePermission());
+//     mInsertAction->setControllerStatePermission(abstractController()->controllerStatePermission());
+    mInsertAction->setControllerStateMachine(abstractController()->controllerStateMachine());
     connect(mInsertAction, &InsertAction::insertTriggered, abstractController(), &AbstractController::insert);
     registerActions(mInsertAction);
   }
@@ -236,7 +238,8 @@ void AbstractEditorWidget::createRemoveActionIfNot()
   if(mRemoveAction == nullptr){
     mRemoveAction = new RemoveAction(this);
     Q_ASSERT(abstractController() != nullptr);
-    mRemoveAction->setControllerStatePermission(abstractController()->controllerStatePermission());
+//     mRemoveAction->setControllerStatePermission(abstractController()->controllerStatePermission());
+    mRemoveAction->setControllerStateMachine(abstractController()->controllerStateMachine());
     connect(mRemoveAction, &RemoveAction::removeTriggered, abstractController(), &AbstractController::remove);
     registerActions(mRemoveAction);
   }
@@ -248,7 +251,8 @@ void AbstractEditorWidget::createEditionActionsIfNot()
   if(mEditionActions == nullptr){
     mEditionActions = new EditionActions(this);
     Q_ASSERT(abstractController() != nullptr);
-    mEditionActions->setControllerStatePermission(abstractController()->controllerStatePermission());
+//     mEditionActions->setControllerStatePermission(abstractController()->controllerStatePermission());
+    mEditionActions->setControllerStateMachine(abstractController()->controllerStateMachine());
     connect(mEditionActions, &EditionActions::submitTriggered, abstractController(), &AbstractController::submit);
     connect(mEditionActions, &EditionActions::revertTriggered, abstractController(), &AbstractController::revert);
     registerActions(mEditionActions);
@@ -261,7 +265,8 @@ void AbstractEditorWidget::createNavigationActionsIfNot()
   if(mNavigationActions == nullptr){
     mNavigationActions = new NavigationActions(this);
     Q_ASSERT(abstractController() != nullptr);
-    mNavigationActions->setControllerStatePermission(abstractController()->controllerStatePermission());
+//     mNavigationActions->setControllerStatePermission(abstractController()->controllerStatePermission());
+    mNavigationActions->setControllerStateMachine(abstractController()->controllerStateMachine());
     connect(mNavigationActions, &NavigationActions::toFirstTriggered, abstractController(), &AbstractController::toFirst);
     connect(mNavigationActions, &NavigationActions::toPreviousTriggered, abstractController(), &AbstractController::toPrevious);
     connect(mNavigationActions, &NavigationActions::toNextTriggered, abstractController(), &AbstractController::toNext);

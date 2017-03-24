@@ -54,7 +54,7 @@ void AbstractTableViewWidget::registerActions(AbstractActionContainer* actions)
   Q_ASSERT(controller != nullptr);
 
   connect(controller, &AbstractController::rowStateChanged, actions, &AbstractActionContainer::setRowState);
-  connect(controller, &AbstractController::controllerStateChanged, actions, &AbstractActionContainer::setControllerState);
+//   connect(controller, &AbstractController::controllerStateChanged, actions, &AbstractActionContainer::setControllerState);
 }
 
 void AbstractTableViewWidget::resizeViewToContents()
@@ -78,7 +78,8 @@ void AbstractTableViewWidget::createResizeToContentsActionIfNot()
   if(mResizeToContentsAction == nullptr){
     mResizeToContentsAction = new ResizeToContentsAction(this);
     Q_ASSERT(abstractController() != nullptr);
-    mResizeToContentsAction->setControllerStatePermission(abstractController()->controllerStatePermission());
+//     mResizeToContentsAction->setControllerStatePermission(abstractController()->controllerStatePermission());
+    mResizeToContentsAction->setControllerStateMachine(abstractController()->controllerStateMachine());
     connect(mResizeToContentsAction, &ResizeToContentsAction::resizeToContentsTriggered, this, &AbstractTableViewWidget::resizeViewToContents);
     registerActions(mResizeToContentsAction);
   }

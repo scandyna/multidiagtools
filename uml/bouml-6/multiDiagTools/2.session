@@ -3,19 +3,11 @@ cleanlooks_style
 diagrams
   classdiagram_ref 3406594 // ControllerStatePermissionProxyModel
     120 98 100 7 0 0
-  classdiagram_ref 3413122 // ControllerStateOverview
-    120 98 100 18 0 0
-  active  classdiagram_ref 3387010 // StateMachine
-    845 911 90 22 0 0
-  classdiagram_ref 3202050 // AbstractActionContainer
-    120 98 100 18 0 0
-  classdiagram_ref 2707074 // AbstractController
-    120 98 100 23 0 0
-  classdiagram_ref 3419650 // StateMachineTest
-    120 98 100 18 0 0
+  active  classdiagram_ref 2707074 // AbstractController
+    845 911 100 23 0 0
 end
 show_stereotypes
-selected operation_ref 5542274 // setCurrentState
+selected class_ref 2684674 // ControllerStateMachine
 open
   
   package_ref 409858 // principes
@@ -30,6 +22,7 @@ open
   operation_ref 5528322 // currentStateChanged
   classview_ref 1287042 // Controller
   classview_ref 1676418 // Relation
+  class_ref 3668354 // AbstractActionContainer
   classdiagram_ref 3201922 // ActionList
   classview_ref 1564290 // Where
   

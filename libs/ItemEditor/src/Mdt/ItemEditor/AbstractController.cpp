@@ -54,9 +54,57 @@ AbstractController::AbstractController(QObject* parent)
   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsRemoved, this, &AbstractController::onRowsRemoved);
 }
 
+ControllerState AbstractController::controllerState() const
+{
+  if(mControllerStateMachine.isNull()){
+    return ControllerState::Visualizing;  /// \todo Fix default state
+  }
+  return mControllerStateMachine->currentState();
+}
+
 ControllerStateMachine* AbstractController::controllerStateMachine() const
 {
   return mControllerStateMachine;
+}
+
+bool AbstractController::canChangeCurrentRow() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->canChangeCurrentRow();
+}
+
+bool AbstractController::canInsert() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->canInsert();
+}
+
+bool AbstractController::canSubmit() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->canSubmit();
+}
+
+bool AbstractController::canRevert() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->canRevert();
+}
+
+bool AbstractController::canRemove() const
+{
+  if(mControllerStateMachine.isNull()){
+    return false;
+  }
+  return mControllerStateMachine->canRemove();
 }
 
 void AbstractController::setInsertLocation(AbstractController::InsertLocation il)
@@ -337,7 +385,7 @@ void AbstractController::toLast()
 bool AbstractController::submit()
 {
   if(!canSubmit()){
-    qDebug() << "AbstractController: connot submit in state " << controllerStateText(mControllerState);
+    qDebug() << "AbstractController: connot submit in state " << controllerStateText(controllerState());
     return false;
   }
   if(!mRelationList.submitForEachChild()){
@@ -418,12 +466,13 @@ void AbstractController::setControllerStateMachine(ControllerStateMachine *state
   Q_ASSERT(stateMachine->parent() == this);
 
   mControllerStateMachine = stateMachine;
+//   connect(stateMachine, &ControllerStateMachine::currentStateChanged, this, &AbstractController::controllerStateChanged);
 }
 
-void AbstractController::setControllerStatePermission(const ControllerStatePermission& permission)
-{
-  mControllerStatePermission = permission;
-}
+// void AbstractController::setControllerStatePermission(const ControllerStatePermission& permission)
+// {
+//   mControllerStatePermission = permission;
+// }
 
 void AbstractController::registerModel(QAbstractItemModel* model)
 {
@@ -494,13 +543,20 @@ void AbstractController::updateRowState(RowState rs)
 
 void AbstractController::setControllerState(ControllerState state)
 {
-  if(state != mControllerState){
-    mControllerState = state;
-    qDebug() << "AC " << this << ": new state: " << mControllerState;
+  Q_ASSERT(!mControllerStateMachine.isNull());
+  qDebug() << "AC: Warning! setControllerState() is deprecated ! - state: " << state;
+  const bool changed = ( controllerState() != state );
+  mControllerStateMachine->forceCurrentState(state);
+  if(changed){
     emit controllerStateChanged(state);
-  }else{ /// \todo ??
-    mControllerState = state;
   }
+//   if(state != mControllerState){
+//     mControllerState = state;
+//     qDebug() << "AC " << this << ": new state: " << mControllerState;
+//     emit controllerStateChanged(state);
+//   }else{ /// \todo ??
+//     mControllerState = state;
+//   }
 }
 
 FilterProxyModel* AbstractController::filterModel() const

@@ -24,7 +24,7 @@
 #include "RowState.h"
 #include "ControllerState.h"
 
-#include "ControllerStatePermission.h"
+// #include "ControllerStatePermission.h"
 
 #include <QObject>
 #include <QPointer>
@@ -63,9 +63,9 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setControllerStateMachine(const ControllerStateMachine * const stateMachine);
 
-    /*! \brief Set controller state permission
-     */
-    void setControllerStatePermission(const ControllerStatePermission & permission);
+//     /*! \brief Set controller state permission
+//      */
+//     void setControllerStatePermission(const ControllerStatePermission & permission);
 
     /*! \brief Get row count
      */
@@ -150,9 +150,9 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setRowState(Mdt::ItemEditor::RowState rs);
 
-    /*! \brief Set controller state
-     */
-    void setControllerState(Mdt::ItemEditor::ControllerState state);
+//     /*! \brief Set controller state
+//      */
+//     void setControllerState(Mdt::ItemEditor::ControllerState state);
 
     /*! \brief Set actions disabled
      *
