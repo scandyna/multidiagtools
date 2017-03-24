@@ -75,80 +75,38 @@ class StateChainTestClass : public AbstractControllerStateChain
 
 void ControllerStateMachineTest::constructTest()
 {
-  /*
-   * Contruct a null state machine
-   */
-//   ControllerStateMachine s0;
-//   QVERIFY(s0.isNull());
-//   QVERIFY(!s0.canChangeCurrentRow());
-//   QVERIFY(!s0.canInsert());
-  /*
-   * Controller state machine with test classes implementations
-   */
   QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<StateChainTestClass, PermissionTestClass>() );
-//   auto *s = ControllerStateMachine::makeNew<StateChainTestClass, PermissionTestClass>();
-//   QVERIFY(!s.isNull());
+  QCOMPARE(s->currentState(), ControllerState::Visualizing);
   QVERIFY(s->canChangeCurrentRow());
   QVERIFY(!s->canInsert());
 }
 
-// void ControllerStateMachineTest::copyTest()
-// {
-//   auto s1 = ControllerStateMachine::make<StateChainTestClass, PermissionTestClass>();
-//   QVERIFY(s1.canChangeCurrentRow());
-//   QVERIFY(!s1.canInsert());
-//   /*
-//    * Copy construct
-//    */
-//   auto s2 = s1;
-//   QVERIFY(s2.canChangeCurrentRow());
-//   QVERIFY(!s2.canInsert());
-//   /*
-//    * Copy assign
-//    */
-//   ControllerStateMachine s3;
-//   // Make shure s3 is used before assign
-//   QVERIFY(!s3.canChangeCurrentRow());
-//   s3 = s1;
-//   QVERIFY(s3.canChangeCurrentRow());
-//   QVERIFY(!s3.canInsert());
-//   /*
-//    * Move construct
-//    */
-//   auto s4 = std::move( ControllerStateMachine::make<StateChainTestClass, PermissionTestClass>() );
-//   QVERIFY(s4.canChangeCurrentRow());
-//   QVERIFY(!s4.canInsert());
-//   /*
-//    * Move assign
-//    */
-//   ControllerStateMachine s5;
-//   // Make shure s5 is used before assign
-//   QVERIFY(!s5.canChangeCurrentRow());
-//   s5 = std::move( ControllerStateMachine::make<StateChainTestClass, PermissionTestClass>() );
-//   QVERIFY(s5.canChangeCurrentRow());
-//   QVERIFY(!s5.canInsert());
-// }
-
 void ControllerStateMachineTest::currentStateChangedSignalTest()
 {
-//   auto stateMachine = ControllerStateMachine::make<StateChainTestClass, PermissionTestClass>();
   QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<StateChainTestClass, PermissionTestClass>() );
-//   QSignalSpy stateChangedSpy(stateMachine.stateChain(), &AbstractControllerStateChain::currentStateChanged);
-//   QVERIFY(stateChangedSpy.isValid());
-
+  QSignalSpy stateChangedSpy(stateMachine.data(), &ControllerStateMachine::currentStateChanged);
+  QVERIFY(stateChangedSpy.isValid());
   /*
    * Initial state
    */
-  ///QCOMPARE(stateMachine.
-  //stateMachine
-  QFAIL("Not complete");
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  QCOMPARE(stateChangedSpy.count(), 0);
+  // Change state
+  stateMachine->forceCurrentState(ControllerState::Editing);
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  QCOMPARE(stateChangedSpy.count(), 1);
+  stateChangedSpy.clear();
+  // Set same state again
+  stateMachine->forceCurrentState(ControllerState::Editing);
+  QCOMPARE(stateChangedSpy.count(), 0);
 }
 
 void ControllerStateMachineTest::getterBenschmark()
 {
   QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<StateChainTestClass, PermissionTestClass>() );
-//   auto s = ControllerStateMachine::make<StateChainTestClass, PermissionTestClass>();
+
   QBENCHMARK{
+    QCOMPARE(s->currentState(), ControllerState::Visualizing);
     QVERIFY(s->canChangeCurrentRow());
     QVERIFY(!s->canInsert());
   }

@@ -115,7 +115,14 @@ namespace Mdt{ namespace ItemEditor{
     {
       static_assert( std::is_base_of<AbstractControllerStateChain, ChainImpl>::value, "Type ChainImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStateChain" );
       static_assert( std::is_base_of<AbstractControllerStatePermission, PermissionImpl>::value, "Type PermissionImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStatePermission" );
-      return new ControllerStateMachine( std::make_unique<const ChainImpl>() , std::make_unique<const AbstractControllerStatePermission>(), parent );
+      return new ControllerStateMachine( std::make_unique<const ChainImpl>() , std::make_unique<const PermissionImpl>(), parent );
+    }
+
+    /*! \brief Get current state
+     */
+    ControllerState currentState() const
+    {
+      return mCurrentState;
     }
 
     /*! \internal Force current state
@@ -124,20 +131,27 @@ namespace Mdt{ namespace ItemEditor{
      */
     void forceCurrentState(ControllerState state);
 
-  private:
+   signals:
 
-    ControllerState currentState() const;
+    /*! \brief Emitted whenever current state changed
+     */
+    void currentStateChanged();
+
+  private:
 
     template<typename ChainImpl>
     ControllerStateMachine(std::unique_ptr<const ChainImpl> chainImpl, std::unique_ptr<const AbstractControllerStatePermission> permission, QObject *parent)
      : QObject(parent),
        mChainImpl( std::move(chainImpl) ),
-       mPermission( std::move(permission) )
+       mPermissionImpl( std::move(permission) )
     {
     }
 
+    void setCurrentState(ControllerState state);
+
+    ControllerState mCurrentState = ControllerState::Visualizing;
     std::unique_ptr<const AbstractControllerStateChain> mChainImpl;
-    std::unique_ptr<const AbstractControllerStatePermission> mPermission;
+    std::unique_ptr<const AbstractControllerStatePermission> mPermissionImpl;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

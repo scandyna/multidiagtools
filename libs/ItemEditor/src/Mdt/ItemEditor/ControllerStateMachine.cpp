@@ -24,74 +24,57 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-// ControllerStateMachine::ControllerStateMachine(QObject* parent)
-//  : QObject(parent)
-// {
-// }
-
-// bool ControllerStateMachine::isNull() const
-// {
-//   return ( (!mChainImpl) || mPermission.isNull() );
-// }
-
 ControllerStateMachine::~ControllerStateMachine()
 {
 }
 
 bool ControllerStateMachine::canChangeCurrentRow() const
 {
-  if(!mChainImpl){
-    return false;
-  }
-  return mPermission->canChangeCurrentRow( currentState() );
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->canChangeCurrentRow( mCurrentState );
 }
 
 bool ControllerStateMachine::canInsert() const
 {
-  if(!mChainImpl){
-    return false;
-  }
-  return mPermission->canInsert( currentState() );
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->canInsert( mCurrentState );
 }
 
 bool ControllerStateMachine::canEdit() const
 {
-  if(!mChainImpl){
-    return false;
-  }
-  return mPermission->canEdit( currentState() );
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->canEdit( mCurrentState );
 }
 
 bool ControllerStateMachine::canSubmit() const
 {
-  if(!mChainImpl){
-    return false;
-  }
-  return mPermission->canSubmit( currentState() );
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->canSubmit( mCurrentState );
 }
 
 bool ControllerStateMachine::canRevert() const
 {
-  if(!mChainImpl){
-    return false;
-  }
-  return mPermission->canRevert( currentState() );
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->canRevert( mCurrentState );
 }
 
 bool ControllerStateMachine::canRemove() const
 {
-  if(!mChainImpl){
-    return false;
-  }
-  return mPermission->canRemove( currentState() );
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->canRemove( mCurrentState );
 }
 
 bool ControllerStateMachine::canSelect() const
 {
-  if(!mChainImpl){
-    return false;
-  }
-  return mPermission->canSelect( currentState() );
+  Q_ASSERT(mPermissionImpl);
+
+  return mPermissionImpl->canSelect( mCurrentState );
 }
 
 void ControllerStateMachine::onDataEditionStarted()
@@ -101,21 +84,17 @@ void ControllerStateMachine::onDataEditionStarted()
 
 void ControllerStateMachine::forceCurrentState(ControllerState state)
 {
-  Q_ASSERT(mChainImpl);
-
-//   mChainImpl->forceCurrentState(state);
+  setCurrentState(state);
 }
 
-ControllerState ControllerStateMachine::currentState() const
+void ControllerStateMachine::setCurrentState(ControllerState state)
 {
-  Q_ASSERT(mChainImpl);
+  const bool changed = (state != mCurrentState);
 
-  return mChainImpl->currentState();
+  mCurrentState = state;
+  if(changed){
+    emit currentStateChanged();
+  }
 }
-
-// void ControllerStateMachine::setCurrentState(ControllerState state)
-// {
-// 
-// }
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -22,21 +22,15 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-AbstractControllerStateChain::AbstractControllerStateChain(QObject* parent)
- : QObject(parent)
-{
-}
+// AbstractControllerStateChain::AbstractControllerStateChain(QObject* parent)
+// {
+// }
 
 ControllerState AbstractControllerStateChain::dataEditionStartedState(ControllerState currentState) const
 {
   switch(currentState){
     
   }
-}
-
-void AbstractControllerStateChain::signalCurrentStateChanged() const
-{
-  emit currentStateChanged();
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

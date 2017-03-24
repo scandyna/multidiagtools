@@ -3071,54 +3071,10 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 3420162 "CurrentState"
-	private type class_ref 2684930 // ControllerState
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       operation 5504258 "~AbstractControllerStateChain"
 	abstract cpp_virtual public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
-"
-	
-	
-	
-	
-      end
-
-      operation 5526402 "currentState"
-	public return_type class_ref 2684930 // ControllerState
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5528322 "currentStateChanged"
-	stereotype "signal"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "newState" type class_ref 2684930 // ControllerState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
 "
 	
 	
@@ -3228,38 +3184,6 @@ ${inlines}
 	
       end
 
-      classrelation 4400386 // <generalisation>
-	relation 4374402 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4400386 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-
-      classrelation 4401410 // <directional composition>
-	relation 4375426 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4401410 // <directional composition>
-	  b parent class_ref 2684930 // ControllerState
-      end
-
-      operation 5541890 "forceCurrentState"
-	protected explicit_return_type "void"
-	nparams 1
-	  param in name "state" type class_ref 2684930 // ControllerState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
     end
 
     class 2684674 "ControllerStateMachine"
@@ -3285,6 +3209,18 @@ ${inlines}
 	  b parent class_ref 3904386 // AbstractControllerStateChain
       end
 
+      attribute 3420162 "CurrentState"
+	private type class_ref 2684930 // ControllerState
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 3406722 "ChainImpl"
 	private type class_ref 3904386 // AbstractControllerStateChain
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3297,17 +3233,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 4393346 // <directional composition>
-	relation 4367362 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4393346 // <directional composition>
-	  b parent class_ref 3870722 // ControllerStatePermission
-      end
-
       attribute 3426690 "Permissions"
-	private type class_ref 3870722 // ControllerStatePermission
+	private type class_ref 3870338 // AbstractControllerStatePermission
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3316,21 +3243,6 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
-      end
-
-      operation 5534850 "stateChain"
-	public return_type class_ref 3904386 // AbstractControllerStateChain
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
       end
 
       operation 5527042 "canInsert"
@@ -3378,10 +3290,10 @@ ${inlines}
 	
       end
 
-      operation 5527426 "make"
+      operation 5527426 "makeNew"
 	class_operation public return_type class_ref 2684674 // ControllerStateMachine
 	nparams 1
-	  param in name "permission" type class_ref 3870722 // ControllerStatePermission
+	  param in name "parent" type class_ref 138626 // QObject
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -3394,12 +3306,87 @@ ${inlines}
 	
       end
 
+      operation 5542018 "forceCurrentState"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 5526914 "currentState"
-	private return_type class_ref 2684930 // ControllerState
+	public return_type class_ref 2684930 // ControllerState
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5528322 "currentStateChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "newState" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4408834 // <generalisation>
+	relation 4382850 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4408834 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 4408962 // <directional composition>
+	relation 4382978 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4408962 // <directional composition>
+	  b parent class_ref 3870338 // AbstractControllerStatePermission
+      end
+
+      classrelation 4409090 // <directional composition>
+	relation 4383106 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4409090 // <directional composition>
+	  b parent class_ref 2684930 // ControllerState
+      end
+
+      operation 5542274 "setCurrentState"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -3413,85 +3400,6 @@ ${inlines}
     classdiagram 3419650 "StateMachineTest"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
-    end
-
-    class 3931522 "ControllerStateMachineTestClass"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4408450 // <generalisation>
-	relation 4382466 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4408450 // <generalisation>
-	  b parent class_ref 2684674 // ControllerStateMachine
-      end
-
-      operation 5541634 "setCurrentState"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "state" type class_ref 2684930 // ControllerState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-    end
-
-    class 3931650 "ControllerStateChainTestClass"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4408578 // <generalisation>
-	relation 4382594 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4408578 // <generalisation>
-	  b parent class_ref 3904386 // AbstractControllerStateChain
-      end
-
-      operation 5541762 "setCurrentState"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "state" type class_ref 2684930 // ControllerState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
     end
 
     classdiagram 3406594 "ControllerStatePermissionProxyModel"

@@ -60,11 +60,6 @@ relationcanvas 136962 relation_ref 4068610 // <directional composition>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 137730 relation_ref 4367362 // <directional composition>
-  from ref 137602 z 2066 to ref 137346
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 137986 relation_ref 4346114 // <directional composition>
   from ref 137602 z 2072 to ref 137858
   no_role_a no_role_b

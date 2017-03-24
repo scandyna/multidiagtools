@@ -22,7 +22,6 @@
 #define MDT_ITEM_EDITOR_ABSTRACT_CONTROLLER_STATE_CHAIN_H
 
 #include "ControllerState.h"
-#include <QObject>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -34,15 +33,13 @@ namespace Mdt{ namespace ItemEditor{
    * Checking if a event can occure in current state
    *  is allready done by ControllerStateMachine.
    */
-  class AbstractControllerStateChain : public QObject
+  class AbstractControllerStateChain
   {
-   Q_OBJECT
-
    public:
 
     /*! \brief Constructor
      */
-    explicit AbstractControllerStateChain(QObject *parent = nullptr);
+    AbstractControllerStateChain() = default;
 
     /*! \brief Destructor
      */
@@ -55,26 +52,9 @@ namespace Mdt{ namespace ItemEditor{
     AbstractControllerStateChain(AbstractControllerStateChain &&) = delete;
     AbstractControllerStateChain & operator=(AbstractControllerStateChain &&) = delete;
 
-    ControllerState currentState() const
-    {
-      return mCurrentState;
-    }
-
     /*! \brief Get state after data edition started
      */
     virtual ControllerState dataEditionStartedState(ControllerState currentState) const;
-
-    void signalCurrentStateChanged() const;
-
-   signals:
-
-    /*! \brief Emitted whenever current state changed
-     */
-    void currentStateChanged() const;
-
-   private:
-
-    ControllerState mCurrentState;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
