@@ -1,22 +1,30 @@
-window_sizes 1280 963 317 957 911 0
+window_sizes 1280 963 94 1180 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 3387010 // StateMachine
-    957 911 100 18 0 0
   classdiagram_ref 3406594 // ControllerStatePermissionProxyModel
+    120 98 100 7 0 0
+  classdiagram_ref 3413122 // ControllerStateOverview
     120 98 100 18 0 0
+  active  classdiagram_ref 3387010 // StateMachine
+    1180 911 90 21 0 51
 end
 show_stereotypes
-selected operation_ref 5526914 // currentState
+selected classdiagram_ref 3387010 // StateMachine
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   
   package_ref 516098 // ItemModel
-  operation_ref 5528322 // stateChanged
-  class_ref 3924994 // ControllerStatePermissionProxyModel
+  attribute_ref 3420162 // CurrentState
+  operation_ref 5526402 // currentState
+  operation_ref 5525634 // dataEditionStartedState
+  classrelation_ref 4372098 // <directional composition>
+  operation_ref 5534850 // stateChain
+  operation_ref 5526914 // currentState
+  operation_ref 5534978 // onCurrentStateChanged
   classview_ref 1287042 // Controller
+  classview_ref 1676418 // Relation
   classdiagram_ref 3201922 // ActionList
   classview_ref 1564290 // Where
   

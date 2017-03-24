@@ -23,6 +23,11 @@
 
 namespace Mdt{ namespace ItemEditor{
 
+bool ControllerStateMachine::isNull() const
+{
+  return ( (!mChainImpl) || mPermission.isNull() );
+}
+
 bool ControllerStateMachine::canChangeCurrentRow() const
 {
   if(!mChainImpl){
@@ -90,5 +95,10 @@ ControllerState ControllerStateMachine::currentState() const
 
   return mChainImpl->currentState();
 }
+
+// void ControllerStateMachine::setCurrentState(ControllerState state)
+// {
+// 
+// }
 
 }} // namespace Mdt{ namespace ItemEditor{

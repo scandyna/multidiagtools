@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 191
+  revision 193
   modified_by 2 "philippe"
   // class settings
   
@@ -2664,6 +2664,11 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 3413122 "ControllerStateOverview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size A4-Landscape
+    end
+
     classdiagram 2414338 "State"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -3044,11 +3049,12 @@ ${inlines}
 	
 	
       end
+
     end
 
     classdiagram 3387010 "StateMachine"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size C-Landscape
     end
 
     class 3904386 "AbstractControllerStateChain"
@@ -3103,10 +3109,16 @@ ${inlines}
 	
       end
 
-      operation 5525634 "onDataEditionStarted"
-	abstract cpp_virtual public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      operation 5528322 "currentStateChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "newState" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
 "
 	
 	
@@ -3114,10 +3126,11 @@ ${inlines}
 	
       end
 
-      operation 5525762 "onDataEditionDone"
-	abstract cpp_virtual public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      operation 5525634 "dataEditionStartedState"
+	abstract cpp_virtual public return_type class_ref 2684930 // ControllerState
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -3125,10 +3138,23 @@ ${inlines}
 	
       end
 
-      operation 5525890 "submit"
-	abstract cpp_virtual public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      operation 5525762 "dataEditionDoneState"
+	abstract cpp_virtual public return_type class_ref 2684930 // ControllerState
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5525890 "submitState"
+	abstract cpp_virtual public return_type class_ref 2684930 // ControllerState
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -3201,6 +3227,39 @@ ${inlines}
 	
 	
       end
+
+      classrelation 4400386 // <generalisation>
+	relation 4374402 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4400386 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 4401410 // <directional composition>
+	relation 4375426 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4401410 // <directional composition>
+	  b parent class_ref 2684930 // ControllerState
+      end
+
+      operation 5541890 "forceCurrentState"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 2684674 "ControllerStateMachine"
@@ -3257,6 +3316,21 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 5534850 "stateChain"
+	public return_type class_ref 3904386 // AbstractControllerStateChain
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 5527042 "canInsert"
@@ -3320,23 +3394,6 @@ ${inlines}
 	
       end
 
-      operation 5528322 "stateChanged"
-	stereotype "signal"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "newState" type class_ref 2684930 // ControllerState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 5526914 "currentState"
 	private return_type class_ref 2684930 // ControllerState
 	nparams 0
@@ -3353,9 +3410,93 @@ ${inlines}
       end
     end
 
-    classdiagram 3406594 "ControllerStatePermissionProxyModel"
+    classdiagram 3419650 "StateMachineTest"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
+    end
+
+    class 3931522 "ControllerStateMachineTestClass"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4408450 // <generalisation>
+	relation 4382466 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4408450 // <generalisation>
+	  b parent class_ref 2684674 // ControllerStateMachine
+      end
+
+      operation 5541634 "setCurrentState"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+    end
+
+    class 3931650 "ControllerStateChainTestClass"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4408578 // <generalisation>
+	relation 4382594 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4408578 // <generalisation>
+	  b parent class_ref 3904386 // AbstractControllerStateChain
+      end
+
+      operation 5541762 "setCurrentState"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 3406594 "ControllerStatePermissionProxyModel"
+      classdiagramsettings member_max_width 0 end
+      size B
     end
 
     class 3924994 "ControllerStatePermissionProxyModel"
@@ -3380,6 +3521,22 @@ ${inlines}
 	  b parent class_ref 1752450 // QIdentityProxyModel
       end
 
+      operation 5535106 "setStateMachine"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "sm" type class_ref 2684674 // ControllerStateMachine
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 5528194 "flags"
 	public explicit_return_type "int"
 	nparams 1
@@ -3402,6 +3559,22 @@ ${inlines}
 "
 	    classrelation_ref 4393602 // <directional composition>
 	  b parent class_ref 2684674 // ControllerStateMachine
+      end
+
+      operation 5534978 "onCurrentStateChanged"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end
@@ -3907,15 +4080,6 @@ ${inlines}
 	  b parent class_ref 3715458 // ForeignKey
       end
 
-      classrelation 4325250 // <directional composition>
-	relation 4299266 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4325250 // <directional composition>
-	  b parent class_ref 3870722 // ControllerStatePermission
-      end
-
       operation 5440386 "setControllerStatePermission"
 	protected explicit_return_type "void"
 	nparams 1
@@ -3977,6 +4141,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4408194 // <directional composition>
+	relation 4382210 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4408194 // <directional composition>
+	  b parent class_ref 2684674 // ControllerStateMachine
       end
     end
 
@@ -5255,6 +5428,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4401154 // <directional composition>
+	relation 4375170 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4401154 // <directional composition>
+	  b parent class_ref 2684674 // ControllerStateMachine
       end
     end
 
@@ -6718,15 +6900,6 @@ ${inlines}
 	
       end
 
-      classrelation 4331778 // <directional composition>
-	relation 4305794 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4331778 // <directional composition>
-	  b parent class_ref 3870722 // ControllerStatePermission
-      end
-
       classrelation 4386690 // <directional composition>
 	relation 4360706 *-->
 	  a role_name "" private
@@ -6734,6 +6907,15 @@ ${inlines}
 "
 	    classrelation_ref 4386690 // <directional composition>
 	  b parent class_ref 3668226 // ActionList
+      end
+
+      classrelation 4408322 // <directional composition>
+	relation 4382338 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4408322 // <directional composition>
+	  b parent class_ref 3870722 // ControllerStatePermission
       end
     end
 

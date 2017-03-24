@@ -23,6 +23,7 @@
 
 #include "ControllerStateMachine.h"
 #include <QIdentityProxyModel>
+#include <QMetaObject>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -38,13 +39,24 @@ namespace Mdt{ namespace ItemEditor{
      */
     explicit ControllerStatePermissionProxyModel(QObject* parent = nullptr);
 
+    /*! \brief Set controller state machine
+     *
+     * \pre \a stateMachine must have valid implemtations
+     */
+    void setStateMachine(const ControllerStateMachine & stateMachine);
+
     /*! \brief
      */
     Qt::ItemFlags flags(const QModelIndex & index) const override;
 
+   private slots:
+
+    void onCurrentStateChanged();
+
    private:
 
     ControllerStateMachine mStateMachine;
+    QMetaObject::Connection mStateChangedConnection;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

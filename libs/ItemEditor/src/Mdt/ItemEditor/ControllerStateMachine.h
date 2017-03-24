@@ -73,6 +73,25 @@ namespace Mdt{ namespace ItemEditor{
      */
     ControllerStateMachine & operator=(ControllerStateMachine && other) = default;
 
+    /*! \brief Check if this state machine is null
+     *
+     * Returns true unless this instance contains
+     *  a implementation of state chain and state permissions.
+     */
+    bool isNull() const;
+
+    /*! \brief Access internal state chain
+     *
+     * Return a nullptr unless this state machine was constructed
+     *  (or copied, or moved) with a implemetation.
+     *
+     * \note Getting internal chain is recommanded only to make signal/slot connection
+     */
+    const AbstractControllerStateChain *stateChain() const
+    {
+      return mChainImpl.get();
+    }
+
     /*! \brief Check if it is allowed to change current row for current state
      */
     bool canChangeCurrentRow() const;

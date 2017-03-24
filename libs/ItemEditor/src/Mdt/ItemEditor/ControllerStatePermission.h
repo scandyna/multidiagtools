@@ -75,6 +75,12 @@ namespace Mdt{ namespace ItemEditor{
       return ControllerStatePermission( std::make_shared<Impl>() );
     }
 
+    /*! \brief Check if this controller state permission instance is null
+     *
+     * Returns true if this instance has no implementation
+     */
+    bool isNull() const;
+
     /*! \brief Check if it is allowed to change current row for state
      */
     bool canChangeCurrentRow(ControllerState state) const;

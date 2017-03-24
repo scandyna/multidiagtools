@@ -19,9 +19,13 @@
  **
  ****************************************************************************/
 #include "ControllerStateMachineTest.h"
+// #include "ControllerStateChangedSignalSpy.h"
+#include "ControllerStateMachineTestClass.h"
+#include "ControllerStateChainTestClass.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include "Mdt/ItemEditor/AbstractControllerStateChain.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
+#include <QSignalSpy>
 
 using namespace Mdt::ItemEditor;
 
@@ -58,6 +62,12 @@ class PermissionTestClass : public AbstractControllerStatePermission
 
 class StateChainTestClass : public AbstractControllerStateChain
 {
+ public:
+
+  ControllerState dataEditionStartedState(ControllerState currentState) const override
+  {
+    return ControllerState::Editing;
+  }
 };
 
 /*
@@ -70,12 +80,14 @@ void ControllerStateMachineTest::constructTest()
    * Contruct a null state machine
    */
   ControllerStateMachine s0;
+  QVERIFY(s0.isNull());
   QVERIFY(!s0.canChangeCurrentRow());
   QVERIFY(!s0.canInsert());
   /*
    * Controller state machine with test classes implementations
    */
   auto s = ControllerStateMachine::make<StateChainTestClass, PermissionTestClass>();
+  QVERIFY(!s.isNull());
   QVERIFY(s.canChangeCurrentRow());
   QVERIFY(!s.canInsert());
 }
@@ -115,6 +127,16 @@ void ControllerStateMachineTest::copyTest()
   s5 = std::move( ControllerStateMachine::make<StateChainTestClass, PermissionTestClass>() );
   QVERIFY(s5.canChangeCurrentRow());
   QVERIFY(!s5.canInsert());
+}
+
+void ControllerStateMachineTest::currentStateChangedSignalTest()
+{
+  auto stateMachine = ControllerStateMachineTestClass::make<StateChainTestClass, PermissionTestClass>();
+  QSignalSpy stateChangedSpy(stateMachine.stateChain(), &AbstractControllerStateChain::currentStateChanged);
+  QVERIFY(stateChangedSpy.isValid());
+
+  //stateMachine
+  QFAIL("Not complete");
 }
 
 void ControllerStateMachineTest::getterBenschmark()

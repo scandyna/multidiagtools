@@ -34,6 +34,7 @@ class ControllerStateMachineTest : public TestBase
 
   void constructTest();
   void copyTest();
+  void currentStateChangedSignalTest();
   void getterBenschmark();
 };
 

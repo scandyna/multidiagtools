@@ -1,0 +1,81 @@
+format 211
+
+classcanvas 128002 class_ref 2684930 // ControllerState
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 746 236 2000
+end
+classcanvas 128258 class_ref 3870722 // ControllerStatePermission
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 255 40.5 2000
+end
+classcanvas 128386 class_ref 2684674 // ControllerStateMachine
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 265 123 2006
+end
+classcanvas 128642 class_ref 3924994 // ControllerStatePermissionProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 505.5 100.5 2012
+end
+classcanvas 128898 class_ref 3648002 // AbstractController
+  classdiagramsettings member_max_width 0 end
+  xyz 505 185.5 2018
+end
+classcanvas 129154 class_ref 3668354 // AbstractActionContainer
+  classdiagramsettings member_max_width 0 end
+  xyz 45 40.5 2006
+end
+classcanvas 129538 class_ref 3904386 // AbstractControllerStateChain
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 246 245.5 2012
+end
+classcanvas 131074 class_ref 3749250 // AbstractControllerRelation
+  classdiagramsettings member_max_width 0 end
+  xyz 41.5 123 2000
+end
+relationcanvas 128514 relation_ref 4367362 // <directional composition>
+  from ref 128386 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 4367618 // <directional composition>
+  decenter_begin 666
+  decenter_end 200
+  from ref 128642 z 2013 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 4346114 // <directional composition>
+  from ref 128386 z 2013 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131202 relation_ref 4375170 // <directional composition>
+  from ref 131074 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132354 relation_ref 4375426 // <directional composition>
+  decenter_begin 555
+  from ref 129538 z 2013 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132866 relation_ref 4382210 // <directional composition>
+  decenter_begin 333
+  decenter_end 711
+  from ref 128898 z 2019 to point 465 200
+  line 133250 z 2019 to point 465 155
+  line 133378 z 2019 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133506 relation_ref 4382338 // <directional composition>
+  from ref 129154 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

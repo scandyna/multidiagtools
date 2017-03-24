@@ -22,11 +22,21 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-void AbstractControllerStateChain::onDataEditionStarted()
+AbstractControllerStateChain::AbstractControllerStateChain(QObject* parent)
+ : QObject(parent)
 {
-  switch(mCurrentState){
+}
+
+ControllerState AbstractControllerStateChain::dataEditionStartedState(ControllerState currentState) const
+{
+  switch(currentState){
     
   }
+}
+
+void AbstractControllerStateChain::forceCurrentState(ControllerState state)
+{
+  mCurrentState = state;
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

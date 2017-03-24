@@ -23,7 +23,10 @@
 
 #include "RowState.h"
 #include "ControllerState.h"
+#include "ControllerStateMachine.h"
+
 #include "ControllerStatePermission.h"
+
 #include "ControllerRelationList.h"
 #include "Mdt/ItemModel/ProxyModelContainer.h"
 #include "Mdt/ItemModel/FilterProxyModel.h"
@@ -142,6 +145,13 @@ namespace Mdt{ namespace ItemEditor{
     ControllerState controllerState() const
     {
       return mControllerState;
+    }
+
+    /*! \brief Get controller state machine
+     */
+    ControllerStateMachine controllerStateMachine() const
+    {
+      return mControllerStateMachine;
     }
 
     /*! \brief Get controller state permission
@@ -608,11 +618,31 @@ namespace Mdt{ namespace ItemEditor{
 
    protected:
 
+    /*! \brief Set controller state machine
+     *
+     * This controller will use \a stateMachine to know in which controller state it is
+     *  and which action is permitted.
+     *  Subclass that implements a concrete controller must pass a instance of ControllerStateMachine
+     *  that has the expected implementation of stat chain and permissions.
+     *
+     * By default, this abstract controller has a null instance of ControllerStateMachine
+     *  (a instance that has no implementation, and that gives no permission at all).
+     *
+     * This method should be called once, early in the initialization, like this:
+     * \code
+     * setControllerStateMachine( ControllerStateMachine::make<MyStateChain, MyPermission>() );
+     * \endcode
+     *
+     * \pre \a stateMachine must have a implementation of state chain and permissions
+     */
+    void setControllerStateMachine(const ControllerStateMachine & stateMachine);
+
     /*! \brief Set controller state permission
      *
      * This controller will use \a permission to know which action is permitted in current controller state.
      *  Subclass that implements a concrete controller must pass a instance of ControllerStatePermission
      *  that has the expected implementation.
+     *
      *
      * By default, this abstract controller has a null instance of ControllerStatePermission
      *  (a isntance that has no implementation, and that gives no permissions at all).
@@ -793,6 +823,8 @@ namespace Mdt{ namespace ItemEditor{
     void updateModelForViewIfChanged(QAbstractItemModel *oldModelForView);
 
     ControllerState mControllerState = ControllerState::Visualizing;
+    ControllerStateMachine mControllerStateMachine;
+    
     ControllerStatePermission mControllerStatePermission;
     RowChangeEventDispatcher *mRowChangeEventDispatcher;
     InsertLocation mInsertLocation;

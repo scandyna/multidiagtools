@@ -65,12 +65,14 @@ void ControllerStatePermissionTest::constructTest()
    * Contruct a null controller state permission
    */
   ControllerStatePermission p0;
+  QVERIFY(p0.isNull());
   QVERIFY(!p0.canChangeCurrentRow(ControllerState::Visualizing));
   QVERIFY(!p0.canInsert(ControllerState::Visualizing));
   /*
    * Controller state permission with test class implementation
    */
   auto p = ControllerStatePermission::make<PermissionTestClass>();
+  QVERIFY(!p.isNull());
   QVERIFY(p.canChangeCurrentRow(ControllerState::Visualizing));
   QVERIFY(!p.canInsert(ControllerState::Visualizing));
 }

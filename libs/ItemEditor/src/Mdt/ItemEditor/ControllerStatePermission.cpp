@@ -23,6 +23,11 @@
 
 namespace Mdt{ namespace ItemEditor{
 
+bool ControllerStatePermission::isNull() const
+{
+  return !mImpl;
+}
+
 bool ControllerStatePermission::canChangeCurrentRow(ControllerState state) const
 {
   if(mImpl){

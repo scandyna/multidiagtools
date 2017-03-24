@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "ItemModelControllerTester.h"
+#include "ControllerStateMachineTestClass.h"
+#include "ControllerStateChainTestClass.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
 #include <QAbstractItemModel>
@@ -29,7 +31,8 @@ using namespace Mdt::ItemEditor;
 ItemModelControllerTester::ItemModelControllerTester(QObject* parent)
  : AbstractItemModelController(parent)
 {
-  setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
+  setControllerStateMachine( ControllerStateMachineTestClass::make<ControllerStateChainTestClass, AbstractControllerStatePermission>() );
+//   setControllerStatePermission( ControllerStatePermission::make<AbstractControllerStatePermission>() );
 }
 
 int ItemModelControllerTester::primaryKeyChangedEventCount() const

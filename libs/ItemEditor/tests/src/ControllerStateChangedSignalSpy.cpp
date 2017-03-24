@@ -18,34 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ControllerStatePermissionProxyModel.h"
-#include "AbstractControllerStateChain.h"
-#include <QIdentityProxyModel>
+#include "ControllerStateChangedSignalSpy.h"
 
-namespace Mdt{ namespace ItemEditor{
-
-ControllerStatePermissionProxyModel::ControllerStatePermissionProxyModel(QObject* parent)
- : QIdentityProxyModel(parent)
+void ControllerStateChangedSignalSpy::onStateChangedChanged(Mdt::ItemEditor::ControllerState state)
 {
+  mStateList.append(state);
 }
 
-void ControllerStatePermissionProxyModel::setStateMachine(const ControllerStateMachine& stateMachine)
+void ControllerStateChangedSignalSpy::clear()
 {
-  Q_ASSERT(stateMachine.stateChain() != nullptr);
-
-  mStateMachine = stateMachine;
-  disconnect(mStateChangedConnection);
-  mStateChangedConnection = connect(mStateMachine.stateChain(), &AbstractControllerStateChain::currentStateChanged, this, &ControllerStatePermissionProxyModel::onCurrentStateChanged);
+  mStateList.clear();
 }
-
-Qt::ItemFlags ControllerStatePermissionProxyModel::flags(const QModelIndex& index) const
-{
-  return QIdentityProxyModel::flags(index);
-}
-
-void ControllerStatePermissionProxyModel::onCurrentStateChanged()
-{
-
-}
-
-}} // namespace Mdt{ namespace ItemEditor{

@@ -18,34 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ControllerStatePermissionProxyModel.h"
-#include "AbstractControllerStateChain.h"
-#include <QIdentityProxyModel>
+#ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_CHAIN_TEST_CLASS_H
+#define MDT_ITEM_EDITOR_CONTROLLER_STATE_CHAIN_TEST_CLASS_H
 
-namespace Mdt{ namespace ItemEditor{
+#include "Mdt/ItemEditor/AbstractControllerStateChain.h"
+#include "Mdt/ItemEditor/ControllerState.h"
 
-ControllerStatePermissionProxyModel::ControllerStatePermissionProxyModel(QObject* parent)
- : QIdentityProxyModel(parent)
+class ControllerStateChainTestClass : public Mdt::ItemEditor::AbstractControllerStateChain
 {
-}
+ public:
 
-void ControllerStatePermissionProxyModel::setStateMachine(const ControllerStateMachine& stateMachine)
-{
-  Q_ASSERT(stateMachine.stateChain() != nullptr);
+  void setCurrentState(Mdt::ItemEditor::ControllerState state);
+};
 
-  mStateMachine = stateMachine;
-  disconnect(mStateChangedConnection);
-  mStateChangedConnection = connect(mStateMachine.stateChain(), &AbstractControllerStateChain::currentStateChanged, this, &ControllerStatePermissionProxyModel::onCurrentStateChanged);
-}
-
-Qt::ItemFlags ControllerStatePermissionProxyModel::flags(const QModelIndex& index) const
-{
-  return QIdentityProxyModel::flags(index);
-}
-
-void ControllerStatePermissionProxyModel::onCurrentStateChanged()
-{
-
-}
-
-}} // namespace Mdt{ namespace ItemEditor{
+#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_CHAIN_TEST_CLASS_H

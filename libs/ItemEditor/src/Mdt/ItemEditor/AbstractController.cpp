@@ -406,6 +406,13 @@ bool AbstractController::remove()
   return model->removeRow(row);
 }
 
+void AbstractController::setControllerStateMachine(const ControllerStateMachine & stateMachine)
+{
+  Q_ASSERT(!stateMachine.isNull());
+
+  mControllerStateMachine = stateMachine;
+}
+
 void AbstractController::setControllerStatePermission(const ControllerStatePermission& permission)
 {
   mControllerStatePermission = permission;
