@@ -142,24 +142,24 @@ void AbstractControllerRelation::childControllerStateChangedEvent(ControllerStat
 
 void AbstractControllerRelation::onParentControllerStateChanged(ControllerState parentState)
 {
-  if(!mChildController.isNull()){
-    const auto state = ControllerRelationStateMapper::childControllerState(parentState);
-    qDebug() << "ACR: new parent state: " << parentState << " -> child state: " << state;
-    if(mChildController->controllerState() != state){
-      mChildController->setControllerState(state);
-    }
-  }
+//   if(!mChildController.isNull()){
+//     const auto state = ControllerRelationStateMapper::childControllerState(parentState);
+//     qDebug() << "ACR: new parent state: " << parentState << " -> child state: " << state;
+//     if(mChildController->controllerState() != state){
+//       mChildController->setControllerState(state);
+//     }
+//   }
 }
 
 void AbstractControllerRelation::onChildControllerStateChanged(ControllerState childState)
 {
-  if(!mParentController.isNull()){
-    const auto state = ControllerRelationStateMapper::parentControllerState(childState);
-    qDebug() << "ACR: new child state: " << childState << " -> parent state: " << state;
-    if(mParentController->controllerState() != state ){
-      mParentController->setControllerState(state);
-    }
-  }
+//   if(!mParentController.isNull()){
+//     const auto state = ControllerRelationStateMapper::parentControllerState(childState);
+//     qDebug() << "ACR: new child state: " << childState << " -> parent state: " << state;
+//     if(mParentController->controllerState() != state ){
+//       mParentController->setControllerState(state);
+//     }
+//   }
 }
 
 // bool AbstractControllerRelation::mustUpdateParentControllerState(ControllerState state) const

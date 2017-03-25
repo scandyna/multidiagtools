@@ -22,6 +22,7 @@
 #include "AddressModel.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemModel/FormatProxyModel.h"
+#include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QLabel>
 
 using namespace Mdt::ItemModel;
@@ -65,10 +66,13 @@ AddressWidget::AddressWidget(QWidget* parent)
   addWidgetToTopArea(new QLabel("State: "));
   mStateLabel = new QLabel;
   addWidgetToTopArea(mStateLabel);
-  connect(ctrl, &TableViewController::controllerStateChanged, this, &AddressWidget::onControllerStateChanged);
+//   connect(ctrl, &TableViewController::controllerStateChanged, this, &AddressWidget::onControllerStateChanged);
+  connect(ctrl->controllerStateMachine(), &ControllerStateMachine::currentStateChanged, this, &AddressWidget::onControllerStateChanged);
+  onControllerStateChanged();
 }
 
-void AddressWidget::onControllerStateChanged(Mdt::ItemEditor::ControllerState state)
+void AddressWidget::onControllerStateChanged()
 {
+  const auto state = controller()->controllerState();
   mStateLabel->setText( controllerStateText(state) );
 }

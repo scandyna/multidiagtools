@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "ClientListWidget.h"
 #include "Mdt/ItemEditor/TableViewController.h"
+#include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QLabel>
 // #include <QComboBox>
 
@@ -42,10 +43,13 @@ ClientListWidget::ClientListWidget(QWidget* parent)
   addWidgetToTopArea(new QLabel("State: "));
   mStateLabel = new QLabel;
   addWidgetToTopArea(mStateLabel);
-  connect(ctrl, &TableViewController::controllerStateChanged, this, &ClientListWidget::onControllerStateChanged);
+//   connect(ctrl, &TableViewController::controllerStateChanged, this, &ClientListWidget::onControllerStateChanged);
+  connect(ctrl->controllerStateMachine(), &ControllerStateMachine::currentStateChanged, this, &ClientListWidget::onControllerStateChanged);
+  onControllerStateChanged();
 }
 
-void ClientListWidget::onControllerStateChanged(Mdt::ItemEditor::ControllerState state)
+void ClientListWidget::onControllerStateChanged()
 {
+  const auto state = controller()->controllerState();
   mStateLabel->setText( controllerStateText(state) );
 }

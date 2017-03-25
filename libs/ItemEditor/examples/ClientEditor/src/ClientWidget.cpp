@@ -22,6 +22,7 @@
 #include "ClientModel.h"
 #include "Mdt/ItemModel/FormatProxyModel.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
+#include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QWidget>
 #include <QLabel>
 
@@ -62,10 +63,12 @@ ClientWidget::ClientWidget(QWidget* parent)
   addWidgetToTopArea(new QLabel("State: "));
   mStateLabel = new QLabel;
   addWidgetToTopArea(mStateLabel);
-  connect(ctrl, &WidgetMapperController::controllerStateChanged, this, &ClientWidget::onControllerStateChanged);
+  connect(ctrl->controllerStateMachine(), &ControllerStateMachine::currentStateChanged, this, &ClientWidget::onControllerStateChanged);
+  onControllerStateChanged();
 }
 
-void ClientWidget::onControllerStateChanged(ControllerState state)
+void ClientWidget::onControllerStateChanged()
 {
+  const auto state = controller()->controllerState();
   mStateLabel->setText( controllerStateText(state) );
 }

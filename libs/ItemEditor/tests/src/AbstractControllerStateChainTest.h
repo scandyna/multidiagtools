@@ -31,6 +31,9 @@ class AbstractControllerStateChainTest : public TestBase
 
   void initTestCase();
   void cleanupTestCase();
+
+  void stateChainTest();
+  void stateMachineTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_CONTROLLER_STATE_CHAIN_TEST_H

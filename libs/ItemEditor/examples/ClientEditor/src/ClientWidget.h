@@ -40,7 +40,7 @@ class ClientWidget : public Mdt::ItemEditor::AbstractFormWidget, Ui::ClientWidge
 
  public slots:
 
-  void onControllerStateChanged(Mdt::ItemEditor::ControllerState state);
+  void onControllerStateChanged();
 
  private:
 

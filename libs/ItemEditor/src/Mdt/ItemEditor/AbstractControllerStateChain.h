@@ -52,9 +52,29 @@ namespace Mdt{ namespace ItemEditor{
     AbstractControllerStateChain(AbstractControllerStateChain &&) = delete;
     AbstractControllerStateChain & operator=(AbstractControllerStateChain &&) = delete;
 
-    /*! \brief Get state after data edition started
+    /*! \brief Get state when data edition started
      */
     virtual ControllerState dataEditionStartedState(ControllerState currentState) const;
+
+    /*! \brief Get state when data edition is done
+     */
+    virtual ControllerState dataEditionDoneState(ControllerState currentState) const;
+
+    /*! \brief Get state when submit is done
+     */
+    virtual ControllerState submitDoneState(ControllerState currentState) const;
+
+    /*! \brief Get state when revert is done
+     */
+    virtual ControllerState revertDoneState(ControllerState currentState) const;
+
+    /*! \brief Get state when insert started
+     */
+    virtual ControllerState insertStartedState(ControllerState currentState) const;
+
+    /*! \brief Get state when remove is done
+     */
+    virtual ControllerState removeDoneState(ControllerState currentState) const;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

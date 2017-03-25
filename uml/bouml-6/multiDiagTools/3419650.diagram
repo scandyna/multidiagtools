@@ -1,16 +1,7 @@
 format 211
 
-classcanvas 128258 class_ref 3904386 // AbstractControllerStateChain
+classcanvas 128002 class_ref 3904386 // AbstractControllerStateChain
   classdiagramsettings member_max_width 0 end
-  xyz 544 145 2006
-end
-classcanvas 128514 class_ref 2684674 // ControllerStateMachine
-  classdiagramsettings member_max_width 0 end
-  xyz 41 200 2012
-end
-relationcanvas 128642 relation_ref 4346114 // <directional composition>
-  from ref 128514 z 2013 to ref 128258
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  xyz 92 112 2000
 end
 end

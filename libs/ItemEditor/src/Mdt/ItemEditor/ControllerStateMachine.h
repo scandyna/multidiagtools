@@ -22,9 +22,6 @@
 #define MDT_ITEM_EDITOR_CONTROLLER_STATE_MACHINE_H
 
 #include "ControllerState.h"
-
-// #include "ControllerStatePermission.h"
-
 #include <QObject>
 #include <memory>
 #include <type_traits>
@@ -45,7 +42,7 @@ namespace Mdt{ namespace ItemEditor{
    *
    * ControllerStateMachine is divided in 2 parts:
    *  - Check if this state machine can accept a event,
-   *     which is driven by ControllerStatePermission
+   *     which is driven by AbstractControllerStatePermission (or a subclass of it).
    *  - Deducing next state regarding current state and the event,
    *     which is driven by AbstractControllerStateChain (or a subclass of it).
    */
@@ -123,7 +120,27 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Data edition started event
      */
-    void onDataEditionStarted();
+    void dataEditionStarted();
+
+    /*! \brief Data edition done event
+     */
+    void dataEditionDone();
+
+    /*! \brief Submit done event
+     */
+    void submitDone();
+
+    /*! \brief Revert done event
+     */
+    void revertDone();
+
+    /*! \brief Insert started event
+     */
+    void insertStarted();
+
+    /*! \brief Remove done event
+     */
+    void removeDone();
 
     /*! \brief Construct a ControllerStateMachine with a concrete state chain and permission implementations
      *

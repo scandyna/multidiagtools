@@ -39,7 +39,7 @@ class ClientListWidget : public Mdt::ItemEditor::TableViewWidget
 
  public slots:
 
-  void onControllerStateChanged(Mdt::ItemEditor::ControllerState state);
+  void onControllerStateChanged();
 
  private:
 

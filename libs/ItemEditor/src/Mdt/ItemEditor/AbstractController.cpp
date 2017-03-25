@@ -339,9 +339,8 @@ bool AbstractController::setCurrentRow(int row)
   if(row == currentRow()){
     return true;
   }
-//   if(!ControllerStatePermission::canChangeCurrentRow(mControllerState)){
   if(!canChangeCurrentRow()){
-//     qDebug() << "AC: cannot change current row in state " << (int)controllerState();
+    qDebug() << "AC: cannot change current row in state " << controllerState();
     return false;
   }
   /**
@@ -396,7 +395,9 @@ bool AbstractController::submit()
     qDebug() << "AbstractController: submit failed";
     return false;
   }
-  setControllerState(ControllerState::Visualizing);
+  Q_ASSERT(!mControllerStateMachine.isNull());
+  mControllerStateMachine->submitDone();
+//   setControllerState(ControllerState::Visualizing);
   ///enableDynamicFilters();
 
   return true;
@@ -409,6 +410,8 @@ void AbstractController::revert()
   }
   mRelationList.revertForEachChild();
   revertDataFromModel();
+  Q_ASSERT(!mControllerStateMachine.isNull());
+  mControllerStateMachine->revertDone();
 }
 
 bool AbstractController::insert()
@@ -420,7 +423,9 @@ bool AbstractController::insert()
     return false;
   }
   ///disableDynamicFilters();
-  setControllerState(ControllerState::Inserting);
+  Q_ASSERT(!mControllerStateMachine.isNull());
+  mControllerStateMachine->insertStarted();
+//   setControllerState(ControllerState::Inserting);
   qDebug() << "AC: insert into " << model;
   bool ok = false;
   switch(mInsertLocation){
@@ -454,8 +459,13 @@ bool AbstractController::remove()
   if(row < 0){
     return false;
   }
+  if(!model->removeRow(row)){
+    return false;
+  }
+  Q_ASSERT(!mControllerStateMachine.isNull());
+  mControllerStateMachine->removeDone();
 
-  return model->removeRow(row);
+  return true;
 }
 
 void AbstractController::setControllerStateMachine(ControllerStateMachine *stateMachine)
@@ -499,12 +509,20 @@ void AbstractController::foreignKeyChangedEvent(const ForeignKey& , const Foreig
 
 void AbstractController::onDataEditionStarted()
 {
-  setControllerState(ControllerState::Editing);
+  if(mControllerStateMachine.isNull()){
+    return;
+  }
+  mControllerStateMachine->dataEditionStarted();
+//   setControllerState(ControllerState::Editing);
 }
 
 void AbstractController::onDataEditionDone()
 {
-  setControllerState(ControllerState::Visualizing);
+  if(mControllerStateMachine.isNull()){
+    return;
+  }
+  mControllerStateMachine->dataEditionDone();
+//   setControllerState(ControllerState::Visualizing);
 }
 
 // void AbstractController::onRowsInserted()
@@ -516,9 +534,9 @@ void AbstractController::onDataEditionDone()
 void AbstractController::onRowsRemoved()
 {
   qDebug() << "AC: rows removed , rows: " << rowCount();
-  if(controllerState() == ControllerState::Inserting){
-    setControllerState(ControllerState::Visualizing);
-  }
+//   if(controllerState() == ControllerState::Inserting){
+//     setControllerState(ControllerState::Visualizing);
+//   }
 }
 
 void AbstractController::updateRowState(RowState rs)

@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 194
+  revision 196
   modified_by 2 "philippe"
   // class settings
   
@@ -2752,7 +2752,7 @@ ${items}};
       end
     end
 
-    classdiagram 2807170 "Permissions"
+    classdiagram 2807170 "StatePermissions"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
     end
@@ -3051,9 +3051,9 @@ ${inlines}
       end
     end
 
-    classdiagram 3387010 "StateMachine"
+    classdiagram 3419650 "StateChain"
       classdiagramsettings member_max_width 0 end
-      size C-Landscape
+      size A4
     end
 
     class 3904386 "AbstractControllerStateChain"
@@ -3105,7 +3105,7 @@ ${inlines}
 	
       end
 
-      operation 5525890 "submitState"
+      operation 5525890 "submitNextState"
 	abstract cpp_virtual public return_type class_ref 2684930 // ControllerState
 	nparams 1
 	  param in name "state" type class_ref 2684930 // ControllerState
@@ -3184,6 +3184,11 @@ ${inlines}
       end
     end
 
+    classdiagram 3387010 "StateMachine"
+      classdiagramsettings member_max_width 0 end
+      size C-Landscape
+    end
+
     class 2684674 "ControllerStateMachine"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -3258,7 +3263,7 @@ ${inlines}
 	
       end
 
-      operation 5527170 "onDataEditionStarted"
+      operation 5527170 "dataEditionStarted"
 	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -3273,7 +3278,22 @@ ${inlines}
 	
       end
 
-      operation 5527298 "onDataEditionStartedFromParent"
+      operation 5548802 "submitDone"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5527298 "dataEditionStartedFromParent"
 	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -5338,6 +5358,15 @@ ${inlines}
 "
 	    classrelation_ref 4401154 // <directional composition>
 	  b parent class_ref 2684674 // ControllerStateMachine
+      end
+
+      classrelation 4422146 // <unidirectional association>
+	relation 4396162 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4422146 // <unidirectional association>
+	  b parent class_ref 3648002 // AbstractController
       end
     end
 

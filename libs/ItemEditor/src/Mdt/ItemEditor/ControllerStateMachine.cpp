@@ -119,9 +119,46 @@ bool ControllerStateMachine::isSelectActionEnabled() const
   return mPermissionImpl->isSelectActionEnabled(mCurrentState);
 }
 
-void ControllerStateMachine::onDataEditionStarted()
+void ControllerStateMachine::dataEditionStarted()
 {
+  Q_ASSERT(mChainImpl);
 
+  setCurrentState( mChainImpl->dataEditionStartedState(mCurrentState) );
+}
+
+void ControllerStateMachine::dataEditionDone()
+{
+  Q_ASSERT(mChainImpl);
+
+  setCurrentState( mChainImpl->dataEditionDoneState(mCurrentState) );
+}
+
+void ControllerStateMachine::submitDone()
+{
+  Q_ASSERT(mChainImpl);
+
+  setCurrentState( mChainImpl->submitDoneState(mCurrentState) );
+}
+
+void ControllerStateMachine::revertDone()
+{
+  Q_ASSERT(mChainImpl);
+
+  setCurrentState( mChainImpl->revertDoneState(mCurrentState) );
+}
+
+void ControllerStateMachine::insertStarted()
+{
+  Q_ASSERT(mChainImpl);
+
+  setCurrentState( mChainImpl->insertStartedState(mCurrentState) );
+}
+
+void ControllerStateMachine::removeDone()
+{
+  Q_ASSERT(mChainImpl);
+
+  setCurrentState( mChainImpl->removeDoneState(mCurrentState) );
 }
 
 void ControllerStateMachine::forceCurrentState(ControllerState state)

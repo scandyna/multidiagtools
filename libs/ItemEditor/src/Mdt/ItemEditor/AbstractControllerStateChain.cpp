@@ -29,8 +29,85 @@ namespace Mdt{ namespace ItemEditor{
 ControllerState AbstractControllerStateChain::dataEditionStartedState(ControllerState currentState) const
 {
   switch(currentState){
-    
+    case ControllerState::Visualizing:
+      return ControllerState::Editing;
+    case ControllerState::Editing:
+    case ControllerState::Inserting:
+    case ControllerState::ParentEditing:
+    case ControllerState::ChildEditing:
+      break;
   }
+  return currentState;
+}
+
+ControllerState AbstractControllerStateChain::dataEditionDoneState(ControllerState currentState) const
+{
+  switch(currentState){
+    case ControllerState::Editing:
+      return ControllerState::Visualizing;
+    case ControllerState::Visualizing:
+    case ControllerState::Inserting:
+    case ControllerState::ParentEditing:
+    case ControllerState::ChildEditing:
+      break;
+  }
+  return currentState;
+}
+
+ControllerState AbstractControllerStateChain::submitDoneState(ControllerState currentState) const
+{
+  switch(currentState){
+    case ControllerState::Editing:
+    case ControllerState::Inserting:
+      return ControllerState::Visualizing;
+    case ControllerState::Visualizing:
+    case ControllerState::ParentEditing:
+    case ControllerState::ChildEditing:
+      break;
+  }
+  return currentState;
+}
+
+ControllerState AbstractControllerStateChain::revertDoneState(ControllerState currentState) const
+{
+  switch(currentState){
+    case ControllerState::Editing:
+      return ControllerState::Visualizing;
+    case ControllerState::Inserting:
+    case ControllerState::Visualizing:
+    case ControllerState::ParentEditing:
+    case ControllerState::ChildEditing:
+      break;
+  }
+  return currentState;
+}
+
+ControllerState AbstractControllerStateChain::insertStartedState(ControllerState currentState) const
+{
+  switch(currentState){
+    case ControllerState::Visualizing:
+      return ControllerState::Inserting;
+    case ControllerState::Editing:
+    case ControllerState::Inserting:
+    case ControllerState::ParentEditing:
+    case ControllerState::ChildEditing:
+      break;
+  }
+  return currentState;
+}
+
+ControllerState AbstractControllerStateChain::removeDoneState(ControllerState currentState) const
+{
+  switch(currentState){
+    case ControllerState::Editing:
+    case ControllerState::Inserting:
+      return ControllerState::Visualizing;
+    case ControllerState::Visualizing:
+    case ControllerState::ParentEditing:
+    case ControllerState::ChildEditing:
+      break;
+  }
+  return currentState;
 }
 
 }} // namespace Mdt{ namespace ItemEditor{
