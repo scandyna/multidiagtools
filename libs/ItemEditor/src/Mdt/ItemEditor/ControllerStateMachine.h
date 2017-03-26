@@ -29,6 +29,8 @@
 namespace Mdt{ namespace ItemEditor{
 
   class AbstractControllerStateChain;
+
+  class AbstractControllerStateTable;
   class AbstractControllerStatePermission;
 
   /*! \brief Synchronous state machine for a item editor controller
@@ -44,7 +46,7 @@ namespace Mdt{ namespace ItemEditor{
    *  - Check if this state machine can accept a event,
    *     which is driven by AbstractControllerStatePermission (or a subclass of it).
    *  - Deducing next state regarding current state and the event,
-   *     which is driven by AbstractControllerStateChain (or a subclass of it).
+   *     which is driven by AbstractControllerStateTable (or a subclass of it).
    */
   class ControllerStateMachine : public QObject
   {
@@ -149,26 +151,26 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Construct a ControllerStateMachine with a concrete state chain and permission implementations
      *
      * \code
-     * auto stateMachine = ControllerStateMachine::make<MyStateChain, MyPermission>();
+     * auto stateMachine = ControllerStateMachine::make<MyStateTable, MyPermission>();
      * \endcode
      *
-     * \pre ChainImpl must be a subclass of AbstractControllerStateChain
+     * \pre TableImpl must be a subclass of AbstractControllerStateTable
      * \pre PermissionImpl must be a subclass of AbstractControllerStatePermission
      */
-    template<typename ChainImpl, typename PermissionImpl>
+    template<typename TableImpl, typename PermissionImpl>
     static ControllerStateMachine *makeNew(QObject *parent = nullptr)
     {
-      static_assert( std::is_base_of<AbstractControllerStateChain, ChainImpl>::value, "Type ChainImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStateChain" );
+      static_assert( std::is_base_of<AbstractControllerStateTable, TableImpl>::value, "Type TableImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStateTable" );
       static_assert( std::is_base_of<AbstractControllerStatePermission, PermissionImpl>::value, "Type PermissionImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStatePermission" );
-      return new ControllerStateMachine( std::make_unique<const ChainImpl>() , std::make_unique<const PermissionImpl>(), parent );
+      return new ControllerStateMachine( std::make_unique<TableImpl>() , std::make_unique<const PermissionImpl>(), parent );
     }
 
     /*! \brief Get current state
      */
-    ControllerState currentState() const
-    {
-      return mCurrentState;
-    }
+    ControllerState currentState() const;
+//     {
+//       return mCurrentState;
+//     }
 
     /*! \internal Force current state
      *
@@ -184,18 +186,21 @@ namespace Mdt{ namespace ItemEditor{
 
   private:
 
-    template<typename ChainImpl>
-    ControllerStateMachine(std::unique_ptr<const ChainImpl> chainImpl, std::unique_ptr<const AbstractControllerStatePermission> permission, QObject *parent)
+    template<typename TableImpl, typename PermissionImpl>
+    ControllerStateMachine(std::unique_ptr<TableImpl> tableImpl, std::unique_ptr<const PermissionImpl> permission, QObject *parent)
      : QObject(parent),
-       mChainImpl( std::move(chainImpl) ),
+       mTableImpl( std::move(tableImpl) ),
        mPermissionImpl( std::move(permission) )
     {
+      createTransitionTable();
     }
 
-    void setCurrentState(ControllerState state);
+    void createTransitionTable();
 
-    ControllerState mCurrentState = ControllerState::Visualizing;
-    std::unique_ptr<const AbstractControllerStateChain> mChainImpl;
+//     void setCurrentState(ControllerState state);
+
+//     ControllerState mCurrentState = ControllerState::Visualizing;
+    std::unique_ptr<AbstractControllerStateTable> mTableImpl;
     std::unique_ptr<const AbstractControllerStatePermission> mPermissionImpl;
   };
 

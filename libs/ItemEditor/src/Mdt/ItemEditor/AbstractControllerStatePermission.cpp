@@ -141,15 +141,15 @@ bool AbstractControllerStatePermission::canSubmit(ControllerState state) const
 
 bool AbstractControllerStatePermission::canSubmit(const AbstractControllerStateTable & st) const
 {
-//   switch(st.currentState()){
-//     case ControllerState::Visualizing:
-//       return true;
-//     case ControllerState::Editing:
-//     case ControllerState::Inserting:
-//     case ControllerState::ChildEditing:
-//     case ControllerState::ParentEditing:
-//       break;
-//   }
+  switch(st.currentState()){
+    case ControllerState::Visualizing:
+      return true;
+    case ControllerState::Editing:
+    case ControllerState::Inserting:
+    case ControllerState::ChildEditing:
+    case ControllerState::ParentEditing:
+      break;
+  }
   return st.canHandleEvent(ControllerEvent::SubmitDone);
 }
 
@@ -252,6 +252,15 @@ bool AbstractControllerStatePermission::canRemove(ControllerState state) const
 
 bool AbstractControllerStatePermission::canRemove(const AbstractControllerStateTable & st) const
 {
+  switch(st.currentState()){
+    case ControllerState::Visualizing:
+      return true;
+    case ControllerState::Editing:
+    case ControllerState::Inserting:
+    case ControllerState::ChildEditing:
+    case ControllerState::ParentEditing:
+      break;
+  }
   return st.canHandleEvent(ControllerEvent::RemoveDone);
 }
 

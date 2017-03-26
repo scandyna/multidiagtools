@@ -20,7 +20,10 @@
  ****************************************************************************/
 #include "TableViewController.h"
 #include "ItemViewPrivateContainer.h"
-#include "AbstractControllerStateChain.h"
+
+// #include "AbstractControllerStateChain.h"
+
+#include "AbstractControllerStateTable.h"
 #include "TableViewControllerStatePermission.h"
 #include "ControllerStateMachine.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
@@ -36,7 +39,7 @@ TableViewController::TableViewController(QObject* parent)
  : AbstractItemModelController(parent),
    mContainer(new ItemViewPrivateContainer)
 {
-  setControllerStateMachine( ControllerStateMachine::makeNew<AbstractControllerStateChain, TableViewControllerStatePermission>(this) );
+  setControllerStateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, TableViewControllerStatePermission>(this) );
   connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionStarted, this, &TableViewController::onDataEditionStarted);
   connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionDone, this, &TableViewController::onDataEditionDone);
 //   connect(this, &TableViewController::primaryKeyChanged, this, &TableViewController::onPrimaryKeyChanged);

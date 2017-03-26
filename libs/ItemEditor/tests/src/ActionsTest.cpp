@@ -28,8 +28,9 @@
 #include "Mdt/ItemEditor/RemoveAction.h"
 #include "Mdt/ItemEditor/ResizeToContentsAction.h"
 #include "Mdt/ItemEditor/ControllerState.h"
+#include "Mdt/ItemEditor/AbstractControllerStateTable.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
-#include "Mdt/ItemEditor/AbstractControllerStateChain.h"
+// #include "Mdt/ItemEditor/AbstractControllerStateChain.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
@@ -78,7 +79,7 @@ void ActionsTest::abstractActionContainerTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(&act);
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(&act);
   act.setControllerStateMachine(stateMachine);
   QCOMPARE(act.controllerState(), ControllerState::Visualizing);
   /*
@@ -216,7 +217,7 @@ void ActionsTest::navigationActionsTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(actions.get());
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(actions.get());
   actions->setControllerStateMachine(stateMachine);
   QVERIFY(!toFirst->isEnabled());
   QVERIFY(!toPrevious->isEnabled());
@@ -356,7 +357,7 @@ void ActionsTest::editionActionsTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(actions.get());
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(actions.get());
   actions->setControllerStateMachine(stateMachine);
   /*
    * Check controller state
@@ -425,7 +426,7 @@ void ActionsTest::insertActionTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(action.get());
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(action.get());
   action->setControllerStateMachine(stateMachine);
   /*
    * Change controller state
@@ -455,7 +456,7 @@ void ActionsTest::removeActionTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(action.get());
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(action.get());
   action->setControllerStateMachine(stateMachine);
   /*
    * Check controller state
@@ -518,7 +519,7 @@ void ActionsTest::resizeToContentsTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(action.get());
+  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(action.get());
   action->setControllerStateMachine(stateMachine);
   /*
    * Check controller state

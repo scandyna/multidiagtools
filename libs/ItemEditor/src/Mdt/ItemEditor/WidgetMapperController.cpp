@@ -20,7 +20,10 @@
  ****************************************************************************/
 #include "WidgetMapperController.h"
 #include "DataWidgetMapper.h"
-#include "AbstractControllerStateChain.h"
+
+// #include "AbstractControllerStateChain.h"
+
+#include "AbstractControllerStateTable.h"
 #include "WidgetMapperControllerStatePermission.h"
 #include "ControllerStateMachine.h"
 
@@ -32,7 +35,7 @@ WidgetMapperController::WidgetMapperController(QObject* parent)
  : AbstractItemModelController(parent),
    mWidgetMapper(new DataWidgetMapper(this))
 {
-  setControllerStateMachine( ControllerStateMachine::makeNew<AbstractControllerStateChain, WidgetMapperControllerStatePermission>(this) );
+  setControllerStateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, WidgetMapperControllerStatePermission>(this) );
   connect(this, &WidgetMapperController::currentRowChanged, mWidgetMapper, &DataWidgetMapper::setCurrentRow);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionStarted, this, &WidgetMapperController::onDataEditionStarted);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionDone, this, &WidgetMapperController::onDataEditionDone);

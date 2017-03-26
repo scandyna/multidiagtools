@@ -19,8 +19,11 @@
  **
  ****************************************************************************/
 #include "ControllerStateMachine.h"
-#include "AbstractControllerStateChain.h"
+#include "AbstractControllerStateTable.h"
 #include "AbstractControllerStatePermission.h"
+#include "ControllerEvent.h"
+
+#include "AbstractControllerStateChain.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -31,156 +34,228 @@ ControllerStateMachine::~ControllerStateMachine()
 bool ControllerStateMachine::canChangeCurrentRow() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->canChangeCurrentRow( mCurrentState );
+  return mPermissionImpl->canChangeCurrentRow( *mTableImpl );
 }
 
 bool ControllerStateMachine::canInsert() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->canInsert( mCurrentState );
+  return mPermissionImpl->canInsert( *mTableImpl );
 }
 
 bool ControllerStateMachine::canEdit() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->canEdit( mCurrentState );
+  return mPermissionImpl->canEdit( *mTableImpl );
 }
 
 bool ControllerStateMachine::canSubmit() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->canSubmit( mCurrentState );
+  return mPermissionImpl->canSubmit( *mTableImpl );
 }
 
 bool ControllerStateMachine::canRevert() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->canRevert( mCurrentState );
+  return mPermissionImpl->canRevert( *mTableImpl );
 }
 
 bool ControllerStateMachine::canRemove() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->canRemove( mCurrentState );
+  return mPermissionImpl->canRemove( *mTableImpl );
 }
 
 bool ControllerStateMachine::canSelect() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->canSelect( mCurrentState );
+  ///return mPermissionImpl->canSelect( *mTableImpl );
+  return false;
 }
 
 bool ControllerStateMachine::isChangeCurrentRowActionEnabled() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->isChangeCurrentRowActionEnabled(mCurrentState);
+  return mPermissionImpl->isChangeCurrentRowActionEnabled(*mTableImpl);
 }
 
 bool ControllerStateMachine::isInsertActionEnabled() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->isInsertActionEnabled(mCurrentState);
+  return mPermissionImpl->isInsertActionEnabled(*mTableImpl);
 }
 
 bool ControllerStateMachine::isSubmitActionEnabled() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->isSubmitActionEnabled(mCurrentState);
+  return mPermissionImpl->isSubmitActionEnabled(*mTableImpl);
 }
 
 bool ControllerStateMachine::isRevertActionEnabled() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->isRevertActionEnabled(mCurrentState);
+  return mPermissionImpl->isRevertActionEnabled(*mTableImpl);
 }
 
 bool ControllerStateMachine::isRemoveActionEnabled() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->isRemoveActionEnabled(mCurrentState);
+  return mPermissionImpl->isRemoveActionEnabled(*mTableImpl);
 }
 
 bool ControllerStateMachine::isSelectActionEnabled() const
 {
   Q_ASSERT(mPermissionImpl);
+  Q_ASSERT(mTableImpl);
 
-  return mPermissionImpl->isSelectActionEnabled(mCurrentState);
+  ///return mPermissionImpl->isSelectActionEnabled(*mTableImpl);
+  return false;
 }
 
 void ControllerStateMachine::dataEditionStarted()
 {
-  Q_ASSERT(mChainImpl);
+  Q_ASSERT(mTableImpl);
 
-  setCurrentState( mChainImpl->dataEditionStartedState(mCurrentState) );
+//   setCurrentState( mTableImpl->dataEditionStartedState(mCurrentState) );
+  const auto previousState = currentState();
+  mTableImpl->setEvent(ControllerEvent::DataEditionStarted);
+  if(currentState() != previousState){
+    emit currentStateChanged();
+  }
 }
 
 void ControllerStateMachine::dataEditionDone()
 {
-  Q_ASSERT(mChainImpl);
+  Q_ASSERT(mTableImpl);
 
-  setCurrentState( mChainImpl->dataEditionDoneState(mCurrentState) );
+//   setCurrentState( mTableImpl->dataEditionDoneState(mCurrentState) );
+  const auto previousState = currentState();
+  mTableImpl->setEvent(ControllerEvent::DataEditionDone);
+  if(currentState() != previousState){
+    emit currentStateChanged();
+  }
 }
 
 void ControllerStateMachine::submitDone()
 {
-  Q_ASSERT(mChainImpl);
+  Q_ASSERT(mTableImpl);
 
-  setCurrentState( mChainImpl->submitDoneState(mCurrentState) );
+//   setCurrentState( mTableImpl->submitDoneState(mCurrentState) );
+  const auto previousState = currentState();
+  mTableImpl->setEvent(ControllerEvent::SubmitDone);
+  if(currentState() != previousState){
+    emit currentStateChanged();
+  }
 }
 
 void ControllerStateMachine::revertDone()
 {
-  Q_ASSERT(mChainImpl);
+  Q_ASSERT(mTableImpl);
 
-  setCurrentState( mChainImpl->revertDoneState(mCurrentState) );
+//   setCurrentState( mTableImpl->revertDoneState(mCurrentState) );
+  const auto previousState = currentState();
+  mTableImpl->setEvent(ControllerEvent::RevertDone);
+  if(currentState() != previousState){
+    emit currentStateChanged();
+  }
 }
 
 void ControllerStateMachine::insertStarted()
 {
-  Q_ASSERT(mChainImpl);
+  Q_ASSERT(mTableImpl);
 
-  setCurrentState( mChainImpl->insertStartedState(mCurrentState) );
+//   setCurrentState( mTableImpl->insertStartedState(mCurrentState) );
+  const auto previousState = currentState();
+  mTableImpl->setEvent(ControllerEvent::InsertStarted);
+  if(currentState() != previousState){
+    emit currentStateChanged();
+  }
 }
 
 void ControllerStateMachine::removeDone()
 {
-  Q_ASSERT(mChainImpl);
+  Q_ASSERT(mTableImpl);
 
-  setCurrentState( mChainImpl->removeDoneState(mCurrentState) );
+//   setCurrentState( mTableImpl->removeDoneState(mCurrentState) );
+  const auto previousState = currentState();
+  mTableImpl->setEvent(ControllerEvent::RemoveDone);
+  if(currentState() != previousState){
+    emit currentStateChanged();
+  }
 }
 
 void ControllerStateMachine::dataEditionStartedFromParent()
 {
-  Q_ASSERT(mChainImpl);
+  Q_ASSERT(mTableImpl);
 
-  setCurrentState( mChainImpl->dataEditionStartedFromParentState(mCurrentState) );
+//   setCurrentState( mTableImpl->dataEditionStartedFromParentState(mCurrentState) );
+  const auto previousState = currentState();
+  ///mTableImpl->setEvent(ControllerEvent::Da);
+  if(currentState() != previousState){
+    emit currentStateChanged();
+  }
+}
+
+ControllerState ControllerStateMachine::currentState() const
+{
+  Q_ASSERT(mTableImpl);
+
+  return mTableImpl->currentState();
 }
 
 void ControllerStateMachine::forceCurrentState(ControllerState state)
 {
-  setCurrentState(state);
-}
+  Q_ASSERT(mTableImpl);
 
-void ControllerStateMachine::setCurrentState(ControllerState state)
-{
-  const bool changed = (state != mCurrentState);
+  const auto previousState = currentState();
 
-  mCurrentState = state;
-  if(changed){
+  mTableImpl->forceCurrentState(state);
+  if(currentState() != previousState){
     emit currentStateChanged();
   }
+//   setCurrentState(state);
 }
+
+void ControllerStateMachine::createTransitionTable()
+{
+  Q_ASSERT(mTableImpl);
+
+  mTableImpl->createTable();
+}
+
+// void ControllerStateMachine::setCurrentState(ControllerState state)
+// {
+//   const bool changed = (state != mCurrentState);
+// 
+//   mCurrentState = state;
+//   if(changed){
+//     emit currentStateChanged();
+//   }
+// }
 
 }} // namespace Mdt{ namespace ItemEditor{

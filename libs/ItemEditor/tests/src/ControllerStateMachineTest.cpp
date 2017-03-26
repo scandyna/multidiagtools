@@ -23,7 +23,7 @@
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
 #include "Mdt/ItemEditor/AbstractControllerStateTable.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
-#include "Mdt/ItemEditor/AbstractControllerStateChain.h"
+// #include "Mdt/ItemEditor/AbstractControllerStateChain.h"
 #include <QSignalSpy>
 #include <QScopedPointer>
 
@@ -60,15 +60,15 @@ class PermissionTestClass : public AbstractControllerStatePermission
   }
 };
 
-class StateChainTestClass : public AbstractControllerStateChain
-{
- public:
-
-  ControllerState dataEditionStartedState(ControllerState currentState) const override
-  {
-    return ControllerState::Editing;
-  }
-};
+// class StateChainTestClass : public AbstractControllerStateChain
+// {
+//  public:
+// 
+//   ControllerState dataEditionStartedState(ControllerState currentState) const override
+//   {
+//     return ControllerState::Editing;
+//   }
+// };
 
 /*
  * Tests
@@ -177,15 +177,36 @@ void ControllerStateMachineTest::abstractControllerStatePermissionTest()
 
 void ControllerStateMachineTest::constructTest()
 {
-  QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<StateChainTestClass, PermissionTestClass>() );
+  QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<AbstractControllerStateTable, PermissionTestClass>() );
   QCOMPARE(s->currentState(), ControllerState::Visualizing);
   QVERIFY(s->canChangeCurrentRow());
   QVERIFY(!s->canInsert());
 }
 
+void ControllerStateMachineTest::transitionTest()
+{
+  /*
+   * Initial state
+   */
+  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>() );
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - Editing
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->dataEditionDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  
+  QFAIL("Not complete");
+}
+
+void ControllerStateMachineTest::permissionTest()
+{
+  QFAIL("Not complete");
+}
+
 void ControllerStateMachineTest::currentStateChangedSignalTest()
 {
-  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<StateChainTestClass, PermissionTestClass>() );
+  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, PermissionTestClass>() );
   QSignalSpy stateChangedSpy(stateMachine.data(), &ControllerStateMachine::currentStateChanged);
   QVERIFY(stateChangedSpy.isValid());
   /*
@@ -205,7 +226,7 @@ void ControllerStateMachineTest::currentStateChangedSignalTest()
 
 void ControllerStateMachineTest::getterBenschmark()
 {
-  QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<StateChainTestClass, PermissionTestClass>() );
+  QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<AbstractControllerStateTable, PermissionTestClass>() );
 
   QBENCHMARK{
     QCOMPARE(s->currentState(), ControllerState::Visualizing);

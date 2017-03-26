@@ -79,31 +79,31 @@ void AbstractControllerStateChainTest::stateMachineTest()
   /*
    * Initial state
    */
-  QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(nullptr) );
-  QCOMPARE(s->currentState(), ControllerState::Visualizing);
-  /*
-   * Just check that each trigger calls the correct method in AbstractControllerStateChain
-   */
-  s->dataEditionStarted();
-  QCOMPARE(s->currentState(), ControllerState::Editing);
-  s->dataEditionDone();
-  QCOMPARE(s->currentState(), ControllerState::Visualizing);
-  s->dataEditionStarted();
-  QCOMPARE(s->currentState(), ControllerState::Editing);
-  s->submitDone();
-  QCOMPARE(s->currentState(), ControllerState::Visualizing);
-  s->dataEditionStarted();
-  QCOMPARE(s->currentState(), ControllerState::Editing);
-  s->revertDone();
-  QCOMPARE(s->currentState(), ControllerState::Visualizing);
-  s->insertStarted();
-  QCOMPARE(s->currentState(), ControllerState::Inserting);
-  s->submitDone();
-  QCOMPARE(s->currentState(), ControllerState::Visualizing);
-  s->dataEditionStarted();
-  QCOMPARE(s->currentState(), ControllerState::Editing);
-  s->removeDone();
-  QCOMPARE(s->currentState(), ControllerState::Visualizing);
+//   QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<AbstractControllerStateChain, AbstractControllerStatePermission>(nullptr) );
+//   QCOMPARE(s->currentState(), ControllerState::Visualizing);
+//   /*
+//    * Just check that each trigger calls the correct method in AbstractControllerStateChain
+//    */
+//   s->dataEditionStarted();
+//   QCOMPARE(s->currentState(), ControllerState::Editing);
+//   s->dataEditionDone();
+//   QCOMPARE(s->currentState(), ControllerState::Visualizing);
+//   s->dataEditionStarted();
+//   QCOMPARE(s->currentState(), ControllerState::Editing);
+//   s->submitDone();
+//   QCOMPARE(s->currentState(), ControllerState::Visualizing);
+//   s->dataEditionStarted();
+//   QCOMPARE(s->currentState(), ControllerState::Editing);
+//   s->revertDone();
+//   QCOMPARE(s->currentState(), ControllerState::Visualizing);
+//   s->insertStarted();
+//   QCOMPARE(s->currentState(), ControllerState::Inserting);
+//   s->submitDone();
+//   QCOMPARE(s->currentState(), ControllerState::Visualizing);
+//   s->dataEditionStarted();
+//   QCOMPARE(s->currentState(), ControllerState::Editing);
+//   s->removeDone();
+//   QCOMPARE(s->currentState(), ControllerState::Visualizing);
 
   QFAIL("Not complete (Miss ParentEditing + ChildEditing states)");
 }
