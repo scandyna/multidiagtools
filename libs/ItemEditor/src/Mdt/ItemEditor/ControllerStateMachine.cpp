@@ -139,78 +139,65 @@ void ControllerStateMachine::dataEditionStarted()
 {
   Q_ASSERT(mTableImpl);
 
-  const auto previousState = currentState();
-  mTableImpl->setEvent(ControllerEvent::DataEditionStarted);
-  if(currentState() != previousState){
-    emit currentStateChanged();
-  }
+  setEvent(ControllerEvent::DataEditionStarted);
 }
 
 void ControllerStateMachine::dataEditionDone()
 {
   Q_ASSERT(mTableImpl);
 
-  const auto previousState = currentState();
-  mTableImpl->setEvent(ControllerEvent::DataEditionDone);
-  if(currentState() != previousState){
-    emit currentStateChanged();
-  }
+  setEvent(ControllerEvent::DataEditionDone);
 }
 
 void ControllerStateMachine::submitDone()
 {
   Q_ASSERT(mTableImpl);
 
-  const auto previousState = currentState();
-  mTableImpl->setEvent(ControllerEvent::SubmitDone);
-  if(currentState() != previousState){
-    emit currentStateChanged();
-  }
+  setEvent(ControllerEvent::SubmitDone);
 }
 
 void ControllerStateMachine::revertDone()
 {
   Q_ASSERT(mTableImpl);
 
-  const auto previousState = currentState();
-  mTableImpl->setEvent(ControllerEvent::RevertDone);
-  if(currentState() != previousState){
-    emit currentStateChanged();
-  }
+  setEvent(ControllerEvent::RevertDone);
 }
 
 void ControllerStateMachine::insertStarted()
 {
   Q_ASSERT(mTableImpl);
 
-  const auto previousState = currentState();
-  mTableImpl->setEvent(ControllerEvent::InsertStarted);
-  if(currentState() != previousState){
-    emit currentStateChanged();
-  }
+  setEvent(ControllerEvent::InsertStarted);
 }
 
 void ControllerStateMachine::removeDone()
 {
   Q_ASSERT(mTableImpl);
 
-  const auto previousState = currentState();
-  mTableImpl->setEvent(ControllerEvent::RemoveDone);
-  if(currentState() != previousState){
-    emit currentStateChanged();
-  }
+  setEvent(ControllerEvent::RemoveDone);
 }
 
-void ControllerStateMachine::dataEditionStartedFromParent()
+void ControllerStateMachine::setEvent(ControllerEvent event)
 {
   Q_ASSERT(mTableImpl);
 
   const auto previousState = currentState();
-  ///mTableImpl->setEvent(ControllerEvent::Da);
+  mTableImpl->setEvent(event);
   if(currentState() != previousState){
     emit currentStateChanged();
   }
 }
+
+// void ControllerStateMachine::dataEditionStartedFromParent()
+// {
+//   Q_ASSERT(mTableImpl);
+// 
+//   const auto previousState = currentState();
+//   ///mTableImpl->setEvent(ControllerEvent::Da);
+//   if(currentState() != previousState){
+//     emit currentStateChanged();
+//   }
+// }
 
 ControllerState ControllerStateMachine::currentState() const
 {

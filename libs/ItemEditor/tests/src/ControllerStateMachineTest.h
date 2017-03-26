@@ -35,13 +35,11 @@ class ControllerStateMachineTest : public TestBase
   void stateTableRowTest();
   void abstractControllerStateTableForceStateTest();
   void abstractControllerStateTableTransitionTest();
-  void abstractControllerStateTablePermissionTest();
   void abstractControllerStatePermissionTest();
   void constructTest();
   void transitionTest();
   void permissionTest();
   void actionEnableStateTest();
-//   void copyTest();
   void currentStateChangedSignalTest();
   void getterBenschmark();
 };

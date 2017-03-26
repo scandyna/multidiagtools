@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_CONTROLLER_STATE_MACHINE_H
 
 #include "ControllerState.h"
+#include "ControllerEvent.h"
 #include <QObject>
 #include <memory>
 #include <type_traits>
@@ -142,9 +143,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     void removeDone();
 
-    /*! \brief Data edition started from parent controller event
+    /*! \brief Set event
      */
-    void dataEditionStartedFromParent();
+    void setEvent(ControllerEvent event);
+
+//     /*! \brief Data edition started from parent controller event
+//      */
+//     void dataEditionStartedFromParent();
 
     /*! \brief Construct a ControllerStateMachine with a concrete state chain and permission implementations
      *

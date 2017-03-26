@@ -59,16 +59,6 @@ class PermissionTestClass : public AbstractControllerStatePermission
   }
 };
 
-// class StateChainTestClass : public AbstractControllerStateChain
-// {
-//  public:
-// 
-//   ControllerState dataEditionStartedState(ControllerState currentState) const override
-//   {
-//     return ControllerState::Editing;
-//   }
-// };
-
 /*
  * Tests
  */
@@ -130,25 +120,9 @@ void ControllerStateMachineTest::abstractControllerStateTableTransitionTest()
   QCOMPARE(table.currentState(), ControllerState::Inserting);
   table.setEvent(ControllerEvent::RemoveDone);
   QCOMPARE(table.currentState(), ControllerState::Visualizing);
-
-  QFAIL("Not complete");
-}
-
-void ControllerStateMachineTest::abstractControllerStateTablePermissionTest()
-{
-  AbstractControllerStateTable table;
-
-  table.createTable();
-  // Visualizing state
-  QCOMPARE(table.currentState(), ControllerState::Visualizing);
-  QVERIFY( table.canHandleEvent(ControllerEvent::DataEditionStarted));
-  QVERIFY(!table.canHandleEvent(ControllerEvent::DataEditionDone));
-  QVERIFY(!table.canHandleEvent(ControllerEvent::SubmitDone));
-  QVERIFY(!table.canHandleEvent(ControllerEvent::RevertDone));
-  QVERIFY( table.canHandleEvent(ControllerEvent::InsertStarted));
-  QVERIFY( table.canHandleEvent(ControllerEvent::RemoveDone));
-  
-  QFAIL("Not complete");
+  /*
+   * Complete test is done below (using ControllerStateMachine)
+   */
 }
 
 void ControllerStateMachineTest::abstractControllerStatePermissionTest()
@@ -166,12 +140,13 @@ void ControllerStateMachineTest::abstractControllerStatePermissionTest()
   QVERIFY( permission.canEdit(table) );
   QVERIFY( permission.canSubmit(table) );
   QVERIFY(!permission.isSubmitActionEnabled(table) );
-  QVERIFY( permission.canRevert(table) );
+  QVERIFY(!permission.canRevert(table) );
   QVERIFY(!permission.isRevertActionEnabled(table) );
   QVERIFY( permission.canRemove(table) );
   QVERIFY( permission.isRemoveActionEnabled(table) );
-  
-  QFAIL("Not complete");
+  /*
+   * Complete test is done below (using ControllerStateMachine)
+   */
 }
 
 void ControllerStateMachineTest::constructTest()
@@ -196,6 +171,23 @@ void ControllerStateMachineTest::transitionTest()
   stateMachine->dataEditionStarted();
   QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
   stateMachine->dataEditionDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->submitDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->revertDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - Inserting
+  stateMachine->insertStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->submitDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  stateMachine->insertStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->removeDone();
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
   
   QFAIL("Not complete");
