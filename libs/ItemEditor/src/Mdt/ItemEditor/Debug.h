@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_DEBUG_H
 
 #include "ControllerState.h"
+#include "ControllerEvent.h"
 #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
@@ -31,5 +32,9 @@ namespace Mdt{ namespace ItemEditor{
 /*! \brief Make Mdt::ItemEditor::ControllerState usable with qDebug()
  */
 QDebug operator<<(QDebug debug, Mdt::ItemEditor::ControllerState state);
+
+/*! \brief Make Mdt::ItemEditor::ControllerEvent usable with qDebug()
+ */
+QDebug operator<<(QDebug debug, Mdt::ItemEditor::ControllerEvent event);
 
 #endif // #ifndef MDT_ITEM_EDITOR_DEBUG_H

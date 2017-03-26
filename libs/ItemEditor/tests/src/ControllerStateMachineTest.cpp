@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "ControllerStateMachineTest.h"
 // #include "ControllerStateChangedSignalSpy.h"
+#include "Mdt/ItemEditor/AbstractControllerStateTable.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include "Mdt/ItemEditor/AbstractControllerStateChain.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
@@ -72,6 +73,84 @@ class StateChainTestClass : public AbstractControllerStateChain
 /*
  * Tests
  */
+
+void ControllerStateMachineTest::stateTableRowTest()
+{
+  ControllerStateTableRow row(ControllerState::Visualizing, ControllerEvent::DataEditionStarted, ControllerState::Editing);
+  QCOMPARE(row.state(), ControllerState::Visualizing);
+  QCOMPARE(row.event(), ControllerEvent::DataEditionStarted);
+  QCOMPARE(row.targetState(), ControllerState::Editing);
+  QVERIFY(row.canHandleEvent(ControllerEvent::DataEditionStarted));
+  QVERIFY(!row.canHandleEvent(ControllerEvent::SubmitDone));
+}
+
+void ControllerStateMachineTest::abstractControllerStateTableForceStateTest()
+{
+  AbstractControllerStateTable table;
+  table.createTable();
+  QCOMPARE(table.currentState(), ControllerState::Visualizing);
+  table.forceCurrentState(ControllerState::Editing);
+  QCOMPARE(table.currentState(), ControllerState::Editing);
+  table.forceCurrentState(ControllerState::Inserting);
+  QCOMPARE(table.currentState(), ControllerState::Inserting);
+  table.forceCurrentState(ControllerState::Visualizing);
+  QCOMPARE(table.currentState(), ControllerState::Visualizing);
+  table.forceCurrentState(ControllerState::ParentEditing);
+  QCOMPARE(table.currentState(), ControllerState::ParentEditing);
+  table.forceCurrentState(ControllerState::ChildEditing);
+  QCOMPARE(table.currentState(), ControllerState::ChildEditing);
+}
+
+void ControllerStateMachineTest::abstractControllerStateTableTransitionTest()
+{
+  /*
+   * Initial state
+   */
+  AbstractControllerStateTable table;
+  table.createTable();
+  // Visualizing - Editing
+  QCOMPARE(table.currentState(), ControllerState::Visualizing);
+  table.setEvent(ControllerEvent::DataEditionStarted);
+  QCOMPARE(table.currentState(), ControllerState::Editing);
+  table.setEvent(ControllerEvent::DataEditionDone);
+  QCOMPARE(table.currentState(), ControllerState::Visualizing);
+  table.setEvent(ControllerEvent::DataEditionStarted);
+  QCOMPARE(table.currentState(), ControllerState::Editing);
+  table.setEvent(ControllerEvent::SubmitDone);
+  QCOMPARE(table.currentState(), ControllerState::Visualizing);
+  table.setEvent(ControllerEvent::DataEditionStarted);
+  QCOMPARE(table.currentState(), ControllerState::Editing);
+  table.setEvent(ControllerEvent::RevertDone);
+  QCOMPARE(table.currentState(), ControllerState::Visualizing);
+  // Visualizing - Inserting
+  table.setEvent(ControllerEvent::InsertStarted);
+  QCOMPARE(table.currentState(), ControllerState::Inserting);
+  table.setEvent(ControllerEvent::SubmitDone);
+  QCOMPARE(table.currentState(), ControllerState::Visualizing);
+  table.setEvent(ControllerEvent::InsertStarted);
+  QCOMPARE(table.currentState(), ControllerState::Inserting);
+  table.setEvent(ControllerEvent::RemoveDone);
+  QCOMPARE(table.currentState(), ControllerState::Visualizing);
+
+  QFAIL("Not complete");
+}
+
+void ControllerStateMachineTest::abstractControllerStateTablePermissionTest()
+{
+  AbstractControllerStateTable table;
+
+  table.createTable();
+  // Visualizing state
+  QCOMPARE(table.currentState(), ControllerState::Visualizing);
+  QVERIFY( table.canHandleEvent(ControllerEvent::DataEditionStarted));
+  QVERIFY(!table.canHandleEvent(ControllerEvent::DataEditionDone));
+  QVERIFY(!table.canHandleEvent(ControllerEvent::SubmitDone));
+  QVERIFY(!table.canHandleEvent(ControllerEvent::RevertDone));
+  QVERIFY( table.canHandleEvent(ControllerEvent::InsertStarted));
+  QVERIFY( table.canHandleEvent(ControllerEvent::RemoveDone));
+  
+  QFAIL("Not complete");
+}
 
 void ControllerStateMachineTest::constructTest()
 {

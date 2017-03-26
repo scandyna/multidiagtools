@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "ControllerState.h"
 #include <QByteArray>
-// #include <QLatin1String>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -40,6 +39,5 @@ QByteArray controllerStateText(ControllerState state)
   }
   return QByteArray();
 }
-
 
 }} // namespace Mdt{ namespace ItemEditor{

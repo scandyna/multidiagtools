@@ -53,6 +53,7 @@ void AbstractControllerStateChainTest::stateChainTest()
   QCOMPARE(sc.revertDoneState(ControllerState::Visualizing), ControllerState::Visualizing);
   QCOMPARE(sc.insertStartedState(ControllerState::Visualizing), ControllerState::Inserting);
   QCOMPARE(sc.removeDoneState(ControllerState::Visualizing), ControllerState::Visualizing);
+  QCOMPARE(sc.dataEditionStartedFromParentState(ControllerState::Visualizing), ControllerState::ParentEditing);
   // From Editing state
   QCOMPARE(sc.dataEditionStartedState(ControllerState::Editing), ControllerState::Editing);
   QCOMPARE(sc.dataEditionDoneState(ControllerState::Editing), ControllerState::Visualizing);
@@ -60,6 +61,7 @@ void AbstractControllerStateChainTest::stateChainTest()
   QCOMPARE(sc.revertDoneState(ControllerState::Editing), ControllerState::Visualizing);
   QCOMPARE(sc.insertStartedState(ControllerState::Editing), ControllerState::Editing);
   QCOMPARE(sc.removeDoneState(ControllerState::Editing), ControllerState::Visualizing);
+  QCOMPARE(sc.dataEditionStartedFromParentState(ControllerState::Editing), ControllerState::Editing);
   // From Inserting state
   QCOMPARE(sc.dataEditionStartedState(ControllerState::Inserting), ControllerState::Inserting);
   QCOMPARE(sc.dataEditionDoneState(ControllerState::Inserting), ControllerState::Inserting);
@@ -67,6 +69,7 @@ void AbstractControllerStateChainTest::stateChainTest()
   QCOMPARE(sc.revertDoneState(ControllerState::Inserting), ControllerState::Inserting);
   QCOMPARE(sc.insertStartedState(ControllerState::Inserting), ControllerState::Inserting);
   QCOMPARE(sc.removeDoneState(ControllerState::Inserting), ControllerState::Visualizing);
+  QCOMPARE(sc.dataEditionStartedFromParentState(ControllerState::Inserting), ControllerState::Inserting);
 
   QFAIL("Not complete (Miss ParentEditing + ChildEditing states)");
 }

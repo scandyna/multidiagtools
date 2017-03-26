@@ -23,6 +23,7 @@
 
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/ControllerState.h"
+#include "Mdt/ItemEditor/ControllerEvent.h"
 #include "ItemViewTestEditTriggers.h"
 #include <QObject>
 #include <QtTest/QtTest>
@@ -63,6 +64,7 @@ class TestBase : public QObject
 namespace Mdt{ namespace ItemEditor{
 
   char *toString(ControllerState state);
+  char *toString(ControllerEvent event);
 
 }} // namespace Mdt{ namespace ItemEditor{
 

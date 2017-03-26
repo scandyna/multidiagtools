@@ -32,3 +32,11 @@ QDebug operator<<(QDebug debug, Mdt::ItemEditor::ControllerState state)
 
   return debug;
 }
+
+QDebug operator<<(QDebug debug, Mdt::ItemEditor::ControllerEvent event)
+{
+  QDebugStateSaver ds(debug);
+  debug.nospace() << Mdt::ItemEditor::controllerEventText(event);
+
+  return debug;
+}

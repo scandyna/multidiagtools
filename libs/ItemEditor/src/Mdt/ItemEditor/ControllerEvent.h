@@ -18,29 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_MACHINE_TEST_H
-#define MDT_ITEM_EDITOR_CONTROLLER_STATE_MACHINE_TEST_H
+#ifndef MDT_ITEM_EDITOR_CONTROLLER_EVENT_H
+#define MDT_ITEM_EDITOR_CONTROLLER_EVENT_H
 
-#include "TestBase.h"
+#include <QMetaType>
 
-class ControllerStateMachineTest : public TestBase
-{
-  Q_OBJECT
+class QByteArray;
 
- private slots:
+namespace Mdt{ namespace ItemEditor{
 
-  void initTestCase();
-  void cleanupTestCase();
+  /*! \brief Event for ControllerStateMachine
+   */
+  enum class ControllerEvent
+  {
+    DataEditionStarted, /*!< Data edition started event */
+    DataEditionDone,    /*!< Data edition done event */
+    SubmitDone,         /*!< Submit done event */
+    RevertDone,         /*!< Revert done event */
+    InsertStarted,      /*!< Instertion started event */
+    RemoveDone          /*!< Remove done event */
+  };
 
-  void stateTableRowTest();
-  void abstractControllerStateTableForceStateTest();
-  void abstractControllerStateTableTransitionTest();
-  void abstractControllerStateTablePermissionTest();
+  /*! \brief Get text version of \a event
+   *
+   * \sa operator<<(QDebug, Mdt::ItemEditor::ControllerEvent)
+   */
+  QByteArray controllerEventText(ControllerEvent event);
 
-  void constructTest();
-//   void copyTest();
-  void currentStateChangedSignalTest();
-  void getterBenschmark();
-};
+}} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_MACHINE_TEST_H
+Q_DECLARE_METATYPE(Mdt::ItemEditor::ControllerEvent)
+
+#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_EVENT_H

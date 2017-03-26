@@ -161,6 +161,13 @@ void ControllerStateMachine::removeDone()
   setCurrentState( mChainImpl->removeDoneState(mCurrentState) );
 }
 
+void ControllerStateMachine::dataEditionStartedFromParent()
+{
+  Q_ASSERT(mChainImpl);
+
+  setCurrentState( mChainImpl->dataEditionStartedFromParentState(mCurrentState) );
+}
+
 void ControllerStateMachine::forceCurrentState(ControllerState state)
 {
   setCurrentState(state);

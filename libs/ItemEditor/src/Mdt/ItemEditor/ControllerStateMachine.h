@@ -142,6 +142,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void removeDone();
 
+    /*! \brief Data edition started from parent controller event
+     */
+    void dataEditionStartedFromParent();
+
     /*! \brief Construct a ControllerStateMachine with a concrete state chain and permission implementations
      *
      * \code

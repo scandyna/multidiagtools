@@ -110,4 +110,9 @@ ControllerState AbstractControllerStateChain::removeDoneState(ControllerState cu
   return currentState;
 }
 
+ControllerState AbstractControllerStateChain::dataEditionStartedFromParentState(ControllerState currentState) const
+{
+
+}
+
 }} // namespace Mdt{ namespace ItemEditor{

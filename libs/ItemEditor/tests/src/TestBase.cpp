@@ -212,7 +212,14 @@ char* toString(ControllerState state)
   using QTest::toString;
   // delegate char* handling to QTest::toString(QByteArray):
   return toString( controllerStateText(state) );
-//   return toString( QByteArray("ControllerState(") + controllerStateText(state) + QByteArray(")") );
+}
+
+char* toString(ControllerEvent event)
+{
+  // bring QTest::toString overloads into scope:
+  using QTest::toString;
+  // delegate char* handling to QTest::toString(QByteArray):
+  return toString( controllerEventText(event) );
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

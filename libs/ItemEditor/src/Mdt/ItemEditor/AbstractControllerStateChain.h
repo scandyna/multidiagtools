@@ -75,6 +75,11 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Get state when remove is done
      */
     virtual ControllerState removeDoneState(ControllerState currentState) const;
+
+    /*! \brief Get state when data edition started from parent controller
+     */
+    virtual ControllerState dataEditionStartedFromParentState(ControllerState currentState) const;
+
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

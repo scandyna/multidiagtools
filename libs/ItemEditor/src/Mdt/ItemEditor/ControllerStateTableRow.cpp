@@ -18,29 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_MACHINE_TEST_H
-#define MDT_ITEM_EDITOR_CONTROLLER_STATE_MACHINE_TEST_H
+#include "ControllerStateTableRow.h"
 
-#include "TestBase.h"
-
-class ControllerStateMachineTest : public TestBase
-{
-  Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void stateTableRowTest();
-  void abstractControllerStateTableForceStateTest();
-  void abstractControllerStateTableTransitionTest();
-  void abstractControllerStateTablePermissionTest();
-
-  void constructTest();
-//   void copyTest();
-  void currentStateChangedSignalTest();
-  void getterBenschmark();
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_MACHINE_TEST_H
+namespace Mdt{ namespace ItemEditor{
+}} // namespace Mdt{ namespace ItemEditor{

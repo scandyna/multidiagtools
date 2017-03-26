@@ -10,6 +10,7 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/EventCatchItemDelegate.cpp
     src/Mdt/ItemEditor/ItemSelectionModel.cpp
     src/Mdt/ItemEditor/ControllerState.cpp
+    src/Mdt/ItemEditor/ControllerEvent.cpp
     src/Mdt/ItemEditor/RowChangeEventDispatcher.cpp
     src/Mdt/ItemEditor/AbstractActionContainer.cpp
     src/Mdt/ItemEditor/NavigationActions.cpp
@@ -20,6 +21,8 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/AbstractControllerStatePermission.cpp
     src/Mdt/ItemEditor/ControllerStatePermission.cpp
     src/Mdt/ItemEditor/ControllerStatePermissionProxyModel.cpp
+    src/Mdt/ItemEditor/ControllerStateTableRow.cpp
+    src/Mdt/ItemEditor/AbstractControllerStateTable.cpp
     src/Mdt/ItemEditor/AbstractControllerStateChain.cpp
     src/Mdt/ItemEditor/ControllerStateMachine.cpp
     src/Mdt/ItemEditor/AbstractController.cpp
