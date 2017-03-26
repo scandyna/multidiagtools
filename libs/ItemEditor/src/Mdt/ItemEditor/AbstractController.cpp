@@ -21,7 +21,6 @@
 #include "AbstractController.h"
 #include "ControllerStateMachine.h"
 #include "RowChangeEventDispatcher.h"
-#include "ControllerStatePermission.h"
 #include "NavigationControllerRelation.h"
 #include "FilterControllerRelation.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"

@@ -19,25 +19,16 @@
  **
  ****************************************************************************/
 #include "TableViewControllerStatePermission.h"
+#include "AbstractControllerStateTable.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-bool TableViewControllerStatePermission::canInsert(ControllerState state) const
+bool TableViewControllerStatePermission::canInsert(const AbstractControllerStateTable & st) const
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      return false;
-    case ControllerState::Inserting:
-      return true;
-    case ControllerState::ChildEditing:
-      return false;
-    case ControllerState::ParentEditing:
-      return true;
+  if(st.currentState() == ControllerState::Inserting){
+    return true;
   }
-  return false;
+  return AbstractControllerStatePermission::canInsert(st);
 }
-
 
 }} // namespace Mdt{ namespace ItemEditor{

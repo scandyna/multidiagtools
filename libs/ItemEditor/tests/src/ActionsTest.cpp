@@ -30,7 +30,6 @@
 #include "Mdt/ItemEditor/ControllerState.h"
 #include "Mdt/ItemEditor/AbstractControllerStateTable.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
-// #include "Mdt/ItemEditor/AbstractControllerStateChain.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>

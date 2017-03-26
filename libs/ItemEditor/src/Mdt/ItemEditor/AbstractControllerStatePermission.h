@@ -66,89 +66,45 @@ namespace Mdt{ namespace ItemEditor{
     AbstractControllerStatePermission(AbstractControllerStatePermission &&) = delete;
     AbstractControllerStatePermission & operator=(AbstractControllerStatePermission &&) = delete;
 
-    /*! \brief Check if it is allowed to change current row for state
-     */
-    virtual bool canChangeCurrentRow(ControllerState state) const;
-
     /*! \brief Check if it is allowed to change current row
      */
     virtual bool canChangeCurrentRow(const AbstractControllerStateTable & st) const;
-
-    /*! \brief Check if changing current row action is enabled for state
-     */
-    virtual bool isChangeCurrentRowActionEnabled(ControllerState state) const;
 
     /*! \brief Check if changing current row action is enabled
      */
     virtual bool isChangeCurrentRowActionEnabled(const AbstractControllerStateTable & st) const;
 
-    /*! \brief Check if it is allowed to insert for state
-     */
-    virtual bool canInsert(ControllerState state) const;
-
     /*! \brief Check if it is allowed to insert
      */
     virtual bool canInsert(const AbstractControllerStateTable & st) const;
-
-    /*! \brief Check if insert action is enabled for state
-     */
-    virtual bool isInsertActionEnabled(ControllerState state) const;
 
     /*! \brief Check if insert action is enabled
      */
     virtual bool isInsertActionEnabled(const AbstractControllerStateTable & st) const;
 
-    /*! \brief Check if it is possible to edit for state
-     */
-    virtual bool canEdit(ControllerState state) const;
-
     /*! \brief Check if it is possible to edit
      */
     virtual bool canEdit(const AbstractControllerStateTable & st) const;
-
-    /*! \brief Check if it is possible to submit for state
-     */
-    virtual bool canSubmit(ControllerState state) const;
 
     /*! \brief Check if it is possible to submit
      */
     virtual bool canSubmit(const AbstractControllerStateTable & st) const;
 
-    /*! \brief Check if submit action is enabled for state
-     */
-    virtual bool isSubmitActionEnabled(ControllerState state) const;
-
     /*! \brief Check if submit action is enabled
      */
     virtual bool isSubmitActionEnabled(const AbstractControllerStateTable & st) const;
-
-    /*! \brief Check if it is possible to revert for state
-     */
-    virtual bool canRevert(ControllerState state) const;
 
     /*! \brief Check if it is possible to revert
      */
     virtual bool canRevert(const AbstractControllerStateTable & st) const;
 
-    /*! \brief Check if revert action is enabled for state
-     */
-    virtual bool isRevertActionEnabled(ControllerState state) const;
-
     /*! \brief Check if revert action is enabled
      */
     virtual bool isRevertActionEnabled(const AbstractControllerStateTable & st) const;
 
-    /*! \brief Check if it is possible to remove for state
-     */
-    virtual bool canRemove(ControllerState state) const;
-
     /*! \brief Check if it is possible to remove
      */
     virtual bool canRemove(const AbstractControllerStateTable & st) const;
-
-    /*! \brief Check if remove action is enabled for state
-     */
-    virtual bool isRemoveActionEnabled(ControllerState state) const;
 
     /*! \brief Check if remove action is enabled
      */
@@ -156,11 +112,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Check if it is possible to select data from database
      */
-    virtual bool canSelect(ControllerState state) const;
+    virtual bool canSelect(const AbstractControllerStateTable & st) const;
 
-    /*! \brief Check if select action is enabled for state
+    /*! \brief Check if select action is enabled
      */
-    virtual bool isSelectActionEnabled(ControllerState state) const;
+    virtual bool isSelectActionEnabled(const AbstractControllerStateTable & st) const;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

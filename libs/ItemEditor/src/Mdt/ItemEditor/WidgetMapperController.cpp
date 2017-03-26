@@ -20,9 +20,6 @@
  ****************************************************************************/
 #include "WidgetMapperController.h"
 #include "DataWidgetMapper.h"
-
-// #include "AbstractControllerStateChain.h"
-
 #include "AbstractControllerStateTable.h"
 #include "WidgetMapperControllerStatePermission.h"
 #include "ControllerStateMachine.h"

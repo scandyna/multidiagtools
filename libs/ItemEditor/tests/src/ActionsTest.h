@@ -23,8 +23,6 @@
 
 #include "Mdt/ItemEditor/AbstractActionContainer.h"
 #include "TestBase.h"
-// #include <QObject>
-// #include <QtTest/QtTest>
 
 /*
  * Test class for AbstractActionContainer

@@ -24,7 +24,6 @@
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
-#include "Mdt/ItemEditor/ControllerStatePermission.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"

@@ -36,10 +36,6 @@ bool AbstractControllerStateTable::canHandleEvent(ControllerEvent event) const n
 
 void AbstractControllerStateTable::setEvent(ControllerEvent event) noexcept
 {
-//   const auto pred = [event, this](const ControllerStateTableRow & row){
-//     return ( (row.event() == event) && (row.state() == mCurrentState) );
-//   };
-//   const auto it = std::find_if(mTable.cbegin(), mTable.cend(), pred);
   const auto it = findTransitionFromCurrentState(event);
   if(it != mTable.cend()){
     mCurrentState = it->targetState();
@@ -55,7 +51,7 @@ void AbstractControllerStateTable::createTable()
   addTransition(ControllerState::Editing, ControllerEvent::RevertDone, ControllerState::Visualizing);
   addTransition(ControllerState::Inserting, ControllerEvent::SubmitDone, ControllerState::Visualizing);
   addTransition(ControllerState::Inserting, ControllerEvent::RemoveDone, ControllerState::Visualizing);
-  
+
   mCurrentState = ControllerState::Visualizing;
 }
 

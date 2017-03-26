@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "ControllerStatePermissionProxyModel.h"
-#include "AbstractControllerStateChain.h"
 #include <QIdentityProxyModel>
 
 namespace Mdt{ namespace ItemEditor{

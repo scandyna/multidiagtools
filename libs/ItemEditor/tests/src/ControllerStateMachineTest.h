@@ -40,6 +40,7 @@ class ControllerStateMachineTest : public TestBase
   void constructTest();
   void transitionTest();
   void permissionTest();
+  void actionEnableStateTest();
 //   void copyTest();
   void currentStateChangedSignalTest();
   void getterBenschmark();

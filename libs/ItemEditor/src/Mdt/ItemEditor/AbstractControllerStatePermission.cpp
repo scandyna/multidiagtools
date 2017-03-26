@@ -24,23 +24,6 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-bool AbstractControllerStatePermission::canChangeCurrentRow(ControllerState state) const
-{
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      return false;
-    case ControllerState::Inserting:
-      return false;
-    case ControllerState::ChildEditing:
-      return false;
-    case ControllerState::ParentEditing:
-      return true;
-  }
-  return false;
-}
-
 bool AbstractControllerStatePermission::canChangeCurrentRow(const AbstractControllerStateTable & st) const
 {
   switch(st.currentState()){
@@ -58,31 +41,9 @@ bool AbstractControllerStatePermission::canChangeCurrentRow(const AbstractContro
   return false;
 }
 
-bool AbstractControllerStatePermission::isChangeCurrentRowActionEnabled(ControllerState state) const
-{
-  return canChangeCurrentRow(state);
-}
-
 bool AbstractControllerStatePermission::isChangeCurrentRowActionEnabled(const AbstractControllerStateTable & st) const
 {
   return canChangeCurrentRow(st);
-}
-
-bool AbstractControllerStatePermission::canInsert(ControllerState state) const
-{
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      return false;
-    case ControllerState::Inserting:
-      return true;
-    case ControllerState::ChildEditing:
-      return false;
-    case ControllerState::ParentEditing:
-      return true;
-  }
-  return false;
 }
 
 bool AbstractControllerStatePermission::canInsert(const AbstractControllerStateTable & st) const
@@ -90,53 +51,23 @@ bool AbstractControllerStatePermission::canInsert(const AbstractControllerStateT
   return st.canHandleEvent(ControllerEvent::InsertStarted);
 }
 
-bool AbstractControllerStatePermission::isInsertActionEnabled(ControllerState state) const
-{
-  return canInsert(state);
-}
-
 bool AbstractControllerStatePermission::isInsertActionEnabled(const AbstractControllerStateTable & st) const
 {
   return canInsert(st);
 }
 
-bool AbstractControllerStatePermission::canEdit(ControllerState state) const
-{
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      return true;
-    case ControllerState::Inserting:
-      return true;
-    case ControllerState::ChildEditing:
-      return false;
-    case ControllerState::ParentEditing:
-      return false;
-  }
-  return false;
-}
-
 bool AbstractControllerStatePermission::canEdit(const AbstractControllerStateTable & st) const
 {
-  return st.canHandleEvent(ControllerEvent::DataEditionStarted);
-}
-
-bool AbstractControllerStatePermission::canSubmit(ControllerState state) const
-{
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
+  switch(st.currentState()){
     case ControllerState::Editing:
-      return true;
     case ControllerState::Inserting:
       return true;
+    case ControllerState::Visualizing:
     case ControllerState::ChildEditing:
-      return true;
     case ControllerState::ParentEditing:
-      return true;
+      break;
   }
-  return false;
+  return st.canHandleEvent(ControllerEvent::DataEditionStarted);
 }
 
 bool AbstractControllerStatePermission::canSubmit(const AbstractControllerStateTable & st) const
@@ -151,21 +82,6 @@ bool AbstractControllerStatePermission::canSubmit(const AbstractControllerStateT
       break;
   }
   return st.canHandleEvent(ControllerEvent::SubmitDone);
-}
-
-bool AbstractControllerStatePermission::isSubmitActionEnabled(ControllerState state) const
-{
-  switch(state){
-    case ControllerState::ParentEditing:
-      return false;
-    case ControllerState::Visualizing:
-      return false;
-    case ControllerState::Editing:
-    case ControllerState::Inserting:
-    case ControllerState::ChildEditing:
-      break;
-  }
-  return canSubmit(state);
 }
 
 bool AbstractControllerStatePermission::isSubmitActionEnabled(const AbstractControllerStateTable & st) const
@@ -183,40 +99,9 @@ bool AbstractControllerStatePermission::isSubmitActionEnabled(const AbstractCont
   return canSubmit(st);
 }
 
-bool AbstractControllerStatePermission::canRevert(ControllerState state) const
-{
-  switch(state){
-    case ControllerState::Visualizing:
-      return false;
-    case ControllerState::Editing:
-      return true;
-    case ControllerState::Inserting:
-      return false;
-    case ControllerState::ChildEditing:
-      return true;
-    case ControllerState::ParentEditing:
-      return true;
-  }
-  return false;
-}
-
 bool AbstractControllerStatePermission::canRevert(const AbstractControllerStateTable & st) const
 {
   return st.canHandleEvent(ControllerEvent::RevertDone);
-}
-
-bool AbstractControllerStatePermission::isRevertActionEnabled(ControllerState state) const
-{
-  switch(state){
-    case ControllerState::ParentEditing:
-      return false;
-    case ControllerState::Visualizing:
-    case ControllerState::Editing:
-    case ControllerState::Inserting:
-    case ControllerState::ChildEditing:
-      break;
-  }
-  return canRevert(state);
 }
 
 bool AbstractControllerStatePermission::isRevertActionEnabled(const AbstractControllerStateTable& st) const
@@ -233,23 +118,6 @@ bool AbstractControllerStatePermission::isRevertActionEnabled(const AbstractCont
   return canRevert(st);
 }
 
-bool AbstractControllerStatePermission::canRemove(ControllerState state) const
-{
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      return false;
-    case ControllerState::Inserting:
-      return true;
-    case ControllerState::ChildEditing:
-      return false;
-    case ControllerState::ParentEditing:
-      return true;
-  }
-  return false;
-}
-
 bool AbstractControllerStatePermission::canRemove(const AbstractControllerStateTable & st) const
 {
   switch(st.currentState()){
@@ -264,19 +132,14 @@ bool AbstractControllerStatePermission::canRemove(const AbstractControllerStateT
   return st.canHandleEvent(ControllerEvent::RemoveDone);
 }
 
-bool AbstractControllerStatePermission::isRemoveActionEnabled(ControllerState state) const
-{
-  return canRemove(state);
-}
-
 bool AbstractControllerStatePermission::isRemoveActionEnabled(const AbstractControllerStateTable & st) const
 {
   return canRemove(st);
 }
 
-bool AbstractControllerStatePermission::canSelect(ControllerState state) const
+bool AbstractControllerStatePermission::canSelect(const AbstractControllerStateTable & st) const
 {
-  switch(state){
+  switch(st.currentState()){
     case ControllerState::Visualizing:
       return true;
     case ControllerState::Editing:
@@ -291,9 +154,9 @@ bool AbstractControllerStatePermission::canSelect(ControllerState state) const
   return false;
 }
 
-bool AbstractControllerStatePermission::isSelectActionEnabled(ControllerState state) const
+bool AbstractControllerStatePermission::isSelectActionEnabled(const AbstractControllerStateTable & st) const
 {
-  return canSelect(state);
+  return canSelect(st);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

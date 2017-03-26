@@ -2,31 +2,27 @@ format 211
 
 classcanvas 128130 class_ref 2684930 // ControllerState
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 392.5 2006
+  xyz 40.5 368.5 2006
 end
 classcanvas 128386 class_ref 3171330 // ControllerPermission
   classdiagramsettings member_max_width 0 end
-  xyz 42 644 2000
+  xyz 42 620 2000
 end
 classcanvas 128642 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 705 663 2000
+  xyz 705 639 2000
 end
 classcanvas 129026 class_ref 3870338 // AbstractControllerStatePermission
   classdiagramsettings member_max_width 0 end
-  xyz 524 56 2000
+  xyz 313 40 2000
 end
 classcanvas 129410 class_ref 3870466 // TableViewControllerStatePermission
   classdiagramsettings member_max_width 0 end
-  xyz 561 250 2000
+  xyz 353 226 2000
 end
 classcanvas 129666 class_ref 3870594 // WidgetMapperControllerStatePermission
   classdiagramsettings member_max_width 0 end
-  xyz 248 250 2000
-end
-classcanvas 130178 class_ref 3870722 // ControllerStatePermission
-  classdiagramsettings member_max_width 0 end
-  xyz 42 41 2000
+  xyz 40 226 2000
 end
 relationcanvas 128770 relation_ref 3595394 // <dependency>
   from ref 128386 z 2001 to ref 128642
@@ -40,14 +36,9 @@ relationcanvas 129538 relation_ref 4298882 // <generalisation>
 end
 relationcanvas 129794 relation_ref 4299010 // <generalisation>
   geometry VHV unfixed
-  from ref 129666 z 2001 to point 382 208
-  line 130690 z 2001 to point 694 208
+  from ref 129666 z 2001 to point 174 184
+  line 130690 z 2001 to point 486 184
   line 130818 z 2001 to ref 129026
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 130306 relation_ref 4299138 // <directional composition>
-  from ref 130178 z 2001 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

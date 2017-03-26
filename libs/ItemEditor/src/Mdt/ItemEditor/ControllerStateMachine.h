@@ -28,8 +28,6 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-  class AbstractControllerStateChain;
-
   class AbstractControllerStateTable;
   class AbstractControllerStatePermission;
 
@@ -168,9 +166,6 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Get current state
      */
     ControllerState currentState() const;
-//     {
-//       return mCurrentState;
-//     }
 
     /*! \internal Force current state
      *
@@ -197,9 +192,6 @@ namespace Mdt{ namespace ItemEditor{
 
     void createTransitionTable();
 
-//     void setCurrentState(ControllerState state);
-
-//     ControllerState mCurrentState = ControllerState::Visualizing;
     std::unique_ptr<AbstractControllerStateTable> mTableImpl;
     std::unique_ptr<const AbstractControllerStatePermission> mPermissionImpl;
   };

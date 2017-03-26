@@ -23,8 +23,6 @@
 #include "AbstractControllerStatePermission.h"
 #include "ControllerEvent.h"
 
-#include "AbstractControllerStateChain.h"
-
 namespace Mdt{ namespace ItemEditor{
 
 ControllerStateMachine::~ControllerStateMachine()
@@ -84,7 +82,7 @@ bool ControllerStateMachine::canSelect() const
   Q_ASSERT(mPermissionImpl);
   Q_ASSERT(mTableImpl);
 
-  ///return mPermissionImpl->canSelect( *mTableImpl );
+  return mPermissionImpl->canSelect( *mTableImpl );
   return false;
 }
 
@@ -133,7 +131,7 @@ bool ControllerStateMachine::isSelectActionEnabled() const
   Q_ASSERT(mPermissionImpl);
   Q_ASSERT(mTableImpl);
 
-  ///return mPermissionImpl->isSelectActionEnabled(*mTableImpl);
+  return mPermissionImpl->isSelectActionEnabled(*mTableImpl);
   return false;
 }
 
@@ -141,7 +139,6 @@ void ControllerStateMachine::dataEditionStarted()
 {
   Q_ASSERT(mTableImpl);
 
-//   setCurrentState( mTableImpl->dataEditionStartedState(mCurrentState) );
   const auto previousState = currentState();
   mTableImpl->setEvent(ControllerEvent::DataEditionStarted);
   if(currentState() != previousState){
@@ -153,7 +150,6 @@ void ControllerStateMachine::dataEditionDone()
 {
   Q_ASSERT(mTableImpl);
 
-//   setCurrentState( mTableImpl->dataEditionDoneState(mCurrentState) );
   const auto previousState = currentState();
   mTableImpl->setEvent(ControllerEvent::DataEditionDone);
   if(currentState() != previousState){
@@ -165,7 +161,6 @@ void ControllerStateMachine::submitDone()
 {
   Q_ASSERT(mTableImpl);
 
-//   setCurrentState( mTableImpl->submitDoneState(mCurrentState) );
   const auto previousState = currentState();
   mTableImpl->setEvent(ControllerEvent::SubmitDone);
   if(currentState() != previousState){
@@ -177,7 +172,6 @@ void ControllerStateMachine::revertDone()
 {
   Q_ASSERT(mTableImpl);
 
-//   setCurrentState( mTableImpl->revertDoneState(mCurrentState) );
   const auto previousState = currentState();
   mTableImpl->setEvent(ControllerEvent::RevertDone);
   if(currentState() != previousState){
@@ -189,7 +183,6 @@ void ControllerStateMachine::insertStarted()
 {
   Q_ASSERT(mTableImpl);
 
-//   setCurrentState( mTableImpl->insertStartedState(mCurrentState) );
   const auto previousState = currentState();
   mTableImpl->setEvent(ControllerEvent::InsertStarted);
   if(currentState() != previousState){
@@ -201,7 +194,6 @@ void ControllerStateMachine::removeDone()
 {
   Q_ASSERT(mTableImpl);
 
-//   setCurrentState( mTableImpl->removeDoneState(mCurrentState) );
   const auto previousState = currentState();
   mTableImpl->setEvent(ControllerEvent::RemoveDone);
   if(currentState() != previousState){
@@ -213,7 +205,6 @@ void ControllerStateMachine::dataEditionStartedFromParent()
 {
   Q_ASSERT(mTableImpl);
 
-//   setCurrentState( mTableImpl->dataEditionStartedFromParentState(mCurrentState) );
   const auto previousState = currentState();
   ///mTableImpl->setEvent(ControllerEvent::Da);
   if(currentState() != previousState){
@@ -233,12 +224,10 @@ void ControllerStateMachine::forceCurrentState(ControllerState state)
   Q_ASSERT(mTableImpl);
 
   const auto previousState = currentState();
-
   mTableImpl->forceCurrentState(state);
   if(currentState() != previousState){
     emit currentStateChanged();
   }
-//   setCurrentState(state);
 }
 
 void ControllerStateMachine::createTransitionTable()
@@ -247,15 +236,5 @@ void ControllerStateMachine::createTransitionTable()
 
   mTableImpl->createTable();
 }
-
-// void ControllerStateMachine::setCurrentState(ControllerState state)
-// {
-//   const bool changed = (state != mCurrentState);
-// 
-//   mCurrentState = state;
-//   if(changed){
-//     emit currentStateChanged();
-//   }
-// }
 
 }} // namespace Mdt{ namespace ItemEditor{

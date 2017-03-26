@@ -25,6 +25,8 @@
 
 namespace Mdt{ namespace ItemEditor{
 
+  class AbstractControllerStateTable;
+
   /*! \brief Controller state permission implementation for TableViewController
    */
   class TableViewControllerStatePermission : public AbstractControllerStatePermission
@@ -33,7 +35,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Check if it is allowed to insert for state
      */
-    bool canInsert(ControllerState state) const override;
+    bool canInsert(const AbstractControllerStateTable & st) const override;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
