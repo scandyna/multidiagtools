@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "AbstractControllerStatePermission.h"
+#include "AbstractControllerStateTable.h"
+#include "ControllerEvent.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -39,9 +41,31 @@ bool AbstractControllerStatePermission::canChangeCurrentRow(ControllerState stat
   return false;
 }
 
+bool AbstractControllerStatePermission::canChangeCurrentRow(const AbstractControllerStateTable & st) const
+{
+  switch(st.currentState()){
+    case ControllerState::Visualizing:
+      return true;
+    case ControllerState::Editing:
+      return false;
+    case ControllerState::Inserting:
+      return false;
+    case ControllerState::ChildEditing:
+      return false;
+    case ControllerState::ParentEditing:
+      return true;
+  }
+  return false;
+}
+
 bool AbstractControllerStatePermission::isChangeCurrentRowActionEnabled(ControllerState state) const
 {
   return canChangeCurrentRow(state);
+}
+
+bool AbstractControllerStatePermission::isChangeCurrentRowActionEnabled(const AbstractControllerStateTable & st) const
+{
+  return canChangeCurrentRow(st);
 }
 
 bool AbstractControllerStatePermission::canInsert(ControllerState state) const
@@ -61,9 +85,19 @@ bool AbstractControllerStatePermission::canInsert(ControllerState state) const
   return false;
 }
 
+bool AbstractControllerStatePermission::canInsert(const AbstractControllerStateTable & st) const
+{
+  return st.canHandleEvent(ControllerEvent::InsertStarted);
+}
+
 bool AbstractControllerStatePermission::isInsertActionEnabled(ControllerState state) const
 {
   return canInsert(state);
+}
+
+bool AbstractControllerStatePermission::isInsertActionEnabled(const AbstractControllerStateTable & st) const
+{
+  return canInsert(st);
 }
 
 bool AbstractControllerStatePermission::canEdit(ControllerState state) const
@@ -83,6 +117,11 @@ bool AbstractControllerStatePermission::canEdit(ControllerState state) const
   return false;
 }
 
+bool AbstractControllerStatePermission::canEdit(const AbstractControllerStateTable & st) const
+{
+  return st.canHandleEvent(ControllerEvent::DataEditionStarted);
+}
+
 bool AbstractControllerStatePermission::canSubmit(ControllerState state) const
 {
   switch(state){
@@ -100,6 +139,20 @@ bool AbstractControllerStatePermission::canSubmit(ControllerState state) const
   return false;
 }
 
+bool AbstractControllerStatePermission::canSubmit(const AbstractControllerStateTable & st) const
+{
+//   switch(st.currentState()){
+//     case ControllerState::Visualizing:
+//       return true;
+//     case ControllerState::Editing:
+//     case ControllerState::Inserting:
+//     case ControllerState::ChildEditing:
+//     case ControllerState::ParentEditing:
+//       break;
+//   }
+  return st.canHandleEvent(ControllerEvent::SubmitDone);
+}
+
 bool AbstractControllerStatePermission::isSubmitActionEnabled(ControllerState state) const
 {
   switch(state){
@@ -113,6 +166,21 @@ bool AbstractControllerStatePermission::isSubmitActionEnabled(ControllerState st
       break;
   }
   return canSubmit(state);
+}
+
+bool AbstractControllerStatePermission::isSubmitActionEnabled(const AbstractControllerStateTable & st) const
+{
+  switch(st.currentState()){
+    case ControllerState::ParentEditing:
+      return false;
+    case ControllerState::Visualizing:
+      return false;
+    case ControllerState::Editing:
+    case ControllerState::Inserting:
+    case ControllerState::ChildEditing:
+      break;
+  }
+  return canSubmit(st);
 }
 
 bool AbstractControllerStatePermission::canRevert(ControllerState state) const
@@ -132,6 +200,11 @@ bool AbstractControllerStatePermission::canRevert(ControllerState state) const
   return false;
 }
 
+bool AbstractControllerStatePermission::canRevert(const AbstractControllerStateTable & st) const
+{
+  return st.canHandleEvent(ControllerEvent::RevertDone);
+}
+
 bool AbstractControllerStatePermission::isRevertActionEnabled(ControllerState state) const
 {
   switch(state){
@@ -144,6 +217,20 @@ bool AbstractControllerStatePermission::isRevertActionEnabled(ControllerState st
       break;
   }
   return canRevert(state);
+}
+
+bool AbstractControllerStatePermission::isRevertActionEnabled(const AbstractControllerStateTable& st) const
+{
+  switch(st.currentState()){
+    case ControllerState::ParentEditing:
+      return false;
+    case ControllerState::Visualizing:
+    case ControllerState::Editing:
+    case ControllerState::Inserting:
+    case ControllerState::ChildEditing:
+      break;
+  }
+  return canRevert(st);
 }
 
 bool AbstractControllerStatePermission::canRemove(ControllerState state) const
@@ -163,9 +250,19 @@ bool AbstractControllerStatePermission::canRemove(ControllerState state) const
   return false;
 }
 
+bool AbstractControllerStatePermission::canRemove(const AbstractControllerStateTable & st) const
+{
+  return st.canHandleEvent(ControllerEvent::RemoveDone);
+}
+
 bool AbstractControllerStatePermission::isRemoveActionEnabled(ControllerState state) const
 {
   return canRemove(state);
+}
+
+bool AbstractControllerStatePermission::isRemoveActionEnabled(const AbstractControllerStateTable & st) const
+{
+  return canRemove(st);
 }
 
 bool AbstractControllerStatePermission::canSelect(ControllerState state) const

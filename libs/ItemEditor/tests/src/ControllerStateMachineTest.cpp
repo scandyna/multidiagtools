@@ -20,10 +20,10 @@
  ****************************************************************************/
 #include "ControllerStateMachineTest.h"
 // #include "ControllerStateChangedSignalSpy.h"
+#include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
 #include "Mdt/ItemEditor/AbstractControllerStateTable.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include "Mdt/ItemEditor/AbstractControllerStateChain.h"
-#include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
 #include <QSignalSpy>
 #include <QScopedPointer>
 
@@ -148,6 +148,29 @@ void ControllerStateMachineTest::abstractControllerStateTablePermissionTest()
   QVERIFY(!table.canHandleEvent(ControllerEvent::RevertDone));
   QVERIFY( table.canHandleEvent(ControllerEvent::InsertStarted));
   QVERIFY( table.canHandleEvent(ControllerEvent::RemoveDone));
+  
+  QFAIL("Not complete");
+}
+
+void ControllerStateMachineTest::abstractControllerStatePermissionTest()
+{
+  AbstractControllerStatePermission permission;
+  AbstractControllerStateTable table;
+
+  table.createTable();
+  // Visualizing state
+  table.forceCurrentState(ControllerState::Visualizing);
+  QVERIFY( permission.canChangeCurrentRow(table) );
+  QVERIFY( permission.isChangeCurrentRowActionEnabled(table) );
+  QVERIFY( permission.canInsert(table) );
+  QVERIFY( permission.isInsertActionEnabled(table) );
+  QVERIFY( permission.canEdit(table) );
+  QVERIFY( permission.canSubmit(table) );
+  QVERIFY(!permission.isSubmitActionEnabled(table) );
+  QVERIFY( permission.canRevert(table) );
+  QVERIFY(!permission.isRevertActionEnabled(table) );
+  QVERIFY( permission.canRemove(table) );
+  QVERIFY( permission.isRemoveActionEnabled(table) );
   
   QFAIL("Not complete");
 }

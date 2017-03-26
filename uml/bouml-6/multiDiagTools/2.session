@@ -4,25 +4,29 @@ diagrams
   classdiagram_ref 3148674 // Overview
     676 728 100 22 22 0
   active  classdiagram_ref 3387010 // StateMachine
-    887 911 100 22 0 288
+    887 911 100 22 36 331
   classdiagram_ref 3419650 // StateChain
     887 911 100 4 0 0
   classdiagram_ref 2707074 // AbstractController
     120 98 100 23 0 0
 end
 show_stereotypes
-selected operation_ref 5525634 // dataEditionStartedState
+selected operation_ref 5426306 // canInsert
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
+  class_ref 3870338 // AbstractControllerStatePermission
   class_ref 3904386 // AbstractControllerStateChain
-  classrelation_ref 4372098 // <directional composition>
   attribute_ref 3420162 // CurrentState
   operation_ref 5542018 // forceCurrentState
   operation_ref 5526914 // currentState
   operation_ref 5528322 // currentStateChanged
   operation_ref 5542274 // setCurrentState
+  operation_ref 5556610 // AbstractControllerStateTable
+  operation_ref 5556226 // setEvent
+  operation_ref 5556866 // createTable
+  class_ref 3938306 // ControllerStateTableRow
   classview_ref 1287042 // Controller
   classview_ref 1676418 // Relation
   class_ref 3668354 // AbstractActionContainer

@@ -25,13 +25,15 @@
 
 namespace Mdt{ namespace ItemEditor{
 
+  class AbstractControllerStateTable;
+
   /*! \brief Base class to implement constroller state permission
    *
-   * Implements permissions regarding controller state for all actions.
+   * Implements permissions regarding controller state table for all actions.
    *  While implementing a concrete controller, which needs other permission for certain action,
    *  subclass AbstractControllerStatePermission.
    *
-   * A controller will check if it can do a action calling a can method
+   * A ControllerStateMachine will check if it can do a action calling a can method
    *  (for example canChangeCurrentRow() ).
    *
    * Actions (see AbstractActionContainer) will set their enable state calling a is..ActionEnabled method
@@ -68,45 +70,89 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual bool canChangeCurrentRow(ControllerState state) const;
 
+    /*! \brief Check if it is allowed to change current row
+     */
+    virtual bool canChangeCurrentRow(const AbstractControllerStateTable & st) const;
+
     /*! \brief Check if changing current row action is enabled for state
      */
     virtual bool isChangeCurrentRowActionEnabled(ControllerState state) const;
+
+    /*! \brief Check if changing current row action is enabled
+     */
+    virtual bool isChangeCurrentRowActionEnabled(const AbstractControllerStateTable & st) const;
 
     /*! \brief Check if it is allowed to insert for state
      */
     virtual bool canInsert(ControllerState state) const;
 
+    /*! \brief Check if it is allowed to insert
+     */
+    virtual bool canInsert(const AbstractControllerStateTable & st) const;
+
     /*! \brief Check if insert action is enabled for state
      */
     virtual bool isInsertActionEnabled(ControllerState state) const;
+
+    /*! \brief Check if insert action is enabled
+     */
+    virtual bool isInsertActionEnabled(const AbstractControllerStateTable & st) const;
 
     /*! \brief Check if it is possible to edit for state
      */
     virtual bool canEdit(ControllerState state) const;
 
+    /*! \brief Check if it is possible to edit
+     */
+    virtual bool canEdit(const AbstractControllerStateTable & st) const;
+
     /*! \brief Check if it is possible to submit for state
      */
     virtual bool canSubmit(ControllerState state) const;
+
+    /*! \brief Check if it is possible to submit
+     */
+    virtual bool canSubmit(const AbstractControllerStateTable & st) const;
 
     /*! \brief Check if submit action is enabled for state
      */
     virtual bool isSubmitActionEnabled(ControllerState state) const;
 
+    /*! \brief Check if submit action is enabled
+     */
+    virtual bool isSubmitActionEnabled(const AbstractControllerStateTable & st) const;
+
     /*! \brief Check if it is possible to revert for state
      */
     virtual bool canRevert(ControllerState state) const;
+
+    /*! \brief Check if it is possible to revert
+     */
+    virtual bool canRevert(const AbstractControllerStateTable & st) const;
 
     /*! \brief Check if revert action is enabled for state
      */
     virtual bool isRevertActionEnabled(ControllerState state) const;
 
+    /*! \brief Check if revert action is enabled
+     */
+    virtual bool isRevertActionEnabled(const AbstractControllerStateTable & st) const;
+
     /*! \brief Check if it is possible to remove for state
      */
     virtual bool canRemove(ControllerState state) const;
 
+    /*! \brief Check if it is possible to remove
+     */
+    virtual bool canRemove(const AbstractControllerStateTable & st) const;
+
     /*! \brief Check if remove action is enabled for state
      */
     virtual bool isRemoveActionEnabled(ControllerState state) const;
+
+    /*! \brief Check if remove action is enabled
+     */
+    virtual bool isRemoveActionEnabled(const AbstractControllerStateTable & st) const;
 
     /*! \brief Check if it is possible to select data from database
      */
