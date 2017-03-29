@@ -29,6 +29,20 @@ ControllerStateMachine::~ControllerStateMachine()
 {
 }
 
+void ControllerStateMachine::setModelHasCache(bool hasCache)
+{
+  Q_ASSERT(mPermissionImpl);
+
+  mPermissionImpl->setModelHasCache(hasCache);
+}
+
+void ControllerStateMachine::setHasChildController(bool hasChild)
+{
+  Q_ASSERT(mPermissionImpl);
+
+  mPermissionImpl->setHasChildController(hasChild);
+}
+
 bool ControllerStateMachine::canChangeCurrentRow() const
 {
   Q_ASSERT(mPermissionImpl);
@@ -186,6 +200,7 @@ void ControllerStateMachine::setEvent(ControllerEvent event)
   if(currentState() != previousState){
     emit currentStateChanged();
   }
+  emit eventCompleted(event);
 }
 
 // void ControllerStateMachine::dataEditionStartedFromParent()

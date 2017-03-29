@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 199
+  revision 206
   modified_by 2 "philippe"
   // class settings
   
@@ -2515,6 +2515,22 @@ ${inlines}
 	
       end
 
+      operation 5570306 "setModel"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 5483010 "submit"
 	abstract cpp_virtual public explicit_return_type "bool"
 	nparams 0
@@ -2526,8 +2542,52 @@ ${inlines}
 	
       end
 
+      operation 5590530 "revert"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
       operation 5483138 "lastError"
 	abstract cpp_virtual public return_type class_ref 182402 // Error
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5570178 "hasCache"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5570434 "setupModel"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5584002 "isReadOnly"
+	abstract cpp_virtual public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2771,10 +2831,80 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      attribute 3440130 "ModelHasCache"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3446658 "HasChildController"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       operation 5426178 "~AbstractControllerStatePermission"
 	abstract cpp_virtual public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 5570690 "setModelHasCache"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "mhc" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5570818 "modelHasCache"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5577474 "hasChildController"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
 "
 	
 	
@@ -2893,14 +3023,9 @@ ${inlines}
       end
     end
 
-    classdiagram 3419650 "StateChain"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
     classdiagram 3426178 "StateTable"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 3938178 "ControllerEvent"
@@ -3150,6 +3275,44 @@ ${inlines}
       end
     end
 
+    class 3951362 "TableViewControllerStateTable"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4442242 // <generalisation>
+	relation 4416258 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4442242 // <generalisation>
+	  b parent class_ref 3938050 // AbstractControllerStateTable
+      end
+
+      operation 5577346 "createTable"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     classdiagram 3387010 "StateMachine"
       classdiagramsettings member_max_width 0 end
       size C-Landscape
@@ -3191,6 +3354,22 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 5570562 "setModelHasCache"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "mhc" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 5527042 "canInsert"
@@ -3238,12 +3417,13 @@ ${inlines}
 	
       end
 
-      operation 5527298 "dataEditionStartedFromParent"
+      operation 5563394 "setEvent"
 	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+	nparams 1
+	  param in name "event" type class_ref 3938178 // ControllerEvent
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -3303,8 +3483,24 @@ ${inlines}
       operation 5528322 "currentStateChanged"
 	stereotype "signal"
 	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5563650 "eventCompleted"
+	stereotype "signal"
+	public explicit_return_type "void"
 	nparams 1
-	  param in name "newState" type class_ref 2684930 // ControllerState
+	  param in name "event" type class_ref 3938178 // ControllerEvent
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -3946,10 +4142,10 @@ ${inlines}
 	  b parent class_ref 3715458 // ForeignKey
       end
 
-      operation 5440386 "setControllerStatePermission"
+      operation 5440386 "setControllerStateMachine"
 	protected explicit_return_type "void"
 	nparams 1
-	  param in name "permission" explicit_type "ControllerStatePermission"
+	  param in name "sm" type class_ref 2684674 // ControllerStateMachine
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -5270,11 +5466,11 @@ ${inlines}
 	
       end
 
-      operation 5239554 "onParentControllerStateChanged"
+      operation 5239554 "onParentControllerEventCompleted"
 	stereotype "slot"
 	abstract cpp_virtual private explicit_return_type ""
 	nparams 1
-	  param in name "state" type class_ref 2684930 // ControllerState
+	  param in name "event" type class_ref 3938178 // ControllerEvent
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	
@@ -5757,7 +5953,7 @@ ${inlines}
       end
     end
 
-    classdiagram 3360898 "ControllerRelationStateMapper"
+    classdiagram 3360898 "ControllerRelationEventMapper"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -5796,6 +5992,37 @@ ${inlines}
 	class_operation public return_type class_ref 2684930 // ControllerState
 	nparams 1
 	  param in name "parentControllerState" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3944834 "ControllerRelationEventMapper"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5563522 "eventForChildController"
+	class_operation public return_type class_ref 3938178 // ControllerEvent
+	nparams 1
+	  param in name "event" type class_ref 3938178 // ControllerEvent
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}

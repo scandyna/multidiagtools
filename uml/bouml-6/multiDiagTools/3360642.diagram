@@ -41,7 +41,7 @@ relationcanvas 129282 relation_ref 4332802 // <generalisation>
   decenter_begin 472
   decenter_end 519
   from ref 129026 z 2006 to point 117 184
-  line 129794 z 2006 to point 805 184
+  line 129794 z 2006 to point 872 184
   line 129922 z 2006 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

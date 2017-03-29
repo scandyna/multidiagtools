@@ -21,10 +21,9 @@
 #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
 #define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
 
-class WidgetMapperControllerTest : public QObject
+class WidgetMapperControllerTest : public TestBase
 {
   Q_OBJECT
 
@@ -34,6 +33,7 @@ class WidgetMapperControllerTest : public QObject
   void cleanupTestCase();
 
   void statePermissionTest();
+  void stateTableTest();
   void setModelTest();
   void currentRowChangedTest();
   void editTest();

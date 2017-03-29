@@ -51,13 +51,19 @@ namespace Mdt{ namespace ItemEditor{
 
   /*! \brief Common base for controllers
    *
-   * \par Edition
-   *  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   * #### Edition
    *
-   * \par Primary key
+   * When the user beginns editing, onDataEditionStarted() slot will be called, which turns the controller to the editing state
+   *  (or EditingItem or similar state, depending on concrete controller implementation).
+   *  How the beginning of editing is triggered depends on specific implementation, see for example TableViewController and WidgetMapperController.
+   *
+   *
+   * #### Primary key
+   *
    *  A primary key can be set with setPrimaryKey().
    *
-   * \par Insertion
+   * #### Insertion
+   *
    *  To insert a row, use insert() slot, which will also update this controller state,
    *   and emit related signals.
    *   When a new row is inserted from model, for example using QAbstractItemModel::insertRow(),
@@ -67,10 +73,11 @@ namespace Mdt{ namespace ItemEditor{
    *    - If rows have been inserted before currentRow(),
    *       currentRow() will be adjusted to point to the same data as before insertion.
    *
-   *      This allows applying relations filters to its child controllers automatically.
+   *  This allows applying relations filters to its child controllers automatically.
    *    NOTE: and when a filter is applyed ????????
    *
-   * \par Filters
+   * #### Filters
+   *
    *  To set a filter, use setFilter().
    *   Once the filter was applied, currentRow() will be updated:
    *    - For all cases, if rowCount() becomes 0, currentRow() will become invalid (-1).
@@ -78,7 +85,8 @@ namespace Mdt{ namespace ItemEditor{
    *    - If a primary key was set, but its values no longer exists, currentRow() will be adjusted point to first row.
    *    - If no primary key was set, currentRow() will be adjusted point to first row.
    *
-   * \par Relation handling
+   * #### Relation handling
+   *
    *  Common case of a relation is a child model having a foreign key referring to a primary key of a parent model:
    *   \code
    *    Controller clientController;
@@ -87,6 +95,7 @@ namespace Mdt{ namespace ItemEditor{
    *    addressController.setForeignKey({1});
    *    clientController.addChildController(addressController);
    *   \endcode
+   *
    *   Now, addressController will be filtered for values in column 1 that correspond to values in column 0 of clientController.
    *    A relation can handle more that 1 column, in whitch case they must all match (AND constraint).
    *   Using above code will offer a good support for edition.
@@ -99,6 +108,7 @@ namespace Mdt{ namespace ItemEditor{
    *    ChildModelColumn endUnitId(1);
    *    unitController.addChildController(linkController, (startUnitId == unitId) || (endUnitId == unitId) );
    *   \endcode
+   *
    *   Support for edition can be offered, but will only take in account relation pairs that are equaly compared
    *    (ChildModelColumn == ParentModelColumn, ChildModelColumn <= ParentModelColumn, ChildModelColumn >= ParentModelColumn).
    *   When edition is supported in a relation, some event are handled:
@@ -527,7 +537,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void toLast();
 
-    /*! \brief Submit data to model
+    /*! \brief Validate edited data and submit them to storage
+     *
+     * Will first tell the view to set the data to the model
+     *  by calling setDataToModel() .
      */
     bool submit();
 
@@ -655,12 +668,12 @@ namespace Mdt{ namespace ItemEditor{
      */
     void modelSetToView();
 
-    /*! \brief Submit data to model
+    /*! \brief Set data to model
      *
      * Subclass should request the view it handles
-     *  to submit data to the model.
+     *  to set data to the model.
      */
-    virtual bool submitDataToModel() = 0;
+    virtual bool setDataToModel() = 0;
 
     /*! \brief Revert data from model
      */
@@ -745,8 +758,14 @@ namespace Mdt{ namespace ItemEditor{
    private:
 
     /*! \brief Set controller state
+     *
+     * \todo Seems obselete
      */
     void setControllerState(ControllerState state);
+
+    /*! \brief Remove current row
+     */
+    bool removeCurrentRow();
 
     /*! \brief Get filter proxy model
      *

@@ -26,9 +26,47 @@ namespace Mdt{ namespace ItemEditor{
 bool TableViewControllerStatePermission::canInsert(const AbstractControllerStateTable & st) const
 {
   if(st.currentState() == ControllerState::Inserting){
-    return true;
+    return !hasChildController();
   }
   return AbstractControllerStatePermission::canInsert(st);
+}
+
+bool TableViewControllerStatePermission::canChangeCurrentRow(const AbstractControllerStateTable & st) const
+{
+  if(st.currentState() == ControllerState::Editing){
+    return !hasChildController();
+  }
+  if(st.currentState() == ControllerState::Inserting){
+    return !hasChildController();
+  }
+  return AbstractControllerStatePermission::canChangeCurrentRow(st);
+}
+
+bool TableViewControllerStatePermission::isSubmitActionEnabled(const AbstractControllerStateTable & st) const
+{
+  if(st.currentState() == ControllerState::EditingItem){
+    return true;
+  }
+  return AbstractControllerStatePermission::isSubmitActionEnabled(st);
+}
+
+bool TableViewControllerStatePermission::canRevert(const AbstractControllerStateTable& st) const
+{
+  if(st.currentState() == ControllerState::Editing){
+    return modelHasCache();
+  }
+  return AbstractControllerStatePermission::canRevert(st);
+}
+
+bool TableViewControllerStatePermission::isRevertActionEnabled(const AbstractControllerStateTable & st) const
+{
+  if(st.currentState() == ControllerState::EditingItem){
+    return true;
+  }
+  if(st.currentState() == ControllerState::Editing){
+    return modelHasCache();
+  }
+  return AbstractControllerStatePermission::isRevertActionEnabled(st);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -21,16 +21,15 @@
 #ifndef MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_TEST_H
 #define MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_TEST_H
 
+#include "TestBase.h"
 #include "ItemViewTestEditTriggers.h"
-#include <QObject>
-#include <QtTest/QtTest>
 
 class QAbstractItemView;
 class QAbstractItemModel;
 
-class TableViewControllerTest : public QObject
+class TableViewControllerTest : public TestBase
 {
-  Q_OBJECT
+ Q_OBJECT
 
  private slots:
 
@@ -38,6 +37,7 @@ class TableViewControllerTest : public QObject
   void cleanupTestCase();
 
   void statePermissionTest();
+  void stateTableTest();
 //   void basicStateTest();
   void setModelTest();
 //   void primaryKeyTest();
@@ -60,17 +60,8 @@ class TableViewControllerTest : public QObject
 
  private:
 
-  // Helper function for editing in a QAbstractItemView
-  void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
-  void editText(QAbstractItemView & view, const QModelIndex & editingIndex, const QString & str);
-  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
   void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
   void edit(QAbstractItemView & view, int row, int column, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
-  // Model access helpers
-  bool setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value);
-  bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value);
-  QVariant getModelData(QAbstractItemModel & model, int row, int column);
-  QVariant getModelData(QAbstractItemModel *model, int row, int column);
 };
 
 #endif // MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_TEST_H

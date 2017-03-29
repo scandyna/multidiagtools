@@ -31,7 +31,10 @@ namespace Mdt{ namespace ItemEditor{
   {
    public:
 
-    
+//     /*! \brief Check if it is possible to revert
+//      */
+//     bool canRevert(const AbstractControllerStateTable & st) const override;
+
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

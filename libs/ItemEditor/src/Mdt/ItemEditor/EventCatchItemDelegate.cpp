@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "EventCatchItemDelegate.h"
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -31,6 +31,7 @@ EventCatchItemDelegate::EventCatchItemDelegate(QObject* parent)
 
 QWidget* EventCatchItemDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+  qDebug() << "ECID: createEditor - index: " << index;
   pvCurrentEditor = ItemDelegateProxy::createEditor(parent, option, index);
   emit dataEditionStarted();
   return pvCurrentEditor;
@@ -38,6 +39,7 @@ QWidget* EventCatchItemDelegate::createEditor(QWidget* parent, const QStyleOptio
 
 void EventCatchItemDelegate::destroyEditor(QWidget* editor, const QModelIndex& index) const
 {
+  qDebug() << "ECID: destroyEditor - index: " << index;
   pvCurrentEditor.clear();
   ItemDelegateProxy::destroyEditor(editor, index);
   emit dataEditionDone();
@@ -46,6 +48,7 @@ void EventCatchItemDelegate::destroyEditor(QWidget* editor, const QModelIndex& i
 void EventCatchItemDelegate::commitCurrentEditorData()
 {
   if(!pvCurrentEditor.isNull()){
+    qDebug() << "ECID: commitData()";
     commitData(pvCurrentEditor);
     closeEditor(pvCurrentEditor, EventCatchItemDelegate::NoHint);
   }

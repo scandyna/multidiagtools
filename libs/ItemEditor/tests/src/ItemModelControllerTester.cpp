@@ -87,7 +87,7 @@ void ItemModelControllerTester::setModelToView(QAbstractItemModel* /*model*/)
   modelSetToView();
 }
 
-bool ItemModelControllerTester::submitDataToModel()
+bool ItemModelControllerTester::setDataToModel()
 {
   ++mDataSubmitToModelCount;
   return true;

@@ -20,9 +20,12 @@
  ****************************************************************************/
 #include "TableViewControllerTest.h"
 #include "ItemViewTestEdit.h"
+
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
+#include "Mdt/ItemEditor/ControllerState.h"
+#include "Mdt/ItemEditor/ControllerEvent.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QStringList>
 #include <QSignalSpy>
@@ -65,40 +68,124 @@ void TableViewControllerTest::statePermissionTest()
   TableViewController controller;
   auto *stateMachine = controller.controllerStateMachine();
   QVERIFY(stateMachine != nullptr);
-  /*
-   * Complete state machine check is done in ControllerStateMachineTest.
-   * Here, just check TableViewController specific stuff
-   */
-  // Inserting
-  stateMachine->forceCurrentState(ControllerState::Inserting);
-  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
-  QVERIFY(stateMachine->canInsert());
-  QVERIFY(stateMachine->isInsertActionEnabled());
 
-//   // Visualizing state
-//   stateMachine->forceCurrentState(ControllerState::Visualizing);
-//   QVERIFY( stateMachine->canChangeCurrentRow());
-//   QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
-//   QVERIFY( stateMachine->canSubmit());
-//   QVERIFY(!stateMachine->isSubmitActionEnabled());
-//   QVERIFY(!stateMachine->canRevert());
-//   QVERIFY(!stateMachine->isRevertActionEnabled());
-//   QVERIFY( stateMachine->canInsert());
-//   QVERIFY( stateMachine->isInsertActionEnabled());
-//   QVERIFY( stateMachine->canRemove());
-//   QVERIFY( stateMachine->isRemoveActionEnabled());
-//   // Editing state
-//   stateMachine->forceCurrentState(ControllerState::Editing);
-//   QVERIFY(!stateMachine->canChangeCurrentRow());
-//   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
-//   QVERIFY( stateMachine->canSubmit());
-//   QVERIFY( stateMachine->isSubmitActionEnabled());
-//   QVERIFY( stateMachine->canRevert());
-//   QVERIFY( stateMachine->isRevertActionEnabled());
-//   QVERIFY(!stateMachine->canInsert());
-//   QVERIFY(!stateMachine->isInsertActionEnabled());
-//   QVERIFY(!stateMachine->canRemove());
-//   QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Visualizing state
+   */
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
+  QVERIFY( stateMachine->canChangeCurrentRow());
+  QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY(!stateMachine->isSubmitActionEnabled());
+  QVERIFY(!stateMachine->canRevert());
+  QVERIFY(!stateMachine->isRevertActionEnabled());
+  QVERIFY( stateMachine->canInsert());
+  QVERIFY( stateMachine->isInsertActionEnabled());
+  QVERIFY( stateMachine->canRemove());
+  QVERIFY( stateMachine->isRemoveActionEnabled());
+  /*
+   * EditingItem state
+   */
+  stateMachine->forceCurrentState(ControllerState::EditingItem);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY(!stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY(!stateMachine->canRevert());
+  QVERIFY( stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Editing state
+   *  - Model has cache: No
+   *  - Controller has child: No
+   */
+  stateMachine->setModelHasCache(false);
+  stateMachine->setHasChildController(false);
+  stateMachine->forceCurrentState(ControllerState::Editing);
+  QVERIFY( stateMachine->canChangeCurrentRow());
+  QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY(!stateMachine->canRevert());
+  QVERIFY(!stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Editing state
+   *  - Model has cache: Yes
+   *  - Controller has child: No
+   */
+  stateMachine->setModelHasCache(true);
+  stateMachine->setHasChildController(false);
+  stateMachine->forceCurrentState(ControllerState::Editing);
+  QVERIFY( stateMachine->canChangeCurrentRow());
+  QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY( stateMachine->canRevert());
+  QVERIFY( stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Editing state
+   *  - Model has cache: No
+   *  - Controller has child: Yes
+   */
+  stateMachine->setModelHasCache(false);
+  stateMachine->setHasChildController(true);
+  stateMachine->forceCurrentState(ControllerState::Editing);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY(!stateMachine->canRevert());
+  QVERIFY(!stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Inserting state
+   *  - Controller has child: No
+   */
+  stateMachine->setHasChildController(false);
+  stateMachine->forceCurrentState(ControllerState::Inserting);
+  QVERIFY( stateMachine->canChangeCurrentRow());
+  QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY( stateMachine->canRevert());
+  QVERIFY( stateMachine->isRevertActionEnabled());
+  QVERIFY( stateMachine->canInsert());
+  QVERIFY( stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Inserting state
+   *  - Controller has child: Yes
+   */
+  stateMachine->setHasChildController(true);
+  stateMachine->forceCurrentState(ControllerState::Inserting);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY( stateMachine->canRevert());
+  QVERIFY( stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+
+
+  QFAIL("Not complete");
 //   // ParentEditing state
 //   stateMachine->forceCurrentState(ControllerState::ParentEditing);
 //   QVERIFY( stateMachine->canChangeCurrentRow());
@@ -144,6 +231,47 @@ void TableViewControllerTest::statePermissionTest()
 //   QVERIFY(!stateMachine->canSelect(ControllerState::ParentEditing));
 
 //   QFAIL("Not complete - Check also Insert + Select");
+}
+
+void TableViewControllerTest::stateTableTest()
+{
+  TableViewController controller;
+  auto *stateMachine = controller.controllerStateMachine();
+  QVERIFY(stateMachine != nullptr);
+
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - EditingItem - Editing
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::EditingItem);
+  stateMachine->dataEditionDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::EditingItem);
+  stateMachine->dataEditionDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->submitDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::EditingItem);
+  stateMachine->dataEditionDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->revertDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - Inserting
+  stateMachine->insertStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->dataEditionDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->submitDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  stateMachine->insertStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->revertDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  
+  QFAIL("Not complete");
 }
 
 void TableViewControllerTest::setModelTest()
@@ -1208,21 +1336,6 @@ void TableViewControllerTest::sortTest()
  * Helper
  */
 
-void TableViewControllerTest::beginEditing(QAbstractItemView& view, const QModelIndex& index, BeginEditTrigger trigger)
-{
-  ItemViewTestEdit::beginEditing(view, index, trigger);
-}
-
-void TableViewControllerTest::editText(QAbstractItemView& view, const QModelIndex& editingIndex, const QString& str)
-{
-  ItemViewTestEdit::editText(view, editingIndex, str);
-}
-
-void TableViewControllerTest::endEditing(QAbstractItemView& view, const QModelIndex& editingIndex, EndEditTrigger trigger)
-{
-  ItemViewTestEdit::endEditing(view, editingIndex, trigger);
-}
-
 void TableViewControllerTest::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
 {
   ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
@@ -1235,40 +1348,6 @@ void TableViewControllerTest::edit(QAbstractItemView& view, int row, int column,
   auto index = view.model()->index(row, column);
   QVERIFY(index.isValid());
   ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
-}
-
-bool TableViewControllerTest::setModelData(QAbstractItemModel& model, int row, int column, const QVariant& value)
-{
-  auto index = model.index(row, column);
-  if(!index.isValid()){
-    qDebug() << "Invalid index: " << index;
-    return false;
-  }
-
-  return model.setData(index, value);
-}
-
-bool TableViewControllerTest::setModelData(QAbstractItemModel* model, int row, int column, const QVariant& value)
-{
-  Q_ASSERT(model != nullptr);
-  return setModelData(*model, row, column, value);
-}
-
-QVariant TableViewControllerTest::getModelData(QAbstractItemModel & model, int row, int column)
-{
-  auto index = model.index(row, column);
-  if(!index.isValid()){
-    qDebug() << "Invalid index: " << index;
-    return QVariant();
-  }
-
-  return model.data(index);
-}
-
-QVariant TableViewControllerTest::getModelData(QAbstractItemModel* model, int row, int column)
-{
-  Q_ASSERT(model != nullptr);
-  return getModelData(*model, row, column);
 }
 
 /*

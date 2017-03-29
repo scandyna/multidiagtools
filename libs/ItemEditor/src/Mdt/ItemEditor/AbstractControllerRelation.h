@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_ABSTRACT_CONTROLLER_RELATION_H
 
 #include "ControllerState.h"
+#include "ControllerEvent.h"
 #include <QObject>
 #include <QPointer>
 
@@ -121,6 +122,8 @@ namespace Mdt{ namespace ItemEditor{
 
    private slots:
 
+    void onParentControllerEventCompleted(Mdt::ItemEditor::ControllerEvent event);
+
     /*! \brief Set parent controller state
      */
     void onParentControllerStateChanged(Mdt::ItemEditor::ControllerState newState);
@@ -137,6 +140,8 @@ namespace Mdt{ namespace ItemEditor{
     QPointer<AbstractController> mChildController;
     QMetaObject::Connection mParentControllerModelChangedConnection;
     QMetaObject::Connection mChildControllerModelChangedConnection;
+
+    QMetaObject::Connection mParentControllerEventCompletedConnection;
     QMetaObject::Connection mParentControllerStateChagedConnection;
     QMetaObject::Connection mChildControllerStateChagedConnection;
   };

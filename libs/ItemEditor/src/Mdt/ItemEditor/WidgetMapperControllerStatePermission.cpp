@@ -19,6 +19,17 @@
  **
  ****************************************************************************/
 #include "WidgetMapperControllerStatePermission.h"
+#include "AbstractControllerStateTable.h"
+#include "ControllerState.h"
 
 namespace Mdt{ namespace ItemEditor{
+
+// bool WidgetMapperControllerStatePermission::canRevert(const AbstractControllerStateTable & st) const
+// {
+//   if(st.currentState() == ControllerState::Editing){
+//     return true;
+//   }
+//   return AbstractControllerStatePermission::canRevert(st);
+// }
+
 }} // namespace Mdt{ namespace ItemEditor{

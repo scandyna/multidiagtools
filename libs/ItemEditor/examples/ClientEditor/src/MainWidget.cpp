@@ -46,7 +46,7 @@ MainWidget::MainWidget(QWidget* parent)
   clientListWidget->setModel(clientWidget->controller()->model());
   addWidget(clientListWidget);
   addWidget(editorWidget);
-  setStretchFactor(0, 1);
+//   setStretchFactor(0, 1);
   setStretchFactor(1, 4);
 
 //   mMainController = clientWidget->controller();

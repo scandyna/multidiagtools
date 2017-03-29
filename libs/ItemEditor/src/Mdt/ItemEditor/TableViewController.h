@@ -32,6 +32,12 @@ namespace Mdt{ namespace ItemEditor{
   class ItemViewPrivateContainer;
 
   /*! \brief TableViewController acts on a QAbstractTableModel and a QTableView
+   *
+   * #### Editing
+   *
+   * When a editor is created at some index, the controller will turn to editing item state.
+   *  Whenn edition is done, the item delegate set data to the model and closes the editor,
+   *  also turning this controller to editing state.
    */
   class TableViewController : public AbstractItemModelController
   {
@@ -93,7 +99,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Submit data to model
      */
-    bool submitDataToModel() override;
+    bool setDataToModel() override;
 
     /*! \brief Revert data from model
      */

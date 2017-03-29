@@ -24,6 +24,16 @@
 
 namespace Mdt{ namespace ItemEditor{
 
+void AbstractControllerStatePermission::setModelHasCache(bool hasCache)
+{
+  mModelHasCache = hasCache;
+}
+
+void AbstractControllerStatePermission::setHasChildController(bool hasChild)
+{
+  mHasChildController = hasChild;
+}
+
 bool AbstractControllerStatePermission::canChangeCurrentRow(const AbstractControllerStateTable & st) const
 {
   switch(st.currentState()){
@@ -31,8 +41,12 @@ bool AbstractControllerStatePermission::canChangeCurrentRow(const AbstractContro
       return true;
     case ControllerState::Editing:
       return false;
+    case ControllerState::EditingItem:
+      return false;
     case ControllerState::Inserting:
       return false;
+//     case ControllerState::EditingNewItem:
+//       return false;
     case ControllerState::ChildEditing:
       return false;
     case ControllerState::ParentEditing:
@@ -60,7 +74,9 @@ bool AbstractControllerStatePermission::canEdit(const AbstractControllerStateTab
 {
   switch(st.currentState()){
     case ControllerState::Editing:
+    case ControllerState::EditingItem:
     case ControllerState::Inserting:
+//     case ControllerState::EditingNewItem:
       return true;
     case ControllerState::Visualizing:
     case ControllerState::ChildEditing:

@@ -31,11 +31,13 @@ namespace Mdt{ namespace ItemEditor{
    */
   enum class ControllerState
   {
-    Visualizing,  /*!< Visualizing state */
-    Editing,      /*!< Editing state */
-    Inserting,    /*!< Inserting state */
-    ChildEditing, /*!< A child controller is in Editing state */
-    ParentEditing /*!< Parent controller is in Editing state */
+    Visualizing,    /*!< Visualizing state */
+    Editing,        /*!< Editing state */
+    EditingItem,    /*!< Editing a item state */
+    Inserting,      /*!< Inserting state */
+//     EditingNewItem, /*!< Editing a new item state */
+    ChildEditing,   /*!< A child controller is in Editing state */
+    ParentEditing   /*!< Parent controller is in Editing state */
   };
 
   /// \todo Add ModelNotSet (or NoModelSet) state ?

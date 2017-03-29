@@ -152,15 +152,19 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setCurrentRow(int row);
 
-    /*! \brief Submit data from mapped widgets to the model
+    /*! \brief Set data from mapped widgets to the model
      *
+     * \note Will not call submit on model
      * \pre Model must be set before calling this method
      */
-    bool submit();
+    bool setDataToModel();
 
     /*! \brief Repopulate mapped widgets with data from model
+     *
+     * \note Will not call submit on model
+     * \pre Model must be set before calling this method
      */
-    void revert();
+    void revertDataFromModel();
 
    signals:
 

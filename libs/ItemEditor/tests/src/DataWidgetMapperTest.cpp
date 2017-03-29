@@ -1018,7 +1018,7 @@ void DataWidgetMapperTest::editionDoneTest()
   editDoneSpy.clear();
   editor0.setText("A");
   editor1.setText("1");
-  QVERIFY(mapper.submit());
+  QVERIFY(mapper.setDataToModel());
   QCOMPARE(editDoneSpy.count(), 1);
   QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
   QCOMPARE(getModelData(model, 0, 1), QVariant("1"));
@@ -1299,7 +1299,7 @@ void DataWidgetMapperTest::insertWidgetTest()
   QVERIFY(edit1.isEnabled());
   edit0.setText("2");
   edit1.setText("B");
-  QVERIFY(mapper.submit());
+  QVERIFY(mapper.setDataToModel());
   QCOMPARE(model.rowCount(), 1);
   QCOMPARE(model.data(0, 0), QVariant("2"));
   QCOMPARE(model.data(0, 1), QVariant("B"));
@@ -1318,7 +1318,7 @@ void DataWidgetMapperTest::insertWidgetTest()
   QVERIFY(edit1.text().isEmpty());
   edit0.setText("1");
   edit1.setText("A");
-  QVERIFY(mapper.submit());
+  QVERIFY(mapper.setDataToModel());
   QCOMPARE(model.rowCount(), 2);
   QCOMPARE(model.data(0, 0), QVariant("1"));
   QCOMPARE(model.data(0, 1), QVariant("A"));
@@ -1405,7 +1405,7 @@ void DataWidgetMapperTest::insertFromModelWidgetTest()
   /*
    * Submit
    */
-  QVERIFY(mapper.submit());
+  QVERIFY(mapper.setDataToModel());
   QCOMPARE(mapper.currentRow(), 1);
   QCOMPARE(edit0.text(), QString("1"));
   QCOMPARE(edit1.text(), QString("A"));
@@ -1457,7 +1457,7 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   /*
    * Submit
    */
-  QVERIFY(mapper.submit());
+  QVERIFY(mapper.setDataToModel());
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 1);
   editDoneSpy.clear();
@@ -1472,7 +1472,7 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   /*
    * Revert
    */
-  mapper.revert();
+  mapper.revertDataFromModel();
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 1);
   editDoneSpy.clear();
@@ -1487,7 +1487,7 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   /*
    * Submit (for nexte test)
    */
-  QVERIFY(mapper.submit());
+  QVERIFY(mapper.setDataToModel());
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 1);
   editDoneSpy.clear();
@@ -1626,7 +1626,7 @@ void DataWidgetMapperTest::submitDataQLineEditTest()
   /*
    * Submit and check
    */
-  QVERIFY(mapper.submit());
+  QVERIFY(mapper.setDataToModel());
   index = model.index(0, 0);
   QVERIFY(index.isValid());
   QCOMPARE(index.data().toString(), QString("ABCD"));
@@ -1646,7 +1646,7 @@ void DataWidgetMapperTest::submitDataQLineEditTest()
   /*
    * Submit and check
    */
-  QVERIFY(mapper.submit());
+  QVERIFY(mapper.setDataToModel());
   index = model.index(0, 0);
   QVERIFY(index.isValid());
   QCOMPARE(index.data().toString(), QString("EFGH"));
@@ -1685,7 +1685,7 @@ void DataWidgetMapperTest::revertDataQLineEditTest()
   /*
    * Revert and check
    */
-  mapper.revert();
+  mapper.revertDataFromModel();
   // Check mapped widgets
   QCOMPARE(editor0.text(), originalText0);
   QCOMPARE(editor1.text(), originalText1);

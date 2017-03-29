@@ -25,9 +25,10 @@ using namespace Mdt::ItemModel;
 ClientModel::ClientModel(QObject* parent)
  : VariantTableModel(VariantTableModelStorageRule::GroupDisplayAndEditRoleData, parent)
 {
-  resize(2, 2);
+  resize(2, 3);
   populateColumn(0, {1,2});
-  populateColumn(1, {"Name 1","Name 2"});
+  populateColumn(1, {"First name 1","First name 2"});
+  populateColumn(2, {"Last name 1","Last name 2"});
 }
 
 QVariant ClientModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -42,7 +43,9 @@ QVariant ClientModel::headerData(int section, Qt::Orientation orientation, int r
     case 0:
       return "Id";
     case 1:
-      return "Name";
+      return "First name";
+    case 2:
+      return "Last name";
   }
   return VariantTableModel::headerData(section, orientation, role);
 }

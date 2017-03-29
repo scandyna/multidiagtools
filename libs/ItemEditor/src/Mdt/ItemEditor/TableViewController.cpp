@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "TableViewController.h"
 #include "ItemViewPrivateContainer.h"
-#include "AbstractControllerStateTable.h"
+#include "TableViewControllerStateTable.h"
 #include "TableViewControllerStatePermission.h"
 #include "ControllerStateMachine.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
@@ -36,7 +36,7 @@ TableViewController::TableViewController(QObject* parent)
  : AbstractItemModelController(parent),
    mContainer(new ItemViewPrivateContainer)
 {
-  setControllerStateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, TableViewControllerStatePermission>(this) );
+  setControllerStateMachine( ControllerStateMachine::makeNew<TableViewControllerStateTable, TableViewControllerStatePermission>(this) );
   connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionStarted, this, &TableViewController::onDataEditionStarted);
   connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionDone, this, &TableViewController::onDataEditionDone);
 //   connect(this, &TableViewController::primaryKeyChanged, this, &TableViewController::onPrimaryKeyChanged);
@@ -77,7 +77,7 @@ void TableViewController::setModelToView(QAbstractItemModel* model)
   registerModelAndSelectionModel();
 }
 
-bool TableViewController::submitDataToModel()
+bool TableViewController::setDataToModel()
 {
   mContainer->proxyItemDelegate()->commitCurrentEditorData();
   return true;

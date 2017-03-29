@@ -67,6 +67,14 @@ namespace Mdt{ namespace ItemEditor{
     ControllerStateMachine(ControllerStateMachine && other) = delete;
     ControllerStateMachine & operator=(ControllerStateMachine && other) = delete;
 
+    /*! \brief Set if model has cache
+     */
+    void setModelHasCache(bool hasCache);
+
+    /*! \brief Set if the controller handles child controllers
+     */
+    void setHasChildController(bool hasChild);
+
     /*! \brief Check if it is allowed to change current row for current state
      */
     bool canChangeCurrentRow() const;
@@ -165,7 +173,7 @@ namespace Mdt{ namespace ItemEditor{
     {
       static_assert( std::is_base_of<AbstractControllerStateTable, TableImpl>::value, "Type TableImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStateTable" );
       static_assert( std::is_base_of<AbstractControllerStatePermission, PermissionImpl>::value, "Type PermissionImpl must be a subclass of Mdt::ItemEditor::AbstractControllerStatePermission" );
-      return new ControllerStateMachine( std::make_unique<TableImpl>() , std::make_unique<const PermissionImpl>(), parent );
+      return new ControllerStateMachine( std::make_unique<TableImpl>() , std::make_unique<PermissionImpl>(), parent );
     }
 
     /*! \brief Get current state
@@ -184,10 +192,14 @@ namespace Mdt{ namespace ItemEditor{
      */
     void currentStateChanged();
 
+    /*! \brief Emitted whenever a event completed
+     */
+    void eventCompleted(Mdt::ItemEditor::ControllerEvent event);
+
   private:
 
     template<typename TableImpl, typename PermissionImpl>
-    ControllerStateMachine(std::unique_ptr<TableImpl> tableImpl, std::unique_ptr<const PermissionImpl> permission, QObject *parent)
+    ControllerStateMachine(std::unique_ptr<TableImpl> tableImpl, std::unique_ptr<PermissionImpl> permission, QObject *parent)
      : QObject(parent),
        mTableImpl( std::move(tableImpl) ),
        mPermissionImpl( std::move(permission) )
@@ -198,7 +210,7 @@ namespace Mdt{ namespace ItemEditor{
     void createTransitionTable();
 
     std::unique_ptr<AbstractControllerStateTable> mTableImpl;
-    std::unique_ptr<const AbstractControllerStatePermission> mPermissionImpl;
+    std::unique_ptr<AbstractControllerStatePermission> mPermissionImpl;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -18,30 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ControllerState.h"
-#include <QByteArray>
+#ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_EVENT_MAPPER_H
+#define MDT_ITEM_EDITOR_CONTROLLER_RELATION_EVENT_MAPPER_H
+
+#include "ControllerEvent.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-QByteArray controllerStateText(ControllerState state)
-{
-  switch(state){
-    case ControllerState::Visualizing:
-      return QByteArray("Visualizing");
-    case ControllerState::Editing:
-      return QByteArray("Editing");
-    case ControllerState::EditingItem:
-      return QByteArray("EditingItem");
-    case ControllerState::Inserting:
-      return QByteArray("Inserting");
-//     case ControllerState::EditingNewItem:
-//       return QByteArray("EditingNewItem");
-    case ControllerState::ChildEditing:
-      return QByteArray("ChildEditing");
-    case ControllerState::ParentEditing:
-      return QByteArray("ParentEditing");
-  }
-  return QByteArray();
-}
+  /*! \brief Mapping between a controller event and the one sent from parent or child controller
+   */
+  class ControllerRelationEventMapper
+  {
+   public:
+
+    /*! \brief Get the event for child controller
+     */
+    static ControllerEvent eventForChildController(ControllerEvent parentControllerEvent);
+  };
 
 }} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_EVENT_MAPPER_H

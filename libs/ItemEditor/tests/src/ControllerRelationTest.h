@@ -36,9 +36,13 @@ class ControllerRelationTest : public TestBase
   void setModelToControllersFirstTest();
   void setModelToControllersAfterTest();
 
-  void stateMapperTest();
-  
+  void eventMapperTest();
+
   /// \todo Maybe obselete
+  void stateMapperTest();
+
+  void parentToChildStateMapTest();
+  void childToParentStateMapTest();
   void editSubmitRevertParentChildStateTest();
   void editSubmitRevertTopMiddleChildStateTest();
   

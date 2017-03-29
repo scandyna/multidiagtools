@@ -272,6 +272,52 @@ void ControllerRelationListTest::editSubmitRevertParentChildStateTest()
 
 void ControllerRelationListTest::editSubmitRevertTopMiddleChildStateTest()
 {
+  /*
+   * Setup top parent model and controller
+   */
+  VariantTableModel topParentModel;
+  topParentModel.resize(1, 1);
+  ItemModelControllerTester topParentController;
+  topParentController.setModel(&topParentModel);
+  /*
+   * Setup middle model and controller
+   */
+  VariantTableModel middleModel;
+  middleModel.resize(1, 1);
+  ItemModelControllerTester middleController;
+  middleController.setModel(&middleModel);
+  /*
+   * Setup child model and controller
+   */
+  VariantTableModel childModel;
+  childModel.resize(1, 1);
+  ItemModelControllerTester childController;
+  childController.setModel(&childModel);
+  /*
+   * Setup relations
+   *
+   * topParentController
+   *       |
+   *       ---> middleController
+   *                 |
+   *                 ---> childController
+   */
+  ControllerRelationList topMiddleRelationList(&topParentController);
+  topMiddleRelationList.addChildController<AbstractControllerRelationTestClass>(&middleController);
+  ControllerRelationList middleChildRelationList(&middleController);
+  middleChildRelationList.addChildController<AbstractControllerRelationTestClass>(&childController);
+  QCOMPARE(topParentController.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(middleController.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
+  /*
+   * Begin editing from top parent controller
+   */
+  // Begin editing
+  topParentController.startEditing();
+  QCOMPARE(topParentController.controllerState(), ControllerState::Editing);
+  QCOMPARE(middleController.controllerState(), ControllerState::ParentEditing);
+  QCOMPARE(childController.controllerState(), ControllerState::ParentEditing);
+
   QFAIL("Not complete");
 }
 

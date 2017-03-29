@@ -36,6 +36,22 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Check if it is allowed to insert for state
      */
     bool canInsert(const AbstractControllerStateTable & st) const override;
+
+    /*! \brief Check if it is allowed to change current row
+     */
+    bool canChangeCurrentRow(const AbstractControllerStateTable & st) const override;
+
+    /*! \brief Check if submit action is enabled
+     */
+    bool isSubmitActionEnabled(const AbstractControllerStateTable & st) const override;
+
+    /*! \brief Check if it is possible to revert
+     */
+    bool canRevert(const AbstractControllerStateTable & st) const override;
+
+    /*! \brief Check if revert action is enabled
+     */
+    bool isRevertActionEnabled(const AbstractControllerStateTable & st) const override;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -18,30 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ControllerState.h"
-#include <QByteArray>
+#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_STATE_TABLE_H
+#define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_STATE_TABLE_H
+
+#include "AbstractControllerStateTable.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-QByteArray controllerStateText(ControllerState state)
-{
-  switch(state){
-    case ControllerState::Visualizing:
-      return QByteArray("Visualizing");
-    case ControllerState::Editing:
-      return QByteArray("Editing");
-    case ControllerState::EditingItem:
-      return QByteArray("EditingItem");
-    case ControllerState::Inserting:
-      return QByteArray("Inserting");
-//     case ControllerState::EditingNewItem:
-//       return QByteArray("EditingNewItem");
-    case ControllerState::ChildEditing:
-      return QByteArray("ChildEditing");
-    case ControllerState::ParentEditing:
-      return QByteArray("ParentEditing");
-  }
-  return QByteArray();
-}
+  /*! \brief State table for WidgetMapperController
+   */
+  class WidgetMapperControllerStateTable : public AbstractControllerStateTable
+  {
+   public:
+
+    /*! \brief Create transition table
+     */
+    void createTable() override;
+  };
 
 }} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_STATE_TABLE_H

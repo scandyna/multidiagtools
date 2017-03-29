@@ -40,15 +40,14 @@ namespace Mdt{ namespace ItemEditor{
    * To keep the user interface of a item editor coherent, all its components must be updated when a row state changes.
    *
    * This table shows some signals/slots connections that exits:
-   * <table class="srcdoc_td_center">
-   *  <tr><th>Sender</th><th>Signal</th><th>Receiver</th><th>Slot (or signal)</th><th>Remarks</th></tr>
-   *  <tr><td>QAbstractItemModel</td><td>modelReset()</td><td>RowChangeEventDispatcher</td><td>onModelReset()</td><td></td></tr>
-   *  <tr><td>ItemSelectionModel</td><td>currentRowChangeRequested()</td><td>AbstractController</td><td>setCurrentRow()</td><td></td></tr>
-   *  <tr><td>NavigationActions</td><td>toFirstTriggered()</td><td>AbstractController</td><td>toFirst()</td><td></td></tr>
-   *  <tr><td>RowChangeEventDispatcher</td><td>rowStateUpdated()</td><td>AbstractController</td><td>updateRowState()</td><td></td></tr>
-   *  <tr><td>AbstractController</td><td>rowStateChanged()</td><td>NavigationActions</td><td>setRowState()</td><td>Used to update NavigationActions state</td></tr>
-   *  <tr><td>AbstractController</td><td>currentRowChanged()</td><td>ItemSelectionModel</td><td>updateCurrentRow()</td><td></td></tr>
-   * </table>
+   * |          Sender          |              Signal         |         Receiver         |  Slot (or signal)  | Remarks |
+   * | :----------------------: | :-------------------------: | :----------------------: | :----------------: | :------ |
+   * | QAbstractItemModel       | modelReset()                | RowChangeEventDispatcher | onModelReset()     | |
+   * | ItemSelectionModel       | currentRowChangeRequested() | AbstractController       | setCurrentRow()    | |
+   * | NavigationActions        | toFirstTriggered()          | AbstractController       | toFirst()          | |
+   * | RowChangeEventDispatcher | rowStateUpdated()           | AbstractController       | updateRowState()   | |
+   * | AbstractController       | rowStateChanged()           | NavigationActions        | setRowState()      | Used to update NavigationActions state |
+   * | AbstractController       | currentRowChanged()         | ItemSelectionModel       | updateCurrentRow() | |
    *
    *
    * Example of events chain when user selects a new row in a QTableView:

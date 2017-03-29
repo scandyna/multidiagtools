@@ -18,30 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#include "WidgetMapperControllerStateTable.h"
 #include "ControllerState.h"
-#include <QByteArray>
+#include "ControllerEvent.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-QByteArray controllerStateText(ControllerState state)
+void WidgetMapperControllerStateTable::createTable()
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return QByteArray("Visualizing");
-    case ControllerState::Editing:
-      return QByteArray("Editing");
-    case ControllerState::EditingItem:
-      return QByteArray("EditingItem");
-    case ControllerState::Inserting:
-      return QByteArray("Inserting");
-//     case ControllerState::EditingNewItem:
-//       return QByteArray("EditingNewItem");
-    case ControllerState::ChildEditing:
-      return QByteArray("ChildEditing");
-    case ControllerState::ParentEditing:
-      return QByteArray("ParentEditing");
-  }
-  return QByteArray();
+  addTransition(ControllerState::Visualizing, ControllerEvent::DataEditionStarted, ControllerState::Editing);
+  addTransition(ControllerState::Visualizing, ControllerEvent::InsertStarted, ControllerState::Inserting);
+
+  addTransition(ControllerState::Editing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+  addTransition(ControllerState::Editing, ControllerEvent::RevertDone, ControllerState::Visualizing);
+
+  addTransition(ControllerState::Inserting, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+  addTransition(ControllerState::Inserting, ControllerEvent::RevertDone, ControllerState::Visualizing);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -56,10 +56,109 @@ void WidgetMapperControllerTest::statePermissionTest()
   WidgetMapperController controller;
   auto *stateMachine = controller.controllerStateMachine();
   QVERIFY(stateMachine != nullptr);
+
   /*
-   * Complete state machine check is done in ControllerStateMachineTest.
-   * Here, just check WidgetMapperController specific stuff
+   * Visualizing state
    */
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
+  QVERIFY( stateMachine->canChangeCurrentRow());
+  QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY(!stateMachine->isSubmitActionEnabled());
+  QVERIFY(!stateMachine->canRevert());
+  QVERIFY(!stateMachine->isRevertActionEnabled());
+  QVERIFY( stateMachine->canInsert());
+  QVERIFY( stateMachine->isInsertActionEnabled());
+  QVERIFY( stateMachine->canRemove());
+  QVERIFY( stateMachine->isRemoveActionEnabled());
+  /*
+   * Editing state
+   *  - Model has cache: No
+   *  - Controller has child: No
+   */
+  stateMachine->setModelHasCache(false);
+  stateMachine->setHasChildController(false);
+  stateMachine->forceCurrentState(ControllerState::Editing);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY( stateMachine->canRevert());
+  QVERIFY( stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Editing state
+   *  - Model has cache: Yes
+   *  - Controller has child: No
+   */
+  stateMachine->setModelHasCache(true);
+  stateMachine->setHasChildController(false);
+  stateMachine->forceCurrentState(ControllerState::Editing);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY( stateMachine->canRevert());
+  QVERIFY( stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Editing state
+   *  - Model has cache: No
+   *  - Controller has child: Yes
+   */
+  stateMachine->setModelHasCache(false);
+  stateMachine->setHasChildController(true);
+  stateMachine->forceCurrentState(ControllerState::Editing);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY( stateMachine->canRevert());
+  QVERIFY( stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Inserting state
+   *  - Controller has child: No
+   */
+  stateMachine->setHasChildController(false);
+  stateMachine->forceCurrentState(ControllerState::Inserting);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY( stateMachine->canRevert());
+  QVERIFY( stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Inserting state
+   *  - Controller has child: Yes
+   */
+  stateMachine->setHasChildController(true);
+  stateMachine->forceCurrentState(ControllerState::Inserting);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY( stateMachine->canRevert());
+  QVERIFY( stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+
+  QFAIL("Not complete");
 
 //   // Visualizing state
 //   stateMachine->forceCurrentState(ControllerState::Visualizing);
@@ -204,6 +303,43 @@ void WidgetMapperControllerTest::statePermissionTest()
 // //   QVERIFY(!permission.canSelect(ControllerState::ParentEditing));
 // 
 //   QFAIL("Not complete - Check also Insert + Select");
+}
+
+void WidgetMapperControllerTest::stateTableTest()
+{
+  WidgetMapperController controller;
+  auto *stateMachine = controller.controllerStateMachine();
+  QVERIFY(stateMachine != nullptr);
+
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - EditingItem - Editing
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->dataEditionDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->submitDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->revertDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - Inserting
+  stateMachine->insertStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->dataEditionDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->submitDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  stateMachine->insertStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->revertDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+
+  QFAIL("Not complete");
 }
 
 void WidgetMapperControllerTest::setModelTest()

@@ -139,7 +139,7 @@ void DataWidgetMapper::setCurrentRow(int row)
   }
 }
 
-bool DataWidgetMapper::submit()
+bool DataWidgetMapper::setDataToModel()
 {
   Q_ASSERT(!mModel.isNull());
   Q_ASSERT(!mSubmittingFromMapper);
@@ -150,9 +150,9 @@ bool DataWidgetMapper::submit()
   if(!commitAllMappedWidgetsData()){
     return false;
   }
-  if(!mModel->submit()){
-    return false;
-  }
+//   if(!mModel->submit()){
+//     return false;
+//   }
 
   mEditingState = false;
   emit dataEditionDone();
@@ -160,7 +160,10 @@ bool DataWidgetMapper::submit()
   return true;
 }
 
-void DataWidgetMapper::revert()
+/*! \todo
+ *  Should be renamed (see item delagate, or...)
+ */
+void DataWidgetMapper::revertDataFromModel()
 {
   updateAllMappedWidgets();
   mEditingState = false;

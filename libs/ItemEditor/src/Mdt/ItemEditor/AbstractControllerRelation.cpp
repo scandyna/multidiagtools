@@ -20,7 +20,11 @@
  ****************************************************************************/
 #include "AbstractControllerRelation.h"
 #include "AbstractController.h"
-#include "ControllerRelationStateMapper.h"
+#include "ControllerRelationEventMapper.h"
+#include "ControllerStateMachine.h"
+#include "ControllerEvent.h"
+
+// #include "ControllerRelationStateMapper.h"
 
 #include "Debug.h"
 
@@ -51,9 +55,14 @@ void AbstractControllerRelation::setParentController(AbstractController* control
   mParentControllerModelChangedConnection = 
     connect( mParentController, &AbstractController::modelForViewChanged, this, &AbstractControllerRelation::parentControllerModelChangedEvent );
 
-  disconnect(mParentControllerStateChagedConnection);
-  mParentControllerStateChagedConnection =
-    connect( mParentController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::onParentControllerStateChanged );
+//   disconnect(mParentControllerStateChagedConnection);
+//   mParentControllerStateChagedConnection =
+//     connect( mParentController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::onParentControllerStateChanged );
+
+  Q_ASSERT(mParentController->controllerStateMachine() != nullptr);
+  disconnect(mParentControllerEventCompletedConnection);
+  mParentControllerEventCompletedConnection =
+    connect( mParentController->controllerStateMachine(), &ControllerStateMachine::eventCompleted, this, &AbstractControllerRelation::onParentControllerEventCompleted );
 
   parentControllerChangedEvent(mParentController);
 }
@@ -138,6 +147,31 @@ void AbstractControllerRelation::parentControllerStateChangedEvent(ControllerSta
 
 void AbstractControllerRelation::childControllerStateChangedEvent(ControllerState)
 {
+}
+
+void AbstractControllerRelation::onParentControllerEventCompleted(ControllerEvent event)
+{
+  Q_ASSERT(!mChildController.isNull());
+  Q_ASSERT(mChildController->controllerStateMachine() != nullptr);
+
+  qDebug() << "ACR - rx event from parent: " << event;
+  switch(event){
+    case ControllerEvent::DataEditionStarted:
+    case ControllerEvent::EditionStartedFromParent:
+    case ControllerEvent::InsertStarted:
+      mChildController->controllerStateMachine()->setEvent(ControllerEvent::EditionStartedFromParent);
+      break;
+    case ControllerEvent::DataEditionDone:
+    case ControllerEvent::SubmitDone:
+    case ControllerEvent::RevertDone:
+    case ControllerEvent::RemoveDone:
+      break;
+  }
+/*  
+  const auto eventForChild = ControllerRelationEventMapper::eventForChildController(event);
+  if(eventForChild != event){
+    mChildController->controllerStateMachine()->setEvent(eventForChild);
+  }*/
 }
 
 void AbstractControllerRelation::onParentControllerStateChanged(ControllerState parentState)

@@ -49,7 +49,7 @@ class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelContr
  private:
 
   void setModelToView(QAbstractItemModel *model) override;
-  bool submitDataToModel() override;
+  bool setDataToModel() override;
   void revertDataFromModel() override;
   void primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey& oldPrimaryKey, const Mdt::ItemModel::PrimaryKey& newPrimaryKey) override;
 

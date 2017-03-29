@@ -31,12 +31,13 @@ namespace Mdt{ namespace ItemEditor{
    */
   enum class ControllerEvent
   {
-    DataEditionStarted, /*!< Data edition started event */
-    DataEditionDone,    /*!< Data edition done event */
-    SubmitDone,         /*!< Submit done event */
-    RevertDone,         /*!< Revert done event */
-    InsertStarted,      /*!< Instertion started event */
-    RemoveDone          /*!< Remove done event */
+    DataEditionStarted,       /*!< Data edition started event */
+    DataEditionDone,          /*!< Data edition done event */
+    SubmitDone,               /*!< Submit done event */
+    RevertDone,               /*!< Revert done event */
+    InsertStarted,            /*!< Instertion started event */
+    RemoveDone,               /*!< Remove done event */
+    EditionStartedFromParent, /*!< Parent controller stated editing (or inserting, or ...) */
   };
 
   /*! \brief Get text version of \a event

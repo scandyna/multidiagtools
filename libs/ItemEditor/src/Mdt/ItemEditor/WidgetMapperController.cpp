@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "WidgetMapperController.h"
 #include "DataWidgetMapper.h"
-#include "AbstractControllerStateTable.h"
+#include "WidgetMapperControllerStateTable.h"
 #include "WidgetMapperControllerStatePermission.h"
 #include "ControllerStateMachine.h"
 
@@ -32,7 +32,7 @@ WidgetMapperController::WidgetMapperController(QObject* parent)
  : AbstractItemModelController(parent),
    mWidgetMapper(new DataWidgetMapper(this))
 {
-  setControllerStateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, WidgetMapperControllerStatePermission>(this) );
+  setControllerStateMachine( ControllerStateMachine::makeNew<WidgetMapperControllerStateTable, WidgetMapperControllerStatePermission>(this) );
   connect(this, &WidgetMapperController::currentRowChanged, mWidgetMapper, &DataWidgetMapper::setCurrentRow);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionStarted, this, &WidgetMapperController::onDataEditionStarted);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionDone, this, &WidgetMapperController::onDataEditionDone);
@@ -60,14 +60,14 @@ void WidgetMapperController::setModelToView(QAbstractItemModel* _model)
 //   Q_ASSERT(model() == mWidgetMapper->model());
 }
 
-bool WidgetMapperController::submitDataToModel()
+bool WidgetMapperController::setDataToModel()
 {
-  return mWidgetMapper->submit();
+  return mWidgetMapper->setDataToModel();
 }
 
 void WidgetMapperController::revertDataFromModel()
 {
-  mWidgetMapper->revert();
+  mWidgetMapper->revertDataFromModel();
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

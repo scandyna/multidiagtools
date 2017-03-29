@@ -38,7 +38,8 @@ QByteArray controllerEventText(ControllerEvent event)
       return QByteArray("InsertStarted");
     case ControllerEvent::RemoveDone:
       return QByteArray("RemoveDone");
-
+    case ControllerEvent::EditionStartedFromParent:
+      return QByteArray("EditionStartedFromParent");
   }
   return QByteArray();
 }

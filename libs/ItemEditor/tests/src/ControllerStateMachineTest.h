@@ -41,6 +41,7 @@ class ControllerStateMachineTest : public TestBase
   void permissionTest();
   void actionEnableStateTest();
   void currentStateChangedSignalTest();
+  void eventCompletedTest();
   void getterBenschmark();
 };
 

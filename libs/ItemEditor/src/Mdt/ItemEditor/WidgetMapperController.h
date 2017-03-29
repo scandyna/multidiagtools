@@ -79,7 +79,7 @@ namespace Mdt{ namespace ItemEditor{
      *
      * Tell widget mapper to submit data to model.
      */
-    bool submitDataToModel() override;
+    bool setDataToModel() override;
 
     /*! \brief Revert data from model
      */

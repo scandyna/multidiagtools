@@ -308,27 +308,33 @@ void AbstractController::setDynamicFiltersEnabled(bool enable)
 void AbstractController::addChildController(AbstractController *controller, const ItemModel::RelationFilterExpression & conditions)
 {
   Q_ASSERT(controller != nullptr);
+  Q_ASSERT(!mControllerStateMachine.isNull());
 
   auto *relation = mRelationList.addChildController<FilterControllerRelation>(controller);
   relation->setRelationFilter(conditions);
+  mControllerStateMachine->setHasChildController(true);
 }
 
 void AbstractController::addChildController(AbstractController* controller)
 {
   Q_ASSERT(controller != nullptr);
+  Q_ASSERT(!mControllerStateMachine.isNull());
   Q_ASSERT(!getPrimaryKey().isNull());
   Q_ASSERT(!controller->getForeignKey().isNull());
   Q_ASSERT(getPrimaryKey().columnCount() == controller->getForeignKey().columnCount());
 
   auto *relation = mRelationList.addChildController<FilterControllerRelation>(controller);
   relation->setRelationFilterFromPkFk();
+  mControllerStateMachine->setHasChildController(true);
 }
 
 void AbstractController::setNavigationController(AbstractController* controller)
 {
   Q_ASSERT(controller != nullptr);
+  Q_ASSERT(!mControllerStateMachine.isNull());
 
   controller->mRelationList.addChildController<NavigationControllerRelation>(this);
+  controller->mControllerStateMachine->setHasChildController(true);
 }
 
 bool AbstractController::setCurrentRow(int row)
@@ -380,21 +386,32 @@ void AbstractController::toLast()
   setCurrentRow(rowCount()-1);
 }
 
+/** \todo Avoid double setDataToModel()
+ *
+ * - If submit() is called while item view is editing a item (has a editor opern),
+ *   first tell it to commit
+ * - For item view, submit() can be called after data has been set to model
+ * - Widget mapper: allways tell it to commit (or?)
+ */
 bool AbstractController::submit()
 {
+  qDebug() << "AC:submit - set data to model";
+  if(!setDataToModel()){
+    qDebug() << "AbstractController: set data to model failed";
+    return false;
+  }
   if(!canSubmit()){
     qDebug() << "AbstractController: connot submit in state " << controllerStateText(controllerState());
     return false;
   }
+  qDebug() << "AC:submit - submit for each child";
   if(!mRelationList.submitForEachChild()){
     qDebug() << "AbstractController: submit failed for a child controller";
     return false;
   }
-  if(!submitDataToModel()){
-    qDebug() << "AbstractController: submit failed";
-    return false;
-  }
+  /// \todo Here, tell model to submit
   Q_ASSERT(!mControllerStateMachine.isNull());
+  qDebug() << "AC:submit - DONE";
   mControllerStateMachine->submitDone();
 //   setControllerState(ControllerState::Visualizing);
   ///enableDynamicFilters();
@@ -404,12 +421,20 @@ bool AbstractController::submit()
 
 void AbstractController::revert()
 {
+  Q_ASSERT(!mControllerStateMachine.isNull());
+
+  revertDataFromModel();
   if(!canRevert()){
     return;
   }
   mRelationList.revertForEachChild();
-  revertDataFromModel();
-  Q_ASSERT(!mControllerStateMachine.isNull());
+  if(controllerState() == ControllerState::Inserting){
+    if(!removeCurrentRow()){
+      return;
+    }
+  }else{
+    /// \todo Call model -> revert
+  }
   mControllerStateMachine->revertDone();
 }
 
@@ -448,19 +473,23 @@ bool AbstractController::insert()
 
 bool AbstractController::remove()
 {
-  auto *model = modelForView();
-  Q_ASSERT(model != nullptr);
+//   auto *model = modelForView();
+//   Q_ASSERT(model != nullptr);
 
   if(!canRemove()){
+    qDebug() << "AC: cannot remove in state " << controllerState();
     return false;
   }
-  int row = currentRow();
-  if(row < 0){
+  if(!removeCurrentRow()){
     return false;
   }
-  if(!model->removeRow(row)){
-    return false;
-  }
+//   int row = currentRow();
+//   if(row < 0){
+//     return false;
+//   }
+//   if(!model->removeRow(row)){
+//     return false;
+//   }
   Q_ASSERT(!mControllerStateMachine.isNull());
   mControllerStateMachine->removeDone();
 
@@ -508,20 +537,20 @@ void AbstractController::foreignKeyChangedEvent(const ForeignKey& , const Foreig
 
 void AbstractController::onDataEditionStarted()
 {
+  qDebug() << "AC: onDataEditionStarted() ..";
   if(mControllerStateMachine.isNull()){
     return;
   }
   mControllerStateMachine->dataEditionStarted();
-//   setControllerState(ControllerState::Editing);
 }
 
 void AbstractController::onDataEditionDone()
 {
+  qDebug() << "AC: onDataEditionDone()";
   if(mControllerStateMachine.isNull()){
     return;
   }
   mControllerStateMachine->dataEditionDone();
-//   setControllerState(ControllerState::Visualizing);
 }
 
 // void AbstractController::onRowsInserted()
@@ -566,6 +595,22 @@ void AbstractController::setControllerState(ControllerState state)
 //   }else{ /// \todo ??
 //     mControllerState = state;
 //   }
+}
+
+bool AbstractController::removeCurrentRow()
+{
+  auto *model = modelForView();
+  Q_ASSERT(model != nullptr);
+
+  int row = currentRow();
+  if(row < 0){
+    return false;
+  }
+  if(!model->removeRow(row)){
+    return false;
+  }
+
+  return true;
 }
 
 FilterProxyModel* AbstractController::filterModel() const

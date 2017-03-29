@@ -44,6 +44,8 @@ void ControllerStateMachineTest::cleanupTestCase()
  * Test classes
  */
 
+/// \todo Create a Table test class
+
 class PermissionTestClass : public AbstractControllerStatePermission
 {
  public:
@@ -189,7 +191,16 @@ void ControllerStateMachineTest::transitionTest()
   QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
   stateMachine->removeDone();
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
-  
+  // Visualizing - ParentEditing
+  stateMachine->setEvent(ControllerEvent::EditionStartedFromParent);
+  QCOMPARE(stateMachine->currentState(), ControllerState::ParentEditing);
+  stateMachine->submitDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  stateMachine->setEvent(ControllerEvent::EditionStartedFromParent);
+  QCOMPARE(stateMachine->currentState(), ControllerState::ParentEditing);
+  stateMachine->revertDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+
   QFAIL("Not complete");
 }
 
@@ -306,6 +317,20 @@ void ControllerStateMachineTest::currentStateChangedSignalTest()
   // Set same state again
   stateMachine->forceCurrentState(ControllerState::Editing);
   QCOMPARE(stateChangedSpy.count(), 0);
+}
+
+void ControllerStateMachineTest::eventCompletedTest()
+{
+  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>() );
+  QSignalSpy eventCompletedSpy(stateMachine.data(), &ControllerStateMachine::eventCompleted);
+  QVERIFY(eventCompletedSpy.isValid());
+
+  QCOMPARE(eventCompletedSpy.count(), 0);
+  stateMachine->setEvent(ControllerEvent::DataEditionStarted);
+  QCOMPARE(eventCompletedSpy.count(), 1);
+  const auto arguments = eventCompletedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).value<ControllerEvent>(), ControllerEvent::DataEditionStarted);
 }
 
 void ControllerStateMachineTest::getterBenschmark()

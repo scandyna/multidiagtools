@@ -66,6 +66,39 @@ namespace Mdt{ namespace ItemEditor{
     AbstractControllerStatePermission(AbstractControllerStatePermission &&) = delete;
     AbstractControllerStatePermission & operator=(AbstractControllerStatePermission &&) = delete;
 
+    /*! \brief Set if model has cache
+     *
+     * \sa modelHasCache()
+     */
+    void setModelHasCache(bool hasCache);
+
+    /*! \brief Check if model has cache
+     *
+     * If the controller acts on a model that has cache, such as QSqlTableModel,
+     *  revert can replace the cache with the stored data.
+     *  This means that a complete set of edited data can be reverted.
+     *
+     * \sa setModelHasCache()
+     */
+    bool modelHasCache() const
+    {
+      return mModelHasCache;
+    }
+
+    /*! \brief Set if the controller handles child controllers
+     */
+    void setHasChildController(bool hasChild);
+
+    /*! \brief Check if the controller handles child controllers
+     *
+     * For some controllers, changing current row can be accepted in editing states,
+     *  as far as thei not handle child controllers.
+     */
+    bool hasChildController() const
+    {
+      return mHasChildController;
+    }
+
     /*! \brief Check if it is allowed to change current row
      */
     virtual bool canChangeCurrentRow(const AbstractControllerStateTable & st) const;
@@ -117,6 +150,11 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Check if select action is enabled
      */
     virtual bool isSelectActionEnabled(const AbstractControllerStateTable & st) const;
+
+   private:
+
+    bool mModelHasCache = false;
+    bool mHasChildController = false;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
