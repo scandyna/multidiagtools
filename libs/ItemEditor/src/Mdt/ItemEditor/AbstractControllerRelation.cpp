@@ -87,9 +87,14 @@ void AbstractControllerRelation::setChildController(AbstractController* controll
   mChildControllerModelChangedConnection = 
     connect( mChildController, &AbstractController::modelForViewChanged, this, &AbstractControllerRelation::childControllerModelChangedEvent );
 
-  disconnect(mChildControllerStateChagedConnection);
-  mChildControllerStateChagedConnection =
-    connect( mChildController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::onChildControllerStateChanged );
+//   disconnect(mChildControllerStateChagedConnection);
+//   mChildControllerStateChagedConnection =
+//     connect( mChildController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::onChildControllerStateChanged );
+
+  Q_ASSERT(mChildController->controllerStateMachine() != nullptr);
+  disconnect(mChildControllerEventCompletedConnection);
+  mChildControllerEventCompletedConnection =
+    connect( mChildController->controllerStateMachine(), &ControllerStateMachine::eventCompleted, this, &AbstractControllerRelation::onChildControllerEventCompleted );
 
   childControllerChangedEvent(mChildController);
 }
@@ -159,12 +164,19 @@ void AbstractControllerRelation::onParentControllerEventCompleted(ControllerEven
     case ControllerEvent::DataEditionStarted:
     case ControllerEvent::EditionStartedFromParent:
     case ControllerEvent::InsertStarted:
+      qDebug() << "ACR - sending EditionStartedFromParent to child";
       mChildController->controllerStateMachine()->setEvent(ControllerEvent::EditionStartedFromParent);
       break;
-    case ControllerEvent::DataEditionDone:
     case ControllerEvent::SubmitDone:
     case ControllerEvent::RevertDone:
+    case ControllerEvent::EditionDoneFromParent:
+      qDebug() << "ACR - sending EditionDoneFromParent to child";
+      mChildController->controllerStateMachine()->setEvent(ControllerEvent::EditionDoneFromParent);
+      break;
+    case ControllerEvent::DataEditionDone:
     case ControllerEvent::RemoveDone:
+    case ControllerEvent::EditionStartedFromChild:
+    case ControllerEvent::EditionDoneFromChild:
       break;
   }
 /*  
@@ -174,8 +186,35 @@ void AbstractControllerRelation::onParentControllerEventCompleted(ControllerEven
   }*/
 }
 
-void AbstractControllerRelation::onParentControllerStateChanged(ControllerState parentState)
+void AbstractControllerRelation::onChildControllerEventCompleted(ControllerEvent event)
 {
+  Q_ASSERT(!mParentController.isNull());
+  Q_ASSERT(mParentController->controllerStateMachine() != nullptr);
+
+  qDebug() << "ACR - rx event from child: " << event;
+  switch(event){
+    case ControllerEvent::DataEditionStarted:
+    case ControllerEvent::EditionStartedFromChild:
+    case ControllerEvent::InsertStarted:
+      qDebug() << "ACR - sending EditionStartedFromChild to parent";
+      mParentController->controllerStateMachine()->setEvent(ControllerEvent::EditionStartedFromChild);
+      break;
+    case ControllerEvent::SubmitDone:
+    case ControllerEvent::RevertDone:
+    case ControllerEvent::EditionDoneFromChild:
+      qDebug() << "ACR - sending EditionDoneFromChild to parent";
+      mParentController->controllerStateMachine()->setEvent(ControllerEvent::EditionDoneFromChild);
+      break;
+    case ControllerEvent::DataEditionDone:
+    case ControllerEvent::RemoveDone:
+    case ControllerEvent::EditionStartedFromParent:
+    case ControllerEvent::EditionDoneFromParent:
+      break;
+  }
+}
+
+// void AbstractControllerRelation::onParentControllerStateChanged(ControllerState parentState)
+// {
 //   if(!mChildController.isNull()){
 //     const auto state = ControllerRelationStateMapper::childControllerState(parentState);
 //     qDebug() << "ACR: new parent state: " << parentState << " -> child state: " << state;
@@ -183,10 +222,10 @@ void AbstractControllerRelation::onParentControllerStateChanged(ControllerState 
 //       mChildController->setControllerState(state);
 //     }
 //   }
-}
+// }
 
-void AbstractControllerRelation::onChildControllerStateChanged(ControllerState childState)
-{
+// void AbstractControllerRelation::onChildControllerStateChanged(ControllerState childState)
+// {
 //   if(!mParentController.isNull()){
 //     const auto state = ControllerRelationStateMapper::parentControllerState(childState);
 //     qDebug() << "ACR: new child state: " << childState << " -> parent state: " << state;
@@ -194,7 +233,7 @@ void AbstractControllerRelation::onChildControllerStateChanged(ControllerState c
 //       mParentController->setControllerState(state);
 //     }
 //   }
-}
+// }
 
 // bool AbstractControllerRelation::mustUpdateParentControllerState(ControllerState state) const
 // {

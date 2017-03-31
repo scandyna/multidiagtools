@@ -76,11 +76,8 @@ namespace Mdt{ namespace ItemEditor{
     void setEvent(ControllerEvent event) noexcept;
 
     /*! \brief Create transition table
-     *
-     * This default implementation creates a common usable table.
-     *  It can be subclassed if needed.
      */
-    virtual void createTable();
+    virtual void createTable() = 0;
 
    protected:
 
@@ -92,7 +89,7 @@ namespace Mdt{ namespace ItemEditor{
 
     const_iterator findTransitionFromCurrentState(ControllerEvent event) const;
 
-    ControllerState mCurrentState;
+    ControllerState mCurrentState = ControllerState::Visualizing;
     std::vector<ControllerStateTableRow> mTable;
   };
 

@@ -23,6 +23,8 @@
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
 #include "Mdt/ItemEditor/AbstractControllerStateTable.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
+#include "Mdt/ItemEditor/ControllerState.h"
+#include "Mdt/ItemEditor/ControllerEvent.h"
 #include <QSignalSpy>
 #include <QScopedPointer>
 
@@ -44,7 +46,20 @@ void ControllerStateMachineTest::cleanupTestCase()
  * Test classes
  */
 
-/// \todo Create a Table test class
+class StateTableTestClass : public AbstractControllerStateTable
+{
+ public:
+
+  void createTable() override
+  {
+    addTransition(ControllerState::Visualizing, ControllerEvent::DataEditionStarted, ControllerState::Editing);
+    addTransition(ControllerState::Visualizing, ControllerEvent::InsertStarted, ControllerState::Inserting);
+    addTransition(ControllerState::Editing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+    addTransition(ControllerState::Editing, ControllerEvent::RevertDone, ControllerState::Visualizing);
+    addTransition(ControllerState::Inserting, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+    addTransition(ControllerState::Inserting, ControllerEvent::RevertDone, ControllerState::Visualizing);
+  }
+};
 
 class PermissionTestClass : public AbstractControllerStatePermission
 {
@@ -75,9 +90,9 @@ void ControllerStateMachineTest::stateTableRowTest()
   QVERIFY(!row.canHandleEvent(ControllerEvent::SubmitDone));
 }
 
-void ControllerStateMachineTest::abstractControllerStateTableForceStateTest()
+void ControllerStateMachineTest::stateTableForceStateTest()
 {
-  AbstractControllerStateTable table;
+  StateTableTestClass table;
   table.createTable();
   QCOMPARE(table.currentState(), ControllerState::Visualizing);
   table.forceCurrentState(ControllerState::Editing);
@@ -92,19 +107,19 @@ void ControllerStateMachineTest::abstractControllerStateTableForceStateTest()
   QCOMPARE(table.currentState(), ControllerState::ChildEditing);
 }
 
-void ControllerStateMachineTest::abstractControllerStateTableTransitionTest()
+void ControllerStateMachineTest::stateTableTransitionTest()
 {
   /*
    * Initial state
    */
-  AbstractControllerStateTable table;
+  StateTableTestClass table;
   table.createTable();
   // Visualizing - Editing
   QCOMPARE(table.currentState(), ControllerState::Visualizing);
   table.setEvent(ControllerEvent::DataEditionStarted);
   QCOMPARE(table.currentState(), ControllerState::Editing);
   table.setEvent(ControllerEvent::DataEditionDone);
-  QCOMPARE(table.currentState(), ControllerState::Visualizing);
+  QCOMPARE(table.currentState(), ControllerState::Editing);
   table.setEvent(ControllerEvent::DataEditionStarted);
   QCOMPARE(table.currentState(), ControllerState::Editing);
   table.setEvent(ControllerEvent::SubmitDone);
@@ -120,17 +135,14 @@ void ControllerStateMachineTest::abstractControllerStateTableTransitionTest()
   QCOMPARE(table.currentState(), ControllerState::Visualizing);
   table.setEvent(ControllerEvent::InsertStarted);
   QCOMPARE(table.currentState(), ControllerState::Inserting);
-  table.setEvent(ControllerEvent::RemoveDone);
+  table.setEvent(ControllerEvent::RevertDone);
   QCOMPARE(table.currentState(), ControllerState::Visualizing);
-  /*
-   * Complete test is done below (using ControllerStateMachine)
-   */
 }
 
 void ControllerStateMachineTest::abstractControllerStatePermissionTest()
 {
   AbstractControllerStatePermission permission;
-  AbstractControllerStateTable table;
+  StateTableTestClass table;
 
   table.createTable();
   // Visualizing state
@@ -153,7 +165,7 @@ void ControllerStateMachineTest::abstractControllerStatePermissionTest()
 
 void ControllerStateMachineTest::constructTest()
 {
-  QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<AbstractControllerStateTable, PermissionTestClass>() );
+  QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<StateTableTestClass, PermissionTestClass>() );
   QCOMPARE(s->currentState(), ControllerState::Visualizing);
   QVERIFY(s->canChangeCurrentRow());
   QVERIFY(!s->canInsert());
@@ -167,13 +179,9 @@ void ControllerStateMachineTest::transitionTest()
   /*
    * Initial state
    */
-  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>() );
+  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>() );
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
   // Visualizing - Editing
-  stateMachine->dataEditionStarted();
-  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
-  stateMachine->dataEditionDone();
-  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
   stateMachine->dataEditionStarted();
   QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
   stateMachine->submitDone();
@@ -189,19 +197,8 @@ void ControllerStateMachineTest::transitionTest()
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
   stateMachine->insertStarted();
   QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
-  stateMachine->removeDone();
-  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
-  // Visualizing - ParentEditing
-  stateMachine->setEvent(ControllerEvent::EditionStartedFromParent);
-  QCOMPARE(stateMachine->currentState(), ControllerState::ParentEditing);
-  stateMachine->submitDone();
-  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
-  stateMachine->setEvent(ControllerEvent::EditionStartedFromParent);
-  QCOMPARE(stateMachine->currentState(), ControllerState::ParentEditing);
   stateMachine->revertDone();
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
-
-  QFAIL("Not complete");
 }
 
 /*
@@ -212,7 +209,7 @@ void ControllerStateMachineTest::permissionTest()
   /*
    * Initial state
    */
-  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>() );
+  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>() );
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
   /*
    * Visualizing state
@@ -261,7 +258,7 @@ void ControllerStateMachineTest::actionEnableStateTest()
   /*
    * Initial state
    */
-  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>() );
+  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>() );
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
   /*
    * Visualizing state
@@ -301,7 +298,7 @@ void ControllerStateMachineTest::actionEnableStateTest()
 
 void ControllerStateMachineTest::currentStateChangedSignalTest()
 {
-  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, PermissionTestClass>() );
+  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<StateTableTestClass, PermissionTestClass>() );
   QSignalSpy stateChangedSpy(stateMachine.data(), &ControllerStateMachine::currentStateChanged);
   QVERIFY(stateChangedSpy.isValid());
   /*
@@ -321,7 +318,7 @@ void ControllerStateMachineTest::currentStateChangedSignalTest()
 
 void ControllerStateMachineTest::eventCompletedTest()
 {
-  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>() );
+  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>() );
   QSignalSpy eventCompletedSpy(stateMachine.data(), &ControllerStateMachine::eventCompleted);
   QVERIFY(eventCompletedSpy.isValid());
 
@@ -335,7 +332,7 @@ void ControllerStateMachineTest::eventCompletedTest()
 
 void ControllerStateMachineTest::getterBenschmark()
 {
-  QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<AbstractControllerStateTable, PermissionTestClass>() );
+  QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<StateTableTestClass, PermissionTestClass>() );
 
   QBENCHMARK{
     QCOMPARE(s->currentState(), ControllerState::Visualizing);

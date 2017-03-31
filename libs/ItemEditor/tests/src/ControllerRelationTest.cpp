@@ -261,6 +261,53 @@ void ControllerRelationTest::stateMapperTest()
   QFAIL("Not complete");
 }
 
+void ControllerRelationTest::controllerTesterStateTableTest()
+{
+  /*
+   * Setup model and controller
+   */
+  VariantTableModel model;
+  model.resize(1, 1);
+  ItemModelControllerTester controller;
+  controller.setModel(&model);
+  auto *stateMachine = controller.controllerStateMachine();
+  QVERIFY(stateMachine != nullptr);
+
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - Editing
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->submitDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
+  stateMachine->revertDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - Inserting
+  stateMachine->insertStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->dataEditionStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->dataEditionDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->submitDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  stateMachine->insertStarted();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
+  stateMachine->revertDone();
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - ParentEditing
+  stateMachine->setEvent(ControllerEvent::EditionStartedFromParent);
+  QCOMPARE(stateMachine->currentState(), ControllerState::ParentEditing);
+  stateMachine->setEvent(ControllerEvent::EditionDoneFromParent);
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - ChildEditing
+  stateMachine->setEvent(ControllerEvent::EditionStartedFromChild);
+  QCOMPARE(stateMachine->currentState(), ControllerState::ChildEditing);
+  stateMachine->setEvent(ControllerEvent::EditionDoneFromChild);
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+}
+
 void ControllerRelationTest::parentToChildStateMapTest()
 {
   /*
@@ -289,9 +336,12 @@ void ControllerRelationTest::parentToChildStateMapTest()
    *       |
    *       ---> childController
    */
-  AbstractControllerRelationTestClass relation;
-  relation.setParentController(&parentController);
-  relation.setChildController(&childController);
+  parentController.setPrimaryKey({0});
+  childController.setForeignKey({0});
+  parentController.addChildController(&childController);
+//   AbstractControllerRelationTestClass relation;
+//   relation.setParentController(&parentController);
+//   relation.setChildController(&childController);
   QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
   QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
   childStateChangedSpy.clear();
@@ -305,23 +355,23 @@ void ControllerRelationTest::parentToChildStateMapTest()
   QCOMPARE(childStateChangedSpy.count(), 1);
   QCOMPARE(parentController.controllerState(), ControllerState::Editing);
   QCOMPARE(childController.controllerState(), ControllerState::ParentEditing);
-  QVERIFY(childController.submit());
+//   QVERIFY(childController.submit());
   QVERIFY(parentController.submit());
   QCOMPARE(childStateChangedSpy.count(), 2);
   QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
   QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
   childStateChangedSpy.clear();
-  // EditionStartedFromParent
-  parentStateMachine->setEvent(ControllerEvent::EditionStartedFromParent);
-  QCOMPARE(childStateChangedSpy.count(), 1);
-  QCOMPARE(parentController.controllerState(), ControllerState::ParentEditing);
-  QCOMPARE(childController.controllerState(), ControllerState::ParentEditing);
-  QVERIFY(childController.submit());
-  QVERIFY(parentController.submit());
-  QCOMPARE(childStateChangedSpy.count(), 2);
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-  childStateChangedSpy.clear();
+//   // EditionStartedFromParent
+//   parentStateMachine->setEvent(ControllerEvent::EditionStartedFromParent);
+//   QCOMPARE(childStateChangedSpy.count(), 1);
+//   QCOMPARE(parentController.controllerState(), ControllerState::ParentEditing);
+//   QCOMPARE(childController.controllerState(), ControllerState::ParentEditing);
+// //   QVERIFY(childController.submit());
+//   QVERIFY(parentController.submit());
+//   QCOMPARE(childStateChangedSpy.count(), 2);
+//   QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
+//   QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
+//   childStateChangedSpy.clear();
 
   QFAIL("Not complete");
 }

@@ -23,6 +23,8 @@
 #include "AbstractControllerStatePermission.h"
 #include "ControllerEvent.h"
 
+#include "Debug.h"
+
 namespace Mdt{ namespace ItemEditor{
 
 ControllerStateMachine::~ControllerStateMachine()
@@ -197,6 +199,9 @@ void ControllerStateMachine::setEvent(ControllerEvent event)
 
   const auto previousState = currentState();
   mTableImpl->setEvent(event);
+  
+  qDebug() << "CSM: setEvent() - event: " << event << "state: " << previousState << " -> " << currentState();
+  
   if(currentState() != previousState){
     emit currentStateChanged();
   }

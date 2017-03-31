@@ -33,8 +33,8 @@ class ControllerStateMachineTest : public TestBase
   void cleanupTestCase();
 
   void stateTableRowTest();
-  void abstractControllerStateTableForceStateTest();
-  void abstractControllerStateTableTransitionTest();
+  void stateTableForceStateTest();
+  void stateTableTransitionTest();
   void abstractControllerStatePermissionTest();
   void constructTest();
   void transitionTest();

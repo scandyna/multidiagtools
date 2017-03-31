@@ -38,6 +38,9 @@ namespace Mdt{ namespace ItemEditor{
     InsertStarted,            /*!< Instertion started event */
     RemoveDone,               /*!< Remove done event */
     EditionStartedFromParent, /*!< Parent controller stated editing (or inserting, or ...) */
+    EditionDoneFromParent,    /*!< Parent controller finished editing */
+    EditionStartedFromChild,  /*!< Child controller stated editing (or inserting, or ...) */
+    EditionDoneFromChild      /*!< Child controller finished editing */
   };
 
   /*! \brief Get text version of \a event

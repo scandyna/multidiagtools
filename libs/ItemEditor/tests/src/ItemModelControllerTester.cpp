@@ -27,10 +27,30 @@
 
 using namespace Mdt::ItemEditor;
 
+class StateTableTestClass : public AbstractControllerStateTable
+{
+ public:
+
+  void createTable() override
+  {
+    addTransition(ControllerState::Visualizing, ControllerEvent::DataEditionStarted, ControllerState::Editing);
+    addTransition(ControllerState::Visualizing, ControllerEvent::InsertStarted, ControllerState::Inserting);
+    addTransition(ControllerState::Visualizing, ControllerEvent::EditionStartedFromParent, ControllerState::ParentEditing);
+    addTransition(ControllerState::Visualizing, ControllerEvent::EditionStartedFromChild, ControllerState::ChildEditing);
+    addTransition(ControllerState::Editing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+    addTransition(ControllerState::Editing, ControllerEvent::RevertDone, ControllerState::Visualizing);
+    addTransition(ControllerState::Inserting, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+    addTransition(ControllerState::Inserting, ControllerEvent::RevertDone, ControllerState::Visualizing);
+    addTransition(ControllerState::ParentEditing, ControllerEvent::EditionDoneFromParent, ControllerState::Visualizing);
+    addTransition(ControllerState::ChildEditing, ControllerEvent::EditionDoneFromChild, ControllerState::Visualizing);
+  }
+};
+
+
 ItemModelControllerTester::ItemModelControllerTester(QObject* parent)
  : AbstractItemModelController(parent)
 {
-  setControllerStateMachine( ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(this) );
+  setControllerStateMachine( ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>(this) );
 }
 
 int ItemModelControllerTester::primaryKeyChangedEventCount() const

@@ -270,8 +270,16 @@ void TableViewControllerTest::stateTableTest()
   QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
   stateMachine->revertDone();
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
-  
-  QFAIL("Not complete");
+  // Visualizing - ParentEditing
+  stateMachine->setEvent(ControllerEvent::EditionStartedFromParent);
+  QCOMPARE(stateMachine->currentState(), ControllerState::ParentEditing);
+  stateMachine->setEvent(ControllerEvent::EditionDoneFromParent);
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - ChildEditing
+  stateMachine->setEvent(ControllerEvent::EditionStartedFromChild);
+  QCOMPARE(stateMachine->currentState(), ControllerState::ChildEditing);
+  stateMachine->setEvent(ControllerEvent::EditionDoneFromChild);
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
 }
 
 void TableViewControllerTest::setModelTest()

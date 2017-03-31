@@ -41,6 +41,7 @@ class ControllerRelationTest : public TestBase
   /// \todo Maybe obselete
   void stateMapperTest();
 
+  void controllerTesterStateTableTest();
   void parentToChildStateMapTest();
   void childToParentStateMapTest();
   void editSubmitRevertParentChildStateTest();

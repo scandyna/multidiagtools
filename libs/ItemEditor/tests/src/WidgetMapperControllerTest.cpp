@@ -22,6 +22,8 @@
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
+#include "Mdt/ItemEditor/ControllerState.h"
+#include "Mdt/ItemEditor/ControllerEvent.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
 #include <QStringListModel>
@@ -63,6 +65,7 @@ void WidgetMapperControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Visualizing);
   QVERIFY( stateMachine->canChangeCurrentRow());
   QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY(!stateMachine->isSubmitActionEnabled());
   QVERIFY(!stateMachine->canRevert());
@@ -81,6 +84,7 @@ void WidgetMapperControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY(!stateMachine->canChangeCurrentRow());
   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY( stateMachine->canRevert());
@@ -99,6 +103,7 @@ void WidgetMapperControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY(!stateMachine->canChangeCurrentRow());
   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY( stateMachine->canRevert());
@@ -117,6 +122,7 @@ void WidgetMapperControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY(!stateMachine->canChangeCurrentRow());
   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY( stateMachine->canRevert());
@@ -133,6 +139,7 @@ void WidgetMapperControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Inserting);
   QVERIFY(!stateMachine->canChangeCurrentRow());
   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY( stateMachine->canRevert());
@@ -149,6 +156,7 @@ void WidgetMapperControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Inserting);
   QVERIFY(!stateMachine->canChangeCurrentRow());
   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY( stateMachine->canRevert());
@@ -157,8 +165,36 @@ void WidgetMapperControllerTest::statePermissionTest()
   QVERIFY(!stateMachine->isInsertActionEnabled());
   QVERIFY(!stateMachine->canRemove());
   QVERIFY(!stateMachine->isRemoveActionEnabled());
-
-  QFAIL("Not complete");
+  /*
+   * ParentEditing state
+   */
+  stateMachine->forceCurrentState(ControllerState::ParentEditing);
+  QVERIFY( stateMachine->canChangeCurrentRow());
+  QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY(!stateMachine->canEdit());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY(!stateMachine->isSubmitActionEnabled());
+  QVERIFY( stateMachine->canRevert());
+  QVERIFY(!stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * ChildEditing state
+   */
+  stateMachine->forceCurrentState(ControllerState::ChildEditing);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY(!stateMachine->canEdit());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY( stateMachine->canRevert());
+  QVERIFY(!stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
 
 //   // Visualizing state
 //   stateMachine->forceCurrentState(ControllerState::Visualizing);
@@ -338,8 +374,16 @@ void WidgetMapperControllerTest::stateTableTest()
   QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
   stateMachine->revertDone();
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
-
-  QFAIL("Not complete");
+  // Visualizing - ParentEditing
+  stateMachine->setEvent(ControllerEvent::EditionStartedFromParent);
+  QCOMPARE(stateMachine->currentState(), ControllerState::ParentEditing);
+  stateMachine->setEvent(ControllerEvent::EditionDoneFromParent);
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - ChildEditing
+  stateMachine->setEvent(ControllerEvent::EditionStartedFromChild);
+  QCOMPARE(stateMachine->currentState(), ControllerState::ChildEditing);
+  stateMachine->setEvent(ControllerEvent::EditionDoneFromChild);
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
 }
 
 void WidgetMapperControllerTest::setModelTest()

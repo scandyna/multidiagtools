@@ -88,16 +88,17 @@ bool AbstractControllerStatePermission::canEdit(const AbstractControllerStateTab
 
 bool AbstractControllerStatePermission::canSubmit(const AbstractControllerStateTable & st) const
 {
-  switch(st.currentState()){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-    case ControllerState::Inserting:
-    case ControllerState::ChildEditing:
-    case ControllerState::ParentEditing:
-      break;
-  }
-  return st.canHandleEvent(ControllerEvent::SubmitDone);
+  return true;
+//   switch(st.currentState()){
+//     case ControllerState::Visualizing:
+//       return true;
+//     case ControllerState::Editing:
+//     case ControllerState::Inserting:
+//     case ControllerState::ChildEditing:
+//     case ControllerState::ParentEditing:
+//       break;
+//   }
+//   return st.canHandleEvent(ControllerEvent::SubmitDone);
 }
 
 bool AbstractControllerStatePermission::isSubmitActionEnabled(const AbstractControllerStateTable & st) const

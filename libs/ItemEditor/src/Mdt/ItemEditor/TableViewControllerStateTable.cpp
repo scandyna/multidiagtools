@@ -28,17 +28,18 @@ void TableViewControllerStateTable::createTable()
 {
   addTransition(ControllerState::Visualizing, ControllerEvent::DataEditionStarted, ControllerState::EditingItem);
   addTransition(ControllerState::Visualizing, ControllerEvent::InsertStarted, ControllerState::Inserting);
-
+  addTransition(ControllerState::Visualizing, ControllerEvent::EditionStartedFromParent, ControllerState::ParentEditing);
+  addTransition(ControllerState::Visualizing, ControllerEvent::EditionStartedFromChild, ControllerState::ChildEditing);
   addTransition(ControllerState::EditingItem, ControllerEvent::DataEditionDone, ControllerState::Editing);
   addTransition(ControllerState::Editing, ControllerEvent::DataEditionStarted, ControllerState::EditingItem);
   addTransition(ControllerState::Editing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
   addTransition(ControllerState::Editing, ControllerEvent::RevertDone, ControllerState::Visualizing);
-  
 //   addTransition(ControllerState::Inserting, ControllerEvent::DataEditionStarted, ControllerState::EditingNewItem);
   addTransition(ControllerState::Inserting, ControllerEvent::SubmitDone, ControllerState::Visualizing);
   addTransition(ControllerState::Inserting, ControllerEvent::RevertDone, ControllerState::Visualizing);
-  
 //   addTransition(ControllerState::EditingNewItem, ControllerEvent::DataEditionDone, ControllerState::Inserting);
+  addTransition(ControllerState::ParentEditing, ControllerEvent::EditionDoneFromParent, ControllerState::Visualizing);
+  addTransition(ControllerState::ChildEditing, ControllerEvent::EditionDoneFromChild, ControllerState::Visualizing);
 }
 
 

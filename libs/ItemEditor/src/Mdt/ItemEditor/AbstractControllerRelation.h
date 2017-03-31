@@ -123,14 +123,15 @@ namespace Mdt{ namespace ItemEditor{
    private slots:
 
     void onParentControllerEventCompleted(Mdt::ItemEditor::ControllerEvent event);
+    void onChildControllerEventCompleted(Mdt::ItemEditor::ControllerEvent event);
 
-    /*! \brief Set parent controller state
-     */
-    void onParentControllerStateChanged(Mdt::ItemEditor::ControllerState newState);
+//     /*! \brief Set parent controller state
+//      */
+//     void onParentControllerStateChanged(Mdt::ItemEditor::ControllerState newState);
 
-    /*! \brief Set child controller state
-     */
-    void onChildControllerStateChanged(Mdt::ItemEditor::ControllerState newState);
+//     /*! \brief Set child controller state
+//      */
+//     void onChildControllerStateChanged(Mdt::ItemEditor::ControllerState newState);
 
  private:
 
@@ -140,10 +141,10 @@ namespace Mdt{ namespace ItemEditor{
     QPointer<AbstractController> mChildController;
     QMetaObject::Connection mParentControllerModelChangedConnection;
     QMetaObject::Connection mChildControllerModelChangedConnection;
-
     QMetaObject::Connection mParentControllerEventCompletedConnection;
-    QMetaObject::Connection mParentControllerStateChagedConnection;
-    QMetaObject::Connection mChildControllerStateChagedConnection;
+    QMetaObject::Connection mChildControllerEventCompletedConnection;
+//     QMetaObject::Connection mParentControllerStateChagedConnection;
+//     QMetaObject::Connection mChildControllerStateChagedConnection;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

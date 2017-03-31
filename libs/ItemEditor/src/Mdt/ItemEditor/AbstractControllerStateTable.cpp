@@ -42,21 +42,21 @@ void AbstractControllerStateTable::setEvent(ControllerEvent event) noexcept
   }
 }
 
-void AbstractControllerStateTable::createTable()
-{
-  addTransition(ControllerState::Visualizing, ControllerEvent::DataEditionStarted, ControllerState::Editing);
-  addTransition(ControllerState::Visualizing, ControllerEvent::InsertStarted, ControllerState::Inserting);
-  addTransition(ControllerState::Visualizing, ControllerEvent::EditionStartedFromParent, ControllerState::ParentEditing);
-  addTransition(ControllerState::Editing, ControllerEvent::DataEditionDone, ControllerState::Visualizing);
-  addTransition(ControllerState::Editing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
-  addTransition(ControllerState::Editing, ControllerEvent::RevertDone, ControllerState::Visualizing);
-  addTransition(ControllerState::Inserting, ControllerEvent::SubmitDone, ControllerState::Visualizing);
-  addTransition(ControllerState::Inserting, ControllerEvent::RemoveDone, ControllerState::Visualizing);
-  addTransition(ControllerState::ParentEditing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
-  addTransition(ControllerState::ParentEditing, ControllerEvent::RevertDone, ControllerState::Visualizing);
-
-  mCurrentState = ControllerState::Visualizing;
-}
+// void AbstractControllerStateTable::createTable()
+// {
+//   addTransition(ControllerState::Visualizing, ControllerEvent::DataEditionStarted, ControllerState::Editing);
+//   addTransition(ControllerState::Visualizing, ControllerEvent::InsertStarted, ControllerState::Inserting);
+//   addTransition(ControllerState::Visualizing, ControllerEvent::EditionStartedFromParent, ControllerState::ParentEditing);
+//   addTransition(ControllerState::Editing, ControllerEvent::DataEditionDone, ControllerState::Visualizing);
+//   addTransition(ControllerState::Editing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+//   addTransition(ControllerState::Editing, ControllerEvent::RevertDone, ControllerState::Visualizing);
+//   addTransition(ControllerState::Inserting, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+//   addTransition(ControllerState::Inserting, ControllerEvent::RemoveDone, ControllerState::Visualizing);
+//   addTransition(ControllerState::ParentEditing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+//   addTransition(ControllerState::ParentEditing, ControllerEvent::RevertDone, ControllerState::Visualizing);
+// 
+//   mCurrentState = ControllerState::Visualizing;
+// }
 
 void AbstractControllerStateTable::addTransition(ControllerState state, ControllerEvent event, ControllerState targetState)
 {

@@ -50,6 +50,25 @@ void ActionsTest::cleanupTestCase()
 }
 
 /*
+ * Test classes
+ */
+
+class StateTableTestClass : public AbstractControllerStateTable
+{
+ public:
+
+  void createTable() override
+  {
+    addTransition(ControllerState::Visualizing, ControllerEvent::DataEditionStarted, ControllerState::Editing);
+    addTransition(ControllerState::Visualizing, ControllerEvent::InsertStarted, ControllerState::Inserting);
+    addTransition(ControllerState::Editing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+    addTransition(ControllerState::Editing, ControllerEvent::RevertDone, ControllerState::Visualizing);
+    addTransition(ControllerState::Inserting, ControllerEvent::SubmitDone, ControllerState::Visualizing);
+    addTransition(ControllerState::Inserting, ControllerEvent::RevertDone, ControllerState::Visualizing);
+  }
+};
+
+/*
  * ActionContainerTester implementation
  */
 
@@ -78,7 +97,7 @@ void ActionsTest::abstractActionContainerTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(&act);
+  auto *stateMachine = ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>(&act);
   act.setControllerStateMachine(stateMachine);
   QCOMPARE(act.controllerState(), ControllerState::Visualizing);
   /*
@@ -216,7 +235,7 @@ void ActionsTest::navigationActionsTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(actions.get());
+  auto *stateMachine = ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>(actions.get());
   actions->setControllerStateMachine(stateMachine);
   QVERIFY(!toFirst->isEnabled());
   QVERIFY(!toPrevious->isEnabled());
@@ -356,7 +375,7 @@ void ActionsTest::editionActionsTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(actions.get());
+  auto *stateMachine = ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>(actions.get());
   actions->setControllerStateMachine(stateMachine);
   /*
    * Check controller state
@@ -425,7 +444,7 @@ void ActionsTest::insertActionTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(action.get());
+  auto *stateMachine = ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>(action.get());
   action->setControllerStateMachine(stateMachine);
   /*
    * Change controller state
@@ -455,7 +474,7 @@ void ActionsTest::removeActionTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(action.get());
+  auto *stateMachine = ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>(action.get());
   action->setControllerStateMachine(stateMachine);
   /*
    * Check controller state
@@ -518,7 +537,7 @@ void ActionsTest::resizeToContentsTest()
   /*
    * Set controller state machine
    */
-  auto *stateMachine = ControllerStateMachine::makeNew<AbstractControllerStateTable, AbstractControllerStatePermission>(action.get());
+  auto *stateMachine = ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>(action.get());
   action->setControllerStateMachine(stateMachine);
   /*
    * Check controller state

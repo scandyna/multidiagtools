@@ -40,6 +40,12 @@ QByteArray controllerEventText(ControllerEvent event)
       return QByteArray("RemoveDone");
     case ControllerEvent::EditionStartedFromParent:
       return QByteArray("EditionStartedFromParent");
+    case ControllerEvent::EditionDoneFromParent:
+      return QByteArray("EditionDoneFromParent");
+    case ControllerEvent::EditionStartedFromChild:
+      return QByteArray("EditionStartedFromChild");
+    case ControllerEvent::EditionDoneFromChild:
+      return QByteArray("EditionDoneFromChild");
   }
   return QByteArray();
 }
