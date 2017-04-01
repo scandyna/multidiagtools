@@ -63,6 +63,16 @@ void ItemModelControllerTester::clearPrimaryKeyChangedEventCount()
   mPrimaryKeyChangedEventCount = 0;
 }
 
+int ItemModelControllerTester::foreignKeyChangedEventCount() const
+{
+  return mForeignKeyChangedEventCount;
+}
+
+void ItemModelControllerTester::clearForeignKeyChangedEventCount()
+{
+  mForeignKeyChangedEventCount = 0;
+}
+
 void ItemModelControllerTester::startEditing()
 {
   onDataEditionStarted();
@@ -73,14 +83,14 @@ void ItemModelControllerTester::stopEditing()
   onDataEditionDone();
 }
 
-int ItemModelControllerTester::dataSubmitToModelCount() const
+int ItemModelControllerTester::dataSetToModelCount() const
 {
-  return mDataSubmitToModelCount;
+  return mDataSetToModelCount;
 }
 
-void ItemModelControllerTester::clearDataSubmitToModelCount()
+void ItemModelControllerTester::clearDataSetToModelCount()
 {
-  mDataSubmitToModelCount = 0;
+  mDataSetToModelCount = 0;
 }
 
 int ItemModelControllerTester::dataRevertFromModelCount() const
@@ -109,7 +119,7 @@ void ItemModelControllerTester::setModelToView(QAbstractItemModel* /*model*/)
 
 bool ItemModelControllerTester::setDataToModel()
 {
-  ++mDataSubmitToModelCount;
+  ++mDataSetToModelCount;
   return true;
 }
 
@@ -122,4 +132,9 @@ void ItemModelControllerTester::revertDataFromModel()
 void ItemModelControllerTester::primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey& /*oldPrimaryKey*/, const Mdt::ItemModel::PrimaryKey& /*newPrimaryKey*/)
 {
   ++mPrimaryKeyChangedEventCount;
+}
+
+void ItemModelControllerTester::foreignKeyChangedEvent(const Mdt::ItemModel::ForeignKey& /*oldForeignKey*/, const Mdt::ItemModel::ForeignKey& /*newForeignKey*/)
+{
+  ++mForeignKeyChangedEventCount;
 }

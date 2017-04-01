@@ -322,7 +322,6 @@ void ControllerRelationTest::editSubmitRevertParentChildStateTest()
   QCOMPARE(parentStateChangedSpy.count(), 1);
   QCOMPARE(childStateChangedSpy.count(), 1);
   // Submit
-  QVERIFY(childController.submit());
   QVERIFY(parentController.submit());
   QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
   QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
@@ -353,7 +352,6 @@ void ControllerRelationTest::editSubmitRevertParentChildStateTest()
   QCOMPARE(childStateChangedSpy.count(), 1);
   // Submit
   QVERIFY(childController.submit());
-  QVERIFY(parentController.submit());
   QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
   QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
   QCOMPARE(parentStateChangedSpy.count(), 2);
@@ -366,7 +364,6 @@ void ControllerRelationTest::editSubmitRevertParentChildStateTest()
   QCOMPARE(childStateChangedSpy.count(), 3);
   // Revert
   childController.revert();
-  parentController.revert();
   QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
   QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
   QCOMPARE(parentStateChangedSpy.count(), 4);
@@ -485,169 +482,6 @@ void ControllerRelationTest::editSubmitRevertTopMiddleChildStateTest()
   QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
 }
 
-
-void ControllerRelationTest::changeParentControllerStateTest()
-{
-  /*
-   * Setup parent model and controller
-   */
-  VariantTableModel parentModel;
-  parentModel.resize(1, 1);
-  ItemModelControllerTester parentController;
-  parentController.setModel(&parentModel);
-  /*
-   * Setup child model and controller
-   */
-  VariantTableModel childModel;
-  childModel.resize(1, 1);
-  ItemModelControllerTester childController;
-  childController.setModel(&childModel);
-  /*
-   * Initial states
-   */
-  AbstractControllerRelationTestClass relation;
-  relation.setParentController(&parentController);
-  relation.setChildController(&childController);
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-  /*
-   * Start editing from parent controller
-   */
-  parentController.startEditing();
-  QCOMPARE(parentController.controllerState(), ControllerState::Editing);
-  QCOMPARE(childController.controllerState(), ControllerState::ParentEditing);
-  /*
-   * Stop editing
-   */
-  QVERIFY(parentController.submit());
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-
-  QFAIL("Not complete");
-}
-
-void ControllerRelationTest::changeChildControllerStateTest()
-{
-  /*
-   * Setup parent model and controller
-   */
-  VariantTableModel parentModel;
-  parentModel.resize(1, 1);
-  ItemModelControllerTester parentController;
-  parentController.setModel(&parentModel);
-  /*
-   * Setup child model and controller
-   */
-  VariantTableModel childModel;
-  childModel.resize(1, 1);
-  ItemModelControllerTester childController;
-  childController.setModel(&childModel);
-  /*
-   * Setup relation
-   */
-  AbstractControllerRelationTestClass relation;
-  relation.setParentController(&parentController);
-  relation.setChildController(&childController);
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-  /*
-   * Start editing from child controller
-   */
-  childController.startEditing();
-  QCOMPARE(parentController.controllerState(), ControllerState::ChildEditing);
-  QCOMPARE(childController.controllerState(), ControllerState::Editing);
-  /*
-   * Stop editing
-   */
-  QVERIFY(childController.submit());
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-
-  QFAIL("Not complete");
-}
-
-void ControllerRelationTest::submitRevertStateTest()
-{
-  /*
-   * Setup parent model and controller
-   */
-  VariantTableModel parentModel;
-  parentModel.resize(1, 1);
-  ItemModelControllerTester parentController;
-  parentController.setModel(&parentModel);
-  /*
-   * Setup child model and controller
-   */
-  VariantTableModel childModel;
-  childModel.resize(1, 1);
-  ItemModelControllerTester childController;
-  childController.setModel(&childModel);
-  /*
-   * Setup relation
-   */
-  AbstractControllerRelationTestClass relation;
-  relation.setParentController(&parentController);
-  relation.setChildController(&childController);
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-  /*
-   * Edit then submit in parent controller
-   */
-  parentController.startEditing();
-  QVERIFY(parentController.controllerState() != ControllerState::Visualizing);
-  QVERIFY(childController.controllerState() != ControllerState::Visualizing);
-  QVERIFY(parentController.submit());
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-  /*
-   * Edit then revert in parent controller
-   */
-  parentController.startEditing();
-  QVERIFY(parentController.controllerState() != ControllerState::Visualizing);
-  QVERIFY(childController.controllerState() != ControllerState::Visualizing);
-  parentController.revert();
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-  /*
-   * Edit then submit in child controller
-   */
-  childController.startEditing();
-  QVERIFY(parentController.controllerState() != ControllerState::Visualizing);
-  QVERIFY(childController.controllerState() != ControllerState::Visualizing);
-  QVERIFY(childController.submit());
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-  /*
-   * Edit then revert in child controller
-   */
-  childController.startEditing();
-  QVERIFY(parentController.controllerState() != ControllerState::Visualizing);
-  QVERIFY(childController.controllerState() != ControllerState::Visualizing);
-  childController.revert();
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-  /*
-   * Edit in child controller and submit from partent controller
-   */
-  childController.startEditing();
-  QVERIFY(parentController.controllerState() != ControllerState::Visualizing);
-  QVERIFY(childController.controllerState() != ControllerState::Visualizing);
-  QVERIFY(parentController.submit());
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-  /*
-   * Edit in child controller and revert from partent controller
-   */
-  childController.startEditing();
-  QVERIFY(parentController.controllerState() != ControllerState::Visualizing);
-  QVERIFY(childController.controllerState() != ControllerState::Visualizing);
-  parentController.revert();
-  QCOMPARE(parentController.controllerState(), ControllerState::Visualizing);
-  QCOMPARE(childController.controllerState(), ControllerState::Visualizing);
-
-  QFAIL("Not complete");
-}
-
 void ControllerRelationTest::submitRevertDataTest()
 {
 //   /*
@@ -697,33 +531,6 @@ void ControllerRelationTest::submitRevertDataTest()
 //    */
 
   QFAIL("Not complete");
-}
-
-void ControllerRelationTest::controllerAddChildControllerTest()
-{
-  /*
-   * Setup parent model and controller
-   */
-  VariantTableModel parentModel;
-  ItemModelControllerTester parentController;
-  parentController.setModel(&parentModel);
-  /*
-   * Setup child model and controller
-   */
-  VariantTableModel childModel;
-  ItemModelControllerTester childController;
-  childController.setModel(&childModel);
-  /*
-   * Add child controller
-   */
-  ParentModelColumn pmc(0);
-  FilterColumn fc(0);
-  parentController.addChildController(&childController, fc == pmc);
-//   QVERIFY(childController.isRelationFilterEnabled());
-//   QCOMPARE(childController.relationFilterModel()->parentModel(), &parentModel);
-//   QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
-
-  QFAIL("Not complete (missing check of correct model mappings)");
 }
 
 void ControllerRelationTest::controllerRelationFilterTest()

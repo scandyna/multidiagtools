@@ -229,6 +229,7 @@ void AbstractController::setForeignKeyEnabled(bool enable)
   if(enable){
     appendProxyModel(new ForeignKeyProxyModel(this));
   }else{
+    foreignKeyChangedEvent( getForeignKey(), ForeignKey() );
     deleteFirstProxyModelOfType<ForeignKeyProxyModel>();
   }
 }
@@ -516,6 +517,7 @@ void AbstractController::registerModel(QAbstractItemModel* model)
   emit modelForViewChanged(model);
   setModelToView(model);
   primaryKeyChangedEvent( PrimaryKey(), getPrimaryKey() );
+  foreignKeyChangedEvent( ForeignKey(), getForeignKey() );
 }
 
 void AbstractController::modelSetToView()

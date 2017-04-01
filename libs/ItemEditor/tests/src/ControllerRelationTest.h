@@ -39,14 +39,9 @@ class ControllerRelationTest : public TestBase
   void controllerTesterStateTableTest();
   void editSubmitRevertParentChildStateTest();
   void editSubmitRevertTopMiddleChildStateTest();
-  
-  void changeParentControllerStateTest();
-  void changeChildControllerStateTest();
 
-  void submitRevertStateTest();
   void submitRevertDataTest();
 
-  void controllerAddChildControllerTest();
   void controllerRelationFilterTest();
 };
 

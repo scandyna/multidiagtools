@@ -45,8 +45,6 @@ bool AbstractControllerStatePermission::canChangeCurrentRow(const AbstractContro
       return false;
     case ControllerState::Inserting:
       return false;
-//     case ControllerState::EditingNewItem:
-//       return false;
     case ControllerState::ChildEditing:
       return false;
     case ControllerState::ParentEditing:
@@ -86,19 +84,9 @@ bool AbstractControllerStatePermission::canEdit(const AbstractControllerStateTab
   return st.canHandleEvent(ControllerEvent::DataEditionStarted);
 }
 
-bool AbstractControllerStatePermission::canSubmit(const AbstractControllerStateTable & st) const
+bool AbstractControllerStatePermission::canSubmit(const AbstractControllerStateTable &) const
 {
   return true;
-//   switch(st.currentState()){
-//     case ControllerState::Visualizing:
-//       return true;
-//     case ControllerState::Editing:
-//     case ControllerState::Inserting:
-//     case ControllerState::ChildEditing:
-//     case ControllerState::ParentEditing:
-//       break;
-//   }
-//   return st.canHandleEvent(ControllerEvent::SubmitDone);
 }
 
 bool AbstractControllerStatePermission::isSubmitActionEnabled(const AbstractControllerStateTable & st) const
@@ -109,6 +97,7 @@ bool AbstractControllerStatePermission::isSubmitActionEnabled(const AbstractCont
     case ControllerState::Visualizing:
       return false;
     case ControllerState::Editing:
+    case ControllerState::EditingItem:
     case ControllerState::Inserting:
     case ControllerState::ChildEditing:
       break;
@@ -128,6 +117,7 @@ bool AbstractControllerStatePermission::isRevertActionEnabled(const AbstractCont
       return false;
     case ControllerState::Visualizing:
     case ControllerState::Editing:
+    case ControllerState::EditingItem:
     case ControllerState::Inserting:
     case ControllerState::ChildEditing:
       break;
@@ -141,6 +131,7 @@ bool AbstractControllerStatePermission::canRemove(const AbstractControllerStateT
     case ControllerState::Visualizing:
       return true;
     case ControllerState::Editing:
+    case ControllerState::EditingItem:
     case ControllerState::Inserting:
     case ControllerState::ChildEditing:
     case ControllerState::ParentEditing:
@@ -160,6 +151,7 @@ bool AbstractControllerStatePermission::canSelect(const AbstractControllerStateT
     case ControllerState::Visualizing:
       return true;
     case ControllerState::Editing:
+    case ControllerState::EditingItem:
       return false;
     case ControllerState::Inserting:
       return false;

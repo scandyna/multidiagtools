@@ -38,7 +38,7 @@ namespace Mdt{ namespace ItemEditor{
    *  AbstractController receives events from the GUI,
    *  but can also be driven by code.
    *  Experience showed that the latter does not work well with
-   *  a asynchronous state machine, this why a existing framework
+   *  a asynchronous state machine, this is why a existing framework
    *  (like QStateMachine) is not used here.
    *
    * ControllerStateMachine is divided in 2 parts:
@@ -154,10 +154,6 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Set event
      */
     void setEvent(ControllerEvent event);
-
-//     /*! \brief Data edition started from parent controller event
-//      */
-//     void dataEditionStartedFromParent();
 
     /*! \brief Construct a ControllerStateMachine with a concrete state chain and permission implementations
      *

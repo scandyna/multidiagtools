@@ -28,7 +28,12 @@ namespace Mdt{ namespace ItemEditor{
 
   /*! \brief AbstractControllerStateTable is the transition table for ControllerStateMachine
    *
-   * This is the implementation for AbstractController.
+   * While implementing a concrete controller by subclassing AbstractController,
+   *  create a concrete state table by subclassing AbstractControllerStateTable
+   *  and implement createTable().
+   *
+   * This class is a interface that provides common needed functionnality,
+   *  but does not create any state table.
    */
   class AbstractControllerStateTable
   {

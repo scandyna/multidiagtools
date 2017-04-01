@@ -75,6 +75,7 @@ void TableViewControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Visualizing);
   QVERIFY( stateMachine->canChangeCurrentRow());
   QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY(!stateMachine->isSubmitActionEnabled());
   QVERIFY(!stateMachine->canRevert());
@@ -89,7 +90,8 @@ void TableViewControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::EditingItem);
   QVERIFY(!stateMachine->canChangeCurrentRow());
   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
-  QVERIFY(!stateMachine->canSubmit());
+  QVERIFY( stateMachine->canEdit());
+  QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY(!stateMachine->canRevert());
   QVERIFY( stateMachine->isRevertActionEnabled());
@@ -107,6 +109,7 @@ void TableViewControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY( stateMachine->canChangeCurrentRow());
   QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY(!stateMachine->canRevert());
@@ -125,6 +128,7 @@ void TableViewControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY( stateMachine->canChangeCurrentRow());
   QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY( stateMachine->canRevert());
@@ -143,6 +147,7 @@ void TableViewControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Editing);
   QVERIFY(!stateMachine->canChangeCurrentRow());
   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY(!stateMachine->canRevert());
@@ -159,6 +164,7 @@ void TableViewControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Inserting);
   QVERIFY( stateMachine->canChangeCurrentRow());
   QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY( stateMachine->canRevert());
@@ -175,6 +181,7 @@ void TableViewControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Inserting);
   QVERIFY(!stateMachine->canChangeCurrentRow());
   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY( stateMachine->canEdit());
   QVERIFY( stateMachine->canSubmit());
   QVERIFY( stateMachine->isSubmitActionEnabled());
   QVERIFY( stateMachine->canRevert());
@@ -183,54 +190,36 @@ void TableViewControllerTest::statePermissionTest()
   QVERIFY(!stateMachine->isInsertActionEnabled());
   QVERIFY(!stateMachine->canRemove());
   QVERIFY(!stateMachine->isRemoveActionEnabled());
-
-
-  QFAIL("Not complete");
-//   // ParentEditing state
-//   stateMachine->forceCurrentState(ControllerState::ParentEditing);
-//   QVERIFY( stateMachine->canChangeCurrentRow());
-//   QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
-//   QVERIFY( stateMachine->canSubmit());
-//   QVERIFY(!stateMachine->isSubmitActionEnabled());
-//   QVERIFY( stateMachine->canRevert());
-//   QVERIFY(!stateMachine->isRevertActionEnabled());
-//   QVERIFY( stateMachine->canInsert());
-//   QVERIFY( stateMachine->isInsertActionEnabled());
-//   QVERIFY( stateMachine->canRemove());
-//   QVERIFY( stateMachine->isRemoveActionEnabled());
-//   // ChildEditing state
-//   stateMachine->forceCurrentState(ControllerState::ChildEditing);
-//   QVERIFY(!stateMachine->canChangeCurrentRow());
-//   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
-//   QVERIFY( stateMachine->canSubmit());
-//   QVERIFY( stateMachine->isSubmitActionEnabled());
-//   QVERIFY( stateMachine->canRevert());
-//   QVERIFY( stateMachine->isRevertActionEnabled());
-//   QVERIFY(!stateMachine->canInsert());
-//   QVERIFY(!stateMachine->isInsertActionEnabled());
-//   QVERIFY(!stateMachine->canRemove());
-//   QVERIFY(!stateMachine->isRemoveActionEnabled());
-//   // Inserting state
-//   stateMachine->forceCurrentState(ControllerState::Inserting);
-//   QVERIFY(!stateMachine->canChangeCurrentRow());
-//   QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
-// //   QVERIFY(!stateMachine->canSubmit());
-// //   QVERIFY(!stateMachine->isInsertActionEnabled());
-//   QVERIFY(!stateMachine->canRevert());
-//   QVERIFY(!stateMachine->isRevertActionEnabled());
-// //   QVERIFY(!stateMachine->canInsert());
-// //   QVERIFY(!stateMachine->isInsertActionEnabled());
-//   QVERIFY( stateMachine->canRemove());
-//   QVERIFY( stateMachine->isRemoveActionEnabled());
-// 
-//   // Select
-// //   QVERIFY(stateMachine->canSelect(ControllerState::Visualizing));
-//   QVERIFY(!stateMachine->canSelect(ControllerState::Editing));
-//   QVERIFY(!stateMachine->canSelect(ControllerState::Inserting));
-//   QVERIFY(!stateMachine->canSelect(ControllerState::ChildEditing));
-//   QVERIFY(!stateMachine->canSelect(ControllerState::ParentEditing));
-
-//   QFAIL("Not complete - Check also Insert + Select");
+  /*
+   * ParentEditing state
+   */
+  stateMachine->forceCurrentState(ControllerState::ParentEditing);
+  QVERIFY( stateMachine->canChangeCurrentRow());
+  QVERIFY( stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY(!stateMachine->canEdit());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY(!stateMachine->isSubmitActionEnabled());
+  QVERIFY(!stateMachine->canRevert());
+  QVERIFY(!stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * ChildEditing state
+   */
+  stateMachine->forceCurrentState(ControllerState::ChildEditing);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY(!stateMachine->canEdit());
+  QVERIFY( stateMachine->canSubmit());
+  QVERIFY( stateMachine->isSubmitActionEnabled());
+  QVERIFY(!stateMachine->canRevert());
+  QVERIFY(!stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
 }
 
 void TableViewControllerTest::stateTableTest()

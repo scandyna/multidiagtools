@@ -34,12 +34,14 @@ class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelContr
 
   int primaryKeyChangedEventCount() const;
   void clearPrimaryKeyChangedEventCount();
+  int foreignKeyChangedEventCount() const;
+  void clearForeignKeyChangedEventCount();
 
   void startEditing();
   void stopEditing();
 
-  int dataSubmitToModelCount() const;
-  void clearDataSubmitToModelCount();
+  int dataSetToModelCount() const;
+  void clearDataSetToModelCount();
   int dataRevertFromModelCount() const;
   void clearDataRevertFromModelCount();
 
@@ -52,9 +54,11 @@ class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelContr
   bool setDataToModel() override;
   void revertDataFromModel() override;
   void primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey& oldPrimaryKey, const Mdt::ItemModel::PrimaryKey& newPrimaryKey) override;
+  void foreignKeyChangedEvent(const Mdt::ItemModel::ForeignKey& oldForeignKey, const Mdt::ItemModel::ForeignKey& newForeignKey) override;
 
   int mPrimaryKeyChangedEventCount = 0;
-  int mDataSubmitToModelCount = 0;
+  int mForeignKeyChangedEventCount = 0;
+  int mDataSetToModelCount = 0;
   int mDataRevertFromModelCount = 0;
 };
 

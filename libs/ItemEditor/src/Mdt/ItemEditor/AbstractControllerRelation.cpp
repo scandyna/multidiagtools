@@ -23,7 +23,7 @@
 #include "ControllerStateMachine.h"
 #include "ControllerEvent.h"
 
-#include "Debug.h"
+// #include "Debug.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -148,18 +148,15 @@ void AbstractControllerRelation::onParentControllerEventCompleted(ControllerEven
   Q_ASSERT(!mChildController.isNull());
   Q_ASSERT(mChildController->controllerStateMachine() != nullptr);
 
-  qDebug() << "ACR - rx event from parent: " << event;
   switch(event){
     case ControllerEvent::DataEditionStarted:
     case ControllerEvent::EditionStartedFromParent:
     case ControllerEvent::InsertStarted:
-      qDebug() << "ACR - sending EditionStartedFromParent to child";
       mChildController->controllerStateMachine()->setEvent(ControllerEvent::EditionStartedFromParent);
       break;
     case ControllerEvent::SubmitDone:
     case ControllerEvent::RevertDone:
     case ControllerEvent::EditionDoneFromParent:
-      qDebug() << "ACR - sending EditionDoneFromParent to child";
       mChildController->controllerStateMachine()->setEvent(ControllerEvent::EditionDoneFromParent);
       break;
     case ControllerEvent::DataEditionDone:
@@ -175,18 +172,15 @@ void AbstractControllerRelation::onChildControllerEventCompleted(ControllerEvent
   Q_ASSERT(!mParentController.isNull());
   Q_ASSERT(mParentController->controllerStateMachine() != nullptr);
 
-  qDebug() << "ACR - rx event from child: " << event;
   switch(event){
     case ControllerEvent::DataEditionStarted:
     case ControllerEvent::EditionStartedFromChild:
     case ControllerEvent::InsertStarted:
-      qDebug() << "ACR - sending EditionStartedFromChild to parent";
       mParentController->controllerStateMachine()->setEvent(ControllerEvent::EditionStartedFromChild);
       break;
     case ControllerEvent::SubmitDone:
     case ControllerEvent::RevertDone:
     case ControllerEvent::EditionDoneFromChild:
-      qDebug() << "ACR - sending EditionDoneFromChild to parent";
       mParentController->controllerStateMachine()->setEvent(ControllerEvent::EditionDoneFromChild);
       break;
     case ControllerEvent::DataEditionDone:

@@ -35,9 +35,6 @@ class ControllerRelationListTest : public TestBase
   void addChildControllerTest();
   void submitTest();
   void revertTest();
-
-  void editSubmitRevertParentChildStateTest();
-  void editSubmitRevertTopMiddleChildStateTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_LIST_TEST_H

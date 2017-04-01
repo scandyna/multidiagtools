@@ -64,9 +64,10 @@ namespace Mdt{ namespace ItemEditor{
      * This method will set parent parent controller
      *  (the one passed in the contructor)
      *  and \a controller as child controller the created relation.
-     *  The crreated relation is returned to finish setup.
+     *  The created relation is returned to finish setup.
      *
      * \pre \a controller must be a valid pointer
+     * \note Returned relation is owned by this list.
      */
     template<typename RelationType>
     RelationType *addChildController(AbstractController *controller)

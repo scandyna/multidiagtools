@@ -159,7 +159,8 @@ void ControllerStateMachineTest::abstractControllerStatePermissionTest()
   QVERIFY( permission.canRemove(table) );
   QVERIFY( permission.isRemoveActionEnabled(table) );
   /*
-   * Complete test is done below (using ControllerStateMachine)
+   * Complete test is done in concrete implementation tests
+   * (WidgetMapperControllerTest and TableViewControllerTest)
    */
 }
 
@@ -171,9 +172,6 @@ void ControllerStateMachineTest::constructTest()
   QVERIFY(!s->canInsert());
 }
 
-/*
- * Here we check the complete state machine with implementations for AbstractController
- */
 void ControllerStateMachineTest::transitionTest()
 {
   /*
@@ -199,101 +197,6 @@ void ControllerStateMachineTest::transitionTest()
   QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
   stateMachine->revertDone();
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
-}
-
-/*
- * Here we check permissions for all states with implementations for AbstractController
- */
-void ControllerStateMachineTest::permissionTest()
-{
-  /*
-   * Initial state
-   */
-  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>() );
-  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
-  /*
-   * Visualizing state
-   */
-  QVERIFY( stateMachine->canChangeCurrentRow() );
-  QVERIFY( stateMachine->canInsert() );
-  QVERIFY( stateMachine->canEdit() );
-  QVERIFY( stateMachine->canSubmit() );
-  QVERIFY(!stateMachine->canRevert() );
-  QVERIFY( stateMachine->canRemove() );
-  //QVERIFY( stateMachine->canSelect() );
-  /*
-   * Editing state
-   */
-  stateMachine->forceCurrentState(ControllerState::Editing);
-  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
-  QVERIFY(!stateMachine->canChangeCurrentRow() );
-  QVERIFY(!stateMachine->canInsert() );
-  QVERIFY( stateMachine->canEdit() );
-  QVERIFY( stateMachine->canSubmit() );
-  QVERIFY( stateMachine->canRevert() );
-  QVERIFY(!stateMachine->canRemove() );
-  //QVERIFY( stateMachine->canSelect() );
-  /*
-   * Inserting state
-   */
-  stateMachine->forceCurrentState(ControllerState::Inserting);
-  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
-  QVERIFY(!stateMachine->canChangeCurrentRow() );
-  QVERIFY(!stateMachine->canInsert() );
-  QVERIFY( stateMachine->canEdit() );
-  QVERIFY( stateMachine->canSubmit() );
-  QVERIFY(!stateMachine->canRevert() );
-  QVERIFY( stateMachine->canRemove() );
-  //QVERIFY( stateMachine->canSelect() );
-
-
-  QFAIL("Not complete");
-}
-
-/*
- * Here we check actions enable state for all states with implementations for AbstractController
- */
-void ControllerStateMachineTest::actionEnableStateTest()
-{
-  /*
-   * Initial state
-   */
-  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>() );
-  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
-  /*
-   * Visualizing state
-   */
-  QVERIFY( stateMachine->isChangeCurrentRowActionEnabled() );
-  QVERIFY( stateMachine->isInsertActionEnabled() );
-  QVERIFY(!stateMachine->isSubmitActionEnabled() );
-  QVERIFY(!stateMachine->isRevertActionEnabled() );
-  QVERIFY( stateMachine->isRemoveActionEnabled() );
-  //QVERIFY( stateMachine->isSelectActionEnabled() );
-  /*
-   * Editing state
-   */
-  stateMachine->forceCurrentState(ControllerState::Editing);
-  QCOMPARE(stateMachine->currentState(), ControllerState::Editing);
-  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled() );
-  QVERIFY(!stateMachine->isInsertActionEnabled() );
-  QVERIFY( stateMachine->isSubmitActionEnabled() );
-  QVERIFY( stateMachine->isRevertActionEnabled() );
-  QVERIFY(!stateMachine->isRemoveActionEnabled() );
-  //QVERIFY( stateMachine->isSelectActionEnabled() );
-  /*
-   * Inserting state
-   */
-  stateMachine->forceCurrentState(ControllerState::Inserting);
-  QCOMPARE(stateMachine->currentState(), ControllerState::Inserting);
-  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled() );
-  QVERIFY(!stateMachine->isInsertActionEnabled() );
-  QVERIFY( stateMachine->isSubmitActionEnabled() );
-  QVERIFY(!stateMachine->isRevertActionEnabled() );
-  QVERIFY( stateMachine->isRemoveActionEnabled() );
-  //QVERIFY( stateMachine->isSelectActionEnabled() );
-
-
-  QFAIL("Not complete");
 }
 
 void ControllerStateMachineTest::currentStateChangedSignalTest()
@@ -338,6 +241,19 @@ void ControllerStateMachineTest::getterBenschmark()
     QCOMPARE(s->currentState(), ControllerState::Visualizing);
     QVERIFY(s->canChangeCurrentRow());
     QVERIFY(!s->canInsert());
+  }
+}
+
+void ControllerStateMachineTest::transitionBenchmark()
+{
+  QScopedPointer<ControllerStateMachine> s( ControllerStateMachine::makeNew<StateTableTestClass, PermissionTestClass>() );
+
+  QBENCHMARK{
+    QCOMPARE(s->currentState(), ControllerState::Visualizing);
+    s->dataEditionStarted();
+    QCOMPARE(s->currentState(), ControllerState::Editing);
+    s->submitDone();
+    QCOMPARE(s->currentState(), ControllerState::Visualizing);
   }
 }
 

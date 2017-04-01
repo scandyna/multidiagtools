@@ -38,11 +38,10 @@ class ControllerStateMachineTest : public TestBase
   void abstractControllerStatePermissionTest();
   void constructTest();
   void transitionTest();
-  void permissionTest();
-  void actionEnableStateTest();
   void currentStateChangedSignalTest();
   void eventCompletedTest();
   void getterBenschmark();
+  void transitionBenchmark();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_MACHINE_TEST_H

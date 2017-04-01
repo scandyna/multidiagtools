@@ -67,7 +67,7 @@ void ControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::Visualizing);
   QVERIFY( controller.canChangeCurrentRow());
   QVERIFY( controller.canSubmit());
-  QVERIFY( controller.canRevert());
+  QVERIFY(!controller.canRevert());
   QVERIFY( controller.canRemove());
   // Editing state
   stateMachine->forceCurrentState(ControllerState::Editing);
@@ -79,30 +79,20 @@ void ControllerTest::statePermissionTest()
   stateMachine->forceCurrentState(ControllerState::ParentEditing);
   QVERIFY( controller.canChangeCurrentRow());
   QVERIFY( controller.canSubmit());
-  QVERIFY( controller.canRevert());
-  QVERIFY( controller.canRemove());
+  QVERIFY(!controller.canRevert());
+  QVERIFY(!controller.canRemove());
   // ChildEditing state
   stateMachine->forceCurrentState(ControllerState::ChildEditing);
   QVERIFY(!controller.canChangeCurrentRow());
   QVERIFY( controller.canSubmit());
-  QVERIFY( controller.canRevert());
+  QVERIFY(!controller.canRevert());
   QVERIFY(!controller.canRemove());
   // Inserting state
   stateMachine->forceCurrentState(ControllerState::Inserting);
   QVERIFY(!controller.canChangeCurrentRow());
-  QVERIFY(!controller.canSubmit());
-  QVERIFY(!controller.canRevert());
-  QVERIFY( controller.canRemove());
-//   // Insert
-//   QVERIFY(permission.canInsert(ControllerState::Visualizing));
-//   QVERIFY(!permission.canInsert(ControllerState::Editing));
-//   QVERIFY(!permission.canInsert(ControllerState::Inserting));
-//   // Select
-//   QVERIFY(permission.canSelect(ControllerState::Visualizing));
-//   QVERIFY(!permission.canSelect(ControllerState::Editing));
-//   QVERIFY(!permission.canSelect(ControllerState::Inserting));
-
-  QFAIL("Fix which operations are permitted");
+  QVERIFY( controller.canSubmit());
+  QVERIFY( controller.canRevert());
+  QVERIFY(!controller.canRemove());
 }
 
 void ControllerTest::basicStateTest()
@@ -669,6 +659,7 @@ void ControllerTest::foreignKeyTest()
    */
   QVERIFY(!controller.isForeignKeyEnabled());
   QVERIFY(controller.getForeignKey().isNull());
+  QCOMPARE(controller.foreignKeyChangedEventCount(), 0);
   /*
    * Set foreign key
    * (Must also enable foreign key support)
@@ -677,6 +668,8 @@ void ControllerTest::foreignKeyTest()
   QVERIFY(controller.isForeignKeyEnabled());
   QCOMPARE(controller.getForeignKey().columnCount(), 1);
   QCOMPARE(controller.getForeignKey().greatestColumn(), 2);
+  QCOMPARE(controller.foreignKeyChangedEventCount(), 1);
+  controller.clearForeignKeyChangedEventCount();
   /*
    * Check some flags
    */
@@ -685,13 +678,21 @@ void ControllerTest::foreignKeyTest()
   controller.setForeignKeyItemsEnabled(false);
   QVERIFY(!controller.getForeignKeyProxyModel()->isForeignKeyItemsEnabled());
   /*
+   * Set model
+   */
+  VariantTableModel model;
+  model.resize(1, 3);
+  controller.setModel(&model);
+  QCOMPARE(controller.foreignKeyChangedEventCount(), 1);
+  controller.clearForeignKeyChangedEventCount();
+  /*
    * Disable foreign key support
    */
   QVERIFY(!controller.getForeignKey().isNull());
   controller.setForeignKeyEnabled(false);
   QVERIFY(controller.getForeignKey().isNull());
-
-  QFAIL("Not complete");
+  QCOMPARE(controller.foreignKeyChangedEventCount(), 1);
+  controller.clearForeignKeyChangedEventCount();
 }
 
 void ControllerTest::currentRowTest()
@@ -704,31 +705,6 @@ void ControllerTest::currentRowSignalsTest()
   QFAIL("Not complete");
 }
 
-
-// void ControllerTest::controllerListTest()
-// {
-//   ControllerList list;
-//   TableViewController tableController;
-// 
-//   /*
-//    * Initial state
-//    */
-//   QCOMPARE(list.size(), 0);
-//   QVERIFY(list.isEmpty());
-//   QVERIFY(list.cbegin() == list.cend());
-//   /*
-//    * Add 1 element
-//    */
-//   list.addController(&tableController);
-//   QCOMPARE(list.size(), 1);
-//   QVERIFY(!list.isEmpty());
-//   QVERIFY(list.cbegin() != list.cend());
-//   /*
-//    * Clear
-//    */
-//   list.clear();
-//   QVERIFY(list.isEmpty());
-// }
 
 /*
  * Main
