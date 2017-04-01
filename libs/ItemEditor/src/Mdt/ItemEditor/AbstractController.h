@@ -120,7 +120,6 @@ namespace Mdt{ namespace ItemEditor{
    */
   class AbstractController : public QObject
   {
-   friend class AbstractControllerRelation;
 
    Q_OBJECT
 

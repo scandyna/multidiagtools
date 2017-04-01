@@ -37,9 +37,9 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/WidgetMapperControllerStateTable.cpp
     src/Mdt/ItemEditor/WidgetMapperController.cpp
     
-    src/Mdt/ItemEditor/ControllerRelationStateMapper.cpp
+#     src/Mdt/ItemEditor/ControllerRelationStateMapper.cpp
     
-    src/Mdt/ItemEditor/ControllerRelationEventMapper.cpp
+#     src/Mdt/ItemEditor/ControllerRelationEventMapper.cpp
     src/Mdt/ItemEditor/AbstractControllerRelation.cpp
     src/Mdt/ItemEditor/FilterControllerRelation.cpp
     src/Mdt/ItemEditor/NavigationControllerRelation.cpp

@@ -20,11 +20,8 @@
  ****************************************************************************/
 #include "AbstractControllerRelation.h"
 #include "AbstractController.h"
-#include "ControllerRelationEventMapper.h"
 #include "ControllerStateMachine.h"
 #include "ControllerEvent.h"
-
-// #include "ControllerRelationStateMapper.h"
 
 #include "Debug.h"
 
@@ -55,10 +52,6 @@ void AbstractControllerRelation::setParentController(AbstractController* control
   mParentControllerModelChangedConnection = 
     connect( mParentController, &AbstractController::modelForViewChanged, this, &AbstractControllerRelation::parentControllerModelChangedEvent );
 
-//   disconnect(mParentControllerStateChagedConnection);
-//   mParentControllerStateChagedConnection =
-//     connect( mParentController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::onParentControllerStateChanged );
-
   Q_ASSERT(mParentController->controllerStateMachine() != nullptr);
   disconnect(mParentControllerEventCompletedConnection);
   mParentControllerEventCompletedConnection =
@@ -86,10 +79,6 @@ void AbstractControllerRelation::setChildController(AbstractController* controll
   disconnect(mChildControllerModelChangedConnection);
   mChildControllerModelChangedConnection = 
     connect( mChildController, &AbstractController::modelForViewChanged, this, &AbstractControllerRelation::childControllerModelChangedEvent );
-
-//   disconnect(mChildControllerStateChagedConnection);
-//   mChildControllerStateChagedConnection =
-//     connect( mChildController, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::onChildControllerStateChanged );
 
   Q_ASSERT(mChildController->controllerStateMachine() != nullptr);
   disconnect(mChildControllerEventCompletedConnection);
@@ -179,11 +168,6 @@ void AbstractControllerRelation::onParentControllerEventCompleted(ControllerEven
     case ControllerEvent::EditionDoneFromChild:
       break;
   }
-/*  
-  const auto eventForChild = ControllerRelationEventMapper::eventForChildController(event);
-  if(eventForChild != event){
-    mChildController->controllerStateMachine()->setEvent(eventForChild);
-  }*/
 }
 
 void AbstractControllerRelation::onChildControllerEventCompleted(ControllerEvent event)
@@ -212,35 +196,5 @@ void AbstractControllerRelation::onChildControllerEventCompleted(ControllerEvent
       break;
   }
 }
-
-// void AbstractControllerRelation::onParentControllerStateChanged(ControllerState parentState)
-// {
-//   if(!mChildController.isNull()){
-//     const auto state = ControllerRelationStateMapper::childControllerState(parentState);
-//     qDebug() << "ACR: new parent state: " << parentState << " -> child state: " << state;
-//     if(mChildController->controllerState() != state){
-//       mChildController->setControllerState(state);
-//     }
-//   }
-// }
-
-// void AbstractControllerRelation::onChildControllerStateChanged(ControllerState childState)
-// {
-//   if(!mParentController.isNull()){
-//     const auto state = ControllerRelationStateMapper::parentControllerState(childState);
-//     qDebug() << "ACR: new child state: " << childState << " -> parent state: " << state;
-//     if(mParentController->controllerState() != state ){
-//       mParentController->setControllerState(state);
-//     }
-//   }
-// }
-
-// bool AbstractControllerRelation::mustUpdateParentControllerState(ControllerState state) const
-// {
-//   Q_ASSERT(!mChildController.isNull());
-// 
-//   return ( (state != mParentController->controllerState()) );
-// //   return ( (state != ControllerState::ChildEditing) && (state != mParentController->controllerState()) );
-// }
 
 }} // namespace Mdt{ namespace ItemEditor{
