@@ -590,9 +590,9 @@ void VariantTableModelTest::tableModelFlagTest()
   /*
    * Re-enable item
    */
+  model.setItemEnabled(0, 0, true);
   index = model.index(0, 0);
   QVERIFY(index.isValid());
-  model.setItemEnabled(index, true);
   QCOMPARE(model.flags(index), standardFlags);
   index = model.index(0, 1);
   QVERIFY(index.isValid());
@@ -623,9 +623,9 @@ void VariantTableModelTest::tableModelFlagTest()
   /*
    * Set item editable again
    */
+  model.setItemEditable(0, 0, true);
   index = model.index(0, 0);
   QVERIFY(index.isValid());
-  model.setItemEditable(index, true);
   QCOMPARE(model.flags(index), standardFlags);
   index = model.index(0, 1);
   QVERIFY(index.isValid());

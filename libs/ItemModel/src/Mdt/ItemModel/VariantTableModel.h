@@ -95,12 +95,28 @@ namespace Mdt{ namespace ItemModel{
      */
     void setItemEnabled(const QModelIndex & index, bool enable);
 
+    /*! \brief Set item enabled at row and column
+     *
+     * \pre row must be in valid range ( 0 <= row < rowCount() )
+     * \pre column must be in valid range ( 0 <= column < columnCount() )
+     * \sa setItemEnabled(const QModelIndex &, bool)
+     */
+    void setItemEnabled(int row, int column, bool enable);
+
     /*! \brief Set item editable at index
      *
      * \pre index must be in valid range
      *      ( 0 <= index.row() < rowCount() and 0 <= index.column() < columnCount() )
      */
     void setItemEditable(const QModelIndex & index, bool editable);
+
+    /*! \brief Set item editable at row and column
+     *
+     * \pre row must be in valid range ( 0 <= row < rowCount() )
+     * \pre column must be in valid range ( 0 <= column < columnCount() )
+     * \sa setItemEditable(const QModelIndex &, bool)
+     */
+    void setItemEditable(int row, int column, bool editable);
 
     /*! \brief Get flags at index
      *

@@ -86,7 +86,17 @@ void VariantTableModel::setItemEnabled(const QModelIndex& index, bool enable)
   Q_ASSERT(index.column() >= 0);
   Q_ASSERT(index.column() < mColumnCount);
 
-  mData[index.row()].setItemEnabled(index.column(), enable);
+  setItemEnabled(index.row(), index.column(), enable);
+}
+
+void VariantTableModel::setItemEnabled(int row, int column, bool enable)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < columnCount());
+
+  mData[row].setItemEnabled(column, enable);
 }
 
 void VariantTableModel::setItemEditable(const QModelIndex& index, bool editable)
@@ -96,7 +106,17 @@ void VariantTableModel::setItemEditable(const QModelIndex& index, bool editable)
   Q_ASSERT(index.column() >= 0);
   Q_ASSERT(index.column() < mColumnCount);
 
-  mData[index.row()].setItemEditable(index.column(), editable);
+  setItemEditable(index.row(), index.column(), editable);
+}
+
+void VariantTableModel::setItemEditable(int row, int column, bool editable)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < columnCount());
+
+  mData[row].setItemEditable(column, editable);
 }
 
 Qt::ItemFlags VariantTableModel::flags(const QModelIndex& index) const
