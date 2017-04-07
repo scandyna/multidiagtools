@@ -22,6 +22,7 @@
 #include "WidgetStyleSheet.h"
 #include "Mdt/ItemModel/RowRange.h"
 #include "Mdt/ItemModel/ColumnRange.h"
+#include "Mdt/Error.h"
 #include <QAbstractItemModel>
 #include <QStyledItemDelegate>
 #include <QWidget>
@@ -31,7 +32,7 @@
 #include <QMetaProperty>
 #include <QScopedValueRollback>
 
-// #include <QDebug>
+// #include "Debug.h"
 
 using namespace Mdt::ItemModel;
 
@@ -139,6 +140,13 @@ void DataWidgetMapper::setCurrentRow(int row)
   }
 }
 
+void DataWidgetMapper::updateFromModelFlags()
+{
+  for(const auto & mw : mMappedWidgetList){
+    updateMappedWidgetFromModelFlags(mw.widget(), mw.column());
+  }
+}
+
 bool DataWidgetMapper::setDataToModel()
 {
   Q_ASSERT(!mModel.isNull());
@@ -160,9 +168,6 @@ bool DataWidgetMapper::setDataToModel()
   return true;
 }
 
-/*! \todo
- *  Should be renamed (see item delagate, or...)
- */
 void DataWidgetMapper::revertDataFromModel()
 {
   updateAllMappedWidgets();
@@ -249,7 +254,14 @@ void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, Dat
   Q_ASSERT(widget->metaObject() != nullptr);
 
   // Find widget's user property notify signal
-  QMetaMethod notifySignal = widget->metaObject()->userProperty().notifySignal();
+  QMetaProperty userProperty = widget->metaObject()->userProperty();
+  if(!userProperty.hasNotifySignal()){
+    const auto message = tr("Class %1 has no user property notify signal. Data edition started will not be detected on it.").arg(widget->metaObject()->className());
+    auto error = mdtErrorNew( message , Mdt::Error::Warning, this );
+    error.commit();
+    return;
+  }
+  QMetaMethod notifySignal = userProperty.notifySignal();
   // Get QMetaMethod of onDataEditionStarted()
   int slotIndex = metaObject()->indexOfSlot("onDataEditionStarted()");
   Q_ASSERT(slotIndex >= 0);
@@ -285,6 +297,26 @@ void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column)
     widget->setEnabled(false);
   }
   mUpdatingMappedWidget = false;
+}
+
+void DataWidgetMapper::updateMappedWidgetFromModelFlags(QWidget*const widget, int column)
+{
+  if(widget == nullptr){
+    return;
+  }
+  QModelIndex index;
+  if(!mModel.isNull()){
+    index = mModel->index(mCurrentRow, column);
+  }
+  /*
+   * On invalid index, widget must allways be disabled.
+   */
+  if(index.isValid()){
+    Q_ASSERT(!mModel.isNull());
+    updateMappedWidgetForItemFlags(widget, mModel->flags(index));
+  }else{
+    widget->setEnabled(false);
+  }
 }
 
 void DataWidgetMapper::updateMappedWidgetForItemFlags(QWidget*const widget, Qt::ItemFlags flags)

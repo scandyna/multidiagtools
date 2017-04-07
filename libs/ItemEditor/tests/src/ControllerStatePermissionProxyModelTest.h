@@ -22,6 +22,8 @@
 #define MDT_ITEM_EDITOR_CONTROLLER_STATE_PERMISSION_PROXY_MODEL_TEST_H
 
 #include "TestBase.h"
+#include "Mdt/ItemEditor/ControllerStatePermissionProxyModel.h"
+#include <Qt>
 
 class ControllerStatePermissionProxyModelTest : public TestBase
 {
@@ -32,7 +34,12 @@ class ControllerStatePermissionProxyModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
+  void flagsTest();
+  void flagsSignalTest();
+
+ private:
+
+  static bool containsFlag(const Mdt::ItemEditor::ControllerStatePermissionProxyModel & proxyModel, int row, int column, Qt::ItemFlag flag);
 };
 
 

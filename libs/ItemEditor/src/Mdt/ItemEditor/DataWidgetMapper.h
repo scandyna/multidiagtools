@@ -48,6 +48,15 @@ namespace Mdt{ namespace ItemEditor{
    *
    * This is why DataWidgetMapper was created, which provides less functionality
    *  than QDataWidgetMapper, but can interact with WidgetMapperController as expected.
+   *
+   * DataWidgetMapper follows QAbstractItemModel flags to set mapped widgets editable or not.
+   *  \note QAbstractItemView based views will check model's flags just before creating a editor.
+   *        QAbstractItemModel provides no signal to tell that its flags changed.
+   *        Unlike QAbstractItemView based views, DataWidgetMapper has only persistent editors
+   *        (the mapped widgets), and will not catch any event from the user to check model's flags.
+   *        Model's flags are checked when changing current row or calling the updateFromModelFlags() slot.
+   *        If the model changes its flags dynamically on DataWidgetMapper current row,
+   *        it should provide a signal to notify it.
    */
   class DataWidgetMapper : public QObject
   {
@@ -152,6 +161,14 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setCurrentRow(int row);
 
+    /*! \brief Update mapped widgets regarding model flags
+     *
+     * Will get flags (Qt::ItemFlags) from model for current row,
+     *  and update each mapped widget regarding them
+     *  (typically Qt::ItemIsEditable and Qt::ItemIsEnabled).
+     */
+    void updateFromModelFlags();
+
     /*! \brief Set data from mapped widgets to the model
      *
      * \note Will not call submit on model
@@ -219,8 +236,18 @@ namespace Mdt{ namespace ItemEditor{
      */
     void updateMappedWidget(QWidget * const widget, int column);
 
+    void updateMappedWidgetFromModelFlags(QWidget * const widget, int column);
     void updateMappedWidgetForItemFlags(QWidget * const widget, Qt::ItemFlags flags);
     void updateMappedWidgetForAppearance(QWidget * const widget, const QModelIndex & index);
+
+    /** \todo Ideas
+     *
+     * setModelDataToMappedWidget(...)
+     *
+     * setMappedWidgetDataToModel(...)
+     *
+     * Flags from model: they should realy be checked just before editing, like QAbstractItemView subclasses.
+     */
 
     /*! \brief Update all mapped widgets
      */

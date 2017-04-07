@@ -588,9 +588,9 @@ namespace Mdt{ namespace ItemEditor{
      */
     void currentRowChanged(int row);
 
-    /*! \brief Emitted whenever controller state changed
-     */
-    void controllerStateChanged(Mdt::ItemEditor::ControllerState newState);
+//     /*! \brief Emitted whenever controller state changed
+//      */
+//     void controllerStateChanged(Mdt::ItemEditor::ControllerState newState);
 
 //     /*! \brief Emitted whenever primary key changed
 //      */
@@ -756,11 +756,11 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    /*! \brief Set controller state
-     *
-     * \todo Seems obselete
-     */
-    void setControllerState(ControllerState state);
+//     /*! \brief Set controller state
+//      *
+//      * \todo Seems obselete
+//      */
+//     void setControllerState(ControllerState state);
 
     /*! \brief Remove current row
      */

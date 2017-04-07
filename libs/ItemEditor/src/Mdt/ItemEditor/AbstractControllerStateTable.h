@@ -98,7 +98,6 @@ namespace Mdt{ namespace ItemEditor{
     std::vector<ControllerStateTableRow> mTable;
   };
 
-
 }} // namespace Mdt{ namespace ItemEditor{
 
 #endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_CONTROLLER_STATE_TABLE_H

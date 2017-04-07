@@ -23,9 +23,6 @@
 
 #include "RowState.h"
 #include "ControllerState.h"
-
-// #include "ControllerStatePermission.h"
-
 #include <QObject>
 #include <QPointer>
 
@@ -63,10 +60,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setControllerStateMachine(const ControllerStateMachine * const stateMachine);
 
-//     /*! \brief Set controller state permission
-//      */
-//     void setControllerStatePermission(const ControllerStatePermission & permission);
-
     /*! \brief Get row count
      */
     int rowCount() const
@@ -98,61 +91,36 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Get controller state
      */
     ControllerState controllerState() const;
-//     {
-//       return mControllerState;
-//     }
 
     /*! \brief Check if changing current row action is enabled for state
      */
     bool isChangeCurrentRowActionEnabled() const;
-//     {
-//       return mControllerStatePermission.isChangeCurrentRowActionEnabled(mControllerState);
-//     }
 
     /*! \brief Check if insert action is enabled for state
      */
     bool isInsertActionEnabled() const;
-//     {
-//       return mControllerStatePermission.isInsertActionEnabled(mControllerState);
-//     }
 
     /*! \brief Check if submit action is enabled for state
      */
     bool isSubmitActionEnabled() const;
-//     {
-//       return mControllerStatePermission.isSubmitActionEnabled(mControllerState);
-//     }
 
     /*! \brief Check if revert action is enabled for state
      */
     bool isRevertActionEnabled() const;
-//     {
-//       return mControllerStatePermission.isRevertActionEnabled(mControllerState);
-//     }
 
     /*! \brief Check if remove action is enabled for state
      */
     bool isRemoveActionEnabled() const;
-//     {
-//       return mControllerStatePermission.isRemoveActionEnabled(mControllerState);
-//     }
 
     /*! \brief Check if select action is enabled for state
      */
     bool isSelectActionEnabled() const;
-//     {
-//       return mControllerStatePermission.isSelectActionEnabled(mControllerState);
-//     }
 
    public slots:
 
     /*! \brief Set row state
      */
     void setRowState(Mdt::ItemEditor::RowState rs);
-
-//     /*! \brief Set controller state
-//      */
-//     void setControllerState(Mdt::ItemEditor::ControllerState state);
 
     /*! \brief Set actions disabled
      *
@@ -194,19 +162,10 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-//     bool stateHasChanged() const
-//     {
-//       return ( (mRowState != mPreviousRowState) || (mControllerState != mPreviousControllerState) );
-//     }
-
     bool mActionsDisabled = false;
     RowState mRowState;
     QPointer<const ControllerStateMachine> mControllerStateMachine;
     QMetaObject::Connection mControllerStateChangedConnection;
-//     RowState mPreviousRowState;
-//     ControllerState mControllerState = ControllerState::Visualizing;
-//     ControllerStatePermission mControllerStatePermission;
-//     ControllerState mPreviousControllerState = ControllerState::Visualizing;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

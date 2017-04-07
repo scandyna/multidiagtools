@@ -35,8 +35,7 @@
 #include <QMetaObject>
 #include <QMetaProperty>
 #include <QMetaMethod>
-
-#include <QDebug>
+#include <QScopedPointer>
 
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
@@ -552,15 +551,18 @@ void WidgetMapperControllerTest::editTest()
   
   
   QFETCH(QWidget*, editor0);
-
+  QScopedPointer<QWidget> editor0gaurd(editor0);
   VariantTableModel model;
   QLineEdit editA, editB;
-  WidgetMapperController controller;
   QModelIndex index;
-  QSignalSpy stateSpy(&controller, &WidgetMapperController::controllerStateChanged);
-  QList<QVariant> spyItem;
+//   QList<QVariant> spyItem;
   QString originalText;
-
+  /*
+   * Setup controller
+   */
+  WidgetMapperController controller;
+  QVERIFY(controller.controllerStateMachine() != nullptr);
+  QSignalSpy stateSpy(controller.controllerStateMachine(), &ControllerStateMachine::currentStateChanged);
   QVERIFY(stateSpy.isValid());
   /*
    * Setup
@@ -593,8 +595,9 @@ void WidgetMapperControllerTest::editTest()
   QVERIFY(controller.controllerState() == ControllerState::Editing);
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
-  spyItem = stateSpy.takeFirst();
-  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
+  stateSpy.clear();
+//   spyItem = stateSpy.takeFirst();
+//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
   // Check that we cannot change current row
   QVERIFY(!controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 1);
@@ -605,8 +608,9 @@ void WidgetMapperControllerTest::editTest()
   QVERIFY(controller.controllerState() == ControllerState::Visualizing);
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
-  spyItem = stateSpy.takeFirst();
-  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
+  stateSpy.clear();
+//   spyItem = stateSpy.takeFirst();
+//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
   QCOMPARE(controller.currentRow(), 1);
   // Check that model was updated
   index = model.index(1, 0);
@@ -626,8 +630,9 @@ void WidgetMapperControllerTest::editTest()
   QVERIFY(controller.controllerState() == ControllerState::Editing);
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
-  spyItem = stateSpy.takeFirst();
-  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
+  stateSpy.clear();
+//   spyItem = stateSpy.takeFirst();
+//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
   // Check that we cannot change current row
   QVERIFY(!controller.setCurrentRow(1));
   QCOMPARE(controller.currentRow(), 0);
@@ -638,8 +643,9 @@ void WidgetMapperControllerTest::editTest()
   QVERIFY(controller.controllerState() == ControllerState::Visualizing);
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
-  spyItem = stateSpy.takeFirst();
-  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
+  stateSpy.clear();
+//   spyItem = stateSpy.takeFirst();
+//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
   QCOMPARE(controller.currentRow(), 0);
   // Check that model was not updated
   index = model.index(0, 0);
@@ -650,10 +656,6 @@ void WidgetMapperControllerTest::editTest()
   // Check that we can change current row
   QVERIFY(controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 0);
-  /*
-   * Cleanup
-   */
-  delete editor0;
 }
 
 void WidgetMapperControllerTest::editTest_data()

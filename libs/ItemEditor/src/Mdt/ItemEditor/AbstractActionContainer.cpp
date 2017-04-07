@@ -39,11 +39,6 @@ void AbstractActionContainer::setControllerStateMachine(const ControllerStateMac
   onControllerStateChanged();
 }
 
-// void AbstractActionContainer::setControllerStatePermission(const ControllerStatePermission & permission)
-// {
-// //   mControllerStatePermission = permission;
-// }
-
 ControllerState AbstractActionContainer::controllerState() const
 {
   if(mControllerStateMachine.isNull()){
@@ -108,15 +103,6 @@ void AbstractActionContainer::setRowState(RowState rs)
     updateEnableState();
   }
 }
-
-// void AbstractActionContainer::setControllerState(ControllerState state)
-// {
-// //   const bool changed = (state != mControllerState);
-// // //   mControllerState = state;
-// //   if( changed && !mActionsDisabled ){
-// //     updateEnableState();
-// //   }
-// }
 
 void AbstractActionContainer::setActionsDisabled(bool disable)
 {

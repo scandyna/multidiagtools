@@ -21,6 +21,8 @@
 #include "ControllerStatePermissionProxyModel.h"
 #include <QIdentityProxyModel>
 
+// #include "Debug.h"
+
 namespace Mdt{ namespace ItemEditor{
 
 ControllerStatePermissionProxyModel::ControllerStatePermissionProxyModel(QObject* parent)
@@ -34,17 +36,30 @@ void ControllerStatePermissionProxyModel::setStateMachine(const ControllerStateM
 
   mStateMachine = stateMachine;
   disconnect(mStateChangedConnection);
-//   mStateChangedConnection = connect(mStateMachine.stateChain(), &AbstractControllerStateChain::currentStateChanged, this, &ControllerStatePermissionProxyModel::onCurrentStateChanged);
+  mStateChangedConnection =
+   connect( mStateMachine, &ControllerStateMachine::currentStateChanged, this, &ControllerStatePermissionProxyModel::flagsChanged );
+  emit flagsChanged();
 }
 
-Qt::ItemFlags ControllerStatePermissionProxyModel::flags(const QModelIndex& index) const
+Qt::ItemFlags ControllerStatePermissionProxyModel::flags(const QModelIndex & index) const
 {
-  return QIdentityProxyModel::flags(index);
+  if(mStateMachine.isNull()){
+    return unsetFlag( QIdentityProxyModel::flags(index), Qt::ItemIsEditable );
+  }
+  if(mStateMachine->canEdit()){
+    return setFlag( QIdentityProxyModel::flags(index), Qt::ItemIsEditable );
+  }
+  return unsetFlag( QIdentityProxyModel::flags(index), Qt::ItemIsEditable );
 }
 
-void ControllerStatePermissionProxyModel::onCurrentStateChanged()
+Qt::ItemFlags ControllerStatePermissionProxyModel::setFlag(Qt::ItemFlags flags, Qt::ItemFlag flag)
 {
+  return flags | flag;
+}
 
+Qt::ItemFlags ControllerStatePermissionProxyModel::unsetFlag(Qt::ItemFlags flags, Qt::ItemFlag flag)
+{
+  return flags & Qt::ItemFlags(~flag);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

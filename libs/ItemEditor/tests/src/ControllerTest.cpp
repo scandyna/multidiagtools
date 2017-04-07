@@ -113,9 +113,10 @@ void ControllerTest::setModelTest()
   ItemModelControllerTester controller;
   QVERIFY(controller.model() == nullptr);
   QVERIFY(controller.sourceModel() == nullptr);
-  QVERIFY(controller.modelForView() == nullptr);
+//   QVERIFY(controller.modelForView() == nullptr);
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
+  const auto *defaultModelForView = controller.modelForView();
   /*
    * Set a empty model
    */
@@ -123,7 +124,8 @@ void ControllerTest::setModelTest()
   controller.setModel(&tableModel);
   QVERIFY(controller.model() == &tableModel);
   QVERIFY(controller.sourceModel() == &tableModel);
-  QVERIFY(controller.modelForView() == &tableModel);
+//   QVERIFY(controller.modelForView() == &tableModel);
+  QVERIFY(controller.modelForView() == defaultModelForView);
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
   /*
@@ -134,7 +136,8 @@ void ControllerTest::setModelTest()
   controller.setModel(&listModel);
   QVERIFY(controller.model() == &listModel);
   QVERIFY(controller.sourceModel() == &listModel);
-  QVERIFY(controller.modelForView() == &listModel);
+//   QVERIFY(controller.modelForView() == &listModel);
+  QVERIFY(controller.modelForView() == defaultModelForView);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 0);
   /*
@@ -144,7 +147,8 @@ void ControllerTest::setModelTest()
   controller.setModel(&tableModel);
   QVERIFY(controller.model() == &tableModel);
   QVERIFY(controller.sourceModel() == &tableModel);
-  QVERIFY(controller.modelForView() == &tableModel);
+//   QVERIFY(controller.modelForView() == &tableModel);
+  QVERIFY(controller.modelForView() == defaultModelForView);
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
 }
@@ -154,6 +158,7 @@ void ControllerTest::setModelSignalTest()
   ItemModelControllerTester controller;
   QVariantList arguments;
   RowState rs;
+  const auto *defaultModelForView = controller.modelForView();
   QSignalSpy sourceModelChangedSpy(&controller, &ItemModelControllerTester::sourceModelChanged);
   QSignalSpy modelForViewChangedSpy(&controller, &ItemModelControllerTester::modelForViewChanged);
   QSignalSpy rowStateChangedSpy(&controller, &ItemModelControllerTester::rowStateChanged);
@@ -183,7 +188,8 @@ void ControllerTest::setModelSignalTest()
   QCOMPARE(modelForViewChangedSpy.count(), 1);
   arguments = modelForViewChangedSpy.takeFirst();
   QCOMPARE(arguments.size(), 1);
-  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &tableModel);
+//   QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &tableModel);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), defaultModelForView);
   // Check rowStateChanged
   QCOMPARE(rowStateChangedSpy.count(), 0);
   // Check currentRowChanged
@@ -203,7 +209,8 @@ void ControllerTest::setModelSignalTest()
   QCOMPARE(modelForViewChangedSpy.count(), 1);
   arguments = modelForViewChangedSpy.takeFirst();
   QCOMPARE(arguments.size(), 1);
-  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &listModel);
+//   QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &listModel);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), defaultModelForView);
   // Check rowStateChanged
   QCOMPARE(rowStateChangedSpy.count(), 1);
   arguments = rowStateChangedSpy.takeFirst();
@@ -237,7 +244,8 @@ void ControllerTest::setModelSignalTest()
   QCOMPARE(modelForViewChangedSpy.count(), 1);
   arguments = modelForViewChangedSpy.takeFirst();
   QCOMPARE(arguments.size(), 1);
-  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &tableModel);
+//   QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &tableModel);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), defaultModelForView);
   // Check rowStateChanged
   QCOMPARE(rowStateChangedSpy.count(), 1);
   arguments = rowStateChangedSpy.takeFirst();
@@ -411,13 +419,15 @@ void ControllerTest::addRemoveProxyModelWithoutSourceModelTest()
    */
   ItemModelControllerTester controller;
   QVERIFY(controller.sourceModel() == nullptr);
-  QVERIFY(controller.modelForView() == nullptr);
+//   QVERIFY(controller.modelForView() == nullptr);
+  const auto *defaultModelForView = controller.modelForView();
   /*
    * Prepend a proxy model
    */
   QSortFilterProxyModel proxyModel1;
   controller.prependProxyModel(&proxyModel1);
-  QCOMPARE(controller.modelForView(), &proxyModel1);
+//   QCOMPARE(controller.modelForView(), &proxyModel1);
+  QCOMPARE(controller.modelForView(), defaultModelForView);
   /*
    * Append a proxy model
    */
@@ -430,7 +440,8 @@ void ControllerTest::addRemoveProxyModelWithoutSourceModelTest()
   controller.removeProxyModel(&proxyModel1);
   QCOMPARE(controller.modelForView(), &proxyModel2);
   controller.removeProxyModel(&proxyModel2);
-  QVERIFY(controller.modelForView() == nullptr);
+//   QVERIFY(controller.modelForView() == nullptr);
+  QCOMPARE(controller.modelForView(), defaultModelForView);
 }
 
 void ControllerTest::addRemoveProxyModelTest()
@@ -443,14 +454,14 @@ void ControllerTest::addRemoveProxyModelTest()
   controller.setModel(&model1);
   QCOMPARE(controller.model(), &model1);
   QCOMPARE(controller.sourceModel(), &model1);
-  QCOMPARE(controller.modelForView(), &model1);
+  const auto *defaultModelForView = controller.modelForView();
   /*
    * Prepend a proxy model
    */
   QSortFilterProxyModel proxyModel1;
   controller.prependProxyModel(&proxyModel1);
   QCOMPARE(controller.sourceModel(), &model1);
-  QCOMPARE(controller.modelForView(), &proxyModel1);
+  QCOMPARE(controller.modelForView(), defaultModelForView);
   /*
    * Append a proxy model
    */
@@ -466,12 +477,13 @@ void ControllerTest::addRemoveProxyModelTest()
   QCOMPARE(controller.modelForView(), &proxyModel2);
   controller.removeProxyModel(&proxyModel2);
   QCOMPARE(controller.sourceModel(), &model1);
-  QCOMPARE(controller.modelForView(), &model1);
+  QCOMPARE(controller.modelForView(), defaultModelForView);
 }
 
 void ControllerTest::addRemoveProxyModelSignalTest()
 {
   ItemModelControllerTester controller;
+  const auto *defaultModelForView = controller.modelForView();
   QVariantList arguments;
   QSignalSpy sourceModelSpy(&controller, &ItemModelControllerTester::sourceModelChanged);
   QSignalSpy ModelForViewSpy(&controller, &ItemModelControllerTester::modelForViewChanged);
@@ -523,7 +535,8 @@ void ControllerTest::addRemoveProxyModelSignalTest()
   QCOMPARE(ModelForViewSpy.count(), 1);
   arguments = ModelForViewSpy.takeFirst();
   QCOMPARE(arguments.size(), 1);
-  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
+//   QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), defaultModelForView);
 }
 
 void ControllerTest::filterCheckModelTest()
@@ -536,7 +549,7 @@ void ControllerTest::filterCheckModelTest()
   controller.setModel(&model1);
   QCOMPARE(controller.model(), &model1);
   QCOMPARE(controller.sourceModel(), &model1);
-  QCOMPARE(controller.modelForView(), &model1);
+  const auto *defaultModelForView = controller.modelForView();
   /*
    * Initial state
    */
@@ -547,15 +560,14 @@ void ControllerTest::filterCheckModelTest()
   controller.setFilterEnabled(true);
   QVERIFY(controller.isFilterEnabled());
   QCOMPARE(controller.sourceModel(), &model1);
-  QVERIFY(controller.modelForView() != nullptr);
-  QVERIFY(controller.modelForView() != &model1);
+  QCOMPARE(controller.modelForView(), defaultModelForView); // Filter model must be prepended
   /*
    * Disable filter
    */
   controller.setFilterEnabled(false);
   QVERIFY(!controller.isFilterEnabled());
   QCOMPARE(controller.sourceModel(), &model1);
-  QCOMPARE(controller.modelForView(), &model1);
+  QCOMPARE(controller.modelForView(), defaultModelForView);
   /*
    * Check that setting a filter also enables filter
    */
@@ -563,47 +575,47 @@ void ControllerTest::filterCheckModelTest()
   QVERIFY(controller.isFilterEnabled());
 }
 
-void ControllerTest::filterCheckModelSignalTest()
-{
-  ItemModelControllerTester controller;
-  QVariantList arguments;
-  QSignalSpy sourceModelSpy(&controller, &ItemModelControllerTester::sourceModelChanged);
-  QSignalSpy ModelForViewSpy(&controller, &ItemModelControllerTester::modelForViewChanged);
-  QVERIFY(sourceModelSpy.isValid());
-  QVERIFY(ModelForViewSpy.isValid());
-  /*
-   * Set a model
-   */
-  QStringListModel model1;
-  controller.setModel(&model1);
-  sourceModelSpy.clear();
-  ModelForViewSpy.clear();
-  /*
-   * Enable filter
-   */
-  controller.setFilterEnabled(true);
-  // Check source model signal
-  QCOMPARE(sourceModelSpy.count(), 0);
-  // Check model for view signal
-  QCOMPARE(ModelForViewSpy.count(), 1);
-  arguments = ModelForViewSpy.takeFirst();
-  QCOMPARE(arguments.size(), 1);
-  QVERIFY(arguments.at(0).value<QAbstractItemModel*>() != nullptr);
-  QVERIFY(arguments.at(0).value<QAbstractItemModel*>() != &model1);
-  /*
-   * Disable filter
-   */
-  controller.setFilterEnabled(false);
-  // Check source model signal
-  QCOMPARE(sourceModelSpy.count(), 0);
-  // Check model for view signal
-  QCOMPARE(ModelForViewSpy.count(), 1);
-  arguments = ModelForViewSpy.takeFirst();
-  QCOMPARE(arguments.size(), 1);
-  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
-
-  QFAIL("Not complete");
-}
+// void ControllerTest::filterCheckModelSignalTest()
+// {
+//   ItemModelControllerTester controller;
+//   QVariantList arguments;
+//   QSignalSpy sourceModelSpy(&controller, &ItemModelControllerTester::sourceModelChanged);
+//   QSignalSpy ModelForViewSpy(&controller, &ItemModelControllerTester::modelForViewChanged);
+//   QVERIFY(sourceModelSpy.isValid());
+//   QVERIFY(ModelForViewSpy.isValid());
+//   /*
+//    * Set a model
+//    */
+//   QStringListModel model1;
+//   controller.setModel(&model1);
+//   sourceModelSpy.clear();
+//   ModelForViewSpy.clear();
+//   /*
+//    * Enable filter
+//    */
+//   controller.setFilterEnabled(true);
+//   // Check source model signal
+//   QCOMPARE(sourceModelSpy.count(), 0);
+//   // Check model for view signal
+//   QCOMPARE(ModelForViewSpy.count(), 1);
+//   arguments = ModelForViewSpy.takeFirst();
+//   QCOMPARE(arguments.size(), 1);
+//   QVERIFY(arguments.at(0).value<QAbstractItemModel*>() != nullptr);
+//   QVERIFY(arguments.at(0).value<QAbstractItemModel*>() != &model1);
+//   /*
+//    * Disable filter
+//    */
+//   controller.setFilterEnabled(false);
+//   // Check source model signal
+//   QCOMPARE(sourceModelSpy.count(), 0);
+//   // Check model for view signal
+//   QCOMPARE(ModelForViewSpy.count(), 1);
+//   arguments = ModelForViewSpy.takeFirst();
+//   QCOMPARE(arguments.size(), 1);
+//   QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
+// 
+//   QFAIL("Wrong because modelForView() will allways be permission model");
+// }
 
 void ControllerTest::primaryKeyTest()
 {

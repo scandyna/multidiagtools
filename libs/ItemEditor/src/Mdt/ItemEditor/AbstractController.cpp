@@ -23,6 +23,7 @@
 #include "RowChangeEventDispatcher.h"
 #include "NavigationControllerRelation.h"
 #include "FilterControllerRelation.h"
+#include "ControllerStatePermissionProxyModel.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 
@@ -47,6 +48,7 @@ AbstractController::AbstractController(QObject* parent)
    mInsertLocation(InsertAtBeginning),
    mRelationList(this)
 {
+  mModelContainer.appendProxyModel( new ControllerStatePermissionProxyModel(this) );
   mRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
 //   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsInserted, this, &AbstractController::onRowsInserted);
@@ -503,6 +505,9 @@ void AbstractController::setControllerStateMachine(ControllerStateMachine *state
   Q_ASSERT(stateMachine->parent() == this);
 
   mControllerStateMachine = stateMachine;
+  auto *statePermissionModel = reinterpret_cast<ControllerStatePermissionProxyModel*>( mModelContainer.firstProxyModelOfType<ControllerStatePermissionProxyModel>() );
+  Q_ASSERT(statePermissionModel != nullptr);
+  statePermissionModel->setStateMachine(stateMachine);
 }
 
 void AbstractController::registerModel(QAbstractItemModel* model)
@@ -581,23 +586,24 @@ void AbstractController::updateRowState(RowState rs)
 //   primaryKeyChangedEvent( PrimaryKey(), getPrimaryKey() );
 // }
 
-void AbstractController::setControllerState(ControllerState state)
-{
-  Q_ASSERT(!mControllerStateMachine.isNull());
-  qDebug() << "AC: Warning! setControllerState() is deprecated ! - state: " << state;
-  const bool changed = ( controllerState() != state );
-  mControllerStateMachine->forceCurrentState(state);
-  if(changed){
-    emit controllerStateChanged(state);
-  }
-//   if(state != mControllerState){
-//     mControllerState = state;
-//     qDebug() << "AC " << this << ": new state: " << mControllerState;
-//     emit controllerStateChanged(state);
-//   }else{ /// \todo ??
-//     mControllerState = state;
-//   }
-}
+// void AbstractController::setControllerState(ControllerState state)
+// {
+//   Q_ASSERT(!mControllerStateMachine.isNull());
+//   qDebug() << "AC: Warning! setControllerState() is deprecated ! - state: " << state;
+// //   const bool changed = ( controllerState() != state );
+//   mControllerStateMachine->forceCurrentState(state);
+// //   if(changed){
+// //     emit controllerStateChanged(state);
+// //   }
+// 
+// //   if(state != mControllerState){
+// //     mControllerState = state;
+// //     qDebug() << "AC " << this << ": new state: " << mControllerState;
+// //     emit controllerStateChanged(state);
+// //   }else{ /// \todo ??
+// //     mControllerState = state;
+// //   }
+// }
 
 bool AbstractController::removeCurrentRow()
 {

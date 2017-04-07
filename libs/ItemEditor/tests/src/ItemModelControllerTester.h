@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_ITEM_MODEL_CONTROLLER_TESTER_H
 
 #include "Mdt/ItemEditor/AbstractItemModelController.h"
+#include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QVariant>
 
 class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelController
@@ -30,7 +31,8 @@ class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelContr
 
  public:
 
-  explicit ItemModelControllerTester(QObject* parent = nullptr);
+  explicit ItemModelControllerTester(QObject* parent = nullptr, Mdt::ItemEditor::ControllerStateMachine *stateMachine = nullptr);
+  explicit ItemModelControllerTester(Mdt::ItemEditor::ControllerStateMachine *stateMachine);
 
   int primaryKeyChangedEventCount() const;
   void clearPrimaryKeyChangedEventCount();

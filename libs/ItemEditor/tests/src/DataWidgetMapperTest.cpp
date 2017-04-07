@@ -33,6 +33,8 @@
 #include <QTextEdit>
 #include <QPlainTextEdit>
 
+#include <QTableView>
+
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
 
@@ -747,11 +749,17 @@ void DataWidgetMapperTest::clearMappingTest()
   QVERIFY(edit1.text().isEmpty());
 }
 
+/** \todo
+ *  - Check that flags are updated when changing current row
+ *     (Some model have fixed flags per index)
+ *  - Check that flags are updated on notifier
+ *     (dynamic update, typical case with ControllerStatePermissionProxyModel)
+ */
 void DataWidgetMapperTest::itemEditableFlagTest()
 {
   /*
    * DataWidgetMapper uses WidgetEditablePropertyMap,
-   * so we don't have to check every widgets here
+   * so we don't have to check every widget types here
    */
   DataWidgetMapper mapper;
   VariantTableModel model;
@@ -762,7 +770,7 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   /*
    * Setup
    */
-  model.populate(1, 3);
+  model.populate(2, 3);
   mapper.setModel(&model);
   mapper.addMapping(&le, 0);
   mapper.addMapping(&cb, 1);
@@ -783,7 +791,7 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   index = model.index(0, 0);
   QVERIFY(index.isValid());
   model.setItemEditable(index, false);
-  mapper.setCurrentRow(0);
+  mapper.updateFromModelFlags();
   QVERIFY(le.isReadOnly());
   QVERIFY(cb.isEditable());
   QVERIFY(le.isEnabled());
@@ -792,7 +800,7 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   index = model.index(0, 1);
   QVERIFY(index.isValid());
   model.setItemEditable(index, false);
-  mapper.setCurrentRow(0);
+  mapper.updateFromModelFlags();
   QVERIFY(le.isReadOnly());
   QVERIFY(!cb.isEditable());
   QVERIFY(le.isEnabled());
@@ -801,7 +809,7 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   index = model.index(0, 2);
   QVERIFY(index.isValid());
   model.setItemEditable(index, false);
-  mapper.setCurrentRow(0);
+  mapper.updateFromModelFlags();
   QVERIFY(!w.isEnabled());
   /*
    * Set editable flag (again)
@@ -810,7 +818,7 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   index = model.index(0, 0);
   QVERIFY(index.isValid());
   model.setItemEditable(index, true);
-  mapper.setCurrentRow(0);
+  mapper.updateFromModelFlags();
   QVERIFY(!le.isReadOnly());
   QVERIFY(!cb.isEditable());
   QVERIFY(le.isEnabled());
@@ -819,7 +827,7 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   index = model.index(0, 1);
   QVERIFY(index.isValid());
   model.setItemEditable(index, true);
-  mapper.setCurrentRow(0);
+  mapper.updateFromModelFlags();
   QVERIFY(!le.isReadOnly());
   QVERIFY(cb.isEditable());
   QVERIFY(le.isEnabled());
@@ -828,8 +836,51 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   index = model.index(0, 2);
   QVERIFY(index.isValid());
   model.setItemEditable(index, true);
-  mapper.setCurrentRow(0);
+  mapper.updateFromModelFlags();
   QVERIFY(w.isEnabled());
+  /*
+   * Check that model's flags are also update when changing current row
+   */
+  // Set editable flag for row 1
+  //  Line edit
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, true);
+  //  Combobox
+  index = model.index(1, 1);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, true);
+  //  Widget without any editable property
+  index = model.index(1, 2);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, true);
+  // Change current row and check
+  mapper.setCurrentRow(1);
+  QVERIFY(!le.isReadOnly());
+  QVERIFY(cb.isEditable());
+  QVERIFY(le.isEnabled());
+  QVERIFY(cb.isEnabled());
+  QVERIFY(w.isEnabled());
+  // Unset editable flag for row 0
+  //  Line edit
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, false);
+  //  Combobox
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, false);
+  //  Widget without any editable property
+  index = model.index(0, 2);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, false);
+  // Change current row and check
+  mapper.setCurrentRow(0);
+  QVERIFY(le.isReadOnly());
+  QVERIFY(!cb.isEditable());
+  QVERIFY(le.isEnabled());
+  QVERIFY(cb.isEnabled());
+  QVERIFY(!w.isEnabled());
 }
 
 void DataWidgetMapperTest::itemEnabledFlagTest()

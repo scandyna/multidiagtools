@@ -44,7 +44,7 @@ class ControllerTest : public TestBase
   void addRemoveProxyModelTest();
   void addRemoveProxyModelSignalTest();
   void filterCheckModelTest();
-  void filterCheckModelSignalTest();
+//   void filterCheckModelSignalTest();
   void primaryKeyTest();
   void foreignKeyTest();
   void currentRowTest();

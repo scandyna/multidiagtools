@@ -35,7 +35,6 @@ namespace Mdt{ namespace ItemEditor{
     Editing,        /*!< Editing state */
     EditingItem,    /*!< Editing a item state */
     Inserting,      /*!< Inserting state */
-//     EditingNewItem, /*!< Editing a new item state */
     ChildEditing,   /*!< A child controller is in Editing state */
     ParentEditing   /*!< Parent controller is in Editing state */
   };

@@ -23,8 +23,9 @@
 
 #include "ControllerStateMachine.h"
 #include <QIdentityProxyModel>
-#include <QMetaObject>
 #include <QPointer>
+#include <QMetaObject>
+#include <Qt>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -46,15 +47,26 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setStateMachine(const ControllerStateMachine * const stateMachine);
 
-    /*! \brief
+    /*! \brief Get flags
      */
     Qt::ItemFlags flags(const QModelIndex & index) const override;
 
-   private slots:
+   signals:
 
-    void onCurrentStateChanged();
+    /*! \brief Emitted whenever flags changed
+     *
+     * Can be used by views to update the editable state of their components.
+     *  This signal is used by DataWidgetMapper and WidgetMapperController.
+     *
+     * \note Common views based on QAbstractItemView (such as QTableView)
+     *        will check models's flags before editing, so they do not need this signal.
+     */
+    void flagsChanged();
 
    private:
+
+    static Qt::ItemFlags setFlag(Qt::ItemFlags flags, Qt::ItemFlag flag);
+    static Qt::ItemFlags unsetFlag(Qt::ItemFlags flags, Qt::ItemFlag flag);
 
     QPointer<const ControllerStateMachine> mStateMachine;
     QMetaObject::Connection mStateChangedConnection;

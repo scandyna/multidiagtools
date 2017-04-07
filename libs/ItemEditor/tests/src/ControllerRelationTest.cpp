@@ -41,6 +41,7 @@
 #include <QMetaObject>
 #include <QMetaProperty>
 #include <QMetaMethod>
+#include <QSortFilterProxyModel>
 
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
@@ -115,6 +116,7 @@ void ControllerRelationTest::setModelToControllersFirstTest()
   ItemModelControllerTester parentController;
   parentController.setModel(&parentModel);
   QCOMPARE(parentController.sourceModel(), &parentModel);
+  auto *defaultParentModelForView = parentController.modelForView();
   /*
    * Setup child model and controller
    */
@@ -123,7 +125,7 @@ void ControllerRelationTest::setModelToControllersFirstTest()
   ItemModelControllerTester childController;
   childController.setModel(&childModel);
   QCOMPARE(childController.sourceModel(), &childModel);
-  QCOMPARE(childController.modelForView(), &childModel);
+  auto *defaultChildModelForView = childController.modelForView();
   /*
    * Set parent controller
    */
@@ -131,30 +133,30 @@ void ControllerRelationTest::setModelToControllersFirstTest()
   relation.setParentController(&parentController);
   QCOMPARE(relation.parentController(), &parentController);
   QVERIFY(relation.childController() == nullptr);
-  QCOMPARE(relation.parentControllerModel(), &parentModel);
+  QCOMPARE(relation.parentControllerModel(), defaultParentModelForView);
   QVERIFY(relation.childControllerModel() == nullptr);
   // Check that parent model was signaled to subclass
-  QCOMPARE(relation.parentControllerStoredModel(), &parentModel);
+  QCOMPARE(relation.parentControllerStoredModel(), defaultParentModelForView);
   QVERIFY(relation.childControllerStoredModel() == nullptr);
   // Check that relation did no mismatch with controllers
   QCOMPARE(parentController.sourceModel(), &parentModel);
-  QCOMPARE(parentController.modelForView(), &parentModel);
+  QCOMPARE(parentController.modelForView(), defaultParentModelForView);
   /*
    * Set child controller
    */
   relation.setChildController(&childController);
   QCOMPARE(relation.parentController(), &parentController);
   QCOMPARE(relation.childController(), &childController);
-  QCOMPARE(relation.parentControllerModel(), &parentModel);
-  QCOMPARE(relation.childControllerModel(), &childModel);
+  QCOMPARE(relation.parentControllerModel(), defaultParentModelForView);
+  QCOMPARE(relation.childControllerModel(), defaultChildModelForView);
   // Check that child model was signaled to subclass
-  QCOMPARE(relation.parentControllerStoredModel(), &parentModel);
-  QCOMPARE(relation.childControllerStoredModel(), &childModel);
+  QCOMPARE(relation.parentControllerStoredModel(), defaultParentModelForView);
+  QCOMPARE(relation.childControllerStoredModel(), defaultChildModelForView);
   // Check that relation did no mismatch with controllers
   QCOMPARE(parentController.sourceModel(), &parentModel);
-  QCOMPARE(parentController.modelForView(), &parentModel);
+  QCOMPARE(parentController.modelForView(), defaultParentModelForView);
   QCOMPARE(childController.sourceModel(), &childModel);
-  QCOMPARE(childController.modelForView(), &childModel);
+  QCOMPARE(childController.modelForView(), defaultChildModelForView);
 }
 
 void ControllerRelationTest::setModelToControllersAfterTest()
@@ -164,8 +166,10 @@ void ControllerRelationTest::setModelToControllersAfterTest()
    */
   ItemModelControllerTester parentController;
   parentController.setObjectName("parentController");
+  auto *defaultParentModelForView = parentController.modelForView();
   ItemModelControllerTester childController;
   childController.setObjectName("childController");
+  auto *defaultChildModelForView = childController.modelForView();
   /*
    * Set parent controller
    */
@@ -173,60 +177,88 @@ void ControllerRelationTest::setModelToControllersAfterTest()
   relation.setParentController(&parentController);
   QCOMPARE(relation.parentController(), &parentController);
   QVERIFY(relation.childController() == nullptr);
-  QVERIFY(relation.parentControllerModel() == nullptr);
+  QCOMPARE(relation.parentControllerModel(), defaultParentModelForView);
   QVERIFY(relation.childControllerModel() == nullptr);
   // Subclass has not yet recieved any model changed signal
-  QVERIFY(relation.parentControllerStoredModel() == nullptr);
+  QCOMPARE(relation.parentControllerStoredModel(), defaultParentModelForView);
   QVERIFY(relation.childControllerStoredModel() == nullptr);
   // Check that relation did no mismatch with controllers
   QVERIFY(parentController.sourceModel() == nullptr);
-  QVERIFY(parentController.modelForView() == nullptr);
+  QCOMPARE(parentController.modelForView(), defaultParentModelForView);
   /*
    * Set child controller
    */
   relation.setChildController(&childController);
   QCOMPARE(relation.parentController(), &parentController);
   QCOMPARE(relation.childController(), &childController);
-  QVERIFY(relation.parentControllerModel() == nullptr);
-  QVERIFY(relation.childControllerModel() == nullptr);
+  QCOMPARE(relation.parentControllerModel(), defaultParentModelForView);
+  QCOMPARE(relation.childControllerModel(), defaultChildModelForView);
   // Subclass has not yet recieved any model changed signal
-  QVERIFY(relation.parentControllerStoredModel() == nullptr);
-  QVERIFY(relation.childControllerStoredModel() == nullptr);
+  QCOMPARE(relation.parentControllerStoredModel(), defaultParentModelForView);
+  QCOMPARE(relation.childControllerStoredModel(), defaultChildModelForView);
   // Check that relation did no mismatch with controllers
   QVERIFY(parentController.sourceModel() == nullptr);
-  QVERIFY(parentController.modelForView() == nullptr);
+  QCOMPARE(parentController.modelForView(), defaultParentModelForView);
   QVERIFY(childController.sourceModel() == nullptr);
-  QVERIFY(childController.modelForView() == nullptr);
+  QCOMPARE(childController.modelForView(), defaultChildModelForView);
   /*
    * Setup parent model
    */
   VariantTableModel parentModel;
   parentModel.resize(0, 1);
   parentController.setModel(&parentModel);
-  QCOMPARE(relation.parentControllerModel(), &parentModel);
-  QVERIFY(relation.childControllerModel() == nullptr);
+  QCOMPARE(relation.parentControllerModel(), defaultParentModelForView);
+  QCOMPARE(relation.childControllerModel(), defaultChildModelForView);
   // Check that parent model was signaled to subclass
-  QCOMPARE(relation.parentControllerStoredModel(), &parentModel);
-  QVERIFY(relation.childControllerStoredModel() == nullptr);
+  QCOMPARE(relation.parentControllerStoredModel(), defaultParentModelForView);
+  QCOMPARE(relation.childControllerStoredModel(), defaultChildModelForView);
   // Check that relation did no mismatch with controllers
   QCOMPARE(parentController.sourceModel(), &parentModel);
-  QCOMPARE(parentController.modelForView(), &parentModel);
+  QCOMPARE(parentController.modelForView(), defaultParentModelForView);
   /*
    * Setup child model
    */
   VariantTableModel childModel;
   childModel.resize(0, 1);
   childController.setModel(&childModel);
-  QCOMPARE(relation.parentControllerModel(), &parentModel);
-  QCOMPARE(relation.childControllerModel(), &childModel);
+  QCOMPARE(relation.parentControllerModel(), defaultParentModelForView);
+  QCOMPARE(relation.childControllerModel(), defaultChildModelForView);
   // Check that child model was signaled to subclass
-  QCOMPARE(relation.parentControllerStoredModel(), &parentModel);
-  QCOMPARE(relation.childControllerStoredModel(), &childModel);
+  QCOMPARE(relation.parentControllerStoredModel(), defaultParentModelForView);
+  QCOMPARE(relation.childControllerStoredModel(), defaultChildModelForView);
   // Check that relation did no mismatch with controllers
   QCOMPARE(parentController.sourceModel(), &parentModel);
-  QCOMPARE(parentController.modelForView(), &parentModel);
+  QCOMPARE(parentController.modelForView(), defaultParentModelForView);
   QCOMPARE(childController.sourceModel(), &childModel);
-  QCOMPARE(childController.modelForView(), &childModel);
+  QCOMPARE(childController.modelForView(), defaultChildModelForView);
+  /*
+   * Change parent model for view
+   */
+  auto *parentFilterModel = new QSortFilterProxyModel(&parentController);
+  parentController.appendProxyModel(parentFilterModel);
+  QCOMPARE(relation.parentControllerModel(), parentFilterModel);
+  QCOMPARE(relation.childControllerModel(), defaultChildModelForView);
+  // Check that parent model was signaled to subclass
+  QCOMPARE(relation.parentControllerStoredModel(), parentFilterModel);
+  QCOMPARE(relation.childControllerStoredModel(), defaultChildModelForView);
+  // Check that relation did no mismatch with controllers
+  QCOMPARE(parentController.sourceModel(), &parentModel);
+  QCOMPARE(parentController.modelForView(), parentFilterModel);
+  /*
+   * Change child model for view
+   */
+  auto *childFilterModel = new QSortFilterProxyModel(&childController);
+  childController.appendProxyModel(childFilterModel);
+  QCOMPARE(relation.parentControllerModel(), parentFilterModel);
+  QCOMPARE(relation.childControllerModel(), childFilterModel);
+  // Check that parent model was signaled to subclass
+  QCOMPARE(relation.parentControllerStoredModel(), parentFilterModel);
+  QCOMPARE(relation.childControllerStoredModel(), childFilterModel);
+  // Check that relation did no mismatch with controllers
+  QCOMPARE(parentController.sourceModel(), &parentModel);
+  QCOMPARE(parentController.modelForView(), parentFilterModel);
+  QCOMPARE(childController.sourceModel(), &childModel);
+  QCOMPARE(childController.modelForView(), childFilterModel);
 }
 
 void ControllerRelationTest::controllerTesterStateTableTest()

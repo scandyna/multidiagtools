@@ -21,7 +21,6 @@
 #include "ItemModelControllerTester.h"
 #include "Mdt/ItemEditor/AbstractControllerStateTable.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
-#include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QAbstractItemModel>
 #include <QModelIndex>
 
@@ -47,10 +46,19 @@ class StateTableTestClass : public AbstractControllerStateTable
 };
 
 
-ItemModelControllerTester::ItemModelControllerTester(QObject* parent)
+ItemModelControllerTester::ItemModelControllerTester(QObject* parent, ControllerStateMachine *stateMachine)
  : AbstractItemModelController(parent)
 {
-  setControllerStateMachine( ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>(this) );
+  if(stateMachine == nullptr){
+    setControllerStateMachine( ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>(this) );
+  }else{
+    setControllerStateMachine( stateMachine );
+  }
+}
+
+ItemModelControllerTester::ItemModelControllerTester(ControllerStateMachine* stateMachine)
+ : ItemModelControllerTester(nullptr, stateMachine)
+{
 }
 
 int ItemModelControllerTester::primaryKeyChangedEventCount() const
