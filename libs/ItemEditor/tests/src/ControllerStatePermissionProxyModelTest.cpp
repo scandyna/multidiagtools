@@ -162,6 +162,35 @@ void ControllerStatePermissionProxyModelTest::flagsSignalTest()
   flagsChangedSpy.clear();
 }
 
+void ControllerStatePermissionProxyModelTest::sourceModelFlagsTest()
+{
+  /*
+   * Setup model and proxy model
+   */
+  VariantTableModel model;
+  model.populate(1, 1);
+  QScopedPointer<ControllerStateMachine> stateMachine( ControllerStateMachine::makeNew<StateTableTestClass, StatePermissionTestClass>() );
+  ControllerStatePermissionProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  proxyModel.setStateMachine( stateMachine.data() );
+  /*
+   * Model has ItemIsEditable flag
+   */
+  model.setItemEditable(0, 0, true);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
+  QVERIFY( containsFlag(proxyModel, 0, 0, Qt::ItemIsEditable));
+  stateMachine->forceCurrentState(ControllerState::ChildEditing);
+  QVERIFY(!containsFlag(proxyModel, 0, 0, Qt::ItemIsEditable));
+  /*
+   * Model do not have ItemIsEditable flag
+   */
+  model.setItemEditable(0, 0, false);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
+  QVERIFY(!containsFlag(proxyModel, 0, 0, Qt::ItemIsEditable));
+  stateMachine->forceCurrentState(ControllerState::ChildEditing);
+  QVERIFY(!containsFlag(proxyModel, 0, 0, Qt::ItemIsEditable));
+}
+
 /*
  * Helpers
  */

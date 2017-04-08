@@ -546,16 +546,8 @@ void WidgetMapperControllerTest::currentRowChangedTest()
 
 void WidgetMapperControllerTest::editTest()
 {
-  using Mdt::ItemEditor::ControllerState;
-
-  
-  
-  QFETCH(QWidget*, editor0);
-  QScopedPointer<QWidget> editor0gaurd(editor0);
   VariantTableModel model;
   QLineEdit editA, editB;
-  QModelIndex index;
-//   QList<QVariant> spyItem;
   QString originalText;
   /*
    * Setup controller
@@ -567,13 +559,7 @@ void WidgetMapperControllerTest::editTest()
   /*
    * Setup
    */
-  model.populate(5, 2);
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  model.setData(index, QVariant());
-  index = model.index(1, 0);
-  QVERIFY(index.isValid());
-  model.setData(index, QVariant());
+  model.resize(5, 2);
   controller.setModel(&model);
   controller.addMapping(&editA, 0);
   controller.addMapping(&editB, 1);
@@ -596,8 +582,6 @@ void WidgetMapperControllerTest::editTest()
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
   stateSpy.clear();
-//   spyItem = stateSpy.takeFirst();
-//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
   // Check that we cannot change current row
   QVERIFY(!controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 1);
@@ -609,13 +593,9 @@ void WidgetMapperControllerTest::editTest()
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
   stateSpy.clear();
-//   spyItem = stateSpy.takeFirst();
-//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
   QCOMPARE(controller.currentRow(), 1);
   // Check that model was updated
-  index = model.index(1, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("A"));
   // Check that widget data was updated
   QCOMPARE(editA.text(), QString("A"));
   // Check that we can change current row
@@ -631,8 +611,6 @@ void WidgetMapperControllerTest::editTest()
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
   stateSpy.clear();
-//   spyItem = stateSpy.takeFirst();
-//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
   // Check that we cannot change current row
   QVERIFY(!controller.setCurrentRow(1));
   QCOMPARE(controller.currentRow(), 0);
@@ -644,13 +622,9 @@ void WidgetMapperControllerTest::editTest()
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
   stateSpy.clear();
-//   spyItem = stateSpy.takeFirst();
-//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
   QCOMPARE(controller.currentRow(), 0);
   // Check that model was not updated
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index).toString(), originalText);
+  QCOMPARE(getModelData(model, 0, 0).toString(), originalText);
   // Check that widget data was updated
   QCOMPARE(editA.text(), originalText);
   // Check that we can change current row
@@ -658,18 +632,47 @@ void WidgetMapperControllerTest::editTest()
   QCOMPARE(controller.currentRow(), 0);
 }
 
-void WidgetMapperControllerTest::editTest_data()
+void WidgetMapperControllerTest::statePermissionModelFlagsTest()
 {
-  QTest::addColumn<QWidget*>("editor0");
-
-  QTest::newRow("QLineEdit") << (static_cast<QWidget*>(new QLineEdit));
-  QTest::newRow("QSpinBox") << (static_cast<QWidget*>(new QSpinBox));
-
-  auto *cb = new QComboBox;
-  ///cb->setEditable(true);
-  cb->addItem("A");
-  cb->addItem("B");
-  QTest::newRow("QComboBox") << (static_cast<QWidget*>(cb));
+  VariantTableModel model;
+  QLineEdit editA;
+  WidgetMapperController controller;
+  auto *stateMachine = controller.controllerStateMachine();
+  QVERIFY(stateMachine != nullptr);
+  /*
+   * Setup
+   */
+  model.resize(2, 1);
+  controller.setModel(&model);
+  controller.addMapping(&editA, 0);
+  /*
+   * Initial state
+   */
+  controller.setCurrentRow(0);
+  QCOMPARE(controller.currentRow(), 0);
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.currentRow(), 0);
+  QVERIFY(!editA.isReadOnly());
+  /*
+   * Change controller state without changing current row
+   */
+  stateMachine->forceCurrentState(ControllerState::ChildEditing);
+  QVERIFY(editA.isReadOnly());
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
+  QVERIFY(!editA.isReadOnly());
+  /*
+   * Check that underlaying model flags are respected
+   * -> Those flags are only updated when changing current row
+   */
+  // Set flags for row 0 and 1
+  model.setItemEditable(0, 0, true);
+  model.setItemEditable(1, 0, false);
+  // Change to row 1 and check
+  controller.setCurrentRow(1);
+  QVERIFY(editA.isReadOnly());
+  // Change to row 0 and check
+  controller.setCurrentRow(0);
+  QVERIFY(!editA.isReadOnly());
 }
 
 void WidgetMapperControllerTest::insertTest()
@@ -735,8 +738,6 @@ void WidgetMapperControllerTest::insertTest()
 
 void WidgetMapperControllerTest::insertFromModelTest()
 {
-  using Mdt::ItemEditor::ControllerState;
-
   QStringListModel model;
   QLineEdit editor0;
   WidgetMapperController controller;
@@ -757,28 +758,32 @@ void WidgetMapperControllerTest::insertFromModelTest()
    * Insert at beginning
    */
   QVERIFY(controller.insert());
+  QVERIFY(controller.submit());
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QVERIFY(controller.insert());
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
   /*
    * Begin editing
    */
   editor0.setText("ABCD");
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
   /*
    * Insert at end in model
    */
   QVERIFY(model.insertRow(2));
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 0);
   /*
    * End
    */
   QVERIFY(controller.submit());
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index, Qt::DisplayRole).toString(), QString("ABCD"));
+  QCOMPARE(getModelData(model, 0, 0), QVariant("ABCD"));
+//   index = model.index(0, 0);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index, Qt::DisplayRole).toString(), QString("ABCD"));
 }
 
 void WidgetMapperControllerTest::removeTest()

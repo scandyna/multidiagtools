@@ -510,6 +510,12 @@ void AbstractController::setControllerStateMachine(ControllerStateMachine *state
   statePermissionModel->setStateMachine(stateMachine);
 }
 
+ControllerStatePermissionProxyModel* AbstractController::getControllerStatePermissionProxyModel() const
+{
+  Q_ASSERT( mModelContainer.firstProxyModelOfType<ControllerStatePermissionProxyModel>() != nullptr );
+  return reinterpret_cast<ControllerStatePermissionProxyModel*>( mModelContainer.firstProxyModelOfType<ControllerStatePermissionProxyModel>() );
+}
+
 void AbstractController::registerModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);

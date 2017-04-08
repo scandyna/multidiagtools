@@ -326,8 +326,6 @@ void TableViewControllerTest::setModelTest()
 //   while(tableView.isVisible()){
 //     QTest::qWait(500);
 //   }
-
-  QFAIL("Missing set nullptr model");
 }
 
 void TableViewControllerTest::primaryKeyVisibilityTest()
@@ -445,7 +443,7 @@ void TableViewControllerTest::foreignKeyVisibilityTest()
 
 void TableViewControllerTest::currentRowChangeTest()
 {
-  using Mdt::ItemEditor::RowState;
+//   using Mdt::ItemEditor::RowState;
 
   VariantTableModel modelA, modelB;
   QModelIndex index;
@@ -697,10 +695,8 @@ void TableViewControllerTest::controllerCurrentRowChangeBenchmark()
 void TableViewControllerTest::editTest()
 {
   VariantTableModel model;
-  QModelIndex index;
+//   QModelIndex index;
   QTableView view;
-//   QList<QVariant> spyItem;
-
   /*
    * Setup controller
    */
@@ -715,7 +711,7 @@ void TableViewControllerTest::editTest()
   controller.setView(&view);
   model.populate(3, 2);
   view.show();
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.currentRow(), 0);
   /*
    * Check that we can change current row
@@ -725,115 +721,96 @@ void TableViewControllerTest::editTest()
   /*
    * Begin editing
    */
-  index = model.index(1, 0);
-  QVERIFY(index.isValid());
-  beginEditing(view, index, BeginEditTrigger::DoubleClick);
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  beginEditing(view, 1, 0, BeginEditTrigger::DoubleClick);
+  QCOMPARE(controller.controllerState(), ControllerState::EditingItem);
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
   stateSpy.clear();
-//   spyItem = stateSpy.takeFirst();
-//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
   // Check that we cannot change current row
   QVERIFY(!controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 1);
   /*
    * Edit some text
    */
-  editText(view, index, "ABCD");
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  editText(view, 1, 0, "ABCD");
+  QCOMPARE(controller.controllerState(), ControllerState::EditingItem);
   QCOMPARE(stateSpy.count(), 0);
   /*
    * End edition (by user)
    */
-  endEditing(view, index, EndEditTrigger::EnterKeyClick);
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  endEditing(view, 1, 0, EndEditTrigger::EnterKeyClick);
+  QCOMPARE(controller.controllerState(), ControllerState::Editing);
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
   stateSpy.clear();
-//   spyItem = stateSpy.takeFirst();
-//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
   QCOMPARE(controller.currentRow(), 1);
   // Check that we can change current row
   QVERIFY(controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 0);
   // Check that model was updated
-  QCOMPARE(model.data(index).toString(), QString("ABCD"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("ABCD"));
   /*
    * Begin editing
    */
-  index = model.index(1, 0);
-  QVERIFY(index.isValid());
-  beginEditing(view, index, BeginEditTrigger::DoubleClick);
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  beginEditing(view, 1, 0, BeginEditTrigger::DoubleClick);
+  QCOMPARE(controller.controllerState(), ControllerState::EditingItem);
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
   stateSpy.clear();
-//   spyItem = stateSpy.takeFirst();
-//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
   // Check that we cannot change current row
   QVERIFY(!controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 1);
   /*
    * Edit some text
    */
-  editText(view, index, "1234");
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  editText(view, 1, 0, "1234");
+  QCOMPARE(controller.controllerState(), ControllerState::EditingItem);
   QCOMPARE(stateSpy.count(), 0);
   /*
    * Call submit from controller
    */
   QVERIFY(controller.submit());
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
-  // Check that new state was signaled
-  QCOMPARE(stateSpy.count(), 1);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  // Check that new state was signaled (EditingItem -> Editing -> Visualizing = 2 state changes)
+  QCOMPARE(stateSpy.count(), 2);
   stateSpy.clear();
-//   spyItem = stateSpy.takeFirst();
-//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
   QCOMPARE(controller.currentRow(), 1);
   // Check that we can change current row
   QVERIFY(controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 0);
   // Check that model was updated
-  QCOMPARE(model.data(index).toString(), QString("1234"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("1234"));
   /*
    * Begin editing
    */
-  index = model.index(1, 0);
-  QVERIFY(index.isValid());
-  beginEditing(view, index, BeginEditTrigger::DoubleClick);
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  beginEditing(view, 1, 0, BeginEditTrigger::DoubleClick);
+  QCOMPARE(controller.controllerState(), ControllerState::EditingItem);
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
   stateSpy.clear();
-//   spyItem = stateSpy.takeFirst();
-//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
   // Check that we cannot change current row
   QVERIFY(!controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 1);
   /*
    * Edit some text
    */
-  editText(view, index, "EFGH");
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  editText(view, 1, 0, "EFGH");
+  QCOMPARE(controller.controllerState(), ControllerState::EditingItem);
   QCOMPARE(stateSpy.count(), 0);
   /*
    * Call revert from controller
    */
   controller.revert();
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
   stateSpy.clear();
-//   spyItem = stateSpy.takeFirst();
-//   QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
   QCOMPARE(controller.currentRow(), 1);
   // Check that we can change current row
   QVERIFY(controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 0);
   // Check that model was not updated
-  QCOMPARE(model.data(index).toString(), QString("1234"));
-
+  QCOMPARE(getModelData(model, 1, 0), QVariant("1234"));
   /*
    * Play
    */
@@ -858,14 +835,15 @@ void TableViewControllerTest::insertTest()
    */
   controller.setModel(&model);
   controller.setView(&view);
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
+  view.show();
   /*
    * Insert at beginning
    */
   QVERIFY(controller.insert());
-  QVERIFY(controller.controllerState() == ControllerState::Inserting);
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
   QCOMPARE(controller.rowCount(), 1);
   QCOMPARE(controller.currentRow(), 0);
   /*
@@ -874,10 +852,12 @@ void TableViewControllerTest::insertTest()
   index = view.model()->index(0, 0);
   QVERIFY(index.isValid());
   beginEditing(view, index, BeginEditTrigger::F2KeyClick);
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
   editText(view, index, "A");
   endEditing(view, index, EndEditTrigger::EnterKeyClick);
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
+  QVERIFY(controller.submit());
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 1);
   QCOMPARE(controller.currentRow(), 0);
   QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
@@ -887,14 +867,16 @@ void TableViewControllerTest::insertTest()
   controller.setInsertLocation(TableViewController::InsertAtEnd);
   QVERIFY(controller.insertLocation() == TableViewController::InsertAtEnd);
   QVERIFY(controller.insert());
-  QVERIFY(controller.controllerState() == ControllerState::Inserting);
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 1);
   /*
    * Edit new inserted row
    */
   edit(view, 1, 0, "B", BeginEditTrigger::DoubleClick, EndEditTrigger::EnterKeyClick);
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
+  QVERIFY(controller.submit());
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 1);
   QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
@@ -908,7 +890,7 @@ void TableViewControllerTest::insertTest()
 //   }
 }
 
-void TableViewControllerTest::insertRemoveTest()
+void TableViewControllerTest::insertRevertTest()
 {
   QStringListModel model;
   QModelIndex index;
@@ -925,21 +907,21 @@ void TableViewControllerTest::insertRemoveTest()
   model.setStringList(QStringList({"A","B"}));
   controller.setModel(&model);
   controller.setView(&view);
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
   /*
    * Insert at beginning
    */
   QVERIFY(controller.insert());
-  QVERIFY(controller.controllerState() == ControllerState::Inserting);
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 0);
   /*
    * Remove inserted row
    */
-  QVERIFY(controller.remove());
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  controller.revert();
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
   QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
@@ -950,14 +932,14 @@ void TableViewControllerTest::insertRemoveTest()
   controller.setInsertLocation(TableViewController::InsertAtEnd);
   QVERIFY(controller.insertLocation() == TableViewController::InsertAtEnd);
   QVERIFY(controller.insert());
-  QVERIFY(controller.controllerState() == ControllerState::Inserting);
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 2);
   /*
    * Remove inserted row
    */
-  QVERIFY(controller.remove());
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  controller.revert();
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 1);
   QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
@@ -976,7 +958,7 @@ void TableViewControllerTest::insertFromModelTest()
    */
   controller.setModel(&model);
   controller.setView(&view);
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
   /*
@@ -985,7 +967,7 @@ void TableViewControllerTest::insertFromModelTest()
    * - Controller state must not change
    */
   QVERIFY(model.insertRow(0));
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 1);
   QCOMPARE(controller.currentRow(), -1);
   /*
@@ -999,7 +981,7 @@ void TableViewControllerTest::insertFromModelTest()
    * - Controller state must not change
    */
   QVERIFY(model.insertRow(1));
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
   /*
@@ -1013,7 +995,7 @@ void TableViewControllerTest::insertFromModelTest()
    * - Controller state must not change
    */
   QVERIFY(model.insertRow(1));
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 2);
 
@@ -1100,21 +1082,21 @@ void TableViewControllerTest::insertFromModelAndRemoveTest()
   model.setStringList(QStringList({"A","B"}));
   controller.setModel(&model);
   controller.setView(&view);
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
   /*
    * Insert at beginning
    */
   QVERIFY(model.insertRow(0));
-  QVERIFY(controller.controllerState() == ControllerState::Inserting);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 3);
-  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(controller.currentRow(), 1);
   /*
    * Remove inserted row
    */
   QVERIFY(controller.remove());
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
   QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
@@ -1123,14 +1105,14 @@ void TableViewControllerTest::insertFromModelAndRemoveTest()
    * Insert at end
    */
   QVERIFY(model.insertRow(2));
-  QVERIFY(controller.controllerState() == ControllerState::Inserting);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 2);
   /*
    * Remove inserted row
    */
   QVERIFY(controller.remove());
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 1);
   QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
@@ -1140,7 +1122,6 @@ void TableViewControllerTest::insertFromModelAndRemoveTest()
 void TableViewControllerTest::removeTest()
 {
   QStringListModel model({"A","B"});
-  QModelIndex index;
   QTableView view;
   TableViewController controller;
 
@@ -1151,26 +1132,25 @@ void TableViewControllerTest::removeTest()
   controller.setView(&view);
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
+  view.show();
   /*
    * Edit and check that remove fails
    */
    // Begin editing
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  beginEditing(view, index, BeginEditTrigger::DoubleClick);
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
-  editText(view, index, "ABCD");
+  beginEditing(view, 0, 0, BeginEditTrigger::DoubleClick);
+  QCOMPARE(controller.controllerState(), ControllerState::EditingItem);
+  editText(view, 0, 0, "ABCD");
   // Try to remove
   QVERIFY(!controller.remove());
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  QCOMPARE(controller.controllerState(), ControllerState::EditingItem);
   // End editing and check
-  endEditing(view, index, EndEditTrigger::EnterKeyClick);
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index, Qt::DisplayRole).toString(), QString("ABCD"));
+  endEditing(view, 0, 0, EndEditTrigger::EnterKeyClick);
+  QCOMPARE(controller.controllerState(), ControllerState::Editing);
+  QVERIFY(controller.submit());
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("ABCD"));
   /*
    * Remove
    */
@@ -1201,7 +1181,6 @@ void TableViewControllerTest::removeTest()
 void TableViewControllerTest::removeFromModelTest()
 {
   QStringListModel model({"A","B","C","D"});
-  QModelIndex index;
   QTableView view;
   TableViewController controller;
 
@@ -1212,26 +1191,25 @@ void TableViewControllerTest::removeFromModelTest()
   controller.setView(&view);
   QCOMPARE(controller.rowCount(), 4);
   QCOMPARE(controller.currentRow(), 0);
+  view.show();
   /*
    * Edit row 0 , remove last row
    */
    // Begin editing
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  beginEditing(view, index, BeginEditTrigger::DoubleClick);
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
-  editText(view, index, "1234");
+  beginEditing(view, 0, 0, BeginEditTrigger::DoubleClick);
+  QCOMPARE(controller.controllerState(), ControllerState::EditingItem);
+  editText(view, 0, 0, "1234");
   // Remove last row
   QVERIFY(model.removeRow(3));
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 0);
-  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  QCOMPARE(controller.controllerState(), ControllerState::EditingItem);
   // End editing and check
-  endEditing(view, index, EndEditTrigger::EnterKeyClick);
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index, Qt::DisplayRole).toString(), QString("1234"));
+  endEditing(view, 0, 0, EndEditTrigger::EnterKeyClick);
+  QCOMPARE(controller.controllerState(), ControllerState::Editing);
+  QVERIFY(controller.submit());
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("1234"));
   /*
    * Go to row 1 , remove row 0
    */
@@ -1255,7 +1233,6 @@ void TableViewControllerTest::removeFromModelTest()
   QVERIFY(model.removeRow(0));
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
-
   /*
    * Play
    */

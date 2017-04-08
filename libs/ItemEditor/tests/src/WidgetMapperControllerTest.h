@@ -37,7 +37,7 @@ class WidgetMapperControllerTest : public TestBase
   void setModelTest();
   void currentRowChangedTest();
   void editTest();
-  void editTest_data();
+  void statePermissionModelFlagsTest();
   void insertTest();
   void insertFromModelTest();
   void removeTest();

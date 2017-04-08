@@ -36,6 +36,7 @@ class ControllerStatePermissionProxyModelTest : public TestBase
 
   void flagsTest();
   void flagsSignalTest();
+  void sourceModelFlagsTest();
 
  private:
 

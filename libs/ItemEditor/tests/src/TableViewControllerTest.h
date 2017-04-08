@@ -50,7 +50,7 @@ class TableViewControllerTest : public TestBase
   void controllerCurrentRowChangeBenchmark();
   void editTest();
   void insertTest();
-  void insertRemoveTest();
+  void insertRevertTest();
   void insertFromModelTest();
   void insertFromModelAndRemoveTest();
   void removeTest();

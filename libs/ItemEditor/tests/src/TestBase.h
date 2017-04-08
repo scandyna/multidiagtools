@@ -55,9 +55,13 @@ class TestBase : public QObject
   static Qt::ItemFlags getModelFlags(const QAbstractItemModel & model, int row, int column);
   // Helper function for editing in a QAbstractItemView
   static void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
+  static void beginEditing(QAbstractItemView & view, int row, int column, BeginEditTrigger trigger);
   static void editText(QAbstractItemView & view, const QModelIndex & editingIndex, const QString & str);
+  static void editText(QAbstractItemView & view, int editingRow, int editingColumn, const QString & str);
   static void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
+  static void endEditing(QAbstractItemView & view, int editingRow, int editingColumn, EndEditTrigger trigger);
   static void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
+  static void edit(QAbstractItemView & view, int row, int column, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 
 };
 

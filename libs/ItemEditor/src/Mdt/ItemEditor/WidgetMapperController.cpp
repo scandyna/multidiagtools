@@ -23,6 +23,7 @@
 #include "WidgetMapperControllerStateTable.h"
 #include "WidgetMapperControllerStatePermission.h"
 #include "ControllerStateMachine.h"
+#include "ControllerStatePermissionProxyModel.h"
 
 // #include <QDebug>
 
@@ -33,6 +34,7 @@ WidgetMapperController::WidgetMapperController(QObject* parent)
    mWidgetMapper(new DataWidgetMapper(this))
 {
   setControllerStateMachine( ControllerStateMachine::makeNew<WidgetMapperControllerStateTable, WidgetMapperControllerStatePermission>(this) );
+  connect( getControllerStatePermissionProxyModel(), &ControllerStatePermissionProxyModel::flagsChanged, mWidgetMapper, &DataWidgetMapper::updateFromModelFlags );
   connect(this, &WidgetMapperController::currentRowChanged, mWidgetMapper, &DataWidgetMapper::setCurrentRow);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionStarted, this, &WidgetMapperController::onDataEditionStarted);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionDone, this, &WidgetMapperController::onDataEditionDone);

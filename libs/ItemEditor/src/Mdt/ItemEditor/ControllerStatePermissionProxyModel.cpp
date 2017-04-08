@@ -47,7 +47,7 @@ Qt::ItemFlags ControllerStatePermissionProxyModel::flags(const QModelIndex & ind
     return unsetFlag( QIdentityProxyModel::flags(index), Qt::ItemIsEditable );
   }
   if(mStateMachine->canEdit()){
-    return setFlag( QIdentityProxyModel::flags(index), Qt::ItemIsEditable );
+    return QIdentityProxyModel::flags(index);
   }
   return unsetFlag( QIdentityProxyModel::flags(index), Qt::ItemIsEditable );
 }

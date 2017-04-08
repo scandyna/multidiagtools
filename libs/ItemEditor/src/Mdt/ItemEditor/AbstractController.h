@@ -48,6 +48,7 @@ namespace Mdt{ namespace ItemEditor{
 
   class RowChangeEventDispatcher;
   class ControllerStateMachine;
+  class ControllerStatePermissionProxyModel;
 
   /*! \brief Common base for controllers
    *
@@ -617,6 +618,12 @@ namespace Mdt{ namespace ItemEditor{
      * \pre \a stateMachine must have this as parent
      */
     void setControllerStateMachine(ControllerStateMachine *stateMachine);
+
+    /*! \brief Get controller state permission proxy model
+     *
+     * \post Returns allways a valid pointer
+     */
+    ControllerStatePermissionProxyModel *getControllerStatePermissionProxyModel() const;
 
     /*! \brief Register model
      *

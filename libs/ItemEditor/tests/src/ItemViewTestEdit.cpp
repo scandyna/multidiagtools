@@ -30,7 +30,15 @@
 void ItemViewTestEdit::beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger)
 {
   Q_ASSERT(index.isValid());
+  Q_ASSERT(index.model() == view.model());
 
+  QApplication::setActiveWindow(&view);
+  if(!QTest::qWaitForWindowActive(&view)){
+    qWarning() << "beginEditing() - waiting for window active failed on view " << &view << " -> Did you call show() on view ?";
+  }
+  if(static_cast<QWidget *>(&view) != QApplication::activeWindow()){
+    qWarning() << "beginEditing() - view " << &view << " is not the active window";
+  }
   // Get view port (which is the widget to which event must be sent)
   QWidget *viewPort = view.viewport();
   Q_ASSERT(viewPort != nullptr);
@@ -39,11 +47,13 @@ void ItemViewTestEdit::beginEditing(QAbstractItemView & view, const QModelIndex 
   // Begin editing with requested trigger
   if(trigger == BeginEditTrigger::DoubleClick){
     Q_ASSERT(view.editTriggers() & QAbstractItemView::DoubleClicked);
+    Q_ASSERT(view.isVisible());
     // Edition beginns after double click. With QTest, we must click before
     QTest::mouseClick(viewPort, Qt::LeftButton, 0, itemCenter);
     QTest::mouseDClick(viewPort, Qt::LeftButton, 0, itemCenter);
   }else if(trigger == BeginEditTrigger::F2KeyClick){
     Q_ASSERT( (view.editTriggers() & QAbstractItemView::EditKeyPressed) || (view.editTriggers() & QAbstractItemView::AnyKeyPressed) );
+    Q_ASSERT(view.isVisible());
     view.setCurrentIndex(index);
     QTest::keyClick(viewPort, Qt::Key_F2);
   }else{
@@ -55,6 +65,8 @@ void ItemViewTestEdit::beginEditing(QAbstractItemView & view, const QModelIndex 
 
 void ItemViewTestEdit::editText(QAbstractItemView& view, const QModelIndex& editingIndex, const QString& str)
 {
+  Q_ASSERT(editingIndex.isValid());
+  Q_ASSERT(editingIndex.model() == view.model());
   /*
    * We cannot send key clicks directly to view port of the view,
    * because a editor was created.
@@ -67,6 +79,9 @@ void ItemViewTestEdit::editText(QAbstractItemView& view, const QModelIndex& edit
 
 void ItemViewTestEdit::endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger)
 {
+  Q_ASSERT(editingIndex.isValid());
+  Q_ASSERT(editingIndex.model() == view.model());
+
   switch(trigger){
     case EndEditTrigger::IndexChange:
       clickOnOtherItem(view, editingIndex);
@@ -80,6 +95,9 @@ void ItemViewTestEdit::endEditing(QAbstractItemView & view, const QModelIndex & 
 void ItemViewTestEdit::edit(QAbstractItemView & view, const QModelIndex & index, const QString & str,
                             BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
 {
+  Q_ASSERT(index.isValid());
+  Q_ASSERT(index.model() == view.model());
+
   beginEditing(view, index, beginEditTrigger);
   editText(view, index, str);
   endEditing(view, index, endEditTrigger);
@@ -89,6 +107,7 @@ void ItemViewTestEdit::clickOnOtherItem(QAbstractItemView & view, const QModelIn
 {
   Q_ASSERT(!(view.editTriggers() & QAbstractItemView::SelectedClicked));
   Q_ASSERT(editingIndex.isValid());
+  Q_ASSERT(editingIndex.model() == view.model());
 
   auto *model = view.model();
   Q_ASSERT(model != nullptr);
@@ -103,7 +122,7 @@ void ItemViewTestEdit::clickOnOtherItem(QAbstractItemView & view, const QModelIn
       --row;
     }
   }else{
-    Q_ASSERT_X(model->columnCount() > 1, "ItemViewTestEdit::endEditing()", "model must at least have 2 rows or 2 columns");
+    Q_ASSERT_X(model->columnCount() > 1, "ItemViewTestEdit::endEditing()", "model must at least have 2 rows or 2 columns when using IndexChange trigger");
     if(column == 0){
       ++column;
     }else{

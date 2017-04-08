@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -100,6 +100,26 @@ void ItemViewTest::tableViewEditBeginEndTest()
     QCOMPARE(model.data(index), QVariant("TEST"));
   }
   /*
+   * Check using row/column helpers
+   */
+  // Check at row 0 and column 0
+  QVERIFY(getModelData(model, 0, 0) != QVariant("TEST_2"));
+  edit(view, 0, 0, "TEST_2", beginEditTrigger, endEditTrigger);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("TEST_2"));
+  // Check at row 1 if possible
+  if(model.rowCount() > 1){
+    QVERIFY(getModelData(model, 1, 0) != QVariant("TEST_2"));
+    edit(view, 1, 0, "TEST_2", beginEditTrigger, endEditTrigger);
+    QCOMPARE(getModelData(model, 1, 0), QVariant("TEST_2"));
+  }
+  // Check at column 1 if possible
+  if(model.columnCount() > 1){
+    QVERIFY(getModelData(model, 0, 1) != QVariant("TEST_2"));
+    edit(view, 0, 1, "TEST_2", beginEditTrigger, endEditTrigger);
+    QCOMPARE(getModelData(model, 0, 1), QVariant("TEST_2"));
+  }
+
+  /*
    * Play
    */
 //   view.resize(300, 200);
@@ -127,25 +147,6 @@ void ItemViewTest::tableViewEditBeginEndTest_data()
  */
 
 
-/*
- * Helper functions for editing item views
- */
-
-void ItemViewTest::beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger beginEditTrigger)
-{
-  ItemViewTestEdit::beginEditing(view, index, beginEditTrigger);
-}
-
-void ItemViewTest::endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger endEditTrigger)
-{
-  ItemViewTestEdit::endEditing(view, editingIndex, endEditTrigger);
-}
-
-void ItemViewTest::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str,
-                        BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
-{
-  ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
-}
 
 /*
  * Main

@@ -21,6 +21,7 @@
 #include "TestBase.h"
 #include "ItemViewTestEdit.h"
 #include <QAbstractItemModel>
+#include <QModelIndex>
 #include <QAbstractProxyModel>
 #include <QModelIndex>
 #include <QListView>
@@ -31,7 +32,6 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QByteArray>
-#include <QDebug>
 
 void TestBase::displayWidget(QWidget* widget)
 {
@@ -189,9 +189,33 @@ void TestBase::beginEditing(QAbstractItemView& view, const QModelIndex& index, B
   ItemViewTestEdit::beginEditing(view, index, trigger);
 }
 
+void TestBase::beginEditing(QAbstractItemView & view, int row, int column, BeginEditTrigger trigger)
+{
+  Q_ASSERT(view.model() != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < view.model()->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < view.model()->columnCount());
+
+  const auto index = view.model()->index(row, column);
+  beginEditing(view, index, trigger);
+}
+
 void TestBase::editText(QAbstractItemView& view, const QModelIndex& editingIndex, const QString& str)
 {
   ItemViewTestEdit::editText(view, editingIndex, str);
+}
+
+void TestBase::editText(QAbstractItemView& view, int editingRow, int editingColumn, const QString& str)
+{
+  Q_ASSERT(view.model() != nullptr);
+  Q_ASSERT(editingRow >= 0);
+  Q_ASSERT(editingRow < view.model()->rowCount());
+  Q_ASSERT(editingColumn >= 0);
+  Q_ASSERT(editingColumn < view.model()->columnCount());
+
+  const auto index = view.model()->index(editingRow, editingColumn);
+  editText(view, index, str);
 }
 
 void TestBase::endEditing(QAbstractItemView& view, const QModelIndex& editingIndex, EndEditTrigger trigger)
@@ -199,9 +223,33 @@ void TestBase::endEditing(QAbstractItemView& view, const QModelIndex& editingInd
   ItemViewTestEdit::endEditing(view, editingIndex, trigger);
 }
 
-void TestBase::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
+void TestBase::endEditing(QAbstractItemView& view, int editingRow, int editingColumn, EndEditTrigger trigger)
+{
+  Q_ASSERT(view.model() != nullptr);
+  Q_ASSERT(editingRow >= 0);
+  Q_ASSERT(editingRow < view.model()->rowCount());
+  Q_ASSERT(editingColumn >= 0);
+  Q_ASSERT(editingColumn < view.model()->columnCount());
+
+  const auto index = view.model()->index(editingRow, editingColumn);
+  endEditing(view, index, trigger);
+}
+
+void TestBase::edit(QAbstractItemView & view, const QModelIndex& index, const QString& str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
 {
   ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
+}
+
+void TestBase::edit(QAbstractItemView & view, int row, int column, const QString& str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
+{
+  Q_ASSERT(view.model() != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < view.model()->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < view.model()->columnCount());
+
+  const auto index = view.model()->index(row, column);
+  edit(view, index, str, beginEditTrigger, endEditTrigger);
 }
 
 namespace Mdt{ namespace ItemEditor{
