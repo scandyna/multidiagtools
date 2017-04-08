@@ -49,6 +49,12 @@ class ControllerTest : public TestBase
   void foreignKeyTest();
   void currentRowTest();
   void currentRowSignalsTest();
+  void insertTest();
+  void insertRevertTest();
+  void insertFromModelTest();
+  void insertFromModelAndRemoveTest();
+  void removeTest();
+  void removeFromModelTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H

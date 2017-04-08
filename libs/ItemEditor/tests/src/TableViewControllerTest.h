@@ -49,19 +49,12 @@ class TableViewControllerTest : public TestBase
   void viewCurrentRowChangeBenchmark();
   void controllerCurrentRowChangeBenchmark();
   void editTest();
-  void insertTest();
-  void insertRevertTest();
-  void insertFromModelTest();
-  void insertFromModelAndRemoveTest();
-  void removeTest();
-  void removeFromModelTest();
-  void filterTest();
-  void sortTest();
-
- private:
-
-  void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
-  void edit(QAbstractItemView & view, int row, int column, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
+  void insertEditTest();
+  void insertEditRevertTest();
+  void editRemoveTest();
+  void editRemoveFromModelTest();
+  void filterAndEditTest();
+  void sortAndEditTest();
 };
 
 #endif // MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_TEST_H

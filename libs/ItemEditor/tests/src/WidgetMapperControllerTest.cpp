@@ -675,7 +675,7 @@ void WidgetMapperControllerTest::statePermissionModelFlagsTest()
   QVERIFY(!editA.isReadOnly());
 }
 
-void WidgetMapperControllerTest::insertTest()
+void WidgetMapperControllerTest::insertEditTest()
 {
   VariantTableModel model;
   model.resize(0, 1);
@@ -734,6 +734,12 @@ void WidgetMapperControllerTest::insertTest()
   QCOMPARE(model.data(0, 0), QVariant("A"));
   QCOMPARE(model.data(1, 0), QVariant("B"));
   QCOMPARE(model.data(2, 0), QVariant("C"));
+}
+
+void WidgetMapperControllerTest::insertEditRevertTest()
+{
+
+  QFAIL("Not complete");
 }
 
 void WidgetMapperControllerTest::insertFromModelTest()

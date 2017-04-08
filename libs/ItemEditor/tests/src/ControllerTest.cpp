@@ -25,7 +25,7 @@
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
-#include "Mdt/ItemEditor/TableViewController.h"
+// #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
@@ -33,7 +33,7 @@
 #include <QStringList>
 #include <QStringListModel>
 #include <QSortFilterProxyModel>
-#include <QTableView>
+// #include <QTableView>
 #include <QLineEdit>
 #include <QSpinBox>
 #include <QComboBox>
@@ -715,6 +715,292 @@ void ControllerTest::currentRowTest()
 void ControllerTest::currentRowSignalsTest()
 {
   QFAIL("Not complete");
+}
+
+void ControllerTest::insertTest()
+{
+  QStringListModel model;
+  QModelIndex index;
+  ItemModelControllerTester controller;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(controller.insertLocation() == ItemModelControllerTester::InsertAtBeginning);
+  /*
+   * Setup
+   */
+  model.setStringList(QStringList({"A","B"}));
+  controller.setModel(&model);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Insert at beginning
+   */
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  QVERIFY(controller.submit());
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.currentRow(), 0);
+  QVERIFY(getModelData(model, 0, 0).isNull());
+  QCOMPARE(getModelData(model, 1, 0), QVariant("A"));
+  QCOMPARE(getModelData(model, 2, 0), QVariant("B"));
+  /*
+   * Insert at end
+   */
+  controller.setInsertLocation(ItemModelControllerTester::InsertAtEnd);
+  QVERIFY(controller.insertLocation() == ItemModelControllerTester::InsertAtEnd);
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
+  QCOMPARE(controller.rowCount(), 4);
+  QCOMPARE(controller.currentRow(), 3);
+  QVERIFY(controller.submit());
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.currentRow(), 3);
+  QVERIFY(getModelData(model, 0, 0).isNull());
+  QCOMPARE(getModelData(model, 1, 0), QVariant("A"));
+  QCOMPARE(getModelData(model, 2, 0), QVariant("B"));
+  QVERIFY(getModelData(model, 3, 0).isNull());
+}
+
+void ControllerTest::insertRevertTest()
+{
+  QStringListModel model;
+  QModelIndex index;
+  ItemModelControllerTester controller;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(controller.insertLocation() == ItemModelControllerTester::InsertAtBeginning);
+  /*
+   * Setup
+   */
+  model.setStringList(QStringList({"A","B"}));
+  controller.setModel(&model);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Insert at beginning
+   */
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove inserted row
+   */
+  controller.revert();
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("B"));
+  /*
+   * Insert at end
+   */
+  controller.setInsertLocation(ItemModelControllerTester::InsertAtEnd);
+  QVERIFY(controller.insertLocation() == ItemModelControllerTester::InsertAtEnd);
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.controllerState(), ControllerState::Inserting);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 2);
+  /*
+   * Remove inserted row
+   */
+  controller.revert();
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("B"));
+}
+
+void ControllerTest::insertFromModelTest()
+{
+  QStringListModel model;
+  QModelIndex index;
+  ItemModelControllerTester controller;
+
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Insert to a empty model
+   * - Current row must not change
+   * - Controller state must not change
+   */
+  QVERIFY(model.insertRow(0));
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Go to first row
+   */
+  QVERIFY(controller.setCurrentRow(0));
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Insert a row after current row
+   * - Current row must not change
+   * - Controller state must not change
+   */
+  QVERIFY(model.insertRow(1));
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Go to row 1
+   */
+  QVERIFY(controller.setCurrentRow(1));
+  QCOMPARE(controller.currentRow(), 1);
+  /*
+   * Insert a row before row 1
+   * - Current row must now be 2
+   * - Controller state must not change
+   */
+  QVERIFY(model.insertRow(1));
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 2);
+}
+
+void ControllerTest::insertFromModelAndRemoveTest()
+{
+  QStringListModel model;
+  QModelIndex index;
+  ItemModelControllerTester controller;
+  /*
+   * Setup
+   */
+  model.setStringList(QStringList({"A","B"}));
+  controller.setModel(&model);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Insert at beginning
+   */
+  QVERIFY(model.insertRow(0));
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 1);
+  /*
+   * Remove inserted row
+   */
+  QVERIFY(controller.remove());
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("B"));
+  /*
+   * Insert at end
+   */
+  QVERIFY(model.insertRow(2));
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 2);
+  /*
+   * Remove inserted row
+   */
+  QVERIFY(controller.remove());
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("B"));
+}
+
+void ControllerTest::removeTest()
+{
+  QStringListModel model;
+  QModelIndex index;
+  ItemModelControllerTester controller;
+  /*
+   * Setup
+   */
+  model.setStringList(QStringList({"A","B"}));
+  controller.setModel(&model);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove
+   */
+  QVERIFY(controller.remove());
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove
+   */
+  QVERIFY(controller.remove());
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Remove
+   */
+  QVERIFY(!controller.remove());
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+}
+
+void ControllerTest::removeFromModelTest()
+{
+  QStringListModel model({"A","B","C","D"});
+  ItemModelControllerTester controller;
+  auto *stateMachine = controller.controllerStateMachine();
+  QVERIFY(stateMachine != nullptr);
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  QCOMPARE(controller.rowCount(), 4);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Check that removing from model does not change controller state
+   */
+  stateMachine->forceCurrentState(ControllerState::Editing);
+  QCOMPARE(controller.controllerState(), ControllerState::Editing);
+  // Remove last row
+  QVERIFY(model.removeRow(3));
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(controller.controllerState(), ControllerState::Editing);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  stateMachine->forceCurrentState(ControllerState::Visualizing);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  /*
+   * Go to row 1 , remove row 0
+   */
+  // Go to row 1
+  QVERIFY(controller.setCurrentRow(1));
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 1);
+  // Remove row 0 , and check that controller goes to row 0
+  QVERIFY(model.removeRow(0));
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove current row (row 0)
+   */
+  QVERIFY(model.removeRow(0));
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove last row
+   */
+  QVERIFY(model.removeRow(0));
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
 }
 
 

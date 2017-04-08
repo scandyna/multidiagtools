@@ -57,6 +57,7 @@ void EventCatchItemDelegate::commitCurrentEditorData()
 void EventCatchItemDelegate::closeCurrentEditor()
 {
   if(!pvCurrentEditor.isNull()){
+    qDebug() << "ECID: closeEditor()";
     closeEditor(pvCurrentEditor, EventCatchItemDelegate::NoHint);
   }
 }
