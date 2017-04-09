@@ -49,6 +49,7 @@ class ControllerTest : public TestBase
   void foreignKeyTest();
   void currentRowTest();
   void currentRowSignalsTest();
+  void navigationSlotsTest();
   void insertTest();
   void insertRevertTest();
   void insertFromModelTest();

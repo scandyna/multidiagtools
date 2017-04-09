@@ -6,6 +6,7 @@ project(multidiagtools)
 # List of source files
 set(SOURCES_FILES
     src/Mdt/ItemEditor/Debug.cpp
+    src/Mdt/ItemEditor/RowState.cpp
     src/Mdt/ItemEditor/ItemDelegateProxy.cpp
     src/Mdt/ItemEditor/EventCatchItemDelegate.cpp
     src/Mdt/ItemEditor/ItemSelectionModel.cpp

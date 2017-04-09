@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,8 @@
 #define MDT_ITEM_EDITOR_ROW_STATE_H
 
 #include <QMetaType>
+
+class QByteArray;
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -144,6 +146,12 @@ namespace Mdt{ namespace ItemEditor{
     int pvRowCount;
     int pvCurrentRow;
   };
+
+  /*! \brief Get text version of \a rowState
+   *
+   * \sa operator<<(QDebug, Mdt::ItemEditor::RowState)
+   */
+  QByteArray rowStateText(RowState rowState);
 
 }} // namespace Mdt{ namespace ItemEditor{
 

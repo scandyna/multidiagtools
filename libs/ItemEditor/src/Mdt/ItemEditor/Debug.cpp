@@ -25,6 +25,14 @@ namespace Mdt{ namespace ItemEditor{
 
 }} // namespace Mdt{ namespace ItemEditor{
 
+QDebug operator<<(QDebug debug, Mdt::ItemEditor::RowState rowState)
+{
+  QDebugStateSaver ds(debug);
+  debug.nospace() << Mdt::ItemEditor::rowStateText(rowState);
+
+  return debug;
+}
+
 QDebug operator<<(QDebug debug, Mdt::ItemEditor::ControllerState state)
 {
   QDebugStateSaver ds(debug);

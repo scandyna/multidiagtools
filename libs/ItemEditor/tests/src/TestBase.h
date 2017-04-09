@@ -22,6 +22,8 @@
 #define MDT_ITEM_EDITOR_TEST_BASE_H
 
 #include "Mdt/Application.h"
+#include "Mdt/ItemEditor/Debug.h"
+#include "Mdt/ItemEditor/RowState.h"
 #include "Mdt/ItemEditor/ControllerState.h"
 #include "Mdt/ItemEditor/ControllerEvent.h"
 #include "ItemViewTestEditTriggers.h"
@@ -67,6 +69,7 @@ class TestBase : public QObject
 
 namespace Mdt{ namespace ItemEditor{
 
+  char *toString(RowState rowState);
   char *toString(ControllerState state);
   char *toString(ControllerEvent event);
 

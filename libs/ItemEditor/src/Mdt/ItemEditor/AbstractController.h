@@ -753,7 +753,7 @@ namespace Mdt{ namespace ItemEditor{
      *
      * It will also emit rowStateChanged() and currentRowChanged().
      */
-    void updateRowState(Mdt::ItemEditor::RowState rs);
+//     void updateRowState(Mdt::ItemEditor::RowState rs);
 
 //     /*! \brief Actions to perform when primary key's source model changed
 //      *

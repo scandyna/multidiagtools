@@ -26,6 +26,7 @@
 #include "ControllerStatePermissionProxyModel.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
+#include <algorithm>
 
 // #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 
@@ -50,7 +51,9 @@ AbstractController::AbstractController(QObject* parent)
 {
   mModelContainer.appendProxyModel( new ControllerStatePermissionProxyModel(this) );
   mRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
-  connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
+  connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::rowStateChanged);
+  connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::currentRowChanged, this, &AbstractController::currentRowChanged);
+//   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
 //   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsInserted, this, &AbstractController::onRowsInserted);
   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsRemoved, this, &AbstractController::onRowsRemoved);
 }
@@ -347,6 +350,9 @@ bool AbstractController::setCurrentRow(int row)
   if(row == currentRow()){
     return true;
   }
+  if(row >= rowCount()){
+    return false;
+  }
   if(!canChangeCurrentRow()){
     qDebug() << "AC: cannot change current row in state " << controllerState();
     return false;
@@ -374,13 +380,12 @@ void AbstractController::toFirst()
 
 void AbstractController::toPrevious()
 {
-  /// \todo checks..
-  setCurrentRow(currentRow()-1);
+  const int row = std::max( currentRow()-1 , -1 );
+  setCurrentRow(row);
 }
 
 void AbstractController::toNext()
 {
-  /// \todo checks..
   setCurrentRow(currentRow()+1);
 }
 
@@ -522,6 +527,9 @@ void AbstractController::registerModel(QAbstractItemModel* model)
 
 //   mPrimaryKey.clear();
 //   mForeignKey.clear();
+  if(model == mModelContainer.sourceModel()){
+    return;
+  }
   mModelContainer.setSourceModel(model);
   emit sourceModelChanged(model);
   model = modelForView();
@@ -580,12 +588,12 @@ void AbstractController::onRowsRemoved()
 //   }
 }
 
-void AbstractController::updateRowState(RowState rs)
-{
-//   qDebug() << "AC::updateRowState()";
-  emit currentRowChanged(rs.currentRow());
-  emit rowStateChanged(rs);
-}
+// void AbstractController::updateRowState(RowState rs)
+// {
+// //   qDebug() << "AC::updateRowState()";
+//   emit currentRowChanged(rs.currentRow());
+//   emit rowStateChanged(rs);
+// }
 
 // void AbstractController::onPrimaryKeySourceModelChanged()
 // {

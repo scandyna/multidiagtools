@@ -18,35 +18,39 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H
-#define MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H
+#include "CurrentRowChangedSpy.h"
+#include "Mdt/ItemEditor/RowChangeEventDispatcher.h"
+#include "Mdt/ItemEditor/AbstractController.h"
 
-#include "TestBase.h"
-// #include "Mdt/ItemEditor/RowState.h"
+using namespace Mdt::ItemEditor;
 
-class RowChangeTest : public TestBase
+CurrentRowChangedSpy::CurrentRowChangedSpy(const RowChangeEventDispatcher & dispatcher, QObject* parent)
+ : QObject(parent)
 {
- Q_OBJECT
+  connect(&dispatcher, &RowChangeEventDispatcher::currentRowChanged, this, &CurrentRowChangedSpy::onCurrentRowChanged);
+}
 
- private slots:
+CurrentRowChangedSpy::CurrentRowChangedSpy(const AbstractController& controller, QObject* parent)
+ : QObject(parent)
+{
+  connect(&controller, &AbstractController::currentRowChanged, this, &CurrentRowChangedSpy::onCurrentRowChanged);
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+int CurrentRowChangedSpy::takeCurrentRow()
+{
+  int row = mCurrentRow;
+  clear();
+  return row;
+}
 
-  void rowStateTest();
-  void rowStateComparisonTest();
+void CurrentRowChangedSpy::clear()
+{
+  mCount = 0;
+  mCurrentRow = -2;
+}
 
-  void eventDispatcherChangeModelTest();
-  void eventDispatcherTest();
-  void eventDispatcherInsertFromModelTest();
-  void eventDispatcherInsertFromModelMultiTest();
-  void eventDispatcherInsertAtBeginningTest();
-  void eventDispatcherInsertAtEndTest();
-  void eventDispatcherRemoveTest();
-
-//  private:
-// 
-//   Mdt::ItemEditor::RowState expectedRowState(int rowCount, int currentRow);
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H
+void CurrentRowChangedSpy::onCurrentRowChanged(int row)
+{
+  ++mCount;
+  mCurrentRow = row;
+}

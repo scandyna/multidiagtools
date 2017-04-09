@@ -18,35 +18,26 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H
-#define MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H
+#include "RowState.h"
+#include <QByteArray>
 
-#include "TestBase.h"
-// #include "Mdt/ItemEditor/RowState.h"
+namespace Mdt{ namespace ItemEditor{
 
-class RowChangeTest : public TestBase
+QByteArray rowStateText(RowState rowState)
 {
- Q_OBJECT
+  QByteArray text;
 
- private slots:
+  if(rowState.isNull()){
+    text.append("RowState(null)");
+  }else{
+    text.append("RowState(n:");
+    text.append( QByteArray::number(rowState.rowCount()) );
+    text.append(",currentRow:");
+    text.append( QByteArray::number(rowState.currentRow()) );
+    text.append(")");
+  }
 
-  void initTestCase();
-  void cleanupTestCase();
+  return text;
+}
 
-  void rowStateTest();
-  void rowStateComparisonTest();
-
-  void eventDispatcherChangeModelTest();
-  void eventDispatcherTest();
-  void eventDispatcherInsertFromModelTest();
-  void eventDispatcherInsertFromModelMultiTest();
-  void eventDispatcherInsertAtBeginningTest();
-  void eventDispatcherInsertAtEndTest();
-  void eventDispatcherRemoveTest();
-
-//  private:
-// 
-//   Mdt::ItemEditor::RowState expectedRowState(int rowCount, int currentRow);
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H
+}} // namespace Mdt{ namespace ItemEditor{

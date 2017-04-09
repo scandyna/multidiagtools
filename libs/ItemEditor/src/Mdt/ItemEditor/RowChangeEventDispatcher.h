@@ -150,6 +150,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void rowStateUpdated(Mdt::ItemEditor::RowState rs);
 
+    /*! \brief Emitted whenever current row changed
+     */
+    void currentRowChanged(int row);
+
     /*! \brief Emitted when rows have been inserted into the model
      *
      * This signal only tells the controller that some rows where

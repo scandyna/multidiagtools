@@ -83,8 +83,12 @@ void RowChangeEventDispatcher::setModel(QAbstractItemModel* model)
   mModel = model;
   if(mModel.isNull()){
     if(!mRowState.isNull()){
+      const int previousCurrentRow = mRowState.currentRow();
       mRowState.clear();
       emit rowStateUpdated(mRowState);
+      if(mRowState.currentRow() != previousCurrentRow){
+        emit currentRowChanged(mRowState.currentRow());
+      }
     }
   }else{
     connect(mModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
@@ -99,6 +103,7 @@ void RowChangeEventDispatcher::onModelReset()
 {
   Q_ASSERT(!mModel.isNull());
 
+  const auto previousRowState = mRowState;
   /*
    * If model has data, we go to first row
    */
@@ -109,17 +114,24 @@ void RowChangeEventDispatcher::onModelReset()
     mRowState.setCurrentRow(-1);
   }
   Q_ASSERT(mRowState.rowCount() == mModel->rowCount());
+  if(mRowState != previousRowState){
+    emit rowStateUpdated(mRowState);
+  }
+  if(mRowState.currentRow() != previousRowState.currentRow()){
+    emit currentRowChanged(mRowState.currentRow());
+  }
   /*
    * We must allways signal when a model was reset.
    */
 //   qDebug() << "RCEvD:emit rowStateUpdated()";
-  emit rowStateUpdated(mRowState);
+//   emit rowStateUpdated(mRowState);
 }
 
 void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int first, int last)
 {
   Q_ASSERT(!mModel.isNull());
 
+  const int previousCurrentRow = mRowState.currentRow();
   mRowState.setRowCount(mModel->rowCount());
   /*
    * If insertion was called from controller,
@@ -143,6 +155,9 @@ void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int
     }
   }
   emit rowStateUpdated(mRowState);
+  if(mRowState.currentRow() != previousCurrentRow){
+    emit currentRowChanged(mRowState.currentRow());
+  }
   emit rowsInserted();
 }
 
@@ -150,6 +165,7 @@ void RowChangeEventDispatcher::onRowsRemoved(const QModelIndex& /*parent*/, int 
 {
   Q_ASSERT(!mModel.isNull());
 
+  const int previousCurrentRow = mRowState.currentRow();
   mRowState.setRowCount(mModel->rowCount());
   /*
    * Define new current row:
@@ -170,6 +186,9 @@ void RowChangeEventDispatcher::onRowsRemoved(const QModelIndex& /*parent*/, int 
 //   }
   emit rowsRemoved();
   emit rowStateUpdated(mRowState);
+  if(mRowState.currentRow() != previousCurrentRow){
+    emit currentRowChanged(mRowState.currentRow());
+  }
 }
 
 bool RowChangeEventDispatcher::insertRowBefore(int row)
@@ -191,10 +210,13 @@ void RowChangeEventDispatcher::updateCurrentRow(int row)
     return;
   }
   Q_ASSERT(mRowState.rowCount() == mModel->rowCount());
-  auto previousRowState = mRowState;
+  const auto previousRowState = mRowState;
   mRowState.setCurrentRow(row);
   if(mRowState != previousRowState){
     emit rowStateUpdated(mRowState);
+  }
+  if(mRowState.currentRow() != previousRowState.currentRow()){
+    emit currentRowChanged(mRowState.currentRow());
   }
 }
 

@@ -254,6 +254,14 @@ void TestBase::edit(QAbstractItemView & view, int row, int column, const QString
 
 namespace Mdt{ namespace ItemEditor{
 
+char* toString(RowState rowState)
+{
+  // bring QTest::toString overloads into scope:
+  using QTest::toString;
+  // delegate char* handling to QTest::toString(QByteArray):
+  return toString( rowStateText(rowState) );
+}
+
 char* toString(ControllerState state)
 {
   // bring QTest::toString overloads into scope:
