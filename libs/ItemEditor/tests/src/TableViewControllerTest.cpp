@@ -21,7 +21,6 @@
 #include "TableViewControllerTest.h"
 #include "ItemViewTestEdit.h"
 #include "RowStateChangedSpy.h"
-// #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include "Mdt/ItemEditor/ControllerState.h"
@@ -31,8 +30,6 @@
 #include <QSignalSpy>
 #include <QStringListModel>
 #include <QTableView>
-#include <QSpinBox>
-#include <QComboBox>
 #include <QObject>
 #include <QMetaObject>
 #include <QMetaProperty>
@@ -52,16 +49,6 @@ void TableViewControllerTest::cleanupTestCase()
 /*
  * Tests
  */
-
-// void TableViewControllerTest::basicStateTest()
-// {
-//   /*
-//    * Initial state
-//    */
-//   TableViewController controller;
-//   QVERIFY(controller.controllerState() == ControllerState::Visualizing);
-//   QVERIFY(controller.primaryKey().isNull());
-// }
 
 void TableViewControllerTest::statePermissionTest()
 {
@@ -542,88 +529,6 @@ void TableViewControllerTest::currentRowChangeTest()
   QCOMPARE(rs.currentRow(), 2);
   // Check that view was updated
   QCOMPARE(viewB.currentIndex().row(), 2);
-//   /*
-//    * Check toFirst slot
-//    */
-//   controller.toFirst();
-//   QCOMPARE(controller.rowCount(), 5);
-//   QCOMPARE(controller.currentRow(), 0);
-//   // Check that row state was signaled
-//   QCOMPARE(rowStateSpy.count(), 1);
-//   spyItem = rowStateSpy.takeFirst();
-//   rs = spyItem.at(0).value<RowState>();
-//   QCOMPARE(rs.rowCount(), 5);
-//   QCOMPARE(rs.currentRow(), 0);
-//   // Check that view was updated
-//   QCOMPARE(viewB.currentIndex().row(), 0);
-//   /*
-//    * Check toNext slot
-//    */
-//   controller.toNext();
-//   QCOMPARE(controller.rowCount(), 5);
-//   QCOMPARE(controller.currentRow(), 1);
-//   // Check that row state was signaled
-//   QCOMPARE(rowStateSpy.count(), 1);
-//   spyItem = rowStateSpy.takeFirst();
-//   rs = spyItem.at(0).value<RowState>();
-//   QCOMPARE(rs.rowCount(), 5);
-//   QCOMPARE(rs.currentRow(), 1);
-//   // Check that view was updated
-//   QCOMPARE(viewB.currentIndex().row(), 1);
-//   /*
-//    * Check toLast slot
-//    */
-//   controller.toLast();
-//   QCOMPARE(controller.rowCount(), 5);
-//   QCOMPARE(controller.currentRow(), 4);
-//   // Check that row state was signaled
-//   QCOMPARE(rowStateSpy.count(), 1);
-//   spyItem = rowStateSpy.takeFirst();
-//   rs = spyItem.at(0).value<RowState>();
-//   QCOMPARE(rs.rowCount(), 5);
-//   QCOMPARE(rs.currentRow(), 4);
-//   // Check that view was updated
-//   QCOMPARE(viewB.currentIndex().row(), 4);
-//   /*
-//    * Check toPrevious slot
-//    */
-//   controller.toPrevious();
-//   QCOMPARE(controller.rowCount(), 5);
-//   QCOMPARE(controller.currentRow(), 3);
-//   // Check that row state was signaled
-//   QCOMPARE(rowStateSpy.count(), 1);
-//   spyItem = rowStateSpy.takeFirst();
-//   rs = spyItem.at(0).value<RowState>();
-//   QCOMPARE(rs.rowCount(), 5);
-//   QCOMPARE(rs.currentRow(), 3);
-//   // Check that view was updated
-//   QCOMPARE(viewB.currentIndex().row(), 3);
-//   /*
-//    * Change model
-//    */
-//   QStringListModel listModel;
-//   listModel.setStringList({"A","B","C"});
-//   controller.setModel(&listModel);
-//   QCOMPARE(controller.rowCount(), 3);
-//   QCOMPARE(controller.currentRow(), 0);
-//   // Check that row state was signaled
-//   QCOMPARE(rowStateSpy.count(), 1);
-//   spyItem = rowStateSpy.takeFirst();
-//   rs = spyItem.at(0).value<RowState>();
-//   QCOMPARE(rs.rowCount(), 3);
-//   QCOMPARE(rs.currentRow(), 0);
-//   // Check that view was updated
-//   QCOMPARE(viewB.currentIndex().row(), 0);
-  /*
-   * Insert
-   * NOTE: is a other test to implement
-   */
-
-  /*
-   * Remove
-   * NOTE: is a other test to implement
-   */
-
   /*
    * Play
    */
@@ -631,7 +536,6 @@ void TableViewControllerTest::currentRowChangeTest()
 //   while(viewB.isVisible()){
 //     QTest::qWait(500);
 //   }
-
 }
 
 void TableViewControllerTest::viewCurrentRowChangeBenchmark()
@@ -793,9 +697,6 @@ void TableViewControllerTest::editTest()
   QCOMPARE(stateSpy.count(), 1);
   stateSpy.clear();
   QCOMPARE(controller.currentRow(), 1);
-//   // Check that we can change current row
-//   QVERIFY(controller.setCurrentRow(0));
-//   QCOMPARE(controller.currentRow(), 0);
   // Check that model was not updated
   QCOMPARE(getModelData(model, 1, 0), QVariant("1234"));
   /*

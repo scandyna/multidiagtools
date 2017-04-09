@@ -38,8 +38,6 @@ class ControllerTest : public TestBase
   void setModelSignalTest();
   void modelSizeChangedTest();
   void modelSizeChangedSignalsTest();
-  void setModelRowCountTest();
-  void setModelRowCountSignalTest();
   void addRemoveProxyModelWithoutSourceModelTest();
   void addRemoveProxyModelTest();
   void addRemoveProxyModelSignalTest();
