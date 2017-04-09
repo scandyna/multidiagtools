@@ -1,6 +1,6 @@
 format 211
-"Tmc" // mdt::Usb::Tmc
-  revision 2
+"Usbtmc" // Mdt::Usbtmc
+  revision 1
   modified_by 2 "philippe"
   // class settings
   

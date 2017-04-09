@@ -2,29 +2,30 @@ format 211
 
 classcanvas 128002 class_ref 3614594 // AbstractSqlController
   classdiagramsettings member_max_width 0 end
-  xyz 430.4 551.2 2000
+  xyz 426 839 2000
 end
 classcanvas 128514 class_ref 3648002 // AbstractController
   classdiagramsettings member_max_width 0 end
-  xyz 278 44 2006
+  xyz 274 129 2006
 end
 classcanvas 128898 class_ref 2775554 // PrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 760.6 666.2 2000
+  xyz 180 954 2000
 end
 classcanvas 129026 class_ref 2775682 // ForeignKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 473.4 866.2 2000
+  xyz 761 954 2000
 end
 classcanvas 129410 class_ref 3715330 // PrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 923.9 258 2000
+  xyz 40 442 2000
 end
 classcanvas 129538 class_ref 3715458 // ForeignKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 41 258 2000
+  xyz 480 42 2000
 end
 relationcanvas 128770 relation_ref 4025346 // <generalisation>
+  decenter_begin 510
   from ref 128002 z 2007 to ref 128514
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -40,13 +41,11 @@ relationcanvas 129282 relation_ref 4116098 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129666 relation_ref 4116226 // <directional composition>
-  decenter_begin 507
   from ref 128514 z 2007 to ref 129410
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 4116354 // <directional composition>
-  decenter_begin 507
   from ref 128514 z 2007 to ref 129538
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

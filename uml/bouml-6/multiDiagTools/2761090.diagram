@@ -16,13 +16,9 @@ classcanvas 128386 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 49 42 2018
 end
-classcanvas 128898 class_ref 3090434 // AbstractController
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 463 42 2042
-end
-classcanvas 129410 class_ref 3138562 // SqlWidgetMapperTableController
+classcanvas 129410 class_ref 3138562 // SqlWidgetMapperController
   classdiagramsettings member_max_width 0 end
-  xyz 439.5 600.5 2054
+  xyz 70.5 532.5 2054
 end
 classcanvas 129922 class_ref 3138434 // WidgetMapperController
   classdiagramsettings member_max_width 0 end
@@ -34,6 +30,10 @@ classcanvas 132354 class_ref 3191554 // DataWidgetMapper
 end
 note 132610 "Add possibility to map model header data to widgets (typically labels..)"
   xyzwh 40.5 600.5 2000 319 75
+classcanvas 133378 class_ref 3924994 // ControllerStatePermissionProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 363 378 2000
+end
 relationcanvas 128514 relation_ref 141186 // <generalisation>
   decenter_begin 523
   from ref 128002 z 2025 to ref 128386
@@ -50,16 +50,6 @@ relationcanvas 128770 relation_ref 175106 // <generalisation>
   decenter_begin 528
   decenter_end 523
   from ref 128130 z 2031 to ref 128002
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 132994 relation_ref 3975554 // <unidirectional association>
-  from ref 128898 z 2043 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 133122 relation_ref 3983362 // <generalisation>
-  from ref 129922 z 2055 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

@@ -1,6 +1,6 @@
 format 211
 "multiDiagTools"
-  revision 32
+  revision 33
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -68,13 +68,15 @@ format 211
 
   package_ref 134786 // Qt
 
+  package_ref 634882 // Qwt
+
   package_ref 134658 // ImportZms
 
   package_ref 221058 // sandbox
 
-  package_ref 260866 // Boost
+  package_ref 260866 // boost
 
   package_ref 275458 // std
 
-  package_ref 476418 // ODB
+  package_ref 476418 // odb
 end

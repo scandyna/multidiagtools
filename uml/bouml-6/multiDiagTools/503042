@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 206
+  revision 211
   modified_by 2 "philippe"
   // class settings
   
@@ -4752,7 +4752,7 @@ ${inlines}
 
     classdiagram 3168386 "AbstractSqlController"
       classdiagramsettings member_max_width 0 end
-      size B-Landscape
+      size B
     end
 
     class 3614594 "AbstractSqlController"

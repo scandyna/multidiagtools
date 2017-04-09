@@ -1,6 +1,6 @@
 format 211
 "Mdt" // Mdt
-  revision 26
+  revision 27
   modified_by 2 "philippe"
   // class settings
   
@@ -781,6 +781,8 @@ ${members}};
   package_ref 402178 // Sql
 
   package_ref 402434 // Usb
+
+  package_ref 628354 // Usbtmc
 
   package_ref 402562 // Modbus
 

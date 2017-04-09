@@ -2,23 +2,23 @@ format 211
 
 classcanvas 128002 class_ref 3890818 // AbstractModelWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 714 40 2000
+  xyz 90 41 2000
 end
 classcanvas 128130 class_ref 3890946 // SqlTableModelWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 729 487 2000
+  xyz 41 559 2000
 end
 classcanvas 128386 class_ref 174210 // QSqlTableModel
   classdiagramsettings member_max_width 0 end
-  xyz 176 432 2000
+  xyz 296 504 2000
 end
 classcanvas 128514 class_ref 174338 // QSqlQueryModel
   classdiagramsettings member_max_width 0 end
-  xyz 244 223 2006
+  xyz 364 295 2006
 end
 classcanvas 129026 class_ref 3891202 // SqlQueryModelWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 42 282 2005
+  xyz 162 354 2005
 end
 relationcanvas 128642 relation_ref 174978 // <generalisation>
   from ref 128386 z 2007 to ref 128514
@@ -31,18 +31,18 @@ relationcanvas 128770 relation_ref 4332546 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 4332674 // <generalisation>
-  decenter_end 519
-  from ref 128130 z 2001 to ref 128002
+  geometry VHV unfixed
+  decenter_end 485
+  from ref 128130 z 2001 to point 118 312
+  line 130050 z 2001 to point 237 312
+  line 130178 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 4332802 // <generalisation>
-  geometry VHV unfixed
   decenter_begin 472
-  decenter_end 519
-  from ref 129026 z 2006 to point 117 184
-  line 129794 z 2006 to point 872 184
-  line 129922 z 2006 to ref 128002
+  decenter_end 485
+  from ref 129026 z 2006 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

@@ -1,0 +1,16 @@
+format 211
+
+classcanvas 128002 class_ref 3958530 // QwtSeriesData
+  classdiagramsettings member_max_width 0 end
+  xyz 59 40 2005
+end
+classcanvas 128130 class_ref 3958658 // QwtArraySeriesData
+  classdiagramsettings member_max_width 0 end
+  xyz 42 144 2005
+end
+relationcanvas 128258 relation_ref 4423426 // <generalisation>
+  from ref 128130 z 2006 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
