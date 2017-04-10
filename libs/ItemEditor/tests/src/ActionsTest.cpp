@@ -439,8 +439,7 @@ void ActionsTest::insertActionTest()
   /*
    * Initial state
    */
-  /// \todo Define a initial state (also in controller) and enable
-//   QVERIFY(!insertAction->isEnabled());
+  QVERIFY(!insertAction->isEnabled());
   /*
    * Set controller state machine
    */
@@ -458,8 +457,6 @@ void ActionsTest::insertActionTest()
    */
   action.reset();
   QVERIFY(insertAction.isNull());
-
-  QFAIL("Initial state not clear");
 }
 
 void ActionsTest::removeActionTest()

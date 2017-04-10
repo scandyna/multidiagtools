@@ -29,6 +29,7 @@ InsertAction::InsertAction(QObject* parent)
   mAction = new QAction(QIcon::fromTheme("document-new"), tr("Insert"), this);
   mAction->setObjectName("Insert");
   connect(mAction, &QAction::triggered, this, &InsertAction::insertTriggered);
+  mAction->setEnabled(false);
 }
 
 void InsertAction::updateEnableState()
