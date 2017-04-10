@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,14 +21,9 @@
 #ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
 #define MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
 
-#include "ItemViewTestEditTriggers.h"
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
 
-class QAbstractItemView;
-class QModelIndex;
-
-class ItemDelegateTest : public QObject
+class ItemDelegateTest : public TestBase
 {
   Q_OBJECT
 
@@ -37,21 +32,11 @@ class ItemDelegateTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
-
-  void itemDelegateProxyTest();
   void itemDelegateProxyTableViewTest();
   void itemDelegateProxyTableViewEditTest();
   void itemDelegateProxyTableViewEditTest_data();
 
   void eventCatchItemDelegateTableViewEditTest();
-
- private:
-
-  // Helper function for editing in a QAbstractItemView
-  void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
-  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
-  void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H

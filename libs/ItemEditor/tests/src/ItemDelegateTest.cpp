@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,14 +19,10 @@
  **
  ****************************************************************************/
 #include "ItemDelegateTest.h"
-#include "ItemViewTestEdit.h"
-#include "Mdt/Application.h"
 #include "Mdt/ItemEditor/ItemDelegateProxy.h"
 #include "Mdt/ItemEditor/EventCatchItemDelegate.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
-// #include <QItemSelectionModel>
-// #include <QStringListModel>
 #include <QTableView>
 #include <QStyledItemDelegate>
 #include <QLineEdit>
@@ -34,9 +30,8 @@
 #include <QKeyEvent>
 #include <QPainter>
 
-#include <QDebug>
-
-using Mdt::ItemModel::VariantTableModel;
+using namespace Mdt::ItemModel;
+using namespace Mdt::ItemEditor;
 
 void ItemDelegateTest::initTestCase()
 {
@@ -50,164 +45,36 @@ void ItemDelegateTest::cleanupTestCase()
  * Tests
  */
 
-void ItemDelegateTest::sandbox()
+void ItemDelegateTest::itemDelegateProxyTableViewTest()
 {
-  using Mdt::ItemEditor::ItemDelegateProxy;
-
-  ItemDelegateProxy delegateProxy;
-//   sandboxDelegate delegate;
-  QStringListModel model;
-  QTableView tableView;
-  QStringList list;
-  
-  tableView.setModel(&model);
-  tableView.setEditTriggers(QTableView::DoubleClicked | QTableView::EditKeyPressed);
-  delegateProxy.setItemDelegate(tableView.itemDelegate());
-  tableView.setItemDelegate(&delegateProxy);
-  
-  list << "A" << "B" << "C";
-  model.setStringList(list);
-  
-  tableView.show();
-//   while(tableView.isVisible()){
-//     QTest::qWait(500);
-//   }
-}
-
-void ItemDelegateTest::itemDelegateProxyTest()
-{
-  using Mdt::ItemEditor::ItemDelegateProxy;
-
   QTableView view;
-  QWidget *editor1, *editor2;
-  QStringListModel model;
-  QStringList list;
-  QStyledItemDelegate delegate;
-  ItemDelegateProxy *proxy;
-  QStyleOptionViewItem option;
-  QModelIndex index;
-  QEvent *event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Z, Qt::NoModifier);
-  QPainter painter;
-  QLineEdit *lineEdit;
-
-  /// \todo Intercept signals
-
   /*
    * Setup model and view
    */
-  list << "A" << "B" << "C";
-  model.setStringList(list);
-  view.setModel(&model);
-  /*
-   * Get a model index that we will use for various checks
-   */
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  /*
-   * Check when delegate was not allready set
-   */
-  proxy = new ItemDelegateProxy;
-  QVERIFY(proxy->itemDelegate() == nullptr);
-  view.setItemDelegate(proxy);
-  // Check paint()
-  proxy->paint(&painter, option, index);
-  // Check sizeHint()
-  QVERIFY(!proxy->sizeHint(option, index).isValid());
-  // Check createEditor()
-  editor1 = proxy->createEditor(&view, option, index);
-  QVERIFY(editor1 == nullptr);
-  // Check setEditorData()
-  lineEdit = new QLineEdit;
-  proxy->setEditorData(lineEdit, index);
-  QVERIFY(lineEdit->text().isEmpty());
-  // Check setModelData()
-  lineEdit->setText("Z");
-  proxy->setModelData(lineEdit, &model, index);
-  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
-  delete lineEdit;
-  // Check editorEvent()
-  QVERIFY(!proxy->editorEvent(event, &model, option, index));
-  /// \todo Check destroyEditor()
-  /// \todo Check helpEvent()
-  /// \todo Check updateEditorGeometry()
-  
-  // 
-  /*
-   * Checks with delegate set
-   */
-  proxy->setItemDelegate(&delegate);
-  QVERIFY(proxy->itemDelegate() == &delegate);
-  // Check paint()
-  proxy->paint(&painter, option, index);
-  // Check sizeHint()
-  QVERIFY(proxy->sizeHint(option, index).isValid());
-  // Check createEditor()
-  editor1 = proxy->createEditor(&view, option, index);
-  QVERIFY(editor1 != nullptr);
-//   editor2 = delegate.createEditor(&view, option, index);
-//   QVERIFY(editor1 == editor2);
-  // Check setEditorData()
-  lineEdit = dynamic_cast<QLineEdit*>(editor1);
-  QVERIFY(lineEdit != nullptr);
-  proxy->setEditorData(lineEdit, index);
-  QCOMPARE(lineEdit->text(), QString("A"));
-  // Check setModelData()
-  lineEdit->setText("Z");
-  proxy->setModelData(lineEdit, &model, index);
-  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("Z"));
-  // Check editorEvent()
-  QVERIFY(proxy->editorEvent(event, &model, option, index));
-  /// \todo Check destroyEditor()
-  /// \todo Check helpEvent()
-  /// \todo Check updateEditorGeometry()
-  
-  // 
-  /*
-   * Delete proxy
-   */
-  delete proxy;
-  /// call some functions on delegate
-  
-  delete event;
-  
-  /*! \todo We should create a test model,
-   *   that is a table, and that support
-   *   Qt::DisplayRole and Qt::EditRole.
-   *   Then, do the test with a QTableView
-   *   with various types (int, text, ..).
-   *   Once done so, we understand more
-   *   on delegates, and could rewrite a better test
-   *   that acts directly on a delegate later.
-   */
-}
-
-void ItemDelegateTest::itemDelegateProxyTableViewTest()
-{
-  using Mdt::ItemEditor::ItemDelegateProxy;
-
   VariantTableModel model;
-  QTableView view;
-  ItemDelegateProxy proxy;
-
-  /*
-   * Populate model
-   */
-  model.populate(3, 2);
-  /*
-   * Setup view
-   */
+  model.resize(3, 2);
   view.setModel(&model);
-  proxy.setItemDelegate(view.itemDelegate());
-  view.setItemDelegate(&proxy);
-  view.resize(300, 200);
   view.show();
-
+  /*
+   * Check without a item delegate set to proxy
+   */
+  ItemDelegateProxy proxy;
+  auto *originalDelegate = view.itemDelegate();
+  view.setItemDelegate(&proxy);
+  QVERIFY(getModelData(model, 0, 0).isNull());
+  edit(view, 0, 0, "Test 1", BeginEditTrigger::DoubleClick, EndEditTrigger::EnterKeyClick);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("Test 1"));
+  /*
+   * Set delegate to proxy
+   */
+  proxy.setItemDelegate(originalDelegate);
+  QVERIFY(getModelData(model, 0, 1).isNull());
+  edit(view, 0, 1, "Test 2", BeginEditTrigger::DoubleClick, EndEditTrigger::EnterKeyClick);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("Test 2"));
   /*
    * Play
    */
-//   while(view.isVisible()){
-//     QTest::qWait(500);
-//   }
+//   displayWidget(view);
 }
 
 void ItemDelegateTest::itemDelegateProxyTableViewEditTest()
@@ -217,14 +84,13 @@ void ItemDelegateTest::itemDelegateProxyTableViewEditTest()
   QTableView view;
   ItemDelegateProxy proxy;
   VariantTableModel model;
-  QModelIndex index;
   QFETCH(BeginEditTrigger, beginEditTrigger);
   QFETCH(EndEditTrigger, endEditTrigger);
 
   /*
    * Setup model and view
    */
-  model.populate(2, 1);
+  model.resize(2, 1);
   view.setModel(&model);
   proxy.setItemDelegate(view.itemDelegate());
   view.setItemDelegate(&proxy);
@@ -233,11 +99,13 @@ void ItemDelegateTest::itemDelegateProxyTableViewEditTest()
    * Check
    */
   // Check at row 0 and column 0
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  QVERIFY(model.data(index) != QVariant("TEST"));
-  edit(view, index, "TEST", beginEditTrigger, endEditTrigger);
-  QCOMPARE(model.data(index), QVariant("TEST"));
+  QVERIFY(getModelData(model, 0, 0) != QVariant("TEST"));
+  edit(view, 0, 0, "TEST", beginEditTrigger, endEditTrigger);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("TEST"));
+  // Check at row 1 and column 0
+  QVERIFY(getModelData(model, 1, 0) != QVariant("TEST 1,0"));
+  edit(view, 1, 0, "TEST 1,0", beginEditTrigger, endEditTrigger);
+  QCOMPARE(getModelData(model, 1, 0), QVariant("TEST 1,0"));
 
   /*
    * Play
@@ -308,26 +176,6 @@ void ItemDelegateTest::eventCatchItemDelegateTableViewEditTest()
 //   while(view.isVisible()){
 //     QTest::qWait(500);
 //   }
-}
-
-/*
- * Helper functions
- */
-
-void ItemDelegateTest::beginEditing(QAbstractItemView& view, const QModelIndex& index, BeginEditTrigger trigger)
-{
-  ItemViewTestEdit::beginEditing(view, index, trigger);
-}
-
-void ItemDelegateTest::endEditing(QAbstractItemView& view, const QModelIndex& editingIndex, EndEditTrigger trigger)
-{
-  ItemViewTestEdit::endEditing(view, editingIndex, trigger);
-}
-
-void ItemDelegateTest::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str,
-                            BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
-{
-  ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
 }
 
 /*

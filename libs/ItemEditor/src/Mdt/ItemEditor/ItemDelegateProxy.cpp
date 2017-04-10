@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -38,114 +38,114 @@ void ItemDelegateProxy::setItemDelegate(QAbstractItemDelegate* delegate)
   Q_ASSERT(delegate != nullptr);
   auto *styledDelegate = qobject_cast<QStyledItemDelegate*>(delegate);
   Q_ASSERT(styledDelegate != nullptr);
-  pvDelegate = styledDelegate;
+  mDelegate = styledDelegate;
 }
 
 QStyledItemDelegate* ItemDelegateProxy::itemDelegate() const
 {
-  return pvDelegate.data();
+  return mDelegate.data();
 }
 
 QWidget* ItemDelegateProxy::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     return QStyledItemDelegate::createEditor(parent, option, index);
   }
-  return pvDelegate->createEditor(parent, option, index);
+  return mDelegate->createEditor(parent, option, index);
 }
 
 void ItemDelegateProxy::destroyEditor(QWidget* editor, const QModelIndex& index) const
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     QStyledItemDelegate::destroyEditor(editor, index);
   }else{
-    pvDelegate->destroyEditor(editor, index);
+    mDelegate->destroyEditor(editor, index);
   }
 }
 
 bool ItemDelegateProxy::editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index)
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     return QStyledItemDelegate::editorEvent(event, model, option, index);
   }
   // QStyledItemDelegate::editorEvent() is protected, we must do some cast here
-  return reinterpret_cast<QAbstractItemDelegate*>(pvDelegate.data())->editorEvent(event, model, option, index);
+  return reinterpret_cast<QAbstractItemDelegate*>(mDelegate.data())->editorEvent(event, model, option, index);
 }
 
 bool ItemDelegateProxy::helpEvent(QHelpEvent* event, QAbstractItemView* view, const QStyleOptionViewItem& option, const QModelIndex& index)
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     return QStyledItemDelegate::helpEvent(event, view, option, index);
   }
-  return pvDelegate->helpEvent(event, view, option, index);
+  return mDelegate->helpEvent(event, view, option, index);
 }
 
 void ItemDelegateProxy::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     QStyledItemDelegate::paint(painter, option, index);
   }else{
-    pvDelegate->paint(painter, option, index);
+    mDelegate->paint(painter, option, index);
   }
 }
 
 void ItemDelegateProxy::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     QStyledItemDelegate::setEditorData(editor, index);
   }else{
-    pvDelegate->setEditorData(editor, index);
+    mDelegate->setEditorData(editor, index);
   }
 }
 
 void ItemDelegateProxy::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     QStyledItemDelegate::setModelData(editor, model, index);
   }else{
-    pvDelegate->setModelData(editor, model, index);
+    mDelegate->setModelData(editor, model, index);
   }
 }
 
 QSize ItemDelegateProxy::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     return QStyledItemDelegate::sizeHint(option, index);
   }
-  return pvDelegate->sizeHint(option, index);
+  return mDelegate->sizeHint(option, index);
 }
 
 void ItemDelegateProxy::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     QStyledItemDelegate::updateEditorGeometry(editor, option, index);
   }else{
-    pvDelegate->updateEditorGeometry(editor, option, index);
+    mDelegate->updateEditorGeometry(editor, option, index);
   }
 }
 
 QString ItemDelegateProxy::displayText(const QVariant& value, const QLocale& locale) const
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     return QStyledItemDelegate::displayText(value, locale);
   }
-  return pvDelegate->displayText(value, locale);
+  return mDelegate->displayText(value, locale);
 }
 
 QItemEditorFactory* ItemDelegateProxy::itemEditorFactory() const
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     return QStyledItemDelegate::itemEditorFactory();
   }
-  return pvDelegate->itemEditorFactory();
+  return mDelegate->itemEditorFactory();
 }
 
 void ItemDelegateProxy::setItemEditorFactory(QItemEditorFactory* factory)
 {
-  if(pvDelegate.isNull()){
+  if(mDelegate.isNull()){
     QStyledItemDelegate::setItemEditorFactory(factory);
   }else{
-    pvDelegate->setItemEditorFactory(factory);
+    mDelegate->setItemEditorFactory(factory);
   }
 }
 

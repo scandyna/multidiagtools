@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -141,7 +141,7 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    QPointer<QStyledItemDelegate> pvDelegate;
+    QPointer<QStyledItemDelegate> mDelegate;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
