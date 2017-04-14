@@ -21,7 +21,7 @@
 #include "RowChangeEventDispatcher.h"
 // #include "ControllerStatePermission.h"
 
-// #include <QDebug>
+#include "Debug.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -72,8 +72,6 @@ bool RowChangeEventDispatcher::insertRowAtEnd()
 
 void RowChangeEventDispatcher::setModel(QAbstractItemModel* model)
 {
-//   Q_ASSERT(model != nullptr);
-
   if(!mModel.isNull()){
     disconnect(mModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
     disconnect(mModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
@@ -83,12 +81,9 @@ void RowChangeEventDispatcher::setModel(QAbstractItemModel* model)
   mModel = model;
   if(mModel.isNull()){
     if(!mRowState.isNull()){
-      const int previousCurrentRow = mRowState.currentRow();
       mRowState.clear();
-      emit rowStateUpdated(mRowState);
-      if(mRowState.currentRow() != previousCurrentRow){
-        emit currentRowChanged(mRowState.currentRow());
-      }
+      emit rowStateChanged(mRowState);
+      emit currentRowToBeSet(-1);
     }
   }else{
     connect(mModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
@@ -97,6 +92,16 @@ void RowChangeEventDispatcher::setModel(QAbstractItemModel* model)
     connect(mModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
     onModelReset();
   }
+}
+
+void RowChangeEventDispatcher::stopWatchingRowsInsertedRowsRemoved()
+{
+  qWarning() << "RowChangeEventDispatcher::stopWatchingRowsInsertedRowsRemoved() not implemented";
+}
+
+void RowChangeEventDispatcher::startWatchingRowsInsertedRowsRemoved()
+{
+  qWarning() << "RowChangeEventDispatcher::startWatchingRowsInsertedRowsRemoved() not implemented";
 }
 
 void RowChangeEventDispatcher::onModelReset()
@@ -115,16 +120,18 @@ void RowChangeEventDispatcher::onModelReset()
   }
   Q_ASSERT(mRowState.rowCount() == mModel->rowCount());
   if(mRowState != previousRowState){
-    emit rowStateUpdated(mRowState);
-  }
-  if(mRowState.currentRow() != previousRowState.currentRow()){
-    emit currentRowChanged(mRowState.currentRow());
+    emit rowStateChanged(mRowState);
   }
   /*
-   * We must allways signal when a model was reset.
+   * If current row was previously invalid (-1),
+   * and the new one is still invalid, nothing changed
+   * (case, for example, of setting initially a empty model).
+   * For all other cases, we tell receivers to set current row (evt. again),
+   * because data may have change, despite current row is still the same.
    */
-//   qDebug() << "RCEvD:emit rowStateUpdated()";
-//   emit rowStateUpdated(mRowState);
+  if( !((mRowState.currentRow() < 0) && (previousRowState.currentRow() < 0)) ){
+    emit currentRowToBeSet(mRowState.currentRow());
+  }
 }
 
 void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int first, int last)
@@ -134,8 +141,7 @@ void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int
   const int previousCurrentRow = mRowState.currentRow();
   mRowState.setRowCount(mModel->rowCount());
   /*
-   * If insertion was called from controller,
-   * we must update current row.
+   * If insertion was called from controller, we must update current row.
    * If insertion was called outside of our controller, we must:
    * - Not update current row if insertion occured after current row
    * - Update current row to point to the same data if insertion occured before current row
@@ -154,9 +160,9 @@ void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int
       mRowState.setCurrentRow(row);
     }
   }
-  emit rowStateUpdated(mRowState);
-  if(mRowState.currentRow() != previousCurrentRow){
-    emit currentRowChanged(mRowState.currentRow());
+  emit rowStateChanged(mRowState);
+  if( mInsertingFromController || (mRowState.currentRow() != previousCurrentRow) ){
+    emit currentRowToBeSet(mRowState.currentRow());
   }
   emit rowsInserted();
 }
@@ -181,13 +187,14 @@ void RowChangeEventDispatcher::onRowsRemoved(const QModelIndex& /*parent*/, int 
     row = mRowState.rowCount()-1;
   }
   mRowState.setCurrentRow(row);
-//   if(pvRowState.currentRow() >= pvRowState.rowCount()){
-//     pvRowState.setCurrentRow(pvRowState.rowCount()-1);
-//   }
   emit rowsRemoved();
-  emit rowStateUpdated(mRowState);
-  if(mRowState.currentRow() != previousCurrentRow){
-    emit currentRowChanged(mRowState.currentRow());
+  emit rowStateChanged(mRowState);
+  /*
+   * If we removed before or at current row,
+   * we must notify components to requery the model
+   */
+  if(first <= previousCurrentRow){
+    emit currentRowToBeSet(mRowState.currentRow());
   }
 }
 
@@ -213,10 +220,10 @@ void RowChangeEventDispatcher::updateCurrentRow(int row)
   const auto previousRowState = mRowState;
   mRowState.setCurrentRow(row);
   if(mRowState != previousRowState){
-    emit rowStateUpdated(mRowState);
+    emit rowStateChanged(mRowState);
   }
   if(mRowState.currentRow() != previousRowState.currentRow()){
-    emit currentRowChanged(mRowState.currentRow());
+    emit currentRowToBeSet(mRowState.currentRow());
   }
 }
 

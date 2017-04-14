@@ -32,9 +32,10 @@ void NavigationControllerRelation::childControllerChangedEvent(AbstractControlle
 {
   Q_ASSERT(controller != nullptr);
 
-  disconnect(mCurrentRowChangeConnection);
-  mCurrentRowChangeConnection = 
-    connect(parentController(), &AbstractController::currentRowChanged, controller, &AbstractController::setCurrentRow);
+  disconnect(mSetCurrentRowConnection);
+  mSetCurrentRowConnection = 
+    connect(parentController(), &AbstractController::currentRowToBeSet, controller, &AbstractController::setCurrentRow);
+//     connect(parentController(), &AbstractController::currentRowChanged, controller, &AbstractController::setCurrentRow);
 }
 
 

@@ -18,39 +18,41 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "RowStateChangedSpy.h"
+#include "CurrentRowToBeSetSpy.h"
 #include "Mdt/ItemEditor/RowChangeEventDispatcher.h"
 #include "Mdt/ItemEditor/AbstractController.h"
 
+// #include <QDebug>
+
 using namespace Mdt::ItemEditor;
 
-RowStateChangedSpy::RowStateChangedSpy(const RowChangeEventDispatcher& dispatcher, QObject* parent)
+CurrentRowToBeSetSpy::CurrentRowToBeSetSpy(const RowChangeEventDispatcher & dispatcher, QObject* parent)
  : QObject(parent)
 {
-  connect(&dispatcher, &RowChangeEventDispatcher::rowStateChanged, this, &RowStateChangedSpy::onRowStateChanged);
+  connect(&dispatcher, &RowChangeEventDispatcher::currentRowToBeSet, this, &CurrentRowToBeSetSpy::setCurrentRow);
 }
 
-RowStateChangedSpy::RowStateChangedSpy(const AbstractController& controller, QObject* parent)
+CurrentRowToBeSetSpy::CurrentRowToBeSetSpy(const AbstractController& controller, QObject* parent)
  : QObject(parent)
 {
-  connect(&controller, &AbstractController::rowStateChanged, this, &RowStateChangedSpy::onRowStateChanged);
+  connect(&controller, &AbstractController::currentRowToBeSet, this, &CurrentRowToBeSetSpy::setCurrentRow);
 }
 
-RowState RowStateChangedSpy::takeRowState()
+int CurrentRowToBeSetSpy::takeCurrentRow()
 {
-  const auto rs = mRowState;
+  int row = mCurrentRow;
   clear();
-  return rs;
+  return row;
 }
 
-void RowStateChangedSpy::clear()
+void CurrentRowToBeSetSpy::clear()
 {
   mCount = 0;
-  mRowState.clear();
+  mCurrentRow = -2;
 }
 
-void RowStateChangedSpy::onRowStateChanged(RowState rs)
+void CurrentRowToBeSetSpy::setCurrentRow(int row)
 {
   ++mCount;
-  mRowState = rs;
+  mCurrentRow = row;
 }

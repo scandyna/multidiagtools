@@ -45,29 +45,30 @@ namespace Mdt{ namespace ItemEditor{
    * | QAbstractItemModel       | modelReset()                | RowChangeEventDispatcher | onModelReset()     | |
    * | ItemSelectionModel       | currentRowChangeRequested() | AbstractController       | setCurrentRow()    | |
    * | NavigationActions        | toFirstTriggered()          | AbstractController       | toFirst()          | |
-   * | RowChangeEventDispatcher | rowStateUpdated()           | AbstractController       | updateRowState()   | |
+   * | RowChangeEventDispatcher | rowStateChanged()           | AbstractController       | rowStateChanged()   | |
    * | AbstractController       | rowStateChanged()           | NavigationActions        | setRowState()      | Used to update NavigationActions state |
-   * | AbstractController       | currentRowChanged()         | ItemSelectionModel       | updateCurrentRow() | |
+   * | AbstractController       | currentRowToBeSet()         | ItemSelectionModel       | updateCurrentRow() | |
+   * | AbstractController       | currentRowToBeSet()         | DataWidgetMapper         | setCurrentRow()    | |
    *
    *
    * Example of events chain when user selects a new row in a QTableView:
    *  - ItemSelectionModel::currentRowChangeRequested() -> AbstractController::setCurrentRow()
    *  - AbstractController (after calculated row and checks) calls RowChangeEventDispatcher::setCurrentRow()
-   *  - RowChangeEventDispatcher::rowStateUpdated() -> AbstractController::updateRowState()
-   *  - AbstractController::currentRowChanged() -> ItemSelectionModel::updateCurrentRow()
+   *  - RowChangeEventDispatcher::rowStateChanged() -> AbstractController::rowStateChanged()
+   *  - AbstractController::currentRowToBeSet() -> ItemSelectionModel::updateCurrentRow()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
    *
    * Example of events when user clicks toNext button:
    *  - NavigationActions::toNextTriggered() -> AbstractController::toNext()
    *  - AbstractController (after calculated row and checks) calls RowChangeEventDispatcher::setCurrentRow()
-   *  - RowChangeEventDispatcher::rowStateUpdated() -> AbstractController::updateRowState()
-   *  - AbstractController::currentRowChanged() -> ItemSelectionModel::updateCurrentRow()
+   *  - RowChangeEventDispatcher::rowStateChanged() -> AbstractController::rowStateChanged()
+   *  - AbstractController::currentRowToBeSet() -> ItemSelectionModel::updateCurrentRow()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
    *
    * Example of events chain when model was set to controller, or model was repopulated:
    *  - AbstractController calls RowChangeEventDispatcher::setModel() (case of setting a new model)
-   *  - RowChangeEventDispatcher::rowStateUpdated() -> AbstractController::updateRowState()
-   *  - AbstractController::currentRowChanged() -> ItemSelectionModel::updateCurrentRow()
+   *  - RowChangeEventDispatcher::rowStateChanged() -> AbstractController::rowStateChanged()
+   *  - AbstractController::currentRowToBeSet() -> ItemSelectionModel::updateCurrentRow()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
    */
   class RowChangeEventDispatcher : public QObject
@@ -142,23 +143,29 @@ namespace Mdt{ namespace ItemEditor{
 
    signals:
 
-    /*! \brief Emitted when row state was updated
+    /*! \brief Emitted whenever row state changed
      *
      * This signal tells the controller that row count
-     *  or current row was updated by a event like
-     *  current changed, model was set or repopulated.
+     *  or current row has changed.
      */
-    void rowStateUpdated(Mdt::ItemEditor::RowState rs);
+    void rowStateChanged(Mdt::ItemEditor::RowState rs);
 
-    /*! \brief Emitted whenever current row changed
+    /*! \brief Emitted whenever a component should set its current row
+     *
+     * This signal is emitted whenever current row changed,
+     *  or when a new model was set, or after a model reset.
+     *
+     * \note When a nullptr model is set to this RowChangeEventDispatcher,
+     *        currentRowToBeSet() will also be emitted.
+     *        Receiver should also check if it acts on a valid model or not.
      */
-    void currentRowChanged(int row);
+    void currentRowToBeSet(int row);
 
     /*! \brief Emitted when rows have been inserted into the model
      *
      * This signal only tells the controller that some rows where
      *  inserted into the model.
-     *  rowStateUpdated() is also emitted to tell new row state.
+     *  rowStateChanged() is also emitted to tell new row state.
      */
     void rowsInserted();
 
@@ -166,7 +173,7 @@ namespace Mdt{ namespace ItemEditor{
      *
      * This signal only tells the controller that some rows where
      *  removed from the model.
-     *  rowStateUpdated() is also emitted to tell new row state.
+     *  rowStateChanged() is also emitted to tell new row state.
      */
     void rowsRemoved();
 
@@ -175,6 +182,34 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Set model
      */
     void setModel(QAbstractItemModel *model);
+
+    /*! \brief Stop watching on rows inserted and removed
+     *
+     * After calling this method, this RowChangeEventDispatcher
+     *  will no longer update row state when rows have been
+     *  inserted or removed to the model.
+     *
+     * A use case is when a QSortFilterProxyModel applies a filter,
+     *  it removes and/or insert rows.
+     *
+     * By default, rows inserted and removed is watched.
+     *
+     * \sa startWatchingRowsInsertedRowsRemoved()
+     *
+     * \todo To be implemented and tested
+     */
+    void stopWatchingRowsInsertedRowsRemoved();
+
+    /*! \brief Start watching on rows inserted and removed
+     *
+     * Will first update and notify row state,
+     *  then watch about rows inserted and removed again.
+     *
+     * \sa stopWatchingRowsInsertedRowsRemoved()
+     *
+     * \todo To be implemented and tested
+     */
+    void startWatchingRowsInsertedRowsRemoved();
 
    private slots:
 

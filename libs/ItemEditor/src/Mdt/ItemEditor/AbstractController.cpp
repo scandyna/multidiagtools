@@ -26,6 +26,7 @@
 #include "ControllerStatePermissionProxyModel.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
+#include <QModelIndex>
 #include <algorithm>
 
 // #include "Mdt/ItemModel/RelationFilterProxyModel.h"
@@ -51,9 +52,8 @@ AbstractController::AbstractController(QObject* parent)
 {
   mModelContainer.appendProxyModel( new ControllerStatePermissionProxyModel(this) );
   mRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
-  connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::rowStateChanged);
-  connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::currentRowChanged, this, &AbstractController::currentRowChanged);
-//   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
+  connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateChanged, this, &AbstractController::rowStateChanged);
+  connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::currentRowToBeSet, this, &AbstractController::currentRowToBeSet);
 //   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsInserted, this, &AbstractController::onRowsInserted);
   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsRemoved, this, &AbstractController::onRowsRemoved);
 }
@@ -129,6 +129,32 @@ int AbstractController::currentRow() const
 RowState AbstractController::rowState() const
 {
   return mRowChangeEventDispatcher->currentRowState();
+}
+
+int AbstractController::columnCount() const
+{
+  const auto *model = modelForView();
+
+  if(model == nullptr){
+    return 0;
+  }
+  return model->columnCount();
+}
+
+QVariant AbstractController::currentData(int column) const
+{
+  Q_ASSERT(sourceModel() != nullptr);
+  Q_ASSERT(currentRow() >= 0);
+  Q_ASSERT(currentRow() < rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < columnCount());
+
+  const auto *model = modelForView();
+  Q_ASSERT(model != nullptr);
+  const auto index = model->index(currentRow(), column);
+  Q_ASSERT(index.isValid());
+
+  return model->data(index);
 }
 
 void AbstractController::prependProxyModel(QAbstractProxyModel* proxyModel)
@@ -587,13 +613,6 @@ void AbstractController::onRowsRemoved()
 //     setControllerState(ControllerState::Visualizing);
 //   }
 }
-
-// void AbstractController::updateRowState(RowState rs)
-// {
-// //   qDebug() << "AC::updateRowState()";
-//   emit currentRowChanged(rs.currentRow());
-//   emit rowStateChanged(rs);
-// }
 
 // void AbstractController::onPrimaryKeySourceModelChanged()
 // {

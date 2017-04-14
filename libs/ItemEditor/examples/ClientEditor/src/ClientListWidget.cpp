@@ -33,7 +33,7 @@ ClientListWidget::ClientListWidget(QWidget* parent)
   addResizeToContentsActionToTopBar();
   auto ctrl = controller();
   ctrl->setPrimaryKey({0});
-  ctrl->setPrimaryKeyHidden(true);
+//   ctrl->setPrimaryKeyHidden(true);
 
 //   auto *cb = new QComboBox;
 //   cb->addItem("Filter");

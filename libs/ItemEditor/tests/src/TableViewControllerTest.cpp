@@ -479,8 +479,8 @@ void TableViewControllerTest::currentRowChangeTest()
   controller.setView(&viewB);
   controller.setModel(&modelB);
   QVERIFY(viewB.selectionModel() != nullptr);
-  QCOMPARE(controller.rowCount(), 0);
-  QCOMPARE(controller.currentRow(), -1);
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), 0);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   rs = rowStateSpy.takeRowState();

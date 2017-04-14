@@ -72,9 +72,10 @@ void FilterControllerRelation::parentControllerChangedEvent(AbstractController* 
 {
   Q_ASSERT(controller != nullptr);
 
-  disconnect(mParentControllerCurrentRowChangedConnection);
-  mParentControllerCurrentRowChangedConnection = 
-    connect(controller, &AbstractController::currentRowChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
+  disconnect(mSetParentCurrentRowConnection);
+  mSetParentCurrentRowConnection = 
+    connect(controller, &AbstractController::currentRowToBeSet, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
+//     connect(controller, &AbstractController::currentRowChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
   mProxyModel->setParentModelMatchRow( controller->currentRow() );
 }
 

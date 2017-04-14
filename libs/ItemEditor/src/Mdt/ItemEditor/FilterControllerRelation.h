@@ -94,7 +94,7 @@ namespace Mdt{ namespace ItemEditor{
 //     void childControllerModelChangedEvent(QAbstractItemModel* model) override;
 
     std::unique_ptr<Mdt::ItemModel::RelationFilterProxyModel> mProxyModel;
-    QMetaObject::Connection mParentControllerCurrentRowChangedConnection;
+    QMetaObject::Connection mSetParentCurrentRowConnection;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

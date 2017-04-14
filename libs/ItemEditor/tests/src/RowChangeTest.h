@@ -22,7 +22,6 @@
 #define MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H
 
 #include "TestBase.h"
-// #include "Mdt/ItemEditor/RowState.h"
 
 class RowChangeTest : public TestBase
 {
@@ -43,10 +42,6 @@ class RowChangeTest : public TestBase
   void eventDispatcherInsertAtBeginningTest();
   void eventDispatcherInsertAtEndTest();
   void eventDispatcherRemoveTest();
-
-//  private:
-// 
-//   Mdt::ItemEditor::RowState expectedRowState(int rowCount, int currentRow);
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H

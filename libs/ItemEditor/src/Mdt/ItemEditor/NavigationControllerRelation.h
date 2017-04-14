@@ -44,7 +44,7 @@ namespace Mdt{ namespace ItemEditor{
 
     void childControllerChangedEvent(AbstractController* controller) override;
 
-    QMetaObject::Connection mCurrentRowChangeConnection;
+    QMetaObject::Connection mSetCurrentRowConnection;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

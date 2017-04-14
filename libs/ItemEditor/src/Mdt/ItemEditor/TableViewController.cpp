@@ -26,7 +26,7 @@
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include <QTableView>
 
-// #include <QDebug>
+// #include "Debug.h"
 
 using namespace Mdt::ItemModel;
 
@@ -103,9 +103,11 @@ void TableViewController::registerModelAndSelectionModel()
     return;
   }
   disconnect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &TableViewController::setCurrentRow);
-  disconnect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
+  disconnect(this, &TableViewController::currentRowToBeSet, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
+//   disconnect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
   connect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &TableViewController::setCurrentRow);
-  connect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
+  connect(this, &TableViewController::currentRowToBeSet, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
+//   connect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
   modelSetToView();
 }
 

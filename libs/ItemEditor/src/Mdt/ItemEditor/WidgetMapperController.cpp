@@ -35,7 +35,8 @@ WidgetMapperController::WidgetMapperController(QObject* parent)
 {
   setControllerStateMachine( ControllerStateMachine::makeNew<WidgetMapperControllerStateTable, WidgetMapperControllerStatePermission>(this) );
   connect( getControllerStatePermissionProxyModel(), &ControllerStatePermissionProxyModel::flagsChanged, mWidgetMapper, &DataWidgetMapper::updateFromModelFlags );
-  connect(this, &WidgetMapperController::currentRowChanged, mWidgetMapper, &DataWidgetMapper::setCurrentRow);
+  connect(this, &WidgetMapperController::currentRowToBeSet, mWidgetMapper, &DataWidgetMapper::setCurrentRow);
+//   connect(this, &WidgetMapperController::currentRowChanged, mWidgetMapper, &DataWidgetMapper::setCurrentRow);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionStarted, this, &WidgetMapperController::onDataEditionStarted);
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionDone, this, &WidgetMapperController::onDataEditionDone);
 }

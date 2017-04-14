@@ -19,7 +19,8 @@
  **
  ****************************************************************************/
 #include "WidgetMapperControllerTest.h"
-#include "Mdt/Application.h"
+#include "RowStateChangedSpy.h"
+// #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include "Mdt/ItemEditor/ControllerState.h"
@@ -247,12 +248,8 @@ void WidgetMapperControllerTest::setModelTest()
   QStringListModel listModel;
   QLineEdit editA, editB;
   WidgetMapperController controller;
-  QModelIndex index;
-  QSignalSpy rowStateSpy(&controller, &WidgetMapperController::rowStateChanged);
-  QList<QVariant> spyItem;
+  RowStateChangedSpy rowStateSpy(controller);
   RowState rs;
-
-  QVERIFY(rowStateSpy.isValid());
   /*
    * Initial state
    */
@@ -268,10 +265,6 @@ void WidgetMapperControllerTest::setModelTest()
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
   QCOMPARE(rowStateSpy.count(), 0);
-//   spyItem = rowStateSpy.takeFirst();
-//   rs = spyItem.at(0).value<RowState>();
-//   QCOMPARE(rs.rowCount(), 0);
-//   QCOMPARE(rs.currentRow(), -1);
   /*
    * Map widgets
    */
@@ -289,17 +282,14 @@ void WidgetMapperControllerTest::setModelTest()
   QCOMPARE(controller.currentRow(), 0);
   // Check that row state signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 3);
   QCOMPARE(rs.currentRow(), 0);
   // Check mapped widgets enable state
   QVERIFY(editA.isEnabled());
   QVERIFY(!editB.isEnabled());
   // Check mapped widgets data
-  index = tableModel.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(editA.text(), tableModel.data(index).toString());
+  QCOMPARE(editA.text(), tableModel.data(0, 0).toString());
   QVERIFY(editB.text().isEmpty());
   /*
    * Populate model with 2 columns
@@ -308,20 +298,12 @@ void WidgetMapperControllerTest::setModelTest()
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 0);
   QCOMPARE(rowStateSpy.count(), 0);
-//   spyItem = rowStateSpy.takeFirst();
-//   rs = spyItem.at(0).value<RowState>();
-//   QCOMPARE(rs.rowCount(), 3);
-//   QCOMPARE(rs.currentRow(), 0);
   // Check mapped widgets enable state
   QVERIFY(editA.isEnabled());
   QVERIFY(editB.isEnabled());
   // Check mapped widgets data
-  index = tableModel.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(editA.text(), tableModel.data(index).toString());
-  index = tableModel.index(0, 1);
-  QVERIFY(index.isValid());
-  QCOMPARE(editB.text(), tableModel.data(index).toString());
+  QCOMPARE(editA.text(), tableModel.data(0, 0).toString());
+  QCOMPARE(editB.text(), tableModel.data(0, 1).toString());
   /*
    * Change to a empty model model
    */
@@ -333,8 +315,7 @@ void WidgetMapperControllerTest::setModelTest()
   QCOMPARE(controller.currentRow(), -1);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 0);
   QCOMPARE(rs.currentRow(), -1);
   // Map widgets
@@ -356,8 +337,7 @@ void WidgetMapperControllerTest::setModelTest()
   QCOMPARE(controller.currentRow(), 0);
   // Check that row state signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 3);
   QCOMPARE(rs.currentRow(), 0);
   // Map widgets
@@ -367,12 +347,8 @@ void WidgetMapperControllerTest::setModelTest()
   QVERIFY(editA.isEnabled());
   QVERIFY(editB.isEnabled());
   // Check mapped widgets data
-  index = tableModel.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(editA.text(), tableModel.data(index).toString());
-  index = tableModel.index(0, 1);
-  QVERIFY(index.isValid());
-  QCOMPARE(editB.text(), tableModel.data(index).toString());
+  QCOMPARE(editA.text(), tableModel.data(0, 0).toString());
+  QCOMPARE(editB.text(), tableModel.data(0, 1).toString());
   /*
    * Clear model
    */
@@ -381,8 +357,7 @@ void WidgetMapperControllerTest::setModelTest()
   QCOMPARE(controller.currentRow(), -1);
   // Check that row state signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 0);
   QCOMPARE(rs.currentRow(), -1);
   // Check mapped widgets enable state

@@ -11,7 +11,8 @@ set(SOURCES_FILES
   src/ItemModelControllerTester.cpp
   src/AbstractControllerRelationTestClass.cpp
   src/RowStateChangedSpy.cpp
-  src/CurrentRowChangedSpy.cpp
+  src/CurrentRowToBeSetSpy.cpp
+#   src/CurrentRowChangedSpy.cpp
   src/ControllerStateChangedSignalSpy.cpp
   src/PrimaryKeyChangedSignalSpy.cpp
   src/ItemViewTestEdit.cpp

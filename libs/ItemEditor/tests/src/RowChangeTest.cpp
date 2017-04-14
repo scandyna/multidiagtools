@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "RowChangeTest.h"
 #include "RowStateChangedSpy.h"
+#include "CurrentRowToBeSetSpy.h"
 #include "CurrentRowChangedSpy.h"
 #include "Mdt/ItemEditor/RowState.h"
 #include "Mdt/ItemEditor/RowChangeEventDispatcher.h"
@@ -152,14 +153,16 @@ void RowChangeTest::eventDispatcherChangeModelTest()
   RowChangeEventDispatcher dispatcher(nullptr);
   RowState rs;
   RowStateChangedSpy rowStateSpy(dispatcher);
-  CurrentRowChangedSpy currentRowChangedSpy(dispatcher);
+  CurrentRowToBeSetSpy currentRowToBeSetSpy(dispatcher);
+//   CurrentRowChangedSpy currentRowChangedSpy(dispatcher);
   /*
    * Initial state
    */
   QCOMPARE(dispatcher.rowCount(), 0);
   QCOMPARE(dispatcher.currentRow(), -1);
   QCOMPARE(rowStateSpy.count(), 0);
-  QCOMPARE(currentRowChangedSpy.count(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
+//   QCOMPARE(currentRowChangedSpy.count(), 0);
   /*
    * Set a empty model
    */
@@ -168,7 +171,8 @@ void RowChangeTest::eventDispatcherChangeModelTest()
   QCOMPARE(dispatcher.rowCount(), 0);
   QCOMPARE(dispatcher.currentRow(), -1);
   QCOMPARE(rowStateSpy.count(), 0);
-  QCOMPARE(currentRowChangedSpy.count(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
+//   QCOMPARE(currentRowChangedSpy.count(), 0);
   /*
    * Set a model with data
    */
@@ -181,8 +185,10 @@ void RowChangeTest::eventDispatcherChangeModelTest()
   rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 2);
   QCOMPARE(rs.currentRow(), 0);
-  QCOMPARE(currentRowChangedSpy.count(), 1);
-  QCOMPARE(currentRowChangedSpy.takeCurrentRow(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 0);
+//   QCOMPARE(currentRowChangedSpy.count(), 1);
+//   QCOMPARE(currentRowChangedSpy.takeCurrentRow(), 0);
   /*
    * Set a empty model
    */
@@ -194,8 +200,10 @@ void RowChangeTest::eventDispatcherChangeModelTest()
   rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 0);
   QCOMPARE(rs.currentRow(), -1);
-  QCOMPARE(currentRowChangedSpy.count(), 1);
-  QCOMPARE(currentRowChangedSpy.takeCurrentRow(), -1);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), -1);
+//   QCOMPARE(currentRowChangedSpy.count(), 1);
+//   QCOMPARE(currentRowChangedSpy.takeCurrentRow(), -1);
 }
 
 void RowChangeTest::eventDispatcherTest()
@@ -205,14 +213,16 @@ void RowChangeTest::eventDispatcherTest()
   QModelIndex index;
   RowState rs;
   RowStateChangedSpy rowStateSpy(dispatcher);
-  CurrentRowChangedSpy currentRowChangedSpy(dispatcher);
+  CurrentRowToBeSetSpy currentRowToBeSetSpy(dispatcher);
+//   CurrentRowChangedSpy currentRowChangedSpy(dispatcher);
   /*
    * Initial state
    */
   QCOMPARE(dispatcher.rowCount(), 0);
   QCOMPARE(dispatcher.currentRow(), -1);
   QCOMPARE(rowStateSpy.count(), 0);
-  QCOMPARE(currentRowChangedSpy.count(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
+//   QCOMPARE(currentRowChangedSpy.count(), 0);
   /*
    * Checks without model set
    */
@@ -220,15 +230,17 @@ void RowChangeTest::eventDispatcherTest()
   QCOMPARE(dispatcher.rowCount(), 0);
   QCOMPARE(dispatcher.currentRow(), -1);
   QCOMPARE(rowStateSpy.count(), 0);
-  QCOMPARE(currentRowChangedSpy.count(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
+//   QCOMPARE(currentRowChangedSpy.count(), 0);
   /*
-   * Set model
+   * Set a empty model
    */
   dispatcher.setModel(&model);
   QCOMPARE(dispatcher.rowCount(), 0);
   QCOMPARE(dispatcher.currentRow(), -1);
   QCOMPARE(rowStateSpy.count(), 0);
-  QCOMPARE(currentRowChangedSpy.count(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
+//   QCOMPARE(currentRowChangedSpy.count(), 0);
   /*
    * Populate model
    */
@@ -240,10 +252,12 @@ void RowChangeTest::eventDispatcherTest()
   rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), 0);
-  QCOMPARE(currentRowChangedSpy.count(), 1);
-  QCOMPARE(currentRowChangedSpy.takeCurrentRow(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 0);
+//   QCOMPARE(currentRowChangedSpy.count(), 1);
+//   QCOMPARE(currentRowChangedSpy.takeCurrentRow(), 0);
   /*
-   * Set current row
+   * Change current row
    */
   dispatcher.setCurrentRow(1);
   QCOMPARE(dispatcher.rowCount(), 3);
@@ -253,8 +267,10 @@ void RowChangeTest::eventDispatcherTest()
   rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), 1);
-  QCOMPARE(currentRowChangedSpy.count(), 1);
-  QCOMPARE(currentRowChangedSpy.takeCurrentRow(), 1);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 1);
+//   QCOMPARE(currentRowChangedSpy.count(), 1);
+//   QCOMPARE(currentRowChangedSpy.takeCurrentRow(), 1);
   /*
    * Set the same current row again
    */
@@ -263,7 +279,8 @@ void RowChangeTest::eventDispatcherTest()
   QCOMPARE(dispatcher.currentRow(), 1);
   // Check that row state was not signaled again
   QCOMPARE(rowStateSpy.count(), 0);
-  QCOMPARE(currentRowChangedSpy.count(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
+//   QCOMPARE(currentRowChangedSpy.count(), 0);
   /*
    * Set a empty model
    */
@@ -276,22 +293,52 @@ void RowChangeTest::eventDispatcherTest()
   rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), model2.rowCount());
   QCOMPARE(rs.currentRow(), -1);
-  QCOMPARE(currentRowChangedSpy.count(), 1);
-  QCOMPARE(currentRowChangedSpy.takeCurrentRow(), -1);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), -1);
+//   QCOMPARE(currentRowChangedSpy.count(), 1);
+//   QCOMPARE(currentRowChangedSpy.takeCurrentRow(), -1);
   /*
    * Set previous model again
    */
   QVERIFY(model.rowCount() > 0);
   dispatcher.setModel(&model);
-  QCOMPARE(dispatcher.rowCount(), model.rowCount());
+  QCOMPARE(dispatcher.rowCount(), 3);
   QCOMPARE(dispatcher.currentRow(), 0);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), 0);
-  QCOMPARE(currentRowChangedSpy.count(), 1);
-  QCOMPARE(currentRowChangedSpy.takeCurrentRow(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 0);
+//   QCOMPARE(currentRowChangedSpy.count(), 1);
+//   QCOMPARE(currentRowChangedSpy.takeCurrentRow(), 0);
+  /*
+   * Go to row 0 and set a new populated model with same row count.
+   * rowStateChanged must not be signaled
+   * currentRowToBeSet must be signaled
+   */
+  QCOMPARE(dispatcher.rowCount(), 3);
+  QCOMPARE(dispatcher.currentRow(), 0);
+  VariantTableModel model3;
+  model3.resize(3, 1);
+  dispatcher.setModel(&model3);
+  QCOMPARE(dispatcher.rowCount(), 3);
+  QCOMPARE(dispatcher.currentRow(), 0);
+  QCOMPARE(rowStateSpy.count(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 0);
+  /*
+   * Go to row 0 and repopulated model with same row count (will produce a model reset)
+   * rowStateChanged must not be signaled
+   * currentRowToBeSet must be signaled
+   */
+  model3.resize(3, 1);
+  QCOMPARE(dispatcher.rowCount(), 3);
+  QCOMPARE(dispatcher.currentRow(), 0);
+  QCOMPARE(rowStateSpy.count(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 0);
   /*
    * Set a null pointer model
    * Must reset and signal row state
@@ -305,14 +352,17 @@ void RowChangeTest::eventDispatcherTest()
   rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 0);
   QCOMPARE(rs.currentRow(), -1);
-  QCOMPARE(currentRowChangedSpy.count(), 1);
-  QCOMPARE(currentRowChangedSpy.takeCurrentRow(), -1);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), -1);
+//   QCOMPARE(currentRowChangedSpy.count(), 1);
+//   QCOMPARE(currentRowChangedSpy.takeCurrentRow(), -1);
   /*
    * Set a null pointer model again
    */
   dispatcher.setModel(nullptr);
   QCOMPARE(rowStateSpy.count(), 0);
-  QCOMPARE(currentRowChangedSpy.count(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
+//   QCOMPARE(currentRowChangedSpy.count(), 0);
   /*
    * Play
    */
@@ -322,19 +372,15 @@ void RowChangeTest::eventDispatcherTest()
 //   while(tv.isVisible()){
 //     QTest::qWait(500);
 //   }
-  
 }
 
 void RowChangeTest::eventDispatcherInsertFromModelTest()
 {
   RowChangeEventDispatcher dispatcher(nullptr);
-  QList<QVariant> spyItem;
   QStringListModel model;
-  QModelIndex index;
   RowState rs;
-  QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
-
-  QVERIFY(rowStateSpy.isValid());
+  RowStateChangedSpy rowStateSpy(dispatcher);
+  CurrentRowToBeSetSpy currentRowToBeSetSpy(dispatcher);
   /*
    * Setup
    */
@@ -342,6 +388,8 @@ void RowChangeTest::eventDispatcherInsertFromModelTest()
   rowStateSpy.clear();
   QCOMPARE(dispatcher.rowCount(), 0);
   QCOMPARE(dispatcher.currentRow(), -1);
+  QCOMPARE(rowStateSpy.count(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
   /*
    * Insert a row to a empty model
    * - Current row must not change
@@ -358,10 +406,10 @@ void RowChangeTest::eventDispatcherInsertFromModelTest()
   QCOMPARE(dispatcher.currentRow(), -1);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 1);
   QCOMPARE(rs.currentRow(), -1);
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
   /*
    * Go to row 0
    */
@@ -369,6 +417,7 @@ void RowChangeTest::eventDispatcherInsertFromModelTest()
   QCOMPARE(dispatcher.rowCount(), 1);
   QCOMPARE(dispatcher.currentRow(), 0);
   rowStateSpy.clear();
+  currentRowToBeSetSpy.clear();
   /*
    * Insert a row after row 0
    * - Current row must not change
@@ -385,10 +434,10 @@ void RowChangeTest::eventDispatcherInsertFromModelTest()
   QCOMPARE(dispatcher.currentRow(), 0);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 2);
   QCOMPARE(rs.currentRow(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
   /*
    * Insert a row before row 0
    * - Current row must be updated to 1
@@ -407,10 +456,11 @@ void RowChangeTest::eventDispatcherInsertFromModelTest()
   QCOMPARE(dispatcher.currentRow(), 1);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 3);
   QCOMPARE(rs.currentRow(), 1);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 1);
   /*
    * Insert a row before row 0
    * - Current row must be updated to 2
@@ -431,22 +481,19 @@ void RowChangeTest::eventDispatcherInsertFromModelTest()
   QCOMPARE(dispatcher.currentRow(), 2);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 4);
   QCOMPARE(rs.currentRow(), 2);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 2);
 }
 
 void RowChangeTest::eventDispatcherInsertFromModelMultiTest()
 {
   RowChangeEventDispatcher dispatcher(nullptr);
-  QList<QVariant> spyItem;
   QStringListModel model;
-  QModelIndex index;
   RowState rs;
-  QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
-
-  QVERIFY(rowStateSpy.isValid());
+  RowStateChangedSpy rowStateSpy(dispatcher);
   /*
    * Setup
    */
@@ -471,8 +518,7 @@ void RowChangeTest::eventDispatcherInsertFromModelMultiTest()
   QCOMPARE(dispatcher.currentRow(), -1);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 2);
   QCOMPARE(rs.currentRow(), -1);
   /*
@@ -502,8 +548,7 @@ void RowChangeTest::eventDispatcherInsertFromModelMultiTest()
   QCOMPARE(dispatcher.currentRow(), 0);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 4);
   QCOMPARE(rs.currentRow(), 0);
   /*
@@ -530,8 +575,7 @@ void RowChangeTest::eventDispatcherInsertFromModelMultiTest()
   QCOMPARE(dispatcher.currentRow(), 2);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 6);
   QCOMPARE(rs.currentRow(), 2);
 }
@@ -539,13 +583,10 @@ void RowChangeTest::eventDispatcherInsertFromModelMultiTest()
 void RowChangeTest::eventDispatcherInsertAtBeginningTest()
 {
   RowChangeEventDispatcher dispatcher(nullptr);
-  QList<QVariant> spyItem;
   QStringListModel model;
-  QModelIndex index;
   RowState rs;
-  QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
-
-  QVERIFY(rowStateSpy.isValid());
+  RowStateChangedSpy rowStateSpy(dispatcher);
+  CurrentRowToBeSetSpy currentRowToBeSetSpy(dispatcher);
   /*
    * Setup
    */
@@ -562,10 +603,11 @@ void RowChangeTest::eventDispatcherInsertAtBeginningTest()
   QCOMPARE(dispatcher.currentRow(), 0);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 1);
   QCOMPARE(rs.currentRow(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 0);
   /*
    * Insert a row before row 0
    * - Current row must be set to 0
@@ -575,27 +617,26 @@ void RowChangeTest::eventDispatcherInsertAtBeginningTest()
   QCOMPARE(dispatcher.currentRow(), 0);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 2);
   QCOMPARE(rs.currentRow(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 0);
 }
 
 void RowChangeTest::eventDispatcherInsertAtEndTest()
 {
   RowChangeEventDispatcher dispatcher(nullptr);
-  QList<QVariant> spyItem;
   QStringListModel model;
-  QModelIndex index;
   RowState rs;
-  QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
-
-  QVERIFY(rowStateSpy.isValid());
+  RowStateChangedSpy rowStateSpy(dispatcher);
+  CurrentRowToBeSetSpy currentRowToBeSetSpy(dispatcher);
   /*
    * Setup
    */
   dispatcher.setModel(&model);
   rowStateSpy.clear();
+  currentRowToBeSetSpy.clear();
   QCOMPARE(dispatcher.rowCount(), 0);
   QCOMPARE(dispatcher.currentRow(), -1);
   /*
@@ -607,10 +648,11 @@ void RowChangeTest::eventDispatcherInsertAtEndTest()
   QCOMPARE(dispatcher.currentRow(), 0);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 1);
   QCOMPARE(rs.currentRow(), 0);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 0);
   /*
    * Insert a row after row 0
    * - Current row must be set to 1
@@ -620,10 +662,11 @@ void RowChangeTest::eventDispatcherInsertAtEndTest()
   QCOMPARE(dispatcher.currentRow(), 1);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), 2);
   QCOMPARE(rs.currentRow(), 1);
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 1);
 }
 
 void RowChangeTest::eventDispatcherRemoveTest()
@@ -631,12 +674,11 @@ void RowChangeTest::eventDispatcherRemoveTest()
   RowChangeEventDispatcher dispatcher(nullptr);
   QList<QVariant> spyItem;
   QStringListModel model;
-  QModelIndex index;
   RowState rs;
-  QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
+  RowStateChangedSpy rowStateSpy(dispatcher);
+  CurrentRowToBeSetSpy currentRowToBeSetSpy(dispatcher);
   QSignalSpy rowsRemovedSpy(&dispatcher, &RowChangeEventDispatcher::rowsRemoved);
 
-  QVERIFY(rowStateSpy.isValid());
   QVERIFY(rowsRemovedSpy.isValid());
   /*
    * Setup
@@ -645,6 +687,7 @@ void RowChangeTest::eventDispatcherRemoveTest()
   dispatcher.setModel(&model);
   dispatcher.setCurrentRow(0);
   rowStateSpy.clear();
+  currentRowToBeSetSpy.clear();
   /*
    * Remove at beginning - current row is also at beginning
    *
@@ -658,13 +701,14 @@ void RowChangeTest::eventDispatcherRemoveTest()
   QCOMPARE(dispatcher.currentRow(), 0);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), 0);
   // Check that rows removed isgnal was emitted
   QCOMPARE(rowsRemovedSpy.count(), 1);
   rowsRemovedSpy.clear();
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 0);
   /*
    * Remove at end - current row is also at end
    *
@@ -674,6 +718,7 @@ void RowChangeTest::eventDispatcherRemoveTest()
   // Move to end
   dispatcher.setCurrentRow(2);
   rowStateSpy.clear();
+  currentRowToBeSetSpy.clear();
   // Remove
   QCOMPARE(dispatcher.rowCount(), 3);
   QCOMPARE(dispatcher.currentRow(), 2);
@@ -682,22 +727,24 @@ void RowChangeTest::eventDispatcherRemoveTest()
   QCOMPARE(dispatcher.currentRow(), 1);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), 1);
   // Check that rows removed isgnal was emitted
   QCOMPARE(rowsRemovedSpy.count(), 1);
   rowsRemovedSpy.clear();
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 1);
   /*
    * Remove after current row
    *
    * Now: A,B,C,D   - After remove: A,B,C
    *      ^                         ^
    */
-  // Reset model
+  // Repopulate model
   model.setStringList({"A","B","C","D"});
   rowStateSpy.clear();
+  currentRowToBeSetSpy.clear();
   QCOMPARE(dispatcher.rowCount(), 4);
   QCOMPARE(dispatcher.currentRow(), 0);
   // Remove and check
@@ -706,13 +753,13 @@ void RowChangeTest::eventDispatcherRemoveTest()
   QCOMPARE(dispatcher.currentRow(), 0);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), 0);
   // Check that rows removed isgnal was emitted
   QCOMPARE(rowsRemovedSpy.count(), 1);
   rowsRemovedSpy.clear();
+  QCOMPARE(currentRowToBeSetSpy.count(), 0);
   /*
    * Remove before current row
    *
@@ -721,6 +768,7 @@ void RowChangeTest::eventDispatcherRemoveTest()
    */
   dispatcher.setCurrentRow(1);
   rowStateSpy.clear();
+  currentRowToBeSetSpy.clear();
   QCOMPARE(dispatcher.currentRow(), 1);
   // Remove and check
   QVERIFY(model.removeRow(0));
@@ -728,18 +776,20 @@ void RowChangeTest::eventDispatcherRemoveTest()
   QCOMPARE(dispatcher.currentRow(), 0);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), 0);
   // Check that rows removed isgnal was emitted
   QCOMPARE(rowsRemovedSpy.count(), 1);
   rowsRemovedSpy.clear();
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), 0);
   /*
    * Remove at with a 1 element model
    */
   model.setStringList({"A"});
   rowStateSpy.clear();
+  currentRowToBeSetSpy.clear();
   QCOMPARE(dispatcher.rowCount(), 1);
   QCOMPARE(dispatcher.currentRow(), 0);
   QVERIFY(model.removeRow(0));
@@ -747,28 +797,15 @@ void RowChangeTest::eventDispatcherRemoveTest()
   QCOMPARE(dispatcher.currentRow(), -1);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), -1);
   // Check that rows removed isgnal was emitted
   QCOMPARE(rowsRemovedSpy.count(), 1);
   rowsRemovedSpy.clear();
+  QCOMPARE(currentRowToBeSetSpy.count(), 1);
+  QCOMPARE(currentRowToBeSetSpy.takeCurrentRow(), -1);
 }
-
-// /*
-//  * Helpers
-//  */
-// 
-// RowState RowChangeTest::expectedRowState(int rowCount, int currentRow)
-// {
-//   RowState rs;
-// 
-//   rs.setRowCount(rowCount);
-//   rs.setCurrentRow(currentRow);
-// 
-//   return rs;
-// }
 
 /*
  * Main

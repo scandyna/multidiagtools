@@ -32,6 +32,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QAbstractItemModel>
+#include <QVariant>
 #include <initializer_list>
 
 class QAbstractProxyModel;
@@ -234,7 +235,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Get row count
      *
-     * If not model was set, 0 is returned.
+     * If no model was set, 0 is returned.
      *
      * \note If this controller acts on a model
      *        that handles cache, this method
@@ -262,6 +263,23 @@ namespace Mdt{ namespace ItemEditor{
      * \sa currentRow()
      */
     RowState rowState() const;
+
+    /*! \brief Get column count
+     *
+     * Returns column count as seen by the view if a source model was set,
+     *  otherwise 0.
+     */
+    int columnCount() const;
+
+    /*! \brief Get data for current row and column
+     *
+     * Returns data for current row and \a column as seen by the view.
+     *
+     * \pre source model must be valid
+     * \pre current row must be in valid range ( 0 <= currentRow() < rowCount() )
+     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+     */
+    QVariant currentData(int column) const;
 
     /*! \brief Prepend a proxy model
      *
@@ -583,11 +601,17 @@ namespace Mdt{ namespace ItemEditor{
      */
     void rowStateChanged(Mdt::ItemEditor::RowState rs);
 
-    /*! \brief Emitted whenever current row changed
+    /*! \brief Emitted whenever a component should set its current row
      *
-     * This signal is typically used for widget mappers
+     * This signal is emitted whenever current row changed,
+     *  or when a new model was set, or after a model reset.
+     *
+     * This signal is used by components like DataWidgetMapper or ItemSelectionModel.
+     *
+     * \note This signal can also be emitted when modelForView() becomes a nullptr.
+     *        Receiver should also check if it acts on a valid model or not.
      */
-    void currentRowChanged(int row);
+    void currentRowToBeSet(int row);
 
 //     /*! \brief Emitted whenever controller state changed
 //      */
@@ -743,17 +767,6 @@ namespace Mdt{ namespace ItemEditor{
      *  to update this controller state.
      */
     void onRowsRemoved();
-
-    /*! \brief Update row state
-     *
-     * This slot is only called by RowChangeEventDispatcher,
-     *  to tell that a model was changed or populated,
-     *  a selection model was changed,
-     *  or current row changed by selection model.
-     *
-     * It will also emit rowStateChanged() and currentRowChanged().
-     */
-//     void updateRowState(Mdt::ItemEditor::RowState rs);
 
 //     /*! \brief Actions to perform when primary key's source model changed
 //      *

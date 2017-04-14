@@ -45,11 +45,11 @@ AddressWidget::AddressWidget(QWidget* parent)
   ctrl->setPrimaryKey({0});
 //   ctrl->setPrimaryKeyEditable(false);
 //   ctrl->setPrimaryKeyItemsEnabled(false);
-  ctrl->setPrimaryKeyHidden(true);
+//   ctrl->setPrimaryKeyHidden(true);
   ctrl->setForeignKey({1});
 //   ctrl->setForeignKeyEditable(false);
 //   ctrl->setForeignKeyItemsEnabled(false);
-  ctrl->setForeignKeyHidden(true);
+//   ctrl->setForeignKeyHidden(true);
   /*
    * Setup some formatting
    */

@@ -1270,6 +1270,8 @@ void DataWidgetMapperTest::setCurrentRowWidgetTest()
   QVERIFY(edit1.isEnabled());
   QCOMPARE(edit0.text(), QString("2"));
   QCOMPARE(edit1.text(), QString("B"));
+  
+  QFAIL("Missing setCurrentRow() with nullptr model");
 }
 
 void DataWidgetMapperTest::setCurrentRowSignalTest()
