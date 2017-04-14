@@ -2,27 +2,27 @@ format 211
 
 classcanvas 128386 class_ref 2706434 // NavigationActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 710.6 968.5 2006
+  xyz 710 968.5 2006
 end
 classcanvas 128642 class_ref 2713474 // EditionActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 281.1 968.5 2011
+  xyz 319.5 1024.5 2011
 end
 classcanvas 132482 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 482 43 2047
+  xyz 482.3 43.5 2047
 end
 classcanvas 132610 class_ref 3145090 // RowChangeEventDispatcher
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 248 43 2053
+  xyz 248.5 43.5 2053
 end
 classcanvas 133250 class_ref 3594882 // ProxyModelContainer
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 690 443 2000
+  xyz 690.5 443.5 2000
 end
 classcanvas 136706 class_ref 3648002 // AbstractController
   classdiagramsettings member_max_width 0 end
-  xyz 43 130 2000
+  xyz 43.5 128.2 2000
 end
 classcanvas 137090 class_ref 3823106 // PrimaryKeyProxyModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -30,20 +30,25 @@ classcanvas 137090 class_ref 3823106 // PrimaryKeyProxyModel
 end
 classcanvas 137218 class_ref 3823234 // ForeignKeyProxyModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 469.9 968.5 2000
+  xyz 469.8 968.5 2000
 end
 classcanvas 137602 class_ref 2684674 // ControllerStateMachine
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 265 843 2065
+  xyz 282 948 2065
 end
 classcanvas 138498 class_ref 3890818 // AbstractModelWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 761.9 203.9 2006
+  xyz 761.4 202.9 2006
 end
 note 138754 "While doing long process (submit/revert DB):
  - Disable actions
  - Display processs animation"
-  xyzwh 659.6 565.2 2000 389 104
+  xyzwh 659.9 564.8 2000 389 104
+note 138882 "NOTE: currentRowContentsChanged():
+ - On model changed
+ - On model reset
+ - NOT on data changed, because this signal exits.. heu.."
+  xyzwh 42 714 2005 521 109
 relationcanvas 132738 relation_ref 3561602 // <unidirectional association>
   from ref 132610 z 2054 to ref 132482
   no_role_a no_role_b

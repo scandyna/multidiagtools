@@ -2,47 +2,47 @@ format 211
 
 classcanvas 128002 class_ref 3749250 // AbstractControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 79.6 203.8 2000
+  xyz 78.9 206 2000
 end
 classcanvas 128258 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 671.2 79.15 2006
+  xyz 671.1 79.45 2006
 end
 classcanvas 129282 class_ref 3681922 // SqlControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 907.4 39.6 2011
+  xyz 907.7 39.9 2011
 end
 classcanvas 130050 class_ref 3877378 // FilterControllerRelation
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 251.6 709.45 2000
+  xyz 251.9 709.75 2000
 end
 classcanvas 130306 class_ref 3877506 // NavigationControllerRelation
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 449.8 709.45 2000
+  xyz 449.9 709.75 2000
 end
 classcanvas 131074 class_ref 3877634 // SqlFilterControllerRelation
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 124.9 832.15 2000
+  xyz 124.1 831.45 2000
 end
 classcanvas 131586 class_ref 3877762 // ControllerRelationType
   classdiagramsettings member_max_width 0 end
-  xyz 410.9 1005.4 2000
+  xyz 411.2 1006 2000
 end
 note 131970 "The type of child controller model is known when relation is created.
 So, impl subclass can simply cast (evt. qobject_cast as assertion)"
-  xyzwh 339.85 793.6 2000 408 130
+  xyzwh 340.05 793.8 2000 408 130
 note 132482 "ItemEditor_Core
 ItemEditor_Sql
 ItemEditor_Widgets
 ItemEditor_QtQuick"
-  xyzwh 40.3 1004.2 2000 289 115
+  xyzwh 40.9 1004.6 2000 289 115
 classcanvas 133122 class_ref 2684674 // ControllerStateMachine
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 627.25 204.85 2012
+  xyz 628.25 205.55 2012
 end
 classcanvas 134530 class_ref 3944834 // ControllerRelationEventMapper
   classdiagramsettings member_max_width 0 end
-  xyz 646.5 1002.6 2000
+  xyz 646.5 1002.2 2000
 end
 relationcanvas 128386 relation_ref 4157314 // <generalisation>
   geometry VHV unfixed
@@ -59,16 +59,16 @@ relationcanvas 130178 relation_ref 4312578 // <generalisation>
 end
 relationcanvas 130434 relation_ref 4312706 // <generalisation>
   geometry VHV unfixed
-  from ref 130306 z 2001 to point 545 670.5
-  line 134658 z 2001 to point 328 670.5
+  from ref 130306 z 2001 to point 545 670.6
+  line 134658 z 2001 to point 328 670.6
   line 134786 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131202 relation_ref 4312834 // <generalisation>
   geometry VHV unfixed
-  from ref 131074 z 2001 to point 211 669.7
-  line 134274 z 2001 to point 328 669.7
+  from ref 131074 z 2001 to point 211 669.8
+  line 134274 z 2001 to point 328 669.8
   line 134402 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

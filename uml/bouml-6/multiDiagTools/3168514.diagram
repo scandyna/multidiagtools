@@ -2,14 +2,36 @@ format 211
 
 classcanvas 128002 class_ref 2927362 // SqlTableViewController
   classdiagramsettings member_max_width 0 end
-  xyz 36 287 2000
+  xyz 36 351 2000
 end
 classcanvas 128130 class_ref 3614594 // AbstractSqlController
   classdiagramsettings member_max_width 0 end
-  xyz 110 40 2006
+  xyz 428 62 2006
+end
+classcanvas 128386 class_ref 3138178 // TableViewController
+  classdiagramsettings member_max_width 0 end
+  xyz 98 208 2012
+end
+classcanvas 128514 class_ref 3965570 // SqlTableControllerInterface
+  classdiagramsettings member_max_width 0 end
+  xyz 495 527 2000
+end
+classcanvas 128642 class_ref 3965314 // AbstractSqlControllerInterface
+  classdiagramsettings member_max_width 0 end
+  xyz 516 362 2005
 end
 relationcanvas 128258 relation_ref 3983106 // <generalisation>
   from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 4437378 // <generalisation>
+  from ref 128514 z 2006 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 4438786 // <generalisation>
+  from ref 128002 z 2001 to ref 128514
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

@@ -12,10 +12,6 @@ classcanvas 128386 class_ref 3138562 // SqlWidgetMapperController
   classdiagramsettings member_max_width 0 end
   xyz 242 434 2006
 end
-classcanvas 128642 class_ref 3090434 // AbstractController
-  classdiagramsettings member_max_width 0 end
-  xyz 271 42 2006
-end
 classcanvas 129154 class_ref 174210 // QSqlTableModel
   classdiagramsettings member_max_width 0 end
   xyz 103 306 2006
@@ -42,11 +38,6 @@ relationcanvas 128258 relation_ref 3983106 // <generalisation>
 end
 relationcanvas 128514 relation_ref 3983234 // <generalisation>
   from ref 128386 z 2007 to ref 128002
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128770 relation_ref 3982594 // <generalisation>
-  from ref 128002 z 2007 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

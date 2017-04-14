@@ -1,37 +1,36 @@
-window_sizes 1280 963 282 992 911 0
+window_sizes 1280 963 275 999 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 3148674 // Overview
     676 728 100 22 22 0
   classdiagram_ref 3387010 // StateMachine
     1551 1003 100 22 24 8
-  classdiagram_ref 2707074 // AbstractController
-    911 911 80 23 36 0
-  classdiagram_ref 3261570 // AbstractControllerRelation
-    928 911 90 22 24 0
+  active  classdiagram_ref 3261570 // AbstractControllerRelation
+    999 911 90 22 24 0
   classdiagram_ref 3360898 // ControllerRelationEventMapper
     120 98 100 4 0 0
-  classdiagram_ref 3360642 // ModelWrapper
-    120 98 100 18 0 0
   classdiagram_ref 3353858 // FilterControllerRelation
     928 911 100 4 0 0
   classdiagram_ref 2761090 // WidgetMapperController
     937 911 100 8 0 0
   classdiagram_ref 2761218 // ControllerOverview
     120 98 90 23 0 171
-  classdiagram_ref 3168258 // Overview
-    120 98 100 4 0 0
-  active  classdiagram_ref 3168386 // AbstractSqlController
-    992 911 100 7 288 0
+  classdiagram_ref 2767746 // EventDispatcher
+    999 911 100 23 0 0
 end
 show_stereotypes
-selected class_ref 3648002 // AbstractController
+selected classdiagram_ref 2767746 // EventDispatcher
 open
   
 package_ref 409858 // principes
-  classview_ref 1504898 // DataWidgetMapper
-  classview_ref 1768322 // ControllerState
-  classview_ref 1287042 // Controller
+  operation_ref 5619202 // currentRowChanged
+  class_ref 3972226 // AbstractItemModelControllerInterface
+  operation_ref 5605378 // setDefaultModel
+  operation_ref 5605122 // setQuery
+  operation_ref 5626242 // setModel
+  operation_ref 5605250 // setDefaultModel
+  classdiagram_ref 3367426 // Controller2overview
   classview_ref 1689474 // SqlController
+  class_ref 174338 // QSqlQueryModel
 end
 end

@@ -2,7 +2,7 @@ format 211
 
 classcanvas 128130 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 449 154 2006
+  xyz 451 173 2006
 end
 classcanvas 128514 class_ref 3145090 // RowChangeEventDispatcher
   classdiagramsettings member_max_width 0 end
@@ -14,12 +14,27 @@ classcanvas 129538 class_ref 2706434 // NavigationActions
 end
 classcanvas 132226 class_ref 2927362 // SqlTableViewController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 40.5 392.5 2005
+  xyz 450.5 285.5 2005
 end
 classcanvas 132354 class_ref 3138178 // TableViewController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 279.5 392.5 2006
+  xyz 218.5 764.5 2006
 end
+note 132482 "NOTE: currentRowContentsChanged():
+ - On model changed
+ - On model reset
+ - NOT on data changed, because this signal exits.. heu..
+ --> Finaly, we have special cases for TableViewController and WidgetMapperControllers.
+  -- TableViewController: must be shure that current row is active (selectionModel). The view does the rest (handles all signals from model)
+  --- Mybe: ItemSelectionModel should handle missing cases (model changed and reset)
+  -- DataWidgetMapper: should handle model signals as Q..ItemViews does.
+ ---> Here, should we react to model changed and model reset ?
+
+TRY: currentRowToBeSet(int row):
+ - Name seems correct:
+ - to tell ItemSelectionModel to set its current row to row for any case
+ - to tell DataWidgetMapper to read data (and flags) from model for row for any cases"
+  xyzwh 23.5 362.5 2005 973 395
 relationcanvas 131586 relation_ref 3561602 // <unidirectional association>
   from ref 128514 z 2007 to ref 128130
   no_role_a no_role_b
