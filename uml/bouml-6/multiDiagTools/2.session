@@ -1,36 +1,44 @@
-window_sizes 1280 963 275 999 911 0
+window_sizes 1280 963 349 925 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 3148674 // Overview
     676 728 100 22 22 0
   classdiagram_ref 3387010 // StateMachine
     1551 1003 100 22 24 8
-  active  classdiagram_ref 3261570 // AbstractControllerRelation
-    999 911 90 22 24 0
   classdiagram_ref 3360898 // ControllerRelationEventMapper
     120 98 100 4 0 0
   classdiagram_ref 3353858 // FilterControllerRelation
     928 911 100 4 0 0
   classdiagram_ref 2761090 // WidgetMapperController
     937 911 100 8 0 0
+  classdiagram_ref 3360642 // ModelWrapper
+    120 98 100 7 0 0
+  classdiagram_ref 2760962 // TableViewController
+    120 98 100 21 24 0
+  active  classdiagram_ref 3168514 // SqlTableViewController
+    925 911 100 4 24 0
+  classdiagram_ref 2707074 // AbstractController
+    120 98 100 23 12 0
+  classdiagram_ref 3460098 // ItemViewImplementation
+    951 911 100 18 0 0
+  classdiagram_ref 3168386 // AbstractSqlController
+    120 98 100 8 0 0
   classdiagram_ref 2761218 // ControllerOverview
-    120 98 90 23 0 171
-  classdiagram_ref 2767746 // EventDispatcher
-    999 911 100 23 0 0
+    120 98 100 23 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2767746 // EventDispatcher
+selected classdiagram_ref 3168642 // SqlWidgetMapperController
 open
   
-package_ref 409858 // principes
-  operation_ref 5619202 // currentRowChanged
-  class_ref 3972226 // AbstractItemModelControllerInterface
-  operation_ref 5605378 // setDefaultModel
-  operation_ref 5605122 // setQuery
-  operation_ref 5626242 // setModel
-  operation_ref 5605250 // setDefaultModel
-  classdiagram_ref 3367426 // Controller2overview
-  classview_ref 1689474 // SqlController
+  package_ref 409858 // principes
+  classview_ref 1768322 // ControllerState
+  classview_ref 1801090 // Controller_Core
+  operation_ref 5640578 // setView
+  operation_ref 5640706 // view
+  classdiagram_ref 2761090 // WidgetMapperController
+  classview_ref 1801218 // Controller_Sql
+  classview_ref 1801474 // Controller_Sql_Widgets
+  classview_ref 1287042 // Controller
   class_ref 174338 // QSqlQueryModel
 end
 end

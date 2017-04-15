@@ -29,6 +29,8 @@ class ControllerTest : public TestBase
 
  private slots:
 
+  void sandbox();
+
   void initTestCase();
   void cleanupTestCase();
 

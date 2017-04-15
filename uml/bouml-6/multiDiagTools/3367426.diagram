@@ -128,9 +128,13 @@ relationcanvas 132482 relation_ref 3975938 // <unidirectional association>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 132610 relation_ref 3984258 // <directional composition>
-  decenter_begin 467
-  from ref 131330 z 2013 to ref 132354
+relationcanvas 132866 relation_ref 4446082 // <generalisation>
+  from ref 131458 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133122 relation_ref 4446722 // <generalisation>
+  from ref 131330 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

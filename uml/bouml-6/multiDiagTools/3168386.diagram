@@ -2,39 +2,54 @@ format 211
 
 classcanvas 128002 class_ref 3614594 // AbstractSqlController
   classdiagramsettings member_max_width 0 end
-  xyz 430 879 2000
+  xyz 50 255 2000
 end
 classcanvas 128514 class_ref 3648002 // AbstractController
-  classdiagramsettings member_max_width 0 end
-  xyz 274 127 2006
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 135 130 2006
 end
 classcanvas 128898 class_ref 2775554 // PrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 184 994 2000
+  xyz 424 218 2000
 end
 classcanvas 129026 class_ref 2775682 // ForeignKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 761 994 2000
+  xyz 425 306 2000
 end
 classcanvas 129410 class_ref 3715330 // PrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 480 42 2000
+  xyz 104 42 2000
 end
 classcanvas 129538 class_ref 3715458 // ForeignKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 40 458 2000
+  xyz 300 130 2000
+end
+classcanvas 129922 class_ref 3979010 // AbstractSqlQueryModelController
+  classdiagramsettings member_max_width 0 end
+  xyz 42 375 2006
+end
+classcanvas 130562 class_ref 3979138 // AbstractSqlTableModelController
+  classdiagramsettings member_max_width 0 end
+  xyz 42 497 2000
 end
 relationcanvas 128770 relation_ref 4025346 // <generalisation>
+  decenter_begin 510
   from ref 128002 z 2007 to ref 128514
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 4115970 // <directional composition>
-  from ref 128002 z 2001 to ref 128898
+  decenter_begin 204
+  decenter_end 666
+  from ref 128002 z 2001 to point 384 272
+  line 130306 z 2001 to point 384 248
+  line 130818 z 2001 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 4116098 // <directional composition>
+  decenter_begin 783
+  decenter_end 311
   from ref 128002 z 2001 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -45,8 +60,21 @@ relationcanvas 129666 relation_ref 4116226 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 4116354 // <directional composition>
-  decenter_begin 493
   from ref 128514 z 2007 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 4446466 // <generalisation>
+  decenter_begin 510
+  decenter_end 510
+  from ref 129922 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 4446594 // <generalisation>
+  decenter_begin 510
+  decenter_end 510
+  from ref 130562 z 2007 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

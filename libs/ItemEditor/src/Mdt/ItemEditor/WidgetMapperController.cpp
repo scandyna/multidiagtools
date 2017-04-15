@@ -30,7 +30,7 @@
 namespace Mdt{ namespace ItemEditor{
 
 WidgetMapperController::WidgetMapperController(QObject* parent)
- : AbstractItemModelController(parent),
+ : AbstractController(parent),
    mWidgetMapper(new DataWidgetMapper(this))
 {
   setControllerStateMachine( ControllerStateMachine::makeNew<WidgetMapperControllerStateTable, WidgetMapperControllerStatePermission>(this) );

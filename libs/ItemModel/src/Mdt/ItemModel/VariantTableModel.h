@@ -47,6 +47,8 @@ namespace Mdt{ namespace ItemModel{
    */
   class VariantTableModel : public QAbstractTableModel
   {
+   Q_OBJECT
+
    public:
 
     /*! \brief Construct a model

@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H
 #define MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H
 
-#include "AbstractItemModelController.h"
+#include "AbstractController.h"
 #include <memory>
 
 class QAbstractItemModel;
@@ -39,7 +39,7 @@ namespace Mdt{ namespace ItemEditor{
    *  Whenn edition is done, the item delegate set data to the model and closes the editor,
    *  also turning this controller to editing state.
    */
-  class TableViewController : public AbstractItemModelController
+  class TableViewController : public AbstractController
   {
    Q_OBJECT
 

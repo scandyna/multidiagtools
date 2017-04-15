@@ -44,6 +44,73 @@
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
 
+class AbstractItemModelHandler
+{
+ public:
+
+  AbstractItemModelHandler() = default;
+  AbstractItemModelHandler(const AbstractItemModelHandler &) = delete;
+  AbstractItemModelHandler(AbstractItemModelHandler &&) = delete;
+  AbstractItemModelHandler & operator=(const AbstractItemModelHandler &) = delete;
+  AbstractItemModelHandler & operator=(AbstractItemModelHandler &&) = delete;
+
+  virtual void setModel(QAbstractItemModel *model)
+  {
+    qDebug() << "Abstract model";
+  }
+};
+
+class StringListModelHandler : public AbstractItemModelHandler
+{
+ public:
+
+  void setModel(QAbstractItemModel *model) override
+  {
+    Q_ASSERT( qobject_cast<QStringListModel*>(model) != nullptr );
+
+    qDebug() << "String list model";
+  }
+};
+
+class TableModelHandler : public AbstractItemModelHandler
+{
+ public:
+
+  void setModel(QAbstractItemModel *model) override
+  {
+    Q_ASSERT( qobject_cast<QAbstractTableModel*>(model) != nullptr );
+    
+    qDebug() << "Table model";
+  }
+};
+
+class VTableModelHandler : public TableModelHandler
+{
+ public:
+
+  void setModel(QAbstractItemModel *model) override
+  {
+    Q_ASSERT( qobject_cast<VariantTableModel*>(model) != nullptr );
+    
+    qDebug() << "Variant table model";
+  }
+
+};
+
+void ControllerTest::sandbox()
+{
+  AbstractItemModelHandler amh;
+  StringListModelHandler smh;
+  TableModelHandler tmh;
+  VTableModelHandler vtmh;
+  
+  AbstractItemModelHandler & href = vtmh;
+  
+//   href.setModel(new QStringListModel);
+  href.setModel(new VariantTableModel);
+}
+
+
 void ControllerTest::initTestCase()
 {
 }

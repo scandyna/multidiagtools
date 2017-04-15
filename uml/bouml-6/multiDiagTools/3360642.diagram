@@ -49,7 +49,7 @@ Note: what about a unified setModel() moethod ?
         Subclass can proviede a model() method.
         AbstractController::sourceModel() allways returns the model  passed in setModelWrapper().
          Subclass can cast sourceModel() if it needs to interact with its concrete model"
-  xyzwh 151 382.8 2024 697 425
+  xyzwh 386 122.8 2024 697 425
 relationcanvas 128642 relation_ref 174978 // <generalisation>
   from ref 128386 z 2007 to ref 128514
   no_role_a no_role_b
@@ -63,8 +63,8 @@ end
 relationcanvas 129154 relation_ref 4332674 // <generalisation>
   geometry VHV unfixed
   decenter_end 485
-  from ref 128130 z 2001 to point 117 360.2
-  line 131714 z 2001 to point 237 360.2
+  from ref 128130 z 2001 to point 117 360
+  line 131714 z 2001 to point 237 360
   line 131842 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -85,8 +85,8 @@ relationcanvas 130434 relation_ref 4429954 // <generalisation>
   geometry VHV unfixed
   decenter_begin 475
   decenter_end 485
-  from ref 130306 z 2001 to point 749 359.6
-  line 130818 z 2001 to point 237 359.6
+  from ref 130306 z 2001 to point 749 359
+  line 130818 z 2001 to point 237 359
   line 130946 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

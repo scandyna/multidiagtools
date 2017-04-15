@@ -33,7 +33,7 @@ using namespace Mdt::ItemModel;
 namespace Mdt{ namespace ItemEditor{
 
 TableViewController::TableViewController(QObject* parent)
- : AbstractItemModelController(parent),
+ : AbstractController(parent),
    mContainer(new ItemViewPrivateContainer)
 {
   setControllerStateMachine( ControllerStateMachine::makeNew<TableViewControllerStateTable, TableViewControllerStatePermission>(this) );

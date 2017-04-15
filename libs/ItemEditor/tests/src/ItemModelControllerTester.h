@@ -21,11 +21,11 @@
 #ifndef MDT_ITEM_EDITOR_ITEM_MODEL_CONTROLLER_TESTER_H
 #define MDT_ITEM_EDITOR_ITEM_MODEL_CONTROLLER_TESTER_H
 
-#include "Mdt/ItemEditor/AbstractItemModelController.h"
+#include "Mdt/ItemEditor/AbstractController.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include <QVariant>
 
-class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelController
+class ItemModelControllerTester : public Mdt::ItemEditor::AbstractController
 {
  Q_OBJECT
 

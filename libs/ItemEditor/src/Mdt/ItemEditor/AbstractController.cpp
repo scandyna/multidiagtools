@@ -116,6 +116,12 @@ void AbstractController::setInsertLocation(AbstractController::InsertLocation il
   mInsertLocation = il;
 }
 
+void AbstractController::setModel(QAbstractItemModel* model)
+{
+  /// \todo registerModel() should be deleted
+  registerModel(model);
+}
+
 int AbstractController::rowCount() const
 {
   return mRowChangeEventDispatcher->rowCount();

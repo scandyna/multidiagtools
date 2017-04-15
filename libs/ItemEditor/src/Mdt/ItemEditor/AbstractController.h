@@ -188,32 +188,59 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set model
      *
-     * \note Because model can be shared with several objects (f.ex. other views),
+     * Subclass that acts on a specific item model (derived from QAbstractItemModel)
+     *  should override this method (with QAbstractItemModel as argument):
+     *  and 
+     *  \code
+     *  void setModel(QAbstractItemModel *model) override;
+     *  \endcode
+     *  in the implementation, subclass should make a assertion that \a model is of the excpected type,
+     *  and call this base implementation:
+     *  \code
+     *  Q_ASSERT( qobject_cast<QSqlTableModel*>(model) != nullptr );
+     *  AbstractController::setModel(model);
+     *  \endcode
+     *
+     * A subclass should not store \a model itself, because it becomes difficult to handle
+     *  when model changes.
+     *  Because the model type is known by the subclass, it is better to subclass model()
+     *  and return a casted version of it:
+     *  \code
+     *  QSqlTableModel *model() const
+     *  {
+     *    Q_ASSERT( qobject_cast<QSqlTableModel*>(model) != nullptr );
+     *    return reinterpret_cast<QSqlTableModel*>( AbstractController::model() );
+     *  }
+     *  \endcode
+     *
+     * This base implementation will store the instance of \a model,
+     *  then call setModelToView().
+     *
+     * \note Because \a model can be shared with several objects (f.ex. other views),
      *        the controller does not take ownership of it (it will not delete it).
      * \pre model must be a valid pointer
+     * \sa setModelToView()
+     * \sa model()
      */
-//     void setModel(QAbstractItemModel *model);
+    virtual void setModel(QAbstractItemModel *model);
 
     /*! \brief Get model
      *
      * Returns the model set with setModel(),
      *  or a nullptr if no one was set,
      *  or model was delete elsewhere in application.
+     *
+     * \sa setModel()
+     * \sa sourceModel()
      */
-//     QAbstractItemModel *model() const
-//     {
-//       return mModelContainer.sourceModel();
-//     }
+    QAbstractItemModel *model() const
+    {
+      return mModelContainer.sourceModel();
+    }
 
     /*! \brief Get the source model
      *
-     * Subclass that acts on a specific item model
-     *  (derived from QAbstractItemModel)
-     *  should have setModel() and model() methods.
-     *  sourceModel() also returns the same as model(),
-     *  but a pointer to QAbstractItemModel base class.
-     *
-     * Can also be a nullptr if no model was set.
+     * This is the same as model()
      */
     QAbstractItemModel *sourceModel() const
     {

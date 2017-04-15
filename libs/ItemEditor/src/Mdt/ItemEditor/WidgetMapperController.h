@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_H
 #define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_H
 
-#include "AbstractItemModelController.h"
+#include "AbstractController.h"
 #include <QByteArray>
 
 class QWidget;
@@ -32,7 +32,7 @@ namespace Mdt{ namespace ItemEditor{
 
   /*! \brief Controller for DataWidgetMapper
    */
-  class WidgetMapperController : public AbstractItemModelController
+  class WidgetMapperController : public AbstractController
   {
    Q_OBJECT
 

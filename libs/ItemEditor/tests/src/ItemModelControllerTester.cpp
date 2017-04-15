@@ -47,7 +47,7 @@ class StateTableTestClass : public AbstractControllerStateTable
 
 
 ItemModelControllerTester::ItemModelControllerTester(QObject* parent, ControllerStateMachine *stateMachine)
- : AbstractItemModelController(parent)
+ : AbstractController(parent)
 {
   if(stateMachine == nullptr){
     setControllerStateMachine( ControllerStateMachine::makeNew<StateTableTestClass, AbstractControllerStatePermission>(this) );

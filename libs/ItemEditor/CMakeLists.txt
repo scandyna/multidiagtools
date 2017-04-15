@@ -25,7 +25,6 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/AbstractControllerStateTable.cpp
     src/Mdt/ItemEditor/ControllerStateMachine.cpp
     src/Mdt/ItemEditor/AbstractController.cpp
-    src/Mdt/ItemEditor/AbstractItemModelController.cpp
     src/Mdt/ItemEditor/ItemViewPrivateContainer.cpp
     src/Mdt/ItemEditor/TableViewControllerStatePermission.cpp
     src/Mdt/ItemEditor/TableViewControllerStateTable.cpp
