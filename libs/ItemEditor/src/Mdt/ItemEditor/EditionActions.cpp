@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "EditionActions.h"
 
+#include "Debug.h"
+
 namespace Mdt{ namespace ItemEditor{
 
 EditionActions::EditionActions(QObject* parent)
@@ -37,6 +39,8 @@ EditionActions::EditionActions(QObject* parent)
 
 void EditionActions::updateEnableState()
 {
+  qDebug() << "EA: updateEnableState - state: " << controllerState() << " - row: " << currentRow();
+
   if(rowStateIsNull()){
     disableAllActions();
     return;

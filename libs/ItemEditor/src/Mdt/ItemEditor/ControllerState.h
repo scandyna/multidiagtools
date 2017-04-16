@@ -35,8 +35,9 @@ namespace Mdt{ namespace ItemEditor{
     Editing,        /*!< Editing state */
     EditingItem,    /*!< Editing a item state */
     Inserting,      /*!< Inserting state */
-    ChildEditing,   /*!< A child controller is in Editing state */
-    ParentEditing   /*!< Parent controller is in Editing state */
+    ChildEditing,   /*!< A child controller is Editing */
+    ParentEditing,  /*!< Parent controller is Editing*/
+    Disabled        /*!< Controller is disabled */
   };
 
   /// \todo Add ModelNotSet (or NoModelSet) state ?

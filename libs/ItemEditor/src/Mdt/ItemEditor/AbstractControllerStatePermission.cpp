@@ -49,6 +49,8 @@ bool AbstractControllerStatePermission::canChangeCurrentRow(const AbstractContro
       return false;
     case ControllerState::ParentEditing:
       return true;
+    case ControllerState::Disabled:
+      return false;
   }
   return false;
 }
@@ -60,6 +62,9 @@ bool AbstractControllerStatePermission::isChangeCurrentRowActionEnabled(const Ab
 
 bool AbstractControllerStatePermission::canInsert(const AbstractControllerStateTable & st) const
 {
+  if(st.currentState() == ControllerState::Disabled){
+    return false;
+  }
   return st.canHandleEvent(ControllerEvent::InsertStarted);
 }
 
@@ -76,6 +81,8 @@ bool AbstractControllerStatePermission::canEdit(const AbstractControllerStateTab
     case ControllerState::Inserting:
 //     case ControllerState::EditingNewItem:
       return true;
+    case ControllerState::Disabled:
+      return false;
     case ControllerState::Visualizing:
     case ControllerState::ChildEditing:
     case ControllerState::ParentEditing:
@@ -84,8 +91,11 @@ bool AbstractControllerStatePermission::canEdit(const AbstractControllerStateTab
   return st.canHandleEvent(ControllerEvent::DataEditionStarted);
 }
 
-bool AbstractControllerStatePermission::canSubmit(const AbstractControllerStateTable &) const
+bool AbstractControllerStatePermission::canSubmit(const AbstractControllerStateTable & st) const
 {
+  if(st.currentState() == ControllerState::Disabled){
+    return false;
+  }
   return true;
 }
 
@@ -97,6 +107,7 @@ bool AbstractControllerStatePermission::isSubmitActionEnabled(const AbstractCont
     case ControllerState::Visualizing:
       return false;
     case ControllerState::Editing:
+    case ControllerState::Disabled:
     case ControllerState::EditingItem:
     case ControllerState::Inserting:
     case ControllerState::ChildEditing:
@@ -107,6 +118,9 @@ bool AbstractControllerStatePermission::isSubmitActionEnabled(const AbstractCont
 
 bool AbstractControllerStatePermission::canRevert(const AbstractControllerStateTable & st) const
 {
+  if(st.currentState() == ControllerState::Disabled){
+    return false;
+  }
   return st.canHandleEvent(ControllerEvent::RevertDone);
 }
 
@@ -120,6 +134,7 @@ bool AbstractControllerStatePermission::isRevertActionEnabled(const AbstractCont
     case ControllerState::EditingItem:
     case ControllerState::Inserting:
     case ControllerState::ChildEditing:
+    case ControllerState::Disabled:
       break;
   }
   return canRevert(st);
@@ -130,6 +145,8 @@ bool AbstractControllerStatePermission::canRemove(const AbstractControllerStateT
   switch(st.currentState()){
     case ControllerState::Visualizing:
       return true;
+    case ControllerState::Disabled:
+      return false;
     case ControllerState::Editing:
     case ControllerState::EditingItem:
     case ControllerState::Inserting:
@@ -158,6 +175,8 @@ bool AbstractControllerStatePermission::canSelect(const AbstractControllerStateT
     case ControllerState::ChildEditing:
       return false;
     case ControllerState::ParentEditing:
+      return false;
+    case ControllerState::Disabled:
       return false;
   }
   return false;

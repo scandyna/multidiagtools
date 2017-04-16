@@ -40,7 +40,9 @@ namespace Mdt{ namespace ItemEditor{
     EditionStartedFromParent, /*!< Parent controller stated editing (or inserting, or ...) */
     EditionDoneFromParent,    /*!< Parent controller finished editing */
     EditionStartedFromChild,  /*!< Child controller stated editing (or inserting, or ...) */
-    EditionDoneFromChild      /*!< Child controller finished editing */
+    EditionDoneFromChild,     /*!< Child controller finished editing */
+    DisableController,        /*!< Request to disable the controller */
+    EnableController          /*!< Request to enable the controller */
   };
 
   /*! \brief Get text version of \a event

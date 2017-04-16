@@ -43,13 +43,23 @@ ClientListWidget::ClientListWidget(QWidget* parent)
   addWidgetToTopArea(new QLabel("State: "));
   mStateLabel = new QLabel;
   addWidgetToTopArea(mStateLabel);
+  addWidgetToTopArea(new QLabel("     Row state: "));
+  mRowStateLabel = new QLabel;
+  addWidgetToTopArea(mRowStateLabel);
 //   connect(ctrl, &TableViewController::controllerStateChanged, this, &ClientListWidget::onControllerStateChanged);
   connect(ctrl->controllerStateMachine(), &ControllerStateMachine::currentStateChanged, this, &ClientListWidget::onControllerStateChanged);
   onControllerStateChanged();
+  connect(ctrl, &TableViewController::rowStateChanged, this, &ClientListWidget::onRowStateChanged);
+  onRowStateChanged(ctrl->rowState());
 }
 
 void ClientListWidget::onControllerStateChanged()
 {
   const auto state = controller()->controllerState();
   mStateLabel->setText( controllerStateText(state) );
+}
+
+void ClientListWidget::onRowStateChanged(RowState rs)
+{
+  mRowStateLabel->setText( rowStateText(rs) );
 }

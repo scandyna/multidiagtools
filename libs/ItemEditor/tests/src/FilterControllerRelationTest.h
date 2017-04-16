@@ -35,6 +35,7 @@ class FilterControllerRelationTest : public TestBase
   void setControllersTest();
   void filterConditionTest();
   void parentControllerCurrentRowTest();
+  void insertPermissionTest();
   void filterTest();
   void filterTableViewTest();
 

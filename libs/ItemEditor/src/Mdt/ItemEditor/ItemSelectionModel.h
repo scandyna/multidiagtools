@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -87,10 +87,9 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    bool canChangeIndex(const QModelIndex & index) const;
+    bool canChangeToIndex(const QModelIndex & index) const;
 
-    int pvPreviousCurrentRow = -1;
-    int pvRequestedColumn = -1;
+    int mRequestedColumn = -1;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -57,6 +57,7 @@ void FilterControllerRelationTest::setControllersTest()
   ItemModelControllerTester parentController;
   parentController.setModel(&parentModel);
   QCOMPARE(parentController.sourceModel(), &parentModel);
+  auto *defaultParentModelForView = parentController.modelForView();
   /*
    * Setup child model and controller
    */
@@ -65,14 +66,13 @@ void FilterControllerRelationTest::setControllersTest()
   ItemModelControllerTester childController;
   childController.setModel(&childModel);
   QCOMPARE(childController.sourceModel(), &childModel);
-  QCOMPARE(childController.modelForView(), &childModel);
   /*
    * Setup relation
    */
   FilterControllerRelation relation;
   relation.setParentController(&parentController);
   relation.setChildController(&childController);
-  QCOMPARE(relation.relationFilterModel()->parentModel(), &parentModel);
+  QCOMPARE(relation.relationFilterModel()->parentModel(), defaultParentModelForView);
   QCOMPARE(relation.relationFilterModel()->sourceModel(), &childModel);
 }
 
@@ -95,7 +95,6 @@ void FilterControllerRelationTest::filterConditionTest()
   ItemModelControllerTester childController;
   childController.setModel(&childModel);
   QCOMPARE(childController.sourceModel(), &childModel);
-  QCOMPARE(childController.modelForView(), &childModel);
   /*
    * Setup relation using expression
    */
@@ -171,6 +170,44 @@ void FilterControllerRelationTest::parentControllerCurrentRowTest()
   QCOMPARE(parentController.currentRow(), 1);
   QCOMPARE(relation.relationFilterModel()->parentModelMatchRow(), 1);
 //   QCOMPARE(relation.relationKeyCopier()->parentModelCurrentRow(), 1);
+}
+
+void FilterControllerRelationTest::insertPermissionTest()
+{
+  /*
+   * Setup parent model and controller
+   */
+  VariantTableModel parentModel;
+  parentModel.setObjectName("parentModel");
+  ItemModelControllerTester parentController;
+  parentController.setModel(&parentModel);
+  /*
+   * Setup child model and controller
+   */
+  VariantTableModel childModel;
+  childModel.setObjectName("childModel");
+  ItemModelControllerTester childController;
+  childController.setModel(&childModel);
+  /*
+   * Setup relation
+   */
+  FilterControllerRelation relation;
+  relation.setParentController(&parentController);
+  relation.setChildController(&childController);
+  /*
+   * Because parent controller is at a invalid row,
+   * child controller must not be able to insert
+   */
+  QCOMPARE(parentController.currentRow(), -1);
+  QVERIFY(parentController.canInsert());
+  QVERIFY(!childController.canInsert());
+  /*
+   * Place parent controller to a valid row
+   */
+  parentModel.resize(2, 1);
+  QCOMPARE(parentController.currentRow(), 0);
+  QVERIFY(parentController.canInsert());
+  QVERIFY(childController.canInsert());
 }
 
 void FilterControllerRelationTest::filterTest()
@@ -280,6 +317,7 @@ void FilterControllerRelationTest::filterTest()
    */
   setModelData(addressController.modelForView(), 1, 0, 22);
   setModelData(addressController.modelForView(), 1, 2, "S22");
+  QVERIFY(addressController.submit());
   QCOMPARE(getModelData(addressController.modelForView(), 0, 0), QVariant(21));
   QCOMPARE(getModelData(addressController.modelForView(), 0, 1), QVariant(2));
   QCOMPARE(getModelData(addressController.modelForView(), 0, 2), QVariant("S21"));
@@ -299,6 +337,7 @@ void FilterControllerRelationTest::filterTest()
    * | 22 |   2    |  S22   |
    * ------------------------
    */
+  qDebug() << "Child state: " << addressController.controllerState();
   addressController.setInsertLocation(ItemModelControllerTester::InsertAtBeginning);
   QVERIFY(addressController.insert());
   QCOMPARE(addressController.modelForView()->rowCount(), 3);
@@ -311,6 +350,7 @@ void FilterControllerRelationTest::filterTest()
   QCOMPARE(getModelData(addressController.modelForView(), 2, 0), QVariant(22));
   QCOMPARE(getModelData(addressController.modelForView(), 2, 1), QVariant(2));
   QCOMPARE(getModelData(addressController.modelForView(), 2, 2), QVariant("S22"));
+  QVERIFY(addressController.submit());
   /*
    * Enable formatting for address controller
    * (Will append a proxy model)

@@ -30,6 +30,7 @@ void TableViewControllerStateTable::createTable()
   addTransition(ControllerState::Visualizing, ControllerEvent::InsertStarted, ControllerState::Inserting);
   addTransition(ControllerState::Visualizing, ControllerEvent::EditionStartedFromParent, ControllerState::ParentEditing);
   addTransition(ControllerState::Visualizing, ControllerEvent::EditionStartedFromChild, ControllerState::ChildEditing);
+  addTransition(ControllerState::Visualizing, ControllerEvent::DisableController, ControllerState::Disabled);
   addTransition(ControllerState::EditingItem, ControllerEvent::DataEditionDone, ControllerState::Editing);
   addTransition(ControllerState::Editing, ControllerEvent::DataEditionStarted, ControllerState::EditingItem);
   addTransition(ControllerState::Editing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
@@ -40,6 +41,7 @@ void TableViewControllerStateTable::createTable()
 //   addTransition(ControllerState::EditingNewItem, ControllerEvent::DataEditionDone, ControllerState::Inserting);
   addTransition(ControllerState::ParentEditing, ControllerEvent::EditionDoneFromParent, ControllerState::Visualizing);
   addTransition(ControllerState::ChildEditing, ControllerEvent::EditionDoneFromChild, ControllerState::Visualizing);
+  addTransition(ControllerState::Disabled, ControllerEvent::EnableController, ControllerState::Visualizing);
 }
 
 

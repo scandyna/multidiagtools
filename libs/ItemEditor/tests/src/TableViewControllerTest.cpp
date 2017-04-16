@@ -207,6 +207,21 @@ void TableViewControllerTest::statePermissionTest()
   QVERIFY(!stateMachine->isInsertActionEnabled());
   QVERIFY(!stateMachine->canRemove());
   QVERIFY(!stateMachine->isRemoveActionEnabled());
+  /*
+   * Disabled state
+   */
+  stateMachine->forceCurrentState(ControllerState::Disabled);
+  QVERIFY(!stateMachine->canChangeCurrentRow());
+  QVERIFY(!stateMachine->isChangeCurrentRowActionEnabled());
+  QVERIFY(!stateMachine->canEdit());
+  QVERIFY(!stateMachine->canSubmit());
+  QVERIFY(!stateMachine->isSubmitActionEnabled());
+  QVERIFY(!stateMachine->canRevert());
+  QVERIFY(!stateMachine->isRevertActionEnabled());
+  QVERIFY(!stateMachine->canInsert());
+  QVERIFY(!stateMachine->isInsertActionEnabled());
+  QVERIFY(!stateMachine->canRemove());
+  QVERIFY(!stateMachine->isRemoveActionEnabled());
 }
 
 void TableViewControllerTest::stateTableTest()
@@ -255,6 +270,11 @@ void TableViewControllerTest::stateTableTest()
   stateMachine->setEvent(ControllerEvent::EditionStartedFromChild);
   QCOMPARE(stateMachine->currentState(), ControllerState::ChildEditing);
   stateMachine->setEvent(ControllerEvent::EditionDoneFromChild);
+  QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
+  // Visualizing - Disabled
+  stateMachine->setEvent(ControllerEvent::DisableController);
+  QCOMPARE(stateMachine->currentState(), ControllerState::Disabled);
+  stateMachine->setEvent(ControllerEvent::EnableController);
   QCOMPARE(stateMachine->currentState(), ControllerState::Visualizing);
 }
 

@@ -65,10 +65,20 @@ ClientWidget::ClientWidget(QWidget* parent)
   addWidgetToTopArea(mStateLabel);
   connect(ctrl->controllerStateMachine(), &ControllerStateMachine::currentStateChanged, this, &ClientWidget::onControllerStateChanged);
   onControllerStateChanged();
+  addWidgetToTopArea(new QLabel("     Row state: "));
+  mRowStateLabel = new QLabel;
+  addWidgetToTopArea(mRowStateLabel);
+  connect(ctrl, &WidgetMapperController::rowStateChanged, this, &ClientWidget::onRowStateChanged);
+  onRowStateChanged(ctrl->rowState());
 }
 
 void ClientWidget::onControllerStateChanged()
 {
   const auto state = controller()->controllerState();
   mStateLabel->setText( controllerStateText(state) );
+}
+
+void ClientWidget::onRowStateChanged(RowState rs)
+{
+  mRowStateLabel->setText( rowStateText(rs) );
 }

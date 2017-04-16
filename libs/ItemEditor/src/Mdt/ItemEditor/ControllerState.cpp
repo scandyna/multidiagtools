@@ -40,6 +40,8 @@ QByteArray controllerStateText(ControllerState state)
       return QByteArray("ChildEditing");
     case ControllerState::ParentEditing:
       return QByteArray("ParentEditing");
+    case ControllerState::Disabled:
+      return QByteArray("Disabled");
   }
   return QByteArray();
 }

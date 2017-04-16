@@ -23,6 +23,7 @@
 
 #include "Mdt/ItemEditor/TableViewWidget.h"
 #include "Mdt/ItemEditor/ControllerState.h"
+#include "Mdt/ItemEditor/RowState.h"
 
 class ClientModel;
 class QLabel;
@@ -40,10 +41,12 @@ class ClientListWidget : public Mdt::ItemEditor::TableViewWidget
  public slots:
 
   void onControllerStateChanged();
+  void onRowStateChanged(Mdt::ItemEditor::RowState rs);
 
  private:
 
   QLabel *mStateLabel;
+  QLabel *mRowStateLabel;
 };
 
 #endif // #ifndef CLIENT_LIST_WIDGET_H

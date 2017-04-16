@@ -35,8 +35,6 @@ void NavigationControllerRelation::childControllerChangedEvent(AbstractControlle
   disconnect(mSetCurrentRowConnection);
   mSetCurrentRowConnection = 
     connect(parentController(), &AbstractController::currentRowToBeSet, controller, &AbstractController::setCurrentRow);
-//     connect(parentController(), &AbstractController::currentRowChanged, controller, &AbstractController::setCurrentRow);
 }
-
 
 }} // namespace Mdt{ namespace ItemEditor{

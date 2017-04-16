@@ -21,14 +21,9 @@
 #ifndef MDT_ITEM_EDITOR_ITEM_SELECTION_MODEL_TEST_H
 #define MDT_ITEM_EDITOR_ITEM_SELECTION_MODEL_TEST_H
 
-#include "ItemViewTestEditTriggers.h"
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
 
-class QAbstractItemView;
-class QModelIndex;
-
-class ItemSelectionModelTest : public QObject
+class ItemSelectionModelTest : public TestBase
 {
   Q_OBJECT
 
@@ -41,13 +36,6 @@ class ItemSelectionModelTest : public QObject
 //   void selectIndexTest();
 //   void selectSelectionTest();
   void tableViewSetCurrentIndexTest();
-
- private:
-
-  // Helper function to begin and end editing in a QAbstractItemView
-  void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
-  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
-  void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ITEM_SELECTION_MODEL_TEST_H

@@ -158,7 +158,7 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Construct a ControllerStateMachine with a concrete state chain and permission implementations
      *
      * \code
-     * auto stateMachine = ControllerStateMachine::make<MyStateTable, MyPermission>();
+     * auto stateMachine = ControllerStateMachine::makeNew<MyStateTable, MyPermission>();
      * \endcode
      *
      * \pre TableImpl must be a subclass of AbstractControllerStateTable

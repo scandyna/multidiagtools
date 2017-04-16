@@ -81,6 +81,10 @@ namespace Mdt{ namespace ItemEditor{
       return mProxyModel.get();
     }
 
+   private slots:
+
+    void setParentModelMatchRow(int row);
+
    private:
 
     /*! \brief Set relation filter from relation key

@@ -158,6 +158,19 @@ void ControllerStateMachineTest::abstractControllerStatePermissionTest()
   QVERIFY(!permission.isRevertActionEnabled(table) );
   QVERIFY( permission.canRemove(table) );
   QVERIFY( permission.isRemoveActionEnabled(table) );
+  // Disabled state
+  table.forceCurrentState(ControllerState::Disabled);
+  QVERIFY(!permission.canChangeCurrentRow(table) );
+  QVERIFY(!permission.isChangeCurrentRowActionEnabled(table) );
+  QVERIFY(!permission.canInsert(table) );
+  QVERIFY(!permission.isInsertActionEnabled(table) );
+  QVERIFY(!permission.canEdit(table) );
+  QVERIFY(!permission.canSubmit(table) );
+  QVERIFY(!permission.isSubmitActionEnabled(table) );
+  QVERIFY(!permission.canRevert(table) );
+  QVERIFY(!permission.isRevertActionEnabled(table) );
+  QVERIFY(!permission.canRemove(table) );
+  QVERIFY(!permission.isRemoveActionEnabled(table) );
   /*
    * Complete test is done in concrete implementation tests
    * (WidgetMapperControllerTest and TableViewControllerTest)

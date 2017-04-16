@@ -118,8 +118,20 @@ void AbstractController::setInsertLocation(AbstractController::InsertLocation il
 
 void AbstractController::setModel(QAbstractItemModel* model)
 {
-  /// \todo registerModel() should be deleted
-  registerModel(model);
+  Q_ASSERT(model != nullptr);
+
+//   mPrimaryKey.clear();
+//   mForeignKey.clear();
+  if(model == mModelContainer.sourceModel()){
+    return;
+  }
+  mModelContainer.setSourceModel(model);
+  emit sourceModelChanged(model);
+  model = modelForView();
+  emit modelForViewChanged(model);
+  setModelToView(model);
+  primaryKeyChangedEvent( PrimaryKey(), getPrimaryKey() );
+  foreignKeyChangedEvent( ForeignKey(), getForeignKey() );
 }
 
 int AbstractController::rowCount() const
@@ -553,23 +565,23 @@ ControllerStatePermissionProxyModel* AbstractController::getControllerStatePermi
   return reinterpret_cast<ControllerStatePermissionProxyModel*>( mModelContainer.firstProxyModelOfType<ControllerStatePermissionProxyModel>() );
 }
 
-void AbstractController::registerModel(QAbstractItemModel* model)
-{
-  Q_ASSERT(model != nullptr);
-
-//   mPrimaryKey.clear();
-//   mForeignKey.clear();
-  if(model == mModelContainer.sourceModel()){
-    return;
-  }
-  mModelContainer.setSourceModel(model);
-  emit sourceModelChanged(model);
-  model = modelForView();
-  emit modelForViewChanged(model);
-  setModelToView(model);
-  primaryKeyChangedEvent( PrimaryKey(), getPrimaryKey() );
-  foreignKeyChangedEvent( ForeignKey(), getForeignKey() );
-}
+// void AbstractController::registerModel(QAbstractItemModel* model)
+// {
+//   Q_ASSERT(model != nullptr);
+// 
+// //   mPrimaryKey.clear();
+// //   mForeignKey.clear();
+//   if(model == mModelContainer.sourceModel()){
+//     return;
+//   }
+//   mModelContainer.setSourceModel(model);
+//   emit sourceModelChanged(model);
+//   model = modelForView();
+//   emit modelForViewChanged(model);
+//   setModelToView(model);
+//   primaryKeyChangedEvent( PrimaryKey(), getPrimaryKey() );
+//   foreignKeyChangedEvent( ForeignKey(), getForeignKey() );
+// }
 
 void AbstractController::modelSetToView()
 {

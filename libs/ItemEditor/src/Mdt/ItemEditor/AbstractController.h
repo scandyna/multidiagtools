@@ -188,8 +188,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set model
      *
-     * Subclass that acts on a specific item model (derived from QAbstractItemModel)
-     *  should override this method (with QAbstractItemModel as argument):
+     * Subclass that acts on a specific item model should override this method:
      *  and 
      *  \code
      *  void setModel(QAbstractItemModel *model) override;
@@ -203,17 +202,17 @@ namespace Mdt{ namespace ItemEditor{
      *
      * A subclass should not store \a model itself, because it becomes difficult to handle
      *  when model changes.
-     *  Because the model type is known by the subclass, it is better to subclass model()
+     *  Because the model type is known by the subclass, it is better to redefine model()
      *  and return a casted version of it:
      *  \code
      *  QSqlTableModel *model() const
      *  {
-     *    Q_ASSERT( qobject_cast<QSqlTableModel*>(model) != nullptr );
+     *    Q_ASSERT( qobject_cast<QSqlTableModel*>(model()) != nullptr );
      *    return reinterpret_cast<QSqlTableModel*>( AbstractController::model() );
      *  }
      *  \endcode
      *
-     * This base implementation will store the instance of \a model,
+     * This base implementation will store a reference to \a model,
      *  then call setModelToView().
      *
      * \note Because \a model can be shared with several objects (f.ex. other views),
@@ -676,18 +675,18 @@ namespace Mdt{ namespace ItemEditor{
      */
     ControllerStatePermissionProxyModel *getControllerStatePermissionProxyModel() const;
 
-    /*! \brief Register model
-     *
-     * This method should be called by a common base class
-     *  that handles a more or less specific item model.
-     *
-     * This method should never be called 
-     *  by a subclass implementing a concrete controller.
-     *
-     * \pre model must be a valid pointer
-     * \sa setModelToView()
-     */
-    void registerModel(QAbstractItemModel *model);
+//     /*! \brief Register model
+//      *
+//      * This method should be called by a common base class
+//      *  that handles a more or less specific item model.
+//      *
+//      * This method should never be called 
+//      *  by a subclass implementing a concrete controller.
+//      *
+//      * \pre model must be a valid pointer
+//      * \sa setModelToView()
+//      */
+//     void registerModel(QAbstractItemModel *model);
 
 //     /*! \brief Get model
 //      *

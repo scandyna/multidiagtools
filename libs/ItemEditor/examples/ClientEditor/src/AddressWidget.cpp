@@ -66,13 +66,23 @@ AddressWidget::AddressWidget(QWidget* parent)
   addWidgetToTopArea(new QLabel("State: "));
   mStateLabel = new QLabel;
   addWidgetToTopArea(mStateLabel);
+  addWidgetToTopArea(new QLabel("     Row state: "));
+  mRowStateLabel = new QLabel;
+  addWidgetToTopArea(mRowStateLabel);
 //   connect(ctrl, &TableViewController::controllerStateChanged, this, &AddressWidget::onControllerStateChanged);
   connect(ctrl->controllerStateMachine(), &ControllerStateMachine::currentStateChanged, this, &AddressWidget::onControllerStateChanged);
   onControllerStateChanged();
+  connect(ctrl, &TableViewController::rowStateChanged, this, &AddressWidget::onRowStateChanged);
+  onRowStateChanged(ctrl->rowState());
 }
 
 void AddressWidget::onControllerStateChanged()
 {
   const auto state = controller()->controllerState();
   mStateLabel->setText( controllerStateText(state) );
+}
+
+void AddressWidget::onRowStateChanged(RowState rs)
+{
+  mRowStateLabel->setText( rowStateText(rs) );
 }

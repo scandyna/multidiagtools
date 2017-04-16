@@ -21,6 +21,8 @@
 #include "AbstractActionContainer.h"
 #include "ControllerStateMachine.h"
 
+#include "Debug.h"
+
 namespace Mdt{ namespace ItemEditor{
 
 AbstractActionContainer::AbstractActionContainer(QObject* parent)
@@ -97,6 +99,8 @@ bool AbstractActionContainer::isSelectActionEnabled() const
 
 void AbstractActionContainer::setRowState(RowState rs)
 {
+  qDebug() << "AAC[" << this << "]: new RS: " << rs;
+
   const bool changed = (rs != mRowState);
   mRowState = rs;
   if( changed && !mActionsDisabled ){
@@ -117,6 +121,8 @@ void AbstractActionContainer::setActionsDisabled(bool disable)
 void AbstractActionContainer::onControllerStateChanged()
 {
   Q_ASSERT(!mControllerStateMachine.isNull());
+
+//   qDebug() << "AAC[" << this << "]: new state: " << mControllerStateMachine->currentState();
 
   if(!mActionsDisabled){
     updateEnableState();

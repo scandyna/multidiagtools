@@ -23,6 +23,7 @@
 
 #include "ui_ClientWidget.h"
 #include "Mdt/ItemEditor/AbstractFormWidget.h"
+#include "Mdt/ItemEditor/RowState.h"
 
 class QLabel;
 
@@ -41,10 +42,12 @@ class ClientWidget : public Mdt::ItemEditor::AbstractFormWidget, Ui::ClientWidge
  public slots:
 
   void onControllerStateChanged();
+  void onRowStateChanged(Mdt::ItemEditor::RowState rs);
 
  private:
 
   QLabel *mStateLabel;
+  QLabel *mRowStateLabel;
 };
 
 #endif // #ifndef CLIENT_WIDGET_H

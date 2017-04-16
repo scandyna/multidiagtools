@@ -19,13 +19,9 @@
  **
  ****************************************************************************/
 #include "ItemSelectionModelTest.h"
-#include "ItemViewTestEdit.h"
-#include "Mdt/Application.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
-// #include <QItemSelectionModel>
-// #include <QStringListModel>
 #include <QTableView>
 #include <QTreeView>
 #include <QListView>
@@ -37,9 +33,8 @@
 #include <QKeyEvent>
 #include <QPainter>
 
-#include <QDebug>
-
 using Mdt::ItemModel::VariantTableModel;
+using Mdt::ItemEditor::ItemSelectionModel;
 
 /*
  * Init and cleanup
@@ -60,8 +55,6 @@ void ItemSelectionModelTest::cleanupTestCase()
 
 void ItemSelectionModelTest::setCurrentIndexTest()
 {
-  using Mdt::ItemEditor::ItemSelectionModel;
-
   VariantTableModel model;
   QModelIndex index;
   QList<QVariant> spyItem;
@@ -145,12 +138,88 @@ void ItemSelectionModelTest::setCurrentIndexTest()
   QCOMPARE(selectionModel.currentIndex().row(), 1);
   QCOMPARE(selectionModel.currentIndex().column(), 1);
   QCOMPARE(currentRowSpy.count(), 0);
+  /*
+   * Update current row to a invalid one
+   */
+  selectionModel.updateCurrentRow(-1);
+  QVERIFY(!selectionModel.currentIndex().isValid());
+  QCOMPARE(currentRowSpy.count(), 0);
+  /*
+   * Simulate user wants to go to row 0
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  selectionModel.setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+  // Selection must not be updated now
+  QVERIFY(!selectionModel.currentIndex().isValid());
+  // Check that row change was requested
+  QCOMPARE(currentRowSpy.count(), 1);
+  spyItem = currentRowSpy.takeFirst();
+  QCOMPARE(spyItem.at(0).toInt(), 0);
+  // Update current row
+  selectionModel.updateCurrentRow(0);
+  QCOMPARE(selectionModel.currentIndex().row(), 0);
+  QCOMPARE(selectionModel.currentIndex().column(), 0);
+  QCOMPARE(currentRowSpy.count(), 0);
+  /*
+   * Reset the model
+   * -> The controller also set current row to -1
+   */
+  model.resize(2, 3);
+  selectionModel.updateCurrentRow(-1);
+  QVERIFY(!selectionModel.currentIndex().isValid());
+  /*
+   * Simulate user wants to go to row 0
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  selectionModel.setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+  // Selection must not be updated now
+  QVERIFY(!selectionModel.currentIndex().isValid());
+  // Check that row change was requested
+  QCOMPARE(currentRowSpy.count(), 1);
+  spyItem = currentRowSpy.takeFirst();
+  QCOMPARE(spyItem.at(0).toInt(), 0);
+  // Update current row
+  selectionModel.updateCurrentRow(0);
+  QCOMPARE(selectionModel.currentIndex().row(), 0);
+  QCOMPARE(selectionModel.currentIndex().column(), 0);
+  QCOMPARE(currentRowSpy.count(), 0);
+  /*
+   * Simulate a filter proxy model
+   * which removes and add rows
+   *
+   * Bug discovered 20170415
+   */
+  model.removeLastRow();
+  model.removeLastRow();
+  QCOMPARE(model.rowCount(), 0);
+  model.appendRow();
+  model.appendRow();
+  QVERIFY(!selectionModel.currentIndex().isValid());
+  /*
+   * Simulate user wants to go to row 0
+   *
+   * Bug discovered 20170415
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  selectionModel.setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+  // Selection must not be updated now
+  QVERIFY(!selectionModel.currentIndex().isValid());
+  // Check that row change was requested
+  QCOMPARE(currentRowSpy.count(), 1);
+  spyItem = currentRowSpy.takeFirst();
+  QCOMPARE(spyItem.at(0).toInt(), 0);
+  // Update current row
+  selectionModel.updateCurrentRow(0);
+  QCOMPARE(selectionModel.currentIndex().row(), 0);
+  QCOMPARE(selectionModel.currentIndex().column(), 0);
+  QCOMPARE(currentRowSpy.count(), 0);
 }
 
 void ItemSelectionModelTest::tableViewSetCurrentIndexTest()
 {
-  using Mdt::ItemEditor::ItemSelectionModel;
-
   QTableView view;
   VariantTableModel model;
   QModelIndex index;
@@ -242,10 +311,7 @@ void ItemSelectionModelTest::tableViewSetCurrentIndexTest()
   /*
    * Play
    */
-//   view.resize(300, 200);
-//   while(view.isVisible()){
-//     QTest::qWait(500);
-//   }
+//   displayWidget(view);
 }
 
 // void ItemSelectionModelTest::tableViewSetCurrentIndexTestOLD()
@@ -349,27 +415,6 @@ void ItemSelectionModelTest::tableViewSetCurrentIndexTest()
 // //     QTest::qWait(500);
 // //   }
 // }
-
-
-/*
- * Helper functions for editing item views
- */
-
-void ItemSelectionModelTest::beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger beginEditTrigger)
-{
-  ItemViewTestEdit::beginEditing(view, index, beginEditTrigger);
-}
-
-void ItemSelectionModelTest::endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger endEditTrigger)
-{
-  ItemViewTestEdit::endEditing(view, editingIndex, endEditTrigger);
-}
-
-void ItemSelectionModelTest::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str,
-                        BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
-{
-  ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
-}
 
 /*
  * Main

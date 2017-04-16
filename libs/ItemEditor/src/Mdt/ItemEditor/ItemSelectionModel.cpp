@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "ItemSelectionModel.h"
 
-// #include <QDebug>
+// #include "Debug.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -37,12 +37,11 @@ ItemSelectionModel::ItemSelectionModel(QAbstractItemModel* model, QObject* paren
 void ItemSelectionModel::updateCurrentRow(int row)
 {
   if( (model() != nullptr) && (model()->rowCount() > 0) && (model()->columnCount() > 0) ){
-    pvPreviousCurrentRow = row;
     // Check if a specific column was requested
     int column;
-    if(pvRequestedColumn > -1){
-      column = pvRequestedColumn;
-      pvRequestedColumn = -1;
+    if(mRequestedColumn > -1){
+      column = mRequestedColumn;
+      mRequestedColumn = -1;
     }else{
       column = currentIndex().column();
     }
@@ -57,7 +56,7 @@ void ItemSelectionModel::updateCurrentRow(int row)
 
 void ItemSelectionModel::select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command)
 {
-  if(canChangeIndex(index)){
+  if(canChangeToIndex(index)){
     QItemSelectionModel::select(index, command);
   }
 }
@@ -66,7 +65,7 @@ void ItemSelectionModel::select(const QItemSelection& selection, QItemSelectionM
 {
   const auto indexList = selection.indexes();
   for(const auto & index : indexList){
-    if(!canChangeIndex(index)){
+    if(!canChangeToIndex(index)){
       return;
     }
   }
@@ -75,18 +74,17 @@ void ItemSelectionModel::select(const QItemSelection& selection, QItemSelectionM
 
 void ItemSelectionModel::setCurrentIndex(const QModelIndex& index, QItemSelectionModel::SelectionFlags command)
 {
-  if(canChangeIndex(index)){
+  if(canChangeToIndex(index)){
     QItemSelectionModel::setCurrentIndex(index, command);
-    pvPreviousCurrentRow = index.row();
   }else{
-    pvRequestedColumn = index.column();
+    mRequestedColumn = index.column();
     emit currentRowChangeRequested(index.row());
   }
 }
 
-bool ItemSelectionModel::canChangeIndex(const QModelIndex& index) const
+bool ItemSelectionModel::canChangeToIndex(const QModelIndex& index) const
 {
-  return (index.row() == pvPreviousCurrentRow);
+  return ( index.row() == currentIndex().row()  );
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

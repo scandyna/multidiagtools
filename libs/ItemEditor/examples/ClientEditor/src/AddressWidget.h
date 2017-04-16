@@ -22,6 +22,7 @@
 #define ADDRESS_WIDGET_H
 
 #include "Mdt/ItemEditor/TableViewWidget.h"
+#include "Mdt/ItemEditor/RowState.h"
 
 class QLabel;
 
@@ -38,10 +39,12 @@ class AddressWidget : public Mdt::ItemEditor::TableViewWidget
  public slots:
 
   void onControllerStateChanged();
+  void onRowStateChanged(Mdt::ItemEditor::RowState rs);
 
  private:
 
   QLabel *mStateLabel;
+  QLabel *mRowStateLabel;
 };
 
 #endif // #ifndef ADDRESS_WIDGET_H

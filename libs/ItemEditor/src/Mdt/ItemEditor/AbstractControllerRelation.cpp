@@ -163,6 +163,8 @@ void AbstractControllerRelation::onParentControllerEventCompleted(ControllerEven
     case ControllerEvent::RemoveDone:
     case ControllerEvent::EditionStartedFromChild:
     case ControllerEvent::EditionDoneFromChild:
+    case ControllerEvent::DisableController:
+    case ControllerEvent::EnableController:
       break;
   }
 }
@@ -187,6 +189,8 @@ void AbstractControllerRelation::onChildControllerEventCompleted(ControllerEvent
     case ControllerEvent::RemoveDone:
     case ControllerEvent::EditionStartedFromParent:
     case ControllerEvent::EditionDoneFromParent:
+    case ControllerEvent::DisableController:
+    case ControllerEvent::EnableController:
       break;
   }
 }

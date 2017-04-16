@@ -20,10 +20,12 @@
  ****************************************************************************/
 #include "FilterControllerRelation.h"
 #include "AbstractController.h"
+#include "ControllerStateMachine.h"
+#include "ControllerEvent.h"
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 #include "Mdt/ItemModel/RelationKey.h"
 
-#include <QDebug>
+#include "Debug.h"
 
 using namespace Mdt::ItemModel;
 
@@ -61,6 +63,23 @@ void FilterControllerRelation::setRelationFilterFromPkFk()
   setFilterFromRelationKey(key);
 }
 
+void FilterControllerRelation::setParentModelMatchRow(int row)
+{
+  qDebug() << "FCR: setParentModelMatchRow() - row: " << row << " , child ctlr: " << childController();
+
+  if(childController() != nullptr){
+    Q_ASSERT(childController()->controllerStateMachine() != nullptr);
+    qDebug() << "FCR -> child state A: " << childController()->controllerState();
+    if(row < 0){
+      childController()->controllerStateMachine()->setEvent(ControllerEvent::DisableController);
+    }else{
+      childController()->controllerStateMachine()->setEvent(ControllerEvent::EnableController);
+    }
+    qDebug() << "FCR -> child state B: " << childController()->controllerState();
+  }
+  mProxyModel->setParentModelMatchRow(row);
+}
+
 void FilterControllerRelation::setFilterFromRelationKey(const ItemModel::RelationKey& key)
 {
   Q_ASSERT(!key.isNull());
@@ -73,10 +92,12 @@ void FilterControllerRelation::parentControllerChangedEvent(AbstractController* 
   Q_ASSERT(controller != nullptr);
 
   disconnect(mSetParentCurrentRowConnection);
-  mSetParentCurrentRowConnection = 
-    connect(controller, &AbstractController::currentRowToBeSet, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
+  mSetParentCurrentRowConnection =
+    connect(controller, &AbstractController::currentRowToBeSet, this, &FilterControllerRelation::setParentModelMatchRow);
+  setParentModelMatchRow( controller->currentRow() );
+//     connect(controller, &AbstractController::currentRowToBeSet, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
 //     connect(controller, &AbstractController::currentRowChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
-  mProxyModel->setParentModelMatchRow( controller->currentRow() );
+//   mProxyModel->setParentModelMatchRow( controller->currentRow() );
 }
 
 void FilterControllerRelation::childControllerAboutToChangeEvent(AbstractController* oldController)
@@ -92,6 +113,7 @@ void FilterControllerRelation::childControllerChangedEvent(AbstractController* c
 
   controller->prependProxyModel(mProxyModel.get());
   mProxyModel->setSourceModel(controller->sourceModel());
+  setParentModelMatchRow( controller->currentRow() );
 }
 
 void FilterControllerRelation::parentControllerModelChangedEvent(QAbstractItemModel* model)

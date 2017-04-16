@@ -30,12 +30,14 @@ void WidgetMapperControllerStateTable::createTable()
   addTransition(ControllerState::Visualizing, ControllerEvent::InsertStarted, ControllerState::Inserting);
   addTransition(ControllerState::Visualizing, ControllerEvent::EditionStartedFromParent, ControllerState::ParentEditing);
   addTransition(ControllerState::Visualizing, ControllerEvent::EditionStartedFromChild, ControllerState::ChildEditing);
+  addTransition(ControllerState::Visualizing, ControllerEvent::DisableController, ControllerState::Disabled);
   addTransition(ControllerState::Editing, ControllerEvent::SubmitDone, ControllerState::Visualizing);
   addTransition(ControllerState::Editing, ControllerEvent::RevertDone, ControllerState::Visualizing);
   addTransition(ControllerState::Inserting, ControllerEvent::SubmitDone, ControllerState::Visualizing);
   addTransition(ControllerState::Inserting, ControllerEvent::RevertDone, ControllerState::Visualizing);
   addTransition(ControllerState::ParentEditing, ControllerEvent::EditionDoneFromParent, ControllerState::Visualizing);
   addTransition(ControllerState::ChildEditing, ControllerEvent::EditionDoneFromChild, ControllerState::Visualizing);
+  addTransition(ControllerState::Disabled, ControllerEvent::EnableController, ControllerState::Visualizing);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

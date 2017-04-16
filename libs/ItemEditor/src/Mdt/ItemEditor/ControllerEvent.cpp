@@ -46,6 +46,10 @@ QByteArray controllerEventText(ControllerEvent event)
       return QByteArray("EditionStartedFromChild");
     case ControllerEvent::EditionDoneFromChild:
       return QByteArray("EditionDoneFromChild");
+    case ControllerEvent::DisableController:
+      return QByteArray("DisableController");
+    case ControllerEvent::EnableController:
+      return QByteArray("EnableController");
   }
   return QByteArray();
 }
