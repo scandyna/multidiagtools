@@ -21,13 +21,12 @@
 #ifndef MDT_ITEM_EDITOR_WINDOW_TEST_H
 #define MDT_ITEM_EDITOR_WINDOW_TEST_H
 
+#include "TestBase.h"
 #include "Mdt/ItemEditor/AbstractWindow.h"
 #include "Mdt/ItemEditor/NavigationActions.h"
 #include "Mdt/ItemEditor/EditionActions.h"
 #include "Mdt/ItemEditor/InsertAction.h"
 #include "Mdt/ItemEditor/RemoveAction.h"
-#include <QObject>
-#include <QtTest/QtTest>
 
 using namespace Mdt::ItemEditor;
 
@@ -44,7 +43,7 @@ class AbstractWindowTester : public AbstractWindow
   RemoveAction *removeAction();
 };
 
-class WindowTest : public QObject
+class WindowTest : public TestBase
 {
   Q_OBJECT
 

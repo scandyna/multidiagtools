@@ -1234,12 +1234,21 @@ void DataWidgetMapperTest::setCurrentRowWidgetTest()
   /*
    * Setup
    */
+  mapper.addMapping(&edit0, 0);
+  mapper.addMapping(&edit1, 1);
+  /*
+   * Try to change current row without model set
+   */
+  QCOMPARE(mapper.currentRow(), -1);
+  mapper.setCurrentRow(0);
+  QCOMPARE(mapper.currentRow(), -1);
+  /*
+   * Set model
+   */
   model.resize(3, 2);
   model.populateColumn(0, {1,2,3});
   model.populateColumn(1, {"A","B","C"});
   mapper.setModel(&model);
-  mapper.addMapping(&edit0, 0);
-  mapper.addMapping(&edit1, 1);
   /*
    * Change current row
    */
@@ -1270,8 +1279,6 @@ void DataWidgetMapperTest::setCurrentRowWidgetTest()
   QVERIFY(edit1.isEnabled());
   QCOMPARE(edit0.text(), QString("2"));
   QCOMPARE(edit1.text(), QString("B"));
-  
-  QFAIL("Missing setCurrentRow() with nullptr model");
 }
 
 void DataWidgetMapperTest::setCurrentRowSignalTest()

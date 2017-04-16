@@ -128,9 +128,10 @@ void DataWidgetMapper::clearMapping()
 
 void DataWidgetMapper::setCurrentRow(int row)
 {
+  if(mModel.isNull()){
+    return;
+  }
   bool rowHasChanged = (row != mCurrentRow);
-
-//   qDebug() << "DWM::setCurrentRow(" << row << "): editing: " << mEditingState;
   mCurrentRow = row;
   if(!mEditingState){
     updateAllMappedWidgets();
@@ -158,9 +159,6 @@ bool DataWidgetMapper::setDataToModel()
   if(!commitAllMappedWidgetsData()){
     return false;
   }
-//   if(!mModel->submit()){
-//     return false;
-//   }
 
   mEditingState = false;
   emit dataEditionDone();

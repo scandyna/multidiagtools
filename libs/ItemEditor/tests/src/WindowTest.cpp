@@ -83,7 +83,7 @@ void WindowTest::initActionsTest()
 {
   AbstractWindowTester window;
   /*
-   * Fisrt time a action getter is called,
+   * First time a action getter is called,
    *  the action(s) is created
    */
   QVERIFY(window.navigationActions() != nullptr);
@@ -112,7 +112,7 @@ void WindowTest::setupControllerBeforeSetTest()
   /*
    * Setup window
    * Call each actions to init them
-   * (only those that are initialized are latr handled)
+   * (only those that are initialized are later handled)
    */
   AbstractWindowTester window;
   auto *navigationActions = window.navigationActions();
@@ -124,11 +124,9 @@ void WindowTest::setupControllerBeforeSetTest()
    * Check that initial state was propagated to actions
    */
   QVERIFY(navigationActions->toNext()->isEnabled());
-  /// \todo Check which state insertAction should have
+  QVERIFY(!editionActions->submitAction()->isEnabled());
   QVERIFY(insertAction->insertAction()->isEnabled());
   QVERIFY(removeAction->removeAction()->isEnabled());
-
-  QFAIL("InsertAction initial state not clear");
 }
 
 void WindowTest::setupControllerAfterSetTest()
@@ -163,11 +161,9 @@ void WindowTest::setupControllerAfterSetTest()
    * Check that initial state was propagated to actions
    */
   QVERIFY(navigationActions->toNext()->isEnabled());
-  /// \todo Check which state insertAction should have
+  QVERIFY(!editionActions->submitAction()->isEnabled());
   QVERIFY(insertAction->insertAction()->isEnabled());
   QVERIFY(removeAction->removeAction()->isEnabled());
-
-  QFAIL("InsertAction initial state not clear");
 }
 
 void WindowTest::standardWindowTest()

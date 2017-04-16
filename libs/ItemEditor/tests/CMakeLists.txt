@@ -16,9 +16,6 @@ set(SOURCES_FILES
   src/ControllerStateChangedSignalSpy.cpp
   src/PrimaryKeyChangedSignalSpy.cpp
   src/ItemViewTestEdit.cpp
-  src/TestTableEditionWidget.cpp
-  src/TestFormEditionWidget.cpp
-  src/TestWindowEditor.cpp
 )
 
 add_library(mdtitemeditortest SHARED ${SOURCES_FILES})
@@ -63,4 +60,3 @@ addItemEditorTest("AbstractEditorLayoutTest")
 addItemEditorTest("WindowTest")
 
 addItemEditorTest("StandardWidgetsTest")
-addItemEditorTest("TestEditorTest")
