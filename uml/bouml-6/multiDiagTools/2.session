@@ -15,30 +15,26 @@ diagrams
     120 98 100 7 0 0
   classdiagram_ref 2760962 // TableViewController
     120 98 100 21 24 0
-  active  classdiagram_ref 3168514 // SqlTableViewController
+  classdiagram_ref 3168514 // SqlTableViewController
     925 911 100 4 24 0
   classdiagram_ref 2707074 // AbstractController
     120 98 100 23 12 0
-  classdiagram_ref 3460098 // ItemViewImplementation
-    951 911 100 18 0 0
+  active  classdiagram_ref 3460098 // ItemViewImplementation
+    925 911 100 21 0 0
   classdiagram_ref 3168386 // AbstractSqlController
     120 98 100 8 0 0
   classdiagram_ref 2761218 // ControllerOverview
     120 98 100 23 0 0
+  classdiagram_ref 3413122 // ControllerStateOverview
+    925 911 100 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3168642 // SqlWidgetMapperController
+selected classdiagram_ref 3460098 // ItemViewImplementation
 open
   
-  package_ref 409858 // principes
-  classview_ref 1768322 // ControllerState
-  classview_ref 1801090 // Controller_Core
-  operation_ref 5640578 // setView
-  operation_ref 5640706 // view
+package_ref 409858 // principes
   classdiagram_ref 2761090 // WidgetMapperController
-  classview_ref 1801218 // Controller_Sql
-  classview_ref 1801474 // Controller_Sql_Widgets
-  classview_ref 1287042 // Controller
+  classview_ref 1808002 // Controller_QtQuick
   class_ref 174338 // QSqlQueryModel
 end
 end

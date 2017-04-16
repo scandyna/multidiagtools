@@ -25,7 +25,7 @@
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 #include "Mdt/ItemModel/RelationKey.h"
 
-#include "Debug.h"
+// #include "Debug.h"
 
 using namespace Mdt::ItemModel;
 
@@ -65,17 +65,13 @@ void FilterControllerRelation::setRelationFilterFromPkFk()
 
 void FilterControllerRelation::setParentModelMatchRow(int row)
 {
-  qDebug() << "FCR: setParentModelMatchRow() - row: " << row << " , child ctlr: " << childController();
-
   if(childController() != nullptr){
     Q_ASSERT(childController()->controllerStateMachine() != nullptr);
-    qDebug() << "FCR -> child state A: " << childController()->controllerState();
     if(row < 0){
       childController()->controllerStateMachine()->setEvent(ControllerEvent::DisableController);
     }else{
       childController()->controllerStateMachine()->setEvent(ControllerEvent::EnableController);
     }
-    qDebug() << "FCR -> child state B: " << childController()->controllerState();
   }
   mProxyModel->setParentModelMatchRow(row);
 }
@@ -120,7 +116,6 @@ void FilterControllerRelation::parentControllerModelChangedEvent(QAbstractItemMo
 {
   Q_ASSERT(model != nullptr);
 
-  qDebug() << "FCR: new parent model: " << model;
   mProxyModel->setParentModel(model);
 }
 

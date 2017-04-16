@@ -21,7 +21,7 @@
 #include "AbstractActionContainer.h"
 #include "ControllerStateMachine.h"
 
-#include "Debug.h"
+// #include "Debug.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -99,8 +99,6 @@ bool AbstractActionContainer::isSelectActionEnabled() const
 
 void AbstractActionContainer::setRowState(RowState rs)
 {
-  qDebug() << "AAC[" << this << "]: new RS: " << rs;
-
   const bool changed = (rs != mRowState);
   mRowState = rs;
   if( changed && !mActionsDisabled ){

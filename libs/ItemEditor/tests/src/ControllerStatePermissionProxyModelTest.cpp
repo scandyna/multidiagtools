@@ -82,6 +82,7 @@ class StatePermissionTestClass : public AbstractControllerStatePermission
         return true;
       case ControllerState::ParentEditing:
       case ControllerState::ChildEditing:
+      case ControllerState::Disabled:
         return false;
     }
     return false;

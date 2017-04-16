@@ -804,21 +804,21 @@ namespace Mdt{ namespace ItemEditor{
      */
     void onDataEditionDone();
 
-   private slots:
+//    private slots:
 
-    /*! \brief Actions to perform once rows have been inserted
-     *
-     * This slot is only called by RowChangeEventDispatcher,
-     *  to update this controller state.
-     */
+//     /*! \brief Actions to perform once rows have been inserted
+//      *
+//      * This slot is only called by RowChangeEventDispatcher,
+//      *  to update this controller state.
+//      */
 //     void onRowsInserted();
 
-    /*! \brief Actions to perform once rows have been removed
-     *
-     * This slot is only called by RowChangeEventDispatcher,
-     *  to update this controller state.
-     */
-    void onRowsRemoved();
+//     /*! \brief Actions to perform once rows have been removed
+//      *
+//      * This slot is only called by RowChangeEventDispatcher,
+//      *  to update this controller state.
+//      */
+//     void onRowsRemoved();
 
 //     /*! \brief Actions to perform when primary key's source model changed
 //      *

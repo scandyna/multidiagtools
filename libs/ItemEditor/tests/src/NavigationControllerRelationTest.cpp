@@ -42,36 +42,38 @@ void NavigationControllerRelationTest::cleanupTestCase()
  * Tests
  */
 
-void NavigationControllerRelationTest::setControllersTest()
-{
-  /*
-   * Setup parent model and controller
-   */
-  VariantTableModel parentModel;
-  parentModel.resize(0, 1);
-  ItemModelControllerTester parentController;
-  parentController.setModel(&parentModel);
-  QCOMPARE(parentController.sourceModel(), &parentModel);
-  /*
-   * Setup child model and controller
-   */
-  VariantTableModel childModel;
-  childModel.resize(0, 1);
-  ItemModelControllerTester childController;
-  childController.setModel(&childModel);
-  QCOMPARE(childController.sourceModel(), &childModel);
-  QCOMPARE(childController.modelForView(), &childModel);
-  /*
-   * Setup relation
-   */
-  NavigationControllerRelation relation;
-  relation.setParentController(&parentController);
-  relation.setChildController(&childController);
-//   QCOMPARE(relation.relationFilterModel()->parentModel(), &parentModel);
+// void NavigationControllerRelationTest::setControllersTest()
+// {
+//   /*
+//    * Setup parent model and controller
+//    */
+//   VariantTableModel parentModel;
+//   parentModel.resize(0, 1);
+//   ItemModelControllerTester parentController;
+//   parentController.setModel(&parentModel);
+//   QCOMPARE(parentController.sourceModel(), &parentModel);
+//   auto *originalParentModelForView = parentController.modelForView();
+//   /*
+//    * Setup child model and controller
+//    */
+//   VariantTableModel childModel;
+//   childModel.resize(0, 1);
+//   ItemModelControllerTester childController;
+//   childController.setModel(&childModel);
+//   QCOMPARE(childController.sourceModel(), &childModel);
+//   auto *originalChildModelForView = childController.modelForView();
+// //   QCOMPARE(childController.modelForView(), &childModel);
+//   /*
+//    * Setup relation
+//    */
+//   NavigationControllerRelation relation;
+//   relation.setParentController(&parentController);
+//   relation.setChildController(&childController);
+//   QCOMPARE(relation.relationFilterModel()->parentModel(), originalParentModelForView);
 //   QCOMPARE(relation.relationFilterModel()->sourceModel(), &childModel);
-
-  QFAIL("Not complete");
-}
+// //   QCOMPARE(relation.relationFilterModel()->parentModel(), &parentModel);
+// //   QCOMPARE(relation.relationFilterModel()->sourceModel(), &childModel);
+// }
 
 void NavigationControllerRelationTest::setCurrentRowTest()
 {
@@ -92,7 +94,6 @@ void NavigationControllerRelationTest::setCurrentRowTest()
   ItemModelControllerTester childController;
   childController.setModel(&model);
   QCOMPARE(childController.sourceModel(), &model);
-  QCOMPARE(childController.modelForView(), &model);
   /*
    * Setup relation
    */
@@ -115,11 +116,10 @@ void NavigationControllerRelationTest::setCurrentRowTest()
   QCOMPARE(parentController.currentRow(), 1);
   QCOMPARE(childController.currentRow(), 1);
   childController.stopEditing();
+  QVERIFY(childController.submit());
   QVERIFY(parentController.setCurrentRow(0));
   QCOMPARE(parentController.currentRow(), 0);
   QCOMPARE(childController.currentRow(), 0);
-
-  QFAIL("Not complete");
 }
 
 /*

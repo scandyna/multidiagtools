@@ -337,7 +337,6 @@ void FilterControllerRelationTest::filterTest()
    * | 22 |   2    |  S22   |
    * ------------------------
    */
-  qDebug() << "Child state: " << addressController.controllerState();
   addressController.setInsertLocation(ItemModelControllerTester::InsertAtBeginning);
   QVERIFY(addressController.insert());
   QCOMPARE(addressController.modelForView()->rowCount(), 3);

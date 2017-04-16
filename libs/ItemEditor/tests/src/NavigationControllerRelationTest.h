@@ -32,7 +32,6 @@ class NavigationControllerRelationTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void setControllersTest();
   void setCurrentRowTest();
 };
 

@@ -21,7 +21,6 @@
 #include "RowChangeTest.h"
 #include "RowStateChangedSpy.h"
 #include "CurrentRowToBeSetSpy.h"
-#include "CurrentRowChangedSpy.h"
 #include "Mdt/ItemEditor/RowState.h"
 #include "Mdt/ItemEditor/RowChangeEventDispatcher.h"
 #include "Mdt/ItemModel/VariantTableModel.h"

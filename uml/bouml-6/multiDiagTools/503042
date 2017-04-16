@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 219
+  revision 221
   modified_by 2 "philippe"
   // class settings
   
@@ -3748,12 +3748,12 @@ ${inlines}
 	
       end
 
-      classrelation 4393602 // <directional composition>
-	relation 4367618 *-->
+      classrelation 4393602 // <unidirectional association>
+	relation 4367618 --->
 	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 4393602 // <directional composition>
+	    classrelation_ref 4393602 // <unidirectional association>
 	  b parent class_ref 2684674 // ControllerStateMachine
       end
 
@@ -4462,7 +4462,7 @@ ${inlines}
      end
     classdiagram 3460098 "ItemViewImplementation"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B-Landscape
     end
 
     class 3972354 "ItemViewControllerImplementation"
@@ -4959,6 +4959,24 @@ ${inlines}
 	  b parent class_ref 3648002 // AbstractController
       end
     end
+  end
+
+  classview 1808002 "Controller_QtQuick"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
   end
 
   classview 1801218 "Controller_Sql"
@@ -5497,7 +5515,6 @@ ${inlines}
       mysql_decl ""
       
     end
-
   end
 
   classview 1676418 "Relation"
@@ -5780,12 +5797,12 @@ ${inlines}
 	
       end
 
-      classrelation 4401154 // <directional composition>
-	relation 4375170 *-->
+      classrelation 4401154 // <unidirectional association>
+	relation 4375170 --->
 	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 4401154 // <directional composition>
+	    classrelation_ref 4401154 // <unidirectional association>
 	  b parent class_ref 2684674 // ControllerStateMachine
       end
 
@@ -7299,12 +7316,12 @@ ${inlines}
 	  b parent class_ref 3668226 // ActionList
       end
 
-      classrelation 4415618 // <directional composition>
-	relation 4389634 *-->
+      classrelation 4415618 // <unidirectional association>
+	relation 4389634 --->
 	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 4415618 // <directional composition>
+	    classrelation_ref 4415618 // <unidirectional association>
 	  b parent class_ref 2684674 // ControllerStateMachine
       end
     end

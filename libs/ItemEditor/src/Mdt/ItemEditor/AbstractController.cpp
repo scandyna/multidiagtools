@@ -27,12 +27,11 @@
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 #include "Mdt/ItemModel/SortProxyModel.h"
+#include <QAbstractItemModel>
 #include <QModelIndex>
 #include <algorithm>
 
 // #include "Mdt/ItemModel/RelationFilterProxyModel.h"
-
-#include <QAbstractItemModel>
 
 #include "Debug.h"
 
@@ -57,7 +56,7 @@ AbstractController::AbstractController(QObject* parent)
   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateChanged, this, &AbstractController::rowStateChanged);
   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::currentRowToBeSet, this, &AbstractController::currentRowToBeSet);
 //   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsInserted, this, &AbstractController::onRowsInserted);
-  connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsRemoved, this, &AbstractController::onRowsRemoved);
+//   connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsRemoved, this, &AbstractController::onRowsRemoved);
 }
 
 ControllerState AbstractController::controllerState() const
@@ -472,7 +471,7 @@ void AbstractController::toLast()
  */
 bool AbstractController::submit()
 {
-  qDebug() << "AC:submit - set data to model";
+//   qDebug() << "AC:submit - set data to model";
   if(!setDataToModel()){
     qDebug() << "AbstractController: set data to model failed";
     return false;
@@ -481,14 +480,14 @@ bool AbstractController::submit()
     qDebug() << "AbstractController: connot submit in state " << controllerStateText(controllerState());
     return false;
   }
-  qDebug() << "AC:submit - submit for each child";
+//   qDebug() << "AC:submit - submit for each child";
   if(!mRelationList.submitForEachChild()){
     qDebug() << "AbstractController: submit failed for a child controller";
     return false;
   }
   /// \todo Here, tell model to submit
   Q_ASSERT(!mControllerStateMachine.isNull());
-  qDebug() << "AC:submit - DONE";
+//   qDebug() << "AC:submit - DONE";
   mControllerStateMachine->submitDone();
 //   setControllerState(ControllerState::Visualizing);
   ///enableDynamicFilters();
@@ -523,11 +522,9 @@ bool AbstractController::insert()
   if(!canInsert()){
     return false;
   }
-  ///disableDynamicFilters();
+  //disableDynamicFilters();
   Q_ASSERT(!mControllerStateMachine.isNull());
   mControllerStateMachine->insertStarted();
-//   setControllerState(ControllerState::Inserting);
-  qDebug() << "AC: insert into " << model;
   bool ok = false;
   switch(mInsertLocation){
     case InsertAtBeginning:
@@ -541,9 +538,6 @@ bool AbstractController::insert()
   if(!ok){
     return false;
   }
-  ///setControllerState(ControllerState::Editing);
-//   /// \todo check if ok
-//   setControllerState(ControllerState::Inserting);
 
   return true;
 }
@@ -627,7 +621,7 @@ void AbstractController::foreignKeyChangedEvent(const ForeignKey& , const Foreig
 
 void AbstractController::onDataEditionStarted()
 {
-  qDebug() << "AC: onDataEditionStarted() ..";
+//   qDebug() << "AC: onDataEditionStarted() ..";
   if(mControllerStateMachine.isNull()){
     return;
   }
@@ -636,7 +630,7 @@ void AbstractController::onDataEditionStarted()
 
 void AbstractController::onDataEditionDone()
 {
-  qDebug() << "AC: onDataEditionDone()";
+//   qDebug() << "AC: onDataEditionDone()";
   if(mControllerStateMachine.isNull()){
     return;
   }
@@ -649,13 +643,13 @@ void AbstractController::onDataEditionDone()
 //   setControllerState(ControllerState::Inserting);
 // }
 
-void AbstractController::onRowsRemoved()
-{
-  qDebug() << "AC: rows removed , rows: " << rowCount();
-//   if(controllerState() == ControllerState::Inserting){
-//     setControllerState(ControllerState::Visualizing);
-//   }
-}
+// void AbstractController::onRowsRemoved()
+// {
+//   qDebug() << "AC: rows removed , rows: " << rowCount();
+// //   if(controllerState() == ControllerState::Inserting){
+// //     setControllerState(ControllerState::Visualizing);
+// //   }
+// }
 
 // void AbstractController::onPrimaryKeySourceModelChanged()
 // {
