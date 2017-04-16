@@ -26,6 +26,7 @@
 #include "ControllerStatePermissionProxyModel.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
+#include "Mdt/ItemModel/SortProxyModel.h"
 #include <QModelIndex>
 #include <algorithm>
 
@@ -36,6 +37,7 @@
 #include "Debug.h"
 
 namespace ItemModel = Mdt::ItemModel;
+using ItemModel::SortProxyModel;
 using ItemModel::FilterProxyModel;
 using ItemModel::PrimaryKey;
 using ItemModel::PrimaryKeyProxyModel;
@@ -328,6 +330,29 @@ void AbstractController::setForeignKeyItemsEnabled(bool enable)
 {
   setForeignKeyEnabled(true);
   getForeignKeyProxyModel()->setForeignKeyItemsEnabled(enable);
+}
+
+void AbstractController::setSortEnabled(bool enable)
+{
+  if(enable == isSortEnabled()){
+    return;
+  }
+  if(enable){
+    appendProxyModel(new SortProxyModel(this));
+  }else{
+    deleteFirstProxyModelOfType<SortProxyModel>();
+  }
+}
+
+bool AbstractController::isSortEnabled() const
+{
+  return mModelContainer.containsProxyModelOfType<SortProxyModel>();
+}
+
+ItemModel::SortProxyModel* AbstractController::getSortProxyModel() const
+{
+  auto *model = mModelContainer.firstProxyModelOfType<SortProxyModel>();
+  return reinterpret_cast<SortProxyModel*>(model);
 }
 
 void AbstractController::setFilterEnabled(bool enable)

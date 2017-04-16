@@ -56,6 +56,7 @@ void ItemSelectionModel::updateCurrentRow(int row)
 
 void ItemSelectionModel::select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command)
 {
+  QItemSelectionModel::select(index, command);
   if(canChangeToIndex(index)){
     QItemSelectionModel::select(index, command);
   }

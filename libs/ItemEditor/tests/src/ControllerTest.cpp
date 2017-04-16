@@ -23,12 +23,10 @@
 #include "PrimaryKeyChangedSignalSpy.h"
 #include "RowStateChangedSpy.h"
 #include "CurrentRowToBeSetSpy.h"
-
-#include "CurrentRowChangedSpy.h"
-
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
+#include "Mdt/ItemModel/SortProxyModel.h"
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
@@ -43,73 +41,6 @@
 
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
-
-class AbstractItemModelHandler
-{
- public:
-
-  AbstractItemModelHandler() = default;
-  AbstractItemModelHandler(const AbstractItemModelHandler &) = delete;
-  AbstractItemModelHandler(AbstractItemModelHandler &&) = delete;
-  AbstractItemModelHandler & operator=(const AbstractItemModelHandler &) = delete;
-  AbstractItemModelHandler & operator=(AbstractItemModelHandler &&) = delete;
-
-  virtual void setModel(QAbstractItemModel *model)
-  {
-    qDebug() << "Abstract model";
-  }
-};
-
-class StringListModelHandler : public AbstractItemModelHandler
-{
- public:
-
-  void setModel(QAbstractItemModel *model) override
-  {
-    Q_ASSERT( qobject_cast<QStringListModel*>(model) != nullptr );
-
-    qDebug() << "String list model";
-  }
-};
-
-class TableModelHandler : public AbstractItemModelHandler
-{
- public:
-
-  void setModel(QAbstractItemModel *model) override
-  {
-    Q_ASSERT( qobject_cast<QAbstractTableModel*>(model) != nullptr );
-    
-    qDebug() << "Table model";
-  }
-};
-
-class VTableModelHandler : public TableModelHandler
-{
- public:
-
-  void setModel(QAbstractItemModel *model) override
-  {
-    Q_ASSERT( qobject_cast<VariantTableModel*>(model) != nullptr );
-    
-    qDebug() << "Variant table model";
-  }
-
-};
-
-void ControllerTest::sandbox()
-{
-  AbstractItemModelHandler amh;
-  StringListModelHandler smh;
-  TableModelHandler tmh;
-  VTableModelHandler vtmh;
-  
-  AbstractItemModelHandler & href = vtmh;
-  
-//   href.setModel(new QStringListModel);
-  href.setModel(new VariantTableModel);
-}
-
 
 void ControllerTest::initTestCase()
 {
@@ -579,6 +510,34 @@ void ControllerTest::filterCheckModelTest()
   QVERIFY(controller.isFilterEnabled());
 }
 
+void ControllerTest::sortEnableDisableSetTest()
+{
+  /*
+   * Setup
+   */
+  VariantTableModel model;
+  model.resize(2, 1);
+  ItemModelControllerTester controller;
+  controller.setModel(&model);
+  /*
+   * Initial state
+   */
+  QVERIFY(!controller.isSortEnabled());
+  QVERIFY(controller.getSortProxyModel() == nullptr);
+  /*
+   * Enable sorting
+   */
+  controller.setSortEnabled(true);
+  QVERIFY(controller.isSortEnabled());
+  QVERIFY(controller.getSortProxyModel() != nullptr);
+  /*
+   * Disable sorting
+   */
+  controller.setSortEnabled(false);
+  QVERIFY(!controller.isSortEnabled());
+  QVERIFY(controller.getSortProxyModel() == nullptr);
+}
+
 // void ControllerTest::filterCheckModelSignalTest()
 // {
 //   ItemModelControllerTester controller;
@@ -892,16 +851,26 @@ void ControllerTest::currentDataSortTest()
   QCOMPARE(controller.columnCount(), 1);
   QCOMPARE(controller.currentRow(), 0);
   QCOMPARE(controller.currentData(0), QVariant(1));
+  controller.setSortEnabled(true);
+  auto *sortModel = controller.getSortProxyModel();
+  QVERIFY(sortModel != nullptr);
+//   sortModel->setDynamicSortFilter(true);
   /*
-   * Sort on 2 first elements
+   * Sort ascending
    */
-  ///controller.set
+  sortModel->clearColumnsSortOrder();
+  sortModel->addColumnToSortOrder(0, Qt::AscendingOrder);
+  sortModel->sort();
+  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(controller.currentData(0), QVariant(1));
   /*
-   * Sort on 2 last elements
+   * Sort descending
    */
-  
-
-  QFAIL("Not complete");
+  sortModel->clearColumnsSortOrder();
+  sortModel->addColumnToSortOrder(0, Qt::DescendingOrder);
+  sortModel->sort();
+  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(controller.currentData(0), QVariant(3));
 }
 
 void ControllerTest::navigationSlotsTest()

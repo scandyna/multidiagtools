@@ -29,8 +29,6 @@ class ControllerTest : public TestBase
 
  private slots:
 
-  void sandbox();
-
   void initTestCase();
   void cleanupTestCase();
 
@@ -44,6 +42,7 @@ class ControllerTest : public TestBase
   void addRemoveProxyModelTest();
   void addRemoveProxyModelSignalTest();
   void filterCheckModelTest();
+  void sortEnableDisableSetTest();
 //   void filterCheckModelSignalTest();
   void primaryKeyTest();
   void foreignKeyTest();

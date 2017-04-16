@@ -42,6 +42,7 @@ namespace Mdt{ namespace ItemModel{
   class RelationFilterExpression;
   class PrimaryKeyProxyModel;
   class ForeignKeyProxyModel;
+  class SortProxyModel;
 
 }} // namespace Mdt{ namespace ItemModel{
 
@@ -458,6 +459,31 @@ namespace Mdt{ namespace ItemEditor{
      * By default, foreign key items are enabled.
      */
     void setForeignKeyItemsEnabled(bool enable);
+
+    /*! \brief Set sort enabled
+     *
+     * Enabling support fo sort will insert a proxy model,
+     *  disabling support will remove it.
+     *
+     * \sa getSortProxyModel()
+     * \sa isSortEnabled()
+     */
+    void setSortEnabled(bool enable);
+
+    /*! \brief Check if sort is enabled
+     *
+     * \sa setSortEnabled()
+     */
+    bool isSortEnabled() const;
+
+    /*! \brief Get sort proxy model
+     *
+     * Returns the sort proxy model if support was enabled,
+     *  otherwise a nullptr.
+     *
+     * \sa setSortEnabled()
+     */
+    Mdt::ItemModel::SortProxyModel *getSortProxyModel() const;
 
     /*! \brief Set filter enabled
      *
