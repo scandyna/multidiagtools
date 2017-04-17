@@ -87,7 +87,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Submit data to model
      */
-    bool submitDataToModel() override;
+    bool setDataToModel() override;
 
     /*! \brief Revert data from model
      */

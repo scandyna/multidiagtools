@@ -121,7 +121,7 @@ namespace Mdt{ namespace ItemEditor{
      * \endcode
      *
      * \pre \a controller must be a valid pointer
-     * \pre This implement object's model must be the same than \a controller 's model for view
+     * \pre This implementation object's model must be the same than \a controller 's model for view
      */
     bool connectToController(AbstractController *controller);
 

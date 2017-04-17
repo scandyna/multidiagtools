@@ -21,17 +21,13 @@
 #ifndef MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_TEST_H
 #define MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_TEST_H
 
-#include "ItemViewTestEditTriggers.h"
+#include "SqlTestBase.h"
 #include "Schema/ClientAddressSchema.h"
 #include "Schema/ClientPopulation.h"
-#include <QObject>
-#include <QtTest/QtTest>
 #include <QTemporaryFile>
 #include <QSqlDatabase>
 
-class QAbstractItemView;
-
-class SqlTableViewControllerTest : public QObject
+class SqlTableViewControllerTest : public SqlTestBase
 {
   Q_OBJECT
 
@@ -52,12 +48,6 @@ class SqlTableViewControllerTest : public QObject
   void stateChangeSignalTest();
 
  private:
-
-  // Helper function for editing in a QAbstractItemView
-  void beginEditing(QAbstractItemView & view, int row, int column, BeginEditTrigger trigger);
-  void editText(QAbstractItemView & view, int editingRow, int editingColumn, const QString & str);
-  void endEditing(QAbstractItemView & view, int editingRow, int editingColumn, EndEditTrigger trigger);
-  void edit(QAbstractItemView & view, int row, int column, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 
   void createSchema(const Schema::ClientAddressSchema & schema);
   bool deleteClientData();

@@ -19,9 +19,9 @@
  **
  ****************************************************************************/
 #include "AbstractSqlController.h"
+#include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Error.h"
-#include "Mdt/ItemEditor/ControllerStatePermission.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -42,6 +42,14 @@ AbstractSqlController::AbstractSqlController(QObject* parent)
 // {
 // }
 
+bool AbstractSqlController::canSelect() const
+{
+  if(controllerStateMachine() == nullptr){
+    return false;
+  }
+  return controllerStateMachine()->canSelect();
+}
+
 void AbstractSqlController::setDefaultModel(const QSqlDatabase & db)
 {
   // If we have to set default model on different database, we must re-alloc
@@ -51,7 +59,7 @@ void AbstractSqlController::setDefaultModel(const QSqlDatabase & db)
   Q_ASSERT(mOwningModel.isNull());
   mOwningModel = new QSqlTableModel(this, db);
   mModel = mOwningModel;
-  registerModel(mModel);
+  ///registerModel(mModel);
 }
 
 void AbstractSqlController::setModel(QSqlTableModel* model)
@@ -63,7 +71,7 @@ void AbstractSqlController::setModel(QSqlTableModel* model)
   }
   Q_ASSERT(mOwningModel.isNull());
   mModel = model;
-  registerModel(model);
+  ///registerModel(model);
 }
 
 void AbstractSqlController::setTableName(const QString& name)
@@ -81,7 +89,7 @@ bool AbstractSqlController::select()
 {
   Q_ASSERT(!mModel.isNull());
 
-  if(!ControllerStatePermission::canSelect(controllerState())){
+  if(!canSelect()){
     /// \todo Update last error ?
     return false;
   }

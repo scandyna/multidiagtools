@@ -21,8 +21,6 @@
 #include "SqlTableViewControllerTest.h"
 #include "Schema/Client.h"
 #include "Schema/Address.h"
-#include "ItemViewTestEdit.h"
-#include "Mdt/Application.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/ItemEditor/SqlTableViewController.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
@@ -38,14 +36,9 @@
 #include <QMetaMethod>
 #include <QSqlQuery>
 
-namespace ItemEditor = Mdt::ItemEditor;
-namespace ItemModel = Mdt::ItemModel;
+using namespace Mdt::ItemEditor;
+using namespace Mdt::ItemModel;
 namespace Sql = Mdt::Sql;
-using ItemEditor::SqlTableViewController;
-using ItemEditor::ControllerState;
-using ItemModel::VariantTableModel;
-using ItemModel::FilterColumn;
-using ItemModel::ParentModelColumn;
 using Schema::Client;
 using Schema::Address;
 using Schema::ClientAddressSchema;
@@ -80,7 +73,7 @@ void SqlTableViewControllerTest::cleanupTestCase()
 
 void SqlTableViewControllerTest::setModelThenViewTest()
 {
-  using ItemEditor::RowState;
+//   using ItemEditor::RowState;
 
   QTableView tableView;
   QSqlTableModel model(nullptr, mDatabase);
@@ -126,7 +119,7 @@ void SqlTableViewControllerTest::setModelThenViewTest()
 
 void SqlTableViewControllerTest::setViewThenModelTest()
 {
-  using ItemEditor::RowState;
+//   using ItemEditor::RowState;
 
   QTableView tableView;
   QSqlTableModel model(nullptr, mDatabase);
@@ -172,7 +165,7 @@ void SqlTableViewControllerTest::setViewThenModelTest()
 
 void SqlTableViewControllerTest::setDefaultModelThenViewTest()
 {
-  using ItemEditor::RowState;
+//   using ItemEditor::RowState;
 
   QTableView tableView;
   SqlTableViewController controller;
@@ -217,7 +210,7 @@ void SqlTableViewControllerTest::setDefaultModelThenViewTest()
 
 void SqlTableViewControllerTest::setViewThenDefaultModelTest()
 {
-  using ItemEditor::RowState;
+//   using ItemEditor::RowState;
 
   QTableView tableView;
   SqlTableViewController controller;
@@ -254,7 +247,7 @@ void SqlTableViewControllerTest::setViewThenDefaultModelTest()
 
 void SqlTableViewControllerTest::changeModelTest()
 {
-  using ItemEditor::RowState;
+//   using ItemEditor::RowState;
 
   QTableView tableView;
   SqlTableViewController controller;
@@ -357,8 +350,6 @@ void SqlTableViewControllerTest::setTableTest()
 
 void SqlTableViewControllerTest::selectTest()
 {
-  using ItemEditor::RowState;
-
   Schema::Client client;
   QTableView tableView;
   SqlTableViewController controller;
@@ -432,38 +423,6 @@ void SqlTableViewControllerTest::stateChangeSignalTest()
 /*
  * Helpers
  */
-
-void SqlTableViewControllerTest::beginEditing(QAbstractItemView& view, int row, int column, BeginEditTrigger trigger)
-{
-  Q_ASSERT(view.model() != nullptr);
-  auto index = view.model()->index(row, column);
-  Q_ASSERT(index.isValid());
-  ItemViewTestEdit::beginEditing(view, index, trigger);
-}
-
-void SqlTableViewControllerTest::editText(QAbstractItemView& view, int editingRow, int editingColumn, const QString& str)
-{
-  Q_ASSERT(view.model() != nullptr);
-  auto editingIndex = view.model()->index(editingRow, editingColumn);
-  Q_ASSERT(editingIndex.isValid());
-  ItemViewTestEdit::editText(view, editingIndex, str);
-}
-
-void SqlTableViewControllerTest::endEditing(QAbstractItemView& view, int editingRow, int editingColumn, EndEditTrigger trigger)
-{
-  Q_ASSERT(view.model() != nullptr);
-  auto editingIndex = view.model()->index(editingRow, editingColumn);
-  Q_ASSERT(editingIndex.isValid());
-  ItemViewTestEdit::endEditing(view, editingIndex, trigger);
-}
-
-void SqlTableViewControllerTest::edit(QAbstractItemView& view, int row, int column, const QString& str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
-{
-  Q_ASSERT(view.model() != nullptr);
-  auto index = view.model()->index(row, column);
-  Q_ASSERT(index.isValid());
-  ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
-}
 
 void SqlTableViewControllerTest::createSchema(const Schema::ClientAddressSchema & schema)
 {

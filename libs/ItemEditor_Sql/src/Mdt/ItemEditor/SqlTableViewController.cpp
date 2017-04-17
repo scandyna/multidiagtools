@@ -19,7 +19,12 @@
  **
  ****************************************************************************/
 #include "SqlTableViewController.h"
+#include "Mdt/ItemEditor/TableViewControllerStatePermission.h"
+#include "Mdt/ItemEditor/TableViewControllerStateTable.h"
+#include "Mdt/ItemEditor/TableViewControllerImplementation.h"
+
 #include "Mdt/ItemEditor/ItemViewPrivateContainer.h"
+
 #include <QSqlTableModel>
 
 namespace Mdt{ namespace ItemEditor{
@@ -64,7 +69,7 @@ void SqlTableViewController::setModelToView(QAbstractItemModel* model)
   registerModelAndSelectionModel();
 }
 
-bool SqlTableViewController::submitDataToModel()
+bool SqlTableViewController::setDataToModel()
 {
 
 }
@@ -88,11 +93,11 @@ void SqlTableViewController::registerModelAndSelectionModel()
   if( (mContainer->model() == nullptr) || (mContainer->view() == nullptr) ){
     return;
   }
-  disconnect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &SqlTableViewController::setCurrentRow);
-  disconnect(this, &SqlTableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
-  connect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &SqlTableViewController::setCurrentRow);
-  connect(this, &SqlTableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
-  modelSetToView();
+//   disconnect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &SqlTableViewController::setCurrentRow);
+//   disconnect(this, &SqlTableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
+//   connect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &SqlTableViewController::setCurrentRow);
+//   connect(this, &SqlTableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
+//   modelSetToView();
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

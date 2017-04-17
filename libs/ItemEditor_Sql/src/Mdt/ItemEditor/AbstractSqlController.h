@@ -65,6 +65,10 @@ namespace Mdt{ namespace ItemEditor{
     AbstractSqlController(AbstractSqlController &&) = delete;
     AbstractSqlController & operator=(AbstractSqlController &&) = delete;
 
+    /*! \brief Check if it is allowed to select for current controller state
+     */
+    bool canSelect() const;
+
     /*! \brief Set default model
      *
      * Will use a QSqlTableModel that acts on \a db

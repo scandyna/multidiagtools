@@ -13,6 +13,7 @@ set(SOURCES_FILES
   src/Schema/Address.cpp
   src/Schema/ClientAddressSchema.cpp
   src/Schema/ClientPopulation.cpp
+  src/SqlTestBase.cpp
 )
 
 add_library(mdtitemeditorsqltest SHARED ${SOURCES_FILES})
