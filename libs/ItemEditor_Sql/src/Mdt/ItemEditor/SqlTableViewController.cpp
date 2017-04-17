@@ -30,7 +30,7 @@
 namespace Mdt{ namespace ItemEditor{
 
 SqlTableViewController::SqlTableViewController(QObject* parent)
- : AbstractSqlController(parent),
+ : AbstractSqlTableModelController(parent),
    mContainer(new ItemViewPrivateContainer)
 {
 }

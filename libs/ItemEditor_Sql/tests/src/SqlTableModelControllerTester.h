@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,26 +18,26 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_SQL_TEST_BASE_H
-#define MDT_ITEM_EDITOR_SQL_TEST_BASE_H
+#ifndef MDT_ITEM_EDITOR_SQL_TABLE_MODEL_CONTROLLER_TESTER_H
+#define MDT_ITEM_EDITOR_SQL_TABLE_MODEL_CONTROLLER_TESTER_H
 
-#include "TestBase.h"
-#include <QTemporaryFile>
-#include <QSqlDatabase>
+#include "Mdt/ItemEditor/AbstractSqlTableModelController.h"
+#include "Mdt/ItemEditor/ControllerStateMachine.h"
 
-class SqlTestBase : public TestBase
+class SqlTableModelControllerTester : public Mdt::ItemEditor::AbstractSqlTableModelController
 {
  Q_OBJECT
 
- protected:
+ public:
 
-  bool initDatabaseSqlite();
-  QSqlDatabase database() const;
+  explicit SqlTableModelControllerTester(QObject* parent = nullptr, Mdt::ItemEditor::ControllerStateMachine *stateMachine = nullptr);
+  explicit SqlTableModelControllerTester(Mdt::ItemEditor::ControllerStateMachine *stateMachine);
 
  private:
 
-  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase mDatabase;
+  void setModelToView(QAbstractItemModel *model) override;
+  bool setDataToModel() override;
+  void revertDataFromModel() override;
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_SQL_TEST_BASE_H
+#endif // #ifndef MDT_ITEM_EDITOR_SQL_TABLE_MODEL_CONTROLLER_TESTER_H

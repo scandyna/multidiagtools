@@ -14,6 +14,7 @@ set(SOURCES_FILES
   src/Schema/ClientAddressSchema.cpp
   src/Schema/ClientPopulation.cpp
   src/SqlTestBase.cpp
+  src/SqlTableModelControllerTester.cpp
 )
 
 add_library(mdtitemeditorsqltest SHARED ${SOURCES_FILES})
@@ -37,4 +38,6 @@ endfunction()
 
 #================= Tests ====================
 
+addItemEditorSqlTest("SqlControllerTest")
+addItemEditorSqlTest("SqlTableModelControllerTest")
 addItemEditorSqlTest("SqlTableViewControllerTest")

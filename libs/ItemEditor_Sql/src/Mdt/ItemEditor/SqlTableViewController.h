@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_H
 #define MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_H
 
-#include "AbstractSqlController.h"
+#include "AbstractSqlTableModelController.h"
 #include <memory>
 
 class QSqlTableModel;
@@ -33,7 +33,7 @@ namespace Mdt{ namespace ItemEditor{
 
   /*! \brief SqlTableViewController acts on a QSqlTableModel
    */
-  class SqlTableViewController : public AbstractSqlController
+  class SqlTableViewController : public AbstractSqlTableModelController
   {
    Q_OBJECT
 

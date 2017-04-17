@@ -13,37 +13,20 @@ diagrams
     937 911 100 8 0 0
   classdiagram_ref 3360642 // ModelWrapper
     120 98 100 7 0 0
-  active  classdiagram_ref 3460098 // TableViewControllerImplementation
-    943 911 100 21 0 0
-  classdiagram_ref 3168386 // AbstractSqlController
-    120 98 100 8 0 0
-  classdiagram_ref 2761218 // ControllerOverview
-    120 98 100 23 0 0
-  classdiagram_ref 3413122 // ControllerStateOverview
-    925 911 100 18 0 0
-  classdiagram_ref 2760962 // TableViewController
-    120 98 100 21 0 0
+  active  classdiagram_ref 3168386 // AbstractSqlController
+    943 911 100 8 0 0
+  classdiagram_ref 3168514 // SqlTableViewController
+    120 98 100 7 24 0
 end
 show_stereotypes
-selected operation_ref 5654530 // setDataToModel
+selected classdiagram_ref 3168386 // AbstractSqlController
 open
   
   package_ref 409858 // principes
-  attribute_ref 3459714 // mPrimaryKeyColumnsHidden
-  attribute_ref 3459842 // mForeignKeyColumnsHidden
-  operation_ref 5654402 // model
-  operation_ref 5656066 // setView
-  operation_ref 5656194 // view
-  operation_ref 5663490 // connectToController
-  operation_ref 5633794 // setPrimaryKeyHidden
-  operation_ref 5654146 // registerModelAndSelectionModel
-  class_ref 3138178 // TableViewController
   classdiagram_ref 2761090 // WidgetMapperController
   classview_ref 1808002 // Controller_QtQuick
-  classrelation_ref 4499714 // <directional composition>
-  operation_ref 5656322 // setView
-  operation_ref 5656450 // view
-  operation_ref 5634050 // setPrimaryKeyHidden
+  classview_ref 1801218 // Controller_Sql
+  classview_ref 1801474 // Controller_Sql_Widgets
   classview_ref 1287042 // Controller
   class_ref 174338 // QSqlQueryModel
 end

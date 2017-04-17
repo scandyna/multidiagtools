@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,26 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_SQL_TEST_BASE_H
-#define MDT_ITEM_EDITOR_SQL_TEST_BASE_H
+#include "AbstractSqlTableModelController.h"
 
-#include "TestBase.h"
-#include <QTemporaryFile>
-#include <QSqlDatabase>
+namespace Mdt{ namespace ItemEditor{
 
-class SqlTestBase : public TestBase
+AbstractSqlTableModelController::AbstractSqlTableModelController(QObject* parent)
+ : AbstractSqlController(parent)
 {
- Q_OBJECT
+}
 
- protected:
-
-  bool initDatabaseSqlite();
-  QSqlDatabase database() const;
-
- private:
-
-  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase mDatabase;
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_SQL_TEST_BASE_H
+}} // namespace Mdt{ namespace ItemEditor{

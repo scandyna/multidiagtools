@@ -6,6 +6,7 @@ project(multidiagtools)
 # List of source files
 set(SOURCES_FILES
     src/Mdt/ItemEditor/AbstractSqlController.cpp
+    src/Mdt/ItemEditor/AbstractSqlTableModelController.cpp
     src/Mdt/ItemEditor/SqlTableViewController.cpp
     src/Mdt/ItemEditor/SqlTableViewWidget.cpp
 )

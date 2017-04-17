@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 225
+  revision 226
   modified_by 2 "philippe"
   // class settings
   
@@ -5417,14 +5417,6 @@ ${inlines}
 	
       end
 
-      classrelation 4472578 // <generalisation>
-	relation 4446594 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4472578 // <generalisation>
-	  b parent class_ref 3979010 // AbstractSqlQueryModelController
-      end
-
       operation 5633282 "model"
 	public return_type class_ref 174210 // QSqlTableModel
 	nparams 0
@@ -5591,6 +5583,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4512898 // <generalisation>
+	relation 4486786 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4512898 // <generalisation>
+	  b parent class_ref 3614594 // AbstractSqlController
       end
     end
   end

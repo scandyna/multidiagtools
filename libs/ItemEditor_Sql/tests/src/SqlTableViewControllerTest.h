@@ -29,7 +29,7 @@
 
 class SqlTableViewControllerTest : public SqlTestBase
 {
-  Q_OBJECT
+ Q_OBJECT
 
  private slots:
 

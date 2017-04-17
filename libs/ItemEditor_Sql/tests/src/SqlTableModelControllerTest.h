@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,26 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_SQL_TEST_BASE_H
-#define MDT_ITEM_EDITOR_SQL_TEST_BASE_H
+#ifndef MDT_ITEM_EDITOR_SQL_TABLE_MODEL_CONTROLLER_TEST_H
+#define MDT_ITEM_EDITOR_SQL_TABLE_MODEL_CONTROLLER_TEST_H
 
-#include "TestBase.h"
-#include <QTemporaryFile>
-#include <QSqlDatabase>
+#include "SqlTestBase.h"
+#include "Schema/ClientAddressSchema.h"
+#include "Schema/ClientPopulation.h"
 
-class SqlTestBase : public TestBase
+class SqlTableModelControllerTest : public SqlTestBase
 {
  Q_OBJECT
 
- protected:
+ private slots:
 
-  bool initDatabaseSqlite();
-  QSqlDatabase database() const;
+  void initTestCase();
+  void cleanupTestCase();
+
+  void sandbox();
 
  private:
 
-  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase mDatabase;
+  void createSchema(const Schema::ClientAddressSchema & schema);
+  bool deleteClientData();
+  bool repopulateClientTable(const Schema::ClientPopulation & tp);
+
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_SQL_TEST_BASE_H
+#endif // #ifndef MDT_ITEM_EDITOR_SQL_TABLE_MODEL_CONTROLLER_TEST_H

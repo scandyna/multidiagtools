@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,26 +18,34 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_SQL_TEST_BASE_H
-#define MDT_ITEM_EDITOR_SQL_TEST_BASE_H
+#include "SqlControllerTest.h"
 
-#include "TestBase.h"
-#include <QTemporaryFile>
-#include <QSqlDatabase>
-
-class SqlTestBase : public TestBase
+void SqlControllerTest::initTestCase()
 {
- Q_OBJECT
+}
 
- protected:
+void SqlControllerTest::cleanupTestCase()
+{
+}
 
-  bool initDatabaseSqlite();
-  QSqlDatabase database() const;
+/*
+ * Tests
+ */
 
- private:
 
-  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase mDatabase;
-};
+/*
+ * Main
+ */
 
-#endif // #ifndef MDT_ITEM_EDITOR_SQL_TEST_BASE_H
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  SqlControllerTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+//   app.debugEnvironnement();
+
+  return QTest::qExec(&test, argc, argv);
+}
