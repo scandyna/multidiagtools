@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "TableViewController.h"
-#include "ItemViewPrivateContainer.h"
+#include "TableViewControllerImplementation.h"
 #include "TableViewControllerStateTable.h"
 #include "TableViewControllerStatePermission.h"
 #include "ControllerStateMachine.h"
@@ -34,11 +34,11 @@ namespace Mdt{ namespace ItemEditor{
 
 TableViewController::TableViewController(QObject* parent)
  : AbstractController(parent),
-   mContainer(new ItemViewPrivateContainer)
+   mImpl( std::make_unique<TableViewControllerImplementation>() )
 {
   setControllerStateMachine( ControllerStateMachine::makeNew<TableViewControllerStateTable, TableViewControllerStatePermission>(this) );
-  connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionStarted, this, &TableViewController::onDataEditionStarted);
-  connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionDone, this, &TableViewController::onDataEditionDone);
+  connect(mImpl->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionStarted, this, &TableViewController::onDataEditionStarted);
+  connect(mImpl->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionDone, this, &TableViewController::onDataEditionDone);
 //   connect(this, &TableViewController::primaryKeyChanged, this, &TableViewController::onPrimaryKeyChanged);
 }
 
@@ -50,117 +50,53 @@ void TableViewController::setView(QTableView* view)
 {
   Q_ASSERT(view != nullptr);
 
-  mContainer->setView(view);
-  registerModelAndSelectionModel();
+  mImpl->setView(view);
+  if( mImpl->connectToController(this) ){
+    modelSetToView();
+  }
 }
 
 QTableView* TableViewController::view() const
 {
-  return reinterpret_cast<QTableView*>(mContainer->view());
+  return mImpl->view();
 }
 
 void TableViewController::setPrimaryKeyHidden(bool hide)
 {
-  mPrimaryKeyColumnsHidden = hide;
-  updatePrimaryKeyColumnsVisibility();
+  mImpl->setPrimaryKeyHidden( getPrimaryKey(), hide );
 }
 
 void TableViewController::setForeignKeyHidden(bool hide)
 {
-  mForeignKeyColumnsHidden = hide;
-  updateForeignKeyColumnsVisibility();
+  mImpl->setForeignKeyHidden( getForeignKey(), hide );
 }
 
 void TableViewController::setModelToView(QAbstractItemModel* model)
 {
-  mContainer->setModel(model);
-  registerModelAndSelectionModel();
+  mImpl->setModel(model);
+  if( mImpl->connectToController(this) ){
+    modelSetToView();
+  }
 }
 
 bool TableViewController::setDataToModel()
 {
-  mContainer->proxyItemDelegate()->commitCurrentEditorData();
-  return true;
+  return mImpl->setDataToModel();
 }
 
 void TableViewController::revertDataFromModel()
 {
-  mContainer->proxyItemDelegate()->closeCurrentEditor();
-}
-
-void TableViewController::registerModelAndSelectionModel()
-{
-  /*
-   * Order of signal/slot connections matters here.
-   * We must be sure that model is set to the view
-   * before it is registered (set to RowChangeEventDispatcher).
-   * Not doing so will produces a problem when model resets:
-   *  - Controller receives the event and updates current row to 0 (if model contains data)
-   *  - Controller updates current index of view
-   *  - View will reset (and current will also be lost!)
-   */
-  if( (mContainer->model() == nullptr) || (mContainer->view() == nullptr) ){
-    return;
-  }
-  disconnect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &TableViewController::setCurrentRow);
-  disconnect(this, &TableViewController::currentRowToBeSet, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
-//   disconnect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
-  connect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &TableViewController::setCurrentRow);
-  connect(this, &TableViewController::currentRowToBeSet, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
-//   connect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
-  modelSetToView();
+  mImpl->revertDataFromModel();
 }
 
 void TableViewController::primaryKeyChangedEvent(const PrimaryKey & oldPrimaryKey, const PrimaryKey & newPrimaryKey)
 {
-  auto *v = view();
-  if(v == nullptr){
-    return;
-  }
-  for(int column : oldPrimaryKey){
-    v->setColumnHidden(column, false);
-  }
-  for(int column : newPrimaryKey){
-    v->setColumnHidden(column, mPrimaryKeyColumnsHidden);
-  }
-}
-
-void TableViewController::updatePrimaryKeyColumnsVisibility()
-{
-  auto *v = view();
-  if(v == nullptr){
-    return;
-  }
-  const auto pk = getPrimaryKey();
-  for(int column : pk){
-    v->setColumnHidden(column, mPrimaryKeyColumnsHidden);
-  }
+  mImpl->primaryKeyChangedEvent(oldPrimaryKey, newPrimaryKey);
 }
 
 void TableViewController::foreignKeyChangedEvent(const ForeignKey& oldForeignKey, const ForeignKey& newForeignKey)
 {
-  auto *v = view();
-  if(v == nullptr){
-    return;
-  }
-  for(int column : oldForeignKey){
-    v->setColumnHidden(column, false);
-  }
-  for(int column : newForeignKey){
-    v->setColumnHidden(column, mForeignKeyColumnsHidden);
-  }
-}
-
-void TableViewController::updateForeignKeyColumnsVisibility()
-{
-  auto *v = view();
-  if(v == nullptr){
-    return;
-  }
-  const auto fk = getForeignKey();
-  for(int column : fk){
-    v->setColumnHidden(column, mForeignKeyColumnsHidden);
-  }
+  mImpl->foreignKeyChangedEvent(oldForeignKey, newForeignKey);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

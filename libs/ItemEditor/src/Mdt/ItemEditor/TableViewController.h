@@ -29,7 +29,7 @@ class QTableView;
 
 namespace Mdt{ namespace ItemEditor{
 
-  class ItemViewPrivateContainer;
+  class TableViewControllerImplementation;
 
   /*! \brief TableViewController acts on a QAbstractTableModel and a QTableView
    *
@@ -105,22 +105,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void revertDataFromModel() override;
 
-    void registerModelAndSelectionModel();
-
     void primaryKeyChangedEvent(const ItemModel::PrimaryKey& oldPrimaryKey, const ItemModel::PrimaryKey& newPrimaryKey) override;
-    void updatePrimaryKeyColumnsVisibility();
-
     void foreignKeyChangedEvent(const ItemModel::ForeignKey& oldForeignKey, const ItemModel::ForeignKey& newForeignKey) override;
-    void updateForeignKeyColumnsVisibility();
 
-    /*! \brief Register item delegate
-     *
-     * Once delegate is registered, this controller is able to detect when user beginns editing,
-     *  and can update components in a coherent manner.
-     */
-//     void registerItemDelegate();
-
-    std::unique_ptr<ItemViewPrivateContainer> mContainer;
+    std::unique_ptr<TableViewControllerImplementation> mImpl;
     bool mPrimaryKeyColumnsHidden = false;
     bool mForeignKeyColumnsHidden = false;
   };

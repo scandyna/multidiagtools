@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 224
+  revision 225
   modified_by 2 "philippe"
   // class settings
   
@@ -4618,7 +4618,7 @@ ${inlines}
       end
 
       operation 5654530 "setDataToModel"
-	public explicit_return_type "void"
+	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "

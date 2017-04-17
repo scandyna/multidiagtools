@@ -39,19 +39,6 @@ namespace Mdt{ namespace ItemEditor{
   {
    public:
 
-//     /*! \brief Construct a implementation for \a controller
-//      *
-//      * \code
-//      * TableViewController::TableViewController()
-//      *  : mImpl( new TableViewControllerImplementation(this) )
-//      * {
-//      * }
-//      * \endcode
-//      *
-//      * \pre \a controller must be a valid pointer for the entiere lifetime of this implementation object.
-//      */
-//     TableViewControllerImplementation(AbstractController *controller);
-
     TableViewControllerImplementation() = default;
     ~TableViewControllerImplementation() = default;
     TableViewControllerImplementation(const TableViewControllerImplementation &) = delete;

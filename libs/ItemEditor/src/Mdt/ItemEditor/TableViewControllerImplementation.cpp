@@ -27,12 +27,6 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-// TableViewControllerImplementation::TableViewControllerImplementation(AbstractController* controller)
-//  : mController(controller)
-// {
-//   Q_ASSERT(mController != nullptr);
-// }
-
 void TableViewControllerImplementation::setModel(QAbstractItemModel * const model)
 {
   Q_ASSERT(model != nullptr);
@@ -74,6 +68,17 @@ bool TableViewControllerImplementation::connectToController(AbstractController* 
   QObject::connect(controller, &AbstractController::currentRowToBeSet, mContainer.selectionModel(), &ItemSelectionModel::updateCurrentRow);
 
   return true;
+}
+
+bool TableViewControllerImplementation::setDataToModel()
+{
+  mContainer.proxyItemDelegate()->commitCurrentEditorData();
+  return true;
+}
+
+void TableViewControllerImplementation::revertDataFromModel()
+{
+  mContainer.proxyItemDelegate()->closeCurrentEditor();
 }
 
 void TableViewControllerImplementation::setPrimaryKeyHidden(const ItemModel::PrimaryKey & pk, bool hide)
@@ -137,10 +142,5 @@ void TableViewControllerImplementation::updateForeignKeyColumnsVisibility(const 
     v->setColumnHidden(column, mForeignKeyColumnsHidden);
   }
 }
-
-// void TableViewControllerImplementation::registerModelAndSelectionModel()
-// {
-// 
-// }
 
 }} // namespace Mdt{ namespace ItemEditor{
