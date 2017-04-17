@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 221
+  revision 224
   modified_by 2 "philippe"
   // class settings
   
@@ -4346,6 +4346,18 @@ ${inlines}
 	  b parent class_ref 3715458 // ForeignKey
       end
 
+      operation 5653890 "setModelToView"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
       operation 5440386 "setControllerStateMachine"
 	protected explicit_return_type "void"
 	nparams 1
@@ -4362,7 +4374,18 @@ ${inlines}
 	
       end
 
-      operation 5446914 "submitDataToModel"
+      operation 5446914 "setDataToModel"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5654786 "revertDataFromModel"
 	abstract cpp_virtual protected explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -4441,6 +4464,19 @@ ${inlines}
 	
 	
       end
+
+      operation 5655298 "primaryKeyChangedEvent"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 2
+	  param in name "oldPk" type class_ref 3715330 // PrimaryKey
+	  param in name "newPk" type class_ref 3715330 // PrimaryKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
     end
   end
 
@@ -4460,12 +4496,12 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 3460098 "ItemViewImplementation"
+    classdiagram 3460098 "TableViewControllerImplementation"
       classdiagramsettings member_max_width 0 end
       size B-Landscape
     end
 
-    class 3972354 "ItemViewControllerImplementation"
+    class 3992194 "TableViewControllerImplementation"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -4479,10 +4515,34 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 5640578 "setView"
+      attribute 3459714 "mPrimaryKeyColumnsHidden"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3459842 "mForeignKeyColumnsHidden"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5654274 "setModel"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "view" type class_ref 2160258 // QAbstractItemView
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -4495,8 +4555,85 @@ ${inlines}
 	
       end
 
-      operation 5640706 "view"
-	public return_type class_ref 2160258 // QAbstractItemView
+      operation 5654402 "model"
+	public return_type class_ref 146946 // QAbstractItemModel
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5656066 "setView"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "view" type class_ref 638338 // QTableView
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5656194 "view"
+	public return_type class_ref 638338 // QTableView
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5663490 "connectToController"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "controller" type class_ref 3648002 // AbstractController
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5654530 "setDataToModel"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5654658 "revertDataFromModel"
+	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4542,13 +4679,64 @@ ${inlines}
 	
       end
 
-      classrelation 4472834 // <directional composition>
-	relation 4446850 *-->
+      operation 5655554 "primaryKeyChangedEvent"
+	cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "oldPk" type class_ref 3715330 // PrimaryKey
+	  param in name "newPk" type class_ref 3715330 // PrimaryKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5655938 "updatePrimaryKeyColumnsVisibility"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5654146 "registerModelAndSelectionModel"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4506242 // <directional composition>
+	relation 4480258 *-->
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
-	    classrelation_ref 4472834 // <directional composition>
+	    classrelation_ref 4506242 // <directional composition>
 	  b parent class_ref 3608066 // ItemViewPrivateContainer
+      end
+
+      classrelation 4506370 // <composition>
+	relation_ref 4473602 // <composition>
       end
     end
 
@@ -4721,7 +4909,7 @@ ${inlines}
       operation 4549506 "setView"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "view" type class_ref 2160258 // QAbstractItemView
+	  param in name "view" type class_ref 638338 // QTableView
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -4735,7 +4923,7 @@ ${inlines}
       end
 
       operation 4556034 "view"
-	public return_type class_ref 2160258 // QAbstractItemView
+	public return_type class_ref 638338 // QTableView
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4791,13 +4979,77 @@ ${inlines}
 	  b parent class_ref 3648002 // AbstractController
       end
 
-      classrelation 4486402 // <directional composition>
-	relation 4460418 *-->
+      operation 5654018 "setModelToView"
+	cpp_virtual private explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5654914 "setDataToModel"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5655042 "revertDataFromModel"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5655426 "primaryKeyChangedEvent"
+	cpp_virtual private explicit_return_type "void"
+	nparams 2
+	  param in name "oldPk" type class_ref 3715330 // PrimaryKey
+	  param in name "newPk" type class_ref 3715330 // PrimaryKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4499586 // <composition>
+	relation 4473602 *---
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
-	    classrelation_ref 4486402 // <directional composition>
-	  b parent class_ref 3972354 // ItemViewControllerImplementation
+	    classrelation_ref 4499586 // <composition>
+	  b role_name "" private
+	    classrelation_ref 4506370 // <composition>
       end
     end
 
@@ -5361,7 +5613,7 @@ ${inlines}
      end
     classdiagram 3168514 "SqlTableViewController"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size B
     end
 
     class 2927362 "SqlTableViewController"
@@ -5378,13 +5630,52 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 4472962 // <directional composition>
-	relation 4446978 *-->
+      classrelation 4473218 // <generalisation>
+	relation 4447234 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4473218 // <generalisation>
+	  b parent class_ref 3979138 // AbstractSqlTableModelController
+      end
+
+      classrelation 4499714 // <directional composition>
+	relation 4473730 *-->
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
-	    classrelation_ref 4472962 // <directional composition>
-	  b parent class_ref 3972354 // ItemViewControllerImplementation
+	    classrelation_ref 4499714 // <directional composition>
+	  b parent class_ref 3992194 // TableViewControllerImplementation
+      end
+
+      operation 5656322 "setView"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "view" type class_ref 638338 // QTableView
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5656450 "view"
+	public return_type class_ref 638338 // QTableView
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 5634050 "setPrimaryKeyHidden"
@@ -5404,12 +5695,67 @@ ${inlines}
 	
       end
 
-      classrelation 4473218 // <generalisation>
-	relation 4447234 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4473218 // <generalisation>
-	  b parent class_ref 3979138 // AbstractSqlTableModelController
+      operation 5656578 "setModelToView"
+	cpp_virtual private explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5656706 "setDataToModel"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5656834 "revertDataFromModel"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5656962 "primaryKeyChangedEvent"
+	cpp_virtual private explicit_return_type "void"
+	nparams 2
+	  param in name "oldPk" type class_ref 3715330 // PrimaryKey
+	  param in name "newPk" type class_ref 3715330 // PrimaryKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -5433,15 +5779,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 4479746 // <generalisation>
 	  b parent class_ref 3979010 // AbstractSqlQueryModelController
-      end
-
-      classrelation 4479874 // <directional composition>
-	relation 4453890 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4479874 // <directional composition>
-	  b parent class_ref 3972354 // ItemViewControllerImplementation
       end
     end
 

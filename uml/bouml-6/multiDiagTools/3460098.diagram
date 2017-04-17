@@ -1,29 +1,20 @@
 format 211
 
-classcanvas 128002 class_ref 3972354 // ItemViewControllerImplementation
-  classdiagramsettings member_max_width 0 end
-  xyz 250 289 2000
-end
 classcanvas 128130 class_ref 3608066 // ItemViewPrivateContainer
   classdiagramsettings member_max_width 0 end
-  xyz 216 40 2006
+  xyz 576 128 2006
 end
 classcanvas 128386 class_ref 3015170 // EventCatchItemDelegate
   classdiagramsettings member_max_width 0 end
-  xyz 610 92 2012
+  xyz 562 432 2012
 end
 classcanvas 128642 class_ref 2160258 // QAbstractItemView
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 41 122 2018
+  xyz 681 42 2018
 end
-classcanvas 128898 class_ref 3138178 // TableViewController
+classcanvas 129154 class_ref 3992194 // TableViewControllerImplementation
   classdiagramsettings member_max_width 0 end
-  xyz 105 579 2006
-end
-relationcanvas 128258 relation_ref 4446850 // <directional composition>
-  from ref 128002 z 2007 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  xyz 41 73 2000
 end
 relationcanvas 128514 relation_ref 3976066 // <unidirectional association>
   from ref 128130 z 2013 to ref 128386
@@ -31,12 +22,13 @@ relationcanvas 128514 relation_ref 3976066 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 3975938 // <unidirectional association>
+  decenter_end 525
   from ref 128130 z 2019 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 129026 relation_ref 4460418 // <directional composition>
-  from ref 128898 z 2007 to ref 128002
+relationcanvas 129410 relation_ref 4480258 // <directional composition>
+  from ref 129154 z 2007 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

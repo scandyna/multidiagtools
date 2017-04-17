@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "TableViewControllerTest.h"
-#include "ItemViewTestEdit.h"
 #include "RowStateChangedSpy.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
@@ -47,7 +46,11 @@ void TableViewControllerTest::cleanupTestCase()
 }
 
 /*
- * Tests
+ * This is a complete test for TableViewController,
+ * which is implemented using TableViewControllerImplementation.
+ *
+ * TableViewControllerImplementation is also tested in TableViewControllerImplementationTest,
+ * but event handling is not complete.
  */
 
 void TableViewControllerTest::statePermissionTest()
