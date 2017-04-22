@@ -19,7 +19,21 @@
  **
  ****************************************************************************/
 #include "RowList.h"
+#include <QModelIndex>
 
 namespace Mdt{ namespace ItemModel{
+
+RowList RowList::fromModelIndexList(const QModelIndexList & modelIndexList)
+{
+  RowList list;
+
+  for(const auto index : modelIndexList){
+    if( index.isValid() && !list.contains(index.row()) ){
+      list.append(index.row());
+    }
+  }
+
+  return list;
+}
 
 }} // namespace Mdt{ namespace ItemModel{

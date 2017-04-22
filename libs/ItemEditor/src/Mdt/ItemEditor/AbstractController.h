@@ -28,6 +28,7 @@
 #include "Mdt/ItemModel/FilterProxyModel.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include "Mdt/ItemModel/ForeignKey.h"
+#include "Mdt/ItemModel/RowList.h"
 #include "Mdt/Error.h"
 #include <QObject>
 #include <QPointer>
@@ -208,7 +209,7 @@ namespace Mdt{ namespace ItemEditor{
      *  \code
      *  QSqlTableModel *model() const
      *  {
-     *    Q_ASSERT( qobject_cast<QSqlTableModel*>(model()) != nullptr );
+     *    Q_ASSERT( (AbstractSqlController::model() == nullptr) || (qobject_cast<QSqlTableModel*>(AbstractSqlController::model()) != nullptr) );
      *    return reinterpret_cast<QSqlTableModel*>( AbstractController::model() );
      *  }
      *  \endcode
@@ -624,7 +625,11 @@ namespace Mdt{ namespace ItemEditor{
      */
     bool insert();
 
-    /*! \brief Remove current row
+    /*! \brief Remove current row or selected rows
+     *
+     * If the controller supports selecting multiple rows,
+     *  the currently selected rows are rmoved,
+     *  otherwise current row.
      */
     bool remove();
 
@@ -761,6 +766,24 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual void revertDataFromModel() = 0;
 
+    /*! \brief Submit changes to storage
+     *
+     * Subclass that implements a controller acting on a model that handle edition cache (like QSqlTableModel),
+     *  should implement this method.
+     *
+     * This default implementation does nothing and returns true.
+     */
+    virtual bool submitChangesToStorage();
+
+    /*! \brief Revert changes from storage
+     *
+     * Subclass that implements a controller acting on a model that handle edition cache (like QSqlTableModel),
+     *  should implement this method.
+     *
+     * This default implementation does nothing.
+     */
+    virtual void revertChangesFromStorage();
+
     /*! \brief Primary key changed event
      *
      * If subclass has some action to perform
@@ -780,6 +803,16 @@ namespace Mdt{ namespace ItemEditor{
      * This default implementation does nothing.
      */
     virtual void foreignKeyChangedEvent(const Mdt::ItemModel::ForeignKey & oldForeignKey, const Mdt::ItemModel::ForeignKey & newForeignKey);
+
+    /*! \brief Get a list of currently selected rows
+     *
+     * Subclass that acts on a view that handles selecteing multiple rows
+     *  (like QTableView), can override this method.
+     *
+     * This default implementation return a single row list with current row if it is valied,
+     *  otherwise a empty list.
+     */
+    virtual Mdt::ItemModel::RowList getSelectedRows() const;
 
     /*! \brief Set last error
      */
@@ -837,6 +870,10 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Remove current row
      */
     bool removeCurrentRow();
+
+    /*! \brief Remove selected rows
+     */
+    bool removeSelectedRows();
 
     /*! \brief Get filter proxy model
      *

@@ -873,6 +873,32 @@ void ControllerTest::currentDataSortTest()
   QCOMPARE(controller.currentData(0), QVariant(3));
 }
 
+void ControllerTest::selectedRowsTest()
+{
+  /*
+   * Not model set
+   */
+  ItemModelControllerTester controller;
+  QCOMPARE(controller.getSelectedRows().size(), 0);
+  /*
+   * Empty model
+   */
+  VariantTableModel model;
+  controller.setModel(&model);
+  QCOMPARE(controller.getSelectedRows().size(), 0);
+  /*
+   * Model with data
+   */
+  // Valid index
+  model.resize(3, 2);
+  controller.setCurrentRow(2);
+  QCOMPARE(controller.getSelectedRows().size(), 1);
+  QCOMPARE(controller.getSelectedRows().at(0), 2);
+  // Invalid index
+  controller.setCurrentRow(-1);
+  QCOMPARE(controller.getSelectedRows().size(), 0);
+}
+
 void ControllerTest::navigationSlotsTest()
 {
   /*
@@ -1182,9 +1208,44 @@ void ControllerTest::removeTest()
   /*
    * Remove
    */
-  QVERIFY(!controller.remove());
+//   QVERIFY(!controller.remove());
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
+}
+
+void ControllerTest::removeMultipleRowsTest()
+{
+  QFETCH(QStringList, initialList);
+  QFETCH(RowList, rowList);
+  QFETCH(QStringList, expectedList);
+  QStringListModel model;
+  QModelIndex index;
+  ItemModelControllerTester controller;
+  /*
+   * Setup
+   */
+  model.setStringList(initialList);
+  controller.setModel(&model);
+  QCOMPARE(controller.controllerState(), ControllerState::Visualizing);
+  QCOMPARE(controller.rowCount(), initialList.size());
+  /*
+   * Check
+   */
+  controller.setSelectedRows(rowList);
+  QVERIFY(controller.remove());
+  QCOMPARE(model.stringList(), expectedList);
+}
+
+void ControllerTest::removeMultipleRowsTest_data()
+{
+  QTest::addColumn<QStringList>("initialList");
+  QTest::addColumn<RowList>("rowList");
+  QTest::addColumn<QStringList>("expectedList");
+
+  QTest::newRow("{0}") << QStringList{"A","B","C"} << RowList{0} << QStringList{"B","C"};
+  QTest::newRow("{0,1}") << QStringList{"A","B","C"} << RowList{0,1} << QStringList{"C"};
+  QTest::newRow("{0,2}") << QStringList{"A","B","C"} << RowList{0,2} << QStringList{"B"};
+  QTest::newRow("{0,1,3,4}") << QStringList{"A","B","C","D","E"} << RowList{0,1,3,4} << QStringList{"C"};
 }
 
 void ControllerTest::removeFromModelTest()

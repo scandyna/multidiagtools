@@ -34,6 +34,10 @@ class KeyTest : public QObject
   void cleanupTestCase();
 
   void rowListTest();
+  void rowListFromModelIndexListTest();
+  void rowListFromModelIndexListTest_data();
+  void rowListFromModelIndexListBenchmark();
+  void rowListFromModelIndexListBenchmark_data();
   void columnListTest();
   void columnListQVariantTest();
   void primaryKeyTest();

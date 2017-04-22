@@ -72,6 +72,7 @@ int main(int argc, char **argv)
   StandardWindow mainWindow;
   mainWindow.setCentralWidget(editorWidget);
   mainWindow.setMainController(addressWidget->controller());
+  mainWindow.setWindowTitle("Addresses (SQL)");
   mainWindow.show();
 
   return app.exec();

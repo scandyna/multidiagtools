@@ -24,6 +24,7 @@
 #include "ItemViewPrivateContainer.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include "Mdt/ItemModel/ForeignKey.h"
+#include "Mdt/ItemModel/RowList.h"
 
 class QAbstractItemModel;
 class QTableView;
@@ -83,6 +84,19 @@ namespace Mdt{ namespace ItemEditor{
      * Will also return a nullptr if no view was set
      */
     QTableView *view() const;
+
+    /*! \brief Allow the selection of multiple rows
+     *
+     * If multiple rows selection is allowed, the user can select other rows than current one,
+     *  otherwise only items in current row can be selected.
+     *
+     * By default, selection of multiple rows is not allowed.
+     */
+    void setMultiRowSelectionAllowed(bool allow);
+
+    /*! \brief Get a list of currently selected rows
+     */
+    Mdt::ItemModel::RowList getSelectedRows() const;
 
     /*! \brief Get proxy item delegate
      */

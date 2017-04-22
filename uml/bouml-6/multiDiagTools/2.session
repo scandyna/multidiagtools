@@ -1,4 +1,4 @@
-window_sizes 1280 963 331 943 911 0
+window_sizes 1272 963 331 935 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 3148674 // Overview
@@ -13,16 +13,26 @@ diagrams
     937 911 100 8 0 0
   classdiagram_ref 3360642 // ModelWrapper
     120 98 100 7 0 0
-  active  classdiagram_ref 3168386 // AbstractSqlController
+  classdiagram_ref 3168386 // AbstractSqlController
     943 911 100 8 0 0
   classdiagram_ref 3168514 // SqlTableViewController
     120 98 100 7 24 0
+  classdiagram_ref 2707074 // AbstractController
+    943 911 100 23 0 0
+  active  classdiagram_ref 3287810 // RowList
+    943 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3168386 // AbstractSqlController
+selected 
+package_ref 129 // multiDiagTools
 open
   
-  package_ref 409858 // principes
+package_ref 409858 // principes
+  
+package_ref 549506 // Algorithm
+  class_ref 3775490 // RowList
+  classview_ref 1432450 // Selection
+  classview_ref 1801090 // Controller_Core
   classdiagram_ref 2761090 // WidgetMapperController
   classview_ref 1808002 // Controller_QtQuick
   classview_ref 1801218 // Controller_Sql

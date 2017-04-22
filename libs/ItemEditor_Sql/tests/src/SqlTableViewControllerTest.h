@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -38,23 +38,25 @@ class SqlTableViewControllerTest : public SqlTestBase
 
   void setModelThenViewTest();
   void setViewThenModelTest();
-  void setDefaultModelThenViewTest();
-  void setViewThenDefaultModelTest();
-  void changeModelTest();
-  void changeDefaultModelTest();
-  void setTableTest();
+//   void setDefaultModelThenViewTest();
+//   void setViewThenDefaultModelTest();
+//   void changeModelTest();
+//   void changeDefaultModelTest();
+//   void setTableTest();
   void selectTest();
   void currentRowChangeTest();
   void stateChangeSignalTest();
+  void editSubmitRevertTest();
 
  private:
 
   void createSchema(const Schema::ClientAddressSchema & schema);
   bool deleteClientData();
   bool repopulateClientTable(const Schema::ClientPopulation & tp);
+  QVariant getClientNameFromDatabase(int id); 
 
-  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase mDatabase;
+//   QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
+//   QSqlDatabase mDatabase;
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_TEST_H

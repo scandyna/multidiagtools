@@ -19,20 +19,27 @@
  **
  ****************************************************************************/
 #include "SqlTableViewController.h"
+#include "Mdt/ItemEditor/TableViewControllerImplementation.h"
 #include "Mdt/ItemEditor/TableViewControllerStatePermission.h"
 #include "Mdt/ItemEditor/TableViewControllerStateTable.h"
-#include "Mdt/ItemEditor/TableViewControllerImplementation.h"
+#include "Mdt/ItemEditor/ControllerStateMachine.h"
 
-#include "Mdt/ItemEditor/ItemViewPrivateContainer.h"
+// #include "Mdt/ItemEditor/ItemViewPrivateContainer.h"
 
+#include <QTableView>
 #include <QSqlTableModel>
 
 namespace Mdt{ namespace ItemEditor{
 
 SqlTableViewController::SqlTableViewController(QObject* parent)
  : AbstractSqlTableModelController(parent),
-   mContainer(new ItemViewPrivateContainer)
+   mImpl( std::make_unique<TableViewControllerImplementation>() )
+//    mContainer(new ItemViewPrivateContainer)
 {
+  setControllerStateMachine( ControllerStateMachine::makeNew<TableViewControllerStateTable, TableViewControllerStatePermission>(this) );
+  controllerStateMachine()->setModelHasCache(true);
+  connect(mImpl->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionStarted, this, &SqlTableViewController::onDataEditionStarted);
+  connect(mImpl->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionDone, this, &SqlTableViewController::onDataEditionDone);
 }
 
 // SqlTableViewController::SqlTableViewController(QObject* parent, const QSqlDatabase& db)
@@ -50,54 +57,65 @@ SqlTableViewController::~SqlTableViewController()
 {
 }
 
-void SqlTableViewController::setView(QAbstractItemView* view)
+void SqlTableViewController::setView(QTableView* view)
 {
   Q_ASSERT(view != nullptr);
 
+  mImpl->setView(view);
+  if( mImpl->connectToController(this) ){
+    modelSetToView();
+  }
+/*
+  Q_ASSERT(view != nullptr);
+
   mContainer->setView(view);
-  registerModelAndSelectionModel();
+  registerModelAndSelectionModel();*/
 }
 
-QAbstractItemView* SqlTableViewController::view() const
+QTableView* SqlTableViewController::view() const
 {
-  return mContainer->view();
+  return mImpl->view();
 }
 
 void SqlTableViewController::setModelToView(QAbstractItemModel* model)
 {
-  mContainer->setModel(model);
-  registerModelAndSelectionModel();
+  mImpl->setModel(model);
+  if( mImpl->connectToController(this) ){
+    modelSetToView();
+  }
+//   mContainer->setModel(model);
+//   registerModelAndSelectionModel();
 }
 
 bool SqlTableViewController::setDataToModel()
 {
-
+  return mImpl->setDataToModel();
 }
 
 void SqlTableViewController::revertDataFromModel()
 {
-
+  mImpl->revertDataFromModel();
 }
 
-void SqlTableViewController::registerModelAndSelectionModel()
-{
-  /*
-   * Order of signal/slot connections matters here.
-   * We must be sure that model is set to the view
-   * before it is registered (set to RowChangeEventDispatcher).
-   * Not doing so will produces a problem when model resets:
-   *  - Controller receives the event and updates current row to 0 (if model contains data)
-   *  - Controller updates current index of view
-   *  - View will reset (and current will also be lost!)
-   */
-  if( (mContainer->model() == nullptr) || (mContainer->view() == nullptr) ){
-    return;
-  }
-//   disconnect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &SqlTableViewController::setCurrentRow);
-//   disconnect(this, &SqlTableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
-//   connect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &SqlTableViewController::setCurrentRow);
-//   connect(this, &SqlTableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
-//   modelSetToView();
-}
+// void SqlTableViewController::registerModelAndSelectionModel()
+// {
+//   /*
+//    * Order of signal/slot connections matters here.
+//    * We must be sure that model is set to the view
+//    * before it is registered (set to RowChangeEventDispatcher).
+//    * Not doing so will produces a problem when model resets:
+//    *  - Controller receives the event and updates current row to 0 (if model contains data)
+//    *  - Controller updates current index of view
+//    *  - View will reset (and current will also be lost!)
+//    */
+//   if( (mContainer->model() == nullptr) || (mContainer->view() == nullptr) ){
+//     return;
+//   }
+// //   disconnect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &SqlTableViewController::setCurrentRow);
+// //   disconnect(this, &SqlTableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
+// //   connect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &SqlTableViewController::setCurrentRow);
+// //   connect(this, &SqlTableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
+// //   modelSetToView();
+// }
 
 }} // namespace Mdt{ namespace ItemEditor{

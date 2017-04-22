@@ -2,11 +2,11 @@ format 211
 
 classcanvas 128002 class_ref 3775490 // RowList
   classdiagramsettings member_max_width 0 end
-  xyz 99 312 2000
+  xyz 38 313 2000
 end
 classcanvas 128130 class_ref 3775618 // RowColumnListBase
   classdiagramsettings member_max_width 0 end
-  xyz 38 41 2005
+  xyz 94 41 2005
 end
 relationcanvas 128258 relation_ref 4196866 // <generalisation>
   from ref 128002 z 2006 to ref 128130

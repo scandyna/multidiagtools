@@ -28,4 +28,5 @@ SqlAddressWidget::SqlAddressWidget(const QSqlDatabase & db)
   controller()->setTable(Address());
   controller()->select();
   ///controller()->setDefaultModel(QSqlDatabase());
+//   setWindowTitle("Addresses (SQL)");
 }

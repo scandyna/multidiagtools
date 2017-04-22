@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "SqlTableViewControllerTest.h"
+#include "RowStateChangedSpy.h"
 #include "Schema/Client.h"
 #include "Schema/Address.h"
 #include "Mdt/Sql/Schema/Driver.h"
@@ -35,6 +36,7 @@
 #include <QMetaProperty>
 #include <QMetaMethod>
 #include <QSqlQuery>
+#include <QSqlError>
 
 using namespace Mdt::ItemEditor;
 using namespace Mdt::ItemModel;
@@ -46,21 +48,25 @@ using Schema::ClientPopulation;
 
 void SqlTableViewControllerTest::initTestCase()
 {
-  // Get database instance
-  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
-  if(!mDatabase.isValid()){
-    QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
+  if(!initDatabaseSqlite()){
+    QSKIP("Could not init database - Skip all tests");  // Will also skip all tests
   }
-  // Create a database
-  QVERIFY(mTempFile.open());
-  mTempFile.close();
-  mDatabase.setDatabaseName(mTempFile.fileName());
-  QVERIFY(mDatabase.open());
-  QSqlQuery query(mDatabase);
-  // Specify encoding (is important for some tests)
-  QVERIFY(query.exec("PRAGMA encoding = \"UTF-8\""));
-  // Create default schema
   createSchema(ClientAddressSchema());
+//   // Get database instance
+//   mDatabase = QSqlDatabase::addDatabase("QSQLITE");
+//   if(!mDatabase.isValid()){
+//     QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
+//   }
+//   // Create a database
+//   QVERIFY(mTempFile.open());
+//   mTempFile.close();
+//   mDatabase.setDatabaseName(mTempFile.fileName());
+//   QVERIFY(mDatabase.open());
+//   QSqlQuery query(mDatabase);
+//   // Specify encoding (is important for some tests)
+//   QVERIFY(query.exec("PRAGMA encoding = \"UTF-8\""));
+//   // Create default schema
+//   createSchema(ClientAddressSchema());
 }
 
 void SqlTableViewControllerTest::cleanupTestCase()
@@ -73,189 +79,10 @@ void SqlTableViewControllerTest::cleanupTestCase()
 
 void SqlTableViewControllerTest::setModelThenViewTest()
 {
-//   using ItemEditor::RowState;
-
-  QTableView tableView;
-  QSqlTableModel model(nullptr, mDatabase);
-  SqlTableViewController controller;
-  QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
-  QList<QVariant> spyItem;
-  RowState rs;
-
-  QVERIFY(rowStateSpy.isValid());
-  /*
-   * Initial state
-   */
-  QVERIFY(controller.model() == nullptr);
-  QVERIFY(controller.view() == nullptr);
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Set model
-   */
-  controller.setModel(&model);
-  QVERIFY(controller.model() == &model);
-  // Check that row state was not signaled (no view is attached)
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Affect view to controller
-   */
-  controller.setView(&tableView);
-  QCOMPARE(controller.view(), &tableView);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), 0);
-  QCOMPARE(rs.currentRow(), -1);
-
-  /*
-   * Play
-   */
-//   tableView.show();
-//   while(tableView.isVisible()){
-//     QTest::qWait(500);
-//   }
-}
-
-void SqlTableViewControllerTest::setViewThenModelTest()
-{
-//   using ItemEditor::RowState;
-
-  QTableView tableView;
-  QSqlTableModel model(nullptr, mDatabase);
-  SqlTableViewController controller;
-  QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
-  QList<QVariant> spyItem;
-  RowState rs;
-
-  QVERIFY(rowStateSpy.isValid());
-  /*
-   * Initial state
-   */
-  QVERIFY(controller.model() == nullptr);
-  QVERIFY(controller.view() == nullptr);
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Affect view to controller
-   */
-  controller.setView(&tableView);
-  QCOMPARE(controller.view(), &tableView);
-  // Check that row state was not signaled (no model was set)
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Set model
-   */
-  controller.setModel(&model);
-  QVERIFY(controller.model() == &model);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), 0);
-  QCOMPARE(rs.currentRow(), -1);
-
-  /*
-   * Play
-   */
-//   tableView.show();
-//   while(tableView.isVisible()){
-//     QTest::qWait(500);
-//   }
-}
-
-void SqlTableViewControllerTest::setDefaultModelThenViewTest()
-{
-//   using ItemEditor::RowState;
-
   QTableView tableView;
   SqlTableViewController controller;
-  QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
-  QList<QVariant> spyItem;
+  RowStateChangedSpy rowStateSpy(controller);
   RowState rs;
-
-  QVERIFY(rowStateSpy.isValid());
-  /*
-   * Initial state
-   */
-  QVERIFY(controller.model() == nullptr);
-  QVERIFY(controller.view() == nullptr);
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Set default model
-   */
-  controller.setDefaultModel(mDatabase);
-  QPointer<QSqlTableModel> defaultModel = controller.model();
-  QVERIFY(!defaultModel.isNull());
-  // Check that row state was not signaled (no view is attached)
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Affect view to controller
-   */
-  controller.setView(&tableView);
-  QCOMPARE(controller.view(), &tableView);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), 0);
-  QCOMPARE(rs.currentRow(), -1);
-  /*
-   * Set a other model and check that default one is deleted
-   */
-  QVERIFY(!defaultModel.isNull());
-  QSqlTableModel model;
-  controller.setModel(&model);
-  QVERIFY(defaultModel.isNull());
-}
-
-void SqlTableViewControllerTest::setViewThenDefaultModelTest()
-{
-//   using ItemEditor::RowState;
-
-  QTableView tableView;
-  SqlTableViewController controller;
-  QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
-  QList<QVariant> spyItem;
-  RowState rs;
-
-  QVERIFY(rowStateSpy.isValid());
-  /*
-   * Initial state
-   */
-  QVERIFY(controller.model() == nullptr);
-  QVERIFY(controller.view() == nullptr);
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Affect view to controller
-   */
-  controller.setView(&tableView);
-  QCOMPARE(controller.view(), &tableView);
-  // Check that row state was not signaled (no model was set)
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Set default model
-   */
-  controller.setDefaultModel(mDatabase);
-  QVERIFY(controller.model() != nullptr);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), 0);
-  QCOMPARE(rs.currentRow(), -1);
-}
-
-void SqlTableViewControllerTest::changeModelTest()
-{
-//   using ItemEditor::RowState;
-
-  QTableView tableView;
-  SqlTableViewController controller;
-  QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
-  QList<QVariant> spyItem;
-  RowState rs;
-
-  QVERIFY(rowStateSpy.isValid());
   /*
    * Prepare client data
    */
@@ -264,13 +91,62 @@ void SqlTableViewControllerTest::changeModelTest()
   cp.addClient("B");
   QVERIFY(repopulateClientTable(cp));
   /*
-   * Setup models
+   * Setup model
    */
-  QSqlTableModel emptyModel(nullptr, mDatabase);
-  QSqlTableModel clientModel(nullptr, mDatabase);
-  clientModel.setTable("Client_tbl");
-  QVERIFY(clientModel.select());
-  QCOMPARE(clientModel.rowCount(), 2);
+  QSqlTableModel model(nullptr, database());
+  model.setTable(Client().tableName());
+  QVERIFY(model.select());
+  QCOMPARE(model.rowCount(), 2);
+  /*
+   * Initial state
+   */
+  QVERIFY(controller.model() == nullptr);
+  QVERIFY(controller.view() == nullptr);
+  QCOMPARE(rowStateSpy.count(), 0);
+  /*
+   * Set model
+   */
+  controller.setModel(&model);
+  QVERIFY(controller.model() == &model);
+  // Check that row state was not signaled (no view is attached)
+  QCOMPARE(rowStateSpy.count(), 0);
+  /*
+   * Affect view to controller
+   */
+  controller.setView(&tableView);
+  QCOMPARE(controller.view(), &tableView);
+  // Check that row state was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  rs = rowStateSpy.takeRowState();
+  QCOMPARE(rs.currentRow(), 0);
+}
+
+void SqlTableViewControllerTest::setViewThenModelTest()
+{
+  QTableView tableView;
+  SqlTableViewController controller;
+  RowStateChangedSpy rowStateSpy(controller);
+  RowState rs;
+  /*
+   * Prepare client data
+   */
+  ClientPopulation cp;
+  cp.addClient("A");
+  cp.addClient("B");
+  QVERIFY(repopulateClientTable(cp));
+  /*
+   * Setup model
+   */
+  QSqlTableModel model(nullptr, database());
+  model.setTable(Client().tableName());
+  QVERIFY(model.select());
+  QCOMPARE(model.rowCount(), 2);
+  /*
+   * Initial state
+   */
+  QVERIFY(controller.model() == nullptr);
+  QVERIFY(controller.view() == nullptr);
+  QCOMPARE(rowStateSpy.count(), 0);
   /*
    * Affect view to controller
    */
@@ -279,74 +155,198 @@ void SqlTableViewControllerTest::changeModelTest()
   // Check that row state was not signaled (no model was set)
   QCOMPARE(rowStateSpy.count(), 0);
   /*
-   * Set empty model
+   * Set model
    */
-  controller.setModel(&emptyModel);
-  QVERIFY(controller.model() == &emptyModel);
+  controller.setModel(&model);
+  QVERIFY(controller.model() == &model);
   // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), 0);
-  QCOMPARE(rs.currentRow(), -1);
-  /*
-   * Set client model
-   */
-  controller.setModel(&clientModel);
-  QVERIFY(controller.model() == &clientModel);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), 2);
+  rs = rowStateSpy.takeRowState();
   QCOMPARE(rs.currentRow(), 0);
-  /*
-   * Play
-   */
-//   tableView.show();
-//   while(tableView.isVisible()){
-//     QTest::qWait(500);
-//   }
 }
 
-void SqlTableViewControllerTest::changeDefaultModelTest()
-{
+// void SqlTableViewControllerTest::setDefaultModelThenViewTest()
+// {
+//   QTableView tableView;
+//   SqlTableViewController controller;
+//   QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
+//   QList<QVariant> spyItem;
+//   RowState rs;
+// 
+//   QVERIFY(rowStateSpy.isValid());
+//   /*
+//    * Initial state
+//    */
+//   QVERIFY(controller.model() == nullptr);
+//   QVERIFY(controller.view() == nullptr);
+//   QCOMPARE(rowStateSpy.count(), 0);
+//   /*
+//    * Set default model
+//    */
+//   controller.setDefaultModel(database());
+//   QPointer<QSqlTableModel> defaultModel = controller.model();
+//   QVERIFY(!defaultModel.isNull());
+//   // Check that row state was not signaled (no view is attached)
+//   QCOMPARE(rowStateSpy.count(), 0);
+//   /*
+//    * Affect view to controller
+//    */
+//   controller.setView(&tableView);
+//   QCOMPARE(controller.view(), &tableView);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), 0);
+//   QCOMPARE(rs.currentRow(), -1);
+//   /*
+//    * Set a other model and check that default one is deleted
+//    */
+//   QVERIFY(!defaultModel.isNull());
+//   QSqlTableModel model;
+//   controller.setModel(&model);
+//   QVERIFY(defaultModel.isNull());
+// }
 
-  /*
-   * Set default model
-   */
-  
-  /*
-   * Change database
-   */
-  
-  QFAIL("Not complete");
-}
+// void SqlTableViewControllerTest::setViewThenDefaultModelTest()
+// {
+// //   using ItemEditor::RowState;
+// 
+//   QTableView tableView;
+//   SqlTableViewController controller;
+//   QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
+//   QList<QVariant> spyItem;
+//   RowState rs;
+// 
+//   QVERIFY(rowStateSpy.isValid());
+//   /*
+//    * Initial state
+//    */
+//   QVERIFY(controller.model() == nullptr);
+//   QVERIFY(controller.view() == nullptr);
+//   QCOMPARE(rowStateSpy.count(), 0);
+//   /*
+//    * Affect view to controller
+//    */
+//   controller.setView(&tableView);
+//   QCOMPARE(controller.view(), &tableView);
+//   // Check that row state was not signaled (no model was set)
+//   QCOMPARE(rowStateSpy.count(), 0);
+//   /*
+//    * Set default model
+//    */
+//   controller.setDefaultModel(database());
+//   QVERIFY(controller.model() != nullptr);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), 0);
+//   QCOMPARE(rs.currentRow(), -1);
+// }
 
-void SqlTableViewControllerTest::setTableTest()
-{
-  QTableView tableView;
-  SqlTableViewController controller;
-  Schema::Client client;
+// void SqlTableViewControllerTest::changeModelTest()
+// {
+// //   using ItemEditor::RowState;
+// 
+//   QTableView tableView;
+//   SqlTableViewController controller;
+//   QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
+//   QList<QVariant> spyItem;
+//   RowState rs;
+// 
+//   QVERIFY(rowStateSpy.isValid());
+//   /*
+//    * Prepare client data
+//    */
+//   ClientPopulation cp;
+//   cp.addClient("A");
+//   cp.addClient("B");
+//   QVERIFY(repopulateClientTable(cp));
+//   /*
+//    * Setup models
+//    */
+//   QSqlTableModel emptyModel(nullptr, database());
+//   QSqlTableModel clientModel(nullptr, database());
+//   clientModel.setTable("Client_tbl");
+//   QVERIFY(clientModel.select());
+//   QCOMPARE(clientModel.rowCount(), 2);
+//   /*
+//    * Affect view to controller
+//    */
+//   controller.setView(&tableView);
+//   QCOMPARE(controller.view(), &tableView);
+//   // Check that row state was not signaled (no model was set)
+//   QCOMPARE(rowStateSpy.count(), 0);
+//   /*
+//    * Set empty model
+//    */
+//   controller.setModel(&emptyModel);
+//   QVERIFY(controller.model() == &emptyModel);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), 0);
+//   QCOMPARE(rs.currentRow(), -1);
+//   /*
+//    * Set client model
+//    */
+//   controller.setModel(&clientModel);
+//   QVERIFY(controller.model() == &clientModel);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), 2);
+//   QCOMPARE(rs.currentRow(), 0);
+//   /*
+//    * Play
+//    */
+// //   tableView.show();
+// //   while(tableView.isVisible()){
+// //     QTest::qWait(500);
+// //   }
+// }
 
-  controller.setDefaultModel(mDatabase);
-  QVERIFY(controller.model() != nullptr);
-  /*
-   * Check setting with schema table
-   */
-  controller.setTable(client.toTable());
-  QCOMPARE(controller.model()->tableName(), QString("Client_tbl"));
-  /*
-   * Set table name
-   */
-  controller.setTableName("A_tbl");
-  QCOMPARE(controller.model()->tableName(), QString("A_tbl"));
-  /*
-   * Check setting with table template
-   */
-  controller.setTable(client);
-  QCOMPARE(controller.model()->tableName(), QString("Client_tbl"));
-}
+// void SqlTableViewControllerTest::changeDefaultModelTest()
+// {
+// 
+//   /*
+//    * Set default model
+//    */
+//   
+//   /*
+//    * Change database
+//    */
+//   
+//   QFAIL("Not complete");
+// }
+
+// void SqlTableViewControllerTest::setTableTest()
+// {
+//   QTableView tableView;
+//   SqlTableViewController controller;
+//   Schema::Client client;
+// 
+//   controller.setDefaultModel(mDatabase);
+//   QVERIFY(controller.model() != nullptr);
+//   /*
+//    * Check setting with schema table
+//    */
+//   controller.setTable(client.toTable());
+//   QCOMPARE(controller.model()->tableName(), QString("Client_tbl"));
+//   /*
+//    * Set table name
+//    */
+//   controller.setTableName("A_tbl");
+//   QCOMPARE(controller.model()->tableName(), QString("A_tbl"));
+//   /*
+//    * Check setting with table template
+//    */
+//   controller.setTable(client);
+//   QCOMPARE(controller.model()->tableName(), QString("Client_tbl"));
+// }
 
 void SqlTableViewControllerTest::selectTest()
 {
@@ -368,9 +368,10 @@ void SqlTableViewControllerTest::selectTest()
   /*
    * Setup controller
    */
-  controller.setDefaultModel(mDatabase);
+  controller.setDefaultModel(database());
   controller.setTable(client);
   controller.setView(&tableView);
+  tableView.show();
   rowStateSpy.clear();
   /*
    * Select
@@ -420,13 +421,62 @@ void SqlTableViewControllerTest::stateChangeSignalTest()
   QFAIL("Not complete");
 }
 
+void SqlTableViewControllerTest::editSubmitRevertTest()
+{
+  Schema::Client client;
+  QTableView tableView;
+  SqlTableViewController controller;
+  /*
+   * Prepare client data
+   */
+  ClientPopulation cp;
+  cp.addClient(1, "A");
+  cp.addClient(2, "B");
+  QVERIFY(repopulateClientTable(cp));
+  /*
+   * Setup controller
+   */
+  controller.setDefaultModel(database());
+  controller.setTable(client);
+  controller.setView(&tableView);
+  QVERIFY(controller.select());
+  QCOMPARE(controller.currentData(1), QVariant("A"));
+  tableView.show();
+  /*
+   * Edit
+   */
+  edit(tableView, 0, 1, "AE", BeginEditTrigger::F2KeyClick, EndEditTrigger::EnterKeyClick);
+  QCOMPARE(controller.currentData(1), QVariant("AE"));
+  // Check that database is not touched now
+  QCOMPARE(getClientNameFromDatabase(1), QVariant("A"));
+  /*
+   * Submit
+   */
+  QVERIFY(controller.submit());
+  QCOMPARE(controller.currentData(1), QVariant("AE"));
+  QCOMPARE(getClientNameFromDatabase(1), QVariant("AE"));
+  /*
+   * Edit
+   */
+  edit(tableView, 0, 1, "AR", BeginEditTrigger::F2KeyClick, EndEditTrigger::EnterKeyClick);
+  QCOMPARE(controller.currentData(1), QVariant("AR"));
+  // Check that database is not touched now
+  QCOMPARE(getClientNameFromDatabase(1), QVariant("AE"));
+  /*
+   * Revert
+   */
+  controller.revert();
+  QCOMPARE(controller.currentData(1), QVariant("AE"));
+  QCOMPARE(getClientNameFromDatabase(1), QVariant("AE"));
+}
+
 /*
  * Helpers
  */
 
 void SqlTableViewControllerTest::createSchema(const Schema::ClientAddressSchema & schema)
 {
-  Sql::Schema::Driver driver(mDatabase);
+  Sql::Schema::Driver driver(database());
 
   QVERIFY(driver.isValid());
   QVERIFY(driver.dropSchema(schema));
@@ -435,19 +485,34 @@ void SqlTableViewControllerTest::createSchema(const Schema::ClientAddressSchema 
 
 bool SqlTableViewControllerTest::deleteClientData()
 {
-  QSqlQuery query(mDatabase);
+  QSqlQuery query(database());
   return query.exec("DELETE FROM Client_tbl");
 }
 
 bool SqlTableViewControllerTest::repopulateClientTable(const Schema::ClientPopulation & tp)
 {
-  Sql::Schema::Driver driver(mDatabase);
+  Sql::Schema::Driver driver(database());
 
   Q_ASSERT(driver.isValid());
   if(!deleteClientData()){
     return false;
   }
   return driver.populateTable(tp);
+}
+
+QVariant SqlTableViewControllerTest::getClientNameFromDatabase(int id)
+{
+  Schema::Client client;
+  const QString sql = "SELECT " + client.Name().name() + " FROM " + client.tableName() \
+                    + " WHERE " + client.Id_PK().fieldName() + " =" + QString::number(id);
+  QSqlQuery query(database());
+  if(!query.exec(sql)){
+    qDebug() << query.lastError();
+    return QVariant();
+  }
+  query.next();
+
+  return query.value(0);
 }
 
 /*

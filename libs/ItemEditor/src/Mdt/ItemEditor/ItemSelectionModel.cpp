@@ -34,6 +34,11 @@ ItemSelectionModel::ItemSelectionModel(QAbstractItemModel* model, QObject* paren
 {
 }
 
+void ItemSelectionModel::setMultiRowSelectionAllowed(bool allow)
+{
+  mMultiRowSelectionAllowed = allow;
+}
+
 void ItemSelectionModel::updateCurrentRow(int row)
 {
   if( (model() != nullptr) && (model()->rowCount() > 0) && (model()->columnCount() > 0) ){
@@ -56,21 +61,24 @@ void ItemSelectionModel::updateCurrentRow(int row)
 
 void ItemSelectionModel::select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command)
 {
-  QItemSelectionModel::select(index, command);
-  if(canChangeToIndex(index)){
+  if( mMultiRowSelectionAllowed || canChangeToIndex(index)){
     QItemSelectionModel::select(index, command);
   }
 }
 
 void ItemSelectionModel::select(const QItemSelection& selection, QItemSelectionModel::SelectionFlags command)
 {
-  const auto indexList = selection.indexes();
-  for(const auto & index : indexList){
-    if(!canChangeToIndex(index)){
-      return;
+  if(mMultiRowSelectionAllowed){
+    QItemSelectionModel::select(selection, command);
+  }else{
+    const auto indexList = selection.indexes();
+    for(const auto & index : indexList){
+      if(!canChangeToIndex(index)){
+        return;
+      }
     }
+    QItemSelectionModel::select(selection, command);
   }
-  QItemSelectionModel::select(selection, command);
 }
 
 void ItemSelectionModel::setCurrentIndex(const QModelIndex& index, QItemSelectionModel::SelectionFlags command)

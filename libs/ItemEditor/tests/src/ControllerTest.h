@@ -51,12 +51,15 @@ class ControllerTest : public TestBase
   void currentDataTest();
   void currentDataFilterTest();
   void currentDataSortTest();
+  void selectedRowsTest();
   void navigationSlotsTest();
   void insertTest();
   void insertRevertTest();
   void insertFromModelTest();
   void insertFromModelAndRemoveTest();
   void removeTest();
+  void removeMultipleRowsTest();
+  void removeMultipleRowsTest_data();
   void removeFromModelTest();
 };
 

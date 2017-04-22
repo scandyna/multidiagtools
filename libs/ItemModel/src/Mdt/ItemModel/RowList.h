@@ -22,6 +22,8 @@
 #define MDT_ITEM_MODEL_ROW_LIST_H
 
 #include "RowColumnListBase.h"
+#include <QMetaType>
+#include <QModelIndexList>
 #include <initializer_list>
 
 namespace Mdt{ namespace ItemModel{
@@ -53,8 +55,13 @@ namespace Mdt{ namespace ItemModel{
     {
       return greatest();
     }
+
+    /*! \brief Get a list of rows from a list of QModelIndex
+     */
+    static RowList fromModelIndexList(const QModelIndexList & modelIndexList);
   };
 
 }} // namespace Mdt{ namespace ItemModel{
+Q_DECLARE_METATYPE(Mdt::ItemModel::RowList)
 
 #endif // #ifndef MDT_ITEM_MODEL_ROW_LIST_H

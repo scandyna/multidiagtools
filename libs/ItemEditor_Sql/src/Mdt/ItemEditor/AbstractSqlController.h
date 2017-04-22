@@ -22,19 +22,21 @@
 #define MDT_ITEM_EDITOR_ABSTRACT_SQL_CONTROLLER_H
 
 #include "Mdt/ItemEditor/AbstractController.h"
-#include <QSqlTableModel>
+
+// #include <QSqlTableModel>
+
 #include <QSqlDatabase>
 #include <QPointer>
 #include <QString>
 
-namespace Mdt{ namespace Sql{ namespace Schema{
-
-  class Table;
-
-  template<typename T>
-  class TableTemplate;
-
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+// namespace Mdt{ namespace Sql{ namespace Schema{
+// 
+//   class Table;
+// 
+//   template<typename T>
+//   class TableTemplate;
+// 
+// }}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -65,104 +67,104 @@ namespace Mdt{ namespace ItemEditor{
     AbstractSqlController(AbstractSqlController &&) = delete;
     AbstractSqlController & operator=(AbstractSqlController &&) = delete;
 
-    /*! \brief Check if it is allowed to select for current controller state
-     */
-    bool canSelect() const;
+//     /*! \brief Check if it is allowed to select for current controller state
+//      */
+//     bool canSelect() const;
 
-    /*! \brief Set default model
-     *
-     * Will use a QSqlTableModel that acts on \a db
-     *
-     * \note If a model was previously set with setModel(),
-     *        it will not be deleted.
-     */
-    void setDefaultModel(const QSqlDatabase & db);
+//     /*! \brief Set default model
+//      *
+//      * Will use a QSqlTableModel that acts on \a db connection
+//      *
+//      * \note If a model was previously set with setModel(),
+//      *        it will be replaced but not be deleted.
+//      */
+//     void setDefaultModel(const QSqlDatabase & db);
 
-    /*! \brief Set model
-     *
-     * \note Because model can be shared with several objects (f.ex. other views),
-     *        the controller does not take ownership of it (it will not delete it).
-     * \pre model must be a valid pointer
-     */
-    void setModel(QSqlTableModel *model);
+//     /*! \brief Set model
+//      *
+//      * \note Because model can be shared with several objects (f.ex. other views),
+//      *        the controller does not take ownership of it (it will not delete it).
+//      * \pre model must be a valid pointer
+//      */
+//     void setModel(QSqlTableModel *model);
 
-    /*! \brief Get model
-     *
-     * Returns the model set with setModel(),
-     *  or a nullptr if no one was set,
-     *  or model was delete elsewhere in application.
-     */
-    QSqlTableModel *model() const
-    {
-      return mModel;
-    }
+//     /*! \brief Get model
+//      *
+//      * Returns the model set with setModel(),
+//      *  or a nullptr if no one was set,
+//      *  or model was delete elsewhere in application.
+//      */
+//     QSqlTableModel *model() const
+//     {
+//       return mModel;
+//     }
 
-    /*! \brief Set table name
-     *
-     * Does not select data from the database table.
-     *
-     * \pre A model must be set before calling this method
-     * \sa setModel()
-     * \sa setDefaultModel()
-     * \sa setTable(const Mdt::Sql::Schema::TableTemplate)
-     * \sa setTable(const Mdt::Sql::Schema::Table)
-     * \sa select()
-     */
-    void setTableName(const QString & name);
+//     /*! \brief Set table name
+//      *
+//      * Does not select data from the database table.
+//      *
+//      * \pre A model must be set before calling this method
+//      * \sa setModel()
+//      * \sa setDefaultModel()
+//      * \sa setTable(const Mdt::Sql::Schema::TableTemplate)
+//      * \sa setTable(const Mdt::Sql::Schema::Table)
+//      * \sa select()
+//      */
+//     void setTableName(const QString & name);
+// 
+//     /*! \brief Set table
+//      *
+//      * Does not select data from the database table.
+//      *
+//      * \pre A model must be set before calling this method
+//      * \sa setModel()
+//      * \sa setDefaultModel()
+//      * \sa setTable(const Mdt::Sql::Schema::TableTemplate)
+//      * \sa setTableName()
+//      * \sa select()
+//      */
+//     void setTable(const Mdt::Sql::Schema::Table & table);
+// 
+//     /*! \brief Set table
+//      *
+//      * Does not select data from the database table.
+//      *
+//      * \pre A model must be set before calling this method
+//      * \sa setModel()
+//      * \sa setDefaultModel()
+//      * \sa setTable(const Mdt::Sql::Schema::Table)
+//      * \sa setTableName()
+//      * \sa select()
+//      */
+//     template<typename T>
+//     void setTable(const Mdt::Sql::Schema::TableTemplate<T> & table)
+//     {
+//       setTableName(table.tableName());
+//     }
 
-    /*! \brief Set table
-     *
-     * Does not select data from the database table.
-     *
-     * \pre A model must be set before calling this method
-     * \sa setModel()
-     * \sa setDefaultModel()
-     * \sa setTable(const Mdt::Sql::Schema::TableTemplate)
-     * \sa setTableName()
-     * \sa select()
-     */
-    void setTable(const Mdt::Sql::Schema::Table & table);
+//     /*! \brief Select data from database
+//      *
+//      * If current controller state does not permit to select now
+//      *  (for example, if some edition was not submitted),
+//      *  this method will do nothing and return false.
+//      *
+//      * If a error occured, returns false.
+//      *  See lastError() for details.
+//      *
+//      * \pre A model must be set before calling this method
+//      * \sa setModel()
+//      * \sa setDefaultModel()
+//      * \sa setTable(const Mdt::Sql::Schema::TableTemplate)
+//      * \sa setTable(const Mdt::Sql::Schema::Table)
+//      * \sa setTableName()
+//      * \sa lastError()
+//      */
+//     bool select();
 
-    /*! \brief Set table
-     *
-     * Does not select data from the database table.
-     *
-     * \pre A model must be set before calling this method
-     * \sa setModel()
-     * \sa setDefaultModel()
-     * \sa setTable(const Mdt::Sql::Schema::Table)
-     * \sa setTableName()
-     * \sa select()
-     */
-    template<typename T>
-    void setTable(const Mdt::Sql::Schema::TableTemplate<T> & table)
-    {
-      setTableName(table.tableName());
-    }
-
-    /*! \brief Select data from database
-     *
-     * If current controller state does not permit to select now
-     *  (for example, if some edition was not submitted),
-     *  this method will do nothing and return false.
-     *
-     * If a error occured, returns false.
-     *  See lastError() for details.
-     *
-     * \pre A model must be set before calling this method
-     * \sa setModel()
-     * \sa setDefaultModel()
-     * \sa setTable(const Mdt::Sql::Schema::TableTemplate)
-     * \sa setTable(const Mdt::Sql::Schema::Table)
-     * \sa setTableName()
-     * \sa lastError()
-     */
-    bool select();
-
-   private:
-
-    QPointer<QSqlTableModel> mModel;
-    QPointer<QSqlTableModel> mOwningModel;
+//    private:
+// 
+//     QPointer<QSqlTableModel> mModel;
+//     QPointer<QSqlTableModel> mOwningModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

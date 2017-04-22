@@ -42,71 +42,71 @@ AbstractSqlController::AbstractSqlController(QObject* parent)
 // {
 // }
 
-bool AbstractSqlController::canSelect() const
-{
-  if(controllerStateMachine() == nullptr){
-    return false;
-  }
-  return controllerStateMachine()->canSelect();
-}
+// bool AbstractSqlController::canSelect() const
+// {
+//   if(controllerStateMachine() == nullptr){
+//     return false;
+//   }
+//   return controllerStateMachine()->canSelect();
+// }
 
-void AbstractSqlController::setDefaultModel(const QSqlDatabase & db)
-{
-  // If we have to set default model on different database, we must re-alloc
-  if(!mOwningModel.isNull()){
-    delete mOwningModel;
-  }
-  Q_ASSERT(mOwningModel.isNull());
-  mOwningModel = new QSqlTableModel(this, db);
-  mModel = mOwningModel;
-  ///registerModel(mModel);
-}
+// void AbstractSqlController::setDefaultModel(const QSqlDatabase & db)
+// {
+//   // If we have to set default model on different database, we must re-alloc
+//   if(!mOwningModel.isNull()){
+//     delete mOwningModel;
+//   }
+//   Q_ASSERT(mOwningModel.isNull());
+//   mOwningModel = new QSqlTableModel(this, db);
+//   mModel = mOwningModel;
+//   ///registerModel(mModel);
+// }
 
-void AbstractSqlController::setModel(QSqlTableModel* model)
-{
-  Q_ASSERT(model != nullptr);
+// void AbstractSqlController::setModel(QSqlTableModel* model)
+// {
+//   Q_ASSERT(model != nullptr);
+// 
+//   if(!mOwningModel.isNull()){
+//     delete mOwningModel;
+//   }
+//   Q_ASSERT(mOwningModel.isNull());
+//   mModel = model;
+//   ///registerModel(model);
+// }
 
-  if(!mOwningModel.isNull()){
-    delete mOwningModel;
-  }
-  Q_ASSERT(mOwningModel.isNull());
-  mModel = model;
-  ///registerModel(model);
-}
+// void AbstractSqlController::setTableName(const QString& name)
+// {
+//   Q_ASSERT(!mModel.isNull());
+//   mModel->setTable(name);
+// }
 
-void AbstractSqlController::setTableName(const QString& name)
-{
-  Q_ASSERT(!mModel.isNull());
-  mModel->setTable(name);
-}
+// void AbstractSqlController::setTable(const Sql::Schema::Table & table)
+// {
+//   setTableName(table.tableName());
+// }
 
-void AbstractSqlController::setTable(const Sql::Schema::Table & table)
-{
-  setTableName(table.tableName());
-}
-
-bool AbstractSqlController::select()
-{
-  Q_ASSERT(!mModel.isNull());
-
-  if(!canSelect()){
-    /// \todo Update last error ?
-    return false;
-  }
-  if(mModel->isDirty()){
-    /// \todo Update last error ?
-    return false;
-  }
-  if(!mModel->select()){
-    QString msg = tr("For table '%1': select failed.").arg(mModel->tableName());
-    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    error.stackError( mdtErrorFromQSqlQueryModelQ(*mModel, this) );
-    setLastError(error);
-    return false;
-  }
-
-  return true;
-}
+// bool AbstractSqlController::select()
+// {
+//   Q_ASSERT(!mModel.isNull());
+// 
+//   if(!canSelect()){
+//     /// \todo Update last error ?
+//     return false;
+//   }
+//   if(mModel->isDirty()){
+//     /// \todo Update last error ?
+//     return false;
+//   }
+//   if(!mModel->select()){
+//     QString msg = tr("For table '%1': select failed.").arg(mModel->tableName());
+//     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+//     error.stackError( mdtErrorFromQSqlQueryModelQ(*mModel, this) );
+//     setLastError(error);
+//     return false;
+//   }
+// 
+//   return true;
+// }
 
 // void AbstractSqlController::registerOwningModelIfApplicable()
 // {

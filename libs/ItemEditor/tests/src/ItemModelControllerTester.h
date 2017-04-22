@@ -47,6 +47,14 @@ class ItemModelControllerTester : public Mdt::ItemEditor::AbstractController
   int dataRevertFromModelCount() const;
   void clearDataRevertFromModelCount();
 
+  void setSelectedRows(const Mdt::ItemModel::RowList & rowList);
+  void clearSelectedRows();
+  /*
+   * Returns list of rows set with setSelectedRows() if not empty,
+   * otherwise the implementation of AbstractController
+   */
+  Mdt::ItemModel::RowList getSelectedRows() const override;
+
   /// \todo Wrong: must simulate a editor with a cache (use, f.ex., a QMap<column,data>) - then, set to model (or revert) in submitDataToModel() and revertDataFromModel()
 //   bool setModelData(int column, const QVariant & data);
 
@@ -62,6 +70,8 @@ class ItemModelControllerTester : public Mdt::ItemEditor::AbstractController
   int mForeignKeyChangedEventCount = 0;
   int mDataSetToModelCount = 0;
   int mDataRevertFromModelCount = 0;
+
+  Mdt::ItemModel::RowList mSelectedRows;
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ITEM_MODEL_CONTROLLER_TESTER_H

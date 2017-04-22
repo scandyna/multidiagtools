@@ -28,8 +28,15 @@
 #include "Mdt/ItemModel/KeyRecord.h"
 #include "Mdt/ItemModel/PrimaryKeyRecord.h"
 #include "Mdt/ItemModel/ForeignKeyRecord.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QVector>
+#include <QPair>
 
 using namespace Mdt::ItemModel;
+
+using RowColumnPairList = QVector< QPair<int,int> >;
 
 void KeyTest::initTestCase()
 {
@@ -83,6 +90,85 @@ void KeyTest::rowListTest()
   list2.append(1);
   QCOMPARE(list2.size(), 1);
   QCOMPARE(list2.at(0), 1);
+}
+
+void KeyTest::rowListFromModelIndexListTest()
+{
+  QFETCH(RowColumnPairList , rowColumnPairList);
+  QFETCH(RowList , expectedRowList);
+  VariantTableModel model;
+  /*
+   * Build model index list
+   */
+  QModelIndexList modelIndexList;
+  for(const auto pair : rowColumnPairList){
+    if( (model.rowCount() <= pair.first) || (model.columnCount() <= pair.second) ){
+      model.resize(pair.first+1, pair.second+1);
+    }
+    const auto index = model.index(pair.first, pair.second);
+    QVERIFY(index.isValid());
+    modelIndexList.append(index);
+  }
+  // Add a invalid index
+  if(!modelIndexList.isEmpty()){
+    modelIndexList.append(QModelIndex());
+  }
+  /*
+   * Check
+   */
+  const auto rowList = RowList::fromModelIndexList(modelIndexList);
+  QCOMPARE(rowList.size(), expectedRowList.size());
+  for(int i = 0; i < rowList.size(); ++i){
+    QCOMPARE(rowList.at(i), expectedRowList.at(i));
+  }
+}
+
+void KeyTest::rowListFromModelIndexListTest_data()
+{
+  QTest::addColumn<RowColumnPairList>("rowColumnPairList");
+  QTest::addColumn<RowList>("expectedRowList");
+
+  QTest::newRow("") \
+    << RowColumnPairList({}) \
+    << RowList{} ;
+  QTest::newRow("Simple1") \
+    << RowColumnPairList({qMakePair(1,2)}) \
+    << RowList{1} ;
+  QTest::newRow("SimpleM") \
+    << RowColumnPairList({qMakePair(1,2),qMakePair(3,4),qMakePair(5,6)}) \
+    << RowList{1,3,5} ;
+  QTest::newRow("UniqueTest") \
+    << RowColumnPairList({qMakePair(1,2),qMakePair(1,4),qMakePair(5,6)}) \
+    << RowList{1,5} ;
+}
+
+void KeyTest::rowListFromModelIndexListBenchmark()
+{
+  QFETCH(int, rowCount);
+  QFETCH(int, columnCount);
+  VariantTableModel model;
+  model.resize(rowCount, columnCount);
+  QModelIndexList modelIndexList;
+
+  for(int row = 0; row < rowCount; ++row){
+    for(int column = 0; column < columnCount; ++column){
+      auto index = model.index(row, column);
+      QVERIFY(index.isValid());
+      modelIndexList.append(index);
+    }
+  }
+  QBENCHMARK{
+    QCOMPARE(RowList::fromModelIndexList(modelIndexList).size(), rowCount);
+  }
+}
+
+void KeyTest::rowListFromModelIndexListBenchmark_data()
+{
+  QTest::addColumn<int>("rowCount");
+  QTest::addColumn<int>("columnCount");
+
+  QTest::newRow("1x1") << 1 << 1;
+  QTest::newRow("100x100") << 100 << 100;
 }
 
 void KeyTest::columnListTest()

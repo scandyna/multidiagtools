@@ -51,6 +51,15 @@ namespace Mdt{ namespace ItemEditor{
     ItemSelectionModel(ItemSelectionModel &&) = delete;
     ItemSelectionModel & operator=(ItemSelectionModel &&) = delete;
 
+    /*! \brief Allow the selection of multiple rows
+     *
+     * If multiple rows selection is allowed, the user can select other rows than current one,
+     *  otherwise only items in current row can be selected.
+     *
+     * By default, selection of multiple rows is not allowed.
+     */
+    void setMultiRowSelectionAllowed(bool allow);
+
    signals:
 
     /*! \brief Emitted when changing current row is requested
@@ -90,6 +99,7 @@ namespace Mdt{ namespace ItemEditor{
     bool canChangeToIndex(const QModelIndex & index) const;
 
     int mRequestedColumn = -1;
+    bool mMultiRowSelectionAllowed = false;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -36,6 +36,7 @@ class TableViewControllerImplementationTest : public TestBase
   void setViewThenModelTest();
   void primaryKeyVisibilityTest();
   void foreignKeyVisibilityTest();
+  void selectedRowsTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_IMPLEMENTATION_TEST_H

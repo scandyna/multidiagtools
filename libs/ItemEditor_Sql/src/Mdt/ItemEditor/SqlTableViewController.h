@@ -24,11 +24,13 @@
 #include "AbstractSqlTableModelController.h"
 #include <memory>
 
-class QSqlTableModel;
-class QAbstractItemView;
+// class QSqlTableModel;
+class QTableView;
 
 namespace Mdt{ namespace ItemEditor{
 
+  class TableViewControllerImplementation;
+  
   class ItemViewPrivateContainer;
 
   /*! \brief SqlTableViewController acts on a QSqlTableModel
@@ -71,13 +73,13 @@ namespace Mdt{ namespace ItemEditor{
      *       of the view (it will not delete it).
      * \pre view must be a valid pointer.
      */
-    void setView(QAbstractItemView *view);
+    void setView(QTableView *view);
 
     /*! \brief Get view attached to this controller
      *
      * Will also return a nullptr if no view was set
      */
-    QAbstractItemView *view() const;
+    QTableView *view() const;
 
    private:
 
@@ -93,9 +95,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void revertDataFromModel() override;
 
-    void registerModelAndSelectionModel();
+//     void registerModelAndSelectionModel();
 
-    std::unique_ptr<ItemViewPrivateContainer> mContainer;
+    std::unique_ptr<TableViewControllerImplementation> mImpl;
+//     std::unique_ptr<ItemViewPrivateContainer> mContainer;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

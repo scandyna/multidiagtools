@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 226
+  revision 228
   modified_by 2 "philippe"
   // class settings
   
@@ -716,6 +716,7 @@ ${inlines}
 	
       end
     end
+
   end
 
   classview 1307010 "EventMapper"
@@ -4396,7 +4397,7 @@ ${inlines}
 	
       end
 
-      operation 5447042 "submitDataToStorage"
+      operation 5447042 "submitChangesToStorage"
 	abstract cpp_virtual protected explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};

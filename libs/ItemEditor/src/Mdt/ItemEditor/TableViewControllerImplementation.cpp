@@ -25,6 +25,8 @@
 #include <QObject>
 #include <QTableView>
 
+using namespace Mdt::ItemModel;
+
 namespace Mdt{ namespace ItemEditor{
 
 void TableViewControllerImplementation::setModel(QAbstractItemModel * const model)
@@ -44,6 +46,20 @@ void TableViewControllerImplementation::setView(QTableView * const view)
 QTableView* TableViewControllerImplementation::view() const
 {
   return reinterpret_cast<QTableView*>(mContainer.view());
+}
+
+void TableViewControllerImplementation::setMultiRowSelectionAllowed(bool allow)
+{
+  Q_ASSERT(mContainer.selectionModel() != nullptr);
+
+  mContainer.selectionModel()->setMultiRowSelectionAllowed(allow);
+}
+
+ItemModel::RowList TableViewControllerImplementation::getSelectedRows() const
+{
+  Q_ASSERT(mContainer.selectionModel() != nullptr);
+
+  return RowList::fromModelIndexList( mContainer.selectionModel()->selectedIndexes() );
 }
 
 bool TableViewControllerImplementation::connectToController(AbstractController* controller)

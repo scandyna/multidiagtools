@@ -61,6 +61,11 @@ QTableView* TableViewController::view() const
   return mImpl->view();
 }
 
+void TableViewController::setMultiRowSelectionAllowed(bool allow)
+{
+  mImpl->setMultiRowSelectionAllowed(allow);
+}
+
 void TableViewController::setPrimaryKeyHidden(bool hide)
 {
   mImpl->setPrimaryKeyHidden( getPrimaryKey(), hide );
@@ -97,6 +102,11 @@ void TableViewController::primaryKeyChangedEvent(const PrimaryKey & oldPrimaryKe
 void TableViewController::foreignKeyChangedEvent(const ForeignKey& oldForeignKey, const ForeignKey& newForeignKey)
 {
   mImpl->foreignKeyChangedEvent(oldForeignKey, newForeignKey);
+}
+
+RowList TableViewController::getSelectedRows() const
+{
+  return mImpl->getSelectedRows();
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -20,10 +20,17 @@
  ****************************************************************************/
 #include "SqlTableModelControllerTest.h"
 #include "SqlTableModelControllerTester.h"
+#include "RowStateChangedSpy.h"
 #include "Schema/Client.h"
 #include "Schema/Address.h"
 #include "Mdt/Sql/Schema/Driver.h"
+#include "Mdt/ItemEditor/RowState.h"
 #include <QSqlQuery>
+#include <QSqlError>
+#include <QSqlTableModel>
+#include <QPointer>
+#include <QScopedPointer>
+#include <QSqlDatabase>
 
 using namespace Mdt::ItemEditor;
 namespace Sql = Mdt::Sql;
@@ -48,9 +55,183 @@ void SqlTableModelControllerTest::cleanupTestCase()
  * Tests
  */
 
-void SqlTableModelControllerTest::sandbox()
+void SqlTableModelControllerTest::setModelTest()
 {
-  qDebug() << "Tables: " << database().tables();
+  /*
+   * Initial state
+   */
+  SqlTableModelControllerTester controller;
+  QVERIFY(controller.model() == nullptr);
+  QVERIFY(controller.sourceModel() == nullptr);
+  /*
+   * Set a empty model
+   */
+  QSqlTableModel model1;
+  controller.setModel(&model1);
+  QCOMPARE(controller.model(), &model1);
+  QCOMPARE(controller.sourceModel(), &model1);
+  QCOMPARE(controller.model()->editStrategy(), QSqlTableModel::OnManualSubmit);
+}
+
+void SqlTableModelControllerTest::setDefaultModelTest()
+{
+  /*
+   * Initial state
+   */
+  SqlTableModelControllerTester controller;
+  QVERIFY(controller.model() == nullptr);
+  QVERIFY(controller.sourceModel() == nullptr);
+  /*
+   * Set default model
+   */
+  controller.setDefaultModel(database());
+  QVERIFY(controller.model() != nullptr);
+  QPointer<QSqlTableModel> defaultModel = controller.model();
+  QVERIFY(!defaultModel.isNull());
+  QCOMPARE(controller.sourceModel(), defaultModel.data());
+  QCOMPARE(controller.model()->database().databaseName(), database().databaseName());
+  QCOMPARE(controller.model()->editStrategy(), QSqlTableModel::OnManualSubmit);
+  /*
+   * Set a other model
+   * Default model must also be deleted
+   */
+  QPointer<QSqlTableModel> model(new QSqlTableModel);
+  controller.setModel(model);
+  QVERIFY(defaultModel.isNull());
+  QVERIFY(!model.isNull());
+  QCOMPARE(controller.model(), model.data());
+  QCOMPARE(controller.sourceModel(), model.data());
+  QCOMPARE(controller.model()->editStrategy(), QSqlTableModel::OnManualSubmit);
+  /*
+   * Set default model again
+   * Our model must not be deleted
+   */
+  controller.setDefaultModel(database());
+  QVERIFY(!model.isNull());
+  delete model;
+  QVERIFY(controller.model() != nullptr);
+  QCOMPARE(controller.model()->database().databaseName(), database().databaseName());
+  QCOMPARE(controller.model()->editStrategy(), QSqlTableModel::OnManualSubmit);
+  /*
+   * Set default model again that acts on a other db connection
+   */
+  auto db = QSqlDatabase::addDatabase("QSQLITE", "CNN2");
+  QVERIFY(db.isValid());
+  db.setDatabaseName("Other");
+  controller.setDefaultModel(db);
+  QCOMPARE(controller.model()->database().databaseName(), db.databaseName());
+  QCOMPARE(controller.model()->editStrategy(), QSqlTableModel::OnManualSubmit);
+}
+
+void SqlTableModelControllerTest::setTableTest()
+{
+  SqlTableModelControllerTester controller;
+  Schema::Client client;
+
+  controller.setDefaultModel(database());
+  QVERIFY(controller.model() != nullptr);
+  /*
+   * Check setting with schema table
+   */
+  controller.setTable(client.toTable());
+  QCOMPARE(controller.model()->tableName(), QString("Client_tbl"));
+  /*
+   * Set table name
+   */
+  controller.setTableName("A_tbl");
+  QCOMPARE(controller.model()->tableName(), QString("A_tbl"));
+  /*
+   * Check setting with table template
+   */
+  controller.setTable(client);
+  QCOMPARE(controller.model()->tableName(), QString("Client_tbl"));
+}
+
+void SqlTableModelControllerTest::selectTest()
+{
+  SqlTableModelControllerTester controller;
+  Schema::Client client;
+  RowStateChangedSpy rowStateSpy(controller);
+  RowState rs;
+  /*
+   * Prepare client data
+   */
+  ClientPopulation cp;
+  cp.addClient("A");
+  cp.addClient("B");
+  QVERIFY(repopulateClientTable(cp));
+  /*
+   * Setup controller
+   */
+  controller.setDefaultModel(database());
+  controller.setTable(client);
+  rowStateSpy.clear();
+  /*
+   * Select
+   */
+  QVERIFY(controller.select());
+  // Check that row state was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  rs = rowStateSpy.takeRowState();
+  QCOMPARE(rs.rowCount(), 2);
+  QCOMPARE(rs.currentRow(), 0);
+  // Check that model shows the data
+  QCOMPARE(controller.currentData(1), QVariant("A"));
+  /*
+   * Go to row 1
+   */
+  QVERIFY(controller.setCurrentRow(1));
+  // Check that row state was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  rs = rowStateSpy.takeRowState();
+  QCOMPARE(rs.rowCount(), 2);
+  QCOMPARE(rs.currentRow(), 1);
+  // Check that model shows the data
+  QCOMPARE(controller.currentData(1), QVariant("B"));
+}
+
+void SqlTableModelControllerTest::removeTest()
+{
+  SqlTableModelControllerTester controller;
+  Schema::Client client;
+  /*
+   * Prepare client data
+   */
+  ClientPopulation cp;
+  cp.addClient("A");
+  cp.addClient("B");
+  QVERIFY(repopulateClientTable(cp));
+  /*
+   * Setup controller
+   */
+  controller.setDefaultModel(database());
+  controller.setTable(client);
+
+  QFAIL("Not complete");
+}
+
+void SqlTableModelControllerTest::editSubmitTest()
+{
+
+  /*
+   * Prepare client data
+   */
+  ClientPopulation cp;
+  cp.addClient(1, "A");
+  cp.addClient(2, "B");
+  QVERIFY(repopulateClientTable(cp));
+  
+
+  qDebug() << getClientNameFromDatabase(1);
+  qDebug() << getClientNameFromDatabase(2);
+  
+  QFAIL("Not complete");
+}
+
+void SqlTableModelControllerTest::editSelectTest()
+{
+
+  QFAIL("Not complete");
 }
 
 /*
@@ -81,6 +262,21 @@ bool SqlTableModelControllerTest::repopulateClientTable(const Schema::ClientPopu
     return false;
   }
   return driver.populateTable(tp);
+}
+
+QVariant SqlTableModelControllerTest::getClientNameFromDatabase(int id)
+{
+  Schema::Client client;
+  const QString sql = "SELECT " + client.Name().name() + " FROM " + client.tableName() \
+                    + " WHERE " + client.Id_PK().fieldName() + " =" + QString::number(id);
+  QSqlQuery query(database());
+  if(!query.exec(sql)){
+    qDebug() << query.lastError();
+    return QVariant();
+  }
+  query.next();
+
+  return query.value(0);
 }
 
 /*

@@ -113,6 +113,24 @@ void ItemModelControllerTester::clearDataRevertFromModelCount()
   mDataRevertFromModelCount = 0;
 }
 
+void ItemModelControllerTester::setSelectedRows(const Mdt::ItemModel::RowList& rowList)
+{
+  mSelectedRows = rowList;
+}
+
+void ItemModelControllerTester::clearSelectedRows()
+{
+  mSelectedRows.clear();
+}
+
+Mdt::ItemModel::RowList ItemModelControllerTester::getSelectedRows() const
+{
+  if(mSelectedRows.isEmpty()){
+    return AbstractController::getSelectedRows();
+  }
+  return mSelectedRows;
+}
+
 // bool ItemModelControllerTester::setModelData(int column, const QVariant& data)
 // {
 //   auto *model = sourceModel();

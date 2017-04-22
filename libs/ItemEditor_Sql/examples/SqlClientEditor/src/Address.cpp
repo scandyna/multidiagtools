@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -47,8 +47,14 @@ Address::Address()
   Client_Id_FK.setName("Client_Id_FK");
   Client_Id_FK.setType(FieldType::Integer);
   Client_Id_FK.setRequired(true);
+  // Street
+  Field Street;
+  Street.setName("Street");
+  Street.setType(FieldType::Varchar);
+  Street.setLength(100);
   // Setup table
   setTableName("Address_tbl");
   setAutoIncrementPrimaryKey("Id_PK");
   addForeignKey(Client_Id_FK, ForeignTable(client), ForeignField(client.Id_PK()), fkSettings);
+  addField(Street);
 }

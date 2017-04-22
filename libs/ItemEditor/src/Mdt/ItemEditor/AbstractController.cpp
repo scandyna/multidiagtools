@@ -42,6 +42,7 @@ using ItemModel::PrimaryKey;
 using ItemModel::PrimaryKeyProxyModel;
 using ItemModel::ForeignKey;
 using ItemModel::ForeignKeyProxyModel;
+using ItemModel::RowList;
 // using ItemModel::RelationFilterProxyModel;
 
 namespace Mdt{ namespace ItemEditor{
@@ -485,7 +486,10 @@ bool AbstractController::submit()
     qDebug() << "AbstractController: submit failed for a child controller";
     return false;
   }
-  /// \todo Here, tell model to submit
+  if(!submitChangesToStorage()){
+    qDebug() << "AbstractController: submit data to storage failed";
+    return false;
+  }
   Q_ASSERT(!mControllerStateMachine.isNull());
 //   qDebug() << "AC:submit - DONE";
   mControllerStateMachine->submitDone();
@@ -509,7 +513,7 @@ void AbstractController::revert()
       return;
     }
   }else{
-    /// \todo Call model -> revert
+    revertChangesFromStorage();
   }
   mControllerStateMachine->revertDone();
 }
@@ -551,9 +555,12 @@ bool AbstractController::remove()
     qDebug() << "AC: cannot remove in state " << controllerState();
     return false;
   }
-  if(!removeCurrentRow()){
+  if(!removeSelectedRows()){
     return false;
   }
+//   if(!removeCurrentRow()){
+//     return false;
+//   }
 //   int row = currentRow();
 //   if(row < 0){
 //     return false;
@@ -611,12 +618,33 @@ void AbstractController::modelSetToView()
   mRowChangeEventDispatcher->setModel(model);
 }
 
+bool AbstractController::submitChangesToStorage()
+{
+  return true;
+}
+
+void AbstractController::revertChangesFromStorage()
+{
+}
+
 void AbstractController::primaryKeyChangedEvent(const PrimaryKey& , const PrimaryKey&)
 {
 }
 
 void AbstractController::foreignKeyChangedEvent(const ForeignKey& , const ForeignKey&)
 {
+}
+
+ItemModel::RowList AbstractController::getSelectedRows() const
+{
+  RowList list;
+
+  const int row = currentRow();
+  if(row >= 0){
+    list.append(row);
+  }
+
+  return list;
 }
 
 void AbstractController::onDataEditionStarted()
@@ -686,6 +714,28 @@ bool AbstractController::removeCurrentRow()
   }
   if(!model->removeRow(row)){
     return false;
+  }
+
+  return true;
+}
+
+bool AbstractController::removeSelectedRows()
+{
+  auto *model = modelForView();
+  Q_ASSERT(model != nullptr);
+  const auto rowList = getSelectedRows();
+
+  int offset = 0;
+  for(int row : rowList){
+    Q_ASSERT(row >= 0);
+    row = row - offset;
+    ++offset;
+    Q_ASSERT(row >= 0);
+    /// assert: row in range
+    qDebug() << "AC: removing row " << row;
+    if(!model->removeRow(row)){
+      return false;
+    }
   }
 
   return true;

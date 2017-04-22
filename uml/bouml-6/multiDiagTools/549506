@@ -1,6 +1,6 @@
 format 211
 "Algorithm" // Mdt::Algorithm
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -26,92 +26,4 @@ format 211
   activitydiagramsettings
    end
   
-  classview 1643650 "NaturalSort"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 3122050 "NaturalSort"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 3560450 "NaturalSort"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      operation 4982786 "compare"
-	class_operation public explicit_return_type "int"
-	nparams 3
-	  param in name "a" type class_ref 161026 // QString
-	  param in name "b" type class_ref 161026 // QString
-	  param in name "cs" explicit_type "Qt::CaseSensitivity"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4982530 "lessThan"
-	class_operation public explicit_return_type "bool"
-	nparams 3
-	  param in name "a" type class_ref 161026 // QString
-	  param in name "b" type class_ref 161026 // QString
-	  param in name "cs" explicit_type "Qt::CaseSensitivity"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4982914 "sort"
-	class_operation public explicit_return_type "void"
-	nparams 1
-	  param in name "list" type class_ref 160770 // QStringList
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-  end
 end

@@ -77,6 +77,15 @@ namespace Mdt{ namespace ItemEditor{
      */
     QTableView *view() const;
 
+    /*! \brief Allow the selection of multiple rows
+     *
+     * If multiple rows selection is allowed, the user can select other rows than current one,
+     *  otherwise only items in current row can be selected.
+     *
+     * By default, selection of multiple rows is not allowed.
+     */
+    void setMultiRowSelectionAllowed(bool allow);
+
   public slots:
 
     /*! \brief Set primary key hidden
@@ -108,9 +117,11 @@ namespace Mdt{ namespace ItemEditor{
     void primaryKeyChangedEvent(const ItemModel::PrimaryKey& oldPrimaryKey, const ItemModel::PrimaryKey& newPrimaryKey) override;
     void foreignKeyChangedEvent(const ItemModel::ForeignKey& oldForeignKey, const ItemModel::ForeignKey& newForeignKey) override;
 
+    /*! \brief Get a list of currently selected rows
+     */
+    Mdt::ItemModel::RowList getSelectedRows() const override;
+
     std::unique_ptr<TableViewControllerImplementation> mImpl;
-    bool mPrimaryKeyColumnsHidden = false;
-    bool mForeignKeyColumnsHidden = false;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

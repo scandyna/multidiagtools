@@ -37,6 +37,7 @@ void TestBase::displayWidget(QWidget* widget)
 {
   Q_ASSERT(widget != nullptr);
 
+  widget->resize(800, 500);
   widget->show();
   while(widget->isVisible()){
     QTest::qWait(500);

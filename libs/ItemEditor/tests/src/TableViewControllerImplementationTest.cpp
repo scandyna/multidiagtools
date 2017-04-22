@@ -35,6 +35,8 @@
 #include <QTableView>
 #include <QObject>
 #include <QMetaObject>
+#include <QItemSelectionModel>
+#include <QItemSelection>
 // #include <QMetaProperty>
 // #include <QMetaMethod>
 
@@ -209,6 +211,48 @@ void TableViewControllerImplementationTest::foreignKeyVisibilityTest()
   QVERIFY(!view.isColumnHidden(0));
   QVERIFY(!view.isColumnHidden(1));
   QVERIFY(!view.isColumnHidden(2));
+}
+
+void TableViewControllerImplementationTest::selectedRowsTest()
+{
+  QModelIndex index;
+  RowList rowList;
+  /*
+   * Setup
+   */
+  VariantTableModel model;
+  model.resize(5, 5);
+  QTableView view;
+  TableViewControllerImplementation controllerImpl;
+  controllerImpl.setModel(&model);
+  controllerImpl.setView(&view);
+  controllerImpl.setMultiRowSelectionAllowed(true);
+  QCOMPARE(controllerImpl.model(), &model);
+  auto *selectionModel = view.selectionModel();
+  QVERIFY(selectionModel != nullptr);
+  /*
+   * Check
+   */
+  // Single item
+  index = model.index(0, 0);
+  selectionModel->select(index, QItemSelectionModel::ClearAndSelect);
+  rowList = controllerImpl.getSelectedRows();
+  QCOMPARE(rowList.size(), 1);
+  QCOMPARE(rowList.at(0), 0);
+  // Select a row
+  view.selectRow(1);
+  rowList = controllerImpl.getSelectedRows();
+  QCOMPARE(rowList.size(), 1);
+  QCOMPARE(rowList.at(0), 1);
+  // Select a column
+  view.selectColumn(2);
+  rowList = controllerImpl.getSelectedRows();
+  QCOMPARE(rowList.size(), 5);
+  QCOMPARE(rowList.at(0), 0);
+  QCOMPARE(rowList.at(1), 1);
+  QCOMPARE(rowList.at(2), 2);
+  QCOMPARE(rowList.at(3), 3);
+  QCOMPARE(rowList.at(4), 4);
 }
 
 /*

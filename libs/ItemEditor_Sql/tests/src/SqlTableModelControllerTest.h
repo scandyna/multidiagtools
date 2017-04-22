@@ -24,6 +24,7 @@
 #include "SqlTestBase.h"
 #include "Schema/ClientAddressSchema.h"
 #include "Schema/ClientPopulation.h"
+#include <QVariant>
 
 class SqlTableModelControllerTest : public SqlTestBase
 {
@@ -34,13 +35,20 @@ class SqlTableModelControllerTest : public SqlTestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
+  void setModelTest();
+  void setDefaultModelTest();
+  void setTableTest();
+  void selectTest();
+  void removeTest();
+  void editSubmitTest();
+  void editSelectTest();
 
  private:
 
   void createSchema(const Schema::ClientAddressSchema & schema);
   bool deleteClientData();
   bool repopulateClientTable(const Schema::ClientPopulation & tp);
+  QVariant getClientNameFromDatabase(int id); 
 
 };
 
