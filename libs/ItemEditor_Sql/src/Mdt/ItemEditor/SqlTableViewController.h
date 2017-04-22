@@ -24,14 +24,11 @@
 #include "AbstractSqlTableModelController.h"
 #include <memory>
 
-// class QSqlTableModel;
 class QTableView;
 
 namespace Mdt{ namespace ItemEditor{
 
   class TableViewControllerImplementation;
-  
-  class ItemViewPrivateContainer;
 
   /*! \brief SqlTableViewController acts on a QSqlTableModel
    */
@@ -44,14 +41,6 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Constructor
      */
     explicit SqlTableViewController(QObject* parent = nullptr);
-
-    /*! \brief Construct a controller that acts on \a db
-     */
-//     explicit SqlTableViewController(QObject *parent, const QSqlDatabase & db);
-
-    /*! \brief Construct a controller that acts on \a db
-     */
-//     explicit SqlTableViewController(const QSqlDatabase & db);
 
     // Destructor - unique_ptr needs define of ItemViewPrivateContainer to delet it
     ~SqlTableViewController();
@@ -108,10 +97,7 @@ namespace Mdt{ namespace ItemEditor{
      */
     Mdt::ItemModel::RowList getSelectedRows() const override;
 
-//     void registerModelAndSelectionModel();
-
     std::unique_ptr<TableViewControllerImplementation> mImpl;
-//     std::unique_ptr<ItemViewPrivateContainer> mContainer;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
