@@ -33,11 +33,21 @@ class SqlTableModelControllerTester : public Mdt::ItemEditor::AbstractSqlTableMo
   explicit SqlTableModelControllerTester(QObject* parent = nullptr, Mdt::ItemEditor::ControllerStateMachine *stateMachine = nullptr);
   explicit SqlTableModelControllerTester(Mdt::ItemEditor::ControllerStateMachine *stateMachine);
 
+  void setSelectedRows(const Mdt::ItemModel::RowList & rowList);
+  void clearSelectedRows();
+  /*
+   * Returns list of rows set with setSelectedRows() if not empty,
+   * otherwise the implementation of AbstractSqlTableModelController
+   */
+  Mdt::ItemModel::RowList getSelectedRows() const override;
+
  private:
 
   void setModelToView(QAbstractItemModel *model) override;
   bool setDataToModel() override;
   void revertDataFromModel() override;
+
+  Mdt::ItemModel::RowList mSelectedRows;
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_SQL_TABLE_MODEL_CONTROLLER_TESTER_H

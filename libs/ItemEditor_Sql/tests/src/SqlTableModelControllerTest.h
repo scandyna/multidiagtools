@@ -40,6 +40,7 @@ class SqlTableModelControllerTest : public SqlTestBase
   void setTableTest();
   void selectTest();
   void removeTest();
+  void removeTest_data();
   void editSubmitTest();
   void editSelectTest();
 

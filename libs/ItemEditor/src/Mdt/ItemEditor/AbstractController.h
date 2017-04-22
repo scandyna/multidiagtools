@@ -814,6 +814,16 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual Mdt::ItemModel::RowList getSelectedRows() const;
 
+    /*! \brief Remove selected rows
+     *
+     * This default implementation works with models that do not handle cache.
+     *  To work as expected, a offset is caluclated after each removed row.
+     *
+     * Subclass that acts on a model that behaves differently
+     *  can override this implementation.
+     */
+    virtual bool removeSelectedRows();
+
     /*! \brief Set last error
      */
     void setLastError(const Mdt::Error & error)
@@ -870,10 +880,6 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Remove current row
      */
     bool removeCurrentRow();
-
-    /*! \brief Remove selected rows
-     */
-    bool removeSelectedRows();
 
     /*! \brief Get filter proxy model
      *

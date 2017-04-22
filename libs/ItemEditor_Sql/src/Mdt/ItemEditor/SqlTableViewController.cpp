@@ -29,6 +29,8 @@
 #include <QTableView>
 #include <QSqlTableModel>
 
+#include <QDebug>
+
 namespace Mdt{ namespace ItemEditor{
 
 SqlTableViewController::SqlTableViewController(QObject* parent)
@@ -77,6 +79,11 @@ QTableView* SqlTableViewController::view() const
   return mImpl->view();
 }
 
+void SqlTableViewController::setMultiRowSelectionAllowed(bool allow)
+{
+  mImpl->setMultiRowSelectionAllowed(allow);
+}
+
 void SqlTableViewController::setModelToView(QAbstractItemModel* model)
 {
   mImpl->setModel(model);
@@ -95,6 +102,12 @@ bool SqlTableViewController::setDataToModel()
 void SqlTableViewController::revertDataFromModel()
 {
   mImpl->revertDataFromModel();
+}
+
+ItemModel::RowList SqlTableViewController::getSelectedRows() const
+{
+  qDebug() << "STVC: selecte rows: " << mImpl->getSelectedRows().size();
+  return mImpl->getSelectedRows();
 }
 
 // void SqlTableViewController::registerModelAndSelectionModel()

@@ -153,6 +153,10 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
+    /*! \brief Remove selected rows
+     */
+    bool removeSelectedRows() override;
+
     bool submitChangesToStorage() override;
     void revertChangesFromStorage() override;
 

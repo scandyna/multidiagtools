@@ -411,6 +411,49 @@ void SqlTableViewControllerTest::selectTest()
   QCOMPARE(rs.currentRow(), 0);
 }
 
+void SqlTableViewControllerTest::removeTest()
+{
+  Schema::Client client;
+  QTableView tableView;
+  SqlTableViewController controller;
+  /*
+   * Prepare client data
+   */
+  ClientPopulation cp;
+  cp.addClient("A");
+  cp.addClient("B");
+  cp.addClient("C");
+  cp.addClient("D");
+  QVERIFY(repopulateClientTable(cp));
+  /*
+   * Setup controller
+   */
+  controller.setDefaultModel(database());
+  controller.setTable(client);
+  controller.setView(&tableView);
+  controller.setMultiRowSelectionAllowed(true);
+  tableView.show();
+  QVERIFY(controller.select());
+  QCOMPARE(controller.rowCount(), 4);
+  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(controller.currentData(1), QVariant("A"));
+  /*
+   * Remove 1 row
+   */
+  tableView.selectRow(0);
+  QVERIFY(controller.remove());
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(controller.currentData(1), QVariant("B"));
+  /*
+   * Remove all other rows
+   */
+  tableView.selectColumn(0);
+//   displayWidget(tableView);
+  QVERIFY(controller.remove());
+  QCOMPARE(controller.rowCount(), 0);
+}
+
 void SqlTableViewControllerTest::currentRowChangeTest()
 {
   QFAIL("Not complete");

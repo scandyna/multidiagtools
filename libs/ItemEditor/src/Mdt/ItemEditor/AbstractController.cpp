@@ -558,6 +558,9 @@ bool AbstractController::remove()
   if(!removeSelectedRows()){
     return false;
   }
+  if(!submitChangesToStorage()){
+    return false;
+  }
 //   if(!removeCurrentRow()){
 //     return false;
 //   }
@@ -647,6 +650,27 @@ ItemModel::RowList AbstractController::getSelectedRows() const
   return list;
 }
 
+bool AbstractController::removeSelectedRows()
+{
+  auto *model = modelForView();
+  Q_ASSERT(model != nullptr);
+  const auto rowList = getSelectedRows();
+
+  int offset = 0;
+  for(int row : rowList){
+    Q_ASSERT(row >= 0);
+    row = row - offset;
+    ++offset;
+    Q_ASSERT(row >= 0);
+    qDebug() << "AC: remove row " << row;
+    if(!model->removeRow(row)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
 void AbstractController::onDataEditionStarted()
 {
 //   qDebug() << "AC: onDataEditionStarted() ..";
@@ -714,28 +738,6 @@ bool AbstractController::removeCurrentRow()
   }
   if(!model->removeRow(row)){
     return false;
-  }
-
-  return true;
-}
-
-bool AbstractController::removeSelectedRows()
-{
-  auto *model = modelForView();
-  Q_ASSERT(model != nullptr);
-  const auto rowList = getSelectedRows();
-
-  int offset = 0;
-  for(int row : rowList){
-    Q_ASSERT(row >= 0);
-    row = row - offset;
-    ++offset;
-    Q_ASSERT(row >= 0);
-    /// assert: row in range
-    qDebug() << "AC: removing row " << row;
-    if(!model->removeRow(row)){
-      return false;
-    }
   }
 
   return true;

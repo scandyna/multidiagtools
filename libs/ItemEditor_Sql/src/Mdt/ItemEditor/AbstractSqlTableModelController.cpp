@@ -116,4 +116,20 @@ void AbstractSqlTableModelController::revertChangesFromStorage()
   model()->revertAll();
 }
 
+bool AbstractSqlTableModelController::removeSelectedRows()
+{
+  auto *model = modelForView();
+  Q_ASSERT(model != nullptr);
+  const auto rowList = getSelectedRows();
+
+  for(int row : rowList){
+    Q_ASSERT(row >= 0);
+    if(!model->removeRow(row)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
 }} // namespace Mdt{ namespace ItemEditor{

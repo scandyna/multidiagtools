@@ -31,8 +31,11 @@
 #include <QPointer>
 #include <QScopedPointer>
 #include <QSqlDatabase>
+#include <QString>
+#include <QStringList>
 
 using namespace Mdt::ItemEditor;
+using namespace Mdt::ItemModel;
 namespace Sql = Mdt::Sql;
 using Schema::Client;
 using Schema::Address;
@@ -192,22 +195,48 @@ void SqlTableModelControllerTest::selectTest()
 
 void SqlTableModelControllerTest::removeTest()
 {
+  QFETCH(QStringList, initialList);
+  QFETCH(RowList, rowList);
+  QFETCH(QStringList, expectedList);
   SqlTableModelControllerTester controller;
   Schema::Client client;
   /*
    * Prepare client data
    */
   ClientPopulation cp;
-  cp.addClient("A");
-  cp.addClient("B");
+  for(const auto name : initialList){
+    cp.addClient(name);
+  }
   QVERIFY(repopulateClientTable(cp));
   /*
    * Setup controller
    */
   controller.setDefaultModel(database());
   controller.setTable(client);
+  QVERIFY(controller.select());
+  QCOMPARE(controller.rowCount(), initialList.size());
+  /*
+   * Check
+   */
+  controller.setSelectedRows(rowList);
+  QVERIFY(controller.remove());
+  const auto *model = controller.model();
+  QCOMPARE(model->rowCount(), expectedList.count());
+  for(int row = 0; row < expectedList.count(); ++row){
+    QCOMPARE(getModelData(model, row, 1).toString(), expectedList.at(row));
+  }
+}
 
-  QFAIL("Not complete");
+void SqlTableModelControllerTest::removeTest_data()
+{
+  QTest::addColumn<QStringList>("initialList");
+  QTest::addColumn<RowList>("rowList");
+  QTest::addColumn<QStringList>("expectedList");
+
+  QTest::newRow("{0}") << QStringList{"A","B","C"} << RowList{0} << QStringList{"B","C"};
+  QTest::newRow("{0,1}") << QStringList{"A","B","C"} << RowList{0,1} << QStringList{"C"};
+  QTest::newRow("{0,2}") << QStringList{"A","B","C"} << RowList{0,2} << QStringList{"B"};
+  QTest::newRow("{0,1,3,4}") << QStringList{"A","B","C","D","E"} << RowList{0,1,3,4} << QStringList{"C"};
 }
 
 void SqlTableModelControllerTest::editSubmitTest()

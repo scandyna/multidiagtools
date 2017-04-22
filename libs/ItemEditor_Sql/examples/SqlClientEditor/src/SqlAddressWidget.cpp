@@ -26,6 +26,7 @@ SqlAddressWidget::SqlAddressWidget(const QSqlDatabase & db)
  : SqlTableViewWidget(db)
 {
   controller()->setTable(Address());
+  controller()->setMultiRowSelectionAllowed(true);
   controller()->select();
   ///controller()->setDefaultModel(QSqlDatabase());
 //   setWindowTitle("Addresses (SQL)");

@@ -32,8 +32,6 @@ class ItemSelectionModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
-
   void setCurrentIndexTest();
 //   void selectIndexTest();
 //   void selectSelectionTest();

@@ -23,6 +23,7 @@
 #include "Mdt/ItemEditor/AbstractControllerStatePermission.h"
 
 using namespace Mdt::ItemEditor;
+using namespace Mdt::ItemModel;
 
 class StateTableTestClass : public AbstractControllerStateTable
 {
@@ -58,6 +59,24 @@ SqlTableModelControllerTester::SqlTableModelControllerTester(QObject* parent, Md
 SqlTableModelControllerTester::SqlTableModelControllerTester(Mdt::ItemEditor::ControllerStateMachine* stateMachine)
  : SqlTableModelControllerTester(nullptr, stateMachine)
 {
+}
+
+void SqlTableModelControllerTester::setSelectedRows(const RowList & rowList)
+{
+  mSelectedRows = rowList;
+}
+
+void SqlTableModelControllerTester::clearSelectedRows()
+{
+  mSelectedRows.clear();
+}
+
+RowList SqlTableModelControllerTester::getSelectedRows() const
+{
+  if(mSelectedRows.isEmpty()){
+    return AbstractSqlTableModelController::getSelectedRows();
+  }
+  return mSelectedRows;
 }
 
 void SqlTableModelControllerTester::setModelToView(QAbstractItemModel* /*model*/)

@@ -44,6 +44,7 @@ class SqlTableViewControllerTest : public SqlTestBase
 //   void changeDefaultModelTest();
 //   void setTableTest();
   void selectTest();
+  void removeTest();
   void currentRowChangeTest();
   void stateChangeSignalTest();
   void editSubmitRevertTest();

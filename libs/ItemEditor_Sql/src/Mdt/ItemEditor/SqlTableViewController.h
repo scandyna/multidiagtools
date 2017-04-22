@@ -81,6 +81,15 @@ namespace Mdt{ namespace ItemEditor{
      */
     QTableView *view() const;
 
+    /*! \brief Allow the selection of multiple rows
+     *
+     * If multiple rows selection is allowed, the user can select other rows than current one,
+     *  otherwise only items in current row can be selected.
+     *
+     * By default, selection of multiple rows is not allowed.
+     */
+    void setMultiRowSelectionAllowed(bool allow);
+
    private:
 
     /*! \brief Set model to the view
@@ -94,6 +103,10 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Revert data from model
      */
     void revertDataFromModel() override;
+
+    /*! \brief Get a list of currently selected rows
+     */
+    Mdt::ItemModel::RowList getSelectedRows() const override;
 
 //     void registerModelAndSelectionModel();
 

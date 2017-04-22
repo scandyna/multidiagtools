@@ -53,22 +53,6 @@ void ItemSelectionModelTest::cleanupTestCase()
  * Tests
  */
 
-void ItemSelectionModelTest::sandbox()
-{
-  QTableView view;
-  VariantTableModel model;
-  model.populate(5, 4);
-  view.setModel(&model);
-
-  //view.setSelectionBehavior(QTableView::SelectItems);
-  //view.setSelectionMode(QTableView::MultiSelection);
-
-  ItemSelectionModel selectionModel(&model);
-  view.setSelectionModel(&selectionModel);
-
-  displayWidget(view);
-}
-
 void ItemSelectionModelTest::setCurrentIndexTest()
 {
   VariantTableModel model;
