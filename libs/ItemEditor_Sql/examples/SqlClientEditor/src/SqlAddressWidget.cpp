@@ -22,12 +22,31 @@
 #include "Address.h"
 #include <QSqlDatabase>
 
+using namespace Mdt::ItemEditor;
+
 SqlAddressWidget::SqlAddressWidget(const QSqlDatabase & db)
  : SqlTableViewWidget(db)
 {
-  controller()->setTable(Address());
-  controller()->setMultiRowSelectionAllowed(true);
-  controller()->select();
-  ///controller()->setDefaultModel(QSqlDatabase());
-//   setWindowTitle("Addresses (SQL)");
+  auto ctrl = controller();
+  ctrl->setTable(Address());
+  ctrl->setMultiRowSelectionAllowed(true);
+  ctrl->setInsertLocation(SqlTableViewController::InsertAtEnd);
+  ctrl->select();
+
+  addResizeToContentsActionToTopBar();
+  addNavigationActionsToTopArea();
+  addEditionActionsToBottomArea();
+  addInsertActionToBottomArea();
+  setInsertActionText(tr("Add address"));
+  addRemoveActionToBottomArea();
+  setRemoveActionText(tr("Remove addresses"));
+
+  ///ctrl->setPrimaryKey({0});
+//   ctrl->setPrimaryKeyEditable(false);
+//   ctrl->setPrimaryKeyItemsEnabled(false);
+//   ctrl->setPrimaryKeyHidden(true);
+  ///ctrl->setForeignKey({1});
+//   ctrl->setForeignKeyEditable(false);
+//   ctrl->setForeignKeyItemsEnabled(false);
+//   ctrl->setForeignKeyHidden(true);
 }
