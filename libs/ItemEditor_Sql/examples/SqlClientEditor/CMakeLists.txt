@@ -9,7 +9,9 @@ set(SOURCES_FILES
     src/Client.cpp
     src/Address.cpp
     src/ClientEditorSchema.cpp
+    src/SqlClientWidget.cpp
     src/SqlAddressWidget.cpp
+    src/SqlClientEditorMainWidget.cpp
 )
 
 # Headers directories

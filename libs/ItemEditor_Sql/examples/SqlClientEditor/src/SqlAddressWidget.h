@@ -33,7 +33,15 @@ class SqlAddressWidget : public Mdt::ItemEditor::SqlTableViewWidget
 
   /*! \brief Constructor
    */
-  explicit SqlAddressWidget(const QSqlDatabase & db);
+  explicit SqlAddressWidget(QWidget* parent = nullptr);
+
+//   /*! \brief Constructor
+//    */
+//   explicit SqlAddressWidget(const QSqlDatabase & db);
+
+  /*! \brief Setup
+   */
+  bool setup(const QSqlDatabase & db);
 
  private:
 

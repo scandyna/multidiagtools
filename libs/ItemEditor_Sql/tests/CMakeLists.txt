@@ -27,7 +27,7 @@ target_link_libraries(mdtitemeditorsqltest Qt5::Test)
 
 # Add a test for this ItemEditor_Sql lib
 function(addItemEditorSqlTest testName)
-  set(complteTestName "MdtItemEditor${testName}")
+  set(complteTestName "MdtItemEditor_${testName}")
   set(sourceFilePath "src/${testName}.cpp")
   string(TOLOWER ${complteTestName} executableName)
   add_executable(${executableName} ${sourceFilePath})
@@ -41,3 +41,4 @@ endfunction()
 addItemEditorSqlTest("SqlControllerTest")
 addItemEditorSqlTest("SqlTableModelControllerTest")
 addItemEditorSqlTest("SqlTableViewControllerTest")
+addItemEditorSqlTest("SqlTableWidgetMapperControllerTest")

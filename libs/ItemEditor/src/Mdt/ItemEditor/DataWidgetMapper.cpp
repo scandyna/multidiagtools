@@ -20,11 +20,11 @@
  ****************************************************************************/
 #include "DataWidgetMapper.h"
 #include "WidgetStyleSheet.h"
+#include "DataWidgetMapperItemDelegate.h"
 #include "Mdt/ItemModel/RowRange.h"
 #include "Mdt/ItemModel/ColumnRange.h"
 #include "Mdt/Error.h"
 #include <QAbstractItemModel>
-#include <QStyledItemDelegate>
 #include <QWidget>
 #include <QByteArray>
 #include <QMetaObject>
@@ -32,7 +32,9 @@
 #include <QMetaProperty>
 #include <QScopedValueRollback>
 
-// #include "Debug.h"
+#include <QLineEdit>
+
+#include "Debug.h"
 
 using namespace Mdt::ItemModel;
 
@@ -44,7 +46,7 @@ DataWidgetMapper::DataWidgetMapper(QObject* parent)
    mUpdatingMappedWidget(false),
    mEditingState(false)
 {
-  setItemDelegate(new QStyledItemDelegate(this));
+  setItemDelegate(new DataWidgetMapperItemDelegate(this));
 }
 
 void DataWidgetMapper::setModel(QAbstractItemModel* model)
@@ -200,6 +202,7 @@ void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QMo
     // Update current widget if its column is in range topLeft, bottomRight
     int column = mw.column();
     if(columnRange.containsColumn(column)){
+      qDebug() << "DWM: onModelDataChanged() - column " << column;
       updateMappedWidget(mw.widget(), column);
     }
   }
@@ -283,7 +286,17 @@ void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column)
   QModelIndex index;
   if(!mModel.isNull()){
     index = mModel->index(mCurrentRow, column);
+    
+    auto *le = qobject_cast<QLineEdit*>(widget);
+    qDebug() << "DWM:";
+    qDebug() << "DWM: setEditorData , model data: " << index.data(Qt::EditRole);
+    
     mDelegate->setEditorData(widget, index);
+    
+    
+    if(le != nullptr){
+      qDebug() << "DWM:  line edit text: " << le->text() << " (" << le << ")";
+    }
   }
   /*
    * On invalid index, widget must allways be disabled.
@@ -324,6 +337,7 @@ void DataWidgetMapper::updateMappedWidgetForItemFlags(QWidget*const widget, Qt::
    * If Qt::ItemIsEnabled is not set, widget must allways be disabled.
    * Else, follow Qt::ItemIsEditable if editable property exists for widget
    */
+//   qDebug() << "DWM: update for flags: " << flags;
   const bool enabled = flags.testFlag(Qt::ItemIsEnabled);
   if(enabled){
     const bool editable = flags.testFlag(Qt::ItemIsEditable);
@@ -346,6 +360,7 @@ void DataWidgetMapper::updateMappedWidgetForAppearance(QWidget*const widget, con
   WidgetStyleSheet ws;
   QVariant var;
 
+//   qDebug() << "DWM: update for appearance: ";
   // Text alignment
   var = mModel->data(index, Qt::TextAlignmentRole);
   if(variantIsOfType(var, QMetaType::Int)){

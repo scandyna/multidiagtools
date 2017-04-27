@@ -24,8 +24,8 @@
 #include "SqlTestBase.h"
 #include "Schema/ClientAddressSchema.h"
 #include "Schema/ClientPopulation.h"
-#include <QTemporaryFile>
-#include <QSqlDatabase>
+// #include <QTemporaryFile>
+// #include <QSqlDatabase>
 
 class SqlTableViewControllerTest : public SqlTestBase
 {
@@ -55,9 +55,6 @@ class SqlTableViewControllerTest : public SqlTestBase
   bool deleteClientData();
   bool repopulateClientTable(const Schema::ClientPopulation & tp);
   QVariant getClientNameFromDatabase(int id); 
-
-//   QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
-//   QSqlDatabase mDatabase;
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_TEST_H

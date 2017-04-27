@@ -18,34 +18,43 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
-#define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#ifndef MDT_ITEM_EDITOR_ABSTRACT_SQL_TABLE_FORM_WIDGET_H
+#define MDT_ITEM_EDITOR_ABSTRACT_SQL_TABLE_FORM_WIDGET_H
 
-#include "TestBase.h"
+#include "SqlTableWidgetMapperController.h"
+#include "Mdt/ItemEditor/AbstractEditorWidget.h"
 
-class WidgetMapperControllerTest : public TestBase
-{
-  Q_OBJECT
+namespace Mdt{ namespace ItemEditor{
 
- private slots:
+  /*! \brief Base class to create widgets using SqlTableWidgetMapperController
+   */
+  class AbstractSqlTableFormWidget : public AbstractEditorWidget
+  {
+   Q_OBJECT
 
-  void initTestCase();
-  void cleanupTestCase();
+   public:
 
-  void statePermissionTest();
-  void stateTableTest();
-  void setModelTest();
-  void currentRowChangedTest();
-  void editTest();
-  void statePermissionModelFlagsTest();
-  void insertEditTest();
-  void insertEditRevertTest();
-  void insertFromModelTest();
-//   void lineEditUpdateOnNewRow();
-  void removeTest();
-  void removeFromModelTest();
-  void filterTest();
-  void sortTest();
-};
+    /*! \brief Constructor
+     */
+    explicit AbstractSqlTableFormWidget(QWidget* parent = nullptr);
 
-#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+    /*! \brief Get controller
+     */
+    SqlTableWidgetMapperController *controller() const
+    {
+      return mController;
+    }
+
+   private:
+
+    AbstractController* abstractController() const override
+    {
+      return mController;
+    }
+
+    SqlTableWidgetMapperController *mController;
+  };
+
+}} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_SQL_TABLE_FORM_WIDGET_H

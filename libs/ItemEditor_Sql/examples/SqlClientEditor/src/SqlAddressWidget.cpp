@@ -24,15 +24,9 @@
 
 using namespace Mdt::ItemEditor;
 
-SqlAddressWidget::SqlAddressWidget(const QSqlDatabase & db)
- : SqlTableViewWidget(db)
+SqlAddressWidget::SqlAddressWidget(QWidget* parent)
+ : SqlTableViewWidget(parent)
 {
-  auto ctrl = controller();
-  ctrl->setTable(Address());
-  ctrl->setMultiRowSelectionAllowed(true);
-  ctrl->setInsertLocation(SqlTableViewController::InsertAtEnd);
-  ctrl->select();
-
   addResizeToContentsActionToTopBar();
   addNavigationActionsToTopArea();
   addEditionActionsToBottomArea();
@@ -40,6 +34,45 @@ SqlAddressWidget::SqlAddressWidget(const QSqlDatabase & db)
   setInsertActionText(tr("Add address"));
   addRemoveActionToBottomArea();
   setRemoveActionText(tr("Remove addresses"));
+}
+
+// SqlAddressWidget::SqlAddressWidget(const QSqlDatabase & db)
+//  : SqlTableViewWidget(/*db*/)
+// {
+//   auto ctrl = controller();
+//   ctrl->setTable(Address());
+//   ctrl->setMultiRowSelectionAllowed(true);
+//   ctrl->setInsertLocation(SqlTableViewController::InsertAtEnd);
+//   ctrl->select();
+// 
+//   addResizeToContentsActionToTopBar();
+//   addNavigationActionsToTopArea();
+//   addEditionActionsToBottomArea();
+//   addInsertActionToBottomArea();
+//   setInsertActionText(tr("Add address"));
+//   addRemoveActionToBottomArea();
+//   setRemoveActionText(tr("Remove addresses"));
+// 
+//   ///ctrl->setPrimaryKey({0});
+// //   ctrl->setPrimaryKeyEditable(false);
+// //   ctrl->setPrimaryKeyItemsEnabled(false);
+// //   ctrl->setPrimaryKeyHidden(true);
+//   ///ctrl->setForeignKey({1});
+// //   ctrl->setForeignKeyEditable(false);
+// //   ctrl->setForeignKeyItemsEnabled(false);
+// //   ctrl->setForeignKeyHidden(true);
+// }
+
+bool SqlAddressWidget::setup(const QSqlDatabase & db)
+{
+  auto ctrl = controller();
+  ctrl->setDefaultModel(db);
+  ctrl->setMultiRowSelectionAllowed(true);
+  ctrl->setInsertLocation(SqlTableViewController::InsertAtEnd);
+  ctrl->setTable(Address());
+  if(!ctrl->select()){
+    return false;
+  }
 
   ///ctrl->setPrimaryKey({0});
 //   ctrl->setPrimaryKeyEditable(false);
@@ -49,4 +82,6 @@ SqlAddressWidget::SqlAddressWidget(const QSqlDatabase & db)
 //   ctrl->setForeignKeyEditable(false);
 //   ctrl->setForeignKeyItemsEnabled(false);
 //   ctrl->setForeignKeyHidden(true);
+
+  return true;
 }

@@ -96,7 +96,8 @@ bool AbstractSqlTableModelController::select()
   if(!m->select()){
     QString msg = tr("For table '%1': select failed.").arg(m->tableName());
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    error.stackError( mdtErrorFromQSqlQueryModelQ(*m, this) );
+    error.stackError( mdtErrorFromQSqlQueryModelQ(m, this) );
+    error.commit();
     setLastError(error);
     return false;
   }
@@ -107,7 +108,17 @@ bool AbstractSqlTableModelController::select()
 bool AbstractSqlTableModelController::submitChangesToStorage()
 {
   Q_ASSERT(model() != nullptr);
-  return model()->submitAll();
+
+  if(!model()->submitAll()){
+    QString msg = tr("For table '%1': submitting changes to database failed.").arg(model()->tableName());
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    error.stackError( mdtErrorFromQSqlQueryModelQ(model(), this) );
+    error.commit();
+    setLastError(error);
+    return false;
+  }
+
+  return true;
 }
 
 void AbstractSqlTableModelController::revertChangesFromStorage()
@@ -122,6 +133,7 @@ bool AbstractSqlTableModelController::removeSelectedRows()
   Q_ASSERT(model != nullptr);
   const auto rowList = getSelectedRows();
 
+  /// \todo Transaction
   for(int row : rowList){
     Q_ASSERT(row >= 0);
     if(!model->removeRow(row)){

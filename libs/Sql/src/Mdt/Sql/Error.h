@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -109,9 +109,21 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Get a Mdt::Error from last error in \a queryModel
      *
+     * \sa mdtErrorFromQSqlQueryModel()
+     */
+    static Mdt::Error fromQSqlQueryModel(const QSqlQueryModel * const queryModel, const QString & file, int line, const QString & className, const QString & functionName);
+
+    /*! \brief Get a Mdt::Error from last error in \a queryModel
+     *
      * \sa mdtErrorFromQSqlQueryModelQ()
      */
     static Mdt::Error fromQSqlQueryModel(const QSqlQueryModel & queryModel, const QString & file, int line, const QObject * const obj, const QString & functionName);
+
+    /*! \brief Get a Mdt::Error from last error in \a queryModel
+     *
+     * \sa mdtErrorFromQSqlQueryModelQ()
+     */
+    static Mdt::Error fromQSqlQueryModel(const QSqlQueryModel * const queryModel, const QString & file, int line, const QObject * const obj, const QString & functionName);
 
     /*! \brief Get a Mdt::Error from last error in db
      *

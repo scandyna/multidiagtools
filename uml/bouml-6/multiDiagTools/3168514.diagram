@@ -2,27 +2,27 @@ format 211
 
 classcanvas 128002 class_ref 2927362 // SqlTableViewController
   classdiagramsettings member_max_width 0 end
-  xyz 321 544 2000
+  xyz 41 544 2000
 end
 classcanvas 128130 class_ref 3614594 // AbstractSqlController
   classdiagramsettings member_max_width 0 end
-  xyz 774 39 2006
+  xyz 494 39 2006
 end
 classcanvas 129154 class_ref 3979138 // AbstractSqlTableModelController
   classdiagramsettings member_max_width 0 end
-  xyz 418 201 2005
+  xyz 138 201 2005
 end
 classcanvas 129282 class_ref 3979010 // AbstractSqlQueryModelController
   classdiagramsettings member_max_width 0 end
-  xyz 766 199 2012
+  xyz 486 199 2012
 end
 classcanvas 130050 class_ref 3985666 // SqlQueryViewController
   classdiagramsettings member_max_width 0 end
-  xyz 838 322 2000
+  xyz 558 322 2000
 end
 classcanvas 130690 class_ref 3992194 // TableViewControllerImplementation
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 42 618 2012
+  xyz 578 618 2012
 end
 relationcanvas 129410 relation_ref 4446466 // <generalisation>
   from ref 129282 z 2013 to ref 128130
@@ -48,8 +48,8 @@ end
 relationcanvas 131586 relation_ref 4486786 // <generalisation>
   geometry VHV unfixed
   decenter_begin 485
-  from ref 129154 z 2007 to point 565 160
-  line 131714 z 2007 to point 918 160
+  from ref 129154 z 2007 to point 285 160
+  line 131714 z 2007 to point 638 160
   line 131842 z 2007 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

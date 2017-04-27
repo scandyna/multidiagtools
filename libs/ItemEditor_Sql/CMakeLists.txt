@@ -9,6 +9,8 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/AbstractSqlTableModelController.cpp
     src/Mdt/ItemEditor/SqlTableViewController.cpp
     src/Mdt/ItemEditor/SqlTableViewWidget.cpp
+    src/Mdt/ItemEditor/SqlTableWidgetMapperController.cpp
+    src/Mdt/ItemEditor/AbstractSqlTableFormWidget.cpp
 )
 
 # Headers directories

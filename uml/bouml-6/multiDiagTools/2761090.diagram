@@ -16,7 +16,7 @@ classcanvas 128386 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 49 42 2018
 end
-classcanvas 129410 class_ref 3138562 // SqlWidgetMapperController
+classcanvas 129410 class_ref 3138562 // SqlTableWidgetMapperController
   classdiagramsettings member_max_width 0 end
   xyz 70.5 532.5 2054
 end

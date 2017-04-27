@@ -18,36 +18,43 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "SqlTableViewWidget.h"
-#include <QTableView>
+#ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_ITEM_DELEGATE_H
+#define MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_ITEM_DELEGATE_H
+
+#include <QStyledItemDelegate>
+#include <QVariant>
+#include <QMetaType>
 
 namespace Mdt{ namespace ItemEditor{
 
-SqlTableViewWidget::SqlTableViewWidget(QWidget* parent)
- : AbstractTableViewWidget(parent),
-   mController(new SqlTableViewController(this))
-{
-  mController->setView(view());
-}
+  /*! \brief Item delegate used by DataWidgetMapper
+   */
+  class DataWidgetMapperItemDelegate : public QStyledItemDelegate
+  {
+   Q_OBJECT
 
-// SqlTableViewWidget::SqlTableViewWidget(QWidget* parent, const QSqlDatabase & db)
-//  : AbstractTableViewWidget(parent),
-//    mController(new SqlTableViewController(this))
-// {
-//   mController->setDefaultModel(db);
-//   mController->setView(view());
-// }
+   public:
 
-// SqlTableViewWidget::SqlTableViewWidget(const QSqlDatabase & db)
-//  : SqlTableViewWidget(nullptr, db)
-// {
-// }
+    /*! \brief Constructor
+     */
+    explicit DataWidgetMapperItemDelegate(QObject* parent = nullptr);
 
-void SqlTableViewWidget::setModel(QSqlTableModel* model)
-{
-  Q_ASSERT(model != nullptr);
+    /*! \brief Set model data
+     *
+     * Get the value from \a editor using its user property.
+     */
+    void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
 
-  mController->setModel(model);
-}
+virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+
+   private:
+
+    static QVariant convertData(const QVariant & data);
+    static QVariant convertFromString(const QVariant & data);
+
+    static QVariant displayValueForNullVariant(int editorValueType);
+  };
 
 }} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_ITEM_DELEGATE_H

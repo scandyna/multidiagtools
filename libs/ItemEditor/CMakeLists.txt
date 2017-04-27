@@ -33,6 +33,7 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/MappedWidgetList.cpp
     src/Mdt/ItemEditor/WidgetEditablePropertyMap.cpp
     src/Mdt/ItemEditor/WidgetStyleSheet.cpp
+    src/Mdt/ItemEditor/DataWidgetMapperItemDelegate.cpp
     src/Mdt/ItemEditor/DataWidgetMapper.cpp
     src/Mdt/ItemEditor/WidgetMapperControllerStatePermission.cpp
     src/Mdt/ItemEditor/WidgetMapperControllerStateTable.cpp

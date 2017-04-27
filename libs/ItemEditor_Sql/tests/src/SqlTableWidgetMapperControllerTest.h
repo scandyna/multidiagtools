@@ -18,34 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
-#define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#ifndef MDT_ITEM_EDITOR_SQL_TABLE_WIDGET_MAPPER_CONTROLLER_TEST_H
+#define MDT_ITEM_EDITOR_SQL_TABLE_WIDGET_MAPPER_CONTROLLER_TEST_H
 
-#include "TestBase.h"
+#include "SqlTestBase.h"
+#include "Schema/ClientAddressSchema.h"
+#include "Schema/ClientPopulation.h"
 
-class WidgetMapperControllerTest : public TestBase
+class SqlTableWidgetMapperControllerTest : public SqlTestBase
 {
-  Q_OBJECT
+ Q_OBJECT
 
  private slots:
 
   void initTestCase();
   void cleanupTestCase();
 
-  void statePermissionTest();
-  void stateTableTest();
-  void setModelTest();
-  void currentRowChangedTest();
-  void editTest();
-  void statePermissionModelFlagsTest();
-  void insertEditTest();
-  void insertEditRevertTest();
-  void insertFromModelTest();
-//   void lineEditUpdateOnNewRow();
-  void removeTest();
-  void removeFromModelTest();
-  void filterTest();
-  void sortTest();
+  void lineEditUpdateOnNewRow();
+
+ private:
+
+  void createSchema(const Schema::ClientAddressSchema & schema);
+  bool deleteClientData();
+  bool repopulateClientTable(const Schema::ClientPopulation & tp);
+  QVariant getClientNameFromDatabase(int id); 
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_SQL_TABLE_WIDGET_MAPPER_CONTROLLER_TEST_H

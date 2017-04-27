@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -70,12 +70,26 @@ Mdt::Error Error::fromQSqlQueryModel(const QSqlQueryModel & queryModel, const QS
   return error;
 }
 
+Mdt::Error Sql::Error::fromQSqlQueryModel(const QSqlQueryModel*const queryModel, const QString& file, int line, const QString& className, const QString& functionName)
+{
+  Q_ASSERT(queryModel != nullptr);
+
+  return fromQSqlQueryModel(*queryModel, file, line, className, functionName);
+}
+
 Mdt::Error Sql::Error::fromQSqlQueryModel(const QSqlQueryModel & queryModel, const QString& file, int line, const QObject*const obj, const QString& functionName)
 {
   Q_ASSERT(obj != nullptr);
   Q_ASSERT(obj->metaObject() != nullptr);
 
   return fromQSqlQueryModel(queryModel, file, line, obj->metaObject()->className(), functionName);
+}
+
+Mdt::Error Sql::Error::fromQSqlQueryModel(const QSqlQueryModel * const queryModel, const QString& file, int line, const QObject*const obj, const QString& functionName)
+{
+  Q_ASSERT(queryModel != nullptr);
+
+  return fromQSqlQueryModel(*queryModel, file, line, obj, functionName);
 }
 
 Mdt::Error Sql::Error::fromQSqlDatabase(const QSqlDatabase & db, const QString& file, int line, const QString& className, const QString& functionName)

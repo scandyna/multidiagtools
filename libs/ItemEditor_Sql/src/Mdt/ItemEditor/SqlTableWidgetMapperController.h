@@ -18,11 +18,10 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_H
-#define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_H
+#ifndef MDT_ITEM_EDITOR_SQL_TABLE_WIDGET_MAPPER_CONTROLLER_H
+#define MDT_ITEM_EDITOR_SQL_TABLE_WIDGET_MAPPER_CONTROLLER_H
 
-#include "AbstractController.h"
-//#include <QByteArray>
+#include "AbstractSqlTableModelController.h"
 
 class QWidget;
 
@@ -30,9 +29,9 @@ namespace Mdt{ namespace ItemEditor{
 
   class DataWidgetMapper;
 
-  /*! \brief Controller for DataWidgetMapper
+  /*! \brief Controller for DataWidgetMapper to act on a QSqlTableModel
    */
-  class WidgetMapperController : public AbstractController
+  class SqlTableWidgetMapperController : public AbstractSqlTableModelController
   {
    Q_OBJECT
 
@@ -40,14 +39,14 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit WidgetMapperController(QObject* parent = nullptr);
+    explicit SqlTableWidgetMapperController(QObject* parent = nullptr);
 
     // Copy disabled
-    WidgetMapperController(const WidgetMapperController &) = delete;
-    WidgetMapperController & operator=(const WidgetMapperController &) = delete;
+    SqlTableWidgetMapperController(const SqlTableWidgetMapperController &) = delete;
+    SqlTableWidgetMapperController & operator=(const SqlTableWidgetMapperController &) = delete;
     // Move disabled
-    WidgetMapperController(WidgetMapperController &&) = delete;
-    WidgetMapperController & operator=(WidgetMapperController &&) = delete;
+    SqlTableWidgetMapperController(SqlTableWidgetMapperController &&) = delete;
+    SqlTableWidgetMapperController & operator=(SqlTableWidgetMapperController &&) = delete;
 
     /*! \brief Get widget mapper
      */
@@ -95,4 +94,4 @@ namespace Mdt{ namespace ItemEditor{
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_H
+#endif // #ifndef MDT_ITEM_EDITOR_SQL_TABLE_WIDGET_MAPPER_CONTROLLER_H

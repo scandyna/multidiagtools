@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
-#define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_ITEM_DELEGATE_TEST_H
+#define MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_ITEM_DELEGATE_TEST_H
 
 #include "TestBase.h"
 
-class WidgetMapperControllerTest : public TestBase
+class DataWidgetMapperItemDelegateTest : public TestBase
 {
   Q_OBJECT
 
@@ -32,20 +32,10 @@ class WidgetMapperControllerTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void statePermissionTest();
-  void stateTableTest();
-  void setModelTest();
-  void currentRowChangedTest();
-  void editTest();
-  void statePermissionModelFlagsTest();
-  void insertEditTest();
-  void insertEditRevertTest();
-  void insertFromModelTest();
-//   void lineEditUpdateOnNewRow();
-  void removeTest();
-  void removeFromModelTest();
-  void filterTest();
-  void sortTest();
+  void setModelDataLineEditTest();
+  void setModelDataLineEditTest_data();
+  void setEditorDataLineEditTest();
+  void setEditorDataLineEditTest_data();
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_ITEM_DELEGATE_TEST_H

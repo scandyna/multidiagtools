@@ -18,34 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
-#define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#include "AbstractSqlTableFormWidget.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace ItemEditor{
 
-class WidgetMapperControllerTest : public TestBase
+AbstractSqlTableFormWidget::AbstractSqlTableFormWidget(QWidget* parent)
+ : AbstractEditorWidget(parent),
+   mController( new SqlTableWidgetMapperController(this) )
 {
-  Q_OBJECT
+}
 
- private slots:
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void statePermissionTest();
-  void stateTableTest();
-  void setModelTest();
-  void currentRowChangedTest();
-  void editTest();
-  void statePermissionModelFlagsTest();
-  void insertEditTest();
-  void insertEditRevertTest();
-  void insertFromModelTest();
-//   void lineEditUpdateOnNewRow();
-  void removeTest();
-  void removeFromModelTest();
-  void filterTest();
-  void sortTest();
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+}} // namespace Mdt{ namespace ItemEditor{

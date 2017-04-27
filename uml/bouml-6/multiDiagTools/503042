@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 228
+  revision 231
   modified_by 2 "philippe"
   // class settings
   
@@ -716,7 +716,6 @@ ${inlines}
 	
       end
     end
-
   end
 
   classview 1307010 "EventMapper"
@@ -2483,6 +2482,52 @@ ${inlines}
 "
 	    classrelation_ref 3641346 // <directional composition>
 	  b parent class_ref 3198082 // MappedWidget
+      end
+    end
+
+    classdiagram 3466626 "DataWidgetMapperItemDelegate"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3998722 "DataWidgetMapperItemDelegate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4525954 // <generalisation>
+	relation 4499842 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4525954 // <generalisation>
+	  b parent class_ref 605570 // QStyledItemDelegate
+      end
+
+      operation 5683330 "setModelData"
+	cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "editor" type class_ref 316162 // QWidget
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end
@@ -5788,7 +5833,7 @@ ${inlines}
       size A4
     end
 
-    class 3138562 "SqlWidgetMapperController"
+    class 3138562 "SqlTableWidgetMapperController"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -5808,6 +5853,55 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 4492930 // <generalisation>
 	  b parent class_ref 3979138 // AbstractSqlTableModelController
+      end
+
+      operation 5676546 "addMapping"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "widget" type class_ref 316162 // QWidget
+	  param in name "column" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5676674 "addMapping"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "widget" type class_ref 316162 // QWidget
+	  param in name "field" type class_ref 3370882 // FieldName
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5676802 "clearMapping"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end
@@ -9543,7 +9637,7 @@ ${inlines}
       end
     end
 
-    class 3068674 "AbstractSqlFormWidget"
+    class 3068674 "AbstractSqlTableFormWidget"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -9566,25 +9660,17 @@ ${inlines}
 	  b parent class_ref 404610 // QDataWidgetMapper
       end
 
-      classrelation 4065922 // <generalisation>
-	relation 4039938 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4065922 // <generalisation>
-	  b parent class_ref 316162 // QWidget
-      end
-
       classrelation 4066434 // <directional composition>
 	relation 4040450 *-->
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 4066434 // <directional composition>
-	  b parent class_ref 3138562 // SqlWidgetMapperController
+	  b parent class_ref 3138562 // SqlTableWidgetMapperController
       end
 
       attribute 3244674 "Controller"
-	private type class_ref 3138562 // SqlWidgetMapperController
+	private type class_ref 3138562 // SqlTableWidgetMapperController
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -9596,7 +9682,7 @@ ${inlines}
       end
 
       operation 5095042 "controller"
-	public return_type class_ref 3138562 // SqlWidgetMapperController
+	public return_type class_ref 3138562 // SqlTableWidgetMapperController
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -9654,6 +9740,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4519426 // <generalisation>
+	relation 4493314 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4519426 // <generalisation>
+	  b parent class_ref 3068802 // AbstractEditorWidget
       end
     end
 
@@ -10524,7 +10618,7 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 4066178 // <generalisation>
-	  b parent class_ref 3068674 // AbstractSqlFormWidget
+	  b parent class_ref 3068674 // AbstractSqlTableFormWidget
       end
     end
   end

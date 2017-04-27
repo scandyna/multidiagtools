@@ -22,7 +22,7 @@
 #include "Mdt/ItemEditor/StandardWindow.h"
 #include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
 #include "Mdt/Sql/Schema/Driver.h"
-#include "SqlAddressWidget.h"
+#include "SqlClientEditorMainWidget.h"
 #include "ClientEditorSchema.h"
 #include <QSqlDatabase>
 #include <QTemporaryFile>
@@ -60,18 +60,14 @@ int main(int argc, char **argv)
   if(!driver.createSchema(ClientEditorSchema())){
     return 1;
   }
-  // Setup Client widget
-  
-  // Setup Address widget
-  auto *addressWidget = new SqlAddressWidget(db);
-  
-  // Setup editor widget
-  auto *editorWidget = new StandardEditorLayoutWidget;
-  editorWidget->setMainWidget(addressWidget);
+  auto *mainWidget = new SqlClientEditorMainWidget;
+  if(!mainWidget->setup(db)){
+    return 1;
+  }
   // Setup main window
   StandardWindow mainWindow;
-  mainWindow.setCentralWidget(editorWidget);
-  mainWindow.setMainController(addressWidget->controller());
+  mainWindow.setCentralWidget(mainWidget);
+  mainWindow.setMainController(mainWidget->mainController());
   mainWindow.setWindowTitle("Addresses (SQL)");
   mainWindow.show();
 

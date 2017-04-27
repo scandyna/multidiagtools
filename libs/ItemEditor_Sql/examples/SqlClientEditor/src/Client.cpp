@@ -32,7 +32,7 @@ Client::Client()
   FirstName.setName("FirstName");
   FirstName.setType(FieldType::Varchar);
   FirstName.setLength(100);
-  
+
   // Setup table
   setTableName("Client_tbl");
   setAutoIncrementPrimaryKey("Id_PK");

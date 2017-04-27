@@ -55,6 +55,7 @@ class DataWidgetMapperTest : public TestBase
   void insertWidgetTest();
   void insertSignalTest();
   void insertFromModelWidgetTest();
+  void lineEditUpdateOnNewRow();
   void editStartDoneSignalTest();
   void editStartDoneSignalTest_data();
   void setDataFromModelQLineEditTest();

@@ -18,34 +18,46 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
-#define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#ifndef SQL_CLIENT_EDITOR_MAIN_WIDGET_H
+#define SQL_CLIENT_EDITOR_MAIN_WIDGET_H
 
-#include "TestBase.h"
+#include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
+#include "Mdt/ItemEditor/AbstractController.h"
+#include <QWidget>
+#include <QSqlDatabase>
+#include <QPointer>
 
-class WidgetMapperControllerTest : public TestBase
+class SqlClientWidget;
+class SqlAddressWidget;
+
+/*! \brief Main widget of SQL Client editor
+ */
+class SqlClientEditorMainWidget : public Mdt::ItemEditor::StandardEditorLayoutWidget
 {
-  Q_OBJECT
+ Q_OBJECT
 
- private slots:
+ public:
 
-  void initTestCase();
-  void cleanupTestCase();
+  /*! \brief Constructor
+   */
+  explicit SqlClientEditorMainWidget(QWidget* parent = nullptr);
 
-  void statePermissionTest();
-  void stateTableTest();
-  void setModelTest();
-  void currentRowChangedTest();
-  void editTest();
-  void statePermissionModelFlagsTest();
-  void insertEditTest();
-  void insertEditRevertTest();
-  void insertFromModelTest();
-//   void lineEditUpdateOnNewRow();
-  void removeTest();
-  void removeFromModelTest();
-  void filterTest();
-  void sortTest();
+  /*! \brief Setup
+   */
+  bool setup(const QSqlDatabase & db);
+
+  /*! \brief Get main controller
+   */
+  Mdt::ItemEditor::AbstractController *mainController() const
+  {
+    return mMainController;
+  }
+
+ private:
+
+  SqlClientWidget *mClientWidget;
+  SqlAddressWidget *mAddressWidget;
+  QPointer<Mdt::ItemEditor::AbstractController> mMainController;
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#endif // #ifndef SQL_CLIENT_EDITOR_MAIN_WIDGET_H

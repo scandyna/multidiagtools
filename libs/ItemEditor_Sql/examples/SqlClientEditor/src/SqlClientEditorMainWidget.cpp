@@ -18,34 +18,31 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
-#define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#include "SqlClientEditorMainWidget.h"
+#include "SqlClientWidget.h"
+#include "SqlAddressWidget.h"
 
-#include "TestBase.h"
+using namespace Mdt::ItemEditor;
 
-class WidgetMapperControllerTest : public TestBase
+SqlClientEditorMainWidget::SqlClientEditorMainWidget(QWidget* parent)
+ : StandardEditorLayoutWidget(parent)
 {
-  Q_OBJECT
+  mClientWidget = new SqlClientWidget;
+  mAddressWidget = new SqlAddressWidget;
+  setMainWidget(mClientWidget);
+  addChildWidget(mAddressWidget, tr("Addresses"));
+  mMainController = mClientWidget->controller();
+}
 
- private slots:
+bool SqlClientEditorMainWidget::setup(const QSqlDatabase& db)
+{
+  if(!mClientWidget->setup(db)){
+    return false;
+  }
+  if(!mAddressWidget->setup(db)){
+    return false;
+  }
+  // Setup relation
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void statePermissionTest();
-  void stateTableTest();
-  void setModelTest();
-  void currentRowChangedTest();
-  void editTest();
-  void statePermissionModelFlagsTest();
-  void insertEditTest();
-  void insertEditRevertTest();
-  void insertFromModelTest();
-//   void lineEditUpdateOnNewRow();
-  void removeTest();
-  void removeFromModelTest();
-  void filterTest();
-  void sortTest();
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+  return true;
+}

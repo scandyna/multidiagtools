@@ -24,8 +24,8 @@
 #include "TestBase.h"
 #include "ItemViewTestEditTriggers.h"
 
-class QAbstractItemView;
-class QAbstractItemModel;
+// class QAbstractItemView;
+// class QAbstractItemModel;
 
 class TableViewControllerTest : public TestBase
 {

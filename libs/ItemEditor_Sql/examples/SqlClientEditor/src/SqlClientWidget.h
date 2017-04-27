@@ -18,34 +18,27 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
-#define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#ifndef SQL_CLIENT_WIDGET_H
+#define SQL_CLIENT_WIDGET_H
 
-#include "TestBase.h"
+#include "ui_SqlClientWidget.h"
+#include "Mdt/ItemEditor/AbstractSqlTableFormWidget.h"
 
-class WidgetMapperControllerTest : public TestBase
+/*! \brief SQL Client edition widget
+ */
+class SqlClientWidget : public Mdt::ItemEditor::AbstractSqlTableFormWidget, Ui::SqlClientWidget
 {
-  Q_OBJECT
+ Q_OBJECT
 
- private slots:
+ public:
 
-  void initTestCase();
-  void cleanupTestCase();
+  /*! \brief Constructor
+   */
+  explicit SqlClientWidget(QWidget* parent = nullptr);
 
-  void statePermissionTest();
-  void stateTableTest();
-  void setModelTest();
-  void currentRowChangedTest();
-  void editTest();
-  void statePermissionModelFlagsTest();
-  void insertEditTest();
-  void insertEditRevertTest();
-  void insertFromModelTest();
-//   void lineEditUpdateOnNewRow();
-  void removeTest();
-  void removeFromModelTest();
-  void filterTest();
-  void sortTest();
+  /*! \brief Setup
+   */
+  bool setup(const QSqlDatabase & db);
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H
+#endif // #ifndef SQL_CLIENT_WIDGET_H

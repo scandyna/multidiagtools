@@ -1,4 +1,4 @@
-window_sizes 1272 963 331 935 911 0
+window_sizes 1280 963 306 968 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 3148674 // Overview
@@ -19,25 +19,39 @@ diagrams
     120 98 100 7 24 0
   classdiagram_ref 2707074 // AbstractController
     943 911 100 23 0 0
-  active  classdiagram_ref 3287810 // RowList
-    943 911 100 4 0 0
+  classdiagram_ref 2700418 // EditorWidget
+    120 98 70 9 0 0
+  classdiagram_ref 3181954 // AbstractEditorWidget
+    120 98 100 18 0 0
+  classdiagram_ref 2761218 // ControllerOverview
+    120 98 100 23 0 116
+  classdiagram_ref 3168642 // SqlWidgetMapperController
+    943 911 100 4 12 0
+  classdiagram_ref 3181826 // Overview
+    120 98 100 18 0 0
+  classdiagram_ref 3195266 // FormWidget
+    943 911 100 21 60 8
+  classdiagram_ref 2827266 // DataWidgetMapper
+    968 911 100 7 0 0
+  active  classdiagram_ref 3466626 // DataWidgetMapperItemDelegate
+    968 911 100 4 0 0
 end
 show_stereotypes
-selected 
-package_ref 129 // multiDiagTools
+selected operation_ref 5683330 // setModelData
 open
   
 package_ref 409858 // principes
   
 package_ref 549506 // Algorithm
-  class_ref 3775490 // RowList
   classview_ref 1432450 // Selection
+  class_ref 3998722 // DataWidgetMapperItemDelegate
   classview_ref 1801090 // Controller_Core
   classdiagram_ref 2761090 // WidgetMapperController
   classview_ref 1808002 // Controller_QtQuick
   classview_ref 1801218 // Controller_Sql
-  classview_ref 1801474 // Controller_Sql_Widgets
+  class_ref 3138562 // SqlTableWidgetMapperController
   classview_ref 1287042 // Controller
+  classview_ref 1465474 // EditorWidget
   class_ref 174338 // QSqlQueryModel
 end
 end

@@ -40,11 +40,15 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit SqlTableViewWidget(QWidget* parent, const QSqlDatabase & db);
+    explicit SqlTableViewWidget(QWidget* parent = nullptr);
 
-    /*! \brief Constructor
-     */
-    explicit SqlTableViewWidget(const QSqlDatabase & db);
+//     /*! \brief Constructor
+//      */
+//     explicit SqlTableViewWidget(QWidget* parent, const QSqlDatabase & db);
+
+//     /*! \brief Constructor
+//      */
+//     explicit SqlTableViewWidget(const QSqlDatabase & db);
 
     /*! \brief Get controller
      */
