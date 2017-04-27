@@ -23,7 +23,6 @@
 
 #include <QStyledItemDelegate>
 #include <QVariant>
-#include <QMetaType>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -45,7 +44,9 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
 
-virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+    /*! \brief Set editor data
+     */
+    void setEditorData(QWidget* editor, const QModelIndex& index) const override;
 
    private:
 

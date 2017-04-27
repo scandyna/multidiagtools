@@ -85,6 +85,7 @@ void SqlTableWidgetMapperControllerTest::lineEditUpdateOnNewRow()
   QCOMPARE(controller.currentRow(), 1);
   QVERIFY(editor0.text().isEmpty());
   QVERIFY(controller.submit());
+  controller.toLast();
   QVERIFY(!editor0.text().isEmpty());
   QVERIFY(editor0.text() != QString("1"));
 }

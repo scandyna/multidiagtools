@@ -41,7 +41,6 @@ class WidgetMapperControllerTest : public TestBase
   void insertEditTest();
   void insertEditRevertTest();
   void insertFromModelTest();
-//   void lineEditUpdateOnNewRow();
   void removeTest();
   void removeFromModelTest();
   void filterTest();

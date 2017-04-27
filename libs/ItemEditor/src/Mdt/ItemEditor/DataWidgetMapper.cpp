@@ -32,9 +32,7 @@
 #include <QMetaProperty>
 #include <QScopedValueRollback>
 
-#include <QLineEdit>
-
-#include "Debug.h"
+// #include "Debug.h"
 
 using namespace Mdt::ItemModel;
 
@@ -202,7 +200,6 @@ void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QMo
     // Update current widget if its column is in range topLeft, bottomRight
     int column = mw.column();
     if(columnRange.containsColumn(column)){
-      qDebug() << "DWM: onModelDataChanged() - column " << column;
       updateMappedWidget(mw.widget(), column);
     }
   }
@@ -286,17 +283,7 @@ void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column)
   QModelIndex index;
   if(!mModel.isNull()){
     index = mModel->index(mCurrentRow, column);
-    
-    auto *le = qobject_cast<QLineEdit*>(widget);
-    qDebug() << "DWM:";
-    qDebug() << "DWM: setEditorData , model data: " << index.data(Qt::EditRole);
-    
     mDelegate->setEditorData(widget, index);
-    
-    
-    if(le != nullptr){
-      qDebug() << "DWM:  line edit text: " << le->text() << " (" << le << ")";
-    }
   }
   /*
    * On invalid index, widget must allways be disabled.

@@ -1473,13 +1473,6 @@ void DataWidgetMapperTest::insertFromModelWidgetTest()
   QCOMPARE(model.data(1, 1), QVariant("A"));
 }
 
-// Bug discovered 20170426
-void DataWidgetMapperTest::lineEditUpdateOnNewRow()
-{
-
-  QFAIL("Not complete");
-}
-
 void DataWidgetMapperTest::editStartDoneSignalTest()
 {
   DataWidgetMapper mapper;

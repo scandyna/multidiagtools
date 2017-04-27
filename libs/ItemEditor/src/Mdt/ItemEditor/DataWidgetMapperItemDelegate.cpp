@@ -19,15 +19,14 @@
  **
  ****************************************************************************/
 #include "DataWidgetMapperItemDelegate.h"
+#include <QMetaType>
 #include <QMetaObject>
 #include <QMetaProperty>
 #include <QByteArray>
 #include <QAbstractItemModel>
 #include <QString>
 
-#include <QLineEdit>
-
-#include "Debug.h"
+// #include "Debug.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -53,26 +52,11 @@ void DataWidgetMapperItemDelegate::setEditorData(QWidget* editor, const QModelIn
 {
   Q_ASSERT(editor != nullptr);
 
-  auto *le = qobject_cast<QLineEdit*>(editor);
-  
-  if(le != nullptr){
-    //qDebug() << "DWMID: line edit text: " << le->text() << " , read only: " << le->isReadOnly() << " , enabled: " << le->isEnabled();
-    qDebug() << "DWMID: line edit text: " << le->text();
-  }
-//   qDebug() << "DWMID: model data: " << index.data(Qt::EditRole) << " , null: " << index.data(Qt::EditRole).isNull();
-
-
-//   if(le != nullptr){
-//     le->clear();
-//   }
   const QByteArray propertyName = editor->metaObject()->userProperty().name();
   if(propertyName.isEmpty()){
     return;
   }
-  
-//   qDebug() << "DWMID: editor data type: " << editor->property(propertyName).typeName();
   auto value = index.data(Qt::EditRole);
-  qDebug() << "DWMID: model data: " << value << " , null: " << value.isNull();
   /*
    * If value is null, QVariant::convert() will fail,
    * and QObject::setProperty() will not update editor.
@@ -81,31 +65,7 @@ void DataWidgetMapperItemDelegate::setEditorData(QWidget* editor, const QModelIn
   if(value.isNull()){
     value = displayValueForNullVariant( editor->property(propertyName).userType() );
   }
-  qDebug() << "DWMID: value: " << value;
-  qDebug() << "DWMID: setEditorData ...";
   editor->setProperty(propertyName, value);
-  /*
-   * Problem seen with a QLineEdit:
-   * If the edit has a text (for example 1)
-   * and we update it using the setProperty() with a null QVariant,
-   * the line edit was not updated.
-   */
-//   const auto v = index.data(Qt::EditRole);
-//   
-//   qDebug() << "DWMID: set: " << editor->setProperty(propertyName, v);
-  
-//   if(v.isNull()){
-//     editor->setProperty(propertyName, QVariant());
-//   }else{
-//     editor->setProperty(propertyName, v);
-//   }
-  
-//   QStyledItemDelegate::setEditorData(editor, index);
-  
-  if(le != nullptr){
-    //qDebug() << "DWMID: line edit text: " << le->text() << " , read only: " << le->isReadOnly() << " , enabled: " << le->isEnabled();
-    qDebug() << "DWMID: line edit text: " << le->text();
-  }
 }
 
 QVariant DataWidgetMapperItemDelegate::convertData(const QVariant & data)
@@ -129,7 +89,7 @@ QVariant DataWidgetMapperItemDelegate::convertFromString(const QVariant & data)
 
 QVariant DataWidgetMapperItemDelegate::displayValueForNullVariant(int editorValueType)
 {
-  qDebug() << "DWMID: editor type: " << QMetaType::typeName(editorValueType);
+//   qDebug() << "DWMID: editor type: " << QMetaType::typeName(editorValueType);
   switch( static_cast<QMetaType::Type>(editorValueType) ){
     case QMetaType::QString:
       return QString();
