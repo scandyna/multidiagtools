@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -133,6 +133,7 @@ Expected< FieldList > DriverSQLite::getTableFieldListFromDatabase(const QString&
     error.stackError(lastError());
     error.commit();
     setLastError(error);
+    ret = error;
     return ret;
   }
   uniqueIndexList = expUniqueIndexList.value();
@@ -144,6 +145,7 @@ Expected< FieldList > DriverSQLite::getTableFieldListFromDatabase(const QString&
     error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
     error.commit();
     setLastError(error);
+    ret = error;
     return ret;
   }
   while(query.next()){
@@ -177,6 +179,7 @@ Expected< FieldList > DriverSQLite::getTableFieldListFromDatabase(const QString&
       // Case sensitivity
       auto expCs = getIndexFieldCaseSensitivityFromDatabase(index, field.name());
       if(!expCs){
+        ret = expCs.error();
         return ret;
       }
       CaseSensitivity cs = expCs.value();
@@ -223,6 +226,7 @@ Mdt::Expected<PrimaryKeyContainer> DriverSQLite::getTablePrimaryKeyFromDatabase(
     error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
     error.commit();
     setLastError(error);
+    ret = error;
     return ret;
   }
   // Collect fields that are part of primary key
@@ -273,6 +277,7 @@ Mdt::Expected<ForeignKeyList> DriverSQLite::getTableForeignKeyListFromDatabase(c
     error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
     error.commit();
     setLastError(error);
+    ret = error;
     return ret;
   }
   while(query.next()){
@@ -350,6 +355,7 @@ Mdt::Expected<IndexList> DriverSQLite::getTableIndexListFromDatabase(const QStri
     error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
     error.commit();
     setLastError(error);
+    ret = error;
     return ret;
   }
   while(query.next()){
@@ -401,6 +407,7 @@ Expected<CaseSensitivity> DriverSQLite::getIndexFieldCaseSensitivityFromDatabase
     error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
     error.commit();
     setLastError(error);
+    ret = error;
     return ret;
   }
   while(query.next()){
