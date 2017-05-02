@@ -43,6 +43,7 @@ class KeyTest : public QObject
   void primaryKeyTest();
   void primaryKeyQVariantTest();
   void foreignKeyTest();
+  void foreignKeyListTest();
 
   void keyDataTest();
   void keyRecordTest();

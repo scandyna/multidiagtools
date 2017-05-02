@@ -74,6 +74,13 @@ namespace Mdt{ namespace ItemModel{
       return mColumnList.greatestColumn();
     }
 
+    /*! \brief Check if this foreign key contains a column
+     */
+    bool containsColumn(int column) const
+    {
+      return mColumnList.contains(column);
+    }
+
     /*! \brief Clear
      */
     void clear()

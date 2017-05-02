@@ -18,36 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
-#define MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
-
-#include "KeyRecord.h"
+#include "ForeignKeyList.h"
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief List of data for a specific row and foreign key in a item model
-   */
-  class ForeignKeyRecord : public KeyRecord
-  {
-   public:
+void ForeignKeyList::addForeignKey(const QString& foreignEntityName, const ForeignKey & fk)
+{
+  Q_ASSERT(!foreignEntityName.trimmed().isEmpty());
+  Q_ASSERT(!fk.isNull());
 
-    ForeignKeyRecord() = default;
+  mMap.insert(foreignEntityName, fk);
+}
 
-    /*! \brief Get a foreign key record from a key record
-     */
-    static ForeignKeyRecord fromKeyRecord(const KeyRecord & record)
-    {
-      return ForeignKeyRecord(record);
-    }
+ForeignKey ForeignKeyList::getForeignKeyReferencing(const QString & entityName) const
+{
+  Q_ASSERT(!entityName.trimmed().isEmpty());
 
-  private:
-
-    ForeignKeyRecord(const KeyRecord & record)
-     : KeyRecord(record)
-    {
-    }
-  };
+  return mMap.value(entityName);
+}
 
 }} // namespace Mdt{ namespace ItemModel{
-
-#endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H

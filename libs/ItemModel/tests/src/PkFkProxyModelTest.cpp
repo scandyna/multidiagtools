@@ -21,6 +21,7 @@
 #include "PkFkProxyModelTest.h"
 #include "qtmodeltest.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
+#include "Mdt/ItemModel/ForeignKeyProxyModelMapItem.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
@@ -52,12 +53,30 @@ void PkFkProxyModelTest::pkSetGetKeyTest()
   QCOMPARE(proxyModel.primaryKey().columnCount(), 2);
 }
 
-void PkFkProxyModelTest::fkSetGetKeyTest()
-{
-  ForeignKeyProxyModel proxyModel;
-  proxyModel.setForeignKey({2,3});
-  QCOMPARE(proxyModel.foreignKey().columnCount(), 2);
-}
+// void PkFkProxyModelTest::fkMapItemTest()
+// {
+//   ForeignKey fk{1,2};
+//   ForeignKeyProxyModelMapItem item(fk);
+//   QCOMPARE(item.foreignKey().columnCount(), 2);
+//   QVERIFY(item.isForeignKeyEditable());
+//   QVERIFY(item.isForeignKeyItemsEnabled());
+//   item.setForeignKeyEditable(false);
+//   QVERIFY(!item.isForeignKeyEditable());
+//   QVERIFY(item.isForeignKeyItemsEnabled());
+//   item.setForeignKeyItemsEnabled(false);
+//   QVERIFY(!item.isForeignKeyEditable());
+//   QVERIFY(!item.isForeignKeyItemsEnabled());
+// }
+
+// void PkFkProxyModelTest::fkAddGetKeyTest()
+// {
+//   ForeignKeyProxyModel proxyModel;
+//   proxyModel.addForeignKey("A", {2,3});
+//   QCOMPARE(proxyModel.getForeignKeyReferencing("A").columnCount(), 2);
+// 
+// //   proxyModel.setForeignKey({2,3});
+// //   QCOMPARE(proxyModel.foreignKey().columnCount(), 2);
+// }
 
 void PkFkProxyModelTest::pkSetModelTest()
 {
@@ -83,10 +102,10 @@ void PkFkProxyModelTest::pkSetModelTest()
   QFAIL("Not complete");
 }
 
-void PkFkProxyModelTest::fkSetModelTest()
-{
-  QFAIL("Not complete");
-}
+// void PkFkProxyModelTest::fkSetModelTest()
+// {
+//   QFAIL("Not complete");
+// }
 
 void PkFkProxyModelTest::pkFlagsTest()
 {
@@ -142,16 +161,167 @@ void PkFkProxyModelTest::pkFlagsTest()
   QCOMPARE(getModelFlags(proxyModel, 0, 1), getModelFlags(model, 0, 1));
 }
 
-void PkFkProxyModelTest::fkFlagsTest()
-{
-  ForeignKeyProxyModel proxyModel;
-  QVERIFY(proxyModel.isForeignKeyEditable());
-  QVERIFY(proxyModel.isForeignKeyItemsEnabled());
-  proxyModel.setForeignKeyEditable(false);
-  proxyModel.setForeignKeyItemsEnabled(false);
-  QVERIFY(!proxyModel.isForeignKeyEditable());
-  QVERIFY(!proxyModel.isForeignKeyItemsEnabled());
-}
+// void PkFkProxyModelTest::fkFlagsTest()
+// {
+//   Qt::ItemFlags expectedFlags;
+//   /*
+//    * Setup source model
+//    */
+//   VariantTableModel model;
+//   model.resize(3, 5);
+//   model.populateColumn(0, {1,2});
+//   model.populateColumn(1, {"A","B"});
+//   /*
+//    * Default state
+//    */
+//   ForeignKeyProxyModel proxyModel;
+//   proxyModel.setSourceModel(&model);
+//   proxyModel.addForeignKey("A", {1});
+//   proxyModel.addForeignKey("B", {2,3});
+//   // Check flags for FK -> A
+//   QVERIFY(proxyModel.isForeignKeyEditable("A"));
+//   QVERIFY(proxyModel.isForeignKeyItemsEnabled("A"));
+//   QCOMPARE(getModelFlags(proxyModel, 0, 1), getModelFlags(model, 0, 1));
+//   // Check flags for FK -> B
+//   QVERIFY(proxyModel.isForeignKeyEditable("B"));
+//   QVERIFY(proxyModel.isForeignKeyItemsEnabled("B"));
+//   QCOMPARE(getModelFlags(proxyModel, 0, 2), getModelFlags(model, 0, 2));
+//   QCOMPARE(getModelFlags(proxyModel, 0, 3), getModelFlags(model, 0, 3));
+//   /*
+//    * Disable editable flags for A
+//    */
+//   proxyModel.setForeignKeyEditable("A", false);
+//   proxyModel.setForeignKeyItemsEnabled("A", true);
+//   // Check flags for FK -> A
+//   QVERIFY(!proxyModel.isForeignKeyEditable("A"));
+//   QVERIFY( proxyModel.isForeignKeyItemsEnabled("A"));
+//   expectedFlags = getModelFlags(model, 0, 1) & Qt::ItemFlags(~Qt::ItemIsEditable);
+//   QCOMPARE(getModelFlags(proxyModel, 0, 1), expectedFlags);
+//   // Check flags for FK -> B
+//   QVERIFY(proxyModel.isForeignKeyEditable("B"));
+//   QVERIFY(proxyModel.isForeignKeyItemsEnabled("B"));
+//   QCOMPARE(getModelFlags(proxyModel, 0, 2), getModelFlags(model, 0, 2));
+//   QCOMPARE(getModelFlags(proxyModel, 0, 3), getModelFlags(model, 0, 3));
+//   /*
+//    * Disable items enable flags for A
+//    */
+//   proxyModel.setForeignKeyEditable("A", true);
+//   proxyModel.setForeignKeyItemsEnabled("A", false);
+//   // Check flags for FK -> A
+//   QVERIFY( proxyModel.isForeignKeyEditable("A"));
+//   QVERIFY(!proxyModel.isForeignKeyItemsEnabled("A"));
+//   expectedFlags = getModelFlags(model, 0, 1) & Qt::ItemFlags(~Qt::ItemIsEnabled);
+//   QCOMPARE(getModelFlags(proxyModel, 0, 1), expectedFlags);
+//   // Check flags for FK -> B
+//   QVERIFY(proxyModel.isForeignKeyEditable("B"));
+//   QVERIFY(proxyModel.isForeignKeyItemsEnabled("B"));
+//   QCOMPARE(getModelFlags(proxyModel, 0, 2), getModelFlags(model, 0, 2));
+//   QCOMPARE(getModelFlags(proxyModel, 0, 3), getModelFlags(model, 0, 3));
+//   /*
+//    * Disable editable + enabled flags for A
+//    */
+//   proxyModel.setForeignKeyEditable("A", false);
+//   proxyModel.setForeignKeyItemsEnabled("A", false);
+//   // Check flags for FK -> A
+//   QVERIFY( proxyModel.isForeignKeyEditable("A"));
+//   QVERIFY( proxyModel.isForeignKeyItemsEnabled("A"));
+//   expectedFlags = getModelFlags(model, 0, 1) & Qt::ItemFlags(~Qt::ItemIsEditable) & Qt::ItemFlags(~Qt::ItemIsEnabled);
+//   QCOMPARE(getModelFlags(proxyModel, 0, 1), expectedFlags);
+//   // Check flags for FK -> B
+//   QVERIFY(proxyModel.isForeignKeyEditable("B"));
+//   QVERIFY(proxyModel.isForeignKeyItemsEnabled("B"));
+//   QCOMPARE(getModelFlags(proxyModel, 0, 2), getModelFlags(model, 0, 2));
+//   QCOMPARE(getModelFlags(proxyModel, 0, 3), getModelFlags(model, 0, 3));
+//   /*
+//    * Disable editable + enabled flags for all foreign keys
+//    */
+//   proxyModel.setAllForeignKeysEditable(false);
+//   proxyModel.setAllForeignKeysItemsEnabled(false);
+//   QVERIFY(!proxyModel.isForeignKeyEditable("A"));
+//   QVERIFY(!proxyModel.isForeignKeyItemsEnabled("A"));
+//   QVERIFY(!proxyModel.isForeignKeyEditable("B"));
+//   QVERIFY(!proxyModel.isForeignKeyItemsEnabled("B"));
+//   /*
+//    * Enable editable flag for all foreign keys
+//    */
+//   proxyModel.setAllForeignKeysEditable(true);
+//   proxyModel.setAllForeignKeysItemsEnabled(false);
+//   QVERIFY( proxyModel.isForeignKeyEditable("A"));
+//   QVERIFY(!proxyModel.isForeignKeyItemsEnabled("A"));
+//   QVERIFY( proxyModel.isForeignKeyEditable("B"));
+//   QVERIFY(!proxyModel.isForeignKeyItemsEnabled("B"));
+// 
+// //   QVERIFY(proxyModel.isForeignKeyEditable());
+// //   QVERIFY(proxyModel.isForeignKeyItemsEnabled());
+// //   proxyModel.setForeignKeyEditable(false);
+// //   proxyModel.setForeignKeyItemsEnabled(false);
+// //   QVERIFY(!proxyModel.isForeignKeyEditable());
+// //   QVERIFY(!proxyModel.isForeignKeyItemsEnabled());
+// }
+
+// void PkFkProxyModelTest::modelGetFlagsBenchmark()
+// {
+//   QFETCH(int, n);
+//   /*
+//    * Setup model
+//    */
+//   VariantTableModel model;
+//   model.resize(n, 2);
+//   model.populateColumnWithInt(0, 1);
+//   model.populateColumnWithInt(1, -1);
+//   auto column0flags = model.flags( model.index(0, 0) );
+//   auto column1flags = model.flags( model.index(0, 1) );
+//   QBENCHMARK{
+//     for(int row = 0; row < n; ++row){
+//       QCOMPARE(model.flags( model.index(row, 0) ), column0flags);
+//       QCOMPARE(model.flags( model.index(row, 1) ), column1flags);
+//     }
+//   }
+// }
+
+// void PkFkProxyModelTest::modelGetFlagsBenchmark_data()
+// {
+//   QTest::addColumn<int>("n");
+// 
+//   QTest::newRow("10") << 10;
+//   QTest::newRow("10'000") << 10000;
+// }
+
+// void PkFkProxyModelTest::foreignKeyModelGetFlagsBenchmark()
+// {
+//   QFETCH(int, n);
+//   /*
+//    * Setup model
+//    */
+//   VariantTableModel model;
+//   model.resize(n, 2);
+//   model.populateColumnWithInt(0, 1);
+//   model.populateColumnWithInt(1, -1);
+//   /*
+//    * Setup proxy model
+//    */
+//   ForeignKeyProxyModel proxyModel;
+//   proxyModel.setSourceModel(&model);
+//   proxyModel.addForeignKey("A", {0});
+//   proxyModel.addForeignKey("B", {0,1});
+//   proxyModel.setForeignKeyEditable("A", false);
+//   auto column0flags = proxyModel.flags( model.index(0, 0) );
+//   auto column1flags = proxyModel.flags( model.index(0, 1) );
+//   QBENCHMARK{
+//     for(int row = 0; row < n; ++row){
+//       QCOMPARE(proxyModel.flags( model.index(row, 0) ), column0flags);
+//       QCOMPARE(proxyModel.flags( model.index(row, 1) ), column1flags);
+//     }
+//   }
+// }
+
+// void PkFkProxyModelTest::foreignKeyModelGetFlagsBenchmark_data()
+// {
+//   QTest::addColumn<int>("n");
+// 
+//   QTest::newRow("10") << 10;
+//   QTest::newRow("10'000") << 10000;
+// }
 
 void PkFkProxyModelTest::primaryKeyRecordTest()
 {
@@ -195,33 +365,57 @@ void PkFkProxyModelTest::primaryKeyRecordTest()
   QCOMPARE(proxyModel.findRowForPrimaryKeyRecord(record), -1);
 }
 
-void PkFkProxyModelTest::foreignKeyRecordTest()
-{
-  ForeignKeyRecord record;
-  /*
-   * Setup source model
-   */
-  VariantTableModel model;
-  model.resize(2, 3);
-  model.populateColumn(0, {1,2});
-  model.populateColumn(1, {"A","B"});
-  model.populateColumn(2, {10,20});
-  /*
-   * Setup proxy model
-   */
-  ForeignKeyProxyModel proxyModel;
-  proxyModel.setSourceModel(&model);
-  proxyModel.setForeignKey({0,2});
-  /*
-   * Get record for row 0
-   */
-  record = proxyModel.foreignKeyRecord(0);
-  QCOMPARE(record.columnCount(), 2);
-  QCOMPARE(record.columnAt(0), 0);
-  QCOMPARE(record.dataAt(0), QVariant(1));
-  QCOMPARE(record.columnAt(1), 2);
-  QCOMPARE(record.dataAt(1), QVariant(10));
-}
+// void PkFkProxyModelTest::foreignKeyRecordTest()
+// {
+//   ForeignKeyRecord record;
+//   /*
+//    * Setup source model
+//    */
+//   VariantTableModel model;
+//   model.resize(2, 3);
+//   model.populateColumn(0, {1,2});
+//   model.populateColumn(1, {"A","B"});
+//   model.populateColumn(2, {10,20});
+//   /*
+//    * Setup proxy model
+//    */
+//   ForeignKeyProxyModel proxyModel;
+//   proxyModel.setSourceModel(&model);
+//   proxyModel.addForeignKey("FE1", {0,2});
+//   proxyModel.addForeignKey("FE2", {1});
+//   /*
+//    * Get record for row 0 refering entity FE1
+//    */
+//   record = proxyModel.getForeignKeyRecord("FE1", 0);
+//   QCOMPARE(record.columnCount(), 2);
+//   QCOMPARE(record.columnAt(0), 0);
+//   QCOMPARE(record.dataAt(0), QVariant(1));
+//   QCOMPARE(record.columnAt(1), 2);
+//   QCOMPARE(record.dataAt(1), QVariant(10));
+//   /*
+//    * Get record for row 0 refering entity FE2
+//    */
+//   record = proxyModel.getForeignKeyRecord("FE2", 0);
+//   QCOMPARE(record.columnCount(), 1);
+//   QCOMPARE(record.columnAt(0), 1);
+//   QCOMPARE(record.dataAt(0), QVariant("A"));
+// 
+// //   /*
+// //    * Setup proxy model
+// //    */
+// //   ForeignKeyProxyModel proxyModel;
+// //   proxyModel.setSourceModel(&model);
+// //   proxyModel.setForeignKey({0,2});
+// //   /*
+// //    * Get record for row 0
+// //    */
+// //   record = proxyModel.foreignKeyRecord(0);
+// //   QCOMPARE(record.columnCount(), 2);
+// //   QCOMPARE(record.columnAt(0), 0);
+// //   QCOMPARE(record.dataAt(0), QVariant(1));
+// //   QCOMPARE(record.columnAt(1), 2);
+// //   QCOMPARE(record.dataAt(1), QVariant(10));
+// }
 
 void PkFkProxyModelTest::pkQtModelTest()
 {
@@ -245,27 +439,27 @@ void PkFkProxyModelTest::pkQtModelTest()
   QtModelTest smt(&model);
 }
 
-void PkFkProxyModelTest::fkQtModelTest()
-{
-  /*
-   * Setup model
-   */
-  VariantTableModel model;
-  model.resize(3, 2);
-  model.populateColumn(0, {1,2,3});
-  model.populateColumn(1, {"A","B","C"});
-  /*
-   * Setup proxy model
-   */
-  ForeignKeyProxyModel proxyModel;
-  proxyModel.setSourceModel(&model);
-  /*
-   * Test
-   */
-  QCOMPARE(proxyModel.rowCount(), 3);
-  QtModelTest mt(&proxyModel);
-  QtModelTest smt(&model);
-}
+// void PkFkProxyModelTest::fkQtModelTest()
+// {
+//   /*
+//    * Setup model
+//    */
+//   VariantTableModel model;
+//   model.resize(3, 2);
+//   model.populateColumn(0, {1,2,3});
+//   model.populateColumn(1, {"A","B","C"});
+//   /*
+//    * Setup proxy model
+//    */
+//   ForeignKeyProxyModel proxyModel;
+//   proxyModel.setSourceModel(&model);
+//   /*
+//    * Test
+//    */
+//   QCOMPARE(proxyModel.rowCount(), 3);
+//   QtModelTest mt(&proxyModel);
+//   QtModelTest smt(&model);
+// }
 
 void PkFkProxyModelTest::modelGetDataBenchmark()
 {

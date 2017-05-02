@@ -49,6 +49,19 @@ Qt::ItemFlags PkFkProxyModelBase::flags(const QModelIndex & index) const
   return f;
 }
 
+KeyRecord PkFkProxyModelBase::getKeyRecord(int row, const ColumnList& key) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  KeyRecord record;
+  for(int column : key){
+    Q_ASSERT(column < columnCount());
+    record.append(column, index(row, column).data());
+  }
+  return record;
+}
+
 void PkFkProxyModelBase::setKey(const ColumnList& key)
 {
   mKey = key;

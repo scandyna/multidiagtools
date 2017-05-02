@@ -30,7 +30,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/qt5")
 
 # Add a test for this ItemModel lib
 function(addItemModelTest testName)
-  set(complteTestName "MdtItemModel${testName}")
+  set(complteTestName "MdtItemModel_${testName}")
   set(sourceFilePath "src/${testName}.cpp")
   string(TOLOWER ${complteTestName} executableName)
   add_executable(${executableName} ${sourceFilePath})
@@ -58,3 +58,4 @@ addItemModelTest("ProxyModelContainerTest")
 addItemModelTest("KeyTest")
 addItemModelTest("RelationKeyTest")
 addItemModelTest("PkFkProxyModelTest")
+addItemModelTest("ForeignKeyProxyModelTest")

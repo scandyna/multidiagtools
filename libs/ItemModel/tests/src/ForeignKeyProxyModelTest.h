@@ -18,36 +18,38 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
-#define MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
+#ifndef MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_TEST_H
+#define MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_TEST_H
 
-#include "KeyRecord.h"
+#include "TestBase.h"
 
-namespace Mdt{ namespace ItemModel{
+class ForeignKeyProxyModelTest : public TestBase
+{
+ Q_OBJECT
 
-  /*! \brief List of data for a specific row and foreign key in a item model
-   */
-  class ForeignKeyRecord : public KeyRecord
-  {
-   public:
+ private slots:
 
-    ForeignKeyRecord() = default;
+  void initTestCase();
+  void cleanupTestCase();
 
-    /*! \brief Get a foreign key record from a key record
-     */
-    static ForeignKeyRecord fromKeyRecord(const KeyRecord & record)
-    {
-      return ForeignKeyRecord(record);
-    }
+  void mapItemFlagsTest();
+  void mapItemTest();
+  void mapAddGetTest();
+  void mapMostRestrictiveFlagsForColumnTest();
+  void mapMostRestrictiveFlagsForColumnBenchmark();
+  void addGetTest();
+  void setModelTest();
+  void flagsTest();
+  void modelGetFlagsBenchmark();
+  void modelGetFlagsBenchmark_data();
+  void foreignKeyModelGetFlagsBenchmark();
+  void foreignKeyModelGetFlagsBenchmark_data();
+  void recordTest();
+  void qtModelTest();
+  void modelGetDataBenchmark();
+  void modelGetDataBenchmark_data();
+  void foreignKeyModelGetDataBenchmark();
+  void foreignKeyModelGetDataBenchmark_data();
+};
 
-  private:
-
-    ForeignKeyRecord(const KeyRecord & record)
-     : KeyRecord(record)
-    {
-    }
-  };
-
-}} // namespace Mdt{ namespace ItemModel{
-
-#endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
+#endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_TEST_H

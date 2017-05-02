@@ -24,6 +24,7 @@
 #include "Mdt/ItemModel/ColumnList.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include "Mdt/ItemModel/ForeignKey.h"
+#include "Mdt/ItemModel/ForeignKeyList.h"
 #include "Mdt/ItemModel/KeyData.h"
 #include "Mdt/ItemModel/KeyRecord.h"
 #include "Mdt/ItemModel/PrimaryKeyRecord.h"
@@ -311,6 +312,22 @@ void KeyTest::foreignKeyTest()
   ColumnList cl({1,2});
   auto fk3 = ForeignKey::fromColumnList(cl);
   QCOMPARE(fk3.columnCount(), 2);
+}
+
+void KeyTest::foreignKeyListTest()
+{
+  ForeignKey fk;
+  /*
+   * Initial state
+   */
+  ForeignKeyList list;
+  QVERIFY(list.getForeignKeyReferencing("A").isNull());
+  /*
+   * Add a foreign key
+   */
+  list.addForeignKey("A", ForeignKey({1,2}) );
+  fk = list.getForeignKeyReferencing("A");
+  QCOMPARE(fk.columnCount(), 2);
 }
 
 void KeyTest::keyDataTest()

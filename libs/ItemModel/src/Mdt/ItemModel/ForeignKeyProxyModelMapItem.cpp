@@ -18,36 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
-#define MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
-
-#include "KeyRecord.h"
+#include "ForeignKeyProxyModelMapItem.h"
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief List of data for a specific row and foreign key in a item model
-   */
-  class ForeignKeyRecord : public KeyRecord
-  {
-   public:
+ForeignKeyProxyModelMapItem::ForeignKeyProxyModelMapItem(const ForeignKey& fk)
+ : mFk(fk)
+{
+}
 
-    ForeignKeyRecord() = default;
+void ForeignKeyProxyModelMapItem::setForeignKeyEditable(bool editable)
+{
+  mFlags.setForeignKeyEditable(editable);
+}
 
-    /*! \brief Get a foreign key record from a key record
-     */
-    static ForeignKeyRecord fromKeyRecord(const KeyRecord & record)
-    {
-      return ForeignKeyRecord(record);
-    }
-
-  private:
-
-    ForeignKeyRecord(const KeyRecord & record)
-     : KeyRecord(record)
-    {
-    }
-  };
+void ForeignKeyProxyModelMapItem::setForeignKeyItemsEnabled(bool enable)
+{
+  mFlags.setForeignKeyItemsEnabled(enable);
+}
 
 }} // namespace Mdt{ namespace ItemModel{
-
-#endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H

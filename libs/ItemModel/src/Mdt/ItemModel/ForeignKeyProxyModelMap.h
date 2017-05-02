@@ -18,61 +18,40 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_H
-#define MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_H
+#ifndef MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_MAP_H
+#define MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_MAP_H
 
+#include "ForeignKeyProxyModelMapItem.h"
 #include "ForeignKey.h"
-#include "ForeignKeyProxyModelMap.h"
-#include "ForeignKeyRecord.h"
-#include "PkFkProxyModelBase.h"
 #include <QString>
 #include <QHash>
-#include <QVector>
-#include <initializer_list>
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief Hold informations about a foreign key of a item model
-   *
-   * Example of usage:
-   * \code
-   * QTableView view;
-   * auto *model = new MyModel(&view);
-   * auto *proxyModel = new ForeignKeyProxyModel(&view);
-   *
-   * proxyModel->setSourceModel(model);
-   * proxyModel->setForeignKey({1,2});
-   * proxyModel->setForeignKeyEditable(false);
-   *
-   * view.setModel(proxyModel);
-   * \endcode
+  /*! \brief Used for implementation of ForeignKeyProxyModel
    */
-  class ForeignKeyProxyModel : public PkFkProxyModelBase
+  class ForeignKeyProxyModelMap
   {
-   Q_OBJECT
-
    public:
-
-    /*! \brief Constructor
-     */
-    explicit ForeignKeyProxyModel(QObject* parent = nullptr);
 
     /*! \brief Add a foreign key
      *
      * \pre \a foreignEntityName must not be empty
+     * \pre A foreign key referencing \a foreignEntityName must not allready exist
      * \pre \a fk must not be null
      */
     void addForeignKey(const QString & foreignEntityName, const Mdt::ItemModel::ForeignKey & fk);
 
-    /*! \brief Add a foreign key
+    /*! \brief Remove a foreign key
      *
      * \pre \a foreignEntityName must not be empty
-     * \pre Each column in \a fk must be >= 0
-     * \pre Each column in \a fk must be unique
      */
-    void addForeignKey(const QString & foreignEntityName, std::initializer_list<int> fk);
+    void removeForeignKey(const QString & foreignEntityName);
 
     /*! \brief Get foreign key referencing a entity
+     *
+     * Returns the foreign key referencing the entity named \a entityName if it exists,
+     *  otherwise a null foreign key.
      *
      * \pre \a entityName must not be empty
      */
@@ -121,76 +100,17 @@ namespace Mdt{ namespace ItemModel{
      */
     bool isForeignKeyItemsEnabled(const QString & foreignEntityName) const;
 
-    /*! \brief Get item flags for given index
-     */
-    Qt::ItemFlags flags(const QModelIndex & index) const override;
-
-    /*! \brief Get foreign key record for row referencing foreign entity
+    /*! \brief Get most restricitive flags for a column
      *
-     * \pre \a foreignEntityName must not be empty
-     * \pre A foreign key referencing \a foreignEntityName must exist
-     * \pre \a row must be in correct range ( 0 <= row < rowCount() )
+     * \pre \a column must be >= 0
      */
-    ForeignKeyRecord getForeignKeyRecord(const QString & foreignEntityName, int row) const;
-
-
-    /*! \brief Set foreign key
-     *
-     * \pre \a fk must not be null
-     */
-    void setForeignKey(const ForeignKey & fk);
-
-    /*! \brief Set foreign key
-     *
-     * \pre Each column in \a fk must be >= 0
-     * \pre Each column in \a fk must be unique
-     */
-    void setForeignKey(std::initializer_list<int> fk);
-
-    /*! \brief Get foreign key
-     */
-    ForeignKey foreignKey() const;
-
-    /*! \brief Set foreign key editable
-     *
-     * By default, foreign key is editable
-     */
-    void setForeignKeyEditable(bool editable);
-
-    /*! \brief Check if foreign is editable
-     */
-    bool isForeignKeyEditable() const
-    {
-      return isKeyEditable();
-    }
-
-    /*! \brief Set foreign key items enabled
-     *
-     * By default, foreign key items are enabled.
-     */
-    void setForeignKeyItemsEnabled(bool enable);
-
-    /*! \brief Check if foreign key items are enabled
-     */
-    bool isForeignKeyItemsEnabled() const
-    {
-      return isKeyItemsEnabled();
-    }
-
-    /*! \brief Get foreign key record for row
-     *
-     * \pre \a row must be in correct range ( 0 <= row < rowCount() )
-     */
-    ForeignKeyRecord foreignKeyRecord(int row) const;
+    ForeignKeyProxyModelMapItemFlags getMostRestrictiveFlagsForColumn(int column) const;
 
    private:
 
-//     QVector<ForeignKeyProxyModelMapItem> getItemsActingOnColumn(int column) const;
-
-    ForeignKeyProxyModelMap mMap;
-//     QHash<QString, ForeignKeyProxyModelMapItem> mMap;
+    QHash<QString, ForeignKeyProxyModelMapItem> mMap;
   };
 
 }} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_H
+#endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_MAP_H

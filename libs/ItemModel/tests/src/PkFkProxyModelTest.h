@@ -33,15 +33,20 @@ class PkFkProxyModelTest : public TestBase
   void cleanupTestCase();
 
   void pkSetGetKeyTest();
-  void fkSetGetKeyTest();
+//   void fkMapItemTest();
+//   void fkAddGetKeyTest();
   void pkSetModelTest();
-  void fkSetModelTest();
+//   void fkSetModelTest();
   void pkFlagsTest();
-  void fkFlagsTest();
+//   void fkFlagsTest();
+//   void modelGetFlagsBenchmark();
+//   void modelGetFlagsBenchmark_data();
+//   void foreignKeyModelGetFlagsBenchmark();
+//   void foreignKeyModelGetFlagsBenchmark_data();
   void primaryKeyRecordTest();
-  void foreignKeyRecordTest();
+//   void foreignKeyRecordTest();
   void pkQtModelTest();
-  void fkQtModelTest();
+//   void fkQtModelTest();
 
   void modelGetDataBenchmark();
   void modelGetDataBenchmark_data();

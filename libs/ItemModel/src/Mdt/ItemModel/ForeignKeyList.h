@@ -18,36 +18,45 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
-#define MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
+#ifndef MDT_ITEM_MODEL_FOREIGN_KEY_LIST_H
+#define MDT_ITEM_MODEL_FOREIGN_KEY_LIST_H
 
-#include "KeyRecord.h"
+#include "ForeignKey.h"
+#include <QHash>
+#include <QString>
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief List of data for a specific row and foreign key in a item model
+  /*! \brief Container for ForeignKey
    */
-  class ForeignKeyRecord : public KeyRecord
+  class ForeignKeyList
   {
-   public:
+  public:
 
-    ForeignKeyRecord() = default;
-
-    /*! \brief Get a foreign key record from a key record
+    /*! \brief Add a foreign key
+     *
+     * If foreign key support was not enabled,
+     *  it will be enabled before adding \a fk.
+     *
+     * \pre \a foreignEntityName must not be empty
+     * \pre \a fk must not be null
      */
-    static ForeignKeyRecord fromKeyRecord(const KeyRecord & record)
-    {
-      return ForeignKeyRecord(record);
-    }
+    void addForeignKey(const QString & foreignEntityName, const Mdt::ItemModel::ForeignKey & fk);
+
+    /*! \brief Get foreign key referencing a entity
+     *
+     * Returns the foreign key referencing entity named \a entityName if exists,
+     *  otherwise a null foreign key.
+     *
+     * \pre \a entityName must not be empty
+     */
+    ForeignKey getForeignKeyReferencing(const QString & entityName) const;
 
   private:
 
-    ForeignKeyRecord(const KeyRecord & record)
-     : KeyRecord(record)
-    {
-    }
+    QHash<QString, ForeignKey> mMap;
   };
 
 }} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
+#endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_LIST_H

@@ -33,6 +33,7 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/RowColumnListBase.cpp
     src/Mdt/ItemModel/RowList.cpp
     src/Mdt/ItemModel/ColumnList.cpp
+    src/Mdt/ItemModel/ForeignKeyList.cpp
     src/Mdt/ItemModel/KeyData.cpp
     src/Mdt/ItemModel/KeyRecord.cpp
     src/Mdt/ItemModel/PrimaryKeyRecord.cpp
@@ -41,6 +42,8 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/RelationKeyCopier.cpp
     src/Mdt/ItemModel/PkFkProxyModelBase.cpp
     src/Mdt/ItemModel/PrimaryKeyProxyModel.cpp
+    src/Mdt/ItemModel/ForeignKeyProxyModelMapItem.cpp
+    src/Mdt/ItemModel/ForeignKeyProxyModelMap.cpp
     src/Mdt/ItemModel/ForeignKeyProxyModel.cpp
 )
 

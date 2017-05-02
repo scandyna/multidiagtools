@@ -45,6 +45,12 @@ namespace Mdt{ namespace ItemModel{
 
    protected:
 
+    /*! \brief Get key record for row
+     *
+     * \pre \a row must be in correct range ( 0 <= row < rowCount() )
+     */
+    KeyRecord getKeyRecord(int row, const ColumnList & key) const;
+
     /*! \brief Set key
      */
     void setKey(const ColumnList & key);
