@@ -26,8 +26,6 @@
 #include "ForeignKeyRecord.h"
 #include "PkFkProxyModelBase.h"
 #include <QString>
-#include <QHash>
-#include <QVector>
 #include <initializer_list>
 
 namespace Mdt{ namespace ItemModel{
@@ -41,8 +39,8 @@ namespace Mdt{ namespace ItemModel{
    * auto *proxyModel = new ForeignKeyProxyModel(&view);
    *
    * proxyModel->setSourceModel(model);
-   * proxyModel->setForeignKey({1,2});
-   * proxyModel->setForeignKeyEditable(false);
+   * proxyModel->addForeignKey("Client", {1,2});
+   * proxyModel->setForeignKeyEditable("Client", false);
    *
    * view.setModel(proxyModel);
    * \endcode
@@ -185,10 +183,7 @@ namespace Mdt{ namespace ItemModel{
 
    private:
 
-//     QVector<ForeignKeyProxyModelMapItem> getItemsActingOnColumn(int column) const;
-
     ForeignKeyProxyModelMap mMap;
-//     QHash<QString, ForeignKeyProxyModelMapItem> mMap;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

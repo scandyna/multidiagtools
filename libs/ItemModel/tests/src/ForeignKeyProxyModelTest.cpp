@@ -92,11 +92,13 @@ void ForeignKeyProxyModelTest::mapAddGetTest()
    * Initial state
    */
   ForeignKeyProxyModelMap map;
+  QVERIFY(!map.hasForeignKeyReferencing("FK1"));
   /*
    * Add foreign key
    */
   ForeignKey fk1{1};
   map.addForeignKey("FK1", fk1);
+  QVERIFY(map.hasForeignKeyReferencing("FK1"));
   QCOMPARE(map.getForeignKeyReferencing("FK1").columnCount(), 1);
   ForeignKey fk12{1,2};
   map.addForeignKey("FK12", fk12);

@@ -48,6 +48,12 @@ namespace Mdt{ namespace ItemModel{
      */
     void removeForeignKey(const QString & foreignEntityName);
 
+    /*! \brief Check if a foreign key referencing a entity exists
+     *
+     * \pre \a entityName must not be empty
+     */
+    bool hasForeignKeyReferencing(const QString & entityName) const;
+
     /*! \brief Get foreign key referencing a entity
      *
      * Returns the foreign key referencing the entity named \a entityName if it exists,

@@ -38,6 +38,13 @@ void ForeignKeyProxyModelMap::removeForeignKey(const QString& foreignEntityName)
   mMap.remove(foreignEntityName);
 }
 
+bool ForeignKeyProxyModelMap::hasForeignKeyReferencing(const QString& entityName) const
+{
+  Q_ASSERT(!entityName.trimmed().isEmpty());
+
+  return mMap.contains(entityName);
+}
+
 ForeignKey ForeignKeyProxyModelMap::getForeignKeyReferencing(const QString& entityName) const
 {
   Q_ASSERT(!entityName.trimmed().isEmpty());

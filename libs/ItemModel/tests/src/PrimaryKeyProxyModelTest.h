@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_PK_FK_PROXY_MODEL_TEST_H
-#define MDT_ITEM_MODEL_PK_FK_PROXY_MODEL_TEST_H
+#ifndef MDT_ITEM_MODEL_PRIMARY_KEY_PROXY_MODEL_TEST_H
+#define MDT_ITEM_MODEL_PRIMARY_KEY_PROXY_MODEL_TEST_H
 
 #include "TestBase.h"
 
-class PkFkProxyModelTest : public TestBase
+class PrimaryKeyProxyModelTest : public TestBase
 {
  Q_OBJECT
 
@@ -32,28 +32,21 @@ class PkFkProxyModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-//   void pkSetGetKeyTest();
-//   void fkMapItemTest();
-//   void fkAddGetKeyTest();
-//   void pkSetModelTest();
-//   void fkSetModelTest();
-//   void pkFlagsTest();
-//   void fkFlagsTest();
-//   void modelGetFlagsBenchmark();
-//   void modelGetFlagsBenchmark_data();
-//   void foreignKeyModelGetFlagsBenchmark();
-//   void foreignKeyModelGetFlagsBenchmark_data();
-//   void primaryKeyRecordTest();
-//   void foreignKeyRecordTest();
-//   void pkQtModelTest();
-//   void fkQtModelTest();
-
-//   void modelGetDataBenchmark();
-//   void modelGetDataBenchmark_data();
-//   void proxyModelGetDataBenchmark();
-//   void proxyModelGetDataBenchmark_data();
-//   void findPrimaryKeyRecordBenchmark();
-//   void findPrimaryKeyRecordBenchmark_data();
+  void setGetTest();
+  void setModelTest();
+  void flagsTest();
+  void modelGetFlagsBenchmark();
+  void modelGetFlagsBenchmark_data();
+  void primaryKeyModelGetFlagsBenchmark();
+  void primaryKeyModelGetFlagsBenchmark_data();
+  void recordTest();
+  void qtModelTest();
+  void modelGetDataBenchmark();
+  void modelGetDataBenchmark_data();
+  void primaryKeyModelGetDataBenchmark();
+  void primaryKeyModelGetDataBenchmark_data();
+  void findPrimaryKeyRecordBenchmark();
+  void findPrimaryKeyRecordBenchmark_data();
 };
 
-#endif // #ifndef MDT_ITEM_MODEL_PK_FK_PROXY_MODEL_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_PRIMARY_KEY_PROXY_MODEL_TEST_H
