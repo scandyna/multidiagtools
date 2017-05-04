@@ -2,14 +2,24 @@ format 211
 
 classcanvas 128002 class_ref 3715330 // PrimaryKey
   classdiagramsettings member_max_width 0 end
-  xyz 40 38 2000
+  xyz 42 91 2000
 end
 classcanvas 128130 class_ref 3715074 // ColumnList
   classdiagramsettings member_max_width 0 end
-  xyz 423 69 2006
+  xyz 401 124 2006
+end
+classcanvas 128386 class_ref 3715458 // ForeignKey
+  classdiagramsettings member_max_width 0 end
+  xyz 442 42 2012
 end
 relationcanvas 128258 relation_ref 4116482 // <directional composition>
   from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 4116610 // <directional composition>
+  decenter_begin 541
+  from ref 128386 z 2013 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

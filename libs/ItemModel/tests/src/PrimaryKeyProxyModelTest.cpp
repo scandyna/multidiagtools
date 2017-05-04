@@ -51,21 +51,14 @@ void PrimaryKeyProxyModelTest::setModelTest()
    */
   PrimaryKeyProxyModel proxyModel;
   proxyModel.setPrimaryKey({0,1});
-  
   QCOMPARE(proxyModel.rowCount(), 0);
-
   /*
    * Set source model
    */
   VariantTableModel model;
   model.resize(2, 3);
   proxyModel.setSourceModel(&model);
-  
   QCOMPARE(proxyModel.rowCount(), 2);
-  
-  
-
-  QFAIL("Not complete");
 }
 
 void PrimaryKeyProxyModelTest::flagsTest()

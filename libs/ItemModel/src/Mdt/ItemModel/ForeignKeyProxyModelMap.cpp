@@ -105,11 +105,13 @@ ForeignKeyProxyModelMapItemFlags ForeignKeyProxyModelMap::getMostRestrictiveFlag
   ForeignKeyProxyModelMapItemFlags flags;
 
   for(const auto & item : mMap){
-    if(!item.isForeignKeyEditable()){
-      flags.setForeignKeyEditable(false);
-    }
-    if(!item.isForeignKeyItemsEnabled()){
-      flags.setForeignKeyItemsEnabled(false);
+    if(item.foreignKeyContainsColumn(column)){
+      if(!item.isForeignKeyEditable()){
+        flags.setForeignKeyEditable(false);
+      }
+      if(!item.isForeignKeyItemsEnabled()){
+        flags.setForeignKeyItemsEnabled(false);
+      }
     }
   }
 

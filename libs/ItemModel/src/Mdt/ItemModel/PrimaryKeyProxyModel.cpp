@@ -32,7 +32,6 @@ void PrimaryKeyProxyModel::setPrimaryKey(const PrimaryKey & pk)
   Q_ASSERT(!pk.isNull());
 
   mPk = pk;
-//   setKey(pk.toColumnList());
 }
 
 void PrimaryKeyProxyModel::setPrimaryKey(std::initializer_list<int> pk)
@@ -43,19 +42,16 @@ void PrimaryKeyProxyModel::setPrimaryKey(std::initializer_list<int> pk)
 PrimaryKey PrimaryKeyProxyModel::primaryKey() const
 {
   return mPk;
-//   return PrimaryKey::fromColumnList(key());
 }
 
 void PrimaryKeyProxyModel::setPrimaryKeyEditable(bool editable)
 {
   mIsPkEditable = editable;
-//   setKeyEditable(editable);
 }
 
 void PrimaryKeyProxyModel::setPrimaryKeyItemsEnabled(bool enable)
 {
   mIsPkItemsEnabled = enable;
-//   setKeyItemsEnabled(enable);
 }
 
 Qt::ItemFlags PrimaryKeyProxyModel::flags(const QModelIndex & index) const

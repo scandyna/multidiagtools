@@ -39,4 +39,9 @@ relationcanvas 134274 relation_ref 4164098 // <directional composition>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
+relationcanvas 134402 relation_ref 4396162 // <unidirectional association>
+  from ref 133378 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
 end

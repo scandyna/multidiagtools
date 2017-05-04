@@ -11,8 +11,50 @@ end
 note 128386 "The type of child controller model is known when relation is created.
 So, impl subclass can simply cast (evt. qobject_cast as assertion)"
   xyzwh 40 744 2000 408 130
+classcanvas 128514 class_ref 3877378 // FilterControllerRelation
+  classdiagramsettings member_max_width 0 end
+  xyz 328 684 2012
+end
+classcanvas 128770 class_ref 3648002 // AbstractController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 593 238 2017
+end
+classcanvas 129026 class_ref 3614594 // AbstractSqlController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 577 323 2023
+end
+classcanvas 129282 class_ref 3979138 // AbstractSqlTableModelController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 545 439 2029
+end
+note 129538 "Only QSqlTableModel based model supports the concept of filter.
+How to deal ?
+Public methods in AbstractSqlController, which fails if concrete implementation does not support the concept of filter ?
+
+First version: just implement addSqlChildController() etc.. in AbstractSqlTableModelController , and see later.."
+  xyzwh 86 67 2018 573 167
 relationcanvas 128258 relation_ref 4312834 // <generalisation>
   from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 4312578 // <generalisation>
+  from ref 128514 z 2013 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 4396162 // <unidirectional association>
+  from ref 128130 z 2018 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 4025346 // <generalisation>
+  from ref 129026 z 2024 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 4486786 // <generalisation>
+  from ref 129282 z 2030 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

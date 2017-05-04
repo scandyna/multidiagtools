@@ -20,7 +20,7 @@ relationcanvas 128514 relation_ref 4446466 // <generalisation>
   geometry VHV unfixed
   decenter_begin 485
   from ref 128386 z 2013 to point 189 160
-  line 129666 z 2013 to point 542 160
+  line 129666 z 2013 to point 479 160
   line 129794 z 2013 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

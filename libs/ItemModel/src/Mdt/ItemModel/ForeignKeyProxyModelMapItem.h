@@ -91,6 +91,13 @@ namespace Mdt{ namespace ItemModel{
       return mFk;
     }
 
+    /*! \brief Check if the foreign key of this item contains a column
+     */
+    bool foreignKeyContainsColumn(int column) const
+    {
+      return mFk.containsColumn(column);
+    }
+
     /*! \brief Get flags
      */
     ForeignKeyProxyModelMapItemFlags flags() const

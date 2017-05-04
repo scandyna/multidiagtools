@@ -1,4 +1,4 @@
-window_sizes 1280 963 306 968 911 0
+window_sizes 1280 963 353 921 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 3148674 // Overview
@@ -8,7 +8,7 @@ diagrams
   classdiagram_ref 3360898 // ControllerRelationEventMapper
     120 98 100 4 0 0
   classdiagram_ref 3353858 // FilterControllerRelation
-    928 911 100 4 0 0
+    832 911 100 4 0 0
   classdiagram_ref 2761090 // WidgetMapperController
     937 911 100 8 0 0
   classdiagram_ref 3360642 // ModelWrapper
@@ -17,8 +17,6 @@ diagrams
     943 911 100 8 0 0
   classdiagram_ref 3168514 // SqlTableViewController
     120 98 100 7 24 0
-  classdiagram_ref 2707074 // AbstractController
-    943 911 100 23 0 0
   classdiagram_ref 2700418 // EditorWidget
     120 98 70 9 0 0
   classdiagram_ref 3181954 // AbstractEditorWidget
@@ -27,31 +25,38 @@ diagrams
     120 98 100 23 0 116
   classdiagram_ref 3168642 // SqlWidgetMapperController
     943 911 100 4 12 0
-  classdiagram_ref 3181826 // Overview
+  classdiagram_ref 3168770 // SqlRelation
+    120 98 100 4 0 0
+  classdiagram_ref 3354114 // SqlFilterControllerRelation
+    832 911 100 4 0 0
+  classdiagram_ref 3261570 // AbstractControllerRelation
+    120 98 100 22 0 0
+  classdiagram_ref 3208706 // ControllerRelation
+    120 98 100 8 0 0
+  classdiagram_ref 3327618 // KeyData
+    1012 911 100 4 0 0
+  classdiagram_ref 3235202 // PrimaryKey
+    120 98 100 4 0 0
+  classdiagram_ref 3248514 // RelationKey
+    120 98 100 4 0 0
+  classdiagram_ref 3228418 // KeyOverview
+    120 98 100 4 0 0
+  active  classdiagram_ref 3321090 // PkFkProxyModel
+    921 911 90 21 0 246
+  classdiagram_ref 3473154 // ForeignKey
     120 98 100 18 0 0
-  classdiagram_ref 3195266 // FormWidget
-    943 911 100 21 60 8
-  classdiagram_ref 2827266 // DataWidgetMapper
-    968 911 100 7 0 0
-  active  classdiagram_ref 3466626 // DataWidgetMapperItemDelegate
-    968 911 100 4 0 0
+  classdiagram_ref 3479682 // ForeignKeyProxyModel
+    1012 911 100 21 0 0
 end
 show_stereotypes
-selected operation_ref 5683330 // setModelData
 open
   
-package_ref 409858 // principes
+  package_ref 409858 // principes
   
-package_ref 549506 // Algorithm
-  classview_ref 1432450 // Selection
-  class_ref 3998722 // DataWidgetMapperItemDelegate
-  classview_ref 1801090 // Controller_Core
-  classdiagram_ref 2761090 // WidgetMapperController
-  classview_ref 1808002 // Controller_QtQuick
-  classview_ref 1801218 // Controller_Sql
-  class_ref 3138562 // SqlTableWidgetMapperController
-  classview_ref 1287042 // Controller
-  classview_ref 1465474 // EditorWidget
+  package_ref 549506 // Algorithm
+  class_ref 3829762 // PkFkProxyModelBase
+  
+  package_ref 641410 // PlainText
   class_ref 174338 // QSqlQueryModel
 end
 end

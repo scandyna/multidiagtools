@@ -1,6 +1,6 @@
 format 211
 "Mdt" // Mdt
-  revision 27
+  revision 28
   modified_by 2 "philippe"
   // class settings
   
@@ -772,9 +772,13 @@ ${members}};
 
   package_ref 483202 // Numeric
 
+  package_ref 641410 // PlainText
+
   package_ref 621826 // TextStorage
 
   package_ref 402050 // Csv
+
+  package_ref 641538 // ItemCopier
 
   package_ref 402306 // SerialPort
 

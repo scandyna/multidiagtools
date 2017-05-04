@@ -39,10 +39,6 @@ namespace Mdt{ namespace ItemModel{
      */
     explicit PkFkProxyModelBase(QObject* parent = nullptr);
 
-//     /*! \brief Get item flags for given index
-//      */
-//     Qt::ItemFlags flags(const QModelIndex & index) const override;
-
    protected:
 
     /*! \brief Get key record for row

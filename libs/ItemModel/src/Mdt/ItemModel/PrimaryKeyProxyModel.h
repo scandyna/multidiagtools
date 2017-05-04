@@ -81,7 +81,6 @@ namespace Mdt{ namespace ItemModel{
     bool isPrimaryKeyEditable() const
     {
       return mIsPkEditable;
-      //return isKeyEditable();
     }
 
     /*! \brief Set primary key items enabled
@@ -95,7 +94,6 @@ namespace Mdt{ namespace ItemModel{
     bool isPrimaryKeyItemsEnabled() const
     {
       return mIsPkItemsEnabled;
-      //return isKeyItemsEnabled();
     }
 
     /*! \brief Get item flags for given index

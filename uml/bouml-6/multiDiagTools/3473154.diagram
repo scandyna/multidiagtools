@@ -1,0 +1,16 @@
+format 211
+
+classcanvas 128002 class_ref 3715458 // ForeignKey
+  classdiagramsettings member_max_width 0 end
+  xyz 546 40 2000
+end
+classcanvas 128130 class_ref 4005250 // ForeignKeyList
+  classdiagramsettings member_max_width 0 end
+  xyz 12 79 2000
+end
+relationcanvas 128898 relation_ref 4520066 // <directional composition>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 530 143 3000 no_multiplicity_b
+end
+end

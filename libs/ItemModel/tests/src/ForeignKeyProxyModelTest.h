@@ -40,12 +40,12 @@ class ForeignKeyProxyModelTest : public TestBase
   void addGetTest();
   void setModelTest();
   void flagsTest();
+  void recordTest();
+  void qtModelTest();
   void modelGetFlagsBenchmark();
   void modelGetFlagsBenchmark_data();
   void foreignKeyModelGetFlagsBenchmark();
   void foreignKeyModelGetFlagsBenchmark_data();
-  void recordTest();
-  void qtModelTest();
   void modelGetDataBenchmark();
   void modelGetDataBenchmark_data();
   void foreignKeyModelGetDataBenchmark();

@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 68
+  revision 73
   modified_by 2 "philippe"
   // class settings
   
@@ -1773,6 +1773,11 @@ ${inlines}
       end
     end
 
+    classdiagram 3473154 "ForeignKey"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
     class 3715458 "ForeignKey"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -1794,6 +1799,189 @@ ${inlines}
 "
 	    classrelation_ref 4142594 // <directional composition>
 	  b parent class_ref 3715074 // ColumnList
+      end
+
+      operation 5696514 "ForeignKey"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5696642 "ForeignKey"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "list" explicit_type "int"
+	multiplicity "*"
+	cpp_decl "  ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5696770 "columnCount"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5696898 "isNull"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5697026 "greatestColumn"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5697154 "toColumnList"
+	public return_type class_ref 3715074 // ColumnList
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5697282 "fromColumnList"
+	class_operation public return_type class_ref 3715458 // ForeignKey
+	nparams 1
+	  param in name "list" type class_ref 3715074 // ColumnList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 4005250 "ForeignKeyList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5703810 "addForeignKey"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "foreignEntity" type class_ref 161026 // QString
+	  param in name "fk" type class_ref 3715458 // ForeignKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5703938 "addForeignKey"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "foreignEntity" type class_ref 161026 // QString
+	  param in name "foreignColumns" explicit_type "int"
+	multiplicity "*"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5704066 "getForeignKeyReferencing"
+	public return_type class_ref 3715458 // ForeignKey
+	nparams 1
+	  param in name "foreignEntity" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4546178 // <directional composition>
+	relation 4520066 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 4546178 // <directional composition>
+	  b parent class_ref 3715458 // ForeignKey
       end
     end
 
@@ -2318,7 +2506,7 @@ ${inlines}
 
     classdiagram 3321090 "PkFkProxyModel"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B-Landscape
     end
 
     class 3829762 "PkFkProxyModelBase"
@@ -2335,6 +2523,39 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 5704578 "getKeyRecord"
+	protected return_type class_ref 3829890 // KeyRecord
+	nparams 2
+	  param in name "row" explicit_type "int"
+	  param in name "columnList" explicit_type "T"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5356162 "findFirstRowForKeyRecord"
+	protected explicit_return_type "int"
+	nparams 1
+	  param in name "record" type class_ref 3829890 // KeyRecord
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       attribute 3339522 "KeyIsEditable"
 	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -2365,21 +2586,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 4283778 // <generalisation>
 	  b parent class_ref 1752450 // QIdentityProxyModel
-      end
-
-      operation 5356034 "flags"
-	public explicit_return_type "int"
-	nparams 1
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
       end
 
       operation 5362818 "setKey"
@@ -2445,31 +2651,6 @@ ${inlines}
 	
       end
 
-      operation 5356162 "findFirstRowForKeyRecord"
-	protected explicit_return_type "int"
-	nparams 1
-	  param in name "record" type class_ref 3829890 // KeyRecord
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 4283906 // <directional composition>
-	relation 4257922 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4283906 // <directional composition>
-	  b parent class_ref 3715074 // ColumnList
-      end
-
       classrelation 4284290 // <dependency>
 	relation 4258306 -_->
 	  a public
@@ -2493,6 +2674,45 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      attribute 3473026 "IsPkEditable"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3473154 "IsPkItemsEnabled"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5704194 "flags"
+	public explicit_return_type "int"
+	nparams 1
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 5349122 "setPrimaryKey"
 	public explicit_return_type "void"
 	nparams 1
@@ -2565,6 +2785,20 @@ ${inlines}
 	    classrelation_ref 4284162 // <generalisation>
 	  b parent class_ref 3829762 // PkFkProxyModelBase
       end
+
+      classrelation 4545794 // <directional composition>
+	relation 4519682 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4545794 // <directional composition>
+	  b parent class_ref 3715330 // PrimaryKey
+      end
+    end
+
+    classdiagram 3479682 "ForeignKeyProxyModel"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
     end
 
     class 3823234 "ForeignKeyProxyModel"
@@ -2587,6 +2821,189 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 4284034 // <generalisation>
 	  b parent class_ref 3829762 // PkFkProxyModelBase
+      end
+
+      operation 5704322 "flags"
+	public explicit_return_type "int"
+	nparams 1
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5704450 "addForeignKey"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "foreignEntity" type class_ref 161026 // QString
+	  param in name "fk" type class_ref 3715458 // ForeignKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4552834 // <directional composition>
+	relation 4526722 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4552834 // <directional composition>
+	  b parent class_ref 4018306 // ForeignKeyProxyModelMap
+      end
+    end
+
+    class 4011778 "ForeignKeyProxyModelMapItem"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4546050 // <directional composition>
+	relation 4519938 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4546050 // <directional composition>
+	  b parent class_ref 3715458 // ForeignKey
+      end
+
+      classrelation 4553090 // <directional composition>
+	relation 4526978 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4553090 // <directional composition>
+	  b parent class_ref 4018434 // ForeignKeyProxyModelMapItemFlags
+      end
+
+      operation 5711234 "foreignKey"
+	public return_type class_ref 3715458 // ForeignKey
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5711362 "flags"
+	public return_type class_ref 4018434 // ForeignKeyProxyModelMapItemFlags
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 4018306 "ForeignKeyProxyModelMap"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4552962 // <directional composition>
+	relation 4526850 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 4552962 // <directional composition>
+	  b parent class_ref 4011778 // ForeignKeyProxyModelMapItem
+      end
+
+      operation 5711106 "getMostRestrictiveFlagsForColumn"
+	public return_type class_ref 4018434 // ForeignKeyProxyModelMapItemFlags
+	nparams 1
+	  param in name "column" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 4018434 "ForeignKeyProxyModelMapItemFlags"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3473282 "IsFkEditable"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3473410 "IsFkItemsEnabled"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
   end

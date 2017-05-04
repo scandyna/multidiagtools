@@ -151,10 +151,43 @@ void ForeignKeyProxyModelTest::mapAddGetTest()
 void ForeignKeyProxyModelTest::mapMostRestrictiveFlagsForColumnTest()
 {
   ForeignKeyProxyModelMapItemFlags flags;
+  ForeignKey fk1{1};
+  ForeignKey fk12{1,2};
+  ForeignKey fk2{2};
   /*
-   * Setup:
+   * Setup A:
+   * Non overlapping foreign keys
+   */
+  ForeignKeyProxyModelMap mapA;
+  mapA.addForeignKey("FE1", fk1);
+  mapA.addForeignKey("FE2", fk2);
+  // Default
+  flags = mapA.getMostRestrictiveFlagsForColumn(1);
+  QVERIFY(flags.isForeignKeyItemsEnabled());
+  QVERIFY(flags.isForeignKeyEditable());
+  flags = mapA.getMostRestrictiveFlagsForColumn(2);
+  QVERIFY(flags.isForeignKeyItemsEnabled());
+  QVERIFY(flags.isForeignKeyEditable());
+  // Diable editable for FE1
+  mapA.setForeignKeyEditable("FE1", false);
+  flags = mapA.getMostRestrictiveFlagsForColumn(1);
+  QVERIFY(flags.isForeignKeyItemsEnabled());
+  QVERIFY(!flags.isForeignKeyEditable());
+  flags = mapA.getMostRestrictiveFlagsForColumn(2);
+  QVERIFY(flags.isForeignKeyItemsEnabled());
+  QVERIFY(flags.isForeignKeyEditable());
+  // Disable items enabled for FE1
+  mapA.setForeignKeyItemsEnabled("FE1", false);
+  flags = mapA.getMostRestrictiveFlagsForColumn(1);
+  QVERIFY(!flags.isForeignKeyItemsEnabled());
+  QVERIFY(!flags.isForeignKeyEditable());
+  flags = mapA.getMostRestrictiveFlagsForColumn(2);
+  QVERIFY(flags.isForeignKeyItemsEnabled());
+  QVERIFY(flags.isForeignKeyEditable());
+  /*
+   * Setup B:
    * ------------------------------
-   * | Column             | 0 | 1 |
+   * | Column             | 1 | 2 |
    * ------------------------------
    * | FK1 items enabled  | y | - |
    * ------------------------------
@@ -169,17 +202,15 @@ void ForeignKeyProxyModelTest::mapMostRestrictiveFlagsForColumnTest()
    * | Res. editable      | n | n |
    * ------------------------------
    */
-  ForeignKey fk1{1};
-  ForeignKey fk12{1,2};
-  ForeignKeyProxyModelMap map;
-  map.addForeignKey("FK1", fk1);
-  map.addForeignKey("FK12", fk12);
-  map.setForeignKeyEditable("FK12", false);
+  ForeignKeyProxyModelMap mapB;
+  mapB.addForeignKey("FK1", fk1);
+  mapB.addForeignKey("FK12", fk12);
+  mapB.setForeignKeyEditable("FK12", false);
   // Check
-  flags = map.getMostRestrictiveFlagsForColumn(0);
+  flags = mapB.getMostRestrictiveFlagsForColumn(1);
   QVERIFY(flags.isForeignKeyItemsEnabled());
   QVERIFY(!flags.isForeignKeyEditable());
-  flags = map.getMostRestrictiveFlagsForColumn(1);
+  flags = mapB.getMostRestrictiveFlagsForColumn(2);
   QVERIFY(flags.isForeignKeyItemsEnabled());
   QVERIFY(!flags.isForeignKeyEditable());
 }
@@ -194,8 +225,8 @@ void ForeignKeyProxyModelTest::mapMostRestrictiveFlagsForColumnBenchmark()
   map.addForeignKey("FK12", fk12);
   map.setForeignKeyEditable("FK12", false);
   QBENCHMARK{
-    flags0 = map.getMostRestrictiveFlagsForColumn(0);
-    flags1 = map.getMostRestrictiveFlagsForColumn(1);
+    flags0 = map.getMostRestrictiveFlagsForColumn(1);
+    flags1 = map.getMostRestrictiveFlagsForColumn(2);
   }
   QVERIFY(flags0.isForeignKeyItemsEnabled());
   QVERIFY(!flags0.isForeignKeyEditable());
@@ -212,7 +243,19 @@ void ForeignKeyProxyModelTest::addGetTest()
 
 void ForeignKeyProxyModelTest::setModelTest()
 {
-  QFAIL("Not complete");
+  /*
+   * Check that we can do setup before setting source model
+   */
+  ForeignKeyProxyModel proxyModel;
+  proxyModel.addForeignKey("A", {0,1});
+  QCOMPARE(proxyModel.rowCount(), 0);
+  /*
+   * Set source model
+   */
+  VariantTableModel model;
+  model.resize(2, 3);
+  proxyModel.setSourceModel(&model);
+  QCOMPARE(proxyModel.rowCount(), 2);
 }
 
 void ForeignKeyProxyModelTest::flagsTest()
@@ -230,60 +273,60 @@ void ForeignKeyProxyModelTest::flagsTest()
    */
   ForeignKeyProxyModel proxyModel;
   proxyModel.setSourceModel(&model);
-  proxyModel.addForeignKey("A", {1});
-  proxyModel.addForeignKey("B", {2,3});
-  // Check flags for FK -> A
-  QVERIFY(proxyModel.isForeignKeyEditable("A"));
-  QVERIFY(proxyModel.isForeignKeyItemsEnabled("A"));
+  proxyModel.addForeignKey("FE1", {1});
+  proxyModel.addForeignKey("FE23", {2,3});
+  // Check flags for FE1
+  QVERIFY(proxyModel.isForeignKeyEditable("FE1"));
+  QVERIFY(proxyModel.isForeignKeyItemsEnabled("FE1"));
   QCOMPARE(getModelFlags(proxyModel, 0, 1), getModelFlags(model, 0, 1));
-  // Check flags for FK -> B
-  QVERIFY(proxyModel.isForeignKeyEditable("B"));
-  QVERIFY(proxyModel.isForeignKeyItemsEnabled("B"));
+  // Check flags for FE23
+  QVERIFY(proxyModel.isForeignKeyEditable("FE23"));
+  QVERIFY(proxyModel.isForeignKeyItemsEnabled("FE23"));
   QCOMPARE(getModelFlags(proxyModel, 0, 2), getModelFlags(model, 0, 2));
   QCOMPARE(getModelFlags(proxyModel, 0, 3), getModelFlags(model, 0, 3));
   /*
-   * Disable editable flags for A
+   * Disable editable flags for FE1
    */
-  proxyModel.setForeignKeyEditable("A", false);
-  proxyModel.setForeignKeyItemsEnabled("A", true);
-  // Check flags for FK -> A
-  QVERIFY(!proxyModel.isForeignKeyEditable("A"));
-  QVERIFY( proxyModel.isForeignKeyItemsEnabled("A"));
+  proxyModel.setForeignKeyEditable("FE1", false);
+  proxyModel.setForeignKeyItemsEnabled("FE1", true);
+  // Check flags for FE1
+  QVERIFY(!proxyModel.isForeignKeyEditable("FE1"));
+  QVERIFY( proxyModel.isForeignKeyItemsEnabled("FE1"));
   expectedFlags = getModelFlags(model, 0, 1) & Qt::ItemFlags(~Qt::ItemIsEditable);
   QCOMPARE(getModelFlags(proxyModel, 0, 1), expectedFlags);
-  // Check flags for FK -> B
-  QVERIFY(proxyModel.isForeignKeyEditable("B"));
-  QVERIFY(proxyModel.isForeignKeyItemsEnabled("B"));
+  // Check flags for FE23
+  QVERIFY(proxyModel.isForeignKeyEditable("FE23"));
+  QVERIFY(proxyModel.isForeignKeyItemsEnabled("FE23"));
   QCOMPARE(getModelFlags(proxyModel, 0, 2), getModelFlags(model, 0, 2));
   QCOMPARE(getModelFlags(proxyModel, 0, 3), getModelFlags(model, 0, 3));
   /*
-   * Disable items enable flags for A
+   * Disable items enable flags for FE1
    */
-  proxyModel.setForeignKeyEditable("A", true);
-  proxyModel.setForeignKeyItemsEnabled("A", false);
-  // Check flags for FK -> A
-  QVERIFY( proxyModel.isForeignKeyEditable("A"));
-  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("A"));
+  proxyModel.setForeignKeyEditable("FE1", true);
+  proxyModel.setForeignKeyItemsEnabled("FE1", false);
+  // Check flags for FE1
+  QVERIFY( proxyModel.isForeignKeyEditable("FE1"));
+  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("FE1"));
   expectedFlags = getModelFlags(model, 0, 1) & Qt::ItemFlags(~Qt::ItemIsEnabled);
   QCOMPARE(getModelFlags(proxyModel, 0, 1), expectedFlags);
-  // Check flags for FK -> B
-  QVERIFY(proxyModel.isForeignKeyEditable("B"));
-  QVERIFY(proxyModel.isForeignKeyItemsEnabled("B"));
+  // Check flags for FE23
+  QVERIFY(proxyModel.isForeignKeyEditable("FE23"));
+  QVERIFY(proxyModel.isForeignKeyItemsEnabled("FE23"));
   QCOMPARE(getModelFlags(proxyModel, 0, 2), getModelFlags(model, 0, 2));
   QCOMPARE(getModelFlags(proxyModel, 0, 3), getModelFlags(model, 0, 3));
   /*
-   * Disable editable + enabled flags for A
+   * Disable editable + enabled flags for FE1
    */
-  proxyModel.setForeignKeyEditable("A", false);
-  proxyModel.setForeignKeyItemsEnabled("A", false);
-  // Check flags for FK -> A
-  QVERIFY(!proxyModel.isForeignKeyEditable("A"));
-  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("A"));
+  proxyModel.setForeignKeyEditable("FE1", false);
+  proxyModel.setForeignKeyItemsEnabled("FE1", false);
+  // Check flags for FE1
+  QVERIFY(!proxyModel.isForeignKeyEditable("FE1"));
+  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("FE1"));
   expectedFlags = getModelFlags(model, 0, 1) & Qt::ItemFlags(~Qt::ItemIsEditable) & Qt::ItemFlags(~Qt::ItemIsEnabled);
   QCOMPARE(getModelFlags(proxyModel, 0, 1), expectedFlags);
-  // Check flags for FK -> B
-  QVERIFY(proxyModel.isForeignKeyEditable("B"));
-  QVERIFY(proxyModel.isForeignKeyItemsEnabled("B"));
+  // Check flags for FE23
+  QVERIFY(proxyModel.isForeignKeyEditable("FE23"));
+  QVERIFY(proxyModel.isForeignKeyItemsEnabled("FE23"));
   QCOMPARE(getModelFlags(proxyModel, 0, 2), getModelFlags(model, 0, 2));
   QCOMPARE(getModelFlags(proxyModel, 0, 3), getModelFlags(model, 0, 3));
   /*
@@ -291,19 +334,77 @@ void ForeignKeyProxyModelTest::flagsTest()
    */
   proxyModel.setAllForeignKeysEditable(false);
   proxyModel.setAllForeignKeysItemsEnabled(false);
-  QVERIFY(!proxyModel.isForeignKeyEditable("A"));
-  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("A"));
-  QVERIFY(!proxyModel.isForeignKeyEditable("B"));
-  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("B"));
+  QVERIFY(!proxyModel.isForeignKeyEditable("FE1"));
+  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("FE1"));
+  QVERIFY(!proxyModel.isForeignKeyEditable("FE23"));
+  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("FE23"));
   /*
    * Enable editable flag for all foreign keys
    */
   proxyModel.setAllForeignKeysEditable(true);
   proxyModel.setAllForeignKeysItemsEnabled(false);
-  QVERIFY( proxyModel.isForeignKeyEditable("A"));
-  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("A"));
-  QVERIFY( proxyModel.isForeignKeyEditable("B"));
-  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("B"));
+  QVERIFY( proxyModel.isForeignKeyEditable("FE1"));
+  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("FE1"));
+  QVERIFY( proxyModel.isForeignKeyEditable("FE23"));
+  QVERIFY(!proxyModel.isForeignKeyItemsEnabled("FE23"));
+}
+
+void ForeignKeyProxyModelTest::recordTest()
+{
+  ForeignKeyRecord record;
+  /*
+   * Setup source model
+   */
+  VariantTableModel model;
+  model.resize(2, 3);
+  model.populateColumn(0, {1,2});
+  model.populateColumn(1, {"A","B"});
+  model.populateColumn(2, {10,20});
+  /*
+   * Setup proxy model
+   */
+  ForeignKeyProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  proxyModel.addForeignKey("FE1", {0,2});
+  proxyModel.addForeignKey("FE2", {1});
+  /*
+   * Get record for row 0 refering entity FE1
+   */
+  record = proxyModel.getForeignKeyRecord("FE1", 0);
+  QCOMPARE(record.columnCount(), 2);
+  QCOMPARE(record.columnAt(0), 0);
+  QCOMPARE(record.dataAt(0), QVariant(1));
+  QCOMPARE(record.columnAt(1), 2);
+  QCOMPARE(record.dataAt(1), QVariant(10));
+  /*
+   * Get record for row 0 refering entity FE2
+   */
+  record = proxyModel.getForeignKeyRecord("FE2", 0);
+  QCOMPARE(record.columnCount(), 1);
+  QCOMPARE(record.columnAt(0), 1);
+  QCOMPARE(record.dataAt(0), QVariant("A"));
+}
+
+void ForeignKeyProxyModelTest::qtModelTest()
+{
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(3, 2);
+  model.populateColumn(0, {1,2,3});
+  model.populateColumn(1, {"A","B","C"});
+  /*
+   * Setup proxy model
+   */
+  ForeignKeyProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  /*
+   * Test
+   */
+  QCOMPARE(proxyModel.rowCount(), 3);
+  QtModelTest mt(&proxyModel);
+  QtModelTest smt(&model);
 }
 
 void ForeignKeyProxyModelTest::modelGetFlagsBenchmark()
@@ -368,64 +469,6 @@ void ForeignKeyProxyModelTest::foreignKeyModelGetFlagsBenchmark_data()
 
   QTest::newRow("10") << 10;
   QTest::newRow("10'000") << 10000;
-}
-
-void ForeignKeyProxyModelTest::recordTest()
-{
-  ForeignKeyRecord record;
-  /*
-   * Setup source model
-   */
-  VariantTableModel model;
-  model.resize(2, 3);
-  model.populateColumn(0, {1,2});
-  model.populateColumn(1, {"A","B"});
-  model.populateColumn(2, {10,20});
-  /*
-   * Setup proxy model
-   */
-  ForeignKeyProxyModel proxyModel;
-  proxyModel.setSourceModel(&model);
-  proxyModel.addForeignKey("FE1", {0,2});
-  proxyModel.addForeignKey("FE2", {1});
-  /*
-   * Get record for row 0 refering entity FE1
-   */
-  record = proxyModel.getForeignKeyRecord("FE1", 0);
-  QCOMPARE(record.columnCount(), 2);
-  QCOMPARE(record.columnAt(0), 0);
-  QCOMPARE(record.dataAt(0), QVariant(1));
-  QCOMPARE(record.columnAt(1), 2);
-  QCOMPARE(record.dataAt(1), QVariant(10));
-  /*
-   * Get record for row 0 refering entity FE2
-   */
-  record = proxyModel.getForeignKeyRecord("FE2", 0);
-  QCOMPARE(record.columnCount(), 1);
-  QCOMPARE(record.columnAt(0), 1);
-  QCOMPARE(record.dataAt(0), QVariant("A"));
-}
-
-void ForeignKeyProxyModelTest::qtModelTest()
-{
-  /*
-   * Setup model
-   */
-  VariantTableModel model;
-  model.resize(3, 2);
-  model.populateColumn(0, {1,2,3});
-  model.populateColumn(1, {"A","B","C"});
-  /*
-   * Setup proxy model
-   */
-  ForeignKeyProxyModel proxyModel;
-  proxyModel.setSourceModel(&model);
-  /*
-   * Test
-   */
-  QCOMPARE(proxyModel.rowCount(), 3);
-  QtModelTest mt(&proxyModel);
-  QtModelTest smt(&model);
 }
 
 void ForeignKeyProxyModelTest::modelGetDataBenchmark()

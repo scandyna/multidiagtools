@@ -46,8 +46,8 @@ classcanvas 134530 class_ref 3944834 // ControllerRelationEventMapper
 end
 relationcanvas 128386 relation_ref 4157314 // <generalisation>
   geometry VHV unfixed
-  from ref 128002 z 2007 to point 328 164.8
-  line 133506 z 2007 to point 700 164.8
+  from ref 128002 z 2007 to point 328 164
+  line 133506 z 2007 to point 700 164
   line 133634 z 2007 to ref 128258
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -59,16 +59,16 @@ relationcanvas 130178 relation_ref 4312578 // <generalisation>
 end
 relationcanvas 130434 relation_ref 4312706 // <generalisation>
   geometry VHV unfixed
-  from ref 130306 z 2001 to point 545 670.6
-  line 134658 z 2001 to point 328 670.6
+  from ref 130306 z 2001 to point 545 670
+  line 134658 z 2001 to point 328 670
   line 134786 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131202 relation_ref 4312834 // <generalisation>
   geometry VHV unfixed
-  from ref 131074 z 2001 to point 211 669.8
-  line 134274 z 2001 to point 328 669.8
+  from ref 131074 z 2001 to point 211 669
+  line 134274 z 2001 to point 328 669
   line 134402 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -79,12 +79,12 @@ relationcanvas 133250 relation_ref 4382850 // <generalisation>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 133378 relation_ref 4375170 // <directional composition>
+relationcanvas 133378 relation_ref 4375170 // <unidirectional association>
   decenter_end 577
-  from ref 128002 z 2013 to point 40.6 417.2
-  line 133762 z 2013 to point 40.6 40.6
-  line 133890 z 2013 to point 827.2 40.6
-  line 134018 z 2013 to point 827.2 229.8
+  from ref 128002 z 2013 to point 40 417
+  line 133762 z 2013 to point 40 40
+  line 133890 z 2013 to point 827 40
+  line 134018 z 2013 to point 827 229
   line 134146 z 2013 to ref 133122
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
