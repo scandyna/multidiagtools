@@ -80,7 +80,8 @@ namespace Mdt{ namespace ItemModel{
      */
     bool isPrimaryKeyEditable() const
     {
-      return isKeyEditable();
+      return mIsPkEditable;
+      //return isKeyEditable();
     }
 
     /*! \brief Set primary key items enabled
@@ -93,20 +94,33 @@ namespace Mdt{ namespace ItemModel{
      */
     bool isPrimaryKeyItemsEnabled() const
     {
-      return isKeyItemsEnabled();
+      return mIsPkItemsEnabled;
+      //return isKeyItemsEnabled();
     }
+
+    /*! \brief Get item flags for given index
+     */
+    Qt::ItemFlags flags(const QModelIndex & index) const override;
 
     /*! \brief Get primary key record for row
      *
      * \pre \a row must be in correct range ( 0 <= row < rowCount() )
      */
-    PrimaryKeyRecord primaryKeyRecord(int row) const;
+    PrimaryKeyRecord getPrimaryKeyRecord(int row) const;
 
     /*! \brief Find row that matches primary key record
      *
      * Returns the row that matches, otherwise -1
+     *
+     * \pre \a record must contain the same count of columns than primary key
      */
     int findRowForPrimaryKeyRecord(const PrimaryKeyRecord & record) const;
+
+   private:
+
+    bool mIsPkEditable = true;
+    bool mIsPkItemsEnabled = true;
+    PrimaryKey mPk;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

@@ -28,26 +28,26 @@ PkFkProxyModelBase::PkFkProxyModelBase(QObject* parent)
 {
 }
 
-Qt::ItemFlags PkFkProxyModelBase::flags(const QModelIndex & index) const
-{
-  if(!index.isValid()){
-    return QIdentityProxyModel::flags(index);
-  }
-  if(mIsKeyEditable && mIsKeyItemsEnabled){
-    return QIdentityProxyModel::flags(index);
-  }
-  if(!mKey.contains(index.column())){
-    return QIdentityProxyModel::flags(index);
-  }
-  auto f = QIdentityProxyModel::flags(index);
-  if(!mIsKeyEditable){
-    f &= Qt::ItemFlags(~Qt::ItemIsEditable);
-  }
-  if(!mIsKeyItemsEnabled){
-    f &= Qt::ItemFlags(~Qt::ItemIsEnabled);
-  }
-  return f;
-}
+// Qt::ItemFlags PkFkProxyModelBase::flags(const QModelIndex & index) const
+// {
+//   if(!index.isValid()){
+//     return QIdentityProxyModel::flags(index);
+//   }
+//   if(mIsKeyEditable && mIsKeyItemsEnabled){
+//     return QIdentityProxyModel::flags(index);
+//   }
+//   if(!mKey.contains(index.column())){
+//     return QIdentityProxyModel::flags(index);
+//   }
+//   auto f = QIdentityProxyModel::flags(index);
+//   if(!mIsKeyEditable){
+//     f &= Qt::ItemFlags(~Qt::ItemIsEditable);
+//   }
+//   if(!mIsKeyItemsEnabled){
+//     f &= Qt::ItemFlags(~Qt::ItemIsEnabled);
+//   }
+//   return f;
+// }
 
 KeyRecord PkFkProxyModelBase::getKeyRecord(int row, const ColumnList& key) const
 {
@@ -92,7 +92,7 @@ KeyRecord PkFkProxyModelBase::keyRecord(int row) const
 
 int PkFkProxyModelBase::findFirstRowForKeyRecord(const KeyRecord & record) const
 {
-  Q_ASSERT(record.columnCount() == mKey.size());
+//   Q_ASSERT(record.columnCount() == mKey.size());
 
   const int n = rowCount();
   for(int row = 0; row < n; ++row){

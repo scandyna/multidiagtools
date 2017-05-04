@@ -31,7 +31,8 @@ void PrimaryKeyProxyModel::setPrimaryKey(const PrimaryKey & pk)
 {
   Q_ASSERT(!pk.isNull());
 
-  setKey(pk.toColumnList());
+  mPk = pk;
+//   setKey(pk.toColumnList());
 }
 
 void PrimaryKeyProxyModel::setPrimaryKey(std::initializer_list<int> pk)
@@ -41,29 +42,55 @@ void PrimaryKeyProxyModel::setPrimaryKey(std::initializer_list<int> pk)
 
 PrimaryKey PrimaryKeyProxyModel::primaryKey() const
 {
-  return PrimaryKey::fromColumnList(key());
+  return mPk;
+//   return PrimaryKey::fromColumnList(key());
 }
 
 void PrimaryKeyProxyModel::setPrimaryKeyEditable(bool editable)
 {
-  setKeyEditable(editable);
+  mIsPkEditable = editable;
+//   setKeyEditable(editable);
 }
 
 void PrimaryKeyProxyModel::setPrimaryKeyItemsEnabled(bool enable)
 {
-  setKeyItemsEnabled(enable);
+  mIsPkItemsEnabled = enable;
+//   setKeyItemsEnabled(enable);
 }
 
-PrimaryKeyRecord PrimaryKeyProxyModel::primaryKeyRecord(int row) const
+Qt::ItemFlags PrimaryKeyProxyModel::flags(const QModelIndex & index) const
+{
+  if(!index.isValid()){
+    return PkFkProxyModelBase::flags(index);
+  }
+  if(mIsPkEditable && mIsPkItemsEnabled){
+    return PkFkProxyModelBase::flags(index);
+  }
+  if(!mPk.containsColumn(index.column())){
+    return PkFkProxyModelBase::flags(index);
+  }
+  auto f = PkFkProxyModelBase::flags(index);
+  if(!mIsPkEditable){
+    f &= Qt::ItemFlags(~Qt::ItemIsEditable);
+  }
+  if(!mIsPkItemsEnabled){
+    f &= Qt::ItemFlags(~Qt::ItemIsEnabled);
+  }
+  return f;
+}
+
+PrimaryKeyRecord PrimaryKeyProxyModel::getPrimaryKeyRecord(int row) const
 {
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < rowCount());
 
-  return PrimaryKeyRecord::fromKeyRecord(keyRecord(row));
+  return PrimaryKeyRecord::fromKeyRecord( getKeyRecord(row, mPk.toColumnList()) );
 }
 
 int PrimaryKeyProxyModel::findRowForPrimaryKeyRecord(const PrimaryKeyRecord & record) const
 {
+  Q_ASSERT(record.columnCount() == mPk.columnCount());
+
   return findFirstRowForKeyRecord(record);
 }
 

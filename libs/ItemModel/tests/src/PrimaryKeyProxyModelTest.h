@@ -35,12 +35,12 @@ class PrimaryKeyProxyModelTest : public TestBase
   void setGetTest();
   void setModelTest();
   void flagsTest();
+  void recordTest();
+  void qtModelTest();
   void modelGetFlagsBenchmark();
   void modelGetFlagsBenchmark_data();
   void primaryKeyModelGetFlagsBenchmark();
   void primaryKeyModelGetFlagsBenchmark_data();
-  void recordTest();
-  void qtModelTest();
   void modelGetDataBenchmark();
   void modelGetDataBenchmark_data();
   void primaryKeyModelGetDataBenchmark();

@@ -122,6 +122,70 @@ void PrimaryKeyProxyModelTest::flagsTest()
   QCOMPARE(getModelFlags(proxyModel, 0, 1), getModelFlags(model, 0, 1));
 }
 
+void PrimaryKeyProxyModelTest::recordTest()
+{
+  PrimaryKeyRecord record;
+  /*
+   * Setup source model
+   */
+  VariantTableModel model;
+  model.resize(2, 3);
+  model.populateColumn(0, {1,2});
+  model.populateColumn(1, {"A","B"});
+  model.populateColumn(2, {10,20});
+  /*
+   * Setup proxy model
+   */
+  PrimaryKeyProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  proxyModel.setPrimaryKey({0,2});
+  /*
+   * Get record for row 0
+   */
+  record = proxyModel.getPrimaryKeyRecord(0);
+  QCOMPARE(record.columnCount(), 2);
+  QCOMPARE(record.columnAt(0), 0);
+  QCOMPARE(record.dataAt(0), QVariant(1));
+  QCOMPARE(record.columnAt(1), 2);
+  QCOMPARE(record.dataAt(1), QVariant(10));
+  /*
+   * Find record
+   */
+  QCOMPARE(proxyModel.findRowForPrimaryKeyRecord(record), 0);
+  // Match row 1
+  record.clear();
+  record.append(0, 2);
+  record.append(2, 20);
+  QCOMPARE(proxyModel.findRowForPrimaryKeyRecord(record), 1);
+  // Match non existing row
+  record.clear();
+  record.append(0, 2);
+  record.append(2, 21);
+  QCOMPARE(proxyModel.findRowForPrimaryKeyRecord(record), -1);
+}
+
+void PrimaryKeyProxyModelTest::qtModelTest()
+{
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(3, 2);
+  model.populateColumn(0, {1,2,3});
+  model.populateColumn(1, {"A","B","C"});
+  /*
+   * Setup proxy model
+   */
+  PrimaryKeyProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  /*
+   * Test
+   */
+  QCOMPARE(proxyModel.rowCount(), 3);
+  QtModelTest mt(&proxyModel);
+  QtModelTest smt(&model);
+}
+
 void PrimaryKeyProxyModelTest::modelGetFlagsBenchmark()
 {
   QFETCH(int, n);
@@ -183,70 +247,6 @@ void PrimaryKeyProxyModelTest::primaryKeyModelGetFlagsBenchmark_data()
 
   QTest::newRow("10") << 10;
   QTest::newRow("10'000") << 10000;
-}
-
-void PrimaryKeyProxyModelTest::recordTest()
-{
-  PrimaryKeyRecord record;
-  /*
-   * Setup source model
-   */
-  VariantTableModel model;
-  model.resize(2, 3);
-  model.populateColumn(0, {1,2});
-  model.populateColumn(1, {"A","B"});
-  model.populateColumn(2, {10,20});
-  /*
-   * Setup proxy model
-   */
-  PrimaryKeyProxyModel proxyModel;
-  proxyModel.setSourceModel(&model);
-  proxyModel.setPrimaryKey({0,2});
-  /*
-   * Get record for row 0
-   */
-  record = proxyModel.primaryKeyRecord(0);
-  QCOMPARE(record.columnCount(), 2);
-  QCOMPARE(record.columnAt(0), 0);
-  QCOMPARE(record.dataAt(0), QVariant(1));
-  QCOMPARE(record.columnAt(1), 2);
-  QCOMPARE(record.dataAt(1), QVariant(10));
-  /*
-   * Find record
-   */
-  QCOMPARE(proxyModel.findRowForPrimaryKeyRecord(record), 0);
-  // Match row 1
-  record.clear();
-  record.append(0, 2);
-  record.append(2, 20);
-  QCOMPARE(proxyModel.findRowForPrimaryKeyRecord(record), 1);
-  // Match non existing row
-  record.clear();
-  record.append(0, 2);
-  record.append(2, 21);
-  QCOMPARE(proxyModel.findRowForPrimaryKeyRecord(record), -1);
-}
-
-void PrimaryKeyProxyModelTest::qtModelTest()
-{
-  /*
-   * Setup model
-   */
-  VariantTableModel model;
-  model.resize(3, 2);
-  model.populateColumn(0, {1,2,3});
-  model.populateColumn(1, {"A","B","C"});
-  /*
-   * Setup proxy model
-   */
-  PrimaryKeyProxyModel proxyModel;
-  proxyModel.setSourceModel(&model);
-  /*
-   * Test
-   */
-  QCOMPARE(proxyModel.rowCount(), 3);
-  QtModelTest mt(&proxyModel);
-  QtModelTest smt(&model);
 }
 
 void PrimaryKeyProxyModelTest::modelGetDataBenchmark()

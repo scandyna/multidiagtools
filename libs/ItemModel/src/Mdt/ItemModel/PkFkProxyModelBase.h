@@ -39,9 +39,9 @@ namespace Mdt{ namespace ItemModel{
      */
     explicit PkFkProxyModelBase(QObject* parent = nullptr);
 
-    /*! \brief Get item flags for given index
-     */
-    Qt::ItemFlags flags(const QModelIndex & index) const override;
+//     /*! \brief Get item flags for given index
+//      */
+//     Qt::ItemFlags flags(const QModelIndex & index) const override;
 
    protected:
 
@@ -93,8 +93,6 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Find first row that matches key record
      *
      * Returns the first row that matches, otherwise -1
-     *
-     * \pre \a record must contain the same columns than key set with setKey()
      */
     int findFirstRowForKeyRecord(const KeyRecord & record) const;
 
