@@ -24,6 +24,8 @@
 #include "Mdt/ItemModel/ForeignKeyProxyModelMap.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
+#include <algorithm>
+#include <iterator>
 
 using namespace Mdt::ItemModel;
 
@@ -234,6 +236,18 @@ void ForeignKeyProxyModelTest::mapMostRestrictiveFlagsForColumnBenchmark()
   QVERIFY(!flags1.isForeignKeyEditable());
 }
 
+void ForeignKeyProxyModelTest::mapColumnsPartOfForeognKeyTest()
+{
+  ForeignKey fk1{1};
+  ForeignKey fk12{1,2};
+  ForeignKeyProxyModelMap map;
+  QCOMPARE( toQList(map.getColumnsPartOfForeignKey()), toQList(ColumnList()) );
+  map.addForeignKey("FE1", fk1);
+  QCOMPARE( toQList(map.getColumnsPartOfForeignKey()), toQList(ColumnList({1})) );
+  map.addForeignKey("FE12", fk12);
+  QCOMPARE( toQList(map.getColumnsPartOfForeignKey()), toQList(ColumnList({1,2})) );
+}
+
 void ForeignKeyProxyModelTest::addGetTest()
 {
   ForeignKeyProxyModel proxyModel;
@@ -385,6 +399,15 @@ void ForeignKeyProxyModelTest::recordTest()
   QCOMPARE(record.dataAt(0), QVariant("A"));
 }
 
+void ForeignKeyProxyModelTest::columnsPartOfForeognKeyTest()
+{
+  ForeignKey fk1{1};
+  ForeignKeyProxyModel proxyModel;
+  QCOMPARE( toQList(proxyModel.getColumnsPartOfForeignKey()), toQList(ColumnList()) );
+  proxyModel.addForeignKey("FE1", fk1);
+  QCOMPARE( toQList(proxyModel.getColumnsPartOfForeignKey()), toQList(ColumnList({1})) );
+}
+
 void ForeignKeyProxyModelTest::qtModelTest()
 {
   /*
@@ -529,6 +552,19 @@ void ForeignKeyProxyModelTest::foreignKeyModelGetDataBenchmark_data()
 
   QTest::newRow("10") << 10;
   QTest::newRow("10'000") << 10000;
+}
+
+/*
+ * Helpers
+ */
+
+QList< int > ForeignKeyProxyModelTest::toQList(const ColumnList& list)
+{
+  QList<int> retList;
+
+  std::copy(list.begin(), list.end(), std::back_inserter(retList));
+
+  return retList;
 }
 
 /*

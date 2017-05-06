@@ -33,6 +33,8 @@ namespace Mdt{ namespace ItemModel{
   {
    public:
 
+    typedef int value_type;
+
     /*! \brief Const iterator
      */
     typedef std::vector<int>::const_iterator const_iterator;
@@ -89,6 +91,14 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a e must not allready exists in this list
      */
     void append(int e);
+
+    /*! \brief Append a element to the end of this list
+     *
+     * This is the same as append()
+     */
+    void push_back(int e){
+      append(e);
+    }
 
     /*! \brief Get the greatest element
      *

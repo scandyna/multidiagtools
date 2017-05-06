@@ -351,6 +351,28 @@ void ControllerTest::modelSizeChangedSignalsTest()
   QCOMPARE(currentRowToBeSetSpy.count(), 0);
 }
 
+void ControllerTest::entityNameTest()
+{
+  /*
+   * Initial state
+   */
+  ItemModelControllerTester controller;
+  QVERIFY(controller.entityName().isEmpty());
+  QVERIFY(controller.userFriendlyEntityName().isEmpty());
+  /*
+   * Set entity name
+   */
+  controller.setEntityName("Client");
+  QCOMPARE(controller.entityName(), QString("Client"));
+  QCOMPARE(controller.userFriendlyEntityName(), QString("Client"));
+  /*
+   * Set user friendly entity name
+   */
+  controller.setUserFriendlyEntityName("Clients edition");
+  QCOMPARE(controller.entityName(), QString("Client"));
+  QCOMPARE(controller.userFriendlyEntityName(), QString("Clients edition"));
+}
+
 void ControllerTest::addRemoveProxyModelWithoutSourceModelTest()
 {
   /*
@@ -632,26 +654,31 @@ void ControllerTest::foreignKeyTest()
   /*
    * Initial state
    */
-  QVERIFY(!controller.isForeignKeyEnabled());
-  QVERIFY(controller.getForeignKey().isNull());
+  QVERIFY(!controller.isForeignKeysEnabled());
+  QVERIFY(controller.getForeignKeyReferencing("FE2").isNull());
+//   QVERIFY(controller.getForeignKey().isNull());
   QCOMPARE(controller.foreignKeyChangedEventCount(), 0);
   /*
    * Set foreign key
    * (Must also enable foreign key support)
    */
-  controller.setForeignKey({2});
-  QVERIFY(controller.isForeignKeyEnabled());
-  QCOMPARE(controller.getForeignKey().columnCount(), 1);
-  QCOMPARE(controller.getForeignKey().greatestColumn(), 2);
+//   controller.setForeignKey({2});
+  controller.addForeignKey("FE2", {2});
+  QVERIFY(controller.isForeignKeysEnabled());
+  fk = controller.getForeignKeyReferencing("FE2");
+  QCOMPARE(fk.columnCount(), 1);
+  QVERIFY(fk.containsColumn(2));
+//   QCOMPARE(controller.getForeignKey().columnCount(), 1);
+//   QCOMPARE(controller.getForeignKey().greatestColumn(), 2);
   QCOMPARE(controller.foreignKeyChangedEventCount(), 1);
   controller.clearForeignKeyChangedEventCount();
   /*
    * Check some flags
    */
-  controller.setForeignKeyEditable(false);
-  QVERIFY(!controller.getForeignKeyProxyModel()->isForeignKeyEditable());
-  controller.setForeignKeyItemsEnabled(false);
-  QVERIFY(!controller.getForeignKeyProxyModel()->isForeignKeyItemsEnabled());
+  controller.setForeignKeyEditable("FE2", false);
+  QVERIFY(!controller.getForeignKeysProxyModel()->isForeignKeyEditable("FE2"));
+  controller.setForeignKeyItemsEnabled("FE2", false);
+  QVERIFY(!controller.getForeignKeysProxyModel()->isForeignKeyItemsEnabled("FE2"));
   /*
    * Set model
    */
@@ -663,9 +690,11 @@ void ControllerTest::foreignKeyTest()
   /*
    * Disable foreign key support
    */
-  QVERIFY(!controller.getForeignKey().isNull());
-  controller.setForeignKeyEnabled(false);
-  QVERIFY(controller.getForeignKey().isNull());
+//   QVERIFY(!controller.getForeignKey().isNull());
+  QVERIFY(!controller.getForeignKeyReferencing("FE2").isNull());
+  controller.setForeignKeysEnabled(false);
+  QVERIFY(controller.getForeignKeyReferencing("FE2").isNull());
+//   QVERIFY(controller.getForeignKey().isNull());
   QCOMPARE(controller.foreignKeyChangedEventCount(), 1);
   controller.clearForeignKeyChangedEventCount();
 }

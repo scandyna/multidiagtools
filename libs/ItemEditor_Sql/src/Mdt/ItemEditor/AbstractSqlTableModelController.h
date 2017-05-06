@@ -90,6 +90,9 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set table name
      *
+     * Will fetch fields informations from table,
+     *  set primary key and foreign keys.
+     *
      * Does not select data from the database table.
      *
      * \pre A model must be set before calling this method

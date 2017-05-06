@@ -22,6 +22,8 @@
 #define MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_TEST_H
 
 #include "TestBase.h"
+#include "Mdt/ItemModel/ColumnList.h"
+#include <QList>
 
 class ForeignKeyProxyModelTest : public TestBase
 {
@@ -37,10 +39,12 @@ class ForeignKeyProxyModelTest : public TestBase
   void mapAddGetTest();
   void mapMostRestrictiveFlagsForColumnTest();
   void mapMostRestrictiveFlagsForColumnBenchmark();
+  void mapColumnsPartOfForeognKeyTest();
   void addGetTest();
   void setModelTest();
   void flagsTest();
   void recordTest();
+  void columnsPartOfForeognKeyTest();
   void qtModelTest();
   void modelGetFlagsBenchmark();
   void modelGetFlagsBenchmark_data();
@@ -50,6 +54,11 @@ class ForeignKeyProxyModelTest : public TestBase
   void modelGetDataBenchmark_data();
   void foreignKeyModelGetDataBenchmark();
   void foreignKeyModelGetDataBenchmark_data();
+
+ private:
+
+  // QTest contains a nice qCompare() for QList (not for QVector)
+  static QList<int> toQList(const Mdt::ItemModel::ColumnList & list);
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_TEST_H

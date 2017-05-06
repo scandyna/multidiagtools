@@ -131,6 +131,10 @@ namespace Mdt{ namespace ItemModel{
      */
     ForeignKeyRecord getForeignKeyRecord(const QString & foreignEntityName, int row) const;
 
+    /*! \brief Get a list of all columns that are part of a foreign key
+     */
+    ColumnList getColumnsPartOfForeignKey() const;
+
 
     /*! \brief Set foreign key
      *

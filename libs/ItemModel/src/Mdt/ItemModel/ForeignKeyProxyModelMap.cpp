@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "ForeignKeyProxyModelMap.h"
+#include <algorithm>
+#include <iterator>
 
 namespace Mdt{ namespace ItemModel{
 
@@ -116,6 +118,21 @@ ForeignKeyProxyModelMapItemFlags ForeignKeyProxyModelMap::getMostRestrictiveFlag
   }
 
   return flags;
+}
+
+ColumnList ForeignKeyProxyModelMap::getColumnsPartOfForeignKey() const
+{
+  ColumnList list;
+
+  const auto pred = [&list](int column){
+    return !list.contains(column);
+  };
+  for(const auto & item : mMap){
+    const auto & fk = item.foreignKey();
+    std::copy_if(fk.begin(), fk.end(), std::back_inserter(list), pred);
+  }
+
+  return list;
 }
 
 }} // namespace Mdt{ namespace ItemModel{

@@ -38,6 +38,7 @@ class SqlTableModelControllerTest : public SqlTestBase
   void setModelTest();
   void setDefaultModelTest();
   void setTableTest();
+  void setTablePkFkTest();
   void selectTest();
   void removeTest();
   void removeTest_data();

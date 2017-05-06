@@ -28,11 +28,13 @@
 #include "Mdt/ItemModel/FilterProxyModel.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include "Mdt/ItemModel/ForeignKey.h"
+#include "Mdt/ItemModel/ColumnList.h"
 #include "Mdt/ItemModel/RowList.h"
 #include "Mdt/Error.h"
 #include <QObject>
 #include <QPointer>
 #include <QAbstractItemModel>
+#include <QString>
 #include <QVariant>
 #include <initializer_list>
 
@@ -309,6 +311,45 @@ namespace Mdt{ namespace ItemEditor{
      */
     QVariant currentData(int column) const;
 
+    /*! \brief Set entity name
+     *
+     * The entity name is a technical identifier, for example a table name in the SQL world.
+     *  Depending on the implementation of the concrete controller,
+     *  it should not contain spaces and ather characters than ASCII.
+     *
+     * \sa entityName()
+     * \sa setUserFriendlyEntityName()
+     */
+    void setEntityName(const QString & name);
+
+    /*! \brief Get entity name
+     *
+     * \sa setEntityName()
+     */
+    QString entityName() const
+    {
+      return mEntityName;
+    }
+
+    /*! \brief Set user friendly entity name
+     *
+     * The user friendly entity name is similar to the entity name,
+     *  but it is targetted to be displayed to the user.
+     *
+     * \sa userFriendlyEntityName()
+     * \sa setEntityName()
+     */
+    void setUserFriendlyEntityName(const QString & name);
+
+    /*! \brief Get user friendly entity name
+     *
+     * Returns the user friendly entity name if set,
+     *  otherwise the entity name.
+     *
+     * \sa setUserFriendlyEntityName()
+     */
+    QString userFriendlyEntityName() const;
+
     /*! \brief Prepend a proxy model
      *
      * If, after \a proxyModel was added, modelForView() has changed,
@@ -398,30 +439,87 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setPrimaryKeyItemsEnabled(bool enable);
 
-    /*! \brief Set foreign key support enabled
+    /*! \brief Set foreign keys support enabled
      *
-     * Enabling support for foreign key will insert a proxy model,
+     * Enabling support for foreign keys will insert a proxy model,
      *  disabling support will remove it.
      *
      * \sa setForeignKey()
      * \sa isForeignKeyEnabled()
      */
-    void setForeignKeyEnabled(bool enable);
+    void setForeignKeysEnabled(bool enable);
 
-    /*! \brief Get foreign key proxy model
+    /*! \brief Get foreign keys proxy model
      *
-     * Return the foreign key proxy model if support was enabled,
+     * Return the foreign keys proxy model if support was enabled,
      *  otherwise a nullptr.
      *
-     * \sa setForeignKeyEnabled()
+     * \sa setForeignKeysEnabled()
      */
-    Mdt::ItemModel::ForeignKeyProxyModel *getForeignKeyProxyModel() const;
+    Mdt::ItemModel::ForeignKeyProxyModel *getForeignKeysProxyModel() const;
 
-    /*! \brief Check if foreign key support is enabled
+    /*! \brief Check if foreign keys support is enabled
      *
-     * \sa setForeignKeyEnabled()
+     * \sa setForeignKeysEnabled()
      */
-    bool isForeignKeyEnabled() const;
+    bool isForeignKeysEnabled() const;
+
+    /*! \brief Add a foreign key
+     *
+     * If foreign key support was not enabled,
+     *  it will be enabled before adding \a fk.
+     *
+     * \pre \a foreignEntityName must not be empty
+     * \pre \a fk must not be null
+     */
+    void addForeignKey(const QString & foreignEntityName, const Mdt::ItemModel::ForeignKey & fk);
+
+    /*! \brief Add a foreign key
+     *
+     * If foreign key support was not enabled,
+     *  it will be enabled before adding \a fk.
+     *
+     * \pre \a foreignEntityName must not be empty
+     * \pre Each column in \a fk must be >= 0
+     * \pre Each column in \a fk must be unique
+     */
+    void addForeignKey(const QString & foreignEntityName, std::initializer_list<int> fk);
+
+    /*! \brief Get foreign key referencing a entity
+     *
+     * \pre \a entityName must not be empty
+     */
+    Mdt::ItemModel::ForeignKey getForeignKeyReferencing(const QString & entityName) const;
+
+    /*! \brief Set foreign key editable
+     *
+     * By default, all foreign keys are editable
+     *
+     * \pre \a foreignEntityName must not be empty
+     * \pre A foreign key referencing \a foreignEntityName must exist
+     */
+    void setForeignKeyEditable(const QString & foreignEntityName, bool editable);
+
+    /*! \brief Set all foreign key editable
+     *
+     * By default, all foreign keys are editable
+     */
+    void setAllForeignKeysEditable(bool editable);
+
+    /*! \brief Set foreign key items enabled
+     *
+     * By default, all foreign keys items are enabled.
+     *
+     * \pre \a foreignEntityName must not be empty
+     */
+    void setForeignKeyItemsEnabled(const QString & foreignEntityName, bool enable);
+
+    /*! \brief Set foreign key items enabled for all foreign keys
+     *
+     * By default, all foreign keys items are enabled.
+     */
+    void setAllForeignKeysItemsEnabled(bool enable);
+
 
     /*! \brief Set foreign key
      *
@@ -561,7 +659,7 @@ namespace Mdt{ namespace ItemEditor{
      * \pre \a controller must be a valid pointer
      * \pre This controller must have a non null primary key set
      * \pre \a controller must have a non null foreign key set
-     * \pre Both primary of this controller and foreign key of \a controller
+     * \pre Both primary key of this controller and foreign key of \a controller
      *       must have the same count of columns, and maximum 4
      */
     void addChildController(AbstractController *controller);
@@ -794,6 +892,16 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual void primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey & oldPrimaryKey, const Mdt::ItemModel::PrimaryKey & newPrimaryKey);
 
+    /*! \brief List of columns part of a foreign key changed event
+     *
+     * If subclass hase some action to perform when some columns
+     *  become part, or are no longer part, of a foreign key,
+     *  it can implement this method.
+     *
+     * This default implementation does nothing.
+     */
+    virtual void columnsPartOfForeignKeyChangedEvent(const Mdt::ItemModel::ColumnList & oldColumnList, const Mdt::ItemModel::ColumnList & newColumnList);
+
     /*! \brief Foreign key changed event
      *
      * If subclass has some action to perform
@@ -915,6 +1023,8 @@ namespace Mdt{ namespace ItemEditor{
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
 //     ControllerRelationList<AbstractController, ControllerRelation> mRelationList;
     ControllerRelationList mRelationList;
+    QString mEntityName;
+    QString mUserFriendlyEntityName;
     Mdt::Error mLastError;
   };
 

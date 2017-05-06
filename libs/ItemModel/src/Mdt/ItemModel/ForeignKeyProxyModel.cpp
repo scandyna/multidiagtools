@@ -122,6 +122,11 @@ ForeignKeyRecord ForeignKeyProxyModel::getForeignKeyRecord(const QString& foreig
   return ForeignKeyRecord::fromKeyRecord( getKeyRecord(row, fk.toColumnList()) );
 }
 
+ColumnList ForeignKeyProxyModel::getColumnsPartOfForeignKey() const
+{
+  return mMap.getColumnsPartOfForeignKey();
+}
+
 
 
 void ForeignKeyProxyModel::setForeignKey(const ForeignKey & fk)

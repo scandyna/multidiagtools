@@ -23,6 +23,7 @@
 
 #include "ForeignKeyProxyModelMapItem.h"
 #include "ForeignKey.h"
+#include "ColumnList.h"
 #include <QString>
 #include <QHash>
 
@@ -111,6 +112,10 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a column must be >= 0
      */
     ForeignKeyProxyModelMapItemFlags getMostRestrictiveFlagsForColumn(int column) const;
+
+    /*! \brief Get a list of all columns that are part of a foreign key
+     */
+    ColumnList getColumnsPartOfForeignKey() const;
 
    private:
 

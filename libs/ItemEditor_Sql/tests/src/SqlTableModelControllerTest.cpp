@@ -150,6 +150,12 @@ void SqlTableModelControllerTest::setTableTest()
   QCOMPARE(controller.model()->tableName(), QString("Client_tbl"));
 }
 
+void SqlTableModelControllerTest::setTablePkFkTest()
+{
+
+  QFAIL("Not complete");
+}
+
 void SqlTableModelControllerTest::selectTest()
 {
   SqlTableModelControllerTester controller;
