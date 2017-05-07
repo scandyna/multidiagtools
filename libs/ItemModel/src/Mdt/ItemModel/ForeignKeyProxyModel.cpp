@@ -42,6 +42,11 @@ void ForeignKeyProxyModel::addForeignKey(const QString& foreignEntityName, std::
   addForeignKey( foreignEntityName, ForeignKey(fk) );
 }
 
+void ForeignKeyProxyModel::removeAllForeignKeys()
+{
+  mMap.removeAllForeignKeys();
+}
+
 ForeignKey ForeignKeyProxyModel::getForeignKeyReferencing(const QString& entityName) const
 {
   Q_ASSERT(!entityName.trimmed().isEmpty());
@@ -125,6 +130,11 @@ ForeignKeyRecord ForeignKeyProxyModel::getForeignKeyRecord(const QString& foreig
 ColumnList ForeignKeyProxyModel::getColumnsPartOfForeignKey() const
 {
   return mMap.getColumnsPartOfForeignKey();
+}
+
+ForeignKeyList ForeignKeyProxyModel::getForeignKeyList() const
+{
+  return mMap.getForeignKeyList();
 }
 
 

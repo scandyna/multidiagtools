@@ -40,6 +40,11 @@ void ForeignKeyProxyModelMap::removeForeignKey(const QString& foreignEntityName)
   mMap.remove(foreignEntityName);
 }
 
+void ForeignKeyProxyModelMap::removeAllForeignKeys()
+{
+  mMap.clear();
+}
+
 bool ForeignKeyProxyModelMap::hasForeignKeyReferencing(const QString& entityName) const
 {
   Q_ASSERT(!entityName.trimmed().isEmpty());
@@ -130,6 +135,19 @@ ColumnList ForeignKeyProxyModelMap::getColumnsPartOfForeignKey() const
   for(const auto & item : mMap){
     const auto & fk = item.foreignKey();
     std::copy_if(fk.begin(), fk.end(), std::back_inserter(list), pred);
+  }
+
+  return list;
+}
+
+ForeignKeyList ForeignKeyProxyModelMap::getForeignKeyList() const
+{
+  ForeignKeyList list;
+
+  auto it = mMap.cbegin();
+  while(it != mMap.cend()){
+    list.addForeignKey( it.key(), it.value().foreignKey() );
+    ++it;
   }
 
   return list;

@@ -58,6 +58,7 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Add a foreign key
      *
      * \pre \a foreignEntityName must not be empty
+     * \pre A foreign key referencing \a foreignEntityName must not allready exist
      * \pre \a fk must not be null
      */
     void addForeignKey(const QString & foreignEntityName, const Mdt::ItemModel::ForeignKey & fk);
@@ -65,10 +66,15 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Add a foreign key
      *
      * \pre \a foreignEntityName must not be empty
+     * \pre A foreign key referencing \a foreignEntityName must not allready exist
      * \pre Each column in \a fk must be >= 0
      * \pre Each column in \a fk must be unique
      */
     void addForeignKey(const QString & foreignEntityName, std::initializer_list<int> fk);
+
+    /*! \brief Remove all foreign keys
+     */
+    void removeAllForeignKeys();
 
     /*! \brief Get foreign key referencing a entity
      *
@@ -134,6 +140,10 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Get a list of all columns that are part of a foreign key
      */
     ColumnList getColumnsPartOfForeignKey() const;
+
+    /*! \brief Get a list of foreign keys
+     */
+    ForeignKeyList getForeignKeyList() const;
 
 
     /*! \brief Set foreign key

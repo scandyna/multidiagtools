@@ -39,12 +39,14 @@ class ForeignKeyProxyModelTest : public TestBase
   void mapAddGetTest();
   void mapMostRestrictiveFlagsForColumnTest();
   void mapMostRestrictiveFlagsForColumnBenchmark();
-  void mapColumnsPartOfForeognKeyTest();
+  void mapColumnsPartOfForeignKeyTest();
+  void mapGetForeignKeyListTest();
   void addGetTest();
   void setModelTest();
   void flagsTest();
   void recordTest();
-  void columnsPartOfForeognKeyTest();
+  void columnsPartOfForeignKeyTest();
+  void getForeignKeyListTest();
   void qtModelTest();
   void modelGetFlagsBenchmark();
   void modelGetFlagsBenchmark_data();

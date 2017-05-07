@@ -236,7 +236,7 @@ void ForeignKeyProxyModelTest::mapMostRestrictiveFlagsForColumnBenchmark()
   QVERIFY(!flags1.isForeignKeyEditable());
 }
 
-void ForeignKeyProxyModelTest::mapColumnsPartOfForeognKeyTest()
+void ForeignKeyProxyModelTest::mapColumnsPartOfForeignKeyTest()
 {
   ForeignKey fk1{1};
   ForeignKey fk12{1,2};
@@ -248,11 +248,24 @@ void ForeignKeyProxyModelTest::mapColumnsPartOfForeognKeyTest()
   QCOMPARE( toQList(map.getColumnsPartOfForeignKey()), toQList(ColumnList({1,2})) );
 }
 
+void ForeignKeyProxyModelTest::mapGetForeignKeyListTest()
+{
+  ForeignKeyProxyModelMap map;
+
+  QCOMPARE(map.getForeignKeyList().getForeignKeyReferencing("FE1").columnCount(), 0);
+  map.addForeignKey("FE1", ForeignKey{1});
+  map.addForeignKey("FE23", ForeignKey{2,3});
+  QCOMPARE(map.getForeignKeyList().getForeignKeyReferencing("FE1").columnCount(), 1);
+  QCOMPARE(map.getForeignKeyList().getForeignKeyReferencing("FE23").columnCount(), 2);
+}
+
 void ForeignKeyProxyModelTest::addGetTest()
 {
   ForeignKeyProxyModel proxyModel;
   proxyModel.addForeignKey("A", {2,3});
   QCOMPARE(proxyModel.getForeignKeyReferencing("A").columnCount(), 2);
+  proxyModel.removeAllForeignKeys();
+  QVERIFY(proxyModel.getForeignKeyReferencing("A").isNull());
 }
 
 void ForeignKeyProxyModelTest::setModelTest()
@@ -399,13 +412,22 @@ void ForeignKeyProxyModelTest::recordTest()
   QCOMPARE(record.dataAt(0), QVariant("A"));
 }
 
-void ForeignKeyProxyModelTest::columnsPartOfForeognKeyTest()
+void ForeignKeyProxyModelTest::columnsPartOfForeignKeyTest()
 {
   ForeignKey fk1{1};
   ForeignKeyProxyModel proxyModel;
   QCOMPARE( toQList(proxyModel.getColumnsPartOfForeignKey()), toQList(ColumnList()) );
   proxyModel.addForeignKey("FE1", fk1);
   QCOMPARE( toQList(proxyModel.getColumnsPartOfForeignKey()), toQList(ColumnList({1})) );
+}
+
+void ForeignKeyProxyModelTest::getForeignKeyListTest()
+{
+  ForeignKeyProxyModel proxyModel;
+
+  QCOMPARE(proxyModel.getForeignKeyList().getForeignKeyReferencing("FE1").columnCount(), 0);
+  proxyModel.addForeignKey("FE1", {1});
+  QCOMPARE(proxyModel.getForeignKeyList().getForeignKeyReferencing("FE1").columnCount(), 1);
 }
 
 void ForeignKeyProxyModelTest::qtModelTest()

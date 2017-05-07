@@ -23,6 +23,7 @@
 
 #include "ForeignKeyProxyModelMapItem.h"
 #include "ForeignKey.h"
+#include "ForeignKeyList.h"
 #include "ColumnList.h"
 #include <QString>
 #include <QHash>
@@ -48,6 +49,10 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a foreignEntityName must not be empty
      */
     void removeForeignKey(const QString & foreignEntityName);
+
+    /*! \brief Remove all foreign keys
+     */
+    void removeAllForeignKeys();
 
     /*! \brief Check if a foreign key referencing a entity exists
      *
@@ -116,6 +121,10 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Get a list of all columns that are part of a foreign key
      */
     ColumnList getColumnsPartOfForeignKey() const;
+
+    /*! \brief Get a list of foreign keys
+     */
+    ForeignKeyList getForeignKeyList() const;
 
    private:
 
