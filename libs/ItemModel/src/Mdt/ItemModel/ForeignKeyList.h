@@ -31,7 +31,13 @@ namespace Mdt{ namespace ItemModel{
    */
   class ForeignKeyList
   {
-  public:
+   public:
+
+    /*! \brief STL compatible const iterator
+     *
+     * \note value_type of this iteraor is const ForeignKey
+     */
+    using const_iterator = QHash<QString, ForeignKey>::const_iterator;
 
     /*! \brief Add a foreign key
      *
@@ -52,7 +58,35 @@ namespace Mdt{ namespace ItemModel{
      */
     ForeignKey getForeignKeyReferencing(const QString & entityName) const;
 
-  private:
+    /*! \brief Get STL compatible const iterator to the beginning of this list
+     */
+    const_iterator cbegin() const
+    {
+      return mMap.cbegin();
+    }
+
+    /*! \brief Get STL compatible const iterator to the end of this list
+     */
+    const_iterator cend() const
+    {
+      return mMap.cend();
+    }
+
+    /*! \brief Get STL compatible const iterator to the beginning of this list
+     */
+    const_iterator begin() const
+    {
+      return mMap.cbegin();
+    }
+
+    /*! \brief Get STL compatible const iterator to the end of this list
+     */
+    const_iterator end() const
+    {
+      return mMap.cend();
+    }
+
+   private:
 
     QHash<QString, ForeignKey> mMap;
   };

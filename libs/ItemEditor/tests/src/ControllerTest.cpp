@@ -656,20 +656,16 @@ void ControllerTest::foreignKeyTest()
    */
   QVERIFY(!controller.isForeignKeysEnabled());
   QVERIFY(controller.getForeignKeyReferencing("FE2").isNull());
-//   QVERIFY(controller.getForeignKey().isNull());
   QCOMPARE(controller.foreignKeyChangedEventCount(), 0);
   /*
    * Set foreign key
    * (Must also enable foreign key support)
    */
-//   controller.setForeignKey({2});
   controller.addForeignKey("FE2", {2});
   QVERIFY(controller.isForeignKeysEnabled());
   fk = controller.getForeignKeyReferencing("FE2");
   QCOMPARE(fk.columnCount(), 1);
   QVERIFY(fk.containsColumn(2));
-//   QCOMPARE(controller.getForeignKey().columnCount(), 1);
-//   QCOMPARE(controller.getForeignKey().greatestColumn(), 2);
   QCOMPARE(controller.foreignKeyChangedEventCount(), 1);
   controller.clearForeignKeyChangedEventCount();
   /*
@@ -690,11 +686,9 @@ void ControllerTest::foreignKeyTest()
   /*
    * Disable foreign key support
    */
-//   QVERIFY(!controller.getForeignKey().isNull());
   QVERIFY(!controller.getForeignKeyReferencing("FE2").isNull());
   controller.setForeignKeysEnabled(false);
   QVERIFY(controller.getForeignKeyReferencing("FE2").isNull());
-//   QVERIFY(controller.getForeignKey().isNull());
   QCOMPARE(controller.foreignKeyChangedEventCount(), 1);
   controller.clearForeignKeyChangedEventCount();
 }

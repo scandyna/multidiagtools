@@ -96,6 +96,26 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set foreign key hidden
      *
+     * If \a hide is true,
+     *  columns that are part of the foreign key referencing to the entity named \a foreignEntityName,
+     *  will be hidden.
+     *
+     * \pre \a foreignEntityName must not be empty
+     * \pre A foreign key referencing \a foreignEntityName must exist
+     */
+    void setForeignKeyHidden(const QString & foreignEntityName, bool hide);
+
+    /*! \brief Set all foreign keys hidden
+     *
+     * If \a hide is true,
+     *  all columns that are part of any foreign key
+     *  will be hidden.
+     */
+    void setAllForeignKeysHidden(bool hide);
+
+    
+    /*! \brief Set foreign key hidden
+     *
      * If \a hide is true, columns that are part of foreign key will be hidden.
      */
     void setForeignKeyHidden(bool hide);
@@ -115,7 +135,8 @@ namespace Mdt{ namespace ItemEditor{
     void revertDataFromModel() override;
 
     void primaryKeyChangedEvent(const ItemModel::PrimaryKey& oldPrimaryKey, const ItemModel::PrimaryKey& newPrimaryKey) override;
-    void foreignKeyChangedEvent(const ItemModel::ForeignKey& oldForeignKey, const ItemModel::ForeignKey& newForeignKey) override;
+//     void foreignKeyChangedEvent(const ItemModel::ForeignKey& oldForeignKey, const ItemModel::ForeignKey& newForeignKey) override;
+    void columnsPartOfForeignKeyChangedEvent(const ItemModel::ColumnList& oldColumnList, const ItemModel::ColumnList& newColumnList) override;
 
     /*! \brief Get a list of currently selected rows
      */

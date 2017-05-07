@@ -387,7 +387,7 @@ void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
   const auto oldFk = getForeignKey();
   setForeignKeysEnabled(true);
   getForeignKeysProxyModel()->setForeignKey(fk);
-  foreignKeyChangedEvent(oldFk, fk);
+//   foreignKeyChangedEvent(oldFk, fk);
 }
 
 void AbstractController::setForeignKey(std::initializer_list<int> fk)
@@ -722,9 +722,9 @@ void AbstractController::columnsPartOfForeignKeyChangedEvent(const ItemModel::Co
 {
 }
 
-void AbstractController::foreignKeyChangedEvent(const ForeignKey& , const ForeignKey&)
-{
-}
+// void AbstractController::foreignKeyChangedEvent(const ForeignKey& , const ForeignKey&)
+// {
+// }
 
 ItemModel::RowList AbstractController::getSelectedRows() const
 {

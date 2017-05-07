@@ -103,6 +103,18 @@ void TableViewControllerImplementation::setPrimaryKeyHidden(const ItemModel::Pri
   updatePrimaryKeyColumnsVisibility(pk);
 }
 
+void TableViewControllerImplementation::setForeignKeyHidden(const QString& foreignEntityName, bool hide)
+{
+  Q_ASSERT(!foreignEntityName.trimmed().isEmpty());
+
+  
+}
+
+void TableViewControllerImplementation::setAllForeignKeysHidden(bool hide)
+{
+
+}
+
 void TableViewControllerImplementation::setForeignKeyHidden(const ItemModel::ForeignKey & fk, bool hide)
 {
   mForeignKeyColumnsHidden = hide;

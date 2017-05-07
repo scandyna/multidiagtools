@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 73
+  revision 74
   modified_by 2 "philippe"
   // class settings
   
@@ -2926,6 +2926,30 @@ ${inlines}
 	
 	
       end
+
+      attribute 3486466 "Flags"
+	private type class_ref 4018434 // ForeignKeyProxyModelMapItemFlags
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3486594 "Fk"
+	private type class_ref 3715458 // ForeignKey
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     class 4018306 "ForeignKeyProxyModelMap"
@@ -2965,6 +2989,20 @@ ${inlines}
 	
 	
 	
+      end
+
+      attribute 3486978 "Map"
+	private explicit_type ""
+	multiplicity "*"
+	stereotype "map"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 

@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 235
+  revision 238
   modified_by 2 "philippe"
   // class settings
   
@@ -4590,6 +4590,161 @@ ${inlines}
 	
       end
     end
+
+    classdiagram 3499394 "ForeignKeyVisibilityMap"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4038658 "ForeignKeyColumnVisibilityMap"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4573442 // <directional composition>
+	relation 4547330 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 4573442 // <directional composition>
+	  b parent class_ref 4038786 // ForeignKeyColumnVisibilityMapItem
+      end
+
+      attribute 3487106 "Map"
+	private explicit_type ""
+	multiplicity "*"
+	stereotype "hash"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5731714 "setForeignKeyList"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "list" type class_ref 4005250 // ForeignKeyList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5732226 "getForeignKeyList"
+	public return_type class_ref 4005250 // ForeignKeyList
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5731970 "setForeignKeyHidden"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "feName" type class_ref 161026 // QString
+	  param in name "hide" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5732098 "setAllForeignKeysHidden"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "hide" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 4038786 "ForeignKeyColumnVisibilityMapItem"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4573314 // <directional composition>
+	relation 4547202 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4573314 // <directional composition>
+	  b parent class_ref 3715458 // ForeignKey
+      end
+
+      attribute 3486722 "IsFkHidden"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3486850 "Fk"
+	private type class_ref 3715458 // ForeignKey
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
   end
 
   classview 1801346 "Controller_Widgets"
@@ -4628,18 +4783,6 @@ ${inlines}
       mysql_decl ""
       
       attribute 3459714 "mPrimaryKeyColumnsHidden"
-	private explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 3459842 "mForeignKeyColumnsHidden"
 	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -4777,6 +4920,23 @@ ${inlines}
 
       operation 5633922 "setForeignKeyHidden"
 	public explicit_return_type "void"
+	nparams 2
+	  param in name "feName" type class_ref 161026 // QString
+	  param in name "hide" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5717890 "setAllForeignKeysHidden"
+	public explicit_return_type "void"
 	nparams 1
 	  param in name "hide" explicit_type "bool"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -4799,6 +4959,22 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5731842 "foreignKeysChangedEvent"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fkList" type class_ref 4005250 // ForeignKeyList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -4849,6 +5025,15 @@ ${inlines}
 
       classrelation 4506370 // <composition>
 	relation_ref 4473602 // <composition>
+      end
+
+      classrelation 4573570 // <directional composition>
+	relation 4547458 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4573570 // <directional composition>
+	  b parent class_ref 4038658 // ForeignKeyColumnVisibilityMap
       end
     end
 
@@ -5323,6 +5508,7 @@ ${inlines}
 	  b parent class_ref 3648002 // AbstractController
       end
     end
+
   end
 
   classview 1808002 "Controller_QtQuick"

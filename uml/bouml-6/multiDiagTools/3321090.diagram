@@ -2,43 +2,43 @@ format 211
 
 classcanvas 128002 class_ref 1752450 // QIdentityProxyModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1056 42 2000
+  xyz 1056.2 42.6 2000
 end
 classcanvas 128130 class_ref 3823106 // PrimaryKeyProxyModel
   classdiagramsettings member_max_width 0 end
-  xyz 313 543 2000
+  xyz 313 543.4 2000
 end
 classcanvas 128386 class_ref 3823234 // ForeignKeyProxyModel
   classdiagramsettings member_max_width 0 end
-  xyz 921.8 508.4 2000
+  xyz 921 508.6 2000
 end
 classcanvas 128898 class_ref 3715330 // PrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 769 610 2000
+  xyz 769.8 610.8 2000
 end
 classcanvas 129026 class_ref 3715458 // ForeignKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 778 442.6 2000
+  xyz 778 442.2 2000
 end
 classcanvas 129794 class_ref 3829762 // PkFkProxyModelBase
   classdiagramsettings member_max_width 0 end
-  xyz 943.6 129.7 2000
+  xyz 943.2 129.4 2000
 end
 classcanvas 130050 class_ref 3830018 // PrimaryKeyRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 210 770 2000
+  xyz 210.4 770.8 2000
 end
 classcanvas 130178 class_ref 3830146 // ForeignKeyRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 39 770 2000
+  xyz 39.6 770.8 2000
 end
 classcanvas 133890 class_ref 3829890 // KeyRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 231 218 2006
+  xyz 231.8 218 2006
 end
 classcanvas 135938 class_ref 4005250 // ForeignKeyList
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 768.1 527 2012
+  xyz 768.9 527.1 2012
 end
 relationcanvas 130306 relation_ref 4257794 // <generalisation>
   decenter_begin 509

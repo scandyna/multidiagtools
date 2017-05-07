@@ -41,22 +41,24 @@ diagrams
     120 98 100 4 0 0
   classdiagram_ref 3228418 // KeyOverview
     120 98 100 4 0 0
-  active  classdiagram_ref 3321090 // PkFkProxyModel
+  classdiagram_ref 3321090 // PkFkProxyModel
     921 911 90 21 0 246
-  classdiagram_ref 3473154 // ForeignKey
-    120 98 100 18 0 0
-  classdiagram_ref 3479682 // ForeignKeyProxyModel
-    1012 911 100 21 0 0
+  active  classdiagram_ref 3460098 // TableViewControllerImplementation
+    921 911 100 21 0 0
+  classdiagram_ref 2707074 // AbstractController
+    120 98 100 23 336 0
 end
 show_stereotypes
 open
   
-  package_ref 409858 // principes
-  
   package_ref 549506 // Algorithm
-  class_ref 3829762 // PkFkProxyModelBase
+  class_ref 4011778 // ForeignKeyProxyModelMapItem
+  class_ref 4018306 // ForeignKeyProxyModelMap
+  classview_ref 1801090 // Controller_Core
+  operation_ref 5731842 // foreignKeysChangedEvent
   
   package_ref 641410 // PlainText
-  class_ref 174338 // QSqlQueryModel
+  
+  package_ref 134786 // Qt
 end
 end

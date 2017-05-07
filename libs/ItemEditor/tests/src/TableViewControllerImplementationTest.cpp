@@ -190,6 +190,32 @@ void TableViewControllerImplementationTest::foreignKeyVisibilityTest()
   QVERIFY(!view.isColumnHidden(1));
   QVERIFY(!view.isColumnHidden(2));
   /*
+   * Check that we can hide all foreign keys before set them
+   */
+  
+  
+  /*
+   * Add a foreign key
+   */
+  ///controllerImpl.
+  
+  /*
+   * Show columns part of any foreign keys
+   */
+  
+  /*
+   * Add a foreign key
+   */
+  
+  /*
+   * Hide foreign key FExy
+   */
+  
+  /*
+   * Disable foreign keys support
+   */
+  
+  /*
    * Hide foreign key
    */
   controllerImpl.setForeignKeyHidden(fk, true);
@@ -211,6 +237,8 @@ void TableViewControllerImplementationTest::foreignKeyVisibilityTest()
   QVERIFY(!view.isColumnHidden(0));
   QVERIFY(!view.isColumnHidden(1));
   QVERIFY(!view.isColumnHidden(2));
+  
+  QFAIL("Adapt to new FK API");
 }
 
 void TableViewControllerImplementationTest::selectedRowsTest()

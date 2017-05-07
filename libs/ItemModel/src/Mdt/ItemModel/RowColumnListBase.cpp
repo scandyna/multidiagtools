@@ -29,7 +29,7 @@ for(const auto col : list)  \
 {                           \
   Q_ASSERT(col >= 0);       \
   std::set<int> s(mList.cbegin(), mList.cend());  \
-  Q_ASSERT(s.size() == mList.size());                   \
+  Q_ASSERT_X(s.size() == mList.size(), "RowColumnListBase", "at least one column exists more than once, which is not allowed");                   \
 }
 #else
 #define mdtItemModelRowColumnListAssert(list)

@@ -902,15 +902,15 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual void columnsPartOfForeignKeyChangedEvent(const Mdt::ItemModel::ColumnList & oldColumnList, const Mdt::ItemModel::ColumnList & newColumnList);
 
-    /*! \brief Foreign key changed event
-     *
-     * If subclass has some action to perform
-     *  when foreign key changed,
-     *  it can implement this method.
-     *
-     * This default implementation does nothing.
-     */
-    virtual void foreignKeyChangedEvent(const Mdt::ItemModel::ForeignKey & oldForeignKey, const Mdt::ItemModel::ForeignKey & newForeignKey);
+//     /*! \brief Foreign key changed event
+//      *
+//      * If subclass has some action to perform
+//      *  when foreign key changed,
+//      *  it can implement this method.
+//      *
+//      * This default implementation does nothing.
+//      */
+//     virtual void foreignKeyChangedEvent(const Mdt::ItemModel::ForeignKey & oldForeignKey, const Mdt::ItemModel::ForeignKey & newForeignKey);
 
     /*! \brief Get a list of currently selected rows
      *

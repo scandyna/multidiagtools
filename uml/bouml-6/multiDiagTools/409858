@@ -1,6 +1,6 @@
 format 211
 "principes" // principes
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   // class settings
   
@@ -37,4 +37,6 @@ format 211
   package_ref 529794 // Decorator
 
   package_ref 536322 // TypeErasure
+
+  package_ref 648066 // QObject
 end

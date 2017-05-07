@@ -26,6 +26,7 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/ControllerStateMachine.cpp
     src/Mdt/ItemEditor/AbstractController.cpp
     src/Mdt/ItemEditor/ItemViewPrivateContainer.cpp
+    src/Mdt/ItemEditor/ForeignKeyColumnVisibilityMap.cpp
     src/Mdt/ItemEditor/TableViewControllerImplementation.cpp
     src/Mdt/ItemEditor/TableViewControllerStatePermission.cpp
     src/Mdt/ItemEditor/TableViewControllerStateTable.cpp

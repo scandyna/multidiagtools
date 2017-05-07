@@ -417,7 +417,7 @@ void TableViewControllerTest::foreignKeyVisibilityTest()
   TableViewController controller;
   controller.setModel(&model);
   controller.setView(&view);
-  controller.setForeignKey({0,1});
+  controller.addForeignKey("FE01", {0,1});
   /*
    * By default, all columns are visible
    */
@@ -425,23 +425,30 @@ void TableViewControllerTest::foreignKeyVisibilityTest()
   QVERIFY(!view.isColumnHidden(1));
   QVERIFY(!view.isColumnHidden(2));
   /*
-   * Hide foreign key
+   * Hide all foreign keys
    */
-  controller.setForeignKeyHidden(true);
+  controller.setAllForeignKeysHidden(true);
   QVERIFY( view.isColumnHidden(0));
   QVERIFY( view.isColumnHidden(1));
   QVERIFY(!view.isColumnHidden(2));
   /*
-   * Change foreign key
+   * Add a foreign key
    */
-  controller.setForeignKey({1});
-  QVERIFY(!view.isColumnHidden(0));
+  controller.addForeignKey("FE2", {2});
+  QVERIFY( view.isColumnHidden(0));
   QVERIFY( view.isColumnHidden(1));
-  QVERIFY(!view.isColumnHidden(2));
+  QVERIFY( view.isColumnHidden(2));
+//   /*
+//    * Change foreign key
+//    */
+//   controller.setForeignKey({1});
+//   QVERIFY(!view.isColumnHidden(0));
+//   QVERIFY( view.isColumnHidden(1));
+//   QVERIFY(!view.isColumnHidden(2));
   /*
-   * Show foreign key
+   * Show foreign keys
    */
-  controller.setForeignKeyHidden(false);
+  controller.setAllForeignKeysHidden(false);
   QVERIFY(!view.isColumnHidden(0));
   QVERIFY(!view.isColumnHidden(1));
   QVERIFY(!view.isColumnHidden(2));

@@ -71,6 +71,18 @@ void TableViewController::setPrimaryKeyHidden(bool hide)
   mImpl->setPrimaryKeyHidden( getPrimaryKey(), hide );
 }
 
+void TableViewController::setForeignKeyHidden(const QString& foreignEntityName, bool hide)
+{
+  Q_ASSERT(!foreignEntityName.trimmed().isEmpty());
+
+  
+}
+
+void TableViewController::setAllForeignKeysHidden(bool hide)
+{
+
+}
+
 void TableViewController::setForeignKeyHidden(bool hide)
 {
   mImpl->setForeignKeyHidden( getForeignKey(), hide );
@@ -99,10 +111,15 @@ void TableViewController::primaryKeyChangedEvent(const PrimaryKey & oldPrimaryKe
   mImpl->primaryKeyChangedEvent(oldPrimaryKey, newPrimaryKey);
 }
 
-void TableViewController::foreignKeyChangedEvent(const ForeignKey& oldForeignKey, const ForeignKey& newForeignKey)
+void TableViewController::columnsPartOfForeignKeyChangedEvent(const ColumnList& oldColumnList, const ColumnList& newColumnList)
 {
-  mImpl->foreignKeyChangedEvent(oldForeignKey, newForeignKey);
+
 }
+
+// void TableViewController::foreignKeyChangedEvent(const ForeignKey& oldForeignKey, const ForeignKey& newForeignKey)
+// {
+//   mImpl->foreignKeyChangedEvent(oldForeignKey, newForeignKey);
+// }
 
 RowList TableViewController::getSelectedRows() const
 {
