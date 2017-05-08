@@ -35,7 +35,11 @@ namespace Mdt{ namespace ItemModel{
 
     typedef int value_type;
 
-    /*! \brief Const iterator
+    /*! \brief STL iterator
+     */
+    typedef std::vector<int>::iterator iterator;
+
+    /*! \brief STL const iterator
      */
     typedef std::vector<int>::const_iterator const_iterator;
 
@@ -110,6 +114,20 @@ namespace Mdt{ namespace ItemModel{
      */
     void clear();
 
+    /*! \brief Get iterator to the beginning of the list
+     */
+    iterator begin()
+    {
+      return mList.begin();
+    }
+
+    /*! \brief Get iterator to the end of the list
+     */
+    iterator end()
+    {
+      return mList.end();
+    }
+
     /*! \brief Get const iterator to the beginning of the list
      */
     const_iterator begin() const
@@ -120,6 +138,20 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Get const iterator to the end of the list
      */
     const_iterator end() const
+    {
+      return mList.cend();
+    }
+
+    /*! \brief Get const iterator to the beginning of the list
+     */
+    const_iterator cbegin() const
+    {
+      return mList.cbegin();
+    }
+
+    /*! \brief Get const iterator to the end of the list
+     */
+    const_iterator cend() const
     {
       return mList.cend();
     }

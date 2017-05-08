@@ -37,8 +37,10 @@ class ForeignKeyColumnVisibilityMapTest : public TestBase
   void itemTest();
   void setForeignKeyListTest();
   void setForeignKeyHiddenTest();
-  void setAllForeignKeysHiddenTest();
+//   void setAllForeignKeysHiddenTest();
+  void isColumnVisibleTest();
   void columnsToShowAndHideTest();
+  void setForeignKeyListBenchmark();
 
  private:
 

@@ -26,6 +26,7 @@
 #include "Mdt/ItemModel/ColumnList.h"
 #include <QString>
 #include <QHash>
+#include <vector>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -35,7 +36,7 @@ namespace Mdt{ namespace ItemEditor{
   {
    public:
 
-    ForeignKeyColumnVisibilityMapItem() = delete;
+    ForeignKeyColumnVisibilityMapItem() = default;
 
     /*! \brief Constructor
      */
@@ -46,6 +47,13 @@ namespace Mdt{ namespace ItemEditor{
     ItemModel::ForeignKey foreignKey() const
     {
       return mFk;
+    }
+
+    /*! \brief Check if foreign key constains a column
+     */
+    bool foreignKeyContainsColumn(int column) const
+    {
+      return mFk.containsColumn(column);
     }
 
     /*! \brief Set foreign key hidden
@@ -83,11 +91,36 @@ namespace Mdt{ namespace ItemEditor{
      */
     ItemModel::ForeignKeyList getForeignKeyList() const;
 
+    /*! \brief Set foreign key hidden
+     *
+     * \pre \a foreignEntityName must not be empty
+     * \pre A foreign key referencing \a foreignEntityName must exist
+     */
+    void setForeignKeyHidden(const QString & foreignEntityName, bool hide);
+
     /*! \brief Set all foreign keys hidden
      */
     void setAllForeignKeysHidden(bool hide);
 
+    /*! \brief Check if the foreign key referencing a entity is hidden
+     *
+     * \pre \a foreignEntityName must not be empty
+     * \pre A foreign key referencing \a foreignEntityName must exist
+     */
+    bool isForeignKeyHidden(const QString & foreignEntityName) const;
+
+    /*! \brief Check if a column must is visible
+     *
+     * Returns true if \a column is at least part of a foreign key that is not hidden,
+     *  otherwise false.
+     */
+    bool isColumnVisible(int column) const;
+
     /*! \brief Get a list of columns to show
+     *
+     * \note The first call of this method after setForeignKeyList()
+     *        will also return the columns that are no longer part of a foreign key,
+     *        as long as no modifier is called.
      */
     ItemModel::ColumnList getColumnsToShow() const;
 
@@ -97,7 +130,17 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
+    void updateColumnsToBeShownAndHidden();
+    void setColumnsNoLongerPartOfForeignKey(const QHash<QString, ForeignKeyColumnVisibilityMapItem> & previousMap);
+    ItemModel::ColumnList getColumnsToBeHidden() const;
+    ItemModel::ColumnList getColumnsToBeVisible() const;
+    static void copyItemFkToList(const Mdt::ItemEditor::ForeignKeyColumnVisibilityMapItem& item, Mdt::ItemModel::ColumnList& list);
+
     QHash<QString, ForeignKeyColumnVisibilityMapItem> mMap;
+    ItemModel::ColumnList mColumnsToShow;
+    ItemModel::ColumnList mColumnsToHide;
+    ItemModel::ColumnList mHiddenColumns;
+    mutable ItemModel::ColumnList mColumnsNoLongerPartOfMap;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

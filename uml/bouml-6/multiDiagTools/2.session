@@ -49,16 +49,18 @@ diagrams
     120 98 100 23 336 0
 end
 show_stereotypes
+selected 
+package_ref 129 // multiDiagTools
 open
   
-  package_ref 549506 // Algorithm
+package_ref 549506 // Algorithm
   class_ref 4011778 // ForeignKeyProxyModelMapItem
   class_ref 4018306 // ForeignKeyProxyModelMap
   classview_ref 1801090 // Controller_Core
   operation_ref 5731842 // foreignKeysChangedEvent
   
-  package_ref 641410 // PlainText
+package_ref 641410 // PlainText
   
-  package_ref 134786 // Qt
+package_ref 134786 // Qt
 end
 end

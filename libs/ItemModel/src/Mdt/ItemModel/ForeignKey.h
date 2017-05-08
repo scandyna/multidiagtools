@@ -92,14 +92,28 @@ namespace Mdt{ namespace ItemModel{
      */
     const_iterator begin() const
     {
-      return mColumnList.begin();
+      return mColumnList.cbegin();
     }
 
     /*! \brief Get const iterator to the last
      */
     const_iterator end() const
     {
-      return mColumnList.end();
+      return mColumnList.cend();
+    }
+
+    /*! \brief Get const iterator to the first column
+     */
+    const_iterator cbegin() const
+    {
+      return mColumnList.begin();
+    }
+
+    /*! \brief Get const iterator to the last
+     */
+    const_iterator cend() const
+    {
+      return mColumnList.cend();
     }
 
     /*! \brief Get a foreign key from a column list
