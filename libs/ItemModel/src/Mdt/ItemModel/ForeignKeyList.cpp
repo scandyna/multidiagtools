@@ -37,4 +37,11 @@ ForeignKey ForeignKeyList::getForeignKeyReferencing(const QString & entityName) 
   return mMap.value(entityName);
 }
 
+bool ForeignKeyList::containsForeignKeyReferencing(const QString& entityName) const
+{
+  Q_ASSERT(!entityName.trimmed().isEmpty());
+
+  return mMap.contains(entityName);
+}
+
 }} // namespace Mdt{ namespace ItemModel{

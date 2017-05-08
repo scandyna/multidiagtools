@@ -135,8 +135,9 @@ namespace Mdt{ namespace ItemEditor{
     void revertDataFromModel() override;
 
     void primaryKeyChangedEvent(const ItemModel::PrimaryKey& oldPrimaryKey, const ItemModel::PrimaryKey& newPrimaryKey) override;
+    void foreignKeysChangedEvent(const ItemModel::ForeignKeyList& newForeignKeys) override;
 //     void foreignKeyChangedEvent(const ItemModel::ForeignKey& oldForeignKey, const ItemModel::ForeignKey& newForeignKey) override;
-    void columnsPartOfForeignKeyChangedEvent(const ItemModel::ColumnList& oldColumnList, const ItemModel::ColumnList& newColumnList) override;
+//     void columnsPartOfForeignKeyChangedEvent(const ItemModel::ColumnList& oldColumnList, const ItemModel::ColumnList& newColumnList) override;
 
     /*! \brief Get a list of currently selected rows
      */

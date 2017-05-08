@@ -44,6 +44,7 @@ namespace Mdt{ namespace ItemModel{
 
   class RelationFilterExpression;
   class PrimaryKeyProxyModel;
+  class ForeignKeyList;
   class ForeignKeyProxyModel;
   class SortProxyModel;
 
@@ -890,17 +891,27 @@ namespace Mdt{ namespace ItemEditor{
      *
      * This default implementation does nothing.
      */
-    virtual void primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey & oldPrimaryKey, const Mdt::ItemModel::PrimaryKey & newPrimaryKey);
+    virtual void primaryKeyChangedEvent(const ItemModel::PrimaryKey & oldPrimaryKey, const ItemModel::PrimaryKey & newPrimaryKey);
 
-    /*! \brief List of columns part of a foreign key changed event
+    /*! \brief Foreign keys changed event
      *
-     * If subclass hase some action to perform when some columns
-     *  become part, or are no longer part, of a foreign key,
+     * If subclass has some action to perform
+     *  when foreign keys changed,
      *  it can implement this method.
      *
      * This default implementation does nothing.
      */
-    virtual void columnsPartOfForeignKeyChangedEvent(const Mdt::ItemModel::ColumnList & oldColumnList, const Mdt::ItemModel::ColumnList & newColumnList);
+    virtual void foreignKeysChangedEvent(const ItemModel::ForeignKeyList & newForeignKeys);
+
+//     /*! \brief List of columns part of a foreign key changed event
+//      *
+//      * If subclass hase some action to perform when some columns
+//      *  become part, or are no longer part, of a foreign key,
+//      *  it can implement this method.
+//      *
+//      * This default implementation does nothing.
+//      */
+//     virtual void columnsPartOfForeignKeyChangedEvent(const Mdt::ItemModel::ColumnList & oldColumnList, const Mdt::ItemModel::ColumnList & newColumnList);
 
 //     /*! \brief Foreign key changed event
 //      *
@@ -914,10 +925,10 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Get a list of currently selected rows
      *
-     * Subclass that acts on a view that handles selecteing multiple rows
+     * Subclass that acts on a view that handles selecting multiple rows
      *  (like QTableView), can override this method.
      *
-     * This default implementation return a single row list with current row if it is valied,
+     * This default implementation return a single row list with current row if it is valid,
      *  otherwise a empty list.
      */
     virtual Mdt::ItemModel::RowList getSelectedRows() const;

@@ -91,12 +91,13 @@ void ForeignKeyColumnVisibilityMapTest::setForeignKeyListTest()
   QVERIFY( fkList.getForeignKeyReferencing("FE21").isNull());
 }
 
-/// \brief aybe add isColumnHidden() in ForeignKeyColumnVisibilityMap
-
 void ForeignKeyColumnVisibilityMapTest::setForeignKeyHiddenTest()
 {
   ForeignKeyColumnVisibilityMap map;
   ForeignKeyList fkList1;
+  /*
+   * Set initial foreign key list
+   */
   fkList1.addForeignKey("FE10", ForeignKey{1,0});
   fkList1.addForeignKey("FE12", ForeignKey{1,2});
   map.setForeignKeyList(fkList1);
@@ -111,6 +112,19 @@ void ForeignKeyColumnVisibilityMapTest::setForeignKeyHiddenTest()
   map.setAllForeignKeysHidden(false);
   QVERIFY(!map.isForeignKeyHidden("FE10"));
   QVERIFY(!map.isForeignKeyHidden("FE12"));
+  /*
+   * Simulate controller adding a foreign key
+   */
+  // Change default flags for existing foreign keys
+  map.setAllForeignKeysHidden(true);
+  QVERIFY( map.isForeignKeyHidden("FE10"));
+  QVERIFY( map.isForeignKeyHidden("FE12"));
+  // Add foreign key
+  fkList1.addForeignKey("FE3", ForeignKey{3});
+  map.setForeignKeyList(fkList1);
+  QVERIFY( map.isForeignKeyHidden("FE10"));
+  QVERIFY( map.isForeignKeyHidden("FE12"));
+  QVERIFY(!map.isForeignKeyHidden("FE3"));
 }
 
 // void ForeignKeyColumnVisibilityMapTest::setAllForeignKeysHiddenTest()
@@ -181,8 +195,8 @@ void ForeignKeyColumnVisibilityMapTest::columnsToShowAndHideTest()
    * Initial state
    */
   ForeignKeyColumnVisibilityMap map;
-  QCOMPARE( toQList(map.getColumnsToShow()), QList<int>() );
-  QCOMPARE( toQList(map.getColumnsToHide()), QList<int>() );
+  QCOMPARE( toQList(map.columnsToShow()), QList<int>() );
+  QCOMPARE( toQList(map.columnsToHide()), QList<int>() );
   /*
    * Set initial list
    */
@@ -192,19 +206,19 @@ void ForeignKeyColumnVisibilityMapTest::columnsToShowAndHideTest()
   map.setForeignKeyList(fkList1);
   // Check changing visibility flags for all foreign keys
   map.setAllForeignKeysHidden(true);
-  QCOMPARE( toQList(map.getColumnsToShow()), QList<int>() );
-  QCOMPARE( toSortedQList(map.getColumnsToHide()), QList<int>({0,1,2}) );
+  QCOMPARE( toQList(map.columnsToShow()), QList<int>() );
+  QCOMPARE( toSortedQList(map.columnsToHide()), QList<int>({0,1,2}) );
   map.setAllForeignKeysHidden(false);
-  QCOMPARE( toSortedQList(map.getColumnsToShow()), QList<int>({0,1,2}) );
-  QCOMPARE( toSortedQList(map.getColumnsToHide()), QList<int>() );
+  QCOMPARE( toSortedQList(map.columnsToShow()), QList<int>({0,1,2}) );
+  QCOMPARE( toSortedQList(map.columnsToHide()), QList<int>() );
   /*
    * Check changing visibility for 1 foreign key + conflicts
    * When a column is part of more than 1 foreign key,
    * it must be visible if at least 1 foreign key is visible.
    */
   map.setForeignKeyHidden("FE10", true);
-  QCOMPARE( toSortedQList(map.getColumnsToShow()), QList<int>() );  // All foreign keys are actually visible
-  QCOMPARE( toSortedQList(map.getColumnsToHide()), QList<int>({0}) );
+  QCOMPARE( toSortedQList(map.columnsToShow()), QList<int>() );  // All foreign keys are actually visible
+  QCOMPARE( toSortedQList(map.columnsToHide()), QList<int>({0}) );
   /*
    * Set a other list
    */
@@ -213,18 +227,53 @@ void ForeignKeyColumnVisibilityMapTest::columnsToShowAndHideTest()
   fkList2.addForeignKey("FE24", ForeignKey{2,4});
   map.setForeignKeyList(fkList2);
   map.setAllForeignKeysHidden(true);
-  QCOMPARE( toSortedQList(map.getColumnsToShow()), QList<int>({0,1}) );
-  QCOMPARE( toSortedQList(map.getColumnsToHide()), QList<int>({2,3,4}) );
+  QCOMPARE( toSortedQList(map.columnsToShow()), QList<int>({0,1}) );
+  QCOMPARE( toSortedQList(map.columnsToHide()), QList<int>({2,3,4}) );
   /*
    * After a call of columnsToShow(), list of previous columns must be cleared
    */
   map.setAllForeignKeysHidden(false);
-  QCOMPARE( toSortedQList(map.getColumnsToShow()), QList<int>({2,3,4}) );
-  QCOMPARE( toSortedQList(map.getColumnsToHide()), QList<int>() );
+  QCOMPARE( toSortedQList(map.columnsToShow()), QList<int>({2,3,4}) );
+  QCOMPARE( toSortedQList(map.columnsToHide()), QList<int>() );
   map.setAllForeignKeysHidden(true);
-  QCOMPARE( toSortedQList(map.getColumnsToShow()), QList<int>() );
-  QCOMPARE( toSortedQList(map.getColumnsToHide()), QList<int>({2,3,4}) );
+  QCOMPARE( toSortedQList(map.columnsToShow()), QList<int>() );
+  QCOMPARE( toSortedQList(map.columnsToHide()), QList<int>({2,3,4}) );
 }
+
+// void ForeignKeyColumnVisibilityMapTest::columnsToShowAndHideAddForeignKeyTest()
+// {
+//   ForeignKeyColumnVisibilityMap map;
+//   QCOMPARE( toQList(map.columnsToShow()), QList<int>() );
+//   QCOMPARE( toQList(map.columnsToHide()), QList<int>() );
+//   /*
+//    * Set initial list
+//    */
+//   ForeignKeyList fkList1;
+//   fkList1.addForeignKey("FE10", ForeignKey{1,0});
+//   map.setForeignKeyList(fkList1);
+//   // Check changing visibility flags for all foreign keys
+//   map.setAllForeignKeysHidden(true);
+//   QCOMPARE( toSortedQList(map.columnsToShow()), QList<int>() );
+//   QCOMPARE( toSortedQList(map.columnsToHide()), QList<int>({0,1}) );
+//   /*
+//    * Simulate controller adding a foreign key
+//    */
+//   fkList1.addForeignKey("FE20", ForeignKey{2,0});
+//   map.setForeignKeyList(fkList1);
+//   // For now, columns part FE20 are visible
+//   QCOMPARE( toSortedQList(map.columnsToShow()), QList<int>() );
+//   QCOMPARE( toSortedQList(map.columnsToHide()), QList<int>({1}) );
+//   // Hide all foreign keys
+//   map.setAllForeignKeysHidden(true);
+//   QCOMPARE( toSortedQList(map.columnsToShow()), QList<int>() );
+//   QCOMPARE( toSortedQList(map.columnsToHide()), QList<int>({2}) );
+//   /*
+//    * Simulate controller disabling foreign keys support
+//    */
+//   map.setForeignKeyList(ForeignKeyList());
+//   QCOMPARE( toSortedQList(map.columnsToShow()), QList<int>({0,1,2}) );
+//   QCOMPARE( toSortedQList(map.columnsToHide()), QList<int>() );
+// }
 
 void ForeignKeyColumnVisibilityMapTest::setForeignKeyListBenchmark()
 {

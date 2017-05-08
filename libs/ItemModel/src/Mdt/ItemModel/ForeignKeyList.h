@@ -58,6 +58,12 @@ namespace Mdt{ namespace ItemModel{
      */
     ForeignKey getForeignKeyReferencing(const QString & entityName) const;
 
+    /*! \brief Check if this list contains a foreign key referencing a entity
+     *
+     * \pre \a entityName must not be empty
+     */
+    bool containsForeignKeyReferencing(const QString & entityName) const;
+
     /*! \brief Get STL compatible const iterator to the beginning of this list
      */
     const_iterator cbegin() const

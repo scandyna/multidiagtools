@@ -64,7 +64,8 @@ class ItemModelControllerTester : public Mdt::ItemEditor::AbstractController
   bool setDataToModel() override;
   void revertDataFromModel() override;
   void primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey& oldPrimaryKey, const Mdt::ItemModel::PrimaryKey& newPrimaryKey) override;
-  void columnsPartOfForeignKeyChangedEvent(const Mdt::ItemModel::ColumnList& oldColumnList, const Mdt::ItemModel::ColumnList& newColumnList) override;
+  void foreignKeysChangedEvent(const Mdt::ItemModel::ForeignKeyList& newForeignKeys) override;
+//   void columnsPartOfForeignKeyChangedEvent(const Mdt::ItemModel::ColumnList& oldColumnList, const Mdt::ItemModel::ColumnList& newColumnList) override;
 //   void foreignKeyChangedEvent(const Mdt::ItemModel::ForeignKey& oldForeignKey, const Mdt::ItemModel::ForeignKey& newForeignKey) override;
 
   int mPrimaryKeyChangedEventCount = 0;

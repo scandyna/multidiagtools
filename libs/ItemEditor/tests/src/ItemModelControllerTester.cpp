@@ -162,10 +162,15 @@ void ItemModelControllerTester::primaryKeyChangedEvent(const Mdt::ItemModel::Pri
   ++mPrimaryKeyChangedEventCount;
 }
 
-void ItemModelControllerTester::columnsPartOfForeignKeyChangedEvent(const Mdt::ItemModel::ColumnList& /*oldColumnList*/, const Mdt::ItemModel::ColumnList& /*newColumnList*/)
+void ItemModelControllerTester::foreignKeysChangedEvent(const Mdt::ItemModel::ForeignKeyList& /*newForeignKeys*/)
 {
   ++mForeignKeyChangedEventCount;
 }
+
+// void ItemModelControllerTester::columnsPartOfForeignKeyChangedEvent(const Mdt::ItemModel::ColumnList& /*oldColumnList*/, const Mdt::ItemModel::ColumnList& /*newColumnList*/)
+// {
+//   ++mForeignKeyChangedEventCount;
+// }
 
 // void ItemModelControllerTester::foreignKeyChangedEvent(const Mdt::ItemModel::ForeignKey& /*oldForeignKey*/, const Mdt::ItemModel::ForeignKey& /*newForeignKey*/)
 // {

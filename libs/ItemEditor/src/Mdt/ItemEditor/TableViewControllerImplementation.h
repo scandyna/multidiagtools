@@ -22,8 +22,10 @@
 #define MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_IMPLEMENTATION_H
 
 #include "ItemViewPrivateContainer.h"
+#include "ForeignKeyColumnVisibilityMap.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include "Mdt/ItemModel/ForeignKey.h"
+#include "Mdt/ItemModel/ForeignKeyList.h"
 #include "Mdt/ItemModel/RowList.h"
 
 class QAbstractItemModel;
@@ -172,7 +174,11 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setAllForeignKeysHidden(bool hide);
 
-    
+    /*! \brief Update columns visibility regarding list of foreign keys
+     */
+    void foreignKeysChangedEvent(const ItemModel::ForeignKeyList & foreignKeys);
+
+
     /*! \brief Set foreign key hidden
      *
      * If \a hide is true, columns that are part of foreign key will be hidden.
@@ -190,9 +196,11 @@ namespace Mdt{ namespace ItemEditor{
    private:
 
     void updatePrimaryKeyColumnsVisibility(const ItemModel::PrimaryKey & pk);
+    void updateForeignKeysColumnsVisibility();
     void updateForeignKeyColumnsVisibility(const ItemModel::ForeignKey & fk);
 
     ItemViewPrivateContainer mContainer;
+    ForeignKeyColumnVisibilityMap mForeignKeyVisibilityMap;
     bool mPrimaryKeyColumnsHidden = false;
     bool mForeignKeyColumnsHidden = false;
   };

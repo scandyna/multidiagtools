@@ -25,6 +25,7 @@
 #include "FilterControllerRelation.h"
 #include "ControllerStatePermissionProxyModel.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
+#include "Mdt/ItemModel/ForeignKeyList.h"
 #include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 #include "Mdt/ItemModel/SortProxyModel.h"
 #include <QAbstractItemModel>
@@ -136,7 +137,7 @@ void AbstractController::setModel(QAbstractItemModel* model)
   primaryKeyChangedEvent( PrimaryKey(), getPrimaryKey() );
   const auto *fkModel = getForeignKeysProxyModel();
   if(fkModel != nullptr){
-    columnsPartOfForeignKeyChangedEvent( ColumnList(), fkModel->getColumnsPartOfForeignKey() );
+    foreignKeysChangedEvent( fkModel->getForeignKeyList() );
   }
 //   foreignKeyChangedEvent( ForeignKey(), getForeignKey() );
 }
@@ -304,11 +305,12 @@ void AbstractController::setForeignKeysEnabled(bool enable)
     appendProxyModel(new ForeignKeyProxyModel(this));
   }else{
 //     foreignKeyChangedEvent( getForeignKey(), ForeignKey() );
-    const auto *fkModel = getForeignKeysProxyModel();
-    if(fkModel != nullptr){
-      columnsPartOfForeignKeyChangedEvent( fkModel->getColumnsPartOfForeignKey(), ColumnList() );
-      deleteFirstProxyModelOfType<ForeignKeyProxyModel>();
-    }
+    foreignKeysChangedEvent(ItemModel::ForeignKeyList());
+//     const auto *fkModel = getForeignKeysProxyModel();
+//     if(fkModel != nullptr){
+//       columnsPartOfForeignKeyChangedEvent( fkModel->getColumnsPartOfForeignKey(), ColumnList() );
+//     }
+    deleteFirstProxyModelOfType<ForeignKeyProxyModel>();
   }
 }
 
@@ -331,10 +333,12 @@ void AbstractController::addForeignKey(const QString & foreignEntityName, const 
   setForeignKeysEnabled(true);
   auto *model = getForeignKeysProxyModel();
   Q_ASSERT(model != nullptr);
-  const auto oldFkColumnList = model->getColumnsPartOfForeignKey();
   model->addForeignKey(foreignEntityName, fk);
-  const auto newFkColumnList = model->getColumnsPartOfForeignKey();
-  columnsPartOfForeignKeyChangedEvent(oldFkColumnList, newFkColumnList);
+  foreignKeysChangedEvent(model->getForeignKeyList());
+//   const auto oldFkColumnList = model->getColumnsPartOfForeignKey();
+//   model->addForeignKey(foreignEntityName, fk);
+//   const auto newFkColumnList = model->getColumnsPartOfForeignKey();
+//   columnsPartOfForeignKeyChangedEvent(oldFkColumnList, newFkColumnList);
 }
 
 void AbstractController::addForeignKey(const QString& foreignEntityName, std::initializer_list< int > fk)
@@ -718,9 +722,13 @@ void AbstractController::primaryKeyChangedEvent(const PrimaryKey& , const Primar
 {
 }
 
-void AbstractController::columnsPartOfForeignKeyChangedEvent(const ItemModel::ColumnList&, const ItemModel::ColumnList&)
+void AbstractController::foreignKeysChangedEvent(const ItemModel::ForeignKeyList&)
 {
 }
+
+// void AbstractController::columnsPartOfForeignKeyChangedEvent(const ItemModel::ColumnList&, const ItemModel::ColumnList&)
+// {
+// }
 
 // void AbstractController::foreignKeyChangedEvent(const ForeignKey& , const ForeignKey&)
 // {

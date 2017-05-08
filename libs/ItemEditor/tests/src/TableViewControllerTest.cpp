@@ -437,7 +437,7 @@ void TableViewControllerTest::foreignKeyVisibilityTest()
   controller.addForeignKey("FE2", {2});
   QVERIFY( view.isColumnHidden(0));
   QVERIFY( view.isColumnHidden(1));
-  QVERIFY( view.isColumnHidden(2));
+  QVERIFY(!view.isColumnHidden(2));
 //   /*
 //    * Change foreign key
 //    */

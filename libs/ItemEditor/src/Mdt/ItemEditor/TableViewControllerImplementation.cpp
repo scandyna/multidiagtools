@@ -107,13 +107,23 @@ void TableViewControllerImplementation::setForeignKeyHidden(const QString& forei
 {
   Q_ASSERT(!foreignEntityName.trimmed().isEmpty());
 
-  
+  mForeignKeyVisibilityMap.setForeignKeyHidden(foreignEntityName, hide);
+  updateForeignKeysColumnsVisibility();
 }
 
 void TableViewControllerImplementation::setAllForeignKeysHidden(bool hide)
 {
-
+  mForeignKeyVisibilityMap.setAllForeignKeysHidden(hide);
+  updateForeignKeysColumnsVisibility();
 }
+
+void TableViewControllerImplementation::foreignKeysChangedEvent(const ForeignKeyList & foreignKeys)
+{
+  mForeignKeyVisibilityMap.setForeignKeyList(foreignKeys);
+  updateForeignKeysColumnsVisibility();
+}
+
+
 
 void TableViewControllerImplementation::setForeignKeyHidden(const ItemModel::ForeignKey & fk, bool hide)
 {
@@ -157,6 +167,20 @@ void TableViewControllerImplementation::updatePrimaryKeyColumnsVisibility(const 
   }
   for(int column : pk){
     v->setColumnHidden(column, mPrimaryKeyColumnsHidden);
+  }
+}
+
+void TableViewControllerImplementation::updateForeignKeysColumnsVisibility()
+{
+  auto *v = view();
+  if(v == nullptr){
+    return;
+  }
+  for(int column : mForeignKeyVisibilityMap.columnsToShow()){
+    v->setColumnHidden(column, false);
+  }
+  for(int column : mForeignKeyVisibilityMap.columnsToHide()){
+    v->setColumnHidden(column, true);
   }
 }
 

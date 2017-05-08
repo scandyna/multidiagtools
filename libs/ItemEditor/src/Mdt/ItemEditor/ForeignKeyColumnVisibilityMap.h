@@ -26,7 +26,7 @@
 #include "Mdt/ItemModel/ColumnList.h"
 #include <QString>
 #include <QHash>
-#include <vector>
+// #include <vector>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -122,14 +122,22 @@ namespace Mdt{ namespace ItemEditor{
      *        will also return the columns that are no longer part of a foreign key,
      *        as long as no modifier is called.
      */
-    ItemModel::ColumnList getColumnsToShow() const;
+    ItemModel::ColumnList columnsToShow() const
+    {
+      mColumnsNoLongerPartOfMap.clear();
+      return mColumnsToShow;
+    }
 
     /*! \brief Get a list of columns to hide
      */
-    ItemModel::ColumnList getColumnsToHide() const;
+    ItemModel::ColumnList columnsToHide() const
+    {
+      return mColumnsToHide;
+    }
 
    private:
 
+    void updateColumnsToBeShown();
     void updateColumnsToBeShownAndHidden();
     void setColumnsNoLongerPartOfForeignKey(const QHash<QString, ForeignKeyColumnVisibilityMapItem> & previousMap);
     ItemModel::ColumnList getColumnsToBeHidden() const;

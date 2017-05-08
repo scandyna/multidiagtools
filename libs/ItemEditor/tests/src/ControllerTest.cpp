@@ -676,6 +676,12 @@ void ControllerTest::foreignKeyTest()
   controller.setForeignKeyItemsEnabled("FE2", false);
   QVERIFY(!controller.getForeignKeysProxyModel()->isForeignKeyItemsEnabled("FE2"));
   /*
+   * Add a foreign key
+   */
+  controller.addForeignKey("FE3", {3});
+  QCOMPARE(controller.foreignKeyChangedEventCount(), 1);
+  controller.clearForeignKeyChangedEventCount();
+  /*
    * Set model
    */
   VariantTableModel model;
