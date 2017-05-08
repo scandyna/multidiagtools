@@ -19,8 +19,6 @@
  **
  ****************************************************************************/
 #include "ForeignKeyColumnVisibilityMap.h"
-#include <QList>
-#include <QStringList>
 #include <algorithm>
 #include <iterator>
 #include <vector>
@@ -125,20 +123,12 @@ void ForeignKeyColumnVisibilityMap::updateColumnsToBeShown()
 
 void ForeignKeyColumnVisibilityMap::updateColumnsToBeShownAndHidden()
 {
-//   auto columnsToBeVisible = getColumnsToBeVisible();
   auto columnsToBeHidden = getColumnsToBeHidden();
 
   updateColumnsToBeShown();
-//   std::sort(columnsToBeVisible.begin(), columnsToBeVisible.end());
+
   std::sort(columnsToBeHidden.begin(), columnsToBeHidden.end());
   std::sort(mHiddenColumns.begin(), mHiddenColumns.end());
-//   // Columns to show: columns that must be visible and that are hidden + columns that are no longer part of a foreign key
-//   mColumnsToShow.clear();
-//   std::set_intersection( columnsToBeVisible.cbegin(), columnsToBeVisible.cend(), mHiddenColumns.cbegin(), mHiddenColumns.cend(), std::back_inserter(mColumnsToShow) );
-//   const auto copyPred = [this](int column){
-//     return !mColumnsToShow.contains(column);
-//   };
-//   std::copy_if(mColumnsNoLongerPartOfMap.cbegin(), mColumnsNoLongerPartOfMap.cend(), std::back_inserter(mColumnsToShow), copyPred);
   // Columns to hide: columns that must be hidden, and that are not actually hidden
   mColumnsToHide.clear();
   std::set_difference( columnsToBeHidden.cbegin(), columnsToBeHidden.cend(), mHiddenColumns.cbegin(), mHiddenColumns.cend(), std::back_inserter(mColumnsToHide) );
@@ -165,47 +155,6 @@ void ForeignKeyColumnVisibilityMap::setColumnsNoLongerPartOfForeignKey(const QHa
   std::set_difference( previousColumnList.cbegin(), previousColumnList.cend(), currentColumnList.cbegin(), currentColumnList.cend(), std::back_inserter(mColumnsNoLongerPartOfMap) );
 }
 
-// ColumnList ForeignKeyColumnVisibilityMap::columnsToShow() const
-// {
-//   mColumnsNoLongerPartOfMap.clear();
-//   return mColumnsToShow;
-// /*
-//   ColumnList list;
-//   auto columnsToBeVisible = getColumnsToBeVisible();
-// 
-//   std::sort(columnsToBeVisible.begin(), columnsToBeVisible.end());
-//   std::set_intersection( columnsToBeVisible.cbegin(), columnsToBeVisible.cend(), mHiddenColumns.cbegin(), mHiddenColumns.cend(), std::back_inserter(list) );
-// 
-// //   for(const auto & item : mMap){
-// //     if(!item.isForeignKeyHidden()){
-// //       copyItemFkToList(item, list);
-// //     }
-// //   }
-// 
-//   return list;*/
-// }
-
-// ColumnList ForeignKeyColumnVisibilityMap::columnsToHide() const
-// {
-//   return mColumnsToHide;
-// 
-// //   ColumnList list;
-// //   auto columnsToBeHidden = getColumnsToBeHidden();
-// // 
-// //   std::sort(columnsToBeHidden.begin(), columnsToBeHidden.end());
-// //   std::set_difference( columnsToBeHidden.cbegin(), columnsToBeHidden.cend(), mHiddenColumns.cbegin(), mHiddenColumns.cend(), std::back_inserter(list) );
-// //   //mHiddenColumns.clear();
-// // //   std::copy( list.cbegin(), list.cend(), std::back_inserter(mHiddenColumns) );
-// // 
-// // //   for(const auto & item : mMap){
-// // //     if(item.isForeignKeyHidden()){
-// // //       copyItemFkToList(item, list);
-// // //     }
-// // //   }
-// // 
-// //   return list;
-// }
-
 ColumnList ForeignKeyColumnVisibilityMap::getColumnsToBeHidden() const
 {
   ColumnList list;
@@ -217,7 +166,6 @@ ColumnList ForeignKeyColumnVisibilityMap::getColumnsToBeHidden() const
     if(item.isForeignKeyHidden()){
       const auto & fk = item.foreignKey();
       std::copy_if( fk.cbegin(), fk.cend(), std::back_inserter(list), copyPred );
-//       copyItemFkToList(item, list, false);
     }
   }
 
@@ -235,7 +183,6 @@ ColumnList ForeignKeyColumnVisibilityMap::getColumnsToBeVisible() const
     if(!item.isForeignKeyHidden()){
       const auto & fk = item.foreignKey();
       std::copy_if( fk.cbegin(), fk.cend(), std::back_inserter(list), copyPred );
-//       copyItemFkToList(item, list, true);
     }
   }
 

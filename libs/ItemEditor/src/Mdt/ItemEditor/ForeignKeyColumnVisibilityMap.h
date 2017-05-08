@@ -26,7 +26,6 @@
 #include "Mdt/ItemModel/ColumnList.h"
 #include <QString>
 #include <QHash>
-// #include <vector>
 
 namespace Mdt{ namespace ItemEditor{
 
