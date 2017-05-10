@@ -139,7 +139,6 @@ void AbstractController::setModel(QAbstractItemModel* model)
   if(fkModel != nullptr){
     foreignKeysChangedEvent( fkModel->getForeignKeyList() );
   }
-//   foreignKeyChangedEvent( ForeignKey(), getForeignKey() );
 }
 
 int AbstractController::rowCount() const
@@ -377,43 +376,6 @@ void AbstractController::setAllForeignKeysItemsEnabled(bool enable)
   setForeignKeysEnabled(true);
   getForeignKeysProxyModel()->setAllForeignKeysItemsEnabled(enable);
 }
-
-
-// void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
-// {
-//   Q_ASSERT(!fk.isNull());
-// 
-//   const auto oldFk = getForeignKey();
-//   setForeignKeysEnabled(true);
-//   getForeignKeysProxyModel()->setForeignKey(fk);
-// //   foreignKeyChangedEvent(oldFk, fk);
-// }
-
-// void AbstractController::setForeignKey(std::initializer_list<int> fk)
-// {
-//   setForeignKey( ForeignKey(fk) );
-// }
-
-// ItemModel::ForeignKey AbstractController::getForeignKey() const
-// {
-//   const auto *model = getForeignKeysProxyModel();
-//   if(model == nullptr){
-//     return ForeignKey();
-//   }
-//   return model->foreignKey();
-// }
-
-// void AbstractController::setForeignKeyEditable(bool editable)
-// {
-//   setForeignKeysEnabled(true);
-//   getForeignKeysProxyModel()->setForeignKeyEditable(editable);
-// }
-
-// void AbstractController::setForeignKeyItemsEnabled(bool enable)
-// {
-//   setForeignKeysEnabled(true);
-//   getForeignKeysProxyModel()->setForeignKeyItemsEnabled(enable);
-// }
 
 void AbstractController::setSortEnabled(bool enable)
 {

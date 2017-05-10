@@ -1,6 +1,6 @@
 format 211
 "Mdt" // Mdt
-  revision 28
+  revision 29
   modified_by 2 "philippe"
   // class settings
   
@@ -771,6 +771,8 @@ ${members}};
   package_ref 509570 // WebSocket
 
   package_ref 483202 // Numeric
+
+  package_ref 654594 // File
 
   package_ref 641410 // PlainText
 

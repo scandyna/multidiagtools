@@ -47,45 +47,6 @@ namespace Mdt{ namespace ItemModel{
      */
     KeyRecord getKeyRecord(int row, const ColumnList & key) const;
 
-    /*! \brief Set key
-     */
-    void setKey(const ColumnList & key);
-
-    /*! \brief Get key
-     */
-    ColumnList key() const
-    {
-      return mKey;
-    }
-
-    /*! \brief Set key editable
-     */
-    void setKeyEditable(bool editable);
-
-    /*! \brief Check if key is editable
-     */
-    bool isKeyEditable() const
-    {
-      return mIsKeyEditable;
-    }
-
-    /*! \brief Set key items enabled
-     */
-    void setKeyItemsEnabled(bool enable);
-
-    /*! \brief Check if key items are enabled
-     */
-    bool isKeyItemsEnabled() const
-    {
-      return mIsKeyItemsEnabled;
-    }
-
-    /*! \brief Get key record for row
-     *
-     * \pre \a row must be in correct range ( 0 <= row < rowCount() )
-     */
-    KeyRecord keyRecord(int row) const;
-
     /*! \brief Find first row that matches key record
      *
      * Returns the first row that matches, otherwise -1
@@ -95,10 +56,6 @@ namespace Mdt{ namespace ItemModel{
    private:
 
     bool rowMatchesKeyRecord(int row, const KeyRecord & record) const;
-
-    bool mIsKeyEditable = true;
-    bool mIsKeyItemsEnabled = true;
-    ColumnList mKey;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

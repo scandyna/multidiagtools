@@ -549,45 +549,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setAllForeignKeysItemsEnabled(bool enable);
 
-
-//     /*! \brief Set foreign key
-//      *
-//      * If foreign key support was not enabled,
-//      *  it will be enabled before setting \a fk.
-//      * 
-//      * \pre \a fk must not be null
-//      */
-//     void setForeignKey(const Mdt::ItemModel::ForeignKey & fk);
-
-//     /*! \brief Set foreign key
-//      *
-//      * If foreign key support was not enabled,
-//      *  it will be enabled before setting \a fk.
-//      *
-//      * \pre Each column in \a fk must be >= 0
-//      * \pre Each column in \a fk must be unique
-//      */
-//     void setForeignKey(std::initializer_list<int> fk);
-
-//     /*! \brief Get foreign key
-//      *
-//      * \note When source model changes,
-//      *        the foreign key will be cleared.
-//      */
-//     Mdt::ItemModel::ForeignKey getForeignKey() const;
-
-//     /*! \brief Set foreign key editable
-//      *
-//      * By default, foreign key is editable
-//      */
-//     void setForeignKeyEditable(bool editable);
-
-//     /*! \brief Set foreign key items enabled
-//      *
-//      * By default, foreign key items are enabled.
-//      */
-//     void setForeignKeyItemsEnabled(bool enable);
-
     /*! \brief Set sort enabled
      *
      * Enabling support fo sort will insert a proxy model,

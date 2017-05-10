@@ -38,6 +38,7 @@ ClientWidget::ClientWidget(QWidget* parent)
   setupUi(centralWidget);
   setCentralWidget(centralWidget);
   auto *ctrl = controller();
+  ctrl->setEntityName("Client");
   ctrl->setPrimaryKey({0});
 //   ctrl->setPrimaryKeyEditable(false);
 //   ctrl->setPrimaryKeyItemsEnabled(false);

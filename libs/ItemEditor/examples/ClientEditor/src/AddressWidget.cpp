@@ -41,6 +41,7 @@ AddressWidget::AddressWidget(QWidget* parent)
   addRemoveActionToBottomArea();
   setRemoveActionText(tr("Remove addresse"));
   auto ctrl = controller();
+  ctrl->setEntityName("Address");
   ctrl->setMultiRowSelectionAllowed(true);
   ctrl->setInsertLocation(TableViewController::InsertAtEnd);
   ctrl->setPrimaryKey({0});

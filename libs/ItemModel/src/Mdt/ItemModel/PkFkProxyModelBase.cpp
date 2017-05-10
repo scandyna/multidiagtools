@@ -28,27 +28,6 @@ PkFkProxyModelBase::PkFkProxyModelBase(QObject* parent)
 {
 }
 
-// Qt::ItemFlags PkFkProxyModelBase::flags(const QModelIndex & index) const
-// {
-//   if(!index.isValid()){
-//     return QIdentityProxyModel::flags(index);
-//   }
-//   if(mIsKeyEditable && mIsKeyItemsEnabled){
-//     return QIdentityProxyModel::flags(index);
-//   }
-//   if(!mKey.contains(index.column())){
-//     return QIdentityProxyModel::flags(index);
-//   }
-//   auto f = QIdentityProxyModel::flags(index);
-//   if(!mIsKeyEditable){
-//     f &= Qt::ItemFlags(~Qt::ItemIsEditable);
-//   }
-//   if(!mIsKeyItemsEnabled){
-//     f &= Qt::ItemFlags(~Qt::ItemIsEnabled);
-//   }
-//   return f;
-// }
-
 KeyRecord PkFkProxyModelBase::getKeyRecord(int row, const ColumnList& key) const
 {
   Q_ASSERT(row >= 0);
@@ -56,34 +35,6 @@ KeyRecord PkFkProxyModelBase::getKeyRecord(int row, const ColumnList& key) const
 
   KeyRecord record;
   for(int column : key){
-    Q_ASSERT(column < columnCount());
-    record.append(column, index(row, column).data());
-  }
-  return record;
-}
-
-void PkFkProxyModelBase::setKey(const ColumnList& key)
-{
-  mKey = key;
-}
-
-void PkFkProxyModelBase::setKeyEditable(bool editable)
-{
-  mIsKeyEditable = editable;
-}
-
-void PkFkProxyModelBase::setKeyItemsEnabled(bool enable)
-{
-  mIsKeyItemsEnabled = enable;
-}
-
-KeyRecord PkFkProxyModelBase::keyRecord(int row) const
-{
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < rowCount());
-
-  KeyRecord record;
-  for(int column : mKey){
     Q_ASSERT(column < columnCount());
     record.append(column, index(row, column).data());
   }

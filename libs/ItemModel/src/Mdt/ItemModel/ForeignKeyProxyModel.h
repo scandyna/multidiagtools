@@ -145,56 +145,6 @@ namespace Mdt{ namespace ItemModel{
      */
     ForeignKeyList getForeignKeyList() const;
 
-
-    /*! \brief Set foreign key
-     *
-     * \pre \a fk must not be null
-     */
-    void setForeignKey(const ForeignKey & fk);
-
-    /*! \brief Set foreign key
-     *
-     * \pre Each column in \a fk must be >= 0
-     * \pre Each column in \a fk must be unique
-     */
-    void setForeignKey(std::initializer_list<int> fk);
-
-    /*! \brief Get foreign key
-     */
-    ForeignKey foreignKey() const;
-
-    /*! \brief Set foreign key editable
-     *
-     * By default, foreign key is editable
-     */
-    void setForeignKeyEditable(bool editable);
-
-    /*! \brief Check if foreign is editable
-     */
-    bool isForeignKeyEditable() const
-    {
-      return isKeyEditable();
-    }
-
-    /*! \brief Set foreign key items enabled
-     *
-     * By default, foreign key items are enabled.
-     */
-    void setForeignKeyItemsEnabled(bool enable);
-
-    /*! \brief Check if foreign key items are enabled
-     */
-    bool isForeignKeyItemsEnabled() const
-    {
-      return isKeyItemsEnabled();
-    }
-
-    /*! \brief Get foreign key record for row
-     *
-     * \pre \a row must be in correct range ( 0 <= row < rowCount() )
-     */
-    ForeignKeyRecord foreignKeyRecord(int row) const;
-
    private:
 
     ForeignKeyProxyModelMap mMap;

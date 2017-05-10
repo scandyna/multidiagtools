@@ -137,41 +137,4 @@ ForeignKeyList ForeignKeyProxyModel::getForeignKeyList() const
   return mMap.getForeignKeyList();
 }
 
-
-
-void ForeignKeyProxyModel::setForeignKey(const ForeignKey & fk)
-{
-  Q_ASSERT(!fk.isNull());
-
-  setKey(fk.toColumnList());
-}
-
-void ForeignKeyProxyModel::setForeignKey(std::initializer_list<int> fk)
-{
-  setForeignKey( ForeignKey(fk) );
-}
-
-ForeignKey ForeignKeyProxyModel::foreignKey() const
-{
-  return ForeignKey::fromColumnList(key());
-}
-
-void ForeignKeyProxyModel::setForeignKeyEditable(bool editable)
-{
-  setKeyEditable(editable);
-}
-
-void ForeignKeyProxyModel::setForeignKeyItemsEnabled(bool enable)
-{
-  setKeyItemsEnabled(enable);
-}
-
-ForeignKeyRecord ForeignKeyProxyModel::foreignKeyRecord(int row) const
-{
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < rowCount());
-
-  return ForeignKeyRecord::fromKeyRecord(keyRecord(row));
-}
-
 }} // namespace Mdt{ namespace ItemModel{
