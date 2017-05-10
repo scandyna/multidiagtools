@@ -304,12 +304,7 @@ void AbstractController::setForeignKeysEnabled(bool enable)
   if(enable){
     appendProxyModel(new ForeignKeyProxyModel(this));
   }else{
-//     foreignKeyChangedEvent( getForeignKey(), ForeignKey() );
     foreignKeysChangedEvent(ItemModel::ForeignKeyList());
-//     const auto *fkModel = getForeignKeysProxyModel();
-//     if(fkModel != nullptr){
-//       columnsPartOfForeignKeyChangedEvent( fkModel->getColumnsPartOfForeignKey(), ColumnList() );
-//     }
     deleteFirstProxyModelOfType<ForeignKeyProxyModel>();
   }
 }
@@ -335,10 +330,6 @@ void AbstractController::addForeignKey(const QString & foreignEntityName, const 
   Q_ASSERT(model != nullptr);
   model->addForeignKey(foreignEntityName, fk);
   foreignKeysChangedEvent(model->getForeignKeyList());
-//   const auto oldFkColumnList = model->getColumnsPartOfForeignKey();
-//   model->addForeignKey(foreignEntityName, fk);
-//   const auto newFkColumnList = model->getColumnsPartOfForeignKey();
-//   columnsPartOfForeignKeyChangedEvent(oldFkColumnList, newFkColumnList);
 }
 
 void AbstractController::addForeignKey(const QString& foreignEntityName, std::initializer_list< int > fk)
@@ -361,6 +352,8 @@ ForeignKey AbstractController::getForeignKeyReferencing(const QString& entityNam
 
 void AbstractController::setForeignKeyEditable(const QString& foreignEntityName, bool editable)
 {
+  Q_ASSERT(!foreignEntityName.trimmed().isEmpty());
+
   setForeignKeysEnabled(true);
   getForeignKeysProxyModel()->setForeignKeyEditable(foreignEntityName, editable);
 }
@@ -373,6 +366,8 @@ void AbstractController::setAllForeignKeysEditable(bool editable)
 
 void AbstractController::setForeignKeyItemsEnabled(const QString& foreignEntityName, bool enable)
 {
+  Q_ASSERT(!foreignEntityName.trimmed().isEmpty());
+
   setForeignKeysEnabled(true);
   getForeignKeysProxyModel()->setForeignKeyItemsEnabled(foreignEntityName, enable);
 }
@@ -384,41 +379,41 @@ void AbstractController::setAllForeignKeysItemsEnabled(bool enable)
 }
 
 
-void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
-{
-  Q_ASSERT(!fk.isNull());
+// void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
+// {
+//   Q_ASSERT(!fk.isNull());
+// 
+//   const auto oldFk = getForeignKey();
+//   setForeignKeysEnabled(true);
+//   getForeignKeysProxyModel()->setForeignKey(fk);
+// //   foreignKeyChangedEvent(oldFk, fk);
+// }
 
-  const auto oldFk = getForeignKey();
-  setForeignKeysEnabled(true);
-  getForeignKeysProxyModel()->setForeignKey(fk);
-//   foreignKeyChangedEvent(oldFk, fk);
-}
+// void AbstractController::setForeignKey(std::initializer_list<int> fk)
+// {
+//   setForeignKey( ForeignKey(fk) );
+// }
 
-void AbstractController::setForeignKey(std::initializer_list<int> fk)
-{
-  setForeignKey( ForeignKey(fk) );
-}
+// ItemModel::ForeignKey AbstractController::getForeignKey() const
+// {
+//   const auto *model = getForeignKeysProxyModel();
+//   if(model == nullptr){
+//     return ForeignKey();
+//   }
+//   return model->foreignKey();
+// }
 
-ItemModel::ForeignKey AbstractController::getForeignKey() const
-{
-  const auto *model = getForeignKeysProxyModel();
-  if(model == nullptr){
-    return ForeignKey();
-  }
-  return model->foreignKey();
-}
+// void AbstractController::setForeignKeyEditable(bool editable)
+// {
+//   setForeignKeysEnabled(true);
+//   getForeignKeysProxyModel()->setForeignKeyEditable(editable);
+// }
 
-void AbstractController::setForeignKeyEditable(bool editable)
-{
-  setForeignKeysEnabled(true);
-  getForeignKeysProxyModel()->setForeignKeyEditable(editable);
-}
-
-void AbstractController::setForeignKeyItemsEnabled(bool enable)
-{
-  setForeignKeysEnabled(true);
-  getForeignKeysProxyModel()->setForeignKeyItemsEnabled(enable);
-}
+// void AbstractController::setForeignKeyItemsEnabled(bool enable)
+// {
+//   setForeignKeysEnabled(true);
+//   getForeignKeysProxyModel()->setForeignKeyItemsEnabled(enable);
+// }
 
 void AbstractController::setSortEnabled(bool enable)
 {
@@ -482,9 +477,10 @@ void AbstractController::addChildController(AbstractController* controller)
 {
   Q_ASSERT(controller != nullptr);
   Q_ASSERT(!mControllerStateMachine.isNull());
+  Q_ASSERT(!entityName().trimmed().isEmpty());
   Q_ASSERT(!getPrimaryKey().isNull());
-  Q_ASSERT(!controller->getForeignKey().isNull());
-  Q_ASSERT(getPrimaryKey().columnCount() == controller->getForeignKey().columnCount());
+  Q_ASSERT(!controller->getForeignKeyReferencing(entityName()).isNull());
+  Q_ASSERT(getPrimaryKey().columnCount() == controller->getForeignKeyReferencing(entityName()).columnCount());
 
   auto *relation = mRelationList.addChildController<FilterControllerRelation>(controller);
   relation->setRelationFilterFromPkFk();
@@ -725,14 +721,6 @@ void AbstractController::primaryKeyChangedEvent(const PrimaryKey& , const Primar
 void AbstractController::foreignKeysChangedEvent(const ItemModel::ForeignKeyList&)
 {
 }
-
-// void AbstractController::columnsPartOfForeignKeyChangedEvent(const ItemModel::ColumnList&, const ItemModel::ColumnList&)
-// {
-// }
-
-// void AbstractController::foreignKeyChangedEvent(const ForeignKey& , const ForeignKey&)
-// {
-// }
 
 ItemModel::RowList AbstractController::getSelectedRows() const
 {

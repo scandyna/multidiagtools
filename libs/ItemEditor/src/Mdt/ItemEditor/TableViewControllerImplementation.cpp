@@ -117,20 +117,6 @@ void TableViewControllerImplementation::setAllForeignKeysHidden(bool hide)
   updateForeignKeysColumnsVisibility();
 }
 
-void TableViewControllerImplementation::foreignKeysChangedEvent(const ForeignKeyList & foreignKeys)
-{
-  mForeignKeyVisibilityMap.setForeignKeyList(foreignKeys);
-  updateForeignKeysColumnsVisibility();
-}
-
-
-
-void TableViewControllerImplementation::setForeignKeyHidden(const ItemModel::ForeignKey & fk, bool hide)
-{
-  mForeignKeyColumnsHidden = hide;
-  updateForeignKeyColumnsVisibility(fk);
-}
-
 void TableViewControllerImplementation::primaryKeyChangedEvent(const ItemModel::PrimaryKey& oldPrimaryKey, const ItemModel::PrimaryKey& newPrimaryKey)
 {
   auto *v = view();
@@ -145,18 +131,10 @@ void TableViewControllerImplementation::primaryKeyChangedEvent(const ItemModel::
   }
 }
 
-void TableViewControllerImplementation::foreignKeyChangedEvent(const ItemModel::ForeignKey& oldForeignKey, const ItemModel::ForeignKey& newForeignKey)
+void TableViewControllerImplementation::foreignKeysChangedEvent(const ForeignKeyList & foreignKeys)
 {
-  auto *v = view();
-  if(v == nullptr){
-    return;
-  }
-  for(int column : oldForeignKey){
-    v->setColumnHidden(column, false);
-  }
-  for(int column : newForeignKey){
-    v->setColumnHidden(column, mForeignKeyColumnsHidden);
-  }
+  mForeignKeyVisibilityMap.setForeignKeyList(foreignKeys);
+  updateForeignKeysColumnsVisibility();
 }
 
 void TableViewControllerImplementation::updatePrimaryKeyColumnsVisibility(const ItemModel::PrimaryKey& pk)
@@ -181,17 +159,6 @@ void TableViewControllerImplementation::updateForeignKeysColumnsVisibility()
   }
   for(int column : mForeignKeyVisibilityMap.columnsToHide()){
     v->setColumnHidden(column, true);
-  }
-}
-
-void TableViewControllerImplementation::updateForeignKeyColumnsVisibility(const ItemModel::ForeignKey& fk)
-{
-  auto *v = view();
-  if(v == nullptr){
-    return;
-  }
-  for(int column : fk){
-    v->setColumnHidden(column, mForeignKeyColumnsHidden);
   }
 }
 

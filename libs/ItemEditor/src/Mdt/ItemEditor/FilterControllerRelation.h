@@ -66,7 +66,8 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \pre child controller must allready been set
      * \pre parent controller must have a non null primary key set
-     * \pre child controller must have a non null foreign key set
+     * \pre parent controller must have a non empty entity name
+     * \pre child controller must have 1 non null foreign key, referencing parent controller, set
      * \pre Both primary of parent controller and foreign key of child controller must have the same count of columns, and max 4
      */
     void setRelationFilterFromPkFk();

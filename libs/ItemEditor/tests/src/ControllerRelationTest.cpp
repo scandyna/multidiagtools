@@ -318,6 +318,7 @@ void ControllerRelationTest::editSubmitRevertParentChildStateTest()
   ItemModelControllerTester parentController;
   parentController.setModel(&parentModel);
   parentController.setPrimaryKey({0});
+  parentController.setEntityName("Parent");
   QVERIFY(parentController.controllerStateMachine() != nullptr);
   QSignalSpy parentStateChangedSpy(parentController.controllerStateMachine(), &ControllerStateMachine::currentStateChanged);
   QVERIFY(parentStateChangedSpy.isValid());
@@ -328,7 +329,9 @@ void ControllerRelationTest::editSubmitRevertParentChildStateTest()
   childModel.resize(1, 1);
   ItemModelControllerTester childController;
   childController.setModel(&childModel);
-  childController.setForeignKey({0});
+  childController.addForeignKey("Parent", {0});
+  childController.setEntityName("Child");
+//   childController.setForeignKey({0});
   QVERIFY(childController.controllerStateMachine() != nullptr);
   QSignalSpy childStateChangedSpy(childController.controllerStateMachine(), &ControllerStateMachine::currentStateChanged);
   QVERIFY(childStateChangedSpy.isValid());
@@ -412,6 +415,7 @@ void ControllerRelationTest::editSubmitRevertTopMiddleChildStateTest()
   ItemModelControllerTester topParentController;
   topParentController.setModel(&topParentModel);
   topParentController.setPrimaryKey({0});
+  topParentController.setEntityName("TopParent");
   /*
    * Setup middle model and controller
    */
@@ -420,7 +424,9 @@ void ControllerRelationTest::editSubmitRevertTopMiddleChildStateTest()
   ItemModelControllerTester middleController;
   middleController.setModel(&middleModel);
   middleController.setPrimaryKey({0});
-  middleController.setForeignKey({0});
+  middleController.setEntityName("Middle");
+//   middleController.setForeignKey({0});
+  middleController.addForeignKey("TopParent", {0});
   /*
    * Setup child model and controller
    */
@@ -428,7 +434,9 @@ void ControllerRelationTest::editSubmitRevertTopMiddleChildStateTest()
   childModel.resize(1, 1);
   ItemModelControllerTester childController;
   childController.setModel(&childModel);
-  childController.setForeignKey({0});
+  childController.setEntityName("Child");
+//   childController.setForeignKey({0});
+  childController.addForeignKey("Middle", {0});
   /*
    * Setup relations
    *

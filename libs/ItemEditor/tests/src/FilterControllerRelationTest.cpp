@@ -110,7 +110,9 @@ void FilterControllerRelationTest::filterConditionTest()
    * Setup relation using primary and foreign keys
    */
   parentController.setPrimaryKey({2});
-  childController.setForeignKey({3});
+  parentController.setEntityName("Parent");
+//   childController.setForeignKey({3});
+  childController.addForeignKey("Parent", {3});
   FilterControllerRelation relation2;
   relation2.setParentController(&parentController);
   relation2.setChildController(&childController);

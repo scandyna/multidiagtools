@@ -54,12 +54,13 @@ void FilterControllerRelation::setRelationFilter(const ItemModel::RelationFilter
 void FilterControllerRelation::setRelationFilterFromPkFk()
 {
   Q_ASSERT(childController() != nullptr);
+  Q_ASSERT(!parentController()->entityName().trimmed().isEmpty());
   Q_ASSERT(!parentController()->getPrimaryKey().isNull());
-  Q_ASSERT(!childController()->getForeignKey().isNull());
-  Q_ASSERT(parentController()->getPrimaryKey().columnCount() == childController()->getForeignKey().columnCount());
+  Q_ASSERT(!childController()->getForeignKeyReferencing(parentController()->entityName()).isNull());
+  Q_ASSERT(parentController()->getPrimaryKey().columnCount() == childController()->getForeignKeyReferencing(parentController()->entityName()).columnCount());
 
   Mdt::ItemModel::RelationKey key;
-  key.setKey( parentController()->getPrimaryKey(), childController()->getForeignKey() );
+  key.setKey( parentController()->getPrimaryKey(), childController()->getForeignKeyReferencing(parentController()->entityName()) );
   setFilterFromRelationKey(key);
 }
 

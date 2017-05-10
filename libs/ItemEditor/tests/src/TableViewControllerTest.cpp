@@ -438,13 +438,6 @@ void TableViewControllerTest::foreignKeyVisibilityTest()
   QVERIFY( view.isColumnHidden(0));
   QVERIFY( view.isColumnHidden(1));
   QVERIFY(!view.isColumnHidden(2));
-//   /*
-//    * Change foreign key
-//    */
-//   controller.setForeignKey({1});
-//   QVERIFY(!view.isColumnHidden(0));
-//   QVERIFY( view.isColumnHidden(1));
-//   QVERIFY(!view.isColumnHidden(2));
   /*
    * Show foreign keys
    */
@@ -452,6 +445,13 @@ void TableViewControllerTest::foreignKeyVisibilityTest()
   QVERIFY(!view.isColumnHidden(0));
   QVERIFY(!view.isColumnHidden(1));
   QVERIFY(!view.isColumnHidden(2));
+  /*
+   * Hide FE2
+   */
+  controller.setForeignKeyHidden("FE2", true);
+  QVERIFY(!view.isColumnHidden(0));
+  QVERIFY(!view.isColumnHidden(1));
+  QVERIFY( view.isColumnHidden(2));
 }
 
 void TableViewControllerTest::currentRowChangeTest()

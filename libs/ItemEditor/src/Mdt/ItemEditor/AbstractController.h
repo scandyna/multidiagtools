@@ -467,22 +467,50 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Add a foreign key
      *
+     * It is a good  idea to choose the entity name of given to the controller referenced by \a fk :
+     * \code
+     * Controller clientController;
+     * clientController.setEntityName("Client");
+     * Controller addressController;
+     * addressController.addForeignKey("Client", ForeignKey{1});
+     * \endcode
+     * Doing, some methods can reuse the information later ( f.ex. addChildController(AbstractController*) ).
+     *
+     * For more complex cases its also possible to specify other foreign entity names:
+     * \code
+     * Controller connectionController;
+     * connectionController.setEntityName("Connection");
+     * Controller linkController;
+     * linkController.setEntityName("Link");
+     * linkController.addForeignKey("StartConnection", ForeignKey{1});
+     * linkController.addForeignKey("EndConnection", ForeignKey{2});
+     * \endcode
+     *
      * If foreign key support was not enabled,
      *  it will be enabled before adding \a fk.
      *
      * \pre \a foreignEntityName must not be empty
+     * \pre A foreign key referencing \a foreignEntityName must not allready exist in this controller
      * \pre \a fk must not be null
+     * \sa addForeignKey(const QString&, std::initializer_list<int>)
      */
     void addForeignKey(const QString & foreignEntityName, const Mdt::ItemModel::ForeignKey & fk);
 
     /*! \brief Add a foreign key
      *
+     * This overload permits to define the list of fields in a foreign key without explicitly type ForeignKey{}:
+     * \code
+     * addressController.addForeignKey("Client", {1});
+     * \endcode
+     *
      * If foreign key support was not enabled,
      *  it will be enabled before adding \a fk.
      *
      * \pre \a foreignEntityName must not be empty
+     * \pre A foreign key referencing \a foreignEntityName must not allready exist in this controller
      * \pre Each column in \a fk must be >= 0
      * \pre Each column in \a fk must be unique
+     * \sa addForeignKey(const QString&, const Mdt::ItemModel::ForeignKey&)
      */
     void addForeignKey(const QString & foreignEntityName, std::initializer_list<int> fk);
 
@@ -522,43 +550,43 @@ namespace Mdt{ namespace ItemEditor{
     void setAllForeignKeysItemsEnabled(bool enable);
 
 
-    /*! \brief Set foreign key
-     *
-     * If foreign key support was not enabled,
-     *  it will be enabled before setting \a fk.
-     * 
-     * \pre \a fk must not be null
-     */
-    void setForeignKey(const Mdt::ItemModel::ForeignKey & fk);
+//     /*! \brief Set foreign key
+//      *
+//      * If foreign key support was not enabled,
+//      *  it will be enabled before setting \a fk.
+//      * 
+//      * \pre \a fk must not be null
+//      */
+//     void setForeignKey(const Mdt::ItemModel::ForeignKey & fk);
 
-    /*! \brief Set foreign key
-     *
-     * If foreign key support was not enabled,
-     *  it will be enabled before setting \a fk.
-     *
-     * \pre Each column in \a fk must be >= 0
-     * \pre Each column in \a fk must be unique
-     */
-    void setForeignKey(std::initializer_list<int> fk);
+//     /*! \brief Set foreign key
+//      *
+//      * If foreign key support was not enabled,
+//      *  it will be enabled before setting \a fk.
+//      *
+//      * \pre Each column in \a fk must be >= 0
+//      * \pre Each column in \a fk must be unique
+//      */
+//     void setForeignKey(std::initializer_list<int> fk);
 
-    /*! \brief Get foreign key
-     *
-     * \note When source model changes,
-     *        the foreign key will be cleared.
-     */
-    Mdt::ItemModel::ForeignKey getForeignKey() const;
+//     /*! \brief Get foreign key
+//      *
+//      * \note When source model changes,
+//      *        the foreign key will be cleared.
+//      */
+//     Mdt::ItemModel::ForeignKey getForeignKey() const;
 
-    /*! \brief Set foreign key editable
-     *
-     * By default, foreign key is editable
-     */
-    void setForeignKeyEditable(bool editable);
+//     /*! \brief Set foreign key editable
+//      *
+//      * By default, foreign key is editable
+//      */
+//     void setForeignKeyEditable(bool editable);
 
-    /*! \brief Set foreign key items enabled
-     *
-     * By default, foreign key items are enabled.
-     */
-    void setForeignKeyItemsEnabled(bool enable);
+//     /*! \brief Set foreign key items enabled
+//      *
+//      * By default, foreign key items are enabled.
+//      */
+//     void setForeignKeyItemsEnabled(bool enable);
 
     /*! \brief Set sort enabled
      *
@@ -647,6 +675,16 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Add a child controller
      *
+     * This overload will choose the foreign key in \a controller which references this controller:
+     * \code
+     * Controller clientController;
+     * clientController.setEntityName("Client");
+     * clientController.setPrimaryKey({0});
+     * Controller addressController;
+     * addressController.addForeignKey("Client", {1});
+     * clientController.addChildController(&addressController);
+     * \endcode
+     *
      * Once \a controller becomes child of this controller,
      *  it will be filtered regarding equality between
      *  the primary key of this controller
@@ -659,9 +697,13 @@ namespace Mdt{ namespace ItemEditor{
      *        this controller does not take ownership of it (it will not delete it).
      * \pre \a controller must be a valid pointer
      * \pre This controller must have a non null primary key set
-     * \pre \a controller must have a non null foreign key set
+     * \pre This controller must have a non empty entity name
+     * \pre \a controller must have 1 non null foreign key, referencing this controller, set
      * \pre Both primary key of this controller and foreign key of \a controller
      *       must have the same count of columns, and maximum 4
+     * \sa setPrimaryKey()
+     * \sa setEntityName()
+     * \sa entityName()
      */
     void addChildController(AbstractController *controller);
 
@@ -902,26 +944,6 @@ namespace Mdt{ namespace ItemEditor{
      * This default implementation does nothing.
      */
     virtual void foreignKeysChangedEvent(const ItemModel::ForeignKeyList & newForeignKeys);
-
-//     /*! \brief List of columns part of a foreign key changed event
-//      *
-//      * If subclass hase some action to perform when some columns
-//      *  become part, or are no longer part, of a foreign key,
-//      *  it can implement this method.
-//      *
-//      * This default implementation does nothing.
-//      */
-//     virtual void columnsPartOfForeignKeyChangedEvent(const Mdt::ItemModel::ColumnList & oldColumnList, const Mdt::ItemModel::ColumnList & newColumnList);
-
-//     /*! \brief Foreign key changed event
-//      *
-//      * If subclass has some action to perform
-//      *  when foreign key changed,
-//      *  it can implement this method.
-//      *
-//      * This default implementation does nothing.
-//      */
-//     virtual void foreignKeyChangedEvent(const Mdt::ItemModel::ForeignKey & oldForeignKey, const Mdt::ItemModel::ForeignKey & newForeignKey);
 
     /*! \brief Get a list of currently selected rows
      *

@@ -47,10 +47,10 @@ AddressWidget::AddressWidget(QWidget* parent)
 //   ctrl->setPrimaryKeyEditable(false);
 //   ctrl->setPrimaryKeyItemsEnabled(false);
 //   ctrl->setPrimaryKeyHidden(true);
-  ctrl->setForeignKey({1});
-//   ctrl->setForeignKeyEditable(false);
-//   ctrl->setForeignKeyItemsEnabled(false);
-//   ctrl->setForeignKeyHidden(true);
+  ctrl->addForeignKey("Client", {1});
+//   ctrl->setAllForeignKeysHidden(true);
+  ctrl->setAllForeignKeysEditable(false);
+//   ctrl->setAllForeignKeysItemsEnabled(false);
   /*
    * Setup some formatting
    */

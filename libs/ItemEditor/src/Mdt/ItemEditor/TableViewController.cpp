@@ -75,17 +75,12 @@ void TableViewController::setForeignKeyHidden(const QString& foreignEntityName, 
 {
   Q_ASSERT(!foreignEntityName.trimmed().isEmpty());
 
-  
+  mImpl->setForeignKeyHidden(foreignEntityName, hide);
 }
 
 void TableViewController::setAllForeignKeysHidden(bool hide)
 {
   mImpl->setAllForeignKeysHidden(hide);
-}
-
-void TableViewController::setForeignKeyHidden(bool hide)
-{
-  mImpl->setForeignKeyHidden( getForeignKey(), hide );
 }
 
 void TableViewController::setModelToView(QAbstractItemModel* model)
@@ -115,16 +110,6 @@ void TableViewController::foreignKeysChangedEvent(const ForeignKeyList& newForei
 {
   mImpl->foreignKeysChangedEvent(newForeignKeys);
 }
-
-// void TableViewController::columnsPartOfForeignKeyChangedEvent(const ColumnList& oldColumnList, const ColumnList& newColumnList)
-// {
-// 
-// }
-
-// void TableViewController::foreignKeyChangedEvent(const ForeignKey& oldForeignKey, const ForeignKey& newForeignKey)
-// {
-//   mImpl->foreignKeyChangedEvent(oldForeignKey, newForeignKey);
-// }
 
 RowList TableViewController::getSelectedRows() const
 {

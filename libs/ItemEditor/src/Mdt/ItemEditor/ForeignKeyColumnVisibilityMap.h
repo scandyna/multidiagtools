@@ -26,6 +26,7 @@
 #include "Mdt/ItemModel/ColumnList.h"
 #include <QString>
 #include <QHash>
+#include <QtGlobal>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -71,6 +72,10 @@ namespace Mdt{ namespace ItemEditor{
     bool mIsFkHidden = false;
     ItemModel::ForeignKey mFk;
   };
+}} // namespace Mdt{ namespace ItemEditor{
+Q_DECLARE_TYPEINFO(Mdt::ItemEditor::ForeignKeyColumnVisibilityMapItem, Q_MOVABLE_TYPE);
+
+namespace Mdt{ namespace ItemEditor{
 
   /*! \brief ForeignKeyColumnVisibilityMap holds columns visibility regarding a set of foreign keys and columns hidden flags
    */

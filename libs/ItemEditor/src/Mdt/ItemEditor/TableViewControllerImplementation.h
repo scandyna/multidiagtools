@@ -174,35 +174,22 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setAllForeignKeysHidden(bool hide);
 
-    /*! \brief Update columns visibility regarding list of foreign keys
-     */
-    void foreignKeysChangedEvent(const ItemModel::ForeignKeyList & foreignKeys);
-
-
-    /*! \brief Set foreign key hidden
-     *
-     * If \a hide is true, columns that are part of foreign key will be hidden.
-     */
-    void setForeignKeyHidden(const ItemModel::ForeignKey & fk, bool hide);
-
     /*! \brief Update columns visibility regarding old and new primary keys
      */
     void primaryKeyChangedEvent(const ItemModel::PrimaryKey & oldPrimaryKey, const ItemModel::PrimaryKey & newPrimaryKey);
 
-    /*! \brief Update columns visibility regarding old and new foreign keys
+    /*! \brief Update columns visibility regarding list of foreign keys
      */
-    void foreignKeyChangedEvent(const ItemModel::ForeignKey & oldForeignKey, const ItemModel::ForeignKey & newForeignKey);
+    void foreignKeysChangedEvent(const ItemModel::ForeignKeyList & foreignKeys);
 
    private:
 
     void updatePrimaryKeyColumnsVisibility(const ItemModel::PrimaryKey & pk);
     void updateForeignKeysColumnsVisibility();
-    void updateForeignKeyColumnsVisibility(const ItemModel::ForeignKey & fk);
 
     ItemViewPrivateContainer mContainer;
     ForeignKeyColumnVisibilityMap mForeignKeyVisibilityMap;
     bool mPrimaryKeyColumnsHidden = false;
-    bool mForeignKeyColumnsHidden = false;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -113,13 +113,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setAllForeignKeysHidden(bool hide);
 
-    
-    /*! \brief Set foreign key hidden
-     *
-     * If \a hide is true, columns that are part of foreign key will be hidden.
-     */
-    void setForeignKeyHidden(bool hide);
-
    private:
 
     /*! \brief Set model to the view
@@ -136,8 +129,6 @@ namespace Mdt{ namespace ItemEditor{
 
     void primaryKeyChangedEvent(const ItemModel::PrimaryKey& oldPrimaryKey, const ItemModel::PrimaryKey& newPrimaryKey) override;
     void foreignKeysChangedEvent(const ItemModel::ForeignKeyList& newForeignKeys) override;
-//     void foreignKeyChangedEvent(const ItemModel::ForeignKey& oldForeignKey, const ItemModel::ForeignKey& newForeignKey) override;
-//     void columnsPartOfForeignKeyChangedEvent(const ItemModel::ColumnList& oldColumnList, const ItemModel::ColumnList& newColumnList) override;
 
     /*! \brief Get a list of currently selected rows
      */
