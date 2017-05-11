@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "SchemaDriverSqliteTest.h"
-#include "Mdt/Application.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Schema/DriverSQLite.h"
 #include "Mdt/Sql/Schema/ForeignTable.h"
@@ -37,24 +36,16 @@ namespace Sql = Mdt::Sql;
 
 void SchemaDriverSqliteTest::initTestCase()
 {
-  // Get database instance
-  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
-  if(!mDatabase.isValid()){
-    QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
+  if(!initDatabaseSqlite()){
+    QSKIP("Could not init database - Skip all tests");  // Will also skip all tests
   }
-  // Create a database
-  QVERIFY(pvTempFile.open());
-  pvTempFile.close();
-  mDatabase.setDatabaseName(pvTempFile.fileName());
-  QVERIFY(mDatabase.open());
-  QSqlQuery query(mDatabase);
+  QSqlQuery query(database());
   // Specify encoding (is important for some tests)
   QVERIFY(query.exec("PRAGMA encoding = \"UTF-8\""));
 }
 
 void SchemaDriverSqliteTest::cleanupTestCase()
 {
-  mDatabase.close();
 }
 
 /*
@@ -66,7 +57,7 @@ void SchemaDriverSqliteTest::driverInstanceTest()
   using Mdt::Sql::Schema::Driver;
   using Mdt::Sql::Schema::DriverType;
 
-  auto db = mDatabase;
+  auto db = database();
   /*
    * Create a SQLite driver
    */
@@ -80,7 +71,7 @@ void SchemaDriverSqliteTest::availableFieldTypeTest()
 {
   using Mdt::Sql::Schema::FieldType;
 
-  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Mdt::Sql::Schema::Driver driver(database());
   QVERIFY(driver.isValid());
   auto list = driver.getAvailableFieldTypeList();
 
@@ -99,7 +90,7 @@ void SchemaDriverSqliteTest::fieldTypeMapTest()
 {
   using Mdt::Sql::Schema::FieldType;
 
-  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Mdt::Sql::Schema::Driver driver(database());
   QVERIFY(driver.isValid());
 
   /*
@@ -140,7 +131,7 @@ void SchemaDriverSqliteTest::fieldTypeFromStringTest()
 {
   using Mdt::Sql::Schema::FieldType;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
 
   QVERIFY(driver.fieldTypeFromString("BOOLEAN") == FieldType::Boolean);
   QVERIFY(driver.fieldTypeFromString("boolean") == FieldType::Boolean);
@@ -170,7 +161,7 @@ void SchemaDriverSqliteTest::fieldTypeFromStringTest()
 
 void SchemaDriverSqliteTest::fieldLengthFromStringTest()
 {
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
 
   QCOMPARE(driver.fieldLengthFromString("INTEGER"), -1);
   QCOMPARE(driver.fieldLengthFromString("VARCHAR"), -1);
@@ -187,7 +178,7 @@ void SchemaDriverSqliteTest::databaseDefaultCharsetTest()
 {
   using Mdt::Sql::Schema::Charset;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   Charset cs;
 
   /*
@@ -201,7 +192,7 @@ void SchemaDriverSqliteTest::collationDefinitionTest()
 {
   using Mdt::Sql::Schema::Collation;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   Collation collation;
 
   /*
@@ -239,7 +230,7 @@ void SchemaDriverSqliteTest::fieldDefinitionTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::Field;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   QString expectedSql;
   Field field;
 
@@ -354,7 +345,7 @@ void SchemaDriverSqliteTest::autoIncrementPrimaryKeyDefinitionTest()
 {
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   QString expectedSql;
   AutoIncrementPrimaryKey pk;
 
@@ -372,7 +363,7 @@ void SchemaDriverSqliteTest::primaryKeyDefinitionTest()
   using Sql::Schema::FieldType;
   using Sql::Schema::Field;
 
-  Sql::Schema::DriverSQLite driver(mDatabase);
+  Sql::Schema::DriverSQLite driver(database());
   QString expectedSql;
   PrimaryKey pk;
   Field Id_A_PK, Id_B_PK;
@@ -411,7 +402,7 @@ void SchemaDriverSqliteTest::indexDefinitionTest()
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::Table;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   QString expectedSql;
   Field Id_A, Id_B;
   Index index;
@@ -479,7 +470,7 @@ void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
   using Sql::Schema::ForeignField;
   using Sql::Schema::ForeignFieldList;
 
-  Sql::Schema::DriverSQLite driver(mDatabase);
+  Sql::Schema::DriverSQLite driver(database());
   QString expectedSql;
   Schema::Client client;
   Schema::Address address;
@@ -566,7 +557,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   using Sql::Schema::ForeignKeyAction;
   using Sql::Schema::ForeignKeySettings;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   QString expectedSql;
   Table table;
 
@@ -838,7 +829,7 @@ void SchemaDriverSqliteTest::simpleCreateAndDropTableTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::ForeignKey;
 
-  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Mdt::Sql::Schema::Driver driver(database());
   QVERIFY(driver.isValid());
   Schema::Client client_tbl;
 
@@ -847,16 +838,16 @@ void SchemaDriverSqliteTest::simpleCreateAndDropTableTest()
    * More checks are done in next tests
    */
   // Check versions that takes a Table type
-  QVERIFY(!mDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(!database().tables().contains(client_tbl.tableName()));
   QVERIFY(driver.createTable(client_tbl.toTable()));
-  QVERIFY(mDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(database().tables().contains(client_tbl.tableName()));
   QVERIFY(driver.dropTable(client_tbl.toTable()));
-  QVERIFY(!mDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(!database().tables().contains(client_tbl.tableName()));
   // Check versions that takes a TableTemplate type
   QVERIFY(driver.createTable(client_tbl));
-  QVERIFY(mDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(database().tables().contains(client_tbl.tableName()));
   QVERIFY(driver.dropTable(client_tbl));
-  QVERIFY(!mDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(!database().tables().contains(client_tbl.tableName()));
 }
 
 void SchemaDriverSqliteTest::reverseFieldListTest()
@@ -869,7 +860,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   using Mdt::Sql::Schema::PrimaryKeyContainer;
   using Mdt::Sql::Schema::CaseSensitivity;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   Field field;
   FieldList fieldList;
 
@@ -962,7 +953,7 @@ void SchemaDriverSqliteTest::reverseIndexListTest()
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::IndexList;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   Field field;
   FieldList fieldList;
   IndexList indexList;
@@ -1044,7 +1035,7 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   using Sql::Schema::Table;
   using Sql::Schema::PrimaryKeyContainer;
 
-  Sql::Schema::DriverSQLite driver(mDatabase);
+  Sql::Schema::DriverSQLite driver(database());
   Table table;
   Mdt::Expected<PrimaryKeyContainer> ret;
   PrimaryKeyContainer pk;
@@ -1151,7 +1142,7 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   using Sql::Schema::ForeignFieldList;
   using Sql::Schema::ForeignKeyList;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   Table table;
   ForeignKey fk;
   Mdt::Expected<ForeignKeyList> ret;
@@ -1324,7 +1315,7 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
 
 void SchemaDriverSqliteTest::simpleCreateAndDropViewTest()
 {
-  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Mdt::Sql::Schema::Driver driver(database());
   QVERIFY(driver.isValid());
   Schema::ClientAdrressView view;
   Schema::Client client;
@@ -1334,16 +1325,16 @@ void SchemaDriverSqliteTest::simpleCreateAndDropViewTest()
   QVERIFY(driver.createTable(client));
   QVERIFY(driver.createTable(address));
   // Check version that takes a View
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains(view.name()));
+  QVERIFY(!database().tables(QSql::AllTables).contains(view.name()));
   QVERIFY(driver.createView(view.toView()));
-  QVERIFY(mDatabase.tables(QSql::AllTables).contains(view.name()));
+  QVERIFY(database().tables(QSql::AllTables).contains(view.name()));
   QVERIFY(driver.dropView(view.toView()));
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains(view.name()));
+  QVERIFY(!database().tables(QSql::AllTables).contains(view.name()));
   // Check version that takes a ViewTemplate
   QVERIFY(driver.createView(view));
-  QVERIFY(mDatabase.tables(QSql::AllTables).contains(view.name()));
+  QVERIFY(database().tables(QSql::AllTables).contains(view.name()));
   QVERIFY(driver.dropView(view));
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains(view.name()));
+  QVERIFY(!database().tables(QSql::AllTables).contains(view.name()));
   // Cleanup
   QVERIFY(driver.dropTable(client));
   QVERIFY(driver.dropTable(address));
@@ -1353,7 +1344,7 @@ void SchemaDriverSqliteTest::triggerDefinitionTest()
 {
   using Mdt::Sql::Schema::Trigger;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   QString expectedSql;
   Trigger trigger;
 
@@ -1382,10 +1373,10 @@ void SchemaDriverSqliteTest::simpleTriggerCreateDropTest()
 {
   using Mdt::Sql::Schema::Trigger;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(database());
   Trigger trigger;
   Schema::Client client;
-  QSqlQuery query(mDatabase);
+  QSqlQuery query(database());
 
   /*
    * Setup trigger
@@ -1428,10 +1419,10 @@ void SchemaDriverSqliteTest::tablePopulationTest()
 {
   using Sql::Schema::TablePopulation;
 
-  Sql::Schema::Driver driver(mDatabase);
+  Sql::Schema::Driver driver(database());
   Schema::Client client;
   Schema::ClientPopulation tp;
-  QSqlQuery query(mDatabase);
+  QSqlQuery query(database());
 
   /*
    * Setup table population
@@ -1465,24 +1456,24 @@ void SchemaDriverSqliteTest::tablePopulationTest()
 
 void SchemaDriverSqliteTest::simpleCreateAndDropSchemaTest()
 {
-  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Mdt::Sql::Schema::Driver driver(database());
   QVERIFY(driver.isValid());
   Schema::TestSchema schema;
 
   /*
    * Check with version that takes a Schema
    */
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(!database().tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(!database().tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(!database().tables(QSql::AllTables).contains("ClientAddress_view"));
   QVERIFY(driver.createSchema(schema.toSchema()));
-  QVERIFY(mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
-  QVERIFY(mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
-  QVERIFY(mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(database().tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(database().tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(database().tables(QSql::AllTables).contains("ClientAddress_view"));
   QVERIFY(driver.dropSchema(schema.toSchema()));
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(!database().tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(!database().tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(!database().tables(QSql::AllTables).contains("ClientAddress_view"));
   /*
    * Check with version that takes a SchemaTemplate
    */
@@ -1491,12 +1482,12 @@ void SchemaDriverSqliteTest::simpleCreateAndDropSchemaTest()
   schema.addClient("Name 2");
   // Create schema and check
   QVERIFY(driver.createSchema(schema));
-  QVERIFY(mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
-  QVERIFY(mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
-  QVERIFY(mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(database().tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(database().tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(database().tables(QSql::AllTables).contains("ClientAddress_view"));
   // Check also that data where added
   {
-    QSqlQuery query(mDatabase);
+    QSqlQuery query(database());
     QVERIFY(query.exec("SELECT Name FROM Client_tbl"));
     QVERIFY(query.next());
     QCOMPARE(query.value(0), QVariant("Name 1"));
@@ -1505,9 +1496,9 @@ void SchemaDriverSqliteTest::simpleCreateAndDropSchemaTest()
   }
   // Drop schema
   QVERIFY(driver.dropSchema(schema));
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
-  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(!database().tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(!database().tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(!database().tables(QSql::AllTables).contains("ClientAddress_view"));
 }
 
 /*

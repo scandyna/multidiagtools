@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,12 +21,9 @@
 #ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_TEST_H
 #define MDT_SQL_SCHEMA_DRIVER_SQLITE_TEST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QTemporaryFile>
-#include <QSqlDatabase>
+#include "TestBase.h"
 
-class SchemaDriverSqliteTest : public QObject
+class SchemaDriverSqliteTest : public TestBase
 {
  Q_OBJECT
 
@@ -66,11 +63,6 @@ class SchemaDriverSqliteTest : public QObject
   void tablePopulationTest();
 
   void simpleCreateAndDropSchemaTest();
-
- private:
-
-  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase mDatabase;
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_TEST_H

@@ -7,6 +7,7 @@ enable_testing()
 #================= SQL test library ====================
 
 set(SOURCES_FILES
+    src/TestBase.cpp
     src/Schema/Client.cpp
     src/Schema/Client2.cpp
     src/Schema/Address.cpp
@@ -26,7 +27,7 @@ target_link_libraries(mdtsqltest Qt5::Test)
 
 # Add a test for this Sql lib
 function(addSqlTest testName)
-  set(complteTestName "MdtSql${testName}")
+  set(complteTestName "MdtSql_${testName}")
   set(sourceFilePath "src/${testName}.cpp")
   string(TOLOWER ${complteTestName} executableName)
   add_executable(${executableName} ${sourceFilePath})
