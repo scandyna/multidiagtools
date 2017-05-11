@@ -24,7 +24,10 @@
 #include "DriverType.h"
 #include "FieldType.h"
 #include "FieldTypeList.h"
+#include "PrimaryKeyContainer.h"
+#include "ForeignFieldList.h"
 #include "Mdt/Error.h"
+#include "Mdt/Expected.h"
 #include <QSqlDriver>
 #include <QString>
 #include <QMetaType>
@@ -36,6 +39,8 @@ class QSqlDatabase;
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   class DriverImplementationInterface;
+//   class PrimaryKeyContainer;
+//   class ForeignKeyList;
   class Table;
   class View;
   class TablePopulation;
@@ -168,6 +173,34 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return dropTable(table.toTable());
     }
 
+    /*! \brief Get primary key for table from database
+     *
+     * Returned primary key type depends on how it was defined:
+     *  - For a auto increment primary key, type will be AutoIncrementPrimaryKeyType
+     *  - For other cases, type will be PrimaryKeyType
+     *
+     * \pre Driver must be valid
+     */
+    Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const QString & tableName) const;
+
+    /*! \brief Get primary key for table from database
+     *
+     * \pre Driver must be valid
+     * \sa getTablePrimaryKeyFromDatabase(const QString&)
+     */
+    Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const Table & table) const;
+
+    /*! \brief Get primary key for table from database
+     *
+     * \pre Driver must be valid
+     * \sa getTablePrimaryKeyFromDatabase(const QString&)
+     */
+    template<typename T>
+    Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const TableTemplate<T> & table) const
+    {
+      return getTablePrimaryKeyFromDatabase(table.tableName());
+    }
+
     /*! \brief Create view in database
      *
      * \pre Driver must be valid
@@ -252,7 +285,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     Mdt::Error lastError() const
     {
-      return pvLastError;
+      return mLastError;
     }
 
     /*! \brief Get driver type from QSqlDriver's Dbms Type
@@ -283,8 +316,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QString tr(const char *sourceText);
 
-    std::unique_ptr<DriverImplementationInterface> pvImpl;
-    Mdt::Error pvLastError;
+    std::unique_ptr<DriverImplementationInterface> mImpl;
+    mutable Mdt::Error mLastError;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

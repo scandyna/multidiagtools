@@ -35,23 +35,23 @@ Driver::Driver(const QSqlDatabase & db)
   auto type = typeFromDbmsType(db.driver()->dbmsType());
   switch(type){
     case DriverType::SQLite:
-      pvImpl = std::make_unique<DriverSQLite>(db);
+      mImpl = std::make_unique<DriverSQLite>(db);
       break;
     case DriverType::MySQL:
-      pvImpl = std::make_unique<DriverMySql>(db);
+      mImpl = std::make_unique<DriverMySql>(db);
       break;
     case DriverType::PostgreSQL:
-      pvImpl = std::make_unique<DriverPostgreSQL>(db);
+      mImpl = std::make_unique<DriverPostgreSQL>(db);
       break;
     case DriverType::MariaDB:
     case DriverType::Unknown:
       break;
   }
-  if(!pvImpl){
+  if(!mImpl){
     const QString msg = tr("Database engine with Qt driver name '%1' is not supported. Database connection name: '%2'.") \
                         .arg(db.driverName(), db.connectionName());
-    pvLastError = mdtErrorNew(msg, Mdt::Error::Critical, "Mdt::Sql::Schema::Driver");
-    pvLastError.commit();
+    mLastError = mdtErrorNew(msg, Mdt::Error::Critical, "Mdt::Sql::Schema::Driver");
+    mLastError.commit();
   }
 }
 
@@ -61,82 +61,135 @@ Driver::~Driver()
 
 DriverType Driver::type() const
 {
-  if(!pvImpl){
+  if(!mImpl){
     return DriverType::Unknown;
   }
-  return pvImpl->type();
+  return mImpl->type();
 }
 
 FieldTypeList Driver::getAvailableFieldTypeList() const
 {
   Q_ASSERT(isValid());
-  return pvImpl->getAvailableFieldTypeList();
+  return mImpl->getAvailableFieldTypeList();
 }
 
 FieldType Driver::fieldTypeFromQMetaType(QMetaType::Type qmt) const
 {
   Q_ASSERT(isValid());
-  return pvImpl->fieldTypeFromQMetaType(qmt);
+  return mImpl->fieldTypeFromQMetaType(qmt);
 }
 
 FieldType Driver::fieldTypeFromQVariantType(QVariant::Type qvt) const
 {
   Q_ASSERT(isValid());
-  return pvImpl->fieldTypeFromQVariantType(qvt);
+  return mImpl->fieldTypeFromQVariantType(qvt);
 }
 
 QMetaType::Type Driver::fieldTypeToQMetaType(FieldType ft) const
 {
   Q_ASSERT(isValid());
-  return pvImpl->fieldTypeToQMetaType(ft);
+  return mImpl->fieldTypeToQMetaType(ft);
 }
 
 QVariant::Type Driver::fieldTypeToQVariantType(FieldType ft) const
 {
   Q_ASSERT(isValid());
-  return pvImpl->fieldTypeToQVariantType(ft);
+  return mImpl->fieldTypeToQVariantType(ft);
 }
 
 bool Driver::createTable(const Table & table)
 {
   Q_ASSERT(isValid());
-  return pvImpl->createTable(table);
+
+  if(!mImpl->createTable(table)){
+    mLastError = mImpl->lastError();
+    return false;
+  }
+  return true;
 }
 
 bool Driver::dropTable(const Table & table)
 {
   Q_ASSERT(isValid());
-  return pvImpl->dropTable(table);
+
+  if(!mImpl->dropTable(table)){
+    mLastError = mImpl->lastError();
+    return false;
+  }
+  return true;
+}
+
+Expected<PrimaryKeyContainer> Driver::getTablePrimaryKeyFromDatabase(const QString & tableName) const
+{
+  Q_ASSERT(isValid());
+
+  auto ret = mImpl->getTablePrimaryKeyFromDatabase(tableName);
+  if(!ret){
+    mLastError = ret.error();
+  }
+  return ret;
+}
+
+Expected<PrimaryKeyContainer> Driver::getTablePrimaryKeyFromDatabase(const Table& table) const
+{
+  Q_ASSERT(isValid());
+
+  return getTablePrimaryKeyFromDatabase(table.tableName());
 }
 
 bool Driver::createView(const View & view)
 {
   Q_ASSERT(isValid());
-  return pvImpl->createView(view);
+
+  if(!mImpl->createView(view)){
+    mLastError = mImpl->lastError();
+    return false;
+  }
+  return true;
 }
 
 bool Driver::dropView(const View & view)
 {
   Q_ASSERT(isValid());
-  return pvImpl->dropView(view);
+
+  if(!mImpl->dropView(view)){
+    mLastError = mImpl->lastError();
+    return false;
+  }
+  return true;
 }
 
 bool Driver::populateTable(const TablePopulation & tp)
 {
   Q_ASSERT(isValid());
-  return pvImpl->populateTable(tp);
+
+  if(!mImpl->populateTable(tp)){
+    mLastError = mImpl->lastError();
+    return false;
+  }
+  return true;
 }
 
 bool Driver::createSchema(const Schema& schema)
 {
   Q_ASSERT(isValid());
-  return pvImpl->createSchema(schema);
+
+  if(!mImpl->createSchema(schema)){
+    mLastError = mImpl->lastError();
+    return false;
+  }
+  return true;
 }
 
 bool Driver::dropSchema(const Schema& schema)
 {
   Q_ASSERT(isValid());
-  return pvImpl->dropSchema(schema);
+
+  if(!mImpl->dropSchema(schema)){
+    mLastError = mImpl->lastError();
+    return false;
+  }
+  return true;
 }
 
 QString Driver::tr(const char* sourceText)

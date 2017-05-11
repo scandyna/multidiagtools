@@ -1035,7 +1035,8 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   using Sql::Schema::Table;
   using Sql::Schema::PrimaryKeyContainer;
 
-  Sql::Schema::DriverSQLite driver(database());
+//   Sql::Schema::DriverSQLite driver(database());
+  Sql::Schema::Driver driver(database());
   Table table;
   Mdt::Expected<PrimaryKeyContainer> ret;
   PrimaryKeyContainer pk;
@@ -1078,8 +1079,15 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   table.addField(Name);
   QVERIFY(driver.dropTable(table));
   QVERIFY(driver.createTable(table));
-  // Get primary key from database
+  // Get primary key from database - Use passing table name version
   ret = driver.getTablePrimaryKeyFromDatabase(table.tableName());
+  QVERIFY(ret);
+  pk = ret.value();
+  // Check
+  QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QCOMPARE(pk.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
+  // Get primary key from database - Use passing Table version
+  ret = driver.getTablePrimaryKeyFromDatabase(table);
   QVERIFY(ret);
   pk = ret.value();
   // Check
@@ -1126,6 +1134,18 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   QCOMPARE(pk.primaryKey().fieldNameList().at(1), QString("Id_B"));
   // Drop table
   QVERIFY(driver.dropTable(table));
+  /*
+   * Check also using TableTemplate
+   */
+  Schema::Client client;
+  QVERIFY(driver.createTable(client));
+  ret = driver.getTablePrimaryKeyFromDatabase(client);
+  QVERIFY(ret);
+  pk = ret.value();
+  // Check
+  QVERIFY(pk.primaryKeyType() == client.toTable().primaryKeyType());
+  // Drop table
+  QVERIFY(driver.dropTable(client));
 }
 
 void SchemaDriverSqliteTest::reverseForeignKeyTest()
