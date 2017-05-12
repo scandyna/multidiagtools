@@ -93,6 +93,8 @@ namespace Mdt{ namespace ItemEditor{
      * Will fetch fields informations from table,
      *  set primary key and foreign keys.
      *
+     * Entity name will also be set to \a name.
+     *
      * Does not select data from the database table.
      *
      * \pre A model must be set before calling this method
@@ -102,7 +104,7 @@ namespace Mdt{ namespace ItemEditor{
      * \sa setTable(const Mdt::Sql::Schema::Table)
      * \sa select()
      */
-    void setTableName(const QString & name);
+    bool setTableName(const QString & name);
 
     /*! \brief Set table
      *
@@ -115,7 +117,7 @@ namespace Mdt{ namespace ItemEditor{
      * \sa setTableName()
      * \sa select()
      */
-    void setTable(const Mdt::Sql::Schema::Table & table);
+    bool setTable(const Mdt::Sql::Schema::Table & table);
 
     /*! \brief Set table
      *
@@ -129,10 +131,10 @@ namespace Mdt{ namespace ItemEditor{
      * \sa select()
      */
     template<typename T>
-    void setTable(const Mdt::Sql::Schema::TableTemplate<T> & table)
+    bool setTable(const Mdt::Sql::Schema::TableTemplate<T> & table)
     {
       Q_ASSERT(model() != nullptr);
-      setTableName(table.tableName());
+      return setTableName(table.tableName());
     }
 
     /*! \brief Select data from database

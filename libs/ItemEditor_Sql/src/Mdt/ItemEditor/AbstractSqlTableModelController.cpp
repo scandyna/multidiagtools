@@ -23,6 +23,7 @@
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Error.h"
 #include <QAbstractItemModel>
+#include <QSqlError>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -68,16 +69,29 @@ QSqlTableModel* AbstractSqlTableModelController::model() const
   return reinterpret_cast<QSqlTableModel*>(AbstractSqlController::model());
 }
 
-void AbstractSqlTableModelController::setTableName(const QString & name)
+bool AbstractSqlTableModelController::setTableName(const QString & name)
 {
   Q_ASSERT(model() != nullptr);
+
   model()->setTable(name);
+  const auto sqlError = model()->lastError();
+  if(sqlError.isValid()){
+    const QString msg = tr("Setting table '%1' failed.").arg(name);
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    error.stackError( mdtErrorFromQSqlQueryModelQ(model(), this) );
+    error.commit();
+    setLastError(error);
+    return false;
+  }
+  setEntityName(name);
+
+  return true;
 }
 
-void AbstractSqlTableModelController::setTable(const Sql::Schema::Table & table)
+bool AbstractSqlTableModelController::setTable(const Sql::Schema::Table & table)
 {
   Q_ASSERT(model() != nullptr);
-  setTableName(table.tableName());
+  return setTableName(table.tableName());
 }
 
 bool AbstractSqlTableModelController::select()

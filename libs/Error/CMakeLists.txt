@@ -13,9 +13,9 @@ set(SOURCES_FILES
 )
 
 # Headers directories
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
-# Because some headers are generated during building (config.h, Qt's UIC), we also build path
-include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
+# Because some headers are generated during building (config.h, Qt's UIC), we also add build path
+# include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Output library name
 set(LIBRARY_NAME "Error")
@@ -27,6 +27,10 @@ set(LIBRARY_BIN_NAME "mdt${LIBRARY_NAME_LC}")
 add_library(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Core)
+# Headers directories
+target_include_directories(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
+# Because some headers are generated during building (config.h, Qt's UIC), we also add build path
+target_include_directories(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 
 # Translation files
 set(TS_FILES

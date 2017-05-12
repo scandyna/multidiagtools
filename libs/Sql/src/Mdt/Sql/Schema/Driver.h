@@ -25,7 +25,7 @@
 #include "FieldType.h"
 #include "FieldTypeList.h"
 #include "PrimaryKeyContainer.h"
-#include "ForeignFieldList.h"
+// #include "ForeignFieldList.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include <QSqlDriver>
@@ -40,7 +40,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   class DriverImplementationInterface;
 //   class PrimaryKeyContainer;
-//   class ForeignKeyList;
+  class ForeignKeyList;
   class Table;
   class View;
   class TablePopulation;
@@ -187,6 +187,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \pre Driver must be valid
      * \sa getTablePrimaryKeyFromDatabase(const QString&)
+     *
+     * \todo Has this overload any sense ?
      */
     Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const Table & table) const;
 
@@ -194,12 +196,20 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \pre Driver must be valid
      * \sa getTablePrimaryKeyFromDatabase(const QString&)
+     *
+     * \todo Has this overload any sense ?
      */
     template<typename T>
     Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const TableTemplate<T> & table) const
     {
       return getTablePrimaryKeyFromDatabase(table.tableName());
     }
+
+    /*! \brief Get list of foreign keys for table from database
+     *
+     * \pre Driver must be valid
+     */
+    Mdt::Expected<ForeignKeyList> getTableForeignKeyListFromDatabase(const QString & tableName) const;
 
     /*! \brief Create view in database
      *

@@ -25,6 +25,8 @@
 #include "Schema/Address.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/ItemEditor/RowState.h"
+#include "Mdt/ItemModel/PrimaryKey.h"
+#include "Mdt/ItemModel/ForeignKey.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlTableModel>
@@ -136,24 +138,46 @@ void SqlTableModelControllerTest::setTableTest()
   /*
    * Check setting with schema table
    */
-  controller.setTable(client.toTable());
+  QVERIFY(controller.setTable(client.toTable()));
   QCOMPARE(controller.model()->tableName(), QString("Client_tbl"));
+  QCOMPARE(controller.entityName(), QString("Client_tbl"));
   /*
    * Set table name
    */
-  controller.setTableName("A_tbl");
-  QCOMPARE(controller.model()->tableName(), QString("A_tbl"));
+  QVERIFY(controller.setTableName("Address_tbl"));
+  QCOMPARE(controller.model()->tableName(), QString("Address_tbl"));
   /*
    * Check setting with table template
    */
-  controller.setTable(client);
+  QVERIFY(controller.setTable(client));
   QCOMPARE(controller.model()->tableName(), QString("Client_tbl"));
 }
 
 void SqlTableModelControllerTest::setTablePkFkTest()
 {
+  SqlTableModelControllerTester controller;
+  Schema::Address address;
+  PrimaryKey pk;
+  ForeignKey fk;
 
-  QFAIL("Not complete");
+  controller.setDefaultModel(database());
+  /*
+   * By default, no primary key and no foreign keys are set
+   */
+  QVERIFY(controller.getPrimaryKey().isNull());
+  QVERIFY(controller.getForeignKeyReferencing("Client_tbl").isNull());
+  /*
+   * Set table and check
+   */
+  QVERIFY(controller.setTable(address));
+  pk = controller.getPrimaryKey();
+  QVERIFY(!pk.isNull());
+  QCOMPARE(pk.columnCount(), 1);
+  QCOMPARE(pk.toColumnList().at(0), 0);
+  fk = controller.getForeignKeyReferencing("Client_tbl");
+  QVERIFY(!fk.isNull());
+  QCOMPARE(fk.columnCount(), 1);
+  QCOMPARE(fk.toColumnList().at(0), 1);
 }
 
 void SqlTableModelControllerTest::selectTest()

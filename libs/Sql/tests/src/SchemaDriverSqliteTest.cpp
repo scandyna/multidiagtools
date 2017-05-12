@@ -1162,7 +1162,8 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   using Sql::Schema::ForeignFieldList;
   using Sql::Schema::ForeignKeyList;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+//   Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::Driver driver(database());
   Table table;
   ForeignKey fk;
   Mdt::Expected<ForeignKeyList> ret;

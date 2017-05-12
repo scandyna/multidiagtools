@@ -137,6 +137,17 @@ Expected<PrimaryKeyContainer> Driver::getTablePrimaryKeyFromDatabase(const Table
   return getTablePrimaryKeyFromDatabase(table.tableName());
 }
 
+Expected<ForeignKeyList> Driver::getTableForeignKeyListFromDatabase(const QString& tableName) const
+{
+  Q_ASSERT(isValid());
+
+  auto ret = mImpl->getTableForeignKeyListFromDatabase(tableName);
+  if(!ret){
+    mLastError = ret.error();
+  }
+  return ret;
+}
+
 bool Driver::createView(const View & view)
 {
   Q_ASSERT(isValid());
