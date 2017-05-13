@@ -219,34 +219,30 @@ else(WIN32)
   set(HEADERS_DEST_DIR "include/mdt/mdt${MDTLIB_VERSION_SUFFIX}")
 endif(WIN32)
 
-# * QtSolutions *
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/QtSolutions")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Application")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Algorithm")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Expected")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Error")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ErrorGui")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Numeric")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/FilterExpression")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ItemModel")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Sql")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ItemEditor")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ItemEditor_Sql")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/SerialPort")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/CableList")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/PlainText_Core")
+
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/qt-solutions")
 
-# * Application *
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Application")
-
-# * Algorithm *
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Algorithm")
-
-# * Expected *
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Expected")
 
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
-
-# Numeric library
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Numeric")
-
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/FilterExpression")
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ItemModel")
-
 # * mdtcsv *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtcsv")
 
-# * mdterror and mdterrorgui *
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Error")
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ErrorGui")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdterror")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdterrorgui")
 
@@ -255,17 +251,6 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
 
 # * mdtdatabase *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdatabase")
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Sql")
-
-# ** Item/View **
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ItemEditor")
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ItemEditor_Sql")
-
-# SerialPort
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/SerialPort")
-
-# CableList
-add_subdirectory("${PROJECT_SOURCE_DIR}/libs/CableList")
 
 # NOTE: Support Windows pas terminé
 if(UNIX)

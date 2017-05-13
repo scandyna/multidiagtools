@@ -4,28 +4,27 @@
 project(multidiagtools)
 
 # List of source files
-set(SOURCES_FILES 
-    src/Mdt/Error.cpp
-    src/Mdt/ErrorLogger/Logger.cpp
-    src/Mdt/ErrorLogger/Backend.cpp
-    src/Mdt/ErrorLogger/ConsoleBackend.cpp
-    src/Mdt/ErrorLogger/FileBackend.cpp
+set(SOURCES_FILES
+    src/Mdt/PlainText/FileInputIterator.cpp
+    src/Mdt/PlainText/FileInputIteratorSharedData.cpp
 )
 
 # Headers directories
 # include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
-# Because some headers are generated during building (config.h, Qt's UIC), we also add build path
+# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../FilterExpression/src")
+# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../ItemModel/src")
+# # Because some headers are generated during building (config.h, Qt's UIC), we also build path
 # include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Output library name
-set(LIBRARY_NAME "Error")
+set(LIBRARY_NAME "PlainText_Core")
 
 # Output library technical names
 string(TOLOWER ${LIBRARY_NAME} LIBRARY_NAME_LC)
 set(LIBRARY_BIN_NAME "mdt${LIBRARY_NAME_LC}")
 # Add output library
 add_library(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
-target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Core)
 # Headers directories
 target_include_directories(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
@@ -51,13 +50,7 @@ install(TARGETS "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB
 
 # Strip library and put debug symbols into separate file
 if(UNIX)
-  add_custom_command(TARGET "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}"
-                    POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.so" "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND objcopy --add-gnu-debuglink="${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.dbg" "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND chmod -x "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.dbg")
-  install(FILES "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+  mdtSeparateDebugSymbols(${LIBRARY_BIN_NAME})
 endif(UNIX)
 
 # Unit tests

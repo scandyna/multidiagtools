@@ -1,19 +1,24 @@
 window_sizes 1280 963 323 951 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 3168386 // AbstractSqlController
-    951 911 100 8 0 0
+  classdiagram_ref 1722370 // csvFileParserIterator
+    760 728 100 4 0 0
+  active  classdiagram_ref 3506178 // FileIterator
+    951 911 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 5081218 // setTable
+selected attribute_ref 3493890 // Index
 open
   
-package_ref 549506 // Algorithm
-  class_ref 3979138 // AbstractSqlTableModelController
-  classview_ref 1801474 // Controller_Sql_Widgets
+  package_ref 549506 // Algorithm
+  classview_ref 161666 // Error
   
-package_ref 654594 // File
-  
-package_ref 641410 // PlainText
+  package_ref 654594 // File
+  class_ref 4045570 // StringConstIterator
+  classdiagram_ref 3506050 // GeneratorSettings
+  classview_ref 1828098 // Csv_Core
+  classview_ref 887170 // Parser
+  classview_ref 1097986 // FileParserSettings
+  classview_ref 847234 // spirit
 end
 end

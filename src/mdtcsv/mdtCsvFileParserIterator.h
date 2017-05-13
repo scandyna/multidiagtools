@@ -40,7 +40,7 @@
  *  a char from its internal buffer, witch is handled
  *  by mdtCsvFileParserIteratorSharedData.
  *  When no data is available anymore in the buffer,
- *  a chunck of data is read from QIODevice and encoded
+ *  a chunck of data is read from QIODevice and decoded
  *  to unicode.
  *
  */

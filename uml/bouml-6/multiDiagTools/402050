@@ -1,6 +1,6 @@
 format 211
 "Csv" // Mdt::Csv
-  revision 3
+  revision 4
   modified_by 2 "philippe"
   // class settings
   
@@ -42,6 +42,15 @@ format 211
     
     activitydiagramsettings
      end
+    classdiagram 3506306 "FileParser"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    classdiagram 3506434 "StringParser"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
   end
 
   classview 1828226 "Csv_Widgets"
@@ -61,4 +70,6 @@ format 211
     activitydiagramsettings
      end
   end
+
+  package_ref 661122 // Private
 end

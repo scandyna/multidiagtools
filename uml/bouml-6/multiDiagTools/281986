@@ -1,6 +1,6 @@
 format 211
 "mdtcsv" // mdtcsv
-  revision 42
+  revision 43
   modified_by 2 "philippe"
   // class settings
   
@@ -487,7 +487,6 @@ ${inlines}
 	
       end
     end
-
   end
 
   classview 887170 "Parser"
@@ -607,7 +606,7 @@ ${inlines}
       end
 
       attribute 2097666 "LastError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -858,7 +857,7 @@ ${inlines}
       end
 
       attribute 2370178 "LastError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -870,7 +869,7 @@ ${inlines}
       end
 
       operation 3721346 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -971,7 +970,7 @@ ${inlines}
       end
 
       attribute 2125186 "LastError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1064,7 +1063,7 @@ ${inlines}
       end
 
       attribute 2376706 "LastError"
-	protected type class_ref 182402 // mdtError
+	protected type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1158,7 +1157,7 @@ ${inlines}
       end
 
       operation 3721474 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1240,7 +1239,7 @@ ${inlines}
 	stereotype "signal"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "error" type class_ref 182402 // mdtError
+	  param in name "error" type class_ref 182402 // Error
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
