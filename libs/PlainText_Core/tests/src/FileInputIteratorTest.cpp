@@ -25,6 +25,8 @@
 #include <QTextCodec>
 #include <QString>
 
+#include <QDebug>
+
 using namespace Mdt::PlainText;
 
 void FileInputIteratorTest::initTestCase()
@@ -223,22 +225,228 @@ void FileInputIteratorTest::sharedDataReadTest_data()
 
 void FileInputIteratorTest::sharedDataBenchmark()
 {
-  QFAIL("Not complete");
+  QTemporaryFile file;
+  QFETCH(int, n);
+  QFETCH(QString, fileEncoding);
+  QFETCH(int, rawDataBufferSize);
+  QString fileData;
+  QByteArray fileRawData;
+  QTextCodec *codec;
+  FileInputIteratorSharedData sd(rawDataBufferSize);
+
+  QVERIFY(QTextCodec::codecForName(fileEncoding.toLatin1()) != nullptr);
+  /*
+   * Generate test data
+   */
+  fileData.reserve(n+5);
+  for(int i = 0; i < n; ++i){
+    fileData += QChar( '0' + (i % ('z' - '0')) );
+  }
+//   qDebug() << "data: " << fileData;
+  /*
+   * Write our test data
+   */
+  // Encode test data
+  codec = QTextCodec::codecForName(fileEncoding.toLatin1());
+  QVERIFY(codec != nullptr);
+  fileRawData = codec->fromUnicode(fileData);
+  // Write test data
+  QVERIFY(file.open());
+  QVERIFY(file.write(fileRawData) == fileRawData.size());
+  // Close file (to flush data) and re-open it
+  file.close();
+  QVERIFY(file.open());
+  /*
+   * Check
+   */
+  QString unicodeBuffer;
+  unicodeBuffer.reserve(n+5);
+  // Read data
+  QVERIFY(sd.setSource(&file, fileEncoding.toLatin1()));
+  QBENCHMARK_ONCE{
+    while(!sd.atEnd()){
+      unicodeBuffer.append(sd.get());
+      QVERIFY(sd.advance());
+    }
+  }
+  // Check
+  QCOMPARE(unicodeBuffer, fileData);
 }
 
 void FileInputIteratorTest::sharedDataBenchmark_data()
 {
+  QTest::addColumn<int>("n");
+  QTest::addColumn<QString>("fileEncoding");
+  QTest::addColumn<int>("rawDataBufferSize");
 
+  QTest::newRow("10C,UTF-8,1024") << 10 << "UTF-8" << 1024;
+  QTest::newRow("1'000C,UTF-8,1024") << 1000 << "UTF-8" << 1024;
+  QTest::newRow("10'000C,UTF-8,1024") << 10000 << "UTF-8" << 1024;
+  QTest::newRow("1'000'000C,UTF-8,1024") << 1000000 << "UTF-8" << 1024;
 }
 
 void FileInputIteratorTest::iteratorTest()
 {
-  QFAIL("Not complete");
+  QTemporaryFile file;
+  QString str;
+
+  QVERIFY(QTextCodec::codecForName("UTF-8") != nullptr);
+  /*
+   * Prepare file
+   */
+  QVERIFY(file.open());
+  QVERIFY(file.write("ABCDE") > 0);
+  file.close();
+  /*
+   * Constructs
+   */
+  // Default (end-of-stream iterator)
+  FileInputIterator it;
+  QVERIFY(!it.errorOccured());
+  QVERIFY(it.isEof());
+  // Copy
+  FileInputIterator it2(it);
+  QVERIFY(!it2.errorOccured());
+  QVERIFY(it2.isEof());
+  QVERIFY(it == it2);
+  QVERIFY(!(it != it2));
+  // Assign file to it
+  QVERIFY(file.open());
+  QVERIFY(it.setSource(&file, "UTF-8"));
+  QVERIFY(!it.errorOccured());
+  QVERIFY(!it.isEof());
+  file.close();
+  // Assign again
+  QVERIFY(file.open());
+  QVERIFY(it.setSource(&file, "UTF-8"));
+  QVERIFY(!it.errorOccured());
+  QVERIFY(!it.isEof());
+  // Clear
+  it.clear();
+  QVERIFY(it.isEof());
+  file.close();
+  // Assign again
+  QVERIFY(file.open());
+  QVERIFY(it.setSource(&file, "UTF-8"));
+  QVERIFY(!it.errorOccured());
+  QVERIFY(!it.isEof());
+  file.close();
+  // Construct it3 that acts on file
+  QVERIFY(file.open());
+  FileInputIterator it3(&file, "UTF-8");
+  QVERIFY(!it3.errorOccured());
+  QVERIFY(!it3.isEof());
+  QVERIFY(*it3 == 'A');
+  // Construct it4 that is a copy of it3
+  FileInputIterator it4(it3);
+  QVERIFY(!it4.errorOccured());
+  QVERIFY(!it4.isEof());
+  QVERIFY(*it4 == 'A');
+  QVERIFY(it4 == it3);
+  // Assign it4 to it
+  it = it4;
+  QVERIFY(!it.errorOccured());
+  QVERIFY(!it.isEof());
+  QVERIFY(*it == 'A');
+  QVERIFY(it == it4);
+  // Step it and check
+  QVERIFY(!it.isEof());
+  ++it;
+  QVERIFY(*it == 'B');
+  // Step it and check
+  QVERIFY(!it.isEof());
+  ++it;
+  QVERIFY(*it == 'C');
+  // Step it and check
+  QVERIFY(!it.isEof());
+  ++it;
+  QVERIFY(*it == 'D');
+  // Step it and check
+  QVERIFY(!it.isEof());
+  ++it;
+  QVERIFY(*it == 'E');
+  // Step - Now we reached EOF
+  ++it;
+  QVERIFY(it.isEof());
+  /*
+   * Some error handling
+   */
+  // Close the file and check that we end up with end-of-stream iterators
+  file.close();
+  QVERIFY(it.isEof());
+  QVERIFY(it3.isEof());
+  QVERIFY(it4.isEof());
+  /*
+   * Check reading the whole file
+   */
+  file.close();
+  QVERIFY(file.open());
+  FileInputIterator first(&file, "UTF-8");
+  FileInputIterator last;
+  str.clear();
+  while(first != last){
+    str.append(static_cast<ushort>(*first));
+    ++first;
+  }
+  QCOMPARE(str, QString("ABCDE"));
 }
 
 void FileInputIteratorTest::iteratorBenchmark()
 {
-  QFAIL("Not complete");
+  QTemporaryFile file;
+  QFETCH(int, n);
+  QFETCH(QString, fileEncoding);
+  QString fileData;
+  
+  QByteArray fileRawData;
+  QTextCodec *codec;
+
+  QVERIFY(QTextCodec::codecForName(fileEncoding.toLatin1()) != nullptr);
+  /*
+   * Generate test data
+   */
+  fileData.reserve(n+5);
+  for(int i = 0; i < n; ++i){
+    fileData += QChar( '0' + (i % ('z' - '0')) );
+  }
+  /*
+   * Write our test data
+   */
+  // Encode test data
+  codec = QTextCodec::codecForName(fileEncoding.toLatin1());
+  QVERIFY(codec != nullptr);
+  fileRawData = codec->fromUnicode(fileData);
+  // Write test data
+  QVERIFY(file.open());
+  QVERIFY(file.write(fileRawData) == fileRawData.size());
+  // Close file (to flush data) and re-open it
+  file.close();
+  QVERIFY(file.open());
+  /*
+   * Check
+   */
+  QString unicodeBuffer;
+  unicodeBuffer.reserve(n+5);
+  QBENCHMARK_ONCE{
+    FileInputIterator first(&file, fileEncoding.toLatin1());
+    FileInputIterator last;
+    while(first != last){
+      unicodeBuffer.append(static_cast<ushort>(*first));
+      ++first;
+    }
+  }
+  QCOMPARE(unicodeBuffer, fileData);
+}
+
+void FileInputIteratorTest::iteratorBenchmark_data()
+{
+  QTest::addColumn<int>("n");
+  QTest::addColumn<QString>("fileEncoding");
+
+  QTest::newRow("10C,UTF-8") << 10 << "UTF-8";
+  QTest::newRow("1'000C,UTF-8") << 1000 << "UTF-8";
+  QTest::newRow("10'000C,UTF-8") << 10000 << "UTF-8";
+  QTest::newRow("1'000'000C,UTF-8") << 1000000 << "UTF-8";
 }
 
 /*

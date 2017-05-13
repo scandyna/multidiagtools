@@ -39,6 +39,7 @@ class FileInputIteratorTest : public TestBase
   void sharedDataBenchmark_data();
   void iteratorTest();
   void iteratorBenchmark();
+  void iteratorBenchmark_data();
 };
 
 #endif // #ifndef MDT_PLAIN_TEXT_CORE_FILE_INPUT_ITERATOR_TEST_H
