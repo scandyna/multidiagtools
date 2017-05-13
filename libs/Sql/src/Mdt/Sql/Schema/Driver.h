@@ -183,27 +183,27 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const QString & tableName) const;
 
-    /*! \brief Get primary key for table from database
-     *
-     * \pre Driver must be valid
-     * \sa getTablePrimaryKeyFromDatabase(const QString&)
-     *
-     * \todo Has this overload any sense ?
-     */
-    Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const Table & table) const;
+//     /*! \brief Get primary key for table from database
+//      *
+//      * \pre Driver must be valid
+//      * \sa getTablePrimaryKeyFromDatabase(const QString&)
+//      *
+//      * \todo Has this overload any sense ?
+//      */
+//     Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const Table & table) const;
 
-    /*! \brief Get primary key for table from database
-     *
-     * \pre Driver must be valid
-     * \sa getTablePrimaryKeyFromDatabase(const QString&)
-     *
-     * \todo Has this overload any sense ?
-     */
-    template<typename T>
-    Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const TableTemplate<T> & table) const
-    {
-      return getTablePrimaryKeyFromDatabase(table.tableName());
-    }
+//     /*! \brief Get primary key for table from database
+//      *
+//      * \pre Driver must be valid
+//      * \sa getTablePrimaryKeyFromDatabase(const QString&)
+//      *
+//      * \todo Has this overload any sense ?
+//      */
+//     template<typename T>
+//     Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const TableTemplate<T> & table) const
+//     {
+//       return getTablePrimaryKeyFromDatabase(table.tableName());
+//     }
 
     /*! \brief Get list of foreign keys for table from database
      *

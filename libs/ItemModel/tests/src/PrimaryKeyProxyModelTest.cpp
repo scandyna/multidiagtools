@@ -42,6 +42,8 @@ void PrimaryKeyProxyModelTest::setGetTest()
   PrimaryKeyProxyModel proxyModel;
   proxyModel.setPrimaryKey({1,2});
   QCOMPARE(proxyModel.primaryKey().columnCount(), 2);
+  proxyModel.clearPrimaryKey();
+  QCOMPARE(proxyModel.primaryKey().columnCount(), 0);
 }
 
 void PrimaryKeyProxyModelTest::setModelTest()

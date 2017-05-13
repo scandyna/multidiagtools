@@ -66,6 +66,10 @@ namespace Mdt{ namespace ItemModel{
      */
     void setPrimaryKey(std::initializer_list<int> pk);
 
+    /*! \brief Clear primary key
+     */
+    void clearPrimaryKey();
+
     /*! \brief Get primary key
      */
     PrimaryKey primaryKey() const;

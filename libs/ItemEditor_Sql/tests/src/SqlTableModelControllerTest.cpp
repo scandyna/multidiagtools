@@ -156,6 +156,7 @@ void SqlTableModelControllerTest::setTableTest()
 void SqlTableModelControllerTest::setTablePkFkTest()
 {
   SqlTableModelControllerTester controller;
+  Schema::Client client;
   Schema::Address address;
   PrimaryKey pk;
   ForeignKey fk;
@@ -167,7 +168,7 @@ void SqlTableModelControllerTest::setTablePkFkTest()
   QVERIFY(controller.getPrimaryKey().isNull());
   QVERIFY(controller.getForeignKeyReferencing("Client_tbl").isNull());
   /*
-   * Set table and check
+   * Set table containing foreign key and check
    */
   QVERIFY(controller.setTable(address));
   pk = controller.getPrimaryKey();
@@ -178,6 +179,16 @@ void SqlTableModelControllerTest::setTablePkFkTest()
   QVERIFY(!fk.isNull());
   QCOMPARE(fk.columnCount(), 1);
   QCOMPARE(fk.toColumnList().at(0), 1);
+  /*
+   * Set a table without any foreign key
+   */
+  QVERIFY(controller.setTable(client));
+  pk = controller.getPrimaryKey();
+  QVERIFY(!pk.isNull());
+  QCOMPARE(pk.columnCount(), 1);
+  QCOMPARE(pk.toColumnList().at(0), 0);
+  fk = controller.getForeignKeyReferencing("Client_tbl");
+  QVERIFY(fk.isNull());
 }
 
 void SqlTableModelControllerTest::selectTest()

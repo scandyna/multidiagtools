@@ -19,10 +19,13 @@
  **
  ****************************************************************************/
 #include "AbstractSqlTableModelController.h"
+#include "Mdt/ItemModel/ColumnList.h"
 #include "Mdt/ItemEditor/ControllerStateMachine.h"
 #include "Mdt/Sql/Schema/Table.h"
+#include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Error.h"
 #include <QAbstractItemModel>
+#include <QStringList>
 #include <QSqlError>
 
 namespace Mdt{ namespace ItemEditor{
@@ -81,6 +84,13 @@ bool AbstractSqlTableModelController::setTableName(const QString & name)
     error.stackError( mdtErrorFromQSqlQueryModelQ(model(), this) );
     error.commit();
     setLastError(error);
+    return false;
+  }
+  const Sql::Schema::Driver driver(model()->database());
+  if(!setPrimaryKeyFromTable(driver, name)){
+    return false;
+  }
+  if(!setForeignKeysFromTable(driver, name)){
     return false;
   }
   setEntityName(name);
@@ -156,6 +166,64 @@ bool AbstractSqlTableModelController::removeSelectedRows()
   }
 
   return true;
+}
+
+bool AbstractSqlTableModelController::setPrimaryKeyFromTable(const Sql::Schema::Driver & driver, const QString & tableName)
+{
+  Q_ASSERT(driver.isValid());
+
+  const auto pk = driver.getTablePrimaryKeyFromDatabase(tableName);
+  if(!pk){
+    const QString msg = tr("Fetching primary key for table '%1' failed.").arg(tableName);
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    error.stackError( pk.error() );
+    error.commit();
+    setLastError(error);
+    return false;
+  }
+  const auto fieldNameList = pk.value().fieldNameList();
+  const auto imPk = ItemModel::PrimaryKey::fromColumnList( getColumnListFromFieldNameList(fieldNameList) );
+  setPrimaryKey(imPk);
+
+  return true;
+}
+
+bool AbstractSqlTableModelController::setForeignKeysFromTable(const Sql::Schema::Driver& driver, const QString& tableName)
+{
+  Q_ASSERT(driver.isValid());
+
+  const auto fkList = driver.getTableForeignKeyListFromDatabase(tableName);
+  if(!fkList){
+    const QString msg = tr("Fetching primary key for table '%1' failed.").arg(tableName);
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    error.stackError( fkList.error() );
+    error.commit();
+    setLastError(error);
+    return false;
+  }
+  removeAllForeignKeys();
+  for(const auto & fk : fkList.value()){
+    const auto fieldNameList = fk.fieldNameList();
+    const auto imFk = ItemModel::ForeignKey::fromColumnList( getColumnListFromFieldNameList(fieldNameList) );
+    addForeignKey(fk.foreignTableName(),  imFk);
+  }
+
+  return true;
+}
+
+ItemModel::ColumnList AbstractSqlTableModelController::getColumnListFromFieldNameList(const QStringList& fieldNameList) const
+{
+  ItemModel::ColumnList columns;
+
+  const auto *m = model();
+  Q_ASSERT(m != nullptr);
+
+  for(const auto & fieldName : fieldNameList){
+    Q_ASSERT(m->fieldIndex(fieldName) >= 0);
+    columns.append( m->fieldIndex(fieldName) );
+  }
+
+  return columns;
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

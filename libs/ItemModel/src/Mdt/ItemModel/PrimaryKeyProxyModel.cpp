@@ -39,6 +39,11 @@ void PrimaryKeyProxyModel::setPrimaryKey(std::initializer_list<int> pk)
   setPrimaryKey( PrimaryKey(pk) );
 }
 
+void PrimaryKeyProxyModel::clearPrimaryKey()
+{
+  mPk.clear();
+}
+
 PrimaryKey PrimaryKeyProxyModel::primaryKey() const
 {
   return mPk;

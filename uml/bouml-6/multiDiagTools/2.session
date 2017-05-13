@@ -1,59 +1,19 @@
-window_sizes 1280 963 353 921 911 0
+window_sizes 1280 963 323 951 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 3148674 // Overview
-    676 728 100 22 22 0
-  classdiagram_ref 3387010 // StateMachine
-    1551 1003 100 22 24 8
-  classdiagram_ref 3360898 // ControllerRelationEventMapper
-    120 98 100 4 0 0
-  classdiagram_ref 3353858 // FilterControllerRelation
-    832 911 100 4 0 0
-  classdiagram_ref 2761090 // WidgetMapperController
-    937 911 100 8 0 0
-  classdiagram_ref 3360642 // ModelWrapper
-    120 98 100 7 0 0
-  classdiagram_ref 3168386 // AbstractSqlController
-    943 911 100 8 0 0
-  classdiagram_ref 3168514 // SqlTableViewController
-    120 98 100 7 24 0
-  classdiagram_ref 2700418 // EditorWidget
-    120 98 70 9 0 0
-  classdiagram_ref 3181954 // AbstractEditorWidget
-    120 98 100 18 0 0
-  classdiagram_ref 2761218 // ControllerOverview
-    120 98 100 23 0 116
-  classdiagram_ref 3168642 // SqlWidgetMapperController
-    943 911 100 4 12 0
-  classdiagram_ref 3168770 // SqlRelation
-    120 98 100 4 0 0
-  classdiagram_ref 3354114 // SqlFilterControllerRelation
-    832 911 100 4 0 0
-  classdiagram_ref 3261570 // AbstractControllerRelation
-    120 98 100 22 0 0
-  classdiagram_ref 3208706 // ControllerRelation
-    120 98 100 8 0 0
-  classdiagram_ref 3327618 // KeyData
-    1012 911 100 4 0 0
-  classdiagram_ref 3235202 // PrimaryKey
-    120 98 100 4 0 0
-  classdiagram_ref 3248514 // RelationKey
-    120 98 100 4 0 0
-  classdiagram_ref 3228418 // KeyOverview
-    120 98 100 4 0 0
-  classdiagram_ref 3460098 // TableViewControllerImplementation
-    921 911 100 21 0 0
-  active  classdiagram_ref 2707074 // AbstractController
-    921 911 100 23 240 0
+  active  classdiagram_ref 3168386 // AbstractSqlController
+    951 911 100 8 0 0
 end
 show_stereotypes
+selected operation_ref 5081218 // setTable
 open
   
-  package_ref 549506 // Algorithm
-  class_ref 3829762 // PkFkProxyModelBase
+package_ref 549506 // Algorithm
+  class_ref 3979138 // AbstractSqlTableModelController
+  classview_ref 1801474 // Controller_Sql_Widgets
   
-  package_ref 654594 // File
+package_ref 654594 // File
   
-  package_ref 641410 // PlainText
+package_ref 641410 // PlainText
 end
 end

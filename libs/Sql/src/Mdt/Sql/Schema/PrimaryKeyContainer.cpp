@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -36,6 +36,22 @@ class FieldNameVisitor : public boost::static_visitor<QString>
   {
     return QString();
   }
+};
+
+class FieldNameListVisitor : public boost::static_visitor<QStringList>
+{
+ public:
+
+  QStringList operator()(const AutoIncrementPrimaryKey & pk) const
+  {
+    return QStringList{pk.fieldName()};
+  }
+
+  QStringList operator()(const PrimaryKey & pk) const
+  {
+    return pk.fieldNameList();
+  }
+
 };
 
 class FieldTypeVisitor : public boost::static_visitor<FieldType>
@@ -75,6 +91,11 @@ class FieldLengthVisitor : public boost::static_visitor<int>
 QString PrimaryKeyContainer::fieldName() const
 {
   return boost::apply_visitor( FieldNameVisitor() , mPrimaryKey );
+}
+
+QStringList PrimaryKeyContainer::fieldNameList() const
+{
+  return boost::apply_visitor( FieldNameListVisitor() , mPrimaryKey );
 }
 
 FieldType PrimaryKeyContainer::fieldType() const

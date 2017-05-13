@@ -616,6 +616,23 @@ void ControllerTest::primaryKeyTest()
    * Set primary key
    * (Must also enable primary key support)
    */
+  controller.setPrimaryKey({1,3});
+  QVERIFY(controller.isPrimaryKeyEnabled());
+  QCOMPARE(controller.getPrimaryKey().columnCount(), 2);
+  QCOMPARE(controller.getPrimaryKey().greatestColumn(), 3);
+  QCOMPARE(controller.primaryKeyChangedEventCount(), 1);
+  controller.clearPrimaryKeyChangedEventCount();
+  /*
+   * Clear primary key
+   */
+  controller.clearPrimaryKey();
+  QVERIFY(controller.isPrimaryKeyEnabled());
+  QVERIFY(controller.getPrimaryKey().isNull());
+  QCOMPARE(controller.primaryKeyChangedEventCount(), 1);
+  controller.clearPrimaryKeyChangedEventCount();
+  /*
+   * Set primary key again
+   */
   controller.setPrimaryKey({1});
   QVERIFY(controller.isPrimaryKeyEnabled());
   QCOMPARE(controller.getPrimaryKey().columnCount(), 1);
@@ -655,11 +672,30 @@ void ControllerTest::foreignKeyTest()
    * Initial state
    */
   QVERIFY(!controller.isForeignKeysEnabled());
+  QVERIFY(controller.getForeignKeyReferencing("FE1").isNull());
   QVERIFY(controller.getForeignKeyReferencing("FE2").isNull());
   QCOMPARE(controller.foreignKeyChangedEventCount(), 0);
   /*
    * Set foreign key
    * (Must also enable foreign key support)
+   */
+  controller.addForeignKey("FE1", {1});
+  QVERIFY(controller.isForeignKeysEnabled());
+  fk = controller.getForeignKeyReferencing("FE1");
+  QCOMPARE(fk.columnCount(), 1);
+  QVERIFY(fk.containsColumn(1));
+  QCOMPARE(controller.foreignKeyChangedEventCount(), 1);
+  controller.clearForeignKeyChangedEventCount();
+  /*
+   * Clear foreign keys
+   */
+  controller.removeAllForeignKeys();
+  QVERIFY(controller.isForeignKeysEnabled());
+  QVERIFY(controller.getForeignKeyReferencing("FE1").isNull());
+  QCOMPARE(controller.foreignKeyChangedEventCount(), 1);
+  controller.clearForeignKeyChangedEventCount();
+  /*
+   * Add a foreign key again
    */
   controller.addForeignKey("FE2", {2});
   QVERIFY(controller.isForeignKeysEnabled());

@@ -424,6 +424,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setPrimaryKey(std::initializer_list<int> pk);
 
+    /*! \brief Clear primary key
+     *
+     * \note Primary key support will not be disabled
+     * \sa setPrimaryKeyEnabled()
+     */
+    void clearPrimaryKey();
+
     /*! \brief Get primary key
      */
     Mdt::ItemModel::PrimaryKey getPrimaryKey() const;
@@ -513,6 +520,13 @@ namespace Mdt{ namespace ItemEditor{
      * \sa addForeignKey(const QString&, const Mdt::ItemModel::ForeignKey&)
      */
     void addForeignKey(const QString & foreignEntityName, std::initializer_list<int> fk);
+
+    /*! \brief Remove all foreign keys
+     *
+     * \note This will not disable support of foreign keys
+     * \sa setForeignKeysEnabled()
+     */
+    void removeAllForeignKeys();
 
     /*! \brief Get foreign key referencing a entity
      *

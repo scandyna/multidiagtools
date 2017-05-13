@@ -130,12 +130,12 @@ Expected<PrimaryKeyContainer> Driver::getTablePrimaryKeyFromDatabase(const QStri
   return ret;
 }
 
-Expected<PrimaryKeyContainer> Driver::getTablePrimaryKeyFromDatabase(const Table& table) const
-{
-  Q_ASSERT(isValid());
-
-  return getTablePrimaryKeyFromDatabase(table.tableName());
-}
+// Expected<PrimaryKeyContainer> Driver::getTablePrimaryKeyFromDatabase(const Table& table) const
+// {
+//   Q_ASSERT(isValid());
+// 
+//   return getTablePrimaryKeyFromDatabase(table.tableName());
+// }
 
 Expected<ForeignKeyList> Driver::getTableForeignKeyListFromDatabase(const QString& tableName) const
 {

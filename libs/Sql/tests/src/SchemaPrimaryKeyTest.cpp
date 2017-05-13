@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -171,6 +171,8 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   PrimaryKeyContainer container;
   QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
   QVERIFY(container.fieldName().isEmpty());
+  ///qDebug() << "List: " << container.getFieldNameList();
+  QVERIFY(container.fieldNameList().isEmpty());
   QVERIFY(container.fieldType() == FieldType::UnknownType);
   QCOMPARE(container.fieldLength(), -1);
   /*
@@ -179,6 +181,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   container.setPrimaryKey(Id_PK);
   QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
   QCOMPARE(container.fieldName(), QString("Id_PK"));
+  QCOMPARE(container.fieldNameList(), QStringList({"Id_PK"}));
   QVERIFY(container.fieldType() == FieldType::Integer);
   QCOMPARE(container.fieldLength(), -1);
   QCOMPARE(container.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
@@ -188,6 +191,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   container.setPrimaryKey(Id_A, Id_B);
   QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
   QVERIFY(container.fieldName().isEmpty());
+  QCOMPARE(container.fieldNameList(), QStringList({"Id_A","Id_B"}));
   QVERIFY(container.fieldType() == FieldType::UnknownType);
   QCOMPARE(container.fieldLength(), -1);
   QCOMPARE(container.primaryKey().fieldCount(), 2);

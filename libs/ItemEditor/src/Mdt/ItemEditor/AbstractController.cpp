@@ -274,6 +274,17 @@ void AbstractController::setPrimaryKey(std::initializer_list<int> pk)
   setPrimaryKey( PrimaryKey(pk) );
 }
 
+void AbstractController::clearPrimaryKey()
+{
+  auto pkModel = getPrimaryKeyProxyModel();
+  if(pkModel == nullptr){
+    return;
+  }
+  const auto oldPk = pkModel->primaryKey();
+  pkModel->clearPrimaryKey();
+  primaryKeyChangedEvent(oldPk, PrimaryKey());
+}
+
 ItemModel::PrimaryKey AbstractController::getPrimaryKey() const
 {
   const auto *model = getPrimaryKeyProxyModel();
@@ -336,6 +347,16 @@ void AbstractController::addForeignKey(const QString& foreignEntityName, std::in
   Q_ASSERT(!foreignEntityName.trimmed().isEmpty());
 
   addForeignKey( foreignEntityName, ForeignKey(fk) );
+}
+
+void AbstractController::removeAllForeignKeys()
+{
+  auto *fkModel = getForeignKeysProxyModel();
+  if(fkModel == nullptr){
+    return;
+  }
+  fkModel->removeAllForeignKeys();
+  foreignKeysChangedEvent(fkModel->getForeignKeyList());
 }
 
 ForeignKey AbstractController::getForeignKeyReferencing(const QString& entityName) const

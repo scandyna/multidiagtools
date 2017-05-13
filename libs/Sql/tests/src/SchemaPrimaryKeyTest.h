@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -36,7 +36,6 @@ class SchemaPrimaryKeyTest : public QObject
   void autoIncrementPrimaryKeyTest();
   void primaryKeyTest();
   void primaryKeyContainerTest();
-
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_PRIMARY_KEY_TEST_H

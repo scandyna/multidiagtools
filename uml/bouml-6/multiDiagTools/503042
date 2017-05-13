@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 238
+  revision 240
   modified_by 2 "philippe"
   // class settings
   
@@ -5508,7 +5508,6 @@ ${inlines}
 	  b parent class_ref 3648002 // AbstractController
       end
     end
-
   end
 
   classview 1808002 "Controller_QtQuick"
@@ -5730,7 +5729,7 @@ ${inlines}
       end
 
       operation 5080962 "setTableName"
-	public explicit_return_type "void"
+	public explicit_return_type "bool"
 	nparams 1
 	  param in name "name" type class_ref 161026 // QString
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -5761,7 +5760,7 @@ ${inlines}
       end
 
       operation 5081090 "setTable"
-	public explicit_return_type "void"
+	public explicit_return_type "bool"
 	nparams 1
 	  param in name "table" type class_ref 2775810 // Table
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -5777,7 +5776,7 @@ ${inlines}
       end
 
       operation 5081218 "setTable"
-	public explicit_return_type "void"
+	public explicit_return_type "bool"
 	nparams 1
 	  param in name "table" type class_ref 2838530 // TableTemplate
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};

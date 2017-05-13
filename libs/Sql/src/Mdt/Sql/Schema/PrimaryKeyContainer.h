@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,6 +24,7 @@
 #include "AutoIncrementPrimaryKey.h"
 #include "PrimaryKey.h"
 #include "FieldType.h"
+#include <QStringList>
 #include <boost/variant.hpp>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -84,6 +85,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *  else a empty string is returned.
      */
     QString fieldName() const;
+
+    /*! \brief Get a list of field names of the primary key hold by this container
+     */
+    QStringList fieldNameList() const;
 
     /*! \brief Get field type
      *

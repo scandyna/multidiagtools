@@ -26,15 +26,23 @@
 #include <QPointer>
 
 class QAbstractItemModel;
+class QStringList;
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   class Table;
+  class Driver;
 
   template<typename T>
   class TableTemplate;
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
+
+namespace Mdt{ namespace ItemModel{
+
+  class ColumnList;
+
+}} // namespace Mdt{ namespace ItemModel{
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -164,6 +172,11 @@ namespace Mdt{ namespace ItemEditor{
 
     bool submitChangesToStorage() override;
     void revertChangesFromStorage() override;
+
+    bool setPrimaryKeyFromTable(const Mdt::Sql::Schema::Driver & driver, const QString & tableName);
+    bool setForeignKeysFromTable(const Mdt::Sql::Schema::Driver & driver, const QString & tableName);
+
+    Mdt::ItemModel::ColumnList getColumnListFromFieldNameList(const QStringList & fieldNameList) const;
 
     QPointer<QSqlTableModel> mOwningModel;
   };

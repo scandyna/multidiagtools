@@ -1087,12 +1087,13 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
   QCOMPARE(pk.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   // Get primary key from database - Use passing Table version
-  ret = driver.getTablePrimaryKeyFromDatabase(table);
-  QVERIFY(ret);
-  pk = ret.value();
-  // Check
-  QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
-  QCOMPARE(pk.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
+  /// \todo Uncomment if this overload hase some sense
+//   ret = driver.getTablePrimaryKeyFromDatabase(table);
+//   QVERIFY(ret);
+//   pk = ret.value();
+//   // Check
+//   QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+//   QCOMPARE(pk.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   // Drop table
   QVERIFY(driver.dropTable(table));
   /*
@@ -1137,15 +1138,16 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   /*
    * Check also using TableTemplate
    */
-  Schema::Client client;
-  QVERIFY(driver.createTable(client));
-  ret = driver.getTablePrimaryKeyFromDatabase(client);
-  QVERIFY(ret);
-  pk = ret.value();
-  // Check
-  QVERIFY(pk.primaryKeyType() == client.toTable().primaryKeyType());
-  // Drop table
-  QVERIFY(driver.dropTable(client));
+  /// \todo Uncomment if this overload hase some sense
+//   Schema::Client client;
+//   QVERIFY(driver.createTable(client));
+//   ret = driver.getTablePrimaryKeyFromDatabase(client);
+//   QVERIFY(ret);
+//   pk = ret.value();
+//   // Check
+//   QVERIFY(pk.primaryKeyType() == client.toTable().primaryKeyType());
+//   // Drop table
+//   QVERIFY(driver.dropTable(client));
 }
 
 void SchemaDriverSqliteTest::reverseForeignKeyTest()
