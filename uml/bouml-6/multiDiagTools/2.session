@@ -3,22 +3,27 @@ cleanlooks_style
 diagrams
   classdiagram_ref 1722370 // csvFileParserIterator
     760 728 100 4 0 0
-  active  classdiagram_ref 3506178 // FileIterator
+  classdiagram_ref 3506178 // FileIterator
     951 911 100 18 0 0
+  classdiagram_ref 3506562 // StringIterator
+    120 98 100 4 0 0
+  classdiagram_ref 1701506 // mdtCsvParser
+    951 911 90 8 156 0
+  classdiagram_ref 2427394 // Application
+    120 98 100 4 0 0
+  active  classdiagram_ref 3513090 // Application_Core
+    951 911 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 3493890 // Index
+selected classdiagram_ref 3513090 // Application_Core
 open
   
   package_ref 549506 // Algorithm
-  classview_ref 161666 // Error
+  classview_ref 1848066 // Application_Core
+  classview_ref 1293570 // Application
+  classview_ref 1841538 // ItemView_Widgets
   
   package_ref 654594 // File
-  class_ref 4045570 // StringConstIterator
-  classdiagram_ref 3506050 // GeneratorSettings
-  classview_ref 1828098 // Csv_Core
-  classview_ref 887170 // Parser
-  classview_ref 1097986 // FileParserSettings
   classview_ref 847234 // spirit
 end
 end

@@ -1,6 +1,6 @@
 format 211
 "Mdt" // Mdt
-  revision 30
+  revision 32
   modified_by 2 "philippe"
   // class settings
   
@@ -46,6 +46,44 @@ format 211
     
     activitydiagramsettings
      end
+  end
+
+  classview 1848066 "Application_Core"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3513090 "Application_Core"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4052098 "CoreApplication"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
   end
 
   classview 1293570 "Application"
@@ -763,6 +801,8 @@ ${members}};
   package_ref 588802 // FilterExpression
 
   package_ref 516098 // ItemModel
+
+  package_ref 667650 // ItemView
 
   package_ref 516226 // SqlItemModel
 

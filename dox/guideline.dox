@@ -72,7 +72,7 @@
  *   This option requires that ui_*.h is included in the header file of the class.
  *   Because this header file is generated during compilation, it will be somwhere in the build tree.
  *   For this library, this issue has to be solved, and is by setting correct CMake options.
- *   But, the problem will then happen again to the user, which has probably no access to this ui_*h file.
+ *   But, the problem will then happen again to the user, which has no access to this ui_*h file.
  *
  *  To solve this issue, the Ui class should be forward declared in the header,
  *   used as member of the class, using a unique_ptr.

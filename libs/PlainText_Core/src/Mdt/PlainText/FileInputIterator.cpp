@@ -101,5 +101,4 @@ bool FileInputIterator::init(QIODevice* device, const QByteArray& encoding)
   return true;
 }
 
-
 }} // namespace Mdt{ namespace PlainText{
