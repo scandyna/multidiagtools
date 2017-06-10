@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,8 +24,6 @@
 #include "Mdt/Error.h"
 #include <utility>
 
-//#include <QDebug>
-
 namespace Mdt{
 
   /*! \brief Contains a value or a error
@@ -38,7 +36,7 @@ namespace Mdt{
    * Mdt::Expected is a very limited version of the concept.
    *  For more advanced and performant version,
    *  you should take a look at the official proposal:
-   *  https://github.com/ptal/expected
+   *  https://github.com/viboes/std-make/tree/master/doc/proposal/expected
    *
    * \tparam T Type of value
    */
@@ -53,64 +51,64 @@ namespace Mdt{
      *  (see Mdt::Error::isNull()).
      */
     Expected()
-    : pvHasValue(false),
-      pvError(Mdt::Error())
+    : mHasValue(false),
+      mError(Mdt::Error())
     {
     }
 
     /*! \brief Construct a expected with a value
      */
     Expected(const T & v)
-    : pvHasValue(true),
-      pvValue(v)
+    : mHasValue(true),
+      mValue(v)
     {
     }
 
     /*! \brief Construct a expected with a value
      */
     Expected(T && v)
-    : pvHasValue(true),
-      pvValue(std::move(v))
+    : mHasValue(true),
+      mValue(std::move(v))
     {
     }
 
     /*! \brief Construct a expected with a error
      */
     Expected(const Mdt::Error & e)
-    : pvHasValue(false),
-      pvError(e)
+    : mHasValue(false),
+      mError(e)
     {
     }
 
     /*! \brief Construct a expected with a error
      */
     Expected(Mdt::Error && e)
-    : pvHasValue(false),
-      pvError(std::move(e))
+    : mHasValue(false),
+      mError(std::move(e))
     {
     }
 
     /*! \brief Construct a copy of other
      */
     Expected(const Expected & other)
-    : pvHasValue(other.pvHasValue)
+    : mHasValue(other.mHasValue)
     {
-      if(pvHasValue){
-        new(&pvValue) T(other.pvValue);
+      if(mHasValue){
+        new(&mValue) T(other.mValue);
       }else{
-        new(&pvError) Mdt::Error(other.pvError);
+        new(&mError) Mdt::Error(other.mError);
       }
     }
 
     /*! \brief Construct by moving other
      */
     Expected(Expected && other)
-    : pvHasValue(other.pvHasValue)
+    : mHasValue(other.mHasValue)
     {
-      if(pvHasValue){
-        new(&pvValue) T(std::move(other.pvValue));
+      if(mHasValue){
+        new(&mValue) T(std::move(other.mValue));
       }else{
-        new(&pvError) Mdt::Error(std::move(other.pvError));
+        new(&mError) Mdt::Error(std::move(other.mError));
       }
     }
 
@@ -118,22 +116,16 @@ namespace Mdt{
      */
     ~Expected()
     {
-      if(pvHasValue){
-        pvValue.~T();
-      }else{
-        pvError.~Error();
-      }
+      freeValueOrError();
     }
 
     /*! \brief Assign a value
      */
     Expected & operator=(const T & v)
     {
-      if(!pvHasValue){
-        pvError.~Error();
-      }
-      pvHasValue = true;
-      new(&pvValue) T(v);
+      freeValueOrError();
+      mHasValue = true;
+      new(&mValue) T(v);
       return *this;
     }
 
@@ -141,11 +133,9 @@ namespace Mdt{
      */
     Expected & operator=(T && v)
     {
-      if(!pvHasValue){
-        pvError.~Error();
-      }
-      pvHasValue = true;
-      new(&pvValue) T(std::move(v));
+      freeValueOrError();
+      mHasValue = true;
+      new(&mValue) T(std::move(v));
       return *this;
     }
 
@@ -153,11 +143,9 @@ namespace Mdt{
      */
     Expected & operator=(const Mdt::Error & e)
     {
-      if(pvHasValue){
-        pvValue.~T();
-      }
-      pvHasValue = false;
-      new(&pvError) Mdt::Error(e);
+      freeValueOrError();
+      mHasValue = false;
+      new(&mError) Mdt::Error(e);
       return *this;
     }
 
@@ -165,11 +153,9 @@ namespace Mdt{
      */
     Expected & operator=(Mdt::Error && e)
     {
-      if(pvHasValue){
-        pvValue.~T();
-      }
-      pvHasValue = false;
-      new(&pvError) Mdt::Error(std::move(e));
+      freeValueOrError();
+      mHasValue = false;
+      new(&mError) Mdt::Error(std::move(e));
       return *this;
     }
 
@@ -180,14 +166,22 @@ namespace Mdt{
       if(&other == this){
         return *this;
       }
-      pvHasValue = other.pvHasValue;
-      if(pvHasValue){
-        pvError.~Error();
-        new(&pvValue) T(other.pvValue);
+      if(mHasValue){
+        mValue.~T();
+        if(other.mHasValue){
+          new(&mValue) T(other.mValue);
+        }else{
+          new(&mError) Mdt::Error(other.mError);
+        }
       }else{
-        pvValue.~T();
-        new(&pvError) Mdt::Error(other.pvError);
+        mError.~Error();
+        if(other.mHasValue){
+          new(&mValue) T(other.mValue);
+        }else{
+          new(&mError) Mdt::Error(other.mError);
+        }
       }
+      mHasValue = other.mHasValue;
       return *this;
     }
 
@@ -198,22 +192,22 @@ namespace Mdt{
       if(&other == this){
         return *this;
       }
-      if(pvHasValue){
-        pvValue.~T();
-        if(other.pvHasValue){
-          new(&pvValue) T(std::move(other.pvValue));
+      if(mHasValue){
+        mValue.~T();
+        if(other.mHasValue){
+          new(&mValue) T(std::move(other.mValue));
         }else{
-          new(&pvError) Mdt::Error(std::move(other.pvError));
+          new(&mError) Mdt::Error(std::move(other.mError));
         }
       }else{
-        pvError.~Error();
-        if(other.pvHasValue){
-          new(&pvValue) T(std::move(other.pvValue));
+        mError.~Error();
+        if(other.mHasValue){
+          new(&mValue) T(std::move(other.mValue));
         }else{
-          new(&pvError) Mdt::Error(std::move(other.pvError));
+          new(&mError) Mdt::Error(std::move(other.mError));
         }
       }
-      pvHasValue = other.pvHasValue;
+      mHasValue = other.mHasValue;
 
       return *this;
     }
@@ -222,7 +216,7 @@ namespace Mdt{
      */
     bool hasError() const
     {
-      return !pvHasValue;
+      return !mHasValue;
     }
 
     /*! \brief Access error
@@ -231,8 +225,8 @@ namespace Mdt{
      */
     Mdt::Error & error()
     {
-      Q_ASSERT(!pvHasValue);
-      return pvError;
+      Q_ASSERT(!mHasValue);
+      return mError;
     }
 
     /*! \brief Access error (read only)
@@ -241,22 +235,22 @@ namespace Mdt{
      */
     const Mdt::Error & error() const
     {
-      Q_ASSERT(!pvHasValue);
-      return pvError;
+      Q_ASSERT(!mHasValue);
+      return mError;
     }
 
     /*! \brief Return true if a value was set
      */
     bool hasValue() const
     {
-      return pvHasValue;
+      return mHasValue;
     }
 
     /*! \brief Return true if a value was set
      */
     operator bool() const
     {
-      return pvHasValue;
+      return mHasValue;
     }
 
     /*! \brief Access value
@@ -265,8 +259,8 @@ namespace Mdt{
      */
     T & value()
     {
-      Q_ASSERT(pvHasValue);
-      return pvValue;
+      Q_ASSERT(mHasValue);
+      return mValue;
     }
 
     /*! \brief Access value (read only)
@@ -275,17 +269,26 @@ namespace Mdt{
      */
     const T & value() const
     {
-      Q_ASSERT(pvHasValue);
-      return pvValue;
+      Q_ASSERT(mHasValue);
+      return mValue;
     }
 
   private:
 
-    bool pvHasValue;
+    void freeValueOrError()
+    {
+      if(mHasValue){
+        mValue.~T();
+      }else{
+        mError.~Error();
+      }
+    }
+
+    bool mHasValue;
     union
     {
-      T pvValue;
-      Mdt::Error pvError;
+      T mValue;
+      Mdt::Error mError;
     };
   };
 
