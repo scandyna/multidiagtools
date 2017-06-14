@@ -1,12 +1,12 @@
-# CMake project file for Multi Diag Tools
+# CMake project file for Mdt::Sql tests
 
-# Project
-project(multidiagtools)
 enable_testing()
+
+find_package(Qt5 COMPONENTS Test)
 
 #================= SQL test library ====================
 
-set(SOURCES_FILES
+set(SOURCE_FILES
     src/TestBase.cpp
     src/Schema/Client.cpp
     src/Schema/Client2.cpp
@@ -18,10 +18,8 @@ set(SOURCES_FILES
     src/Schema/LikeExpressionTestSchema.cpp
 )
 
-add_library(mdtsqltest SHARED ${SOURCES_FILES})
-target_link_libraries(mdtsqltest "mdtsql${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtsqltest "mdtapplication${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtsqltest Qt5::Test)
+add_library(mdtsqltest SHARED ${SOURCE_FILES})
+target_link_libraries(mdtsqltest Sql Application Qt5::Test)
 
 #=============== Helper functions ===========
 
@@ -31,7 +29,7 @@ function(addSqlTest testName)
   set(sourceFilePath "src/${testName}.cpp")
   string(TOLOWER ${complteTestName} executableName)
   add_executable(${executableName} ${sourceFilePath})
-  target_link_libraries(${executableName} "mdtsqltest")
+  target_link_libraries(${executableName} mdtsqltest)
   add_test(${complteTestName} ${CMAKE_CURRENT_BINARY_DIR}/${executableName})
 #  message("Test name: ${complteTestName} , src: ${sourceFilePath} , exec: ${executableName}")
 endfunction()

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,36 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ErrorGuiTest.h"
-#include "Mdt/Application.h"
-#include "Mdt/ErrorDialog.h"
+#ifndef MDT_ERROR_WIDGETS_TEST_H
+#define MDT_ERROR_WIDGETS_TEST_H
 
-void ErrorGuiTest::errorDialogTest()
+#include <QObject>
+#include <QtTest/QtTest>
+
+class ErrorWidgetsTest : public QObject
 {
-  Mdt::ErrorDialog dialog;
-  Mdt::Error error;
+ Q_OBJECT
 
-  error.setError<int>(1, "Some error", Mdt::Error::Critical);
-  dialog.setError(error);
+ private slots:
 
-  /*
-   * Play
-   */
-  dialog.exec();
-}
+  void errorDialogTest();
+};
 
-
-/*
- * Main
- */
-int main(int argc, char **argv)
-{
-  Mdt::Application app(argc, argv);
-  ErrorGuiTest errorTest;
-
-  if(!app.init()){
-    return 1;
-  }
-
-  return QTest::qExec(&errorTest, argc, argv);
-}
+#endif // #ifndef MDT_ERROR_WIDGETS_TEST_H

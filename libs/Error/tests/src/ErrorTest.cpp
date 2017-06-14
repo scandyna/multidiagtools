@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "ErrorTest.h"
-#include "Mdt/Application.h"
 #include "Mdt/Error.h"
 #include "Mdt/ErrorLogger/Logger.h"
 #include "Mdt/ErrorLogger/Backend.h"
@@ -35,6 +34,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QVector>
+#include <QCoreApplication>
 #include <memory>
 #include <vector>
 
@@ -680,29 +680,13 @@ void ErrorTest::errorLoggerConcurrentAccessTest_data()
   }
 }
 
-void ErrorTest::coreDumpAfterCommitBugTest()
-{
-  /*
-   * Bug was in Mdt::Application,
-   * which create a Logger, but never called Logger::cleanup().
-   * Now fixed.
-   */
-  auto error = mdtErrorNew("test", Mdt::Error::Critical, "MyClass");
-  error.commit();
-}
-
-
 /*
  * Main
  */
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  QCoreApplication app(argc, argv);
   ErrorTest errorTest;
-
-  if(!app.init()){
-    return 1;
-  }
 
   return QTest::qExec(&errorTest, argc, argv);
 }

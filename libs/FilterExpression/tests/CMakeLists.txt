@@ -1,8 +1,10 @@
-# CMake project file for Multi Diag Tools
 
-# Project
-project(multidiagtools)
 enable_testing()
+
+find_package(
+  Qt5
+  COMPONENTS Test
+)
 
 #=============== Helper functions ===========
 
@@ -12,9 +14,7 @@ function(addFilterExpressionTest testName)
   set(sourceFilePath "src/${testName}.cpp")
   string(TOLOWER ${complteTestName} executableName)
   add_executable(${executableName} ${sourceFilePath})
-  target_link_libraries(${executableName} "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}")
-  target_link_libraries(${executableName} "mdtapplication${MDTLIB_VERSION_SUFFIX}")
-  target_link_libraries(${executableName} Qt5::Test)
+  target_link_libraries(${executableName} FilterExpression Application Qt5::Test)
   add_test(${complteTestName} ${CMAKE_CURRENT_BINARY_DIR}/${executableName})
 #  message("Test name: ${complteTestName} , src: ${sourceFilePath} , exec: ${executableName}")
 endfunction()

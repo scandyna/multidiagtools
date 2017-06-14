@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -33,7 +33,17 @@ class ApplicationTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
+  /*
+   * Bug discovered at 20160611
+   *
+   * This code can produce a core dump:
+   * void foo()
+   * {
+   *   auto error = mdtErrorNew("test", Mdt::Error::Critical, "MyClass");
+   *   error.commit();
+   * }
+   */
+  void coreDumpAfterErrorCommitBugTest();
 };
 
 #endif // #ifndef MDT_APPLICATION_TEST_H

@@ -1,5 +1,2 @@
-# CMake project file for Multi Diag Tools
 
-project(multidiagtools)
-
-add_subdirectory("SqlClientEditor")
+add_subdirectory(SqlClientEditor)

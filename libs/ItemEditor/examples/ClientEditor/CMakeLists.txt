@@ -1,10 +1,6 @@
-# Project file for Multi Diag Tools
-
-# Project
-project(multidiagtools)
 
 # List of source files
-set(SOURCES_FILES
+set(SOURCE_FILES
     src/main.cpp
     src/ClientModel.cpp
     src/ClientWidget.cpp
@@ -14,56 +10,9 @@ set(SOURCES_FILES
     src/MainWidget.cpp
 )
 
-# Headers directories
-# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
-# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../FilterExpression/src")
-# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../ItemModel/src")
-# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../ItemEditor/src")
-# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../Sql/src")
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-# Because some headers are generated during building (config.h, Qt's UIC), we also add build path
-# include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+find_package(Qt5 COMPONENTS Widgets)
 
-add_executable(clienteditor ${SOURCES_FILES})
-target_link_libraries(clienteditor "mdtitemeditor${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(clienteditor "mdtapplication${MDTLIB_VERSION_SUFFIX}")
-
-# Output library name
-# set(LIBRARY_NAME "ItemEditor_Sql")
-
-# Output library technical names
-# string(TOLOWER ${LIBRARY_NAME} LIBRARY_NAME_LC)
-# set(LIBRARY_BIN_NAME "mdt${LIBRARY_NAME_LC}")
-# Add output library
-# add_library(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
-# target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
-# target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
-# target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtfilterexpression${MDTLIB_VERSION_SUFFIX}")
-# target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtitemmodel${MDTLIB_VERSION_SUFFIX}")
-# target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtitemeditor${MDTLIB_VERSION_SUFFIX}")
-# target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtsql${MDTLIB_VERSION_SUFFIX}")
-# target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
-# target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Sql)
-
-# Qt Designer plugins
-# add_subdirectory("qttools")
-
-# Translation files
-# set(TS_FILES
-#     ${CMAKE_CURRENT_SOURCE_DIR}/translations/${LIBRARY_BIN_NAME}_fr.ts
-#     ${CMAKE_CURRENT_SOURCE_DIR}/translations/${LIBRARY_BIN_NAME}_de.ts
-# )
-# qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src ${TS_FILES} OPTIONS -I ${CMAKE_CURRENT_SOURCE_DIR}/src)
-# add_custom_target("Mdt${LIBRARY_NAME}Ts" DEPENDS ${QM_FILES} ${TS_FILES})
-
-# Headers to install
-# file(GLOB INSTALL_HEADERS *.h)
-# install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/Mdt/${LIBRARY_NAME}" COMPONENT dev)
-
-# Install targets
-# install(TARGETS "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-
-# Strip library and put debug symbols into separate file
-# if(UNIX)
-#   mdtSeparateDebugSymbols(${LIBRARY_BIN_NAME})
-# endif(UNIX)
+add_executable(clienteditor ${SOURCE_FILES})
+target_link_libraries(clienteditor ItemEditor Application Qt5::Widgets)

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "ApplicationTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/Error.h"
 
 void ApplicationTest::initTestCase()
 {
@@ -33,10 +34,16 @@ void ApplicationTest::cleanupTestCase()
  * Tests
  */
 
-void ApplicationTest::sandbox()
+void ApplicationTest::coreDumpAfterErrorCommitBugTest()
 {
+  /*
+   * Bug was in Mdt::Application,
+   * which create a Logger, but never called Logger::cleanup().
+   * Now fixed.
+   */
+  auto error = mdtErrorNew("test", Mdt::Error::Critical, "MyClass");
+  error.commit();
 }
-
 
 
 /*

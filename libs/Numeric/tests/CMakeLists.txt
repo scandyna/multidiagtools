@@ -1,28 +1,16 @@
-# CMake project file for Multi Diag Tools
 
-# Project
-project(multidiagtools)
 enable_testing()
 
+find_package(Qt5 COMPONENTS Test)
 
 #================= Tests ====================
 
 # MdtNumericDoubleTest
 add_executable(mdtnumericdoubletest src/DoubleTest.cpp)
-target_link_libraries(mdtnumericdoubletest "mdtnumeric${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtnumericdoubletest "mdtapplication${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtnumericdoubletest Qt5::Test)
-
-# target_link_libraries(mdtnumericdoubletest "mdtutils${MDTLIB_VERSION_SUFFIX}")
-
+target_link_libraries(mdtnumericdoubletest Numeric Application Qt5::Test)
 add_test(MdtNumericDoubleTest ${CMAKE_CURRENT_BINARY_DIR}/mdtnumericdoubletest)
 
 # MdtNumericPhysicsTypesTest
 add_executable(mdtnumericphysicstypestest src/PhysicsTypesTest.cpp)
-target_link_libraries(mdtnumericphysicstypestest "mdtnumeric${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtnumericphysicstypestest "mdtapplication${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtnumericphysicstypestest Qt5::Test)
-
-# target_link_libraries(mdtnumericphysicstypestest "mdtutils${MDTLIB_VERSION_SUFFIX}")
-
+target_link_libraries(mdtnumericphysicstypestest Numeric Application Qt5::Test)
 add_test(MdtNumericPhysicsTypesTest ${CMAKE_CURRENT_BINARY_DIR}/mdtnumericphysicstypestest)

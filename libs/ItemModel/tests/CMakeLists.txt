@@ -1,8 +1,9 @@
-# CMake project file for Multi Diag Tools
 
-# Project
-project(multidiagtools)
 enable_testing()
+
+find_package(Qt5 COMPONENTS Test Widgets)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 #=============== ItemModel test library =====
 
@@ -11,9 +12,7 @@ set(SOURCES_FILES
 )
 
 add_library(mdtitemmodeltest SHARED ${SOURCES_FILES})
-target_link_libraries(mdtitemmodeltest "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtitemmodeltest "mdtapplication${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtitemmodeltest Qt5::Test)
+target_link_libraries(mdtitemmodeltest ItemModel Application Qt5::Test)
 
 #=============== Qt5 item model test library =====
 
@@ -34,11 +33,7 @@ function(addItemModelTest testName)
   set(sourceFilePath "src/${testName}.cpp")
   string(TOLOWER ${complteTestName} executableName)
   add_executable(${executableName} ${sourceFilePath})
-  target_link_libraries(${executableName} "mdtitemmodeltest")
-  target_link_libraries(${executableName} "mdtitemmodelqt5test")
-#   target_link_libraries(${executableName} "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}")
-#   target_link_libraries(${executableName} "mdtapplication${MDTLIB_VERSION_SUFFIX}")
-#   target_link_libraries(${executableName} Qt5::Test)
+  target_link_libraries(${executableName} mdtitemmodeltest mdtitemmodelqt5test)
   add_test(${complteTestName} ${CMAKE_CURRENT_BINARY_DIR}/${executableName})
 endfunction()
 
