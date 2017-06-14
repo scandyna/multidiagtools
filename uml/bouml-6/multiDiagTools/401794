@@ -1,6 +1,6 @@
 format 211
 "Mdt" // Mdt
-  revision 32
+  revision 33
   modified_by 2 "philippe"
   // class settings
   
@@ -64,7 +64,7 @@ format 211
     
     activitydiagramsettings
      end
-    classdiagram 3513090 "Application_Core"
+    classdiagram 3513090 "CoreApplication"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -83,10 +83,45 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 4587522 // <generalisation>
+	relation 4561410 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4587522 // <generalisation>
+	  b parent class_ref 425730 // QCoreApplication
+      end
+    end
+
+    classdiagram 3519746 "SingleCoreApplication"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4058754 "SingleCoreApplication"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4587394 // <generalisation>
+	relation 4561282 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4587394 // <generalisation>
+	  b parent class_ref 4058626 // QtSingleCoreApplication
+      end
     end
   end
 
-  classview 1293570 "Application"
+  classview 1293570 "Application_Widgets"
     
     classdiagramsettings member_max_width 0 end
     
@@ -267,6 +302,11 @@ ${items}};
 	
 	
       end
+    end
+
+    classdiagram 3519618 "SingleApplication"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
   end
 

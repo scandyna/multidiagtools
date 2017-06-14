@@ -9,21 +9,28 @@ diagrams
     120 98 100 4 0 0
   classdiagram_ref 1701506 // mdtCsvParser
     951 911 90 8 156 0
-  classdiagram_ref 2427394 // Application
-    120 98 100 4 0 0
-  active  classdiagram_ref 3513090 // Application_Core
+  active  classdiagram_ref 2427394 // Application
     951 911 100 4 0 0
+  classdiagram_ref 3513090 // CoreApplication
+    951 911 100 4 0 0
+  classdiagram_ref 428802 // QtSingleApplication
+    120 98 100 4 0 0
+  classdiagram_ref 3519746 // SingleCoreApplication
+    120 98 100 4 0 0
+  classdiagram_ref 3519618 // SingleApplication
+    120 98 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3513090 // Application_Core
+selected classdiagram_ref 2427394 // Application
 open
   
   package_ref 549506 // Algorithm
   classview_ref 1848066 // Application_Core
-  classview_ref 1293570 // Application
+  classview_ref 1293570 // Application_Widgets
   classview_ref 1841538 // ItemView_Widgets
   
   package_ref 654594 // File
+  classview_ref 300162 // QtSolutions
   classview_ref 847234 // spirit
 end
 end

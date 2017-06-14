@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 206
+  revision 207
   modified_by 2 "philippe"
   // class settings
   
@@ -5323,6 +5323,29 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 512130 // <generalisation>
 	  b parent class_ref 425602 // QApplication
+      end
+    end
+
+    class 4058626 "QtSingleCoreApplication"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4587650 // <generalisation>
+	relation 4561538 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4587650 // <generalisation>
+	  b parent class_ref 425730 // QCoreApplication
       end
     end
   end
