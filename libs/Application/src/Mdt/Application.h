@@ -21,10 +21,10 @@
 #ifndef MDT_APPLICATION_H
 #define MDT_APPLICATION_H
 
-#include "QtSolutions/QtSingleApplication"
+#include "QtSingleApplication"
 #include <QString>
 
-/*! \brief Gloab Application instance
+/*! \brief Global Application instance
  */
 #if defined(MdtApp)
  #undef MdtApp

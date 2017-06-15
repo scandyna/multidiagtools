@@ -1,8 +1,7 @@
-# Project file for Mdt
 
 set(SOURCE_FILES
-          qtlocalpeer.cpp
-          qtsingleapplication.cpp
+  qtlocalpeer.cpp
+  qtsingleapplication.cpp
 )
 
 find_package(Qt5
@@ -12,7 +11,7 @@ find_package(Qt5
 mdt_add_library(
   NAME QtSingleApplication
   SOURCE_FILES ${SOURCE_FILES}
-  HEADERS_DIRECTORY ../include
+  HEADERS_DIRECTORY .
   LINK_DEPENDENCIES Qt5::Widgets Qt5::Network
 )
 

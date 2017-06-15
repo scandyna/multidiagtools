@@ -70,7 +70,6 @@ function(mdt_add_library)
     message(FATAL_ERROR "mdt_add_library(): NAME argument is missing.")
   endif()
   if(NOT VAR_SOURCE_FILES)
-    # TODO should SOURCE_FILES be optionnal ? Mybe yes: rule: for header only, allways create a source file, aussi if it is empty, and include the header.
     message(FATAL_ERROR "mdt_add_library(): No source file provided.")
   endif()
   if(NOT VAR_HEADERS_DIRECTORY)
@@ -124,7 +123,14 @@ function(mdt_add_library)
   install(DIRECTORY ${headers_dir}
           DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
           COMPONENT ${target_name}-dev
-          FILES_MATCHING PATTERN *.h
+          FILES_MATCHING
+            PATTERN *
+            PATTERN *.c EXCLUDE
+            PATTERN *.C EXCLUDE
+            PATTERN *.cpp EXCLUDE
+            PATTERN *.CPP EXCLUDE
+            PATTERN *.txt EXCLUDE
+            PATTERN *.TXT EXCLUDE
   )
   # Commands to generate Config.cmake file
   install(EXPORT ${library_name}Targets
