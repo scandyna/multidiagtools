@@ -1,4 +1,5 @@
 include(MdtCPackComponent)
+include(MdtDependenciesUtils)
 
 # Enable multi-arch installation
 # For example, install libraries to /usr/lib/x86_64-linux-gnu on a x86_64 Debian
@@ -124,13 +125,7 @@ function(mdt_add_library)
           DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
           COMPONENT ${target_name}-dev
           FILES_MATCHING
-            PATTERN *
-            PATTERN *.c EXCLUDE
-            PATTERN *.C EXCLUDE
-            PATTERN *.cpp EXCLUDE
-            PATTERN *.CPP EXCLUDE
-            PATTERN *.txt EXCLUDE
-            PATTERN *.TXT EXCLUDE
+            REGEX "/[^.]+$|/.+\\.h|/.+\\.hpp" # Only install files without extension, or with .h or .hpp extension
   )
   # Commands to generate Config.cmake file
   install(EXPORT ${library_name}Targets
@@ -140,6 +135,21 @@ function(mdt_add_library)
   )
   set(config_in_file "${CMAKE_CURRENT_BINARY_DIR}/${target_name}Config.cmake.in")
   file(WRITE "${config_in_file}" "@PACKAGE_INIT@\n")
+  set(mdt_dep_targets)
+  mdt_get_library_internal_dependencies(
+    mdt_dep_targets
+    DEP_TARGETS ${link_deps}
+  )
+  if(mdt_dep_targets)
+    file(APPEND "${config_in_file}" "set(@PROJECT_NAME@${target_name}Dependencies \"${mdt_dep_targets}\")\n")
+    file(APPEND "${config_in_file}" "foreach(dependency \${@PROJECT_NAME@${target_name}Dependencies})\n")
+    file(APPEND "${config_in_file}" "  find_package(\n")
+    file(APPEND "${config_in_file}" "    @PROJECT_NAME@\${dependency}\n")
+    file(APPEND "${config_in_file}" "    CONFIG\n")
+    file(APPEND "${config_in_file}" "    PATHS \"\${CMAKE_CURRENT_LIST_DIR}/..\" NO_DEFAULT_PATH\n")
+    file(APPEND "${config_in_file}" "  )\n")
+    file(APPEND "${config_in_file}" "endforeach()\n")
+  endif()
   file(APPEND "${config_in_file}" "include(\"\${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@${target_name}Targets.cmake\")\n")
   file(APPEND "${config_in_file}" "check_required_components(@PROJECT_NAME@${target_name})")
   include(CMakePackageConfigHelpers)
@@ -172,6 +182,8 @@ function(mdt_add_library)
     DEPEND_TARGETS_SUFFIX dev
     EXPLICIT_DEPEND_COMPONENTS ${target_name}
   )
+  
+
 endfunction()
 
 # Add a qt designer plugin library

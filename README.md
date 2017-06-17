@@ -24,13 +24,24 @@ TODO:
  - A) all dependencies here, with comments
  - B) dependencies per sections (see below)
 
-CMake
-C++14 compliant compiler
-dpkg-dev ?
-Packet générique Debian, build-essentials-xx-yy-
 
 Ubuntu (tested on ...)
 apt-get ....
+
+#### Common dependencies
+
+git
+CMake
+C++14 compliant compiler
+Packet générique Debian, build-essentials-xx-yy-
+Qt
+
+#### Dependencies to compile Mdt
+
+dpkg-dev ?
+Qt -dev
+
+#### Dependencies to use Mdt
 
 ### Get Mdt
 
@@ -77,7 +88,6 @@ make test
 To install the library in a non system place,
 i.e. defined above with CMAKE_INSTALL_PREFIX,
 the installation is:
-To run all tests:
 ```bash
 make install
 ```
