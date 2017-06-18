@@ -2,7 +2,7 @@
 
 # Simple script that inits build tree
 
-
+# TODO: this script is obselete
 
 #
 # Helper functions
