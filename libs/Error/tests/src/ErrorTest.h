@@ -33,6 +33,7 @@ class ErrorTest : public QObject
   void constructAndCopyTest();
   void errorStackTest();
   void setSourceTest();
+  void macrosTest();
 
   void errorLoggerConsoleBackendTest();
   void errorLoggerFileBackendTest();

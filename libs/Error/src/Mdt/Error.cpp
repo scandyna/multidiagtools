@@ -24,6 +24,7 @@
 #include <QStringBuilder>
 #include <QObject>
 #include <QFileInfo>
+#include <QFileDevice>
 #include <QMetaObject>
 #include <algorithm>
 #include <iterator>
@@ -166,6 +167,50 @@ QString Error::functionName() const
     return QString();
   }
   return pvShared->functionName;
+}
+
+Error::Level _mdtErrorlevelFromQFileDeviceFileError(QFileDevice::FileError fileError)
+{
+  switch(fileError){
+    case QFileDevice::NoError:
+      return Error::NoError;
+    case QFileDevice::ReadError:
+    case QFileDevice::WriteError:
+    case QFileDevice::FatalError:
+    case QFileDevice::ResourceError:
+    case QFileDevice::OpenError:
+    case QFileDevice::AbortError:
+    case QFileDevice::TimeOutError:
+    case QFileDevice::UnspecifiedError:
+    case QFileDevice::RemoveError:
+    case QFileDevice::RenameError:
+    case QFileDevice::PositionError:
+    case QFileDevice::ResizeError:
+    case QFileDevice::PermissionsError:
+    case QFileDevice::CopyError:
+      return Error::Critical;
+  }
+  return Error::Critical;
+}
+
+Error Error::fromQFileDevice(const QFileDevice & fileDevice, const QString & sourceCodeFile, int line, const QString & className, const QString & functionName)
+{
+  Error error;
+  QString msg;
+
+  msg = QObject::tr("Reported from QFileDevice: %1").arg(fileDevice.errorString());
+  error.setError<QFileDevice::FileError>(fileDevice.error(), msg, _mdtErrorlevelFromQFileDeviceFileError(fileDevice.error()));
+  error.setSource(sourceCodeFile, line, className, functionName);
+
+  return error;
+}
+
+Error Error::fromQFileDevice(const QFileDevice & fileDevice, const QString & sourceCodeFile, int line, const QObject*const obj, const QString & functionName)
+{
+  Q_ASSERT(obj != nullptr);
+  Q_ASSERT(obj->metaObject() != nullptr);
+
+  return fromQFileDevice(fileDevice, sourceCodeFile, line, obj->metaObject()->className(), functionName);
 }
 
 } // namespace Mdt{

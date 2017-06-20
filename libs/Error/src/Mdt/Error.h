@@ -118,6 +118,7 @@ namespace Mdt{
 } // namespace Mdt{
 
 class QObject;
+class QFileDevice;
 
 /*! \brief Helper macro to build a Error with source file informations
  *
@@ -180,9 +181,47 @@ class QObject;
  */
 #define MDT_ERROR_SET_SRC_Q(e, obj) e.setSource(__FILE__, __LINE__, obj, __FUNCTION__)
 
+/*! \brief Get a Mdt::Error from last error of given file device
+ *
+ * Typical usage:
+ * \code
+ * QFile file;
+ * if(!file.open(path)){
+ *   auto error = mdtErrorFromQFileDevice(file, "MyClass");
+ * }
+ * \endcode
+ *
+ * \sa mdtErrorFromQFileDeviceQ()
+ */
+#define mdtErrorFromQFileDevice(fileDevice, className) Mdt::Error::fromQFileDevice(fileDevice, __FILE__, __LINE__, className, __FUNCTION__)
+
+/*! \brief Get a Mdt::Error from last error of given file device
+ *
+ * This version avoid giving class name,
+ *  but only works for QObject subclass.
+ *
+ * \sa mdtErrorFromQFileDevice()
+ */
+#define mdtErrorFromQFileDeviceQ(fileDevice, obj) Mdt::Error::fromQFileDevice(fileDevice, __FILE__, __LINE__, obj, __FUNCTION__)
+
+/*! \brief Get a Mdt::Error from last error of given file
+ *
+ * \sa mdtErrorFromQFileQ()
+ */
+#define mdtErrorFromQFile(file, className) Mdt::Error::fromQFileDevice(file, __FILE__, __LINE__, className, __FUNCTION__)
+
+/*! \brief Get a Mdt::Error from last error of given file
+ *
+ * This version avoid giving class name,
+ *  but only works for QObject subclass.
+ *
+ * \sa mdtErrorFromQFile()
+ */
+#define mdtErrorFromQFileQ(file, obj) Mdt::Error::fromQFileDevice(file, __FILE__, __LINE__, obj, __FUNCTION__)
+
 namespace Mdt{
 
-  /*! \brief Value class that contain a error
+  /*! \brief Value class that contains a error
    *
    * Error contains only a pointer to (implicitly) shared data (also known as copy-on-write).
    *  As long as no error was set, no more memory is allocated.
@@ -465,6 +504,18 @@ namespace Mdt{
     /*! \brief Get error source line
     */
     int fileLine() const;
+
+    /*! \brief Get a Mdt::Error from last error in \a fileDevice
+     *
+     * \sa mdtErrorFromQFileDevice()
+     */
+    static Error fromQFileDevice(const QFileDevice & fileDevice, const QString & sourceCodeFile, int line, const QString & className, const QString & functionName);
+
+    /*! \brief Get a Mdt::Error from last error in \a fileDevice
+     *
+     * \sa mdtErrorFromQFileDeviceQ()
+     */
+    static Error fromQFileDevice(const QFileDevice & fileDevice, const QString & sourceCodeFile, int line, const QObject * const obj, const QString & functionName);
 
   private:
 

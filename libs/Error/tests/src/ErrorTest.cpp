@@ -484,6 +484,71 @@ void ErrorTest::setSourceTest()
   QCOMPARE(error1.functionName(), QString("C1"));
 }
 
+void ErrorTest::macrosTest()
+{
+  /// \todo Should at least call each macro (compile test)
+  ///       Better: check members (value, text)
+
+  auto error1 = mdtErrorNew("error1", Mdt::Error::Info, "Class1");
+  QCOMPARE(error1.text(), QString("error1"));
+  QCOMPARE(error1.level(), Mdt::Error::Info);
+  QCOMPARE(error1.functionName(), QString("Class1::macrosTest()"));
+
+  auto error2 = mdtErrorNewT(int, 2, "error2", Mdt::Error::Critical, "Class2");
+  QCOMPARE(error2.error<int>(), 2);
+  QCOMPARE(error2.text(), QString("error2"));
+  QCOMPARE(error2.level(), Mdt::Error::Critical);
+  QCOMPARE(error2.functionName(), QString("Class2::macrosTest()"));
+
+  auto error3 = mdtErrorNewQ("error3", Mdt::Error::Info, this);
+  QCOMPARE(error3.text(), QString("error3"));
+  QCOMPARE(error3.level(), Mdt::Error::Info);
+  QCOMPARE(error3.functionName(), QString("ErrorTest::macrosTest()"));
+
+  auto error4 = mdtErrorNewTQ(int, 4, "error4", Mdt::Error::Critical, this);
+  QCOMPARE(error4.error<int>(), 4);
+  QCOMPARE(error4.text(), QString("error4"));
+  QCOMPARE(error4.level(), Mdt::Error::Critical);
+  QCOMPARE(error4.functionName(), QString("ErrorTest::macrosTest()"));
+
+  Mdt::Error error5;
+  error5.setError("error5", Mdt::Error::Warning);
+  MDT_ERROR_SET_SRC(error5, "Class5");
+  QCOMPARE(error5.functionName(), QString("Class5::macrosTest()"));
+
+  Mdt::Error error6;
+  error6.setError("error6", Mdt::Error::Critical);
+  MDT_ERROR_SET_SRC(error6, this);
+  QCOMPARE(error6.functionName(), QString("ErrorTest::macrosTest()"));
+
+  QFile file("/msadkj/someNonExistingDirectory/SomeNonExistingFile");
+  QVERIFY(!file.open(QFile::ReadOnly));
+
+  auto error7 = mdtErrorFromQFileDevice(file, "Class7");
+  QCOMPARE(error7.error<QFile::FileError>(), QFile::OpenError);
+  QVERIFY(!error7.text().isEmpty());
+  QVERIFY(error7.level() != Mdt::Error::NoError);
+  QCOMPARE(error7.functionName(), QString("Class7::macrosTest()"));
+
+  auto error8 = mdtErrorFromQFileDeviceQ(file, this);
+  QCOMPARE(error8.error<QFile::FileError>(), QFile::OpenError);
+  QVERIFY(!error8.text().isEmpty());
+  QVERIFY(error8.level() != Mdt::Error::NoError);
+  QCOMPARE(error8.functionName(), QString("ErrorTest::macrosTest()"));
+
+  auto error9 = mdtErrorFromQFile(file, "Class9");
+  QCOMPARE(error9.error<QFile::FileError>(), QFile::OpenError);
+  QVERIFY(!error9.text().isEmpty());
+  QVERIFY(error9.level() != Mdt::Error::NoError);
+  QCOMPARE(error9.functionName(), QString("Class9::macrosTest()"));
+
+  auto error10 = mdtErrorFromQFileQ(file, this);
+  QCOMPARE(error10.error<QFile::FileError>(), QFile::OpenError);
+  QVERIFY(!error10.text().isEmpty());
+  QVERIFY(error10.level() != Mdt::Error::NoError);
+  QCOMPARE(error10.functionName(), QString("ErrorTest::macrosTest()"));
+}
+
 void ErrorTest::errorLoggerConsoleBackendTest()
 {
   Mdt::ErrorLogger::ConsoleBackend backend;
