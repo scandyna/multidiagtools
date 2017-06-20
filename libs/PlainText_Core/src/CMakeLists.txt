@@ -14,5 +14,5 @@ mdt_add_library(
 )
 mdt_set_library_description(
   NAME PlainText_Core
-  DESCRIPTION "PlainText_Core provides common stuff plain text processing."
+  DESCRIPTION "PlainText_Core provides common stuff for plain text processing."
 )
