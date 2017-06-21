@@ -486,9 +486,6 @@ void ErrorTest::setSourceTest()
 
 void ErrorTest::macrosTest()
 {
-  /// \todo Should at least call each macro (compile test)
-  ///       Better: check members (value, text)
-
   auto error1 = mdtErrorNew("error1", Mdt::Error::Info, "Class1");
   QCOMPARE(error1.text(), QString("error1"));
   QCOMPARE(error1.level(), Mdt::Error::Info);
