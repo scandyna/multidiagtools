@@ -56,6 +56,7 @@ function(mdt_add_translations)
     OPTIONAL_COMPONENTS LinguistTools
   )
   if(!${Qt5LinguistTools_FOUND})
+    message(WARNING "Qt5::LinguistTools was not found. Transalation files (.ts) will not be generated.")
     return()
   endif()
   # Build pathes
@@ -66,7 +67,12 @@ function(mdt_add_translations)
     list(APPEND ts_files "${ts_files_path}/${name}_${tl}.ts")
   endforeach()
   # Add the rules to generate translations
-  qt5_create_translation(qm_files "${sources_path}" ${ts_files})
+  mdt_create_translation(
+    qm_files
+    NAME ${name}
+    SOURCES_DIRECTORY ${sources_directory}
+    TS_FILES ${ts_files}
+  )
   add_custom_target(${name}Translations ALL DEPENDS ${qm_files})
   # Add the rule to install translations
   install(
@@ -78,4 +84,72 @@ function(mdt_add_translations)
     COMPONENT ${name}-l10n
     EXPLICIT_DEPEND_COMPONENTS ${name}
   )
+endfunction()
+
+
+# Add rules to create translation files
+#
+# Makes similar work than qt5_add_translation()
+#
+# qt5_add_translation() uses add_custom_command(),
+#  and passes given sources directory as dependency.
+#  This causes the ts files not to be updated when source code was edited.
+#  And, this is because translation files and source files are defined
+#  in different directory (different CMakeLists.txt files).
+#  According to CMake add_custom_command() documentation,
+#  passing a target name as dependency will work across different directories,
+#  and that is what this function does.
+#
+# Input arguments:
+#  NAME:
+#   Name of the library, without any prefix (like project name) or suffix (like version).
+#   This is th same name that has been passed to mdt_add_library()
+#  SOURCES_DIRECTORY:
+#   Relative path to the directory containing source files
+#  TS_FILES:
+#   A list of ts files to generate or update.
+function(mdt_create_translation QM_FILES)
+  # Parse arguments
+  set(oneValueArgs NAME SOURCES_DIRECTORY)
+  set(multiValueArgs TS_FILES)
+  cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  # Set our local variables and check the mandatory ones
+  set(name ${VAR_NAME})
+  if(NOT name)
+    message(FATAL_ERROR "NAME argument is missing.")
+  endif()
+  set(sources_directory ${VAR_SOURCES_DIRECTORY})
+  if(NOT sources_directory)
+    message(FATAL_ERROR "SOURCES_DIRECTORY argument is missing.")
+  endif()
+  set(ts_files ${VAR_TS_FILES})
+  if(NOT ts_files)
+    message(FATAL_ERROR "TS_FILES argument is missing.")
+  endif()
+
+  foreach(ts_file ${ts_files})
+    # make a list file to call lupdate on, so we don't make our commands too long for some systems
+    get_filename_component(ts_name ${ts_file} NAME_WE)
+    set(ts_lst_file "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/${ts_name}_lst_file")
+
+    get_filename_component(abs_sources_directory ${sources_directory} ABSOLUTE)
+    set(source_directory_list ${abs_sources_directory})
+
+    get_directory_property(inclue_dirs INCLUDE_DIRECTORIES)
+    foreach(include_dir ${inclue_dirs})
+      set(source_directory_list "-I${include_dir}\n${source_directory_list}")
+    endforeach()
+
+    file(WRITE "${ts_lst_file}" "${source_directory_list}")
+
+    add_custom_command(
+      OUTPUT ${ts_file}
+      COMMAND ${Qt5_LUPDATE_EXECUTABLE}
+      ARGS "@${ts_lst_file}" -ts ${ts_file}
+      DEPENDS ${abs_sources_directory} ${ts_lst_file} ${name}
+      VERBATIM
+    )
+  endforeach()
+  qt5_add_translation(${QM_FILES} ${ts_files})
+  set(${QM_FILES} ${${QM_FILES}} PARENT_SCOPE)
 endfunction()
