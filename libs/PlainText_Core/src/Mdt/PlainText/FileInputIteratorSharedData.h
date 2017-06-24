@@ -147,9 +147,9 @@ namespace Mdt{ namespace PlainText{
      */
     void clearUnicodeBuffer();
 
-    /*! \brief Translate (calls QObject::tr() )
-     */
-    QString tr(const char *sourceText);
+//     /*! \brief Translate (calls QObject::tr() )
+//      */
+//     QString tr(const char *sourceText);
 
     QString::const_iterator mCurrentPos, mEnd;
     std::vector<char> mRawDataBuffer;
@@ -157,7 +157,6 @@ namespace Mdt{ namespace PlainText{
     QTextDecoder *mDecoder;
     QPointer<QIODevice> mDevice;
     Mdt::Error mLastError;
-
   };
 
 }} // namespace Mdt{ namespace PlainText{

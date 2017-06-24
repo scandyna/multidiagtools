@@ -19,10 +19,12 @@
  **
  ****************************************************************************/
 #include "FileInputIteratorSharedData.h"
-#include <QObject>
+#include <QCoreApplication>
 #include <QTextCodec>
 #include <QTextDecoder>
 #include <utility>
+
+#define tr(sourceText) QCoreApplication::translate("FileInputIteratorSharedData", sourceText)
 
 namespace Mdt{ namespace PlainText{
 
@@ -183,9 +185,10 @@ void FileInputIteratorSharedData::clearUnicodeBuffer()
   mEnd = mUnicodeBuffer.cend();
 }
 
-QString FileInputIteratorSharedData::tr(const char* sourceText)
-{
-  return QObject::tr(sourceText);
-}
+// QString FileInputIteratorSharedData::tr(const char* sourceText)
+// {
+//   return QCoreApplication::translate("FileInputIteratorSharedData", sourceText);
+// //   return QObject::tr(sourceText);
+// }
 
 }} // namespace Mdt{ namespace PlainText{
