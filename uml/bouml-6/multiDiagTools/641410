@@ -1,6 +1,6 @@
 format 211
 "PlainText" // Mdt::PlainText
-  revision 2
+  revision 6
   modified_by 2 "philippe"
   // class settings
   
@@ -242,6 +242,104 @@ ${inlines}
     classdiagram 3506050 "GeneratorSettings"
       classdiagramsettings member_max_width 0 end
       size A4
+    end
+
+    class 4065282 "FileMultiPassIterator"
+      visibility package stereotype "typedef" base_type class_ref 4045314 // FileInputIterator
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4594178 // <dependency>
+	relation 4568066 -_->
+	  a private
+	    cpp default "#include in source"
+	    classrelation_ref 4594178 // <dependency>
+	  b parent class_ref 4045314 // FileInputIterator
+      end
+    end
+
+    classdiagram 3532802 "Data"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4078338 "Record"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4600834 // <directional composition>
+	relation 4574722 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 4600834 // <directional composition>
+	  b parent class_ref 161154 // QVariant
+      end
+    end
+
+    class 4084866 "RecordList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4600706 // <directional composition>
+	relation 4574594 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 4600706 // <directional composition>
+	  b parent class_ref 4078338 // Record
+      end
+    end
+
+    classdiagram 3526274 "CsvParserTemplate"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4071810 "CsvParserTemplate"
+      visibility package 
+      nformals 1
+      formal name "SourceIterator" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

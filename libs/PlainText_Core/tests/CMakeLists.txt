@@ -27,3 +27,5 @@ endfunction()
 #================= Tests ====================
 
 addPlainTextTest("FileInputIteratorTest")
+addPlainTextTest("FileMultiPassIteratorTest")
+addPlainTextTest("StringIteratorTest")

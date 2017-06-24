@@ -196,7 +196,7 @@ namespace Mdt{ namespace PlainText{
     bool init(QIODevice *device, const QByteArray & encoding);
 
     bool mErrorOccured = false;
-    value_type mCurrentChar;
+    value_type mCurrentChar = '\0';
     std::shared_ptr<FileInputIteratorSharedData> mShared;
   };
 

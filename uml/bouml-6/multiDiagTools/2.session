@@ -3,13 +3,23 @@ cleanlooks_style
 diagrams
   classdiagram_ref 1722370 // csvFileParserIterator
     760 728 100 4 0 0
-  active  classdiagram_ref 1701506 // mdtCsvParser
+  classdiagram_ref 1701506 // mdtCsvParser
     951 911 90 8 0 0
   classdiagram_ref 3506306 // FileParser
     120 98 100 4 0 0
+  classdiagram_ref 3506178 // FileIterator
+    951 911 100 18 0 0
+  classdiagram_ref 3526274 // CsvParserTemplate
+    951 911 100 4 0 0
+  classdiagram_ref 3506434 // StringParser
+    120 98 100 4 0 0
+  classdiagram_ref 3506562 // StringIterator
+    951 911 100 4 0 0
+  active  classdiagram_ref 3532802 // DataRecord
+    951 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3506050 // GeneratorSettings
+selected classdiagram_ref 3532802 // DataRecord
 open
   
   package_ref 549506 // Algorithm
@@ -17,8 +27,7 @@ open
   classview_ref 1841538 // ItemView_Widgets
   
   package_ref 654594 // File
-  classview_ref 1834754 // PlainText_Core
-  classdiagram_ref 3526274 // ParserTemplate
+  class_ref 4071810 // CsvParserTemplate
   classdiagram_ref 3506306 // FileParser
   
   package_ref 382082 // csv
