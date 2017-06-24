@@ -185,10 +185,4 @@ void FileInputIteratorSharedData::clearUnicodeBuffer()
   mEnd = mUnicodeBuffer.cend();
 }
 
-// QString FileInputIteratorSharedData::tr(const char* sourceText)
-// {
-//   return QCoreApplication::translate("FileInputIteratorSharedData", sourceText);
-// //   return QObject::tr(sourceText);
-// }
-
 }} // namespace Mdt{ namespace PlainText{

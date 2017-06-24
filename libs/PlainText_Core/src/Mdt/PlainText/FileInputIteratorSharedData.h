@@ -147,10 +147,6 @@ namespace Mdt{ namespace PlainText{
      */
     void clearUnicodeBuffer();
 
-//     /*! \brief Translate (calls QObject::tr() )
-//      */
-//     QString tr(const char *sourceText);
-
     QString::const_iterator mCurrentPos, mEnd;
     std::vector<char> mRawDataBuffer;
     QString mUnicodeBuffer;
