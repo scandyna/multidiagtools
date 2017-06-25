@@ -4,6 +4,12 @@ set(SOURCE_FILES
   Mdt/PlainText/FileInputIteratorSharedData.cpp
   Mdt/PlainText/FileMultiPassIterator.cpp
   Mdt/PlainText/StringConstIterator.cpp
+  Mdt/PlainText/Record.cpp
+  Mdt/PlainText/BoostSpiritQtTraits.cpp
+  Mdt/PlainText/CsvCommonSettings.cpp
+  Mdt/PlainText/CsvParserSettings.cpp
+  Mdt/PlainText/CsvParserTemplate.cpp
+  Mdt/PlainText/CsvStringParser.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
@@ -22,7 +28,7 @@ mdt_add_library(
   NAME PlainText_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Error Qt5::Core
+  LINK_DEPENDENCIES Error Expected Qt5::Core
 )
 mdt_set_library_description(
   NAME PlainText_Core

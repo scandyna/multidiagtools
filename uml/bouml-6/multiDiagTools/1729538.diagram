@@ -1,14 +1,14 @@
 format 211
 
-classcanvas 128002 class_ref 2078978 // mdtCsvCommonSettings
+classcanvas 128002 class_ref 2078978 // CsvCommonSettings
   classdiagramsettings member_max_width 0 end
   xyz 247 554.5 2000
 end
-classcanvas 128130 class_ref 2050434 // mdtCsvParserSettings
+classcanvas 128130 class_ref 2050434 // CsvParserSettings
   classdiagramsettings member_max_width 0 end
   xyz 35 717.5 2000
 end
-classcanvas 128258 class_ref 2078850 // mdtCsvGeneratorSettings
+classcanvas 128258 class_ref 2078850 // CsvGeneratorSettings
   classdiagramsettings member_max_width 0 end
   xyz 223 714.5 2000
 end
@@ -26,8 +26,8 @@ Each subclass hides those that are not needed."
 relationcanvas 128386 relation_ref 2403970 // <generalisation>
   geometry VHV unfixed
   decenter_end 473
-  from ref 128130 z 2001 to point 110 676
-  line 128642 z 2001 to point 325 676
+  from ref 128130 z 2001 to point 98 676
+  line 128642 z 2001 to point 323 676
   line 128770 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

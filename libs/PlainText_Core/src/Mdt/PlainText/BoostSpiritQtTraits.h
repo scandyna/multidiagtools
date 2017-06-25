@@ -24,6 +24,7 @@
 #include <QChar>
 #include <QString>
 #include <QVariant>
+#include <boost/spirit/include/support_container.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {

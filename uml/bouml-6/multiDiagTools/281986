@@ -1,6 +1,6 @@
 format 211
 "mdtcsv" // mdtcsv
-  revision 44
+  revision 45
   modified_by 2 "philippe"
   // class settings
   
@@ -47,45 +47,6 @@ format 211
     classdiagram 1729538 "csvSettings"
       classdiagramsettings member_max_width 0 end
       size A4
-    end
-
-    class 2078978 "mdtCsvCommonSettings"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2111746 "fieldProtection"
-	public explicit_type "char"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2111490 "fieldSeparator"
-	public explicit_type "char"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
     end
 
     class 2376962 "mdtCsvSettingsWidget"
@@ -545,7 +506,7 @@ ${inlines}
       operation 3728258 "setupParser"
 	cpp_inline public explicit_return_type "void"
 	nparams 1
-	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	  param in name "settings" type class_ref 2050434 // CsvParserSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1330,7 +1291,7 @@ ${inlines}
       end
 
       attribute 2377090 "CsvSettings"
-	private type class_ref 2050434 // mdtCsvParserSettings
+	private type class_ref 2050434 // CsvParserSettings
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1344,7 +1305,7 @@ ${inlines}
       operation 3721602 "setCsvSettings"
 	public explicit_return_type "bool"
 	nparams 1
-	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	  param in name "settings" type class_ref 2050434 // CsvParserSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1492,7 +1453,7 @@ ${inlines}
 	nparams 3
 	  param in name "fileInfo" type class_ref 432386 // QFileInfo
 	  param in name "fileEncoding" type class_ref 236162 // QByteArray
-	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	  param in name "settings" type class_ref 2050434 // CsvParserSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
@@ -1543,41 +1504,6 @@ ${inlines}
       size C-Landscape
     end
 
-    class 2050434 "mdtCsvParserSettings"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2420354 // <generalisation>
-	relation 2403970 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2420354 // <generalisation>
-	  b parent class_ref 2078978 // mdtCsvCommonSettings
-      end
-
-      attribute 2138242 "parseExp"
-	private explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
     class 2376706 "mdtCsvParserSettingsWidget"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -1619,7 +1545,7 @@ ${inlines}
       operation 3616002 "setSettings"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	  param in name "settings" type class_ref 2050434 // CsvParserSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1633,7 +1559,7 @@ ${inlines}
       end
 
       operation 3616130 "getSettings"
-	public return_type class_ref 2050434 // mdtCsvParserSettings
+	public return_type class_ref 2050434 // CsvParserSettings
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1651,7 +1577,7 @@ ${inlines}
 	stereotype "signal"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	  param in name "settings" type class_ref 2050434 // CsvParserSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1799,7 +1725,7 @@ ${inlines}
 	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	  param in name "settings" type class_ref 2050434 // CsvParserSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1813,7 +1739,7 @@ ${inlines}
       end
 
       operation 3616898 "getCsvSettings"
-	public return_type class_ref 2050434 // mdtCsvParserSettings
+	public return_type class_ref 2050434 // CsvParserSettings
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1858,7 +1784,7 @@ ${inlines}
 	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	  param in name "settings" type class_ref 2050434 // CsvParserSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1929,7 +1855,7 @@ ${inlines}
       operation 3209090 "mdtCsvStringGenerator"
 	public explicit_return_type ""
 	nparams 1
-	  param in name "csvSettings" type class_ref 2078850 // mdtCsvGeneratorSettings
+	  param in name "csvSettings" type class_ref 2078850 // CsvGeneratorSettings
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
@@ -1985,53 +1911,6 @@ ${inlines}
       size A4
     end
 
-    class 2078850 "mdtCsvGeneratorSettings"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2420482 // <generalisation>
-	relation 2404098 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2420482 // <generalisation>
-	  b parent class_ref 2078978 // mdtCsvCommonSettings
-      end
-
-      attribute 2138370 "eol"
-	public explicit_type "string"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2138498 "allwaysProtectTextFields"
-	public explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
     class 2166914 "mdtCsvGeneratorSettingsWidget"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -2065,7 +1944,7 @@ ${inlines}
       operation 3617154 "setSettings"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "settings" type class_ref 2078850 // mdtCsvGeneratorSettings
+	  param in name "settings" type class_ref 2078850 // CsvGeneratorSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -2079,7 +1958,7 @@ ${inlines}
       end
 
       operation 3617282 "getSettings"
-	public return_type class_ref 2078850 // mdtCsvGeneratorSettings
+	public return_type class_ref 2078850 // CsvGeneratorSettings
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
