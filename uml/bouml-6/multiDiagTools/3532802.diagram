@@ -2,24 +2,33 @@ format 211
 
 classcanvas 128002 class_ref 4078338 // Record
   classdiagramsettings member_max_width 0 end
-  xyz 357 128 2000
+  xyz 561 128 2000
 end
 classcanvas 128130 class_ref 4084866 // RecordList
   classdiagramsettings member_max_width 0 end
-  xyz 40 161 2000
+  xyz 147 128 2000
 end
 classcanvas 128386 class_ref 161154 // QVariant
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 478 42 2000
+  xyz 682 42 2000
 end
+note 128642 "Should we support variable column count ?
+If yes, should a max column count be tracked (usefull for ItemModels) ?
+Note: ths logic of adding columns must be handled in any case in the ItemModel.
+         Here, we possibly just provide columnCount(row)."
+  xyzwh 36 375 2000 601 195
 relationcanvas 128258 relation_ref 4574594 // <directional composition>
   from ref 128130 z 2001 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 341 242 3000 no_multiplicity_b
+  multiplicity_a_pos 545 242 3000 no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 4574722 // <directional composition>
+  decenter_begin 510
+  decenter_end 550
   from ref 128002 z 2001 to ref 128386
   no_role_a no_role_b
-  multiplicity_a_pos 497 96 3000 no_multiplicity_b
+  multiplicity_a_pos 704 96 3000 no_multiplicity_b
 end
+line 128770 -_-_
+  from ref 128130 z 2001 to ref 128642
 end

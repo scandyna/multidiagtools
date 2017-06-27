@@ -5,6 +5,7 @@ set(SOURCE_FILES
   Mdt/PlainText/FileMultiPassIterator.cpp
   Mdt/PlainText/StringConstIterator.cpp
   Mdt/PlainText/Record.cpp
+  Mdt/PlainText/RecordList.cpp
   Mdt/PlainText/BoostSpiritQtTraits.cpp
   Mdt/PlainText/CsvCommonSettings.cpp
   Mdt/PlainText/CsvParserSettings.cpp

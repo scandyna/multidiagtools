@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "DataTest.h"
 #include "Mdt/PlainText/Record.h"
+#include "Mdt/PlainText/RecordList.h"
 
 using namespace Mdt::PlainText;
 
@@ -76,6 +77,52 @@ void DataTest::recordTest()
   QCOMPARE(record.data(0), QVariant("A"));
   QCOMPARE(record.data(1), QVariant(1));
   QCOMPARE(record.data(2), QVariant("B"));
+}
+
+void DataTest::recordListTest()
+{
+  RecordList list;
+  /*
+   * Initial state
+   */
+  QCOMPARE(list.rowCount(), 0);
+  /*
+   * Add/set/get
+   */
+  list.appendRecord({"A","B"});
+  QCOMPARE(list.rowCount(), 1);
+  QCOMPARE(list.columnCount(0), 2);
+  QCOMPARE(list.data(0, 0), QVariant("A"));
+  QCOMPARE(list.value(0, 0), QVariant("A"));
+  QCOMPARE(list.data(0, 1), QVariant("B"));
+  QCOMPARE(list.value(0, 1), QVariant("B"));
+  list.setData(0, 0, "E");
+  QCOMPARE(list.data(0, 0), QVariant("E"));
+  QCOMPARE(list.data(0, 1), QVariant("B"));
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE(list.rowCount(), 0);
+  /*
+   * Stream
+   */
+  list << Record{1,"A"} << Record{2,"B"};
+  QCOMPARE(list.rowCount(), 2);
+  QCOMPARE(list.data(0, 0), QVariant(1));
+  QCOMPARE(list.data(0, 1), QVariant("A"));
+  QCOMPARE(list.data(1, 0), QVariant(2));
+  QCOMPARE(list.data(1, 1), QVariant("B"));
+  /*
+   * Assign and initializer lists
+   * (Mostly used by unit tests)
+   */
+  list = {{3,"C"},{4,"D"}};
+  QCOMPARE(list.rowCount(), 2);
+  QCOMPARE(list.data(0, 0), QVariant(3));
+  QCOMPARE(list.data(0, 1), QVariant("C"));
+  QCOMPARE(list.data(1, 0), QVariant(4));
+  QCOMPARE(list.data(1, 1), QVariant("D"));
 }
 
 /*

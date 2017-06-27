@@ -40,7 +40,7 @@ namespace Mdt{ namespace PlainText{
      */
     Record() = default;
 
-    /*! \brief Construct a vector from initializer list
+    /*! \brief Construct a record from initializer list
      */
     Record(std::initializer_list<QVariant> list);
 

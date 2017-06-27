@@ -16,12 +16,12 @@ diagrams
   classdiagram_ref 3506562 // StringIterator
     951 911 100 4 0 0
   active  classdiagram_ref 3532802 // Data
-    951 911 100 4 0 0
+    951 911 100 18 0 0
   classdiagram_ref 3539330 // CsvStringParser
     120 98 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 5746946 // setData
+selected operation_ref 5761026 // clear
 open
   
   package_ref 549506 // Algorithm
@@ -29,9 +29,8 @@ open
   classview_ref 1841538 // ItemView_Widgets
   
   package_ref 654594 // File
-  operation_ref 5746690 // appendColumn
-  operation_ref 5746818 // setColumnCount
-  operation_ref 5746562 // columnCount
+  operation_ref 5746946 // setData
+  operation_ref 5760898 // setData
   class_ref 4071810 // CsvParserTemplate
   classdiagram_ref 3506306 // FileParser
   
