@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 75
+  revision 76
   modified_by 2 "philippe"
   // class settings
   
@@ -5165,6 +5165,11 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 3552386 "DataType"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
   end
 

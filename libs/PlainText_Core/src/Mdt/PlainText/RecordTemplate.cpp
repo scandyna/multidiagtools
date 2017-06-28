@@ -18,47 +18,4 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "CsvStringParser.h"
-
-namespace Mdt{ namespace PlainText{
-
-CsvStringParser::CsvStringParser()
-{
-
-}
-
-CsvStringParser::~CsvStringParser()
-{
-}
-
-void CsvStringParser::setCsvSettings(const CsvParserSettings& settings)
-{
-
-}
-
-void CsvStringParser::setSource(const QString& source)
-{
-
-}
-
-bool CsvStringParser::atEnd() const
-{
-
-}
-
-Expected<Record> CsvStringParser::readLine()
-{
-
-}
-
-Expected<RecordList> CsvStringParser::readAll()
-{
-
-}
-
-Error CsvStringParser::lastError() const
-{
-
-}
-
-}} // namespace Mdt{ namespace PlainText{
+#include "RecordTemplate.h"

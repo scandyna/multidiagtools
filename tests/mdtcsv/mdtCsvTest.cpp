@@ -2331,7 +2331,7 @@ void mdtCsvTest::buildCsvParserTestData()
 
   /// \todo add casese from: http://stackoverflow.com/questions/7436481/how-to-make-my-split-work-only-on-one-real-line-and-be-capable-to-skip-quoted-pa/7462539#7462539
 
-  /// \todo Add some from /home/philippe/programmation/c_cpp/libreoffiche/git/core/sc/qa/unit/data/contentCSV/
+  /// \todo Add some from ~/programmation/c_cpp/libreoffiche/git/core/sc/qa/unit/data/contentCSV/
   
   /// \todo Check if A B,C\n should be valid (space between A and B, unquoted)
 }

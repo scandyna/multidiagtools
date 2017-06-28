@@ -126,5 +126,6 @@ namespace Mdt{ namespace PlainText{
   };
 
 }} // namespace Mdt{ namespace PlainText{
+Q_DECLARE_METATYPE(Mdt::PlainText::RecordList)
 
 #endif // #ifndef MDT_PLAIN_TEXT_RECORD_LIST_H

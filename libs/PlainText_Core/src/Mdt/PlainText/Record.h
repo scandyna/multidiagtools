@@ -21,106 +21,111 @@
 #ifndef MDT_PLAIN_TEXT_RECORD_H
 #define MDT_PLAIN_TEXT_RECORD_H
 
-#include <QVector>
+#include "RecordTemplate.h"
+// #include <QVector>
 #include <QVariant>
 #include <QMetaType>
-#include <initializer_list>
+// #include <initializer_list>
 
 namespace Mdt{ namespace PlainText{
 
   /*! \brief Record contains a list of field data
-   *
-   * Record can, for example, hold the result of a parsed CSV line.
    */
-  class Record
-  {
-   public:
+  using Record = RecordTemplate<QVariant>;
 
-    /*! \brief Construct a empty record
-     */
-    Record() = default;
-
-    /*! \brief Construct a record from initializer list
-     */
-    Record(std::initializer_list<QVariant> list);
-
-    /*! \brief Copy construct a record from \a other
-     */
-    Record(const Record & other) = default;
-
-    /*! \brief Copy assign \a other to this record
-     */
-    Record & operator=(const Record & other) = default;
-
-    /*! \brief Move construct a record from \a other
-     */
-    Record(Record && other) = default;
-
-    /*! \brief Move assign \a other to this record
-     */
-    Record & operator=(Record && other) = default;
-
-    /*! \brief Get count of columns in the record
-     */
-    int columnCount() const
-    {
-      return mRecord.count();
-    }
-
-    /*! \brief Append a column to this record
-     */
-    void appendColumn();
-
-    /*! \brief Set column count
-     *
-     * If \a count is > current columnCount(),
-     *  default constructed elements are added to the end.
-     *  If \a count is < current columnCount(),
-     *  elements are removed from the end.
-     *
-     * \pre \a count must be > 0
-     */
-    void setColumnCount(int count);
-
-    /*! \brief Set data for given column
-     *
-     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
-     */
-    void setData(int column, const QVariant & data);
-
-    /*! \brief Get data for given column
-     *
-     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
-     */
-    QVariant data(int column) const
-    {
-      Q_ASSERT(column >= 0);
-      Q_ASSERT(column < columnCount());
-      return mRecord.at(column);
-    }
-
-    /*! \brief Get value for given column
-     *
-     * If \a column is out of range,
-     *  a default constructed value is returned
-     */
-    QVariant value(int column) const
-    {
-      return mRecord.value(column);
-    }
-
-    /*! \brief Clear
-     */
-    void clear();
-
-    /*! \brief Appends a column with \a data to this record
-     */
-    Record & operator<<(const QVariant & data);
-
-   private:
-
-    QVector<QVariant> mRecord;
-  };
+//   /*! \brief Record contains a list of field data
+//    *
+//    * Record can, for example, hold the result of a parsed CSV line.
+//    */
+//   class Record
+//   {
+//    public:
+// 
+//     /*! \brief Construct a empty record
+//      */
+//     Record() = default;
+// 
+//     /*! \brief Construct a record from initializer list
+//      */
+//     Record(std::initializer_list<QVariant> list);
+// 
+//     /*! \brief Copy construct a record from \a other
+//      */
+//     Record(const Record & other) = default;
+// 
+//     /*! \brief Copy assign \a other to this record
+//      */
+//     Record & operator=(const Record & other) = default;
+// 
+//     /*! \brief Move construct a record from \a other
+//      */
+//     Record(Record && other) = default;
+// 
+//     /*! \brief Move assign \a other to this record
+//      */
+//     Record & operator=(Record && other) = default;
+// 
+//     /*! \brief Get count of columns in the record
+//      */
+//     int columnCount() const
+//     {
+//       return mRecord.count();
+//     }
+// 
+//     /*! \brief Append a column to this record
+//      */
+//     void appendColumn();
+// 
+//     /*! \brief Set column count
+//      *
+//      * If \a count is > current columnCount(),
+//      *  default constructed elements are added to the end.
+//      *  If \a count is < current columnCount(),
+//      *  elements are removed from the end.
+//      *
+//      * \pre \a count must be > 0
+//      */
+//     void setColumnCount(int count);
+// 
+//     /*! \brief Set data for given column
+//      *
+//      * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+//      */
+//     void setData(int column, const QVariant & data);
+// 
+//     /*! \brief Get data for given column
+//      *
+//      * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+//      */
+//     QVariant data(int column) const
+//     {
+//       Q_ASSERT(column >= 0);
+//       Q_ASSERT(column < columnCount());
+//       return mRecord.at(column);
+//     }
+// 
+//     /*! \brief Get value for given column
+//      *
+//      * If \a column is out of range,
+//      *  a default constructed value is returned
+//      */
+//     QVariant value(int column) const
+//     {
+//       return mRecord.value(column);
+//     }
+// 
+//     /*! \brief Clear
+//      */
+//     void clear();
+// 
+//     /*! \brief Appends a column with \a data to this record
+//      */
+//     Record & operator<<(const QVariant & data);
+// 
+//    private:
+// 
+//     QVector<QVariant> mRecord;
+//   };
 
 }} // namespace Mdt{ namespace PlainText{
 Q_DECLARE_METATYPE(Mdt::PlainText::Record)

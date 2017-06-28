@@ -4,6 +4,7 @@ set(SOURCE_FILES
   Mdt/PlainText/FileInputIteratorSharedData.cpp
   Mdt/PlainText/FileMultiPassIterator.cpp
   Mdt/PlainText/StringConstIterator.cpp
+  Mdt/PlainText/RecordTemplate.cpp
   Mdt/PlainText/Record.cpp
   Mdt/PlainText/RecordList.cpp
   Mdt/PlainText/BoostSpiritQtTraits.cpp

@@ -56,20 +56,6 @@ namespace boost { namespace spirit { namespace traits
     }
   };
 
-  /*! \internal Test if a QVariant is empty (required for debug)
-  */
-  template <>
-  struct is_empty_container<QVariant>
-  {
-    static bool call(const QVariant & v)
-    {
-      if(v.type() == QVariant::String){
-        return v.toString().isEmpty();
-      }
-      return v.isNull();
-    }
-  };
-
   /*! \internal Test if a QString is empty (required for debug)
   */
   template <>
@@ -89,6 +75,20 @@ namespace boost { namespace spirit { namespace traits
     static void call(Out & out, const QString & val)
     {
       out << "QString(" << val.toStdString() << ")";
+    }
+  };
+
+  /*! \internal Test if a QVariant is empty (required for debug)
+  */
+  template <>
+  struct is_empty_container<QVariant>
+  {
+    static bool call(const QVariant & v)
+    {
+      if(v.type() == QVariant::String){
+        return v.toString().isEmpty();
+      }
+      return v.isNull();
     }
   };
 
