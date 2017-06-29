@@ -24,17 +24,17 @@ show_stereotypes
 selected operation_ref 5746434 // value
 open
   
-  package_ref 549506 // Algorithm
+package_ref 549506 // Algorithm
   
-  package_ref 654594 // File
+package_ref 654594 // File
   class_ref 4078338 // RecordTemplate
   class_ref 4084866 // RecordListTemplate
   operation_ref 5767938 // readAll
   classdiagram_ref 3506306 // FileParser
   
-  package_ref 403202 // tools
+package_ref 403202 // tools
   
-  package_ref 382082 // csv
+package_ref 382082 // csv
   classview_ref 887298 // Common
   classview_ref 887170 // Parser
   classview_ref 887426 // Generator
