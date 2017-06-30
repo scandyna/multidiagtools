@@ -18,4 +18,21 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "RecordList.h"
+#ifndef MDT_PLAIN_TEXT_STRING_RECORD_LIST_H
+#define MDT_PLAIN_TEXT_STRING_RECORD_LIST_H
+
+#include "RecordListTemplate.h"
+#include "StringRecord.h"
+#include <QString>
+#include <QMetaType>
+
+namespace Mdt{ namespace PlainText{
+
+  /*! \brief StringRecordList is a list of StringRecord
+   */
+  using StringRecordList = RecordListTemplate<StringRecord, QString>;
+
+}} // namespace Mdt{ namespace PlainText{
+Q_DECLARE_METATYPE(Mdt::PlainText::StringRecordList)
+
+#endif // #ifndef MDT_PLAIN_TEXT_STRING_RECORD_LIST_H

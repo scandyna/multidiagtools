@@ -18,4 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "RecordList.h"
+#ifndef MDT_PLAIN_TEXT_STRING_RECORD_H
+#define MDT_PLAIN_TEXT_STRING_RECORD_H
+
+#include "RecordTemplate.h"
+#include <QString>
+#include <QMetaType>
+
+namespace Mdt{ namespace PlainText{
+
+  /*! \brief StringRecord contains a list of field data
+   *
+   * This can be, for example, the result of a parsed CSV line.
+   */
+  using StringRecord = RecordTemplate<QString>;
+
+}} // namespace Mdt{ namespace PlainText{
+Q_DECLARE_METATYPE(Mdt::PlainText::StringRecord)
+
+#endif // #ifndef MDT_PLAIN_TEXT_STRING_RECORD_H

@@ -36,6 +36,42 @@ namespace Mdt{ namespace PlainText{
   {
    public:
 
+    /*! \brief STL iterator
+     */
+    using iterator = typename QVector<T>::iterator;
+
+    /*! \brief STL const iterator
+     */
+    using const_iterator = typename QVector<T>::const_iterator;
+
+    /*! \brief Value type for STL compatibility
+     */
+    using value_type = typename QVector<T>::value_type;
+
+    /*! \brief Reference type for STL compatibility
+     */
+    using reference = typename QVector<T>::reference;
+
+    /*! \brief Const reference type for STL compatibility
+     */
+    using const_reference = typename QVector<T>::const_reference;
+
+    /*! \brief Size type for STL compatibility
+     */
+    using size_type = typename QVector<T>::size_type;
+
+    /*! \brief Pointer type for STL compatibility
+     */
+    using pointer = typename QVector<T>::pointer;
+
+    /*! \brief Const pointer type for STL compatibility
+     */
+    using const_pointer = typename QVector<T>::const_pointer;
+
+    /*! \brief Difference type for STL compatibility
+     */
+    using difference_type = typename QVector<T>::difference_type;
+
     /*! \brief Construct a empty record
      */
     RecordTemplate() = default;
@@ -92,6 +128,23 @@ namespace Mdt{ namespace PlainText{
       mRecord.resize(count);
     }
 
+    /*! \brief Append data to this record
+     */
+    void push_back(const T & data)
+    {
+      mRecord.push_back(data);
+    }
+
+    /*! \brief Insert data to this record
+     *
+     * Inserts \a data in front of the item pointed to by the iterator \a before.
+     *  Returns an iterator pointing at the inserted item.
+     */
+    iterator insert(iterator before, const T & data)
+    {
+      return mRecord.insert(before, data);
+    }
+
     /*! \brief Set data for given column
      *
      * \pre \a column must be in valid range ( 0 <= column < columnCount() )
@@ -137,6 +190,34 @@ namespace Mdt{ namespace PlainText{
     {
       mRecord << data;
       return *this;
+    }
+
+    /*! \brief Get an STL-style iterator pointing to the first item in the record
+     */
+    iterator begin()
+    {
+      return mRecord.begin();
+    }
+
+    /*! \brief Get an STL-style iterator pointing past the last item in the record
+     */
+    iterator end()
+    {
+      return mRecord.end();
+    }
+
+    /*! \brief Get an STL-style const iterator pointing to the first item in the record
+     */
+    const_iterator cbegin() const
+    {
+      return mRecord.cbegin();
+    }
+
+    /*! \brief Get an STL-style const iterator pointing past the last item in the record
+     */
+    const_iterator cend() const
+    {
+      return mRecord.cend();
     }
 
    private:

@@ -23,6 +23,14 @@
     </message>
 </context>
 <context>
+    <name>Mdt::PlainText::CsvParserTemplate</name>
+    <message>
+        <location filename="../src/Mdt/PlainText/CsvParserTemplate.h" line="168"/>
+        <source>Parsing error occured.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::PlainText::FileInputIteratorSharedData</name>
     <message>
         <location filename="../src/Mdt/PlainText/FileInputIteratorSharedData.cpp" line="63"/>

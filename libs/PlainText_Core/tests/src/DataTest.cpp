@@ -21,6 +21,9 @@
 #include "DataTest.h"
 #include "Mdt/PlainText/Record.h"
 #include "Mdt/PlainText/RecordList.h"
+#include "Mdt/PlainText/StringRecord.h"
+#include "Mdt/PlainText/StringRecordList.h"
+#include <algorithm>
 
 using namespace Mdt::PlainText;
 
@@ -123,6 +126,105 @@ void DataTest::recordListTest()
   QCOMPARE(list.data(0, 1), QVariant("C"));
   QCOMPARE(list.data(1, 0), QVariant(4));
   QCOMPARE(list.data(1, 1), QVariant("D"));
+}
+
+void DataTest::stringRecordTest()
+{
+  StringRecord record;
+  /*
+   * Initial state
+   */
+  QCOMPARE(record.columnCount(), 0);
+  /*
+   * Resize
+   */
+  record.appendColumn();
+  QCOMPARE(record.columnCount(), 1);
+  record.setColumnCount(3);
+  QCOMPARE(record.columnCount(), 3);
+  /*
+   * Set/get
+   */
+  record.setData(0, "A");
+  QCOMPARE(record.value(0), QString("A"));
+  QCOMPARE(record.data(0), QString("A"));
+  /*
+   * Clear
+   */
+  record.clear();
+  QCOMPARE(record.columnCount(), 0);
+  /*
+   * Stream
+   */
+  record << "B" << "2";
+  QCOMPARE(record.columnCount(), 2);
+  QCOMPARE(record.data(0), QString("B"));
+  QCOMPARE(record.data(1), QString("2"));
+  /*
+   * Assign and initializer lists
+   * (Mostly used by unit tests)
+   */
+  record = {"A","1", "B"};
+  QCOMPARE(record.columnCount(), 3);
+  QCOMPARE(record.data(0), QString("A"));
+  QCOMPARE(record.data(1), QString("1"));
+  QCOMPARE(record.data(2), QString("B"));
+  /*
+   * Check STL iterators usage
+   */
+  std::sort(record.begin(), record.end());
+  QCOMPARE(record.columnCount(), 3);
+  QCOMPARE(record.data(0), QString("1"));
+  QCOMPARE(record.data(1), QString("A"));
+  QCOMPARE(record.data(2), QString("B"));
+  const auto it1 = std::find(record.cbegin(), record.cend(), QString("1"));
+  QVERIFY(it1 == record.cbegin());
+}
+
+void DataTest::stringRecordListTest()
+{
+  StringRecordList list;
+  /*
+   * Initial state
+   */
+  QCOMPARE(list.rowCount(), 0);
+  /*
+   * Add/set/get
+   */
+  list.appendRecord({"A","B"});
+  QCOMPARE(list.rowCount(), 1);
+  QCOMPARE(list.columnCount(0), 2);
+  QCOMPARE(list.data(0, 0), QString("A"));
+  QCOMPARE(list.value(0, 0), QString("A"));
+  QCOMPARE(list.data(0, 1), QString("B"));
+  QCOMPARE(list.value(0, 1), QString("B"));
+  list.setData(0, 0, "E");
+  QCOMPARE(list.data(0, 0), QString("E"));
+  QCOMPARE(list.data(0, 1), QString("B"));
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE(list.rowCount(), 0);
+  /*
+   * Stream
+   */
+  list << StringRecord{"1","A"} << StringRecord{"2","B"};
+  QCOMPARE(list.rowCount(), 2);
+  QCOMPARE(list.data(0, 0), QString("1"));
+  QCOMPARE(list.data(0, 1), QString("A"));
+  QCOMPARE(list.data(1, 0), QString("2"));
+  QCOMPARE(list.data(1, 1), QString("B"));
+  /*
+   * Assign and initializer lists
+   * (Mostly used by unit tests)
+   */
+  list = {{"3","C"},{"4","D"}};
+  QCOMPARE(list.rowCount(), 2);
+  QCOMPARE(list.data(0, 0), QString("3"));
+  QCOMPARE(list.data(0, 1), QString("C"));
+  QCOMPARE(list.data(1, 0), QString("4"));
+  QCOMPARE(list.data(1, 1), QString("D"));
 }
 
 /*

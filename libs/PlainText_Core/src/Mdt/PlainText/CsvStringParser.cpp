@@ -19,12 +19,13 @@
  **
  ****************************************************************************/
 #include "CsvStringParser.h"
+#include "CsvParserTemplate.h"
 
 namespace Mdt{ namespace PlainText{
 
 CsvStringParser::CsvStringParser()
+ : mParser(std::make_unique< CsvParserTemplate<StringConstIterator> >())
 {
-
 }
 
 CsvStringParser::~CsvStringParser()
@@ -33,27 +34,44 @@ CsvStringParser::~CsvStringParser()
 
 void CsvStringParser::setCsvSettings(const CsvParserSettings& settings)
 {
+  Q_ASSERT(settings.isValid());
 
+  mParser->setupParser(settings);
 }
 
-void CsvStringParser::setSource(const QString& source)
+void CsvStringParser::setSource(const QString & source)
 {
-
+  mCurrentPosition = source.cbegin();
+  mEnd = source.cend();
 }
 
 bool CsvStringParser::atEnd() const
 {
-
+  return (mCurrentPosition == mEnd);
 }
 
-Expected<Record> CsvStringParser::readLine()
+Expected<StringRecord> CsvStringParser::readLine()
 {
+  Q_ASSERT_X(mParser->isValid(), "CsvStringParser", "No CSV settings set");
 
+  return mParser->readLine(mCurrentPosition, mEnd);
 }
 
-Expected<RecordList> CsvStringParser::readAll()
+Expected<StringRecordList> CsvStringParser::readAll()
 {
+  Q_ASSERT_X(mParser->isValid(), "CsvStringParser", "No CSV settings set");
 
+  StringRecordList recordList;
+
+  while(!atEnd()){
+    const auto record = readLine();
+    if(!record){
+      return record.error();
+    }
+    recordList.appendRecord(record.value());
+  }
+
+  return recordList;
 }
 
 Error CsvStringParser::lastError() const

@@ -23,14 +23,17 @@
 
 #include "StringConstIterator.h"
 #include "CsvParserSettings.h"
-#include "Record.h"
-#include "RecordList.h"
+#include "StringRecord.h"
+#include "StringRecordList.h"
 #include "Mdt/Expected.h"
 #include "Mdt/Error.h"
 #include <QString>
 #include <memory>
 
 namespace Mdt{ namespace PlainText{
+
+  template <typename InputIterator>
+  class CsvParserTemplate;
 
   /*! \brief CSV parser that acts on a QString as input
    *
@@ -92,14 +95,14 @@ namespace Mdt{ namespace PlainText{
      * \pre CSV settings must be set before calling this function
      * \sa setCsvSettings()
      */
-    Mdt::Expected<Record> readLine();
+    Mdt::Expected<StringRecord> readLine();
 
     /*! \brief Read the entire CSV string
     *
     * \pre CSV settings must be set before calling this function
     * \sa setCsvSettings()
     */
-    Mdt::Expected<RecordList> readAll();
+    Mdt::Expected<StringRecordList> readAll();
 
     /*! \brief Get last error
     */
@@ -109,7 +112,7 @@ namespace Mdt{ namespace PlainText{
 
     StringConstIterator mCurrentPosition;
     StringConstIterator mEnd;
-//     std::unique_ptr<CsvParserTemplate<StringConstIterator> > mParser;
+    std::unique_ptr<CsvParserTemplate<StringConstIterator> > mParser;
     Mdt::Error mLastError;
   };
 

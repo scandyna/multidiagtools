@@ -20,8 +20,8 @@
  ****************************************************************************/
 #include "CsvParserTest.h"
 #include "Mdt/Expected.h"
-#include "Mdt/PlainText/Record.h"
-#include "Mdt/PlainText/RecordList.h"
+#include "Mdt/PlainText/StringRecord.h"
+#include "Mdt/PlainText/StringRecordList.h"
 #include "Mdt/PlainText/CsvParserSettings.h"
 #include "Mdt/PlainText/CsvStringParser.h"
 #include <QString>
@@ -43,12 +43,12 @@ void CsvParserTest::cleanupTestCase()
 void CsvParserTest::stringParserReadLineTest()
 {
   QFETCH(QString, sourceData);
-  QFETCH(RecordList, expectedData);
+  QFETCH(StringRecordList, expectedData);
   QFETCH(bool, expectedOk);
   QFETCH(CsvParserSettings, csvSettings);
   CsvStringParser parser;
-  Mdt::Expected<Record> record;
-  RecordList data;
+  Mdt::Expected<StringRecord> record;
+  StringRecordList data;
   /*
    * Initial state
    */
@@ -83,7 +83,37 @@ void CsvParserTest::stringParserReadLineTest_data()
 
 void CsvParserTest::stringParserReadAllTest()
 {
-  QFAIL("Not complete");
+  QFETCH(QString, sourceData);
+  QFETCH(StringRecordList, expectedData);
+  QFETCH(bool, expectedOk);
+  QFETCH(CsvParserSettings, csvSettings);
+  CsvStringParser parser;
+  Mdt::Expected<StringRecordList> recList;
+  /*
+   * Initial state
+   */
+  QVERIFY(parser.atEnd());
+  // Setup CSV source string and parser
+  parser.setCsvSettings(csvSettings);
+  parser.setSource(sourceData);
+  // Parse the entires string
+  recList = parser.readAll();
+  if(expectedOk){
+    QVERIFY(recList.hasValue());
+  }else{
+    QVERIFY(recList.hasError());
+    return;
+  }
+  QVERIFY(recList.hasValue());
+  const auto data = recList.value();
+  // Check
+  QCOMPARE(data.rowCount(), expectedData.rowCount());
+  for(int row = 0; row < data.rowCount(); ++row){
+    QCOMPARE(data.columnCount(row), expectedData.columnCount(row));
+    for(int col = 0; col < data.columnCount(row); ++col){
+      QCOMPARE(data.data(row, col), expectedData.data(row, col));
+    }
+  }
 }
 
 void CsvParserTest::stringParserReadAllTest_data()
@@ -94,12 +124,12 @@ void CsvParserTest::stringParserReadAllTest_data()
 void CsvParserTest::buildParserTestData()
 {
   QTest::addColumn<QString>("sourceData");
-  QTest::addColumn<RecordList>("expectedData");
+  QTest::addColumn<StringRecordList>("expectedData");
   QTest::addColumn<bool>("expectedOk");
   QTest::addColumn<CsvParserSettings>("csvSettings");
 
   QString sourceData;
-  RecordList expectedData;
+  StringRecordList expectedData;
   CsvParserSettings csvSettings;
   const bool Ok = true;
   const bool Nok = false;
@@ -194,7 +224,7 @@ void CsvParserTest::buildParserTestData()
   // 2 lines of single char
   /// \todo check if error should be reported
   sourceData = "A \nB";
-  expectedData = {{"A ","B"}};
+  expectedData = {{"A "},{"B"}};
   QTest::newRow("A \\nB") << sourceData << expectedData << Ok << csvSettings;
   /*
    * Quoted CSV tests:
@@ -273,7 +303,7 @@ void CsvParserTest::buildParserTestData()
   QTest::newRow("\"A B\"") << sourceData << expectedData << Ok << csvSettings;
   // 2 lines of single char
   sourceData = "\"A \"\n\"B\"";
-  expectedData = {{"A"},{"B"}};
+  expectedData = {{"A "},{"B"}};
   QTest::newRow("\"A \"\\n\"B\"") << sourceData << expectedData << Ok << csvSettings;
   /*
    * Excel protection marker CSV tests

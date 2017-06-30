@@ -6,7 +6,7 @@ classcanvas 128002 class_ref 4091394 // CsvStringParser
 end
 classcanvas 128130 class_ref 4071810 // CsvParserTemplate
   classdiagramsettings member_max_width 0 end
-  xyz 425 489 2005
+  xyz 425 467 2005
 end
 note 128514 "Note for CSV parser attributes:
 Old version stored results in QVariant, but all was strings... Bad overhead for nothing.

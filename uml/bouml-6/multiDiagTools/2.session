@@ -15,21 +15,18 @@ diagrams
     120 98 100 4 0 0
   classdiagram_ref 3506562 // StringIterator
     951 911 100 4 0 0
-  classdiagram_ref 3539330 // CsvStringParser
-    833 911 100 4 0 0
-  active  classdiagram_ref 3532802 // Data
-    899 911 100 21 0 572
+  active  classdiagram_ref 3539330 // CsvStringParser
+    899 911 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 5746434 // value
+selected operation_ref 5781250 // readLine
 open
   
 package_ref 549506 // Algorithm
   
 package_ref 654594 // File
-  class_ref 4078338 // RecordTemplate
-  class_ref 4084866 // RecordListTemplate
-  operation_ref 5767938 // readAll
+  class_ref 4071810 // CsvParserTemplate
+  class_ref 4091394 // CsvStringParser
   classdiagram_ref 3506306 // FileParser
   
 package_ref 403202 // tools

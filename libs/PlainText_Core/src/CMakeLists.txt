@@ -6,8 +6,10 @@ set(SOURCE_FILES
   Mdt/PlainText/StringConstIterator.cpp
   Mdt/PlainText/RecordTemplate.cpp
   Mdt/PlainText/Record.cpp
+  Mdt/PlainText/StringRecord.cpp
   Mdt/PlainText/RecordListTemplate.cpp
   Mdt/PlainText/RecordList.cpp
+  Mdt/PlainText/StringRecordList.cpp
   Mdt/PlainText/BoostSpiritQtTraits.cpp
   Mdt/PlainText/CsvCommonSettings.cpp
   Mdt/PlainText/CsvParserSettings.cpp

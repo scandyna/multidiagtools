@@ -18,4 +18,4 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "RecordList.h"
+#include "StringRecordList.h"

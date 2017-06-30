@@ -34,6 +34,10 @@ class DataTest : public TestBase
 
   void recordTest();
   void recordListTest();
+
+  void stringRecordTest();
+  void stringRecordListTest();
+
 };
 
 #endif // #ifndef MDT_PLAIN_TEXT_CORE_DATA_TEST_H
