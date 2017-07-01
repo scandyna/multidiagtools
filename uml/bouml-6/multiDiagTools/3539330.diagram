@@ -2,28 +2,12 @@ format 211
 
 classcanvas 128002 class_ref 4091394 // CsvStringParser
   classdiagramsettings member_max_width 0 end
-  xyz 41 455 2000
+  xyz 41 38 2000
 end
 classcanvas 128130 class_ref 4071810 // CsvParserTemplate
   classdiagramsettings member_max_width 0 end
-  xyz 425 467 2005
+  xyz 425 50 2005
 end
-note 128514 "Note for CSV parser attributes:
-Old version stored results in QVariant, but all was strings... Bad overhead for nothing.
-Store all in QStrings
-Conversions must be done elsewhere.
-F.ex.:
-1 -> int
-10E+6 (as text) -> double
-2017-06-15 XY 10:25:03  (text) -> DateTime
-
-To present data in a view, create a proxy model in ItemModel library
-For other applications, Qt should provide good helper functions.
-
-Note: what's about Record and RecordList ?
-Templates ??
--> RecordBase -> StringRecord, Record (which is QVariant based) ?"
-  xyzwh 40.5 40.5 2000 671 337
 relationcanvas 128258 relation_ref 4581250 // <directional composition>
   from ref 128002 z 2006 to ref 128130
   no_role_a no_role_b

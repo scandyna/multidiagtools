@@ -54,7 +54,7 @@ bool FileInputIteratorSharedData::setSource(QIODevice* device, const QByteArray&
   // Clear buffer
   clearUnicodeBuffer();
   /*
-    * Find a codec for requested encodeing
+    * Find a codec for requested encoding
     * Note: we not have to manage codec lifetime,
     *       see QTextCodec::~QTextCodec()
     */

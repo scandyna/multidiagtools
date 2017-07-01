@@ -18,15 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_PLAIN_TEXT_CSV_STRING_PARSER_H
-#define MDT_PLAIN_TEXT_CSV_STRING_PARSER_H
+#ifndef MDT_PLAIN_TEXT_CSV_FILE_PARSER_H
+#define MDT_PLAIN_TEXT_CSV_FILE_PARSER_H
 
-#include "StringConstIterator.h"
 #include "CsvParserSettings.h"
 #include "StringRecord.h"
 #include "StringRecordList.h"
+#include "FileInputIterator.h"
+#include "FileMultiPassIterator.h"
 #include "Mdt/Expected.h"
+#include "Mdt/Error.h"
 #include <QString>
+#include <QByteArray>
+#include <QFileInfo>
+#include <QFile>
 #include <memory>
 
 namespace Mdt{ namespace PlainText{
@@ -34,83 +39,90 @@ namespace Mdt{ namespace PlainText{
   template <typename InputIterator>
   class CsvParserTemplate;
 
-  /*! \brief CSV parser that acts on a QString as input
-   *
-   * CsvStringParser parses a CSV string.
-   *  The CSV string can contain quoted section.
+  /*! \brief CSV parser that acts on a file as input
    *
    * \note Some part of this API documentation refers to following standards:
    *       \li CSV-1203 available here: http://mastpoint.com/csv-1203
    *       \li RFC 4180 available here: https://tools.ietf.org/html/rfc4180
    */
-  class CsvStringParser
+  class CsvFileParser
   {
    public:
 
     /*! \brief Default constructor
      */
-    CsvStringParser();
+    CsvFileParser();
 
     // Destructor: required so that mParser pointer has the definition for its destructor
-    ~CsvStringParser();
+    ~CsvFileParser();
 
     // Copy disabled
-    CsvStringParser(const CsvStringParser &) = delete;
-    CsvStringParser & operator=(const CsvStringParser &) = delete;
+    CsvFileParser(const CsvFileParser &) = delete;
+    CsvFileParser & operator=(const CsvFileParser &) = delete;
     // Move disabled
-    CsvStringParser(CsvStringParser &&) = delete;
-    CsvStringParser & operator=(CsvStringParser &&) = delete;
+    CsvFileParser(CsvFileParser &&) = delete;
+    CsvFileParser & operator=(CsvFileParser &&) = delete;
 
     /*! \brief Set CSV settings
      *
      * \pre \a settings must be valid
+     * \pre No file must currently be open
      */
     void setCsvSettings(const CsvParserSettings & settings);
 
-    /*! \brief Set CSV source string
+    /*! \brief Open CSV file
      *
-     * \note Parsing will be done directly on source
-     *       Make shure that it is not modified during parsing process
-     *       (take a look at Qt documentation about STL style iterators invalidation for details)
+     * \param fileInfo Path to CSV file that must be open
+     * \param encoding Encoding name of the CSV file format.
+     *               Will use QTextCodec::codecForName() to get apropriate codec.
+     * \return false if CSV file could not be open, or no codec could be found for given encoding,
+     *         true if all goes well.
      */
-    void setSource(const QString & source);
+    bool openFile(const QFileInfo & fileInfo, const QByteArray & encoding);
 
-    /*! \brief Check if parser is at end of the source
+    /*! \brief Check if a CSV file is open
+     */
+    bool isOpen() const;
+
+    /*! \brief Close CSV file
+     */
+    void closeFile();
+
+    /*! \brief Check about end of file
+     *
+     * If no file is open, this function returns allways true
      */
     bool atEnd() const;
 
-    /*! \brief Read one line
-     *
-     * If a end of line is in a quoted section,
-     *  it will not be threated as end of line.
-     *
-     * This function can be used, f.ex.,
-     *  to store a long string to some other
-     *  storage device, without having to
-     *  copy the entiere source before.
-     *  Reading line by line can also
-     *  save some memory.
+    /*! \brief Read one line in CSV file
      *
      * \pre CSV settings must be set before calling this function
      * \sa setCsvSettings()
      */
     Mdt::Expected<StringRecord> readLine();
 
-    /*! \brief Read the entire CSV string
-    *
-    * \pre CSV settings must be set before calling this function
-    * \sa setCsvSettings()
-    */
+    /*! \brief Read the entire CSV file
+     *
+     * \pre CSV settings must be set before calling this function
+     * \sa setCsvSettings()
+     */
     Mdt::Expected<StringRecordList> readAll();
+
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
 
    private:
 
-    StringConstIterator mCurrentPosition;
-    StringConstIterator mEnd;
-    std::unique_ptr<CsvParserTemplate<StringConstIterator> > mParser;
+    QFile mFile;
+    FileInputIterator mFileIterator;
+    std::unique_ptr< CsvParserTemplate<FileMultiPassIterator> > mParser;
     Mdt::Error mLastError;
   };
 
 }} // namespace Mdt{ namespace PlainText{
 
-#endif // #ifndef MDT_PLAIN_TEXT_CSV_STRING_PARSER_H
+#endif // #ifndef MDT_PLAIN_TEXT_CSV_FILE_PARSER_H

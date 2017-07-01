@@ -10,6 +10,15 @@
     </message>
 </context>
 <context>
+    <name>Mdt::PlainText::CsvFileParser</name>
+    <message>
+        <location filename="../src/Mdt/PlainText/CsvFileParser.cpp" line="56"/>
+        <source>Could not open file &apos;%1&apos;
+Directory: &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::PlainText::CsvParserSettings</name>
     <message>
         <location filename="../src/Mdt/PlainText/CsvParserSettings.cpp" line="42"/>
@@ -25,7 +34,7 @@
 <context>
     <name>Mdt::PlainText::CsvParserTemplate</name>
     <message>
-        <location filename="../src/Mdt/PlainText/CsvParserTemplate.h" line="168"/>
+        <location filename="../src/Mdt/PlainText/CsvParserTemplate.h" line="166"/>
         <source>Parsing error occured.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -36,8 +36,6 @@
 #include <QCoreApplication>
 #include <QChar>
 #include <QString>
-// #include <QVariant>
-#include <QVector>
 #include <string>
 #include <vector>
 

@@ -15,18 +15,19 @@ diagrams
     120 98 100 4 0 0
   classdiagram_ref 3506562 // StringIterator
     951 911 100 4 0 0
-  active  classdiagram_ref 3539330 // CsvStringParser
+  classdiagram_ref 3539330 // CsvStringParser
+    899 911 100 4 0 0
+  active  classdiagram_ref 3558914 // CsvFileParser
     899 911 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 5781250 // readLine
+selected operation_ref 5788674 // lastError
 open
   
 package_ref 549506 // Algorithm
   
 package_ref 654594 // File
-  class_ref 4071810 // CsvParserTemplate
-  class_ref 4091394 // CsvStringParser
+  class_ref 4111490 // CsvFileParser
   classdiagram_ref 3506306 // FileParser
   
 package_ref 403202 // tools

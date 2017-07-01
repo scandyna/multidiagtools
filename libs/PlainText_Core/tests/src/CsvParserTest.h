@@ -37,6 +37,11 @@ class CsvParserTest : public TestBase
   void stringParserReadAllTest();
   void stringParserReadAllTest_data();
 
+  void fileParserReadLineTest();
+  void fileParserReadLineTest_data();
+  void fileParserReadAllTest();
+  void fileParserReadAllTest_data();
+
  private:
 
   void buildParserTestData();

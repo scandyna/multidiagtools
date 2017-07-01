@@ -24,7 +24,11 @@
 #include "Mdt/PlainText/StringRecordList.h"
 #include "Mdt/PlainText/CsvParserSettings.h"
 #include "Mdt/PlainText/CsvStringParser.h"
+#include "Mdt/PlainText/CsvFileParser.h"
 #include <QString>
+#include <QByteArray>
+#include <QTextCodec>
+#include <QTemporaryFile>
 
 using namespace Mdt::PlainText;
 
@@ -121,6 +125,122 @@ void CsvParserTest::stringParserReadAllTest_data()
   buildParserTestData();
 }
 
+void CsvParserTest::fileParserReadLineTest()
+{
+  QFETCH(QString, sourceData);
+  QFETCH(StringRecordList, expectedData);
+  QFETCH(bool, expectedOk);
+  QFETCH(CsvParserSettings, csvSettings);
+  CsvFileParser parser;
+  Mdt::Expected<StringRecord> record;
+  StringRecordList data;
+  QTemporaryFile file;
+  QTextCodec *codec;
+  QByteArray rawFileData;
+
+  /*
+   * Prepare file
+   */
+  codec = QTextCodec::codecForName("UTF-8");
+  QVERIFY(codec != nullptr);
+  rawFileData = codec->fromUnicode(sourceData);
+  QVERIFY(file.open());
+  QVERIFY(file.write(rawFileData) >= rawFileData.size());
+  file.close();
+  /*
+   * Initial state
+   */
+  QVERIFY(!parser.isOpen());
+  QVERIFY(parser.atEnd());
+  // Setup CSV parser
+  parser.setCsvSettings(csvSettings);
+  QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
+  QVERIFY(parser.isOpen());
+  // Parse line by line
+  while(!parser.atEnd()){
+    record = parser.readLine();
+    if(expectedOk){
+      QVERIFY(record.hasValue());
+      data.appendRecord(record.value());
+    }else{
+      QVERIFY(record.hasError());
+    }
+  }
+  // Close
+  parser.closeFile();
+  QVERIFY(!parser.isOpen());
+  // Check
+  QCOMPARE(data.rowCount(), expectedData.rowCount());
+  for(int row = 0; row < data.rowCount(); ++row){
+    QCOMPARE(data.columnCount(row), expectedData.columnCount(row));
+    for(int col = 0; col < data.columnCount(row); ++col){
+      QCOMPARE(data.data(row, col), expectedData.data(row, col));
+    }
+  }
+}
+
+void CsvParserTest::fileParserReadLineTest_data()
+{
+  buildParserTestData();
+}
+
+void CsvParserTest::fileParserReadAllTest()
+{
+  QFETCH(QString, sourceData);
+  QFETCH(StringRecordList, expectedData);
+  QFETCH(bool, expectedOk);
+  QFETCH(CsvParserSettings, csvSettings);
+  CsvFileParser parser;
+  QTemporaryFile file;
+  QTextCodec *codec;
+  QByteArray rawFileData;
+
+  /*
+   * Prepare file
+   */
+  codec = QTextCodec::codecForName("UTF-8");
+  QVERIFY(codec != nullptr);
+  rawFileData = codec->fromUnicode(sourceData);
+  QVERIFY(file.open());
+  QVERIFY(file.write(rawFileData) >= rawFileData.size());
+  file.close();
+  /*
+   * Initial state
+   */
+  QVERIFY(!parser.isOpen());
+  QVERIFY(parser.atEnd());
+  // Setup CSV parser
+  parser.setCsvSettings(csvSettings);
+  QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
+  QVERIFY(parser.isOpen());
+  // Parse the file
+  const auto recList = parser.readAll();
+  if(expectedOk){
+    QVERIFY(recList.hasValue());
+  }else{
+    QVERIFY(recList.hasError());
+    return;
+  }
+  QVERIFY(recList.hasValue());
+  const auto data = recList.value();
+  // Close
+  parser.closeFile();
+  QVERIFY(!parser.isOpen());
+  // Check
+  QCOMPARE(data.rowCount(), expectedData.rowCount());
+  for(int row = 0; row < data.rowCount(); ++row){
+    QCOMPARE(data.columnCount(row), expectedData.columnCount(row));
+    for(int col = 0; col < data.columnCount(row); ++col){
+      QCOMPARE(data.data(row, col), expectedData.data(row, col));
+    }
+  }
+}
+
+void CsvParserTest::fileParserReadAllTest_data()
+{
+  buildParserTestData();
+}
+
 void CsvParserTest::buildParserTestData()
 {
   QTest::addColumn<QString>("sourceData");
@@ -140,6 +260,15 @@ void CsvParserTest::buildParserTestData()
    */
 
   /*
+   * Empty CSV source
+   * Parser should simply return a empty result.
+   * (the user of the library can then choose to simply display/process nothing,
+   *  or warn the user of his application about empty source)
+   */
+  sourceData = "";
+  expectedData.clear();
+  QTest::newRow("Empty(,|FP:None|EOL:None") << sourceData << expectedData << Ok << csvSettings;
+  /*
    * Simple CSV tests:
    *  - Tests witout field protection
    *  - Test with EOL: \n and \r\n
@@ -147,10 +276,6 @@ void CsvParserTest::buildParserTestData()
   csvSettings.setFieldSeparator(',');
   csvSettings.setFieldProtection('"');
   csvSettings.setParseExp(false);
-  // Empty CSV
-  sourceData = "";
-  expectedData.clear();
-  QTest::newRow("Empty(,|FP:None|EOL:None") << sourceData << expectedData << Nok << csvSettings;
   // Single char CSV - No EOL (No EOL is allowed by RFC 4180)
   sourceData = "A";
   expectedData = {{"A"}};

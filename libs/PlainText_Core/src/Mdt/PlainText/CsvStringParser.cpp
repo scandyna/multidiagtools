@@ -74,9 +74,8 @@ Expected<StringRecordList> CsvStringParser::readAll()
   return recordList;
 }
 
-Error CsvStringParser::lastError() const
-{
-
-}
+// Error CsvStringParser::lastError() const
+// {
+// }
 
 }} // namespace Mdt{ namespace PlainText{
