@@ -108,9 +108,9 @@ namespace Mdt{ namespace PlainText{
 
     /*! \brief Append a column to this record
      */
-    void appendColumn()
+    void appendColumn(const T & data = T())
     {
-      setColumnCount( columnCount() + 1 );
+      mRecord.append(data);
     }
 
     /*! \brief Set column count
