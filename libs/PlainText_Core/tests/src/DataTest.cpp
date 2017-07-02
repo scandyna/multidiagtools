@@ -24,6 +24,7 @@
 #include "Mdt/PlainText/StringRecord.h"
 #include "Mdt/PlainText/StringRecordList.h"
 #include <algorithm>
+#include <iterator>
 
 using namespace Mdt::PlainText;
 
@@ -126,6 +127,16 @@ void DataTest::recordListTest()
   QCOMPARE(list.data(0, 1), QVariant("C"));
   QCOMPARE(list.data(1, 0), QVariant(4));
   QCOMPARE(list.data(1, 1), QVariant("D"));
+  /*
+   * Check STL iterators usage
+   */
+  const auto f1 = [](const Record & record){
+    QVERIFY(record.columnCount() > 0);
+  };
+  std::for_each(list.begin(), list.end(), f1);
+  RecordList list2;
+  std::copy(list.cbegin(), list.cend(), std::back_inserter(list2));
+  QCOMPARE(list2.rowCount(), list.rowCount());
 }
 
 void DataTest::stringRecordTest()

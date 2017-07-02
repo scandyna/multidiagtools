@@ -36,6 +36,42 @@ namespace Mdt{ namespace PlainText{
   {
    public:
 
+    /*! \brief STL iterator
+     */
+    using iterator = typename QVector<RecordType>::iterator;
+
+    /*! \brief STL const iterator
+     */
+    using const_iterator = typename QVector<RecordType>::const_iterator;
+
+    /*! \brief Value type for STL compatibility
+     */
+    using value_type = typename QVector<RecordType>::value_type;
+
+    /*! \brief Reference type for STL compatibility
+     */
+    using reference = typename QVector<RecordType>::reference;
+
+    /*! \brief Const reference type for STL compatibility
+     */
+    using const_reference = typename QVector<RecordType>::const_reference;
+
+    /*! \brief Size type for STL compatibility
+     */
+    using size_type = typename QVector<RecordType>::size_type;
+
+    /*! \brief Pointer type for STL compatibility
+     */
+    using pointer = typename QVector<RecordType>::pointer;
+
+    /*! \brief Const pointer type for STL compatibility
+     */
+    using const_pointer = typename QVector<RecordType>::const_pointer;
+
+    /*! \brief Difference type for STL compatibility
+     */
+    using difference_type = typename QVector<RecordType>::difference_type;
+
     /*! \brief Construct a empty record list
      */
     RecordListTemplate() = default;
@@ -68,6 +104,23 @@ namespace Mdt{ namespace PlainText{
     void appendRecord(const RecordType & record)
     {
       mRecordList.append(record);
+    }
+
+    /*! \brief Append record to this record list
+     */
+    void push_back(const RecordType & record)
+    {
+      mRecordList.push_back(record);
+    }
+
+    /*! \brief Insert record to this record list
+     *
+     * Inserts \a record in front of the item pointed to by the iterator \a before.
+     *  Returns an iterator pointing at the inserted item.
+     */
+    iterator insert(iterator before, const RecordType & record)
+    {
+      return mRecordList.insert(before, record);
     }
 
     /*! \brief Get row count
@@ -139,6 +192,34 @@ namespace Mdt{ namespace PlainText{
     {
       mRecordList << record;
       return *this;
+    }
+
+    /*! \brief Get an STL-style iterator pointing to the first item in the record list
+     */
+    iterator begin()
+    {
+      return mRecordList.begin();
+    }
+
+    /*! \brief Get an STL-style iterator pointing past the last item in the record list
+     */
+    iterator end()
+    {
+      return mRecordList.end();
+    }
+
+    /*! \brief Get an STL-style const iterator pointing to the first item in the record list
+     */
+    const_iterator cbegin() const
+    {
+      return mRecordList.cbegin();
+    }
+
+    /*! \brief Get an STL-style const iterator pointing past the last item in the record list
+     */
+    const_iterator cend() const
+    {
+      return mRecordList.cend();
     }
 
    private:
