@@ -9,6 +9,7 @@ set(SOURCE_FILES
   Mdt/PlainText/StringRecord.cpp
   Mdt/PlainText/RecordListTemplate.cpp
   Mdt/PlainText/RecordList.cpp
+  Mdt/PlainText/RecordListTableModel.cpp
   Mdt/PlainText/StringRecordList.cpp
   Mdt/PlainText/BoostSpiritQtTraits.cpp
   Mdt/PlainText/CsvCommonSettings.cpp

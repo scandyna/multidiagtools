@@ -26,9 +26,16 @@
 #include <QtTest/QtTest>
 #include <Qt>
 
+class QAbstractItemModel;
+
 class TestBase : public QObject
 {
  Q_OBJECT
+
+ protected:
+
+  static QVariant getModelData(const QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
+  static QVariant getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
 };
 
 #endif // #ifndef MDT_PLAIN_TEXT_CORE_TEST_BASE_H

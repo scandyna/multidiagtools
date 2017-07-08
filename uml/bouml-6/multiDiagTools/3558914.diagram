@@ -2,11 +2,11 @@ format 211
 
 classcanvas 128002 class_ref 4071810 // CsvParserTemplate
   classdiagramsettings member_max_width 0 end
-  xyz 481 82 2005
+  xyz 481 106 2005
 end
 classcanvas 128130 class_ref 4111490 // CsvFileParser
   classdiagramsettings member_max_width 0 end
-  xyz 42 37 2000
+  xyz 42 42 2000
 end
 relationcanvas 128258 relation_ref 4601346 // <directional composition>
   from ref 128130 z 2006 to ref 128002

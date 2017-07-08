@@ -1,6 +1,6 @@
 format 211
 "PlainText" // Mdt::PlainText
-  revision 14
+  revision 16
   modified_by 2 "philippe"
   // class settings
   
@@ -786,7 +786,7 @@ ${inlines}
 
     classdiagram 3545858 "RecordListTableModel"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 4097922 "RecordListTableModel"
@@ -809,15 +809,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 4613890 // <generalisation>
 	  b parent class_ref 147202 // QAbstractTableModel
-      end
-
-      classrelation 4614018 // <directional composition>
-	relation 4587906 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4614018 // <directional composition>
-	  b parent class_ref 4084866 // RecordListTemplate
       end
 
       operation 5753474 "rowCount"
@@ -954,6 +945,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4633986 // <directional composition>
+	relation 4607874 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4633986 // <directional composition>
+	  b parent class_ref 4104834 // RecordList
       end
     end
 
@@ -1130,6 +1130,30 @@ ${inlines}
 	
 	
       end
+
+      attribute 3513986 "CurrentPosition"
+	private type class_ref 4045570 // StringConstIterator
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3514114 "End"
+	private type class_ref 4045570 // StringConstIterator
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     classdiagram 3558914 "CsvFileParser"
@@ -1281,6 +1305,30 @@ ${inlines}
 	
 	
 	
+      end
+
+      attribute 3513730 "FileIterator"
+	private type class_ref 4045314 // FileInputIterator
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3513858 "File"
+	private type class_ref 390530 // QFile
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
   end

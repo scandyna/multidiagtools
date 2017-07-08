@@ -18,28 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#ifndef MDT_PLAIN_TEXT_RECORD_LIST_TABLE_MODEL_TEST_H
+#define MDT_PLAIN_TEXT_RECORD_LIST_TABLE_MODEL_TEST_H
+
 #include "TestBase.h"
-#include <QAbstractItemModel>
-#include <QModelIndex>
 
-QVariant TestBase::getModelData(const QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
+class RecordListTableModelTest : public TestBase
 {
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(column >= 0);
-  Q_ASSERT(column < model->columnCount());
+ Q_OBJECT
 
-  auto index = model->index(row, column);
-  if(!index.isValid()){
-    qDebug() << "TestBase::getModelData() - index is not valid: " << index;
-    return QVariant();
-  }
+ private slots:
 
-  return model->data(index, role);
-}
+  void initTestCase();
+  void cleanupTestCase();
 
-QVariant TestBase::getModelData(const QAbstractItemModel& model, int row, int column, Qt::ItemDataRole role)
-{
-  return getModelData(&model, row, column, role);
-}
+  void columnCountTest();
+  void columnCountTest_data();
+  void dataTest();
+  void dataTest_data();
+  void qtModelTest();
+};
+
+#endif // #ifndef MDT_PLAIN_TEXT_RECORD_LIST_TABLE_MODEL_TEST_H

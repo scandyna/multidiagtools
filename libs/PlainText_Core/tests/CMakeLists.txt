@@ -3,6 +3,17 @@ enable_testing()
 
 find_package(Qt5 COMPONENTS Test)
 
+#=============== Qt5 item model test library =====
+
+set(QT5_SOURCES_FILES
+    qt5/qtdynamictreemodel.cpp
+    qt5/qtmodeltest.cpp
+)
+
+add_library(mdtplaintextqt5test SHARED ${QT5_SOURCES_FILES})
+target_link_libraries(mdtplaintextqt5test Qt5::Core)
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/qt5")
+
 #================= PlainText test library ====================
 
 set(SOURCE_FILES
@@ -10,7 +21,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtplaintexttest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtplaintexttest PlainText_Core Application Qt5::Test)
+target_link_libraries(mdtplaintexttest mdtplaintextqt5test PlainText_Core Application Qt5::Test)
 
 #=============== Helper functions ===========
 
@@ -30,5 +41,6 @@ addPlainTextTest("FileInputIteratorTest")
 addPlainTextTest("FileMultiPassIteratorTest")
 addPlainTextTest("StringIteratorTest")
 addPlainTextTest("DataTest")
+addPlainTextTest("RecordListTableModelTest")
 addPlainTextTest("SettingsTest")
 addPlainTextTest("CsvParserTest")
