@@ -41,6 +41,9 @@ set(SOURCE_FILES
     Mdt/ItemModel/ForeignKeyProxyModelMapItem.cpp
     Mdt/ItemModel/ForeignKeyProxyModelMap.cpp
     Mdt/ItemModel/ForeignKeyProxyModel.cpp
+    Mdt/ItemModel/HeaderProxyModelItem.cpp
+    Mdt/ItemModel/HeaderProxyModelItemList.cpp
+    Mdt/ItemModel/HeaderProxyModel.cpp
 )
 
 find_package(Qt5 COMPONENTS Core Gui)
