@@ -62,7 +62,54 @@ namespace Mdt{ namespace ItemModel{
    * container.setSourceModel( new MyItemModel(this) );
    * container.appendProxyModel( new FilterProxyModel(this) );
    * container.appendProxyModel( new FormatProxyModel(this) );
-   * view->setModel( container.lastProxyModel() );
+   * view->setModel( container.modelForView() );
+   * \endcode
+   *
+   * If we have to access proxy models frquently,
+   *  for example to change some setup,
+   *  it can be helpful to create a custom container.
+   *
+   * Here is a example how this could be done:
+   * \code
+   * class MyModelContainer
+   * {
+   *  public:
+   *
+   *   // Here, parent is used for lifetime management of the proxy models
+   *   MyModelContainer(QObject *parent = nullptr)
+   *   {
+   *     mContainer.appendProxyModel( new FilterProxyModel(parent) );
+   *     mContainer.appendProxyModel( new FormatProxyModel(parent) );
+   *   }
+   *
+   *   // Set source model
+   *   void setSourceModel(QAbstractItemModel *model)
+   *   {
+   *     mContainer.setSourceModel(model);
+   *   }
+   *
+   *   // Get the model for the view
+   *   QAbstractItemModel *modelForView() const
+   *   {
+   *     return mContainer.modelForView();
+   *   }
+   *
+   *   // Access the filter proxy model
+   *   FilterProxyModel *filterModel() const
+   *   {
+   *     return reinterpret_cast<FilterProxyModel*>( mContainer.proxyModelAt(0) );
+   *   }
+   *
+   *   // Access the format proxy model
+   *   FormatProxyModel *formatModel() const
+   *   {
+   *     return reinterpret_cast<FormatProxyModel*>( mContainer.proxyModelAt(1) );
+   *   }
+   *
+   *  private:
+   *
+   *   ProxyModelContainer mContainer;
+   * };
    * \endcode
    *
    * ProxyModelContainer does not own any model,
@@ -101,6 +148,20 @@ namespace Mdt{ namespace ItemModel{
     QAbstractItemModel *sourceModel() const
     {
       return mSourceModel;
+    }
+
+    /*! \brief Get model for the view
+     *
+     * If at least 1 proxy model exists int this container,
+     *  this method returns lastProxyModel(),
+     *  else it returns sourceModel().
+     */
+    QAbstractItemModel *modelForView() const
+    {
+      if(mList.empty()){
+        return sourceModel();
+      }
+      return lastProxyModel();
     }
 
     /*! \brief Add a proxy model to the end

@@ -48,6 +48,7 @@ class ProxyModelContainerTest : public QObject
   void removeAtIndexBugTest();
   void searchRemoveTest();
   void searchPointerRemoveTest();
+  void customContainerTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_PROXY_MODEL_CONTAINER_TEST_H

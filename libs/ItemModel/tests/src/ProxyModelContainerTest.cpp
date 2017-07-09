@@ -24,6 +24,7 @@
 #include "Mdt/ItemModel/FilterProxyModel.h"
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 #include "Mdt/ItemModel/SortProxyModel.h"
+#include "Mdt/ItemModel/FormatProxyModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSortFilterProxyModel>
 
@@ -35,6 +36,7 @@ using ItemModel::ProxyModelContainer;
 using ItemModel::FilterProxyModel;
 using ItemModel::RelationFilterProxyModel;
 using ItemModel::SortProxyModel;
+using ItemModel::FormatProxyModel;
 
 void ProxyModelContainerTest::initTestCase()
 {
@@ -54,6 +56,7 @@ void ProxyModelContainerTest::initialStateTest()
 
   QVERIFY(container.sourceModel() == nullptr);
   QCOMPARE(container.proxyModelCount(), 0);
+  QVERIFY(container.modelForView() == nullptr);
 }
 
 void ProxyModelContainerTest::appendTest()
@@ -69,6 +72,7 @@ void ProxyModelContainerTest::appendTest()
    */
   container.setSourceModel(&model);
   QVERIFY(container.sourceModel() == &model);
+  QVERIFY(container.modelForView() == &model);
   /*
    * Append a filter model
    */
@@ -78,6 +82,7 @@ void ProxyModelContainerTest::appendTest()
   QVERIFY(container.firstProxyModel()->sourceModel() == &model);
   QVERIFY(container.lastProxyModel() == &filterModel);
   QVERIFY(container.lastProxyModel()->sourceModel() == &model);
+  QVERIFY(container.modelForView() == &filterModel);
   /*
    * Append sort model
    */
@@ -86,6 +91,7 @@ void ProxyModelContainerTest::appendTest()
   QVERIFY(container.firstProxyModel()->sourceModel() == &model);
   QVERIFY(container.lastProxyModel() == &sortModel);
   QVERIFY(container.lastProxyModel()->sourceModel() == &filterModel);
+  QVERIFY(container.modelForView() == &sortModel);
   /*
    * Append relation model
    */
@@ -97,6 +103,7 @@ void ProxyModelContainerTest::appendTest()
   QVERIFY(container.proxyModelAt(1)->sourceModel() == &filterModel);
   QVERIFY(container.lastProxyModel() == &relationModel);
   QVERIFY(container.lastProxyModel()->sourceModel() == &sortModel);
+  QVERIFY(container.modelForView() == &relationModel);
 }
 
 void ProxyModelContainerTest::appendThenSetSourceModelTest()
@@ -491,6 +498,57 @@ void ProxyModelContainerTest::searchPointerRemoveTest()
   QVERIFY(filterModel.isNull());
   QVERIFY(!notInContainerModel.isNull());
   delete notInContainerModel;
+}
+
+class MyModelContainer
+{
+ public:
+  // Here, parent is used for lifetime management of the proxy models
+  MyModelContainer(QObject *parent = nullptr)
+  {
+    mContainer.appendProxyModel( new FilterProxyModel(parent) );
+    mContainer.appendProxyModel( new FormatProxyModel(parent) );
+  }
+  // Set source model
+  void setSourceModel(QAbstractItemModel *model)
+  {
+    mContainer.setSourceModel(model);
+  }
+  // Get the model for the view
+  QAbstractItemModel *modelForView() const
+  {
+    return mContainer.modelForView();
+  }
+  // Access the filter proxy model
+  FilterProxyModel *filterModel() const
+  {
+    return reinterpret_cast<FilterProxyModel*>( mContainer.proxyModelAt(0) );
+  }
+  // Access the format proxy model
+  FormatProxyModel *formatModel() const
+  {
+    return reinterpret_cast<FormatProxyModel*>( mContainer.proxyModelAt(1) );
+  }
+ private:
+  ProxyModelContainer mContainer;
+};
+
+void ProxyModelContainerTest::customContainerTest()
+{
+  /*
+   * Initial state
+   */
+  MyModelContainer container(this);
+  QVERIFY(container.filterModel() != nullptr);
+  QVERIFY(container.formatModel() != nullptr);
+  QVERIFY(container.modelForView() == container.formatModel());
+  /*
+   * Set source model
+   */
+  VariantTableModel model;
+  container.setSourceModel(&model);
+  QVERIFY(container.filterModel()->sourceModel() == &model);
+  QVERIFY(container.modelForView() == container.formatModel());
 }
 
 /*
