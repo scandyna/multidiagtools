@@ -40,6 +40,18 @@ bool FileReader::readFile(const QString& filePath, const QByteArray& encoding, q
   }else{
     openMode = QFile::ReadOnly;
   }
+  // Check if file exists
+  if(!file.exists()){
+    QFileInfo fileInfo(file);
+    const QString msg =
+      tr("File '%1' does not exist.\nDirectory: '%2'")
+      .arg(fileInfo.fileName(), fileInfo.dir().absolutePath());
+    mLastError = mdtErrorNew(msg, Mdt::Error::Critical, "FileReader");
+    if(mAutoCommitError){
+      mLastError.commit();
+    }
+    return false;
+  }
   // Open file
   if(!file.open(openMode)){
     QFileInfo fileInfo(file);
