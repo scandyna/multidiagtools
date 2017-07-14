@@ -17,6 +17,7 @@ set(SOURCE_FILES
   Mdt/PlainText/CsvParserTemplate.cpp
   Mdt/PlainText/CsvStringParser.cpp
   Mdt/PlainText/CsvFileParser.cpp
+  Mdt/PlainText/FileReader.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

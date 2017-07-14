@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 208
+  revision 209
   modified_by 2 "philippe"
   // class settings
   
@@ -2297,7 +2297,7 @@ ${inlines}
 
     classdiagram 141442 "QAbstractItemModel"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 146946 "QAbstractItemModel"
@@ -2548,6 +2548,26 @@ ${inlines}
 	
       end
 
+      operation 5809666 "moveRows"
+	public explicit_return_type "bool"
+	nparams 5
+	  param in name "sourceParent" type class_ref 147330 // QModelIndex
+	  param in name "sourceRow" explicit_type "int"
+	  param in name "count" explicit_type "int"
+	  param in name "destinationParent" type class_ref 147330 // QModelIndex
+	  param in name "destinationChild" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}, const ${t3} & ${p3}${v3}, ${t4} ${p4}${v4}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}, const ${t3} & ${p3}, ${t4} ${p4}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 202370 "index"
 	public return_type class_ref 147330 // QModelIndex
 	nparams 3
@@ -2686,6 +2706,41 @@ ${inlines}
 
       classrelation 2726274 // <association>
 	relation_ref 2709250 // <association>
+      end
+
+      operation 5809922 "beginMoveRows"
+	protected explicit_return_type "bool"
+	nparams 5
+	  param in name "sourceParent" type class_ref 147330 // QModelIndex
+	  param in name "sourceFirst" explicit_type "int"
+	  param in name "sourceLast" explicit_type "int"
+	  param in name "destinationParent" type class_ref 147330 // QModelIndex
+	  param in name "destinationChild" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}, const ${t3} & ${p3}${v3}, ${t4} ${p4}${v4}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}, const ${t3} & ${p3}, ${t4} ${p4}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5810050 "endMoveRows"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 

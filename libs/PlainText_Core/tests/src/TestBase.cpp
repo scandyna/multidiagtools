@@ -21,6 +21,8 @@
 #include "TestBase.h"
 #include <QAbstractItemModel>
 #include <QModelIndex>
+#include <QTextStream>
+#include <QTextCodec>
 
 QVariant TestBase::getModelData(const QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
 {
@@ -42,4 +44,23 @@ QVariant TestBase::getModelData(const QAbstractItemModel* model, int row, int co
 QVariant TestBase::getModelData(const QAbstractItemModel& model, int row, int column, Qt::ItemDataRole role)
 {
   return getModelData(&model, row, column, role);
+}
+
+bool TestBase::writeTemporaryTextFile(QTemporaryFile & file, const QString& data, const QByteArray& encoding)
+{
+  if(!file.open()){
+    qDebug() << "Could not create a temporary file";
+    return false;
+  }
+  auto *codec = QTextCodec::codecForName(encoding);
+  if(codec == nullptr){
+    qDebug() << "Could not find a codec for requested encoding: " << encoding;
+    return false;
+  }
+  QTextStream stream(&file);
+  stream.setCodec(codec);
+  stream << data;
+  file.close();
+
+  return true;
 }

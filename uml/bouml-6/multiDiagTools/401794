@@ -1,6 +1,6 @@
 format 211
 "Mdt" // Mdt
-  revision 33
+  revision 34
   modified_by 2 "philippe"
   // class settings
   
@@ -855,8 +855,6 @@ ${members}};
   package_ref 654594 // File
 
   package_ref 641410 // PlainText
-
-  package_ref 402050 // Csv
 
   package_ref 621826 // TextStorage
 

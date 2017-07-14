@@ -23,6 +23,10 @@
 
 #include "Mdt/Application.h"
 #include <QObject>
+#include <QByteArray>
+#include <QString>
+#include <QVariant>
+#include <QTemporaryFile>
 #include <QtTest/QtTest>
 #include <Qt>
 
@@ -36,6 +40,8 @@ class TestBase : public QObject
 
   static QVariant getModelData(const QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
   static QVariant getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
+
+  static bool writeTemporaryTextFile(QTemporaryFile & file, const QString & data, const QByteArray & encoding = QByteArray("UTF-8"));
 };
 
 #endif // #ifndef MDT_PLAIN_TEXT_CORE_TEST_BASE_H

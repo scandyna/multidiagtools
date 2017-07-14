@@ -62,4 +62,25 @@ Directory: &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>Mdt::PlainText::FileReader</name>
+    <message>
+        <location filename="../src/Mdt/PlainText/FileReader.cpp" line="47"/>
+        <source>Could not open file &apos;%1&apos;
+Directory: &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/PlainText/FileReader.cpp" line="60"/>
+        <source>File &apos;%1&apos; exceeds allowed size.
+File size: &apos;%3&apos; , allowed size: &apos;%4&apos;
+Directory: &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/PlainText/FileReader.cpp" line="78"/>
+        <source>Could not find a codec for &apos;%1&apos; encoding.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
