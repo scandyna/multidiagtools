@@ -116,11 +116,19 @@ function(mdt_add_library)
     )
   endif()
   # Commands to install the library
-  install(TARGETS ${target_name}
-          EXPORT ${library_name}Targets
-          LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-          COMPONENT ${target_name}
-  )
+  if(WIN32)
+    install(TARGETS ${target_name}
+            EXPORT ${library_name}Targets
+            DESTINATION bin
+            COMPONENT ${target_name}
+    )
+  else()
+    install(TARGETS ${target_name}
+            EXPORT ${library_name}Targets
+            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+            COMPONENT ${target_name}
+    )
+  endif()
   install(DIRECTORY ${headers_dir}
           DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
           COMPONENT ${target_name}-dev
@@ -182,8 +190,6 @@ function(mdt_add_library)
     DEPEND_TARGETS_SUFFIX dev
     EXPLICIT_DEPEND_COMPONENTS ${target_name}
   )
-  
-
 endfunction()
 
 # Add a qt designer plugin library
@@ -234,6 +240,10 @@ endfunction()
 #    HEADERS_DIRECTORY .
 #    LINK_DEPENDENCIES Application Qt5::Widgets
 #  )
+#
+# Note: if Qt5 Designer plugin is not available,
+#       the plugin will not be built.
+#       (This is for example the case of cross-compilation with MXE)
 function(mdt_add_qt_designer_plugin_library)
   # Parse arguments
   set(oneValueArgs PLUGIN_NAME SOURCE_FILES HEADERS_DIRECTORY LINK_DEPENDENCIES)
@@ -256,7 +266,11 @@ function(mdt_add_qt_designer_plugin_library)
     message(FATAL_ERROR "LINK_DEPENDENCIES argument is missing.")
   endif()
   # Find external dependencies
-  find_package(Qt5 COMPONENTS Designer)
+  find_package(Qt5 QUIET OPTIONAL_COMPONENTS Designer)
+  if(NOT Designer_FOUND)
+    message(WARNING "${plugin_name} will not be built because Qt5 Designer is not available.")
+    return()
+  endif()
   # Commands to build the library
   add_library(${plugin_name} MODULE ${source_files})
   target_compile_definitions(${plugin_name} PRIVATE -DQT_PLUGIN -DQT_NO_DEBUG -DQT_SHARED -DQTDESIGNER_EXPORT_WIDGETS)

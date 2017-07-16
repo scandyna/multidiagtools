@@ -14,6 +14,9 @@ mdt_add_library(
   HEADERS_DIRECTORY .
   LINK_DEPENDENCIES Qt5::Widgets Qt5::Network
 )
+if(WIN32)
+  add_definitions("-DUNICODE -D_UNICODE")
+endif()
 
 mdt_set_library_description(
   NAME QtSingleApplication

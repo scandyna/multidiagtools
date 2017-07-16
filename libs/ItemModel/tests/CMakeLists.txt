@@ -22,7 +22,7 @@ set(QT5_SOURCES_FILES
 )
 
 add_library(mdtitemmodelqt5test SHARED ${QT5_SOURCES_FILES})
-target_link_libraries(mdtitemmodelqt5test Qt5::Widgets)
+target_link_libraries(mdtitemmodelqt5test Qt5::Widgets Qt5::Test)
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/qt5")
 
 #=============== Helper functions ===========

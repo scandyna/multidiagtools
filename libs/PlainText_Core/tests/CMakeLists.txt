@@ -3,7 +3,7 @@ enable_testing()
 
 find_package(Qt5 COMPONENTS Test)
 
-#=============== Qt5 item model test library =====
+#=============== Qt5 plain text test library =====
 
 set(QT5_SOURCES_FILES
     qt5/qtdynamictreemodel.cpp
@@ -11,7 +11,7 @@ set(QT5_SOURCES_FILES
 )
 
 add_library(mdtplaintextqt5test SHARED ${QT5_SOURCES_FILES})
-target_link_libraries(mdtplaintextqt5test Qt5::Core)
+target_link_libraries(mdtplaintextqt5test Qt5::Core Qt5::Test)
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/qt5")
 
 #================= PlainText test library ====================
