@@ -180,7 +180,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_executable(helloworld HelloWorld.cpp)
 target_link_libraries(helloworld Qt5::Widgets)
 target_link_libraries(helloworld Mdt0::ItemModel)
-
 ```
 
 Create a build directory and go to it:
@@ -200,8 +199,308 @@ If Mdt was installed in a other place, cmake must know it:
 cmake -D CMAKE_PREFIX_PATH=~/opt/mdt ../../
 ```
 
+## Windows using cross compilation from Linux
 
-Windows
+TODO make a note about using wine to check a application and its ability to only run 32 bit applications
+
+TODO Document approches that have failed
+ - Wine: compile ICU4C needed MSYS/MSYS2: MSYS2 installer crashed, MSYS: how to install it ?
+
+### Installing MXE
+
+MXE is a powerfull cross-compiler suite that will build all that we need.
+Take a look at [MXE](http://mxe.cc) site for details.
+As stated in the documentation, once MXE is built, it is not relocatable.
+To reuse it for your own project, install it somwhere else than in Mdt source tree.
+In my case, I choosed ~/opt/build/cross as base:
+```bash
+mkdir -p ~/opt/build/cross
+```
+
+MXE has a good step by step [Tutorial](http://mxe.cc/#tutorial),
+simply follow it to install dependencies for your platform.
+
+To make a 32 bit and 64 bit cross compiler that support Qt5 and boost:
+```bash
+cd ~/opt/build/cross
+git clone https://github.com/mxe/mxe.git
+cd mxe
+make MXE_TARGETS='i686-w64-mingw32.shared.posix x86_64-w64-mingw32.shared.posix' boost qt5 qwt -j4
+```
+
+As described in the documentation, MXE will get and build the dependencies of the libraries we just specified.
+The compilation will take some while.
+
+Now go back to Mdt source tree.
+Create a directory to build a Windows 32 bit version:
+```bash
+mkdir -p build/cross/win32/release
+cd build/cross/win32
+```
+
+Finaly, write a script that will set environnment variable,
+and unset some others as recommanded by MXE, and call the appropriate cmake wrapper.
+Note: you should put the script in build/win32 , not build/win32/release ,
+else you have the risk to delete it when doing a rm -r *
+
+cmake-win32:
+```
+#/bin/sh
+export PATH=~/opt/build/cross/mxe/usr/bin:$PATH
+unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
+i686-w64-mingw32.shared.posix-cmake "$@"
+```
+
+Make the script executable and check that it works:
+```bash
+chmod u+x cmake-win32
+cd release
+../cmake-win32 --version
+```
+
+Here is the equivalent script to target 64 bit buid, cmake-win64:
+```
+#/bin/sh
+export PATH=~/opt/build/cross/mxe/usr/bin:$PATH
+unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
+x86_64-w64-mingw32.shared.posix-cmake "$@"
+```
+
+### Cross compile Mdt for Windows
+
+Mdt uses CMake as build tool.
+Here we will use the script we created,
+that calls the MXE CMake wrapper.
+
+Make shure you allready are in the correct build directory
+(f.ex. build/cross/win32/release)
+
+To avoid specifying to many options, Mdt provides some cache files that set common flags.
+For example, for a release build with gcc, use:
+```bash
+../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake ../../../../
+```
+It is also possible to specify the intallation prefix:
+```bash
+../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt ../../../../
+```
+
+Build (-j4 is for parallel build, allowing max. 4 processes):
+```bash
+make -j4
+```
+
+To run all tests:
+```bash
+make test
+```
+
+To install the library in a non system place,
+i.e. defined above with CMAKE_INSTALL_PREFIX,
+the installation is:
+```bash
+make install
+```
+
+
+## Windows using WineHQ
+
+Note: currently, this section was abandonned.
+
+While not having a Windows machine, it is still possible to build some Windows binary,
+and fix some problems.
+Please note that, in my experience, distributed binary of Wine do not support X84_64 executables.
+
+### Install Wine
+
+Using Ubuntu 16.04, I personally installed WineHQ successfully
+by following the instructions avaiable on [WineHQ](https://www.winehq.org)
+website, in the Download section.
+Note: while running winecfg, I had to enable the option that emulates a desktop,
+else a was unable to install CMake.
+This is described here: [https://doc.ubuntu-fr.org/wine](https://doc.ubuntu-fr.org/wine)
+
+### Install tools and libraries
+
+#### Dependency Walker
+
+A optionnal, but helpfull tool, [Dependency Walker](http://www.dependencywalker.com/)
+Note: choose a 32bit version (x86 , not x64) to be able to execute it with Wine.
+
+#### CMake
+
+Install CMake available from [CMake](https://cmake.org/) website.
+Again, choose a 32bit executable (f.ex. win32-x86 installer).
+Using a msi installer is fine.
+To install CMake, in the directory where the installer file lives:
+```bash
+wine msiexec /i cmake-x.y.z-win32-x86.msi
+```
+Note: when the wizard ask about adding CMake to the system PATH,
+its recommanded to add it, else you will have additionnal work
+to create a developpement environnment (described later).
+I personally choosed "Add CMake to the system PATH for the current user"
+For other options, I personally choosed the default ones.
+
+Try if CMake works:
+```bash
+wine cmake --version
+```
+
+#### MinGW (compiler suite including GCC)
+
+Qt binary package for gcc (mingw) is shipped with the compiler,
+and batch file that provides a developpment environnment.
+In my case, the provided compiler was to old.
+Mdt can only be compiled with a fully C++14 compliant compiler.
+
+The recommanded solution is to use [TDM-GCC](http://tdm-gcc.tdragon.net)
+In the Download section, choose a 32 bit installer.
+Run the installer. In my case:
+```bash
+wine tdm-gcc-5.1.0-3.exe
+```
+The default installation path should be fine (C:\TDM-GCC-32)
+This path will be reused later when creating the developpement environnment batch file.
+By default, the installer should have C++ suport enabled. If not, enable it.
+I personally decided to not add TDM-GCC to the PATH.
+
+#### MSYS
+
+In my case, I failed to install MSYS2, because the installer crashed at 66% of the installation.
+This is why using MSYS.
+Go to the [Sourceforg MinGW project](https://sourceforge.net/projects/mingw/).
+Go to Files, MSYS, Base 
+
+#### Qt5
+
+The Qt Company ships some binary distributions of Qt5,
+available here: [https://www.qt.io/download/](https://www.qt.io/download/)
+The time I wrote this help, only a MinGW with gcc 4.9 was available.
+Because gcc ABI changed between gcc 4.9 and gcc 5,
+compiling Mdt was not possible by using the Qt5 binary package.
+In this case, sorry, we have to compile Qt5.
+
+To have a better idea about how to compile Qt,
+you should have a look at the official documentation
+on [http://doc.qt.io/](http://doc.qt.io/) in the "Getting Started Guides" section.
+
+At first, we have to get and compile the ICU library.
+Qt provides some [documentation](https://wiki.qt.io/Compiling-ICU-with-MinGW) on how to achieve that.
+Go to the [ICU Download](http://site.icu-project.org/download) page
+and choose an ICU4C source package.
+In my case, it was "icu4c-59_1-src.zip"
+Extract the archive somewhere and cd to it.
+
+
+Go to the [Download](https://www.qt.io/download) page,
+Choose Desktop applications, then your licence.
+Then, while you are not on Windows now, choose "View All Downloads"
+Download the zip archive provided for Windows.
+In my case, it was "qt-everywhere-opensource-src-5.9.1.zip"
+Extract the archive somewhere and cd to it.
+
+
+
+TODO use notepad to create mingw32-env.bat
+
+
+
+You must choose a 32bit version, that was compiled with gcc (not VS).
+Personally, the only package I found, was a offline installer:
+Qt 5.6.2 for Windows 32-bit (MinGW 4.9.2)
+This is a executable thatcan be run like this:
+```bash
+wine qt-opensource-windows-x86-mingwxyz-x.y.z.exe
+```
+You should choose the default proposed installation directory.
+
+#### Boost
+
+Boost libraries are available here: [www.boost.org](www.boost.org)
+For complete installation documentation, see [Getting Started](www.boost.org/more/getting_started/index.html)
+For me, the following worked, without having to set any environnment variable:
+ - Create a boost directory in ~/.wine/drive_c/Program Files/
+ - Download a Windows archive from [Boost](www.boost.org) , current release
+ - Extract the archive to ~/.wine/drive_c/Program Files/boost/
+My resulting directory path is: ~/.wine/drive_c/Program Files/boost/boost_1_64_0/
+
+### Compile Mdt
+
+Mdt uses CMake as build tool.
+
+At first, create a build directory and cd to it:
+```bash
+mkdir -p build/win32/release
+cd build/win32/release
+```
+
+
+
+In my case, the provided compiler was to old.
+Mdt can only be compiled with a fully C++14 compliant compiler.
+
+
+
+Qt binary package for gcc (mingw) is shipped with the compiler,
+and batch file that provides a developpment environnment.
+
+For ease of use, you can copy this file to the build directory.
+For example, in my case, with Qt5.6.2:
+```bash
+cp ~/.wine/drive_c/Qt/Qt5.6.2/5.6/mingw49_32/bin/qtenv2.bat mingw32-env.bat
+```
+Also edit the file:
+ - If you had to install mingw (TDM-GCC) separatly, replace the path to mingw Tools, but let the path to Qt as is
+   In my case, the result is: set PATH=C:\Qt\Qt5.6.2\5.6\mingw49_32\bin;C:\TDM-GCC-32\bin\;%PATH%
+ - Remove that last line that will dc to C:\Qt\Qt5.x.y.z\y.z\mingwxy_ab
+
+Now, run a DOS shell:
+```bash
+wine cmd
+```
+You should now be in a DOS shell.
+In my case, using Konsole, I just see a Microsoft Windows version,
+and my current path is on Z:\ root.
+
+Build the developpement environnment:
+```bash
+mingw32-env.bat
+```
+
+You can check if PATH contains all that is requird:
+```bash
+echo %PATH%
+```
+You should have at least 2 entry for Qt, all default Windows paths and CMake.
+Check gcc C++ compiler version:
+```bash
+g++ --version
+```
+The version of g++ should be displayed. Check that g++ version >= 5
+
+Now compile Mdt.
+To avoid specifying to many options, Mdt provides some cache files that set common flags.
+For example, for a release build with gcc, use:
+```bash
+cmake -C ../../../cmake/caches/ReleaseGcc.cmake ../../../ -G "MinGW Makefiles"
+```
+It is also possible to specify the intallation prefix:
+```bash
+cmake -C ../../../cmake/caches/ReleaseGcc.cmake -D CMAKE_INSTALL_PREFIX=/Mdt ../../../ -G "MinGW Makefiles"
+```
+
+Build (-j4 is for parallel build, allowing max. 4 processes):
+```bash
+mingw32-make -j4
+```
+
+To run all tests:
+```bash
+make test
+```
+
+## Windows
 
 Note: this section is not up to date.
 
