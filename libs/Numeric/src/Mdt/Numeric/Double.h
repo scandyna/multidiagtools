@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,12 +35,12 @@ namespace Mdt{ namespace Numeric{
     /*! \brief Construct a null Double
      */
     constexpr Double() noexcept
-     : pvValue(std::numeric_limits<double>::quiet_NaN()) {}
+     : mValue(std::numeric_limits<double>::quiet_NaN()) {}
 
     /*! \brief Construct a Double with a value
      */
     constexpr Double(double x) noexcept
-     : pvValue(x) {}
+     : mValue(x) {}
 
     /*! \brief Get Double value
      *
@@ -50,28 +50,28 @@ namespace Mdt{ namespace Numeric{
      */
     constexpr double toDouble() const noexcept
     {
-      return pvValue;
+      return mValue;
     }
 
     /*! \brief Check if value is infinity (+infinity or -infinity)
      */
-    constexpr bool isInfinity() const noexcept
+    bool isInfinity() const noexcept
     {
-      return std::isinf(pvValue);
+      return std::isinf(mValue);
     }
 
     /*! \brief Set -infinity
      */
     constexpr void setMinusInfinity() noexcept
     {
-      pvValue = -std::numeric_limits<double>::infinity();
+      mValue = -std::numeric_limits<double>::infinity();
     }
 
     /*! \brief Check if value is -infinity
      */
-    constexpr bool isMinusInfinity() const noexcept
+    bool isMinusInfinity() const noexcept
     {
-      if(pvValue > 0.0){
+      if(mValue > 0.0){
         return false;
       }
       return isInfinity();
@@ -81,14 +81,14 @@ namespace Mdt{ namespace Numeric{
      */
     constexpr void setPlusInfinity() noexcept
     {
-      pvValue = std::numeric_limits<double>::infinity();
+      mValue = std::numeric_limits<double>::infinity();
     }
 
     /*! \brief Check if value is +infinity
      */
-    constexpr bool isPlusInfinity() const noexcept
+    bool isPlusInfinity() const noexcept
     {
-      if(pvValue < 0.0){
+      if(mValue < 0.0){
         return false;
       }
       return isInfinity();
@@ -98,16 +98,16 @@ namespace Mdt{ namespace Numeric{
      *
      * Internally, std::isnan() is used
      */
-    constexpr bool isNaN() const noexcept
+    bool isNaN() const noexcept
     {
-      return std::isnan(pvValue);
+      return std::isnan(mValue);
     }
 
     /*! \brief Check if Double is null
      *
      * \sa isNaN()
      */
-    constexpr bool isNull() const noexcept
+    bool isNull() const noexcept
     {
       return isNaN();
     }
@@ -116,7 +116,7 @@ namespace Mdt{ namespace Numeric{
      */
     constexpr void clear() noexcept
     {
-      pvValue = std::numeric_limits<double>::quiet_NaN();
+      mValue = std::numeric_limits<double>::quiet_NaN();
     }
 
     /*! \brief Equality comparison operator
@@ -128,12 +128,12 @@ namespace Mdt{ namespace Numeric{
      *  - if one (or both) value is null, they are not considered equal (Same rule as IEEE 754 NaN)
      */
     friend
-    constexpr bool operator==(const Double & x, const Double & y) noexcept
+    bool operator==(const Double & x, const Double & y) noexcept
     {
       if(x.isNull() || y.isNull()){
         return false;
       }
-      return (::fabs(x.toDouble() - y.toDouble()) < std::numeric_limits<double>::epsilon());
+      return (std::abs(x.toDouble() - y.toDouble()) < std::numeric_limits<double>::epsilon());
     }
 
     /*! \brief Inequality comparison operator
@@ -141,7 +141,7 @@ namespace Mdt{ namespace Numeric{
      * \sa operator==()
      */
     friend
-    constexpr bool operator!=(const Double & x, const Double & y) noexcept
+    bool operator!=(const Double & x, const Double & y) noexcept
     {
       return !(x == y);
     }
@@ -152,7 +152,7 @@ namespace Mdt{ namespace Numeric{
      *       (Same rule as IEEE 754 NaN)
      */
     friend
-    constexpr bool operator<(const Double & x, const Double & y) noexcept
+    bool operator<(const Double & x, const Double & y) noexcept
     {
       return std::isless(x.toDouble(), y.toDouble());
     }
@@ -163,7 +163,7 @@ namespace Mdt{ namespace Numeric{
      *       (Same rule as IEEE 754 NaN)
      */
     friend
-    constexpr bool operator<=(const Double & x, const Double & y) noexcept
+    bool operator<=(const Double & x, const Double & y) noexcept
     {
       return std::islessequal(x.toDouble(), y.toDouble());
     }
@@ -174,7 +174,7 @@ namespace Mdt{ namespace Numeric{
      *       (Same rule as IEEE 754 NaN)
      */
     friend
-    constexpr bool operator>(const Double & x, const Double & y) noexcept
+    bool operator>(const Double & x, const Double & y) noexcept
     {
       return std::isgreater(x.toDouble(), y.toDouble());
     }
@@ -185,7 +185,7 @@ namespace Mdt{ namespace Numeric{
      *       (Same rule as IEEE 754 NaN)
      */
     friend
-    constexpr bool operator>=(const Double & x, const Double & y) noexcept
+    bool operator>=(const Double & x, const Double & y) noexcept
     {
       return std::isgreaterequal(x.toDouble(), y.toDouble());
     }
@@ -222,7 +222,7 @@ namespace Mdt{ namespace Numeric{
      */
     constexpr Double operator-() const
     {
-      return -pvValue;
+      return -mValue;
     }
 
     /*! \brief Multiplication operator
@@ -251,7 +251,7 @@ namespace Mdt{ namespace Numeric{
 
   private:
 
-    double pvValue;
+    double mValue;
   };
 
 }} // namespace Mdt{ namespace Numeric{
