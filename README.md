@@ -220,7 +220,7 @@ mkdir -p ~/opt/build/cross
 MXE has a good step by step [Tutorial](http://mxe.cc/#tutorial),
 simply follow it to install dependencies for your platform.
 
-To make a 32 bit and 64 bit cross compiler that support Qt5 and boost:
+To make a 32 bit and 64 bit cross compiler that support boost, Qt5 and qwt:
 ```bash
 cd ~/opt/build/cross
 git clone https://github.com/mxe/mxe.git
@@ -282,7 +282,7 @@ For example, for a release build with gcc, use:
 ```
 It is also possible to specify the intallation prefix:
 ```bash
-../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt ../../../../
+../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt/win32 ../../../../
 ```
 
 Build (-j4 is for parallel build, allowing max. 4 processes):
@@ -290,14 +290,14 @@ Build (-j4 is for parallel build, allowing max. 4 processes):
 make -j4
 ```
 
-To run all tests:
+To run all tests: TODO Not working now
 ```bash
 make test
 ```
 
 To install the library in a non system place,
 i.e. defined above with CMAKE_INSTALL_PREFIX,
-the installation is:
+the installation is: TODO Not checked
 ```bash
 make install
 ```
