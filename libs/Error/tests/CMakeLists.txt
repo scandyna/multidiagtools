@@ -9,4 +9,5 @@ find_package(Qt5
 add_executable(mdterrortest src/ErrorTest.cpp)
 target_link_libraries(mdterrortest Error)
 target_link_libraries(mdterrortest Qt5::Test)
-add_test(MdtErrorTest "${CMAKE_CURRENT_BINARY_DIR}/mdterrortest")
+add_test(NAME MdtErrorTest COMMAND mdterrortest)
+# add_test(MdtErrorTest "${CMAKE_CURRENT_BINARY_DIR}/mdterrortest")
