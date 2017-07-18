@@ -190,6 +190,12 @@ function(mdt_add_library)
     DEPEND_TARGETS_SUFFIX dev
     EXPLICIT_DEPEND_COMPONENTS ${target_name}
   )
+  # On Windows, we later will need the external dll's
+  if(WIN32)
+    mdt_register_library_external_direct_dependencies(
+      TARGET ${target_name}
+    )
+  endif()
 endfunction()
 
 # Add a qt designer plugin library

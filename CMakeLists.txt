@@ -24,6 +24,14 @@ set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
+# On Windows, RPATH do not exist
+# To be able to run tests, we have to put all binaries in the same directory
+if(WIN32)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+endif()
+
+message("CMAKE_RUNTIME_OUTPUT_DIRECTORY: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+
 # Enable testing
 # Must be placed before any add_subdirectory() command, else tests that are defined in sub-directories will be ignored
 enable_testing()
@@ -84,6 +92,73 @@ add_subdirectory(libs/ItemModel)
 add_subdirectory(libs/ItemEditor)
 add_subdirectory(libs/ItemEditor_Sql)
 
+# On Windows, we also install external libraries
+if(WIN32)
+  mdt_install_external_libraries_files()
+endif()
+
+#################################################################################################################################################
+# Unit tests
+#################################################################################################################################################
+
+# On Windows, we have to copy external libraries to the test runtime directory
+if(WIN32)
+  mdt_copy_external_libraries_files(DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+  set(CMAKE_FIND_LIBRARY_SUFFIXES .dll)
+  mdt_find_and_copy_libraries(
+    LIBRARIES
+      libstdc++-6.dll libwinpthread-1.dll libgcc_s_sjlj-1.dll libeay32.dll zlib1.dll
+      ssleay32.dll libharfbuzz-0.dll libpng16-16.dll libpcre2-16-0.dll libfreetype-6.dll libglib-2.0-0.dll 
+      libbz2.dll libintl-8.dll libpcre-1.dll libiconv-2.dll
+      Qt5Test.dll
+    DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+  )
+endif()
+
+# find_library(other_lib NAMES libstdc++-6.dll)
+# message("other_lib: ${other_lib}")
+
+# On Windows, we have to add external libraries to the PATH
+
+# set(ENV{PATH} "/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/bin/;/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/qt5/bin/")
+# message("PATH: $ENV{PATH}")
+#get_cmake_property(prop ENVIRONMENT)
+#get_cmake_property(prop $ENV${PATH})
+#get_property(prop GLOBAL PROPERTY $ENV{PATH})
+#message("Main: prop: ${prop}")
+
+# find_package(Qt5 COMPONENTS Core)
+# 
+# get_target_property(myp Qt5::Core LOCATION)
+# message("Lib: ${myp}")
+
+# mdt_get_all_libraries_external_direct_dependencies(all_ext_deps)
+# message("Main: all_ext_deps ${all_ext_deps}")
+
+# mdt_get_all_libraries_external_direct_dependencies_files(all_ext_dep_files)
+# message("Main: all_ext_dep_files ${all_ext_dep_files}")
+
+# install(
+#   TARGETS Qt5::Core
+#   DESTINATION bin
+# )
+
+
+# get_cmake_property(all_cmp COMPONENTS)
+# foreach(cmp ${all_cmp})
+#   message("Component: ${cmp}")
+#   foreach(cmp_item ${cmp})
+#     if(TARGET ${cmp_item})
+#       message(" Target: ${cmp_item}")
+#       get_target_property(dep_tgt_list ${cmp_item} LINK_LIBRARIES)
+#       message("  Deps: ${dep_tgt_list}")
+#       foreach(dep_tgt ${dep_tgt_list})
+#         get_target_property(dep_dll ${dep_tgt} LOCATION)
+#         message("   Dll: ${dep_dll}")
+#       endforeach()
+#     endif()
+#   endforeach()
+# endforeach()
 
 #################################################################################################################################################
 # Top level package configuration files
@@ -141,12 +216,15 @@ set(CPACK_SOURCE_IGNORE_FILES
   "cmake_install.cmake"
 )
 
+# On Windows, we add external libraries to the distribution
+
+
 if(UNIX)
   set(CPACK_GENERATOR TBZ2)
   set(CPACK_SOURCE_GENERATOR TBZ2)
 endif()
 if(WIN32)
-  set(CPACK_GENERATOR NSIS)
+#   set(CPACK_GENERATOR NSIS)
   set(CPACK_SOURCE_GENERATOR ZIP)
 endif()
 

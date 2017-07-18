@@ -199,12 +199,35 @@ If Mdt was installed in a other place, cmake must know it:
 cmake -D CMAKE_PREFIX_PATH=~/opt/mdt ../../
 ```
 
+## WineHQ
+
+My first attempt was to install Whine (then WhineHQ)
+and all tools and libraries on it, but this did not work for me.
+For more details, see the aboandonned section "Windows using WineHQ" below.
+
+On the ather hand, WineHQ should be usefull to make some test
+on generated binaries.
+Please also note, for the nexte sections, that WineHQ probably not support 64 bit executable.
+
+Using Ubuntu 16.04, I personally installed WineHQ successfully
+by following the instructions avaiable on [WineHQ](https://www.winehq.org)
+website, in the Download section.
+Note: while running winecfg, I had to enable the option that emulates a desktop,
+else a was unable to install CMake.
+This is described here: [https://doc.ubuntu-fr.org/wine](https://doc.ubuntu-fr.org/wine)
+
+## Tools for Windows
+
+### Dependency Walker
+
+A optionnal, but helpfull tool, [Dependency Walker](http://www.dependencywalker.com/)
+Note: choose a 32bit version (x86 , not x64) to be able to execute it with Wine.
+
 ## Windows using cross compilation from Linux
 
-TODO make a note about using wine to check a application and its ability to only run 32 bit applications
-
-TODO Document approches that have failed
- - Wine: compile ICU4C needed MSYS/MSYS2: MSYS2 installer crashed, MSYS: how to install it ?
+Here we will use MXE to do cross-compilation.
+You probably will use WineHQ to do some tests, in which case,
+please remeber that WineHQ is possibly not able to run 64 bit executables.
 
 ### Installing MXE
 
@@ -302,30 +325,15 @@ the installation is: TODO Not checked
 make install
 ```
 
-
 ## Windows using WineHQ
 
-Note: currently, this section was abandonned.
+Note: currently, this section was abandoned.
 
 While not having a Windows machine, it is still possible to build some Windows binary,
 and fix some problems.
 Please note that, in my experience, distributed binary of Wine do not support X84_64 executables.
 
-### Install Wine
-
-Using Ubuntu 16.04, I personally installed WineHQ successfully
-by following the instructions avaiable on [WineHQ](https://www.winehq.org)
-website, in the Download section.
-Note: while running winecfg, I had to enable the option that emulates a desktop,
-else a was unable to install CMake.
-This is described here: [https://doc.ubuntu-fr.org/wine](https://doc.ubuntu-fr.org/wine)
-
 ### Install tools and libraries
-
-#### Dependency Walker
-
-A optionnal, but helpfull tool, [Dependency Walker](http://www.dependencywalker.com/)
-Note: choose a 32bit version (x86 , not x64) to be able to execute it with Wine.
 
 #### CMake
 
@@ -367,12 +375,17 @@ I personally decided to not add TDM-GCC to the PATH.
 
 #### MSYS
 
+Note: currently, this section was abandoned.
+
 In my case, I failed to install MSYS2, because the installer crashed at 66% of the installation.
 This is why using MSYS.
+And: how must MSYS be installed ?
 Go to the [Sourceforg MinGW project](https://sourceforge.net/projects/mingw/).
-Go to Files, MSYS, Base 
+
 
 #### Qt5
+
+Note: currently, this section was abandoned.
 
 The Qt Company ships some binary distributions of Qt5,
 available here: [https://www.qt.io/download/](https://www.qt.io/download/)
@@ -426,6 +439,8 @@ For me, the following worked, without having to set any environnment variable:
 My resulting directory path is: ~/.wine/drive_c/Program Files/boost/boost_1_64_0/
 
 ### Compile Mdt
+
+Note: currently, this section was abandoned.
 
 Mdt uses CMake as build tool.
 
