@@ -16,7 +16,6 @@ function(addFilterExpressionTest testName)
   add_executable(${executableName} ${sourceFilePath})
   target_link_libraries(${executableName} FilterExpression Application Qt5::Test)
   add_test(NAME ${complteTestName} COMMAND ${executableName})
-#   add_test(${complteTestName} ${CMAKE_CURRENT_BINARY_DIR}/${executableName})
 #  message("Test name: ${complteTestName} , src: ${sourceFilePath} , exec: ${executableName}")
 endfunction()
 

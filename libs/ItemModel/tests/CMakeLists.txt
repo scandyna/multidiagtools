@@ -35,7 +35,6 @@ function(addItemModelTest testName)
   add_executable(${executableName} ${sourceFilePath})
   target_link_libraries(${executableName} mdtitemmodeltest mdtitemmodelqt5test)
   add_test(NAME ${complteTestName} COMMAND ${executableName})
-#   add_test(${complteTestName} ${CMAKE_CURRENT_BINARY_DIR}/${executableName})
 endfunction()
 
 #================= Tests ====================
