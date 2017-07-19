@@ -351,6 +351,15 @@ cmake_minimum_required(VERSION 3.3)
 
 project(HelloWorld VERSION 0.0.1)
 
+# Add path to Mdt root
+# Using a custom MDT_CMAKE_PREFIX_PATH has some advantages:
+# - It can be reused, for example to specify CMAKE_MODULE_PATH
+# - It solves the problem that CMAKE_PREFIX_PATH is ignoren when cross-compiling with MXE
+if(MDT_CMAKE_PREFIX_PATH)
+  set(CMAKE_PREFIX_PATH "${MDT_CMAKE_PREFIX_PATH};${CMAKE_PREFIX_PATH}")
+  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${MDT_CMAKE_PREFIX_PATH}/share/cmake/modules")
+endif()
+
 find_package(Qt5 COMPONENTS Widgets)
 find_package(Mdt0 COMPONENTS ItemModel)
 
