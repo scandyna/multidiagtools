@@ -20,19 +20,146 @@ Some work was also done to support QString, and the ability to read or write lin
 
 # Get Mdt
 
+Currently, only sources are available on github.
+
 ## Linux
+
+At first, we have to install git.
+On a Debian system:
+```bash
+sudo apt-get install git
+```
+
+Then, create a directory to put Mdt and cd to it,
+for example:
+```bash
+mkdir -p ~/opt/mdt/src
+cd ~/opt/mdt/src
+git clone git://github.com/scandyna/multidiagtools.git
+```
 
 ## Windows
 
+TODO: to be documented
 
 # Compile Mdt
 
+Mdt uses CMake as build management system.
+It also depend on a C++14 compliant compiler
+(f.ex. allmost recent version GCC or Clang).
+Some libraries, like Qt5 are also needed.
+To make things a bit mor easy,
+we assume to use GCC as compiler,and make as build system.
+(CMake is able to generate other toolchains, but this is not part of this documentation)
+
 ## Linux
 
-### Tools and dependencies
+This section was tested on a Ubuntu 16.04 system.
+
+### Tools and other dependencies
+
+Install tools:
+```bash
+sudo apt-get install cmake make g++
+```
+
+Install libraries:
+```bash
+sudo apt-get install qtbase5-dev qtbase5-dev-tools libqt5gui5 libqt5network5 libqt5sql5 libqt5sql5-mysql libqt5sql5-psql libqt5sql5-sqlite libqt5test5 libqt5widgets5
+```
+
+Optionnally, documentation can also be installed:
+```bash
+sudo apt-get install qtbase5-doc qtbase5-doc-html qtbase5-examples
+```
+
+To install Mdt, one option is to generate basic Debian packages.
+For this, following dependencies are also needed:
+```bash
+sudo apt-get install dpkg dpkg-dev
+```
 
 ### Compile Mdt on Linux
 
+At first, int the source tree, create a build directory and cd to it:
+```bash
+cd ~/opt/mdt/src/multidiagtools
+mkdir -p build/release
+cd build/release
+```
+
+To avoid specifying to many options, Mdt provides some cache files that set common flags.
+For example, for a release build with gcc, use:
+```bash
+cmake -C ../../cmake/caches/ReleaseGcc.cmake ../../
+```
+It is also possible to specify the intallation prefix:
+```bash
+cmake -C ../../cmake/caches/ReleaseGcc.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt ../../
+```
+
+Build (-j4 is for parallel build, allowing max. 4 processes):
+```bash
+make -j4
+```
+
+To run all tests:
+```bash
+make test
+```
+
+### Install Mdt on Linux
+
+To install the library in a non system place,
+i.e. defined above with CMAKE_INSTALL_PREFIX,
+the installation is:
+```bash
+make install
+```
+
+Above method is not recommanded for a system wide installation.
+This section will briefly describe how to generate packages.
+Example to create Debian packages:
+```bash
+rm *.deb
+make package_debian
+```
+To install all generated Debian packages, dpkg can be used:
+```bash
+sudo dpkg -i *.deb
+```
+To install only a subset of them, using dpkg can be tricky,
+because it does not handles dependencies automatically.
+It seems also that apt-get (and other tools based on it) can only work with a repository.
+A possible way to create a local repository is:
+Create a directory that will contain the Debian packages:
+```bash
+mkdir -p /home/you/opt/mdt/debs
+```
+Add a list file in /etc/apt/sources.list.d/ :
+```bash
+sudo echo "deb [trusted=yes] file:///home/you/opt/mdt/debs/ ./" > /etc/apt/sources.list.d/you_mdt_local.list
+```
+Copy the generated Debian packages and the package index file:
+```bash
+cp *.deb Packages.gz /home/you/opt/mdt/debs/
+```
+Update packages database to take the new local packages in account:
+```bash
+sudo apt-get update
+```
+Now, the packages can be installed with apt-get, Synaptic, etc..
+Please note that generated packages are not fully compliant to Debian policy.
+The dependencies are currently not complete.
+For example, Sql-dev depends on qt5base5-dev, but the this is missing in the generated package.
+For details on creating good Debian packages, see https://wiki.debian.org/Packaging
+
+CPack can generate other packages.
+To have a list of packages generators that cpack has on your platform, use:
+```bash
+cpack --help
+```
+Please note that some generators needs some informations that current distribution does not provide.
 
 ## Windows
 
@@ -73,7 +200,66 @@ Some work was also done to support QString, and the ability to read or write lin
 
 ## A HelloWorld example
 
+Take a simple HelloWorld example.
+Source file HelloWorld.cpp could be this:
+```
+#include <Mdt/ItemModel/VariantTableModel.h>
+#include <QTableView>
+#include <QApplication>
+
+using namespace Mdt::ItemModel;
+
+int main(int argc, char **argv)
+{
+  QApplication app(argc, argv);
+  VariantTableModel model;
+  QTableView view;
+
+  view.setModel(&model);
+  view.show();
+  model.populate(3, 2);
+
+  return app.exec();
+}
+```
+
+Write a minimal CMakeLists.txt file:
+```
+cmake_minimum_required(VERSION 3.3)
+
+project(HelloWorld VERSION 0.0.1)
+
+find_package(Qt5 COMPONENTS Widgets)
+find_package(Mdt0 COMPONENTS ItemModel)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+add_executable(helloworld HelloWorld.cpp)
+target_link_libraries(helloworld Qt5::Widgets)
+target_link_libraries(helloworld Mdt0::ItemModel)
+```
+
 ## Build your project on Linux
+
+Create a build directory and go to it:
+```bash
+mkdir -p build/debug
+cd build/debug
+```
+
+If Mdt was installed in system standard way (for example using Debian packages),
+following should be enouth:
+```bash
+cmake ../../
+```
+
+If Mdt was installed in a other place, cmake must know it:
+```bash
+cmake -D CMAKE_PREFIX_PATH=~/opt/mdt ../../
+```
 
 ## Cross compile your project for Windows on a Linux machine
 
@@ -85,7 +271,7 @@ Some work was also done to support QString, and the ability to read or write lin
 
 ## Linux
 
-### Install dependencies
+<!--### Install dependencies
 
 TODO:
  - A) all dependencies here, with comments
@@ -112,19 +298,19 @@ Qt -dev
 
 ### Get Mdt
 
-TODO: put depenendcies to get here.
+TODO: put depenendcies to get here.-->
 
-Currently, only sources are available on github.
+<!--Currently, only sources are available on github.
 
 ```bash
 git clone git://github.com/scandyna/multidiagtools.git
-```
+```-->
 
 ### Compile Mdt
 
 TODO: put dependnecies to build here
 
-Mdt uses CMake as build tool.
+<!--Mdt uses CMake as build tool.
 
 At first, create a build directory and cd to it:
 ```bash
@@ -201,13 +387,13 @@ To have a list of packages generators that cpack has on your platform, use:
 ```bash
 cpack --help
 ```
-Please note that some generators needs some informations that current distribution does not provide.
+Please note that some generators needs some informations that current distribution does not provide.-->
 
 ### Use Mdt in your project
 
 TODO: put dependencies to use here, OR see above...
 
-Take a simple HelloWorld example.
+<!--Take a simple HelloWorld example.
 Source file HelloWorld.cpp could be this:
 ```
 #include <Mdt/ItemModel/VariantTableModel.h>
@@ -264,7 +450,7 @@ cmake ../../
 If Mdt was installed in a other place, cmake must know it:
 ```bash
 cmake -D CMAKE_PREFIX_PATH=~/opt/mdt ../../
-```
+```-->
 
 ## WineHQ
 
