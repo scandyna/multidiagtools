@@ -250,7 +250,7 @@ cd release
 ```
 
 Here is the equivalent script to target 64 bit buid, cmake-win64:
-```
+```bash
 #/bin/sh
 export PATH=~/opt/build/cross/mxe/usr/bin:$PATH
 unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
@@ -263,17 +263,20 @@ Mdt uses CMake as build tool.
 Here we will use the script we created,
 that calls the MXE CMake wrapper.
 
+Here, please consider a important note.
+MXE has created a toolchain file during it's installation,
+which sets CMAKE_INSTALL_PREFIX as a cache variable.
+It can be overwritten ba passing -D CMAKE_INSTALL_PREFIX=some/path
+It defaults to the MXE installation itself.
+Because we not want to install Mdt to MXE's installation, we must allways specify it.
+
 Make shure you allready are in the correct build directory
 (f.ex. build/cross/win32/release)
 
 To avoid specifying to many options, Mdt provides some cache files that set common flags.
 For example, for a release build with gcc, use:
 ```bash
-../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake ../../../../
-```
-It is also possible to specify the intallation prefix:
-```bash
-../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt/win32 ../../../../
+../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt/win32/release ../../../../
 ```
 
 Build (-j4 is for parallel build, allowing max. 4 processes):
@@ -377,10 +380,62 @@ cmake ../../
 
 If Mdt was installed in a other place, cmake must know it:
 ```bash
-cmake -D CMAKE_PREFIX_PATH=~/opt/mdt ../../
+cmake -D CMAKE_PREFIX_PATH=~/opt/helloworld/release ../../
+```
+
+Build (-j4 is for parallel build, allowing max. 4 processes):
+```bash
+make -j4
+```
+
+To run all tests:
+```bash
+make test
 ```
 
 ## Cross compile your project for Windows on a Linux machine
+
+Create a build directory and go to it:
+```bash
+mkdir -p build/cross/win32/release
+cd build/cross/win32/release
+```
+
+Previously, while installing MXE, we created a script, named cmake-win32.
+We will reuse it to build the project.
+Copy it, for example, in build/cross/win32.
+
+Here we have some problem.
+MXE has created a toolchain file during it's installation.
+In this file, 2 important CMake variables are defined:
+ - CMAKE_INSTALL_PREFIX , which is a cache variable, and that can be overwritten by passing it with -D CMAKE_INSTALL_PREFIX=some/path
+   It defaults to the MXE installation itself.
+   Because we not want to install our project to MXE's installation, we must allways specify it.
+ - CMAKE_PREFIX_PATH , which is not a cache variable, so it cannot be overwritten with -D CMAKE_PREFIX_PATH=some/path
+   We need to use a other solution to tell CMake where to find Mdt.
+
+So, each time we open a terminal, we add Mdt to the path.
+Assuming that Mdt was installed in ~/opt/mdt/win32/release:
+```bash
+export PATH=~/opt/mdt/win32/release:$PATH
+```
+
+Then, to initialize the build tree:
+```bash
+../cmake-win32 -D CMAKE_INSTALL_PREFIX=~/opt/helloworld/win32/release ../../../../
+../cmake-win32 -D MDT_CMAKE_PREFIX_PATH=~/opt/mdt/win32/release CMAKE_INSTALL_PREFIX=~/opt/helloworld/win32/release ../../../../
+```
+
+Build (-j4 is for parallel build, allowing max. 4 processes):
+```bash
+make -j4
+```
+
+To run all tests:
+```bash
+make test
+```
+Note that to run the tests, CMake will run wine.
 
 ## Build your project on Windows
 
