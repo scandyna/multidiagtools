@@ -235,7 +235,7 @@ Note: you should put the script in build/win32 , not build/win32/release ,
 else you have the risk to delete it when doing a rm -r *
 
 cmake-win32:
-```
+```bash
 #/bin/sh
 export PATH=~/opt/build/cross/mxe/usr/bin:$PATH
 unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
