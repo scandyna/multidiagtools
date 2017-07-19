@@ -165,21 +165,140 @@ Please note that some generators needs some informations that current distributi
 
 ### Common tools
 
+Following tools are needed as well to build and install Mdt on a native Windows system,
+as well as cross-compile it on a Linux machine.
+
 #### Dependency Walker
 
-#### CMake
+A optionnal, but helpfull tool, [Dependency Walker](http://www.dependencywalker.com/)
+Note: choose a 32bit version (x86 , not x64) to be able to execute it with Wine.
 
 ### Cross compile Mdt for Windows on a Linux machine
 
+My first attempt was to install Wine (then WineHQ)
+and all tools and libraries on it, but this did not work for me.
+
+Here we will use MXE to do cross-compilation.
+You probably will use WineHQ to do some tests, in which case,
+please remeber that WineHQ is possibly not able to run 64 bit executables.
+
 #### Install WineHQ
+
+WineHQ will be needed later to run the unit tests.
+It can also be usefull to use, for example, dependency Walker,
+or to check if your application works.
+
+Please also note, for the nexte sections, that WineHQ probably not support 64 bit executable.
+
+Using Ubuntu 16.04, I personally installed WineHQ successfully
+by following the instructions avaiable on [WineHQ](https://www.winehq.org)
+website, in the Download section.
+Note: while running winecfg, I had to enable the option that emulates a desktop,
+for some tools.
+This is described here: [https://doc.ubuntu-fr.org/wine](https://doc.ubuntu-fr.org/wine)
 
 #### Install MXE
 
+MXE is a powerfull cross-compiler suite that will build all that we need.
+Take a look at [MXE](http://mxe.cc) site for details.
+As stated in the documentation, once MXE is built, it is not relocatable.
+To reuse it for your own project, install it somwhere else than in Mdt source tree.
+In my case, I choosed ~/opt/build/cross as base:
+```bash
+mkdir -p ~/opt/build/cross
+```
+
+MXE has a good step by step [Tutorial](http://mxe.cc/#tutorial),
+simply follow it to install dependencies for your platform.
+
+To make a 32 bit and 64 bit cross compiler that support boost, Qt5 and qwt:
+```bash
+cd ~/opt/build/cross
+git clone https://github.com/mxe/mxe.git
+cd mxe
+make MXE_TARGETS='i686-w64-mingw32.shared.posix x86_64-w64-mingw32.shared.posix' boost qt5 qwt -j4
+```
+
+As described in the documentation, MXE will get and build the dependencies of the libraries we just specified.
+The compilation will take some while.
+
+Now go back to Mdt source tree.
+Create a directory to build a Windows 32 bit version:
+```bash
+mkdir -p build/cross/win32/release
+cd build/cross/win32
+```
+
+Finaly, write a script that will set environnment variable,
+and unset some others as recommanded by MXE, and call the appropriate cmake wrapper.
+Note: you should put the script in build/win32 , not build/win32/release ,
+else you have the risk to delete it when doing a rm -r *
+
+cmake-win32:
+```
+#/bin/sh
+export PATH=~/opt/build/cross/mxe/usr/bin:$PATH
+unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
+i686-w64-mingw32.shared.posix-cmake "$@"
+```
+
+Make the script executable and check that it works:
+```bash
+chmod u+x cmake-win32
+cd release
+../cmake-win32 --version
+```
+
+Here is the equivalent script to target 64 bit buid, cmake-win64:
+```
+#/bin/sh
+export PATH=~/opt/build/cross/mxe/usr/bin:$PATH
+unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
+x86_64-w64-mingw32.shared.posix-cmake "$@"
+```
+
 #### Cross compile Mdt for Windows
+
+Mdt uses CMake as build tool.
+Here we will use the script we created,
+that calls the MXE CMake wrapper.
+
+Make shure you allready are in the correct build directory
+(f.ex. build/cross/win32/release)
+
+To avoid specifying to many options, Mdt provides some cache files that set common flags.
+For example, for a release build with gcc, use:
+```bash
+../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake ../../../../
+```
+It is also possible to specify the intallation prefix:
+```bash
+../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt/win32 ../../../../
+```
+
+Build (-j4 is for parallel build, allowing max. 4 processes):
+```bash
+make -j4
+```
+
+To run all tests:
+```bash
+make test
+```
+Note that to run the tests, CMake will run wine.
+
+To install the library in a non system place,
+i.e. defined above with CMAKE_INSTALL_PREFIX,
+the installation is:
+```bash
+make install
+```
 
 ### Compile Mdt on Windows
 
 #### Additionnal tools and dependencies
+
+##### CMake
 
 ##### MinGW
 
@@ -267,327 +386,12 @@ cmake -D CMAKE_PREFIX_PATH=~/opt/mdt ../../
 
 
 
-# Using Mdt
 
-## Linux
+# Obselete documentation
 
-<!--### Install dependencies
-
-TODO:
- - A) all dependencies here, with comments
- - B) dependencies per sections (see below)
-
-
-Ubuntu (tested on ...)
-apt-get ....
-
-#### Common dependencies
-
-git
-CMake
-C++14 compliant compiler
-Packet générique Debian, build-essentials-xx-yy-
-Qt
-
-#### Dependencies to compile Mdt
-
-dpkg-dev ?
-Qt -dev
-
-#### Dependencies to use Mdt
-
-### Get Mdt
-
-TODO: put depenendcies to get here.-->
-
-<!--Currently, only sources are available on github.
-
-```bash
-git clone git://github.com/scandyna/multidiagtools.git
-```-->
-
-### Compile Mdt
-
-TODO: put dependnecies to build here
-
-<!--Mdt uses CMake as build tool.
-
-At first, create a build directory and cd to it:
-```bash
-mkdir -p build/release
-cd build/release
-```
-
-To avoid specifying to many options, Mdt provides some cache files that set common flags.
-For example, for a release build with gcc, use:
-```bash
-cmake -C ../../cmake/caches/ReleaseGcc.cmake ../../
-```
-It is also possible to specify the intallation prefix:
-```bash
-cmake -C ../../cmake/caches/ReleaseGcc.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt ../../
-```
-
-Build (-j4 is for parallel build, allowing max. 4 processes):
-```bash
-make -j4
-```
-
-To run all tests:
-```bash
-make test
-```
-
-To install the library in a non system place,
-i.e. defined above with CMAKE_INSTALL_PREFIX,
-the installation is:
-```bash
-make install
-```
-
-Above method is not recommandet for a system wide installation.
-This section will briefly describe how to generate packages.
-Example to create Debian packages:
-```bash
-rm *.deb
-make package_debian
-```
-To install all generated Debian packages, dpkg can be used:
-```bash
-sudo dpkg -i *.deb
-```
-To install only a subset of them, using dpkg can be tricky,
-because it does not handles dependencies automatically.
-It seems also that apt-get (and other tools based on it) can only work with a repository.
-A possible way to create a local repository is:
-Create a directory that will contain the Debian packages:
-```bash
-mkdir -p /home/you/opt/mdt/debs
-```
-Add a list file in /etc/apt/sources.list.d/ :
-```bash
-sudo echo "deb [trusted=yes] file:///home/you/opt/mdt/debs/ ./" > /etc/apt/sources.list.d/you_mdt_local.list
-```
-Copy the generated Debian packages and the package index file:
-```bash
-cp *.deb Packages.gz /home/you/opt/mdt/debs/
-```
-Update packages database to take the new local packages in account:
-```bash
-sudo apt-get update
-```
-Now, the packages can be installed with apt-get, Synaptic, etc..
-Please note that generated packages are not fully compliant to Debian policy.
-The dependencies are currently not complete.
-For example, Sql-dev depends on qt5base5-dev, but the this is missing in the generated package.
-For details on creating good Debian packages, see https://wiki.debian.org/Packaging
-
-CPack can generate other packages.
-To have a list of packages generators that cpack has on your platform, use:
-```bash
-cpack --help
-```
-Please note that some generators needs some informations that current distribution does not provide.-->
-
-### Use Mdt in your project
-
-TODO: put dependencies to use here, OR see above...
-
-<!--Take a simple HelloWorld example.
-Source file HelloWorld.cpp could be this:
-```
-#include <Mdt/ItemModel/VariantTableModel.h>
-#include <QTableView>
-#include <QApplication>
-
-using namespace Mdt::ItemModel;
-
-int main(int argc, char **argv)
-{
-  QApplication app(argc, argv);
-  VariantTableModel model;
-  QTableView view;
-
-  view.setModel(&model);
-  view.show();
-  model.populate(3, 2);
-
-  return app.exec();
-}
-```
-
-Write a minimal CMakeLists.txt file:
-```
-cmake_minimum_required(VERSION 3.3)
-
-project(HelloWorld VERSION 0.0.1)
-
-find_package(Qt5 COMPONENTS Widgets)
-find_package(Mdt0 COMPONENTS ItemModel)
-
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-add_executable(helloworld HelloWorld.cpp)
-target_link_libraries(helloworld Qt5::Widgets)
-target_link_libraries(helloworld Mdt0::ItemModel)
-```
-
-Create a build directory and go to it:
-```bash
-mkdir -p build/debug
-cd build/debug
-```
-
-If Mdt was installed in system standard way (for example using Debian packages),
-following should be enouth:
-```bash
-cmake ../../
-```
-
-If Mdt was installed in a other place, cmake must know it:
-```bash
-cmake -D CMAKE_PREFIX_PATH=~/opt/mdt ../../
-```-->
-
-## WineHQ
-
-My first attempt was to install Whine (then WhineHQ)
-and all tools and libraries on it, but this did not work for me.
-For more details, see the aboandonned section "Windows using WineHQ" below.
-
-On the ather hand, WineHQ should be usefull to make some test
-on generated binaries.
-Please also note, for the nexte sections, that WineHQ probably not support 64 bit executable.
-
-Using Ubuntu 16.04, I personally installed WineHQ successfully
-by following the instructions avaiable on [WineHQ](https://www.winehq.org)
-website, in the Download section.
-Note: while running winecfg, I had to enable the option that emulates a desktop,
-else a was unable to install CMake.
-This is described here: [https://doc.ubuntu-fr.org/wine](https://doc.ubuntu-fr.org/wine)
-
-## Tools for Windows
-
-### Dependency Walker
-
-A optionnal, but helpfull tool, [Dependency Walker](http://www.dependencywalker.com/)
-Note: choose a 32bit version (x86 , not x64) to be able to execute it with Wine.
-
-## Windows using cross compilation from Linux
-
-Here we will use MXE to do cross-compilation.
-You probably will use WineHQ to do some tests, in which case,
-please remeber that WineHQ is possibly not able to run 64 bit executables.
-
-### Installing MXE
-
-MXE is a powerfull cross-compiler suite that will build all that we need.
-Take a look at [MXE](http://mxe.cc) site for details.
-As stated in the documentation, once MXE is built, it is not relocatable.
-To reuse it for your own project, install it somwhere else than in Mdt source tree.
-In my case, I choosed ~/opt/build/cross as base:
-```bash
-mkdir -p ~/opt/build/cross
-```
-
-MXE has a good step by step [Tutorial](http://mxe.cc/#tutorial),
-simply follow it to install dependencies for your platform.
-
-To make a 32 bit and 64 bit cross compiler that support boost, Qt5 and qwt:
-```bash
-cd ~/opt/build/cross
-git clone https://github.com/mxe/mxe.git
-cd mxe
-make MXE_TARGETS='i686-w64-mingw32.shared.posix x86_64-w64-mingw32.shared.posix' boost qt5 qwt -j4
-```
-
-As described in the documentation, MXE will get and build the dependencies of the libraries we just specified.
-The compilation will take some while.
-
-Now go back to Mdt source tree.
-Create a directory to build a Windows 32 bit version:
-```bash
-mkdir -p build/cross/win32/release
-cd build/cross/win32
-```
-
-Finaly, write a script that will set environnment variable,
-and unset some others as recommanded by MXE, and call the appropriate cmake wrapper.
-Note: you should put the script in build/win32 , not build/win32/release ,
-else you have the risk to delete it when doing a rm -r *
-
-cmake-win32:
-```
-#/bin/sh
-export PATH=~/opt/build/cross/mxe/usr/bin:$PATH
-unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
-i686-w64-mingw32.shared.posix-cmake "$@"
-```
-
-Make the script executable and check that it works:
-```bash
-chmod u+x cmake-win32
-cd release
-../cmake-win32 --version
-```
-
-Here is the equivalent script to target 64 bit buid, cmake-win64:
-```
-#/bin/sh
-export PATH=~/opt/build/cross/mxe/usr/bin:$PATH
-unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
-x86_64-w64-mingw32.shared.posix-cmake "$@"
-```
-
-### Cross compile Mdt for Windows
-
-Mdt uses CMake as build tool.
-Here we will use the script we created,
-that calls the MXE CMake wrapper.
-
-Make shure you allready are in the correct build directory
-(f.ex. build/cross/win32/release)
-
-To avoid specifying to many options, Mdt provides some cache files that set common flags.
-For example, for a release build with gcc, use:
-```bash
-../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake ../../../../
-```
-It is also possible to specify the intallation prefix:
-```bash
-../cmake-win32 -C ../../../../cmake/caches/ReleaseMxe.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt/win32 ../../../../
-```
-
-Build (-j4 is for parallel build, allowing max. 4 processes):
-```bash
-make -j4
-```
-
-To run all tests:
-```bash
-make test
-```
-Note that to run the tests, CMake will run wine.
-
-To install the library in a non system place,
-i.e. defined above with CMAKE_INSTALL_PREFIX,
-the installation is: TODO Not checked
-```bash
-make install
-```
-
-## Windows using WineHQ
-
-Note: currently, this section was abandoned.
-
-While not having a Windows machine, it is still possible to build some Windows binary,
-and fix some problems.
-Please note that, in my experience, distributed binary of Wine do not support X84_64 executables.
-
-### Install tools and libraries
+Following sections are obselete.
+They are keeped here to later document
+how to use Mdt on a native Windows system.
 
 #### CMake
 
