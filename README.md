@@ -343,7 +343,7 @@ int main(int argc, char **argv)
 ```
 
 Write a minimal CMakeLists.txt file:
-```
+```cmake
 cmake_minimum_required(VERSION 3.3)
 
 project(HelloWorld VERSION 0.0.1)
