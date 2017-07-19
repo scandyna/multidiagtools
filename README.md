@@ -4,15 +4,82 @@ Mdt is a library that should help (in some future) interacting with some common 
 But, today it's just a set of C++ classes, and nothing is complete. Mdt is based on Qt5, but some part of code is platform dependent.
 The branch master is just very old, and work progress only in experimental branch.
 
+## Licnce
+
 ## Libraries
 
-### mdtcsv
+### PlainText
 
-Provides some helper classes to read and write CSV (file or string in memory).
+Provides some helper classes to read and write plain text (file or string in memory).
+
+Currently, the major part of this library is support for CSV.
 A effort was made to follow most of the rules described in [CSV-1203](http://mastpoint.com/csv-1203) specifications,
 but with some tolerances (for example, empty fields are allowed).
 Internally, [Boost.Spirit V2](http://www.boost.org/doc/libs/1_60_0/libs/spirit/doc/html/index.html) is used.
 Some work was also done to support QString, and the ability to read or write line by line.
+
+# Get Mdt
+
+## Linux
+
+## Windows
+
+
+# Compile Mdt
+
+## Linux
+
+### Tools and dependencies
+
+### Compile Mdt on Linux
+
+
+## Windows
+
+### Common tools
+
+#### Dependency Walker
+
+#### CMake
+
+### Cross compile Mdt for Windows on a Linux machine
+
+#### Install WineHQ
+
+#### Install MXE
+
+#### Cross compile Mdt for Windows
+
+### Compile Mdt on Windows
+
+#### Additionnal tools and dependencies
+
+##### MinGW
+
+##### Boost
+
+##### MSYS2 ?
+
+##### ICU ?
+
+##### Qt5
+
+##### Qwt
+
+#### Compile Mdt
+
+
+# Use Mdt in your project
+
+## A HelloWorld example
+
+## Build your project on Linux
+
+## Cross compile your project for Windows on a Linux machine
+
+## Build your project on Windows
+
+
 
 # Using Mdt
 
@@ -313,10 +380,11 @@ Build (-j4 is for parallel build, allowing max. 4 processes):
 make -j4
 ```
 
-To run all tests: TODO Not working now
+To run all tests:
 ```bash
 make test
 ```
+Note that to run the tests, CMake will run wine.
 
 To install the library in a non system place,
 i.e. defined above with CMAKE_INSTALL_PREFIX,
