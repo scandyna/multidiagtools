@@ -49,7 +49,7 @@ It also depend on a C++14 compliant compiler
 (f.ex. allmost recent version GCC or Clang).
 Some libraries, like Qt5 are also needed.
 To make things a bit mor easy,
-we assume to use GCC as compiler,and make as build system.
+we assume to use GCC as compiler, and make as build system.
 (CMake is able to generate other toolchains, but this is not part of this documentation)
 
 ## Linux
@@ -165,7 +165,7 @@ Please note that some generators needs some informations that current distributi
 
 ### Common tools
 
-Following tools are needed as well to build and install Mdt on a native Windows system,
+Following tools are needed to build and install Mdt on a native Windows system,
 as well as cross-compile it on a Linux machine.
 
 #### Dependency Walker
@@ -289,7 +289,7 @@ Note that to run the tests, CMake will run wine.
 
 To install the library in a non system place,
 i.e. defined above with CMAKE_INSTALL_PREFIX,
-the installation is:
+the installation command is:
 ```bash
 make install
 ```
@@ -321,7 +321,7 @@ make install
 
 Take a simple HelloWorld example.
 Source file HelloWorld.cpp could be this:
-```
+```cpp
 #include <Mdt/ItemModel/VariantTableModel.h>
 #include <QTableView>
 #include <QApplication>
