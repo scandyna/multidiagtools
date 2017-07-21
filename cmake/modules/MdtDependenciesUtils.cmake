@@ -141,7 +141,15 @@ function(mdt_copy_binary_dependencies)
   message("==-- UNIX: ${UNIX}")
   message("==-- WIN32: ${WIN32}")
   message("==-- CMAKE_CROSSCOMPILING: ${CMAKE_CROSSCOMPILING}")
-  
+  # Check if we can resolve recusrively
+  # If we are cross-compiling, typically on a Linux system -> Windows,
+  # some system libraries, like KERNEL32.dll, are not available.
+  set(resolve_recursive 1)
+  if(CMAKE_CROSSCOMPILING)
+    message(WARNING "It seems that you are do cross-compilation. It will not be possible to resolve all dependencies. Please use a other tool to add missing ones.")
+    set(resolve_recursive 0)
+  endif()
+  message("==-- resolve_recursive: ${resolve_recursive}")
   # Build the list of directories into which to serach
   # If we have a CMAKE_PREFIX_PATH we do some guesses on how it could be organized
   set(search_directories)
@@ -162,21 +170,32 @@ function(mdt_copy_binary_dependencies)
   # So, lets write our search directories to a file, and tell the path to this file
   set(search_directories_file "${CMAKE_BINARY_DIR}/MdtBinDepsSearchDirectories")
   file(WRITE "${search_directories_file}" "${search_directories}")
-  
-#   file(READ "${search_directories_file}" searchDirsFromFile)
-#   
-#   
-#   message("==-- searchDirsFromFile: ${searchDirsFromFile}")
-#   foreach(file ${searchDirsFromFile})
-#     message("==--  path: ${file}")
-#   endforeach()
-
   # If we are cross-compiling from Linux to Windows, we must sepcify the tool to obtain dependencies
   if(CMAKE_CROSSCOMPILING AND MINGW)
     set(dep_tool objdump)
   endif()
-  
+
   message("==-- dep_tool: ${dep_tool}")
+  # Find our actions file
+  # For some misterious reason, find_file() and find_path() did never find the file.
+  # So, lets do it by hand
+  message("==-- CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
+  set(actions_file "")
+  if(NOT CMAKE_MODULE_PATH)
+    message(WARNING "CMAKE_MODULE_PATH was not set, and is required to find MdtDependenciesUtilsActions.cmake. Resolving dependencies will not be done.")
+    return()
+  endif()
+  foreach(path ${CMAKE_MODULE_PATH})
+    if(EXISTS "${path}/MdtDependenciesUtilsActions.cmake")
+      set(actions_file "${path}/MdtDependenciesUtilsActions.cmake")
+      break()
+    endif()
+  endforeach()
+  message("==-- actions_file: ${actions_file}")
+  if(NOT actions_file)
+    message(WARNING "Could not find MdtDependenciesUtilsActions.cmake. Resolving dependencies will not be done.")
+    return()
+  endif()
   # Create a new target that depends on TARGET
   add_custom_target(
     ${target}_bin_deps
@@ -185,14 +204,13 @@ function(mdt_copy_binary_dependencies)
             -D ACTION=mdt_copy_binary_dependencies -D BINARY_FILE="$<TARGET_FILE:${target}>"
             -D DESTINATION_DIRECTORY="${destination_directory}"
             -D SEARCH_DIRECTORIES_FILE="${search_directories_file}"
+            -D RESOLVE_RECURSIVE=${resolve_recursive}
             -D DEP_TOOL=${dep_tool}
-            -P "${CMAKE_SOURCE_DIR}/cmake/modules/MdtDependenciesUtilsActions.cmake"  # TODO can call relative to known module path?
-#     DEPENDS ${target}
+            -P "${actions_file}"
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
     VERBATIM
   )
   add_dependencies(${target}_bin_deps ${target})
-#   add_dependencies(${target} ${target}_bin_deps)
 endfunction()
 
 # Helper function to get the full path of a binary target

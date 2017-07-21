@@ -101,16 +101,29 @@ add_subdirectory(libs/ItemEditor_Sql)
 # Unit tests
 #################################################################################################################################################
 
-
+# On Windows, we have to copy external libraries to the test runtime directory
+# Why I not found a proper way to get a list of all existing tests,
+# just put some of them that have the most dependencies.
 include(MdtDependenciesUtils)
-mdt_copy_binary_dependencies(
-  TARGET mdterrortest
-  DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
+if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+  mdt_copy_binary_dependencies(
+    TARGET mdterrortest
+    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+  )
+  mdt_copy_binary_dependencies(
+    TARGET mdtitemeditor_sqlcontrollertest
+    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+  )
+
+endif()
+#   mdt_copy_binary_dependencies(
+#     TARGET mdterrortest
+#     DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+#   )
+
 mdt_install_binary_dependencies(
   TARGET Error
 )
-
 
 # On Windows, we have to copy external libraries to the test runtime directory
 # if(WIN32)

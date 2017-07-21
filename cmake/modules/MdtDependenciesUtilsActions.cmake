@@ -5,8 +5,11 @@ include(GetPrerequisites)
 # Input arguments:
 #  BINARY_FILE:
 #   Full path to a library or a executable
-#  SEARCH_DIRECTORIES:
+#  SEARCH_DIRECTORIES (optionnal):
 #   List of full path to directories where to find dependencies
+#  RESOLVE_RECURSIVE:
+#   Tell if resolving must be done recursively.
+#   When do cross-compilation, should be 0
 #  DEP_TOOL (optionnal):
 #   Tool to get dependencies.
 #   Only use when cross-compiling
@@ -15,38 +18,36 @@ include(GetPrerequisites)
 #
 function(mdt_copy_binary_dependencies)
   # Parse arguments
-  set(oneValueArgs BINARY_FILE DEP_TOOL DESTINATION_DIRECTORY)
+  set(oneValueArgs BINARY_FILE RESOLVE_RECURSIVE DEP_TOOL DESTINATION_DIRECTORY)
   set(multiValueArgs SEARCH_DIRECTORIES)
   cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   # Set our local variables and check the mandatory ones
-#   set(binary_file "${VAR_BINARY_FILE}")
-  string(REGEX REPLACE "^\"|\"$" "" binary_file "${VAR_BINARY_FILE}")
+  set(binary_file "${VAR_BINARY_FILE}")
   if(NOT binary_file)
     message(FATAL_ERROR "mdt_copy_binary_dependencies(): BINARY_FILE argument is missing.")
   endif()
+  set(resolve_recursive "${VAR_RESOLVE_RECURSIVE}")
   set(search_directories "${VAR_SEARCH_DIRECTORIES}")
-  if(NOT search_directories)
-    message(FATAL_ERROR "mdt_copy_binary_dependencies(): SEARCH_DIRECTORIES argument is missing.")
-  endif()
+#   if(NOT search_directories)
+#     message(FATAL_ERROR "mdt_copy_binary_dependencies(): SEARCH_DIRECTORIES argument is missing.")
+#   endif()
   set(destination_directory "${VAR_DESTINATION_DIRECTORY}")
   if(NOT destination_directory)
     message(FATAL_ERROR "mdt_copy_binary_dependencies(): DESTINATION_DIRECTORY argument is missing.")
   endif()
-  
-
-  # Get dependencies
   message(STATUS "Searching dependencies for ${binary_file}")
+  # Get dependencies
   get_filename_component(binary_file_directory "${binary_file}" DIRECTORY)
-  message("binary_file_directory: ${binary_file_directory}")
+#   message("binary_file_directory: ${binary_file_directory}")
   if(VAR_DEP_TOOL)
     set(gp_tool ${VAR_DEP_TOOL})
   endif()
   message("== ACT gp_tool: ${gp_tool}")
   message("== ACT search_directories: ${search_directories}")
   set(dependencies "")
-  get_prerequisites("${binary_file}" dependencies 0 0 "${binary_file_directory}" ${search_directories})
+  get_prerequisites("${binary_file}" dependencies 0 ${resolve_recursive} "${binary_file_directory}" "${search_directories}")
   
-  message("dependencies: ${dependencies}")
+#   message("dependencies: ${dependencies}")
   
   # Remove dependencies that are system libraries
   list(REMOVE_ITEM dependencies "KERNEL32.dll" "msvcrt.dll")
@@ -77,6 +78,9 @@ endfunction()
 #  DEP_TOOL (optionnal):
 #   Tool to get dependencies.
 #   Only use when cross-compiling
+#  RESOLVE_RECURSIVE:
+#   Tell if resolving must be done recursively.
+#   When do cross-compilation, should be 0
 #  SEARCH_DIRECTORIES_FILE:
 #   File that contains a list of full path to directories where to find dependencies
 #  DESTINATION_DIRECTORY:
@@ -111,6 +115,7 @@ if(${ACTION} STREQUAL mdt_copy_binary_dependencies)
   mdt_copy_binary_dependencies(
     BINARY_FILE "${binary_file}"
     SEARCH_DIRECTORIES ${search_directories}
+    RESOLVE_RECURSIVE ${RESOLVE_RECURSIVE}
     DEP_TOOL ${DEP_TOOL}
     DESTINATION_DIRECTORY "${destination_directory}"
   )
