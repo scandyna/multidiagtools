@@ -32,7 +32,6 @@ if(WIN32)
   set(CMAKE_CROSSCOMPILING_EMULATOR wine)
 endif()
 
-
 # Enable testing
 # Must be placed before any add_subdirectory() command, else tests that are defined in sub-directories will be ignored
 enable_testing()
@@ -102,20 +101,43 @@ add_subdirectory(libs/ItemEditor_Sql)
 # Unit tests
 #################################################################################################################################################
 
+
+include(MdtDependenciesUtils)
+mdt_copy_binary_dependencies(
+  TARGET mdterrortest
+  DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+mdt_install_binary_dependencies(
+  TARGET Error
+)
+
+
 # On Windows, we have to copy external libraries to the test runtime directory
+# if(WIN32)
+#   include(MdtDependenciesUtils)
+#   mdt_copy_binary_dependencies(
+#     TARGET mdterrortest
+#     DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+#   )
+#   mdt_install_binary_dependencies(
+#     TARGET Error
+#   )
+# 
+# endif()
+
 # TODO should try to not specify the complete dll name
-if(WIN32)
-  mdt_copy_external_libraries_files(DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-  set(CMAKE_FIND_LIBRARY_SUFFIXES .dll)
-  mdt_find_and_copy_libraries(
-    LIBRARIES
-      libstdc++-6.dll libwinpthread-1.dll libgcc_s_sjlj-1.dll libeay32.dll zlib1.dll
-      ssleay32.dll libharfbuzz-0.dll libpng16-16.dll libpcre2-16-0.dll libfreetype-6.dll libglib-2.0-0.dll 
-      libbz2.dll libintl-8.dll libpcre-1.dll libiconv-2.dll
-      Qt5Test.dll
-    DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-  )
-endif()
+# if(WIN32)
+#   mdt_copy_external_libraries_files(DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+#   set(CMAKE_FIND_LIBRARY_SUFFIXES .dll)
+#   mdt_find_and_copy_libraries(
+#     LIBRARIES
+#       libstdc++-6.dll libwinpthread-1.dll libgcc_s_sjlj-1.dll libeay32.dll zlib1.dll
+#       ssleay32.dll libharfbuzz-0.dll libpng16-16.dll libpcre2-16-0.dll libfreetype-6.dll libglib-2.0-0.dll 
+#       libbz2.dll libintl-8.dll libpcre-1.dll libiconv-2.dll
+#       Qt5Test.dll
+#     DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+#   )
+# endif()
 
 #################################################################################################################################################
 # Top level package configuration files

@@ -42,6 +42,13 @@ git clone git://github.com/scandyna/multidiagtools.git
 
 TODO: to be documented
 
+# Build the API documentation
+
+## Linux
+
+## Windows
+
+
 # Compile Mdt
 
 Mdt uses CMake as build management system.
@@ -352,12 +359,20 @@ cmake_minimum_required(VERSION 3.3)
 project(HelloWorld VERSION 0.0.1)
 
 # Add path to Mdt root
-# Using a custom MDT_CMAKE_PREFIX_PATH has some advantages:
+# Using a custom MDT_PREFIX_PATH has some advantages:
 # - It can be reused, for example to specify CMAKE_MODULE_PATH
 # - It solves the problem that CMAKE_PREFIX_PATH is ignoren when cross-compiling with MXE
-if(MDT_CMAKE_PREFIX_PATH)
-  set(CMAKE_PREFIX_PATH "${MDT_CMAKE_PREFIX_PATH};${CMAKE_PREFIX_PATH}")
-  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${MDT_CMAKE_PREFIX_PATH}/share/cmake/modules")
+if(MDT_PREFIX_PATH)
+  set(CMAKE_PREFIX_PATH "${MDT_PREFIX_PATH};${CMAKE_PREFIX_PATH}")
+  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${MDT_PREFIX_PATH}/share/cmake/modules")
+endif()
+
+# On Windows, RPATH do not exist
+# To be able to run tests, we have to put all binaries in the same directory
+# We also tell CMake to use Wine to execute tests if we cross-compiled
+if(WIN32)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+  set(CMAKE_CROSSCOMPILING_EMULATOR wine)
 endif()
 
 find_package(Qt5 COMPONENTS Widgets)
@@ -371,14 +386,18 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_executable(helloworld HelloWorld.cpp)
 target_link_libraries(helloworld Qt5::Widgets)
 target_link_libraries(helloworld Mdt0::ItemModel)
+
+
+
+
 ```
 
 ## Build your project on Linux
 
 Create a build directory and go to it:
 ```bash
-mkdir -p build/debug
-cd build/debug
+mkdir -p build/release
+cd build/release
 ```
 
 If Mdt was installed in system standard way (for example using Debian packages),
@@ -389,7 +408,12 @@ cmake ../../
 
 If Mdt was installed in a other place, cmake must know it:
 ```bash
-cmake -D CMAKE_PREFIX_PATH=~/opt/helloworld/release ../../
+cmake -D MDT_PREFIX_PATH=~/opt/mdt/release ../../
+```
+
+It is also possible to specify a installation prefix:
+```bash
+cmake -D CMAKE_INSTALL_PREFIX=~/opt/helloworld/release ../../
 ```
 
 Build (-j4 is for parallel build, allowing max. 4 processes):
@@ -414,25 +438,19 @@ Previously, while installing MXE, we created a script, named cmake-win32.
 We will reuse it to build the project.
 Copy it, for example, in build/cross/win32.
 
-Here we have some problem.
+Please take into acount the following note.
 MXE has created a toolchain file during it's installation.
 In this file, 2 important CMake variables are defined:
  - CMAKE_INSTALL_PREFIX , which is a cache variable, and that can be overwritten by passing it with -D CMAKE_INSTALL_PREFIX=some/path
    It defaults to the MXE installation itself.
    Because we not want to install our project to MXE's installation, we must allways specify it.
  - CMAKE_PREFIX_PATH , which is not a cache variable, so it cannot be overwritten with -D CMAKE_PREFIX_PATH=some/path
-   We need to use a other solution to tell CMake where to find Mdt.
+   If you write a CMakeLists.txt as proposed above, using MDT_PREFIX_PATH, this is no longer a problem.
 
-So, each time we open a terminal, we add Mdt to the path.
-Assuming that Mdt was installed in ~/opt/mdt/win32/release:
+Assuming that Mdt was installed in ~/opt/mdt/win32/release ,
+initialize the build tree with this command:
 ```bash
-export PATH=~/opt/mdt/win32/release:$PATH
-```
-
-Then, to initialize the build tree:
-```bash
-../cmake-win32 -D CMAKE_INSTALL_PREFIX=~/opt/helloworld/win32/release ../../../../
-../cmake-win32 -D MDT_CMAKE_PREFIX_PATH=~/opt/mdt/win32/release CMAKE_INSTALL_PREFIX=~/opt/helloworld/win32/release ../../../../
+../cmake-win32 -D MDT_PREFIX_PATH=~/opt/mdt/win32/release -D CMAKE_INSTALL_PREFIX=~/opt/helloworld/win32/release ../../../../
 ```
 
 Build (-j4 is for parallel build, allowing max. 4 processes):

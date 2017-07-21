@@ -1,4 +1,8 @@
 
+# Enable multi-arch installation
+# For example, install libraries to /usr/lib/x86_64-linux-gnu on a x86_64 Debian
+include(GNUInstallDirs)
+
 # When getting a imported target LOCATION
 # CMake fails on some libraries, like Threads,
 # with a obscure message about whitelist and not allowed property LOCATION
@@ -66,6 +70,161 @@ function(mdt_get_library_internal_dependencies MDT_DEPENDENCIES)
     endif()
   endforeach()
   set(${MDT_DEPENDENCIES} ${mdt_dep_targets} PARENT_SCOPE)
+endfunction()
+
+
+# Create a rule to install dependencies of a binary target
+#
+# This can be usefull to create packages which also contains
+# libraries given target depends on.
+#
+# Input arguments:
+#  TARGET:
+#   Name of the target for which to install dependencies
+#
+function(mdt_install_binary_dependencies)
+  # Parse arguments
+  set(oneValueArgs TARGET)
+  cmake_parse_arguments(VAR "" "${oneValueArgs}" "" ${ARGN})
+  # Set our local variables and check the mandatory ones
+  set(target "${VAR_TARGET}")
+  if(NOT target)
+    message(FATAL_ERROR "mdt_install_binary_dependencies(): TARGET argument is missing.")
+  endif()
+  # Create a custom target that depends on target and that will put dependencies in a directory
+  mdt_copy_binary_dependencies(
+    TARGET ${target}
+    DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/MdtBinaryDependencies"
+  )
+  # Create a install rule for this new target
+  install(
+    DIRECTORY "${CMAKE_BINARY_DIR}/MdtBinaryDependencies"
+    DESTINATION bin
+  )
+endfunction()
+
+# Copy dependencies of a binary target to a directory
+#
+# This can be used to copy needed dependencies to run unit test
+# on systems that not support RPATH (f.ex. Windows).
+#
+# Note that the copy is not done when this function is called.
+# Behind the scene, a target that depend on TARGET is created,
+# so the dependnecies are only evaluated after TARGET was built.
+#
+# Input arguments:
+#  TARGET:
+#   Name of the target for which to copy dependencies
+#  DESTINATION_DIRECTORY:
+#   Full path to the destination directory
+#
+function(mdt_copy_binary_dependencies)
+  # Parse arguments
+  set(oneValueArgs TARGET DESTINATION_DIRECTORY)
+  cmake_parse_arguments(VAR "" "${oneValueArgs}" "" ${ARGN})
+  # Set our local variables and check the mandatory ones
+  set(target "${VAR_TARGET}")
+  if(NOT target)
+    message(FATAL_ERROR "mdt_copy_binary_dependencies(): TARGET argument is missing.")
+  endif()
+  set(destination_directory "${VAR_DESTINATION_DIRECTORY}")
+  if(NOT destination_directory)
+    message(FATAL_ERROR "mdt_copy_binary_dependencies(): DESTINATION_DIRECTORY argument is missing.")
+  endif()
+  
+  
+#   set(searchDirs "/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/bin" "/home/philippe/opt/build/cross/mxe/usr/bin" "${CMAKE_BINARY_DIR}/bin")
+  message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+  set(searchDirs "/home/philippe/opt/mdt/debug")
+  
+  message("==-- MINGW: ${MINGW}")
+  message("==-- UNIX: ${UNIX}")
+  message("==-- WIN32: ${WIN32}")
+  message("==-- CMAKE_CROSSCOMPILING: ${CMAKE_CROSSCOMPILING}")
+  
+  # Build the list of directories into which to serach
+  # If we have a CMAKE_PREFIX_PATH we do some guesses on how it could be organized
+  set(search_directories)
+  foreach(path ${CMAKE_PREFIX_PATH})
+    message("==--  path: ${path}")
+    list(APPEND search_directories "${path}")
+    list(APPEND search_directories "${path}/bin")
+    # Cross-compilation with MXE
+    list(APPEND search_directories "${path}/qt5/bin")
+  endforeach()
+  
+  message("==-- search_directories: ${search_directories}")
+  # Passing a list of elements to a COMMAND argument is a problem.
+  # So, lets write our search directories to a file, and tell the path to this file
+  set(search_directories_file "${CMAKE_BINARY_DIR}/MdtBinDepsSearchDirectories")
+  file(WRITE "${search_directories_file}" "${search_directories}")
+  
+#   file(READ "${search_directories_file}" searchDirsFromFile)
+#   
+#   
+#   message("==-- searchDirsFromFile: ${searchDirsFromFile}")
+#   foreach(file ${searchDirsFromFile})
+#     message("==--  path: ${file}")
+#   endforeach()
+
+  # If we are cross-compiling from Linux to Windows, we must sepcify the tool to obtain dependencies
+  if(CMAKE_CROSSCOMPILING AND MINGW)
+    set(dep_tool objdump)
+  endif()
+  
+  message("==-- dep_tool: ${dep_tool}")
+  # Create a new target that depends on TARGET
+  add_custom_target(
+    ${target}_bin_deps
+    ALL
+    COMMAND "${CMAKE_COMMAND}"
+            -D ACTION=mdt_copy_binary_dependencies -D BINARY_FILE="$<TARGET_FILE:${target}>"
+            -D DESTINATION_DIRECTORY="${destination_directory}"
+            -D SEARCH_DIRECTORIES_FILE="${search_directories_file}"
+            -D DEP_TOOL=${dep_tool}
+            -P "${CMAKE_SOURCE_DIR}/cmake/modules/MdtDependenciesUtilsActions.cmake"  # TODO can call relative to known module path?
+#     DEPENDS ${target}
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+    VERBATIM
+  )
+  add_dependencies(${target}_bin_deps ${target})
+#   add_dependencies(${target} ${target}_bin_deps)
+endfunction()
+
+# Helper function to get the full path of a binary target
+#
+# Input arguments:
+#  TARGET:
+#   Name of the target for which to copy dependencies
+# Output arguments:
+#  FILE_PATH:
+#   If TARGET is a library or a executable, its file path wil be set here,
+#   otherwise FILE_PATH will be empty.
+#
+function(mdt_get_binary_target_file_path FILE_PATH)
+  # Parse arguments
+  set(oneValueArgs TARGET)
+  cmake_parse_arguments(VAR "" "${oneValueArgs}" "" ${ARGN})
+  # Set our local variables and check the mandatory ones
+  set(target "${VAR_TARGET}")
+  if(NOT target)
+    message(FATAL_ERROR "mdt_get_binary_target_file_path(): TARGET argument is missing.")
+  endif()
+  set(file_path "")
+  # Try to get library name
+#   get_target_property(basename ${target} RUNTIME_OUTPUT_NAME)
+#   if(basename)
+#     
+#   else()
+#     # Try to get executable name
+#     get_target_property(basename ${target} LIBRARY_OUTPUT_NAME)
+#     if(basename)
+#       
+#     endif()
+#   endif()
+#   message("basename: ${basename}")
+  message("$<TARGET_FILE:${target}>")
+
 endfunction()
 
 # Register a external library file
@@ -145,6 +304,11 @@ function(mdt_copy_external_libraries_files)
   endforeach()
   file(COPY ${external_libraries_files} DESTINATION "${destination_directory}")
 endfunction()
+
+
+# TODO custom target to install dlls - Must depend on target (see translations and MdtCPackComponent.cmake for examples)
+#      See GetPrerequisites CMake module
+# TODO custem target to copy dlls into test directory
 
 # Find and copy a library
 #
