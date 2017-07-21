@@ -2,17 +2,17 @@ window_sizes 1280 963 319 955 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 3571970 // SortSetupDialog
-    899 911 100 21 24 0
+    899 911 100 B-Landscape 24 0
   classdiagram_ref 3274626 // SortFilterProxyModel
-    120 98 100 18 0 0
+    120 98 100 A4-Landscape 0 0
   classdiagram_ref 3578498 // ColumnSortOrderSetupWidget
-    120 98 100 21 0 0
+    120 98 100 B-Landscape 0 0
   classdiagram_ref 3578754 // ColumnListModel
-    955 911 100 18 0 0
+    955 911 100 A4-Landscape 0 0
   classdiagram_ref 3585282 // ColumnSelection
-    955 911 100 18 0 0
+    955 911 100 A4-Landscape 0 0
   active  classdiagram_ref 3591810 // FileReader
-    955 911 100 18 0 0
+    955 911 100 A4-Landscape 0 0
 end
 show_stereotypes
 selected class_ref 4145026 // FileReader
