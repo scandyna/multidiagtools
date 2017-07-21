@@ -152,6 +152,10 @@ function(mdt_copy_binary_dependencies)
     # Cross-compilation with MXE
     list(APPEND search_directories "${path}/qt5/bin")
   endforeach()
+  # Directories to resolve libraries of current project
+  if(CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+    list(APPEND search_directories "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+  endif()
   
   message("==-- search_directories: ${search_directories}")
   # Passing a list of elements to a COMMAND argument is a problem.

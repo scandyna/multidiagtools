@@ -47,6 +47,18 @@ function(mdt_copy_binary_dependencies)
   get_prerequisites("${binary_file}" dependencies 0 0 "${binary_file_directory}" ${search_directories})
   
   message("dependencies: ${dependencies}")
+  
+  # Remove dependencies that are system libraries
+  list(REMOVE_ITEM dependencies "KERNEL32.dll" "msvcrt.dll")
+  # Copy dependencies
+  set(dependencies_files)
+  foreach(file ${dependencies})
+    message("  file: ${file}")
+    gp_resolve_item("${binary_file}" "${file}" "" "${search_directories}" file_path)
+    message("   file_path: ${file_path}")
+    list(APPEND dependencies_files "${file_path}")
+  endforeach()
+  file(COPY ${dependencies_files} DESTINATION "${destination_directory}")
 
 #   list_prerequisites("${binary_file}" 1)
   
