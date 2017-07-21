@@ -103,6 +103,7 @@ function(mdt_install_binary_dependencies)
   )
 endfunction()
 
+# TODO Add a QUIET, or W_QUIET, or NO_WARNINGS option !
 # Copy dependencies of a binary target to a directory
 #
 # This can be used to copy needed dependencies to run unit test
@@ -131,16 +132,6 @@ function(mdt_copy_binary_dependencies)
   if(NOT destination_directory)
     message(FATAL_ERROR "mdt_copy_binary_dependencies(): DESTINATION_DIRECTORY argument is missing.")
   endif()
-  
-  
-#   set(searchDirs "/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/bin" "/home/philippe/opt/build/cross/mxe/usr/bin" "${CMAKE_BINARY_DIR}/bin")
-  message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
-  set(searchDirs "/home/philippe/opt/mdt/debug")
-  
-  message("==-- MINGW: ${MINGW}")
-  message("==-- UNIX: ${UNIX}")
-  message("==-- WIN32: ${WIN32}")
-  message("==-- CMAKE_CROSSCOMPILING: ${CMAKE_CROSSCOMPILING}")
   # Check if we can resolve recusrively
   # If we are cross-compiling, typically on a Linux system -> Windows,
   # some system libraries, like KERNEL32.dll, are not available.
@@ -149,12 +140,10 @@ function(mdt_copy_binary_dependencies)
     message(WARNING "It seems that you are do cross-compilation. It will not be possible to resolve all dependencies. Please use a other tool to add missing ones.")
     set(resolve_recursive 0)
   endif()
-  message("==-- resolve_recursive: ${resolve_recursive}")
   # Build the list of directories into which to serach
   # If we have a CMAKE_PREFIX_PATH we do some guesses on how it could be organized
   set(search_directories)
   foreach(path ${CMAKE_PREFIX_PATH})
-    message("==--  path: ${path}")
     list(APPEND search_directories "${path}")
     list(APPEND search_directories "${path}/bin")
     # Cross-compilation with MXE
@@ -164,8 +153,6 @@ function(mdt_copy_binary_dependencies)
   if(CMAKE_RUNTIME_OUTPUT_DIRECTORY)
     list(APPEND search_directories "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
   endif()
-  
-  message("==-- search_directories: ${search_directories}")
   # Passing a list of elements to a COMMAND argument is a problem.
   # So, lets write our search directories to a file, and tell the path to this file
   set(search_directories_file "${CMAKE_BINARY_DIR}/MdtBinDepsSearchDirectories")
@@ -174,12 +161,9 @@ function(mdt_copy_binary_dependencies)
   if(CMAKE_CROSSCOMPILING AND MINGW)
     set(dep_tool objdump)
   endif()
-
-  message("==-- dep_tool: ${dep_tool}")
   # Find our actions file
   # For some misterious reason, find_file() and find_path() did never find the file.
   # So, lets do it by hand
-  message("==-- CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
   set(actions_file "")
   if(NOT CMAKE_MODULE_PATH)
     message(WARNING "CMAKE_MODULE_PATH was not set, and is required to find MdtDependenciesUtilsActions.cmake. Resolving dependencies will not be done.")
@@ -191,7 +175,6 @@ function(mdt_copy_binary_dependencies)
       break()
     endif()
   endforeach()
-  message("==-- actions_file: ${actions_file}")
   if(NOT actions_file)
     message(WARNING "Could not find MdtDependenciesUtilsActions.cmake. Resolving dependencies will not be done.")
     return()
@@ -211,42 +194,6 @@ function(mdt_copy_binary_dependencies)
     VERBATIM
   )
   add_dependencies(${target}_bin_deps ${target})
-endfunction()
-
-# Helper function to get the full path of a binary target
-#
-# Input arguments:
-#  TARGET:
-#   Name of the target for which to copy dependencies
-# Output arguments:
-#  FILE_PATH:
-#   If TARGET is a library or a executable, its file path wil be set here,
-#   otherwise FILE_PATH will be empty.
-#
-function(mdt_get_binary_target_file_path FILE_PATH)
-  # Parse arguments
-  set(oneValueArgs TARGET)
-  cmake_parse_arguments(VAR "" "${oneValueArgs}" "" ${ARGN})
-  # Set our local variables and check the mandatory ones
-  set(target "${VAR_TARGET}")
-  if(NOT target)
-    message(FATAL_ERROR "mdt_get_binary_target_file_path(): TARGET argument is missing.")
-  endif()
-  set(file_path "")
-  # Try to get library name
-#   get_target_property(basename ${target} RUNTIME_OUTPUT_NAME)
-#   if(basename)
-#     
-#   else()
-#     # Try to get executable name
-#     get_target_property(basename ${target} LIBRARY_OUTPUT_NAME)
-#     if(basename)
-#       
-#     endif()
-#   endif()
-#   message("basename: ${basename}")
-  message("$<TARGET_FILE:${target}>")
-
 endfunction()
 
 # Register a external library file
@@ -282,14 +229,6 @@ function(mdt_register_external_library_file)
     GLOBAL
     PROPERTY MDT_EXTERNAL_LIBRARIES_FILES ${external_libraries_files}
   )
-endfunction()
-
-# Create a install rule for external dependencies
-#
-# Will install files registered in MDT_EXTERNAL_LIBRARIES_FILES variable
-#
-function(mdt_install_external_libraries_files)
-
 endfunction()
 
 # Copy external libraries files to a directory
@@ -365,14 +304,33 @@ function(mdt_find_and_copy_libraries)
   if(NOT destination_directory)
     message(FATAL_ERROR "mdt_find_and_copy_libraries(): DESTINATION_DIRECTORY argument is missing.")
   endif()
+  # On Windows, we need to find dll libraries, not .a or .dll.a
+  # Setting CMAKE_FIND_LIBRARY_SUFFIXES does not fix the problem.
+  # So, we tell CMake to only search in bin directories, not lib
+  set(search_directories "")
+  if(WIN32)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES .dll)
+    foreach(directory ${CMAKE_FIND_ROOT_PATH})
+      list(APPEND search_directories "${directory}/bin")
+      list(APPEND search_directories "${directory}/qt5/bin")
+    endforeach()
+    foreach(directory ${CMAKE_PREFIX_PATH})
+      list(APPEND search_directories "${directory}/bin")
+      list(APPEND search_directories "${directory}/qt5/bin")
+    endforeach()
+  else()
+    list(APPEND search_directories ${CMAKE_FIND_ROOT_PATH})
+    list(APPEND search_directories ${CMAKE_PREFIX_PATH})
+  endif()
+  message("search_directories: ${search_directories}")
   # Find libraries
-  message("CMAKE_FIND_LIBRARY_SUFFIXES: ${CMAKE_FIND_LIBRARY_SUFFIXES}")
-  
   set(libraries_files "")
   message("*  libraries_files: ${libraries_files} *")
+  
   foreach(library ${libraries})
     message("-- Searching ${library}")
-    find_library(${library}_file NAMES ${library} PATH_SUFFIXES qt5/bin)
+#     set(${library}_file "")
+    find_library(${library}_file NAMES ${library} PATHS ${search_directories} NO_DEFAULT_PATH)
     if(NOT ${library}_file)
       message(WARNING "Could not find library ${library}")
     else()
@@ -380,6 +338,8 @@ function(mdt_find_and_copy_libraries)
       list(APPEND libraries_files "${${library}_file}")
     endif()
   endforeach()
+#   message("3) CMAKE_FIND_LIBRARY_SUFFIXES: ${CMAKE_FIND_LIBRARY_SUFFIXES}")
+#   set(CMAKE_FIND_LIBRARY_SUFFIXES ${ORIGINAL_CMAKE_FIND_LIBRARY_SUFFIXES})
   # Copy the libraries
   message("** libraries_files: ${libraries_files} **")
   if(libraries_files)
