@@ -38,31 +38,20 @@ function(mdt_copy_binary_dependencies)
   message(STATUS "Searching dependencies for ${binary_file}")
   # Get dependencies
   get_filename_component(binary_file_directory "${binary_file}" DIRECTORY)
-#   message("binary_file_directory: ${binary_file_directory}")
   if(VAR_DEP_TOOL)
     set(gp_tool ${VAR_DEP_TOOL})
   endif()
-  message("== ACT gp_tool: ${gp_tool}")
-  message("== ACT search_directories: ${search_directories}")
   set(dependencies "")
   get_prerequisites("${binary_file}" dependencies 0 ${resolve_recursive} "${binary_file_directory}" "${search_directories}")
-  
-#   message("dependencies: ${dependencies}")
-  
   # Remove dependencies that are system libraries
   list(REMOVE_ITEM dependencies "KERNEL32.dll" "msvcrt.dll")
   # Copy dependencies
   set(dependencies_files)
   foreach(file ${dependencies})
-    message("  file: ${file}")
     gp_resolve_item("${binary_file}" "${file}" "" "${search_directories}" file_path)
-    message("   file_path: ${file_path}")
     list(APPEND dependencies_files "${file_path}")
   endforeach()
   file(COPY ${dependencies_files} DESTINATION "${destination_directory}")
-
-#   list_prerequisites("${binary_file}" 1)
-  
 endfunction()
 
 
@@ -103,15 +92,9 @@ if(${ACTION} STREQUAL mdt_copy_binary_dependencies)
   string(REGEX REPLACE "^\"|\"$" "" binary_file "${BINARY_FILE}")
   string(REGEX REPLACE "^\"|\"$" "" destination_directory "${DESTINATION_DIRECTORY}")
   string(REGEX REPLACE "^\"|\"$" "" search_directories_file "${SEARCH_DIRECTORIES_FILE}")
-
-  message("== ACT Main BINARY_FILE: ${binary_file}")
-  message("== ACT Main DESTINATION_DIRECTORY: ${destination_directory}")
-  message("== ACT Main SEARCH_DIRECTORIES_FILE: ${search_directories_file}")
-  message("== ACT Main DEP_TOOL: ${DEP_TOOL}")
-  
   # Build the list of search directories
   file(READ "${search_directories_file}" search_directories)
-  
+
   mdt_copy_binary_dependencies(
     BINARY_FILE "${binary_file}"
     SEARCH_DIRECTORIES ${search_directories}
@@ -122,5 +105,3 @@ if(${ACTION} STREQUAL mdt_copy_binary_dependencies)
 else()
   message(FATAL_ERROR "Unknown action: ${ACTION}")
 endif()
-
-message("------ BINARY_FILE: ${BINARY_FILE}")
