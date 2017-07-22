@@ -116,27 +116,12 @@ function(mdt_add_library)
     )
   endif()
   # Commands to install the library
-  # TODO Using RUNTIME DESTINATION should be better. See CMake doc, we could then get rid of if(WIN32)
-  # Example:
-#     install(TARGETS ${target_name}
-#             EXPORT ${library_name}Targets
-#             LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-#             RUNTIME DESTINATION bin
-#             COMPONENT ${target_name}
-#     )
-  if(WIN32)
-    install(TARGETS ${target_name}
-            EXPORT ${library_name}Targets
-            DESTINATION bin
-            COMPONENT ${target_name}
-    )
-  else()
-    install(TARGETS ${target_name}
-            EXPORT ${library_name}Targets
-            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-            COMPONENT ${target_name}
-    )
-  endif()
+  install(TARGETS ${target_name}
+          EXPORT ${library_name}Targets
+          LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+          RUNTIME DESTINATION bin
+          COMPONENT ${target_name}
+  )
   install(DIRECTORY ${headers_dir}
           DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
           COMPONENT ${target_name}-dev
