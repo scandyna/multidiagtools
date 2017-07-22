@@ -24,12 +24,17 @@ set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
+message("CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
+
+
 # On Windows, RPATH do not exist
 # To be able to run tests, we have to put all binaries in the same directory
 # We also tell CMake to use Wine to execute tests if we cross-compiled
 if(WIN32)
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-  set(CMAKE_CROSSCOMPILING_EMULATOR wine)
+  if(CMAKE_CROSSCOMPILING)
+    set(CMAKE_CROSSCOMPILING_EMULATOR wine)
+  endif()
 endif()
 
 # Enable testing

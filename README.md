@@ -352,28 +352,91 @@ int main(int argc, char **argv)
 }
 ```
 
-Write a minimal CMakeLists.txt file:
+Here is also a example of a test.
+
+HelloWorldTest.h could be:
+```cpp
+#ifndef HELLO_WORLD_TEST_H
+#define HELLO_WORLD_TEST_H
+
+#include <QObject>
+#include <QtTest/QtTest>
+
+class HelloWorldTest : public QObject
+{
+ Q_OBJECT
+
+ private slots:
+
+  void someTest();
+};
+
+#endif // #ifndef HELLO_WORLD_TEST_H
+```
+
+HelloWorldTest.cpp could be:
+```cpp
+#include "HelloWorldTest.h"
+#include "Mdt/Application.h"
+
+/*
+ * Tests
+ */
+
+void HelloWorldTest::someTest()
+{
+  QVERIFY(1 == 1);
+}
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  HelloWorldTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+//   app.debugEnvironnement();
+
+  return QTest::qExec(&test, argc, argv);
+}
+
+```
+
+Write a CMakeLists.txt file:
 ```cmake
 cmake_minimum_required(VERSION 3.3)
 
 project(HelloWorld VERSION 0.0.1)
 
-# Add path to Mdt root
+# Specify where to find Mdt
 # Using a custom MDT_PREFIX_PATH has some advantages:
 # - It can be reused, for example to specify CMAKE_MODULE_PATH
-# - It solves the problem that CMAKE_PREFIX_PATH is ignoren when cross-compiling with MXE
+# - It solves the problem that CMAKE_PREFIX_PATH is ignored when cross-compiling with MXE
 if(MDT_PREFIX_PATH)
-  set(CMAKE_PREFIX_PATH "${MDT_PREFIX_PATH};${CMAKE_PREFIX_PATH}")
-  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${MDT_PREFIX_PATH}/share/cmake/modules")
+  list(APPEND CMAKE_PREFIX_PATH "${MDT_PREFIX_PATH}")
+  list(APPEND CMAKE_MODULE_PATH "${MDT_PREFIX_PATH}/share/cmake/modules")
 endif()
+
+# Specify where to find Qt
 
 # On Windows, RPATH do not exist
 # To be able to run tests, we have to put all binaries in the same directory
 # We also tell CMake to use Wine to execute tests if we cross-compiled
 if(WIN32)
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-  set(CMAKE_CROSSCOMPILING_EMULATOR wine)
+  if(CMAKE_CROSSCOMPILING)
+    set(CMAKE_CROSSCOMPILING_EMULATOR wine)
+  endif()
 endif()
+
+# Enable testing
+# Must be placed before any add_subdirectory() command, else tests that are defined in sub-directories will be ignored
+enable_testing()
 
 find_package(Qt5 COMPONENTS Widgets)
 find_package(Mdt0 COMPONENTS ItemModel)
@@ -383,13 +446,48 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-add_executable(helloworld HelloWorld.cpp)
+# On Windows, we want a GUI executable, not a console
+if(WIN32)
+  add_executable(helloworld WIN32 HelloWorld.cpp)
+else()
+  add_executable(helloworld HelloWorld.cpp)
+endif()
 target_link_libraries(helloworld Qt5::Widgets)
 target_link_libraries(helloworld Mdt0::ItemModel)
 
+# Add our test
+find_package(Qt5 COMPONENTS Test)
+add_executable(helloworld_test HelloWorldTest.cpp)
+target_link_libraries(helloworld_test Mdt0::Application Qt5::Test)
+#target_include_directories(helloworld_test PRIVATE "${CMAKE_SOURCE_DIR}/src")
+add_test(NAME HelloWorldTest COMMAND helloworld_test)
 
-
-
+# On Windows, we have to copy external libraries to the test runtime directory
+if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+  include(MdtDependenciesUtils)
+  # Because I not found a proper way to get a list of all existing tests,
+  # just put some of them that have the most dependencies.
+  mdt_copy_binary_dependencies(
+    TARGET asgparsertest
+    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    NO_WARNINGS
+  )
+  # If we are doing cross-compilation,
+  # recusrsive resolving do not work
+  # We have to add manually libraries that are missing
+  if(CMAKE_CROSSCOMPILING AND MINGW)
+    mdt_find_and_copy_libraries(
+      LIBRARIES
+        libQtSingleApplication libwinpthread-1 Qt5Network
+        libpcre2-16-0 zlib1 libeay32 ssleay32 libharfbuzz-0 libpng16-16 libfreetype-6 libglib-2.0-0
+        libbz2 libintl-8 libpcre-1 libiconv-2
+      DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    )
+    # For some misterious reason, find_library() simply never wanted to find libQtSingleApplication
+    # So, copy it manually..
+    file(COPY "${MDT_PREFIX_PATH}/bin/libQtSingleApplication.dll" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+  endif()
+endif()
 ```
 
 ## Build your project on Linux

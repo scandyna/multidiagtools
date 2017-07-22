@@ -54,7 +54,6 @@ function(mdt_copy_binary_dependencies)
   file(COPY ${dependencies_files} DESTINATION "${destination_directory}")
 endfunction()
 
-
 # Main
 #
 # Input arguments:
