@@ -109,29 +109,36 @@ if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
   mdt_copy_binary_dependencies(
     TARGET QtSingleApplication
     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    NO_WARNINGS
   )
   mdt_copy_binary_dependencies(
     TARGET Application
     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    NO_WARNINGS
   )
   mdt_copy_binary_dependencies(
     TARGET mdterrortest
     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    NO_WARNINGS
   )
   mdt_copy_binary_dependencies(
     TARGET mdterror_widgetstest
     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    NO_WARNINGS
   )
   mdt_copy_binary_dependencies(
     TARGET mdtitemeditor_sqlcontrollertest
     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    NO_WARNINGS
   )
   # If we are doing cross-compilation,
   # recusrsive resolving do not work
   # We have to add manually libraries that are missing
   if(CMAKE_CROSSCOMPILING AND MINGW)
     mdt_find_and_copy_libraries(
-      LIBRARIES libpcre2-16-0 zlib1
+      LIBRARIES
+        libpcre2-16-0 zlib1 libeay32 ssleay32 libharfbuzz-0 libpng16-16 libfreetype-6 libglib-2.0-0
+        libbz2 libintl-8 libpcre-1 libiconv-2
       DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
     )
   endif()

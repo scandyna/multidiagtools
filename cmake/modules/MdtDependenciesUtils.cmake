@@ -118,11 +118,15 @@ endfunction()
 #   Name of the target for which to copy dependencies
 #  DESTINATION_DIRECTORY:
 #   Full path to the destination directory
+#  NO_WARNINGS:
+#   If this option is passed, no warnings will be emitted.
+#   (Most of the warnings are actually about cross-compiling)
 #
 function(mdt_copy_binary_dependencies)
   # Parse arguments
   set(oneValueArgs TARGET DESTINATION_DIRECTORY)
-  cmake_parse_arguments(VAR "" "${oneValueArgs}" "" ${ARGN})
+  set(options NO_WARNINGS)
+  cmake_parse_arguments(VAR "${options}" "${oneValueArgs}" "" ${ARGN})
   # Set our local variables and check the mandatory ones
   set(target "${VAR_TARGET}")
   if(NOT target)
@@ -132,12 +136,15 @@ function(mdt_copy_binary_dependencies)
   if(NOT destination_directory)
     message(FATAL_ERROR "mdt_copy_binary_dependencies(): DESTINATION_DIRECTORY argument is missing.")
   endif()
+  set(no_warnings "${VAR_NO_WARNINGS}")
   # Check if we can resolve recusrively
   # If we are cross-compiling, typically on a Linux system -> Windows,
   # some system libraries, like KERNEL32.dll, are not available.
   set(resolve_recursive 1)
   if(CMAKE_CROSSCOMPILING)
-    message(WARNING "It seems that you are do cross-compilation. It will not be possible to resolve all dependencies. Please use a other tool to add missing ones.")
+    if(NOT no_warnings)
+      message(WARNING "It seems that you are do cross-compilation. It will not be possible to resolve all dependencies. Please use a other tool to add missing ones.")
+    endif()
     set(resolve_recursive 0)
   endif()
   # Build the list of directories into which to serach
@@ -166,7 +173,9 @@ function(mdt_copy_binary_dependencies)
   # So, lets do it by hand
   set(actions_file "")
   if(NOT CMAKE_MODULE_PATH)
-    message(WARNING "CMAKE_MODULE_PATH was not set, and is required to find MdtDependenciesUtilsActions.cmake. Resolving dependencies will not be done.")
+    if(NOT no_warnings)
+      message(WARNING "CMAKE_MODULE_PATH was not set, and is required to find MdtDependenciesUtilsActions.cmake. Resolving dependencies will not be done.")
+    endif()
     return()
   endif()
   foreach(path ${CMAKE_MODULE_PATH})
@@ -176,7 +185,9 @@ function(mdt_copy_binary_dependencies)
     endif()
   endforeach()
   if(NOT actions_file)
-    message(WARNING "Could not find MdtDependenciesUtilsActions.cmake. Resolving dependencies will not be done.")
+    if(NOT no_warnings)
+      message(WARNING "Could not find MdtDependenciesUtilsActions.cmake. Resolving dependencies will not be done.")
+    endif()
     return()
   endif()
   # Create a new target that depends on TARGET
