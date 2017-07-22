@@ -119,6 +119,7 @@ function(mdt_add_library)
   install(TARGETS ${target_name}
           EXPORT ${library_name}Targets
           LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+          ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
           RUNTIME DESTINATION bin
           COMPONENT ${target_name}
   )
