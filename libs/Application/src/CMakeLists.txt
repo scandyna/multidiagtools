@@ -9,6 +9,7 @@ find_package(Qt5
 )
 
 set(SOURCE_FILES
+  Mdt/StandardPaths.cpp
   Mdt/Application.cpp
 )
 
