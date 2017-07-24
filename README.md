@@ -70,7 +70,33 @@ Install tools:
 sudo apt-get install cmake make g++
 ```
 
-Install libraries:
+To install Mdt, one option is to generate basic Debian packages.
+For this, following dependencies are also needed:
+```bash
+sudo apt-get install dpkg dpkg-dev
+```
+
+#### Install Boost
+
+Mdt uses some Boost libraries.
+Installing it on a Debian system looks like:
+```bash
+sudo apt-get install libboost-dev
+```
+
+Optionnally, documentation can also be installed:
+```bash
+sudo apt-get install libboost-doc
+```
+
+#### Install Qt5
+
+Mdt needs a recent version of Qt5.
+
+##### Install Qt5 provided by the distribution
+
+If your distribution provides the required version, you can use that.
+For example, on Ubuntu:
 ```bash
 sudo apt-get install qtbase5-dev qtbase5-dev-tools libqt5gui5 libqt5network5 libqt5sql5 libqt5sql5-mysql libqt5sql5-psql libqt5sql5-sqlite libqt5test5 libqt5widgets5
 ```
@@ -80,11 +106,28 @@ Optionnally, documentation can also be installed:
 sudo apt-get install qtbase5-doc qtbase5-doc-html qtbase5-examples
 ```
 
-To install Mdt, one option is to generate basic Debian packages.
-For this, following dependencies are also needed:
+##### Install Qt5 if not provided by the distribution
+
+It's also recommanded to have a look at the [documentation](http://doc.qt.io/)
+in the "Getting Started Guides" section.
+Myabe you will have to create a [Qt Acount](https://account.qt.io).
+
+At first, install [requirements](http://doc.qt.io/qt-5/linux.html)
+Qt5 can be downloaded [here](https://www.qt.io/download/)
+Choose "Desktop & Mobile Application", then the licencing option.
+The default proposed package should be fine.
+
+We must make the installer executable and run it.
+In my case, I have put the installer to ~/opt/qt/installers.
 ```bash
-sudo apt-get install dpkg dpkg-dev
+cd ~/opt/qt/installers
+chmod u+x qt-unified-linux-x64-3.0.0-online.run
+./qt-unified-linux-x64-3.0.0-online.run
 ```
+Of course, the name of the installer can be different in your case.
+
+Follow the wizzard.
+In my case, I choosed to install Qt5 to ~/opt/qt/Qt5
 
 ### Compile Mdt on Linux
 
@@ -102,7 +145,18 @@ cmake -C ../../cmake/caches/ReleaseGcc.cmake ../../
 ```
 It is also possible to specify the intallation prefix:
 ```bash
-cmake -C ../../cmake/caches/ReleaseGcc.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt ../../
+cmake -C ../../cmake/caches/ReleaseGcc.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt/release ../../
+```
+
+To use a Qt5 library that is not installed in the default path,
+we have also to specify it:
+```bash
+cmake -C ../../cmake/caches/ReleaseGcc.cmake -D QT_PREFIX_PATH=~/opt/qt/Qt5/5.9.1/gcc_64/ ../../
+```
+
+This is my personnal case to build Mdt in debug mode, and install it locally:
+```bash
+cmake -C ../../cmake/caches/DebugGcc.cmake -D QT_PREFIX_PATH=~/opt/qt/Qt5/5.9.1/gcc_64/ -D CMAKE_INSTALL_PREFIX=~/opt/mdt/debug ../../
 ```
 
 Build (-j4 is for parallel build, allowing max. 4 processes):
@@ -117,6 +171,8 @@ make test
 
 ### Install Mdt on Linux
 
+#### Install in a predefined location
+
 To install the library in a non system place,
 i.e. defined above with CMAKE_INSTALL_PREFIX,
 the installation is:
@@ -124,7 +180,14 @@ the installation is:
 make install
 ```
 
-Above method is not recommanded for a system wide installation.
+This method is not recommanded for a system wide installation.
+
+#### Install system wide on Debian
+
+Please note:
+this method should only work if Mdt depends on Qt5 library
+that is installed system wide (not specified in QT_PREFIX_PATH).
+
 This section will briefly describe how to generate packages.
 Example to create Debian packages:
 ```bash
@@ -423,6 +486,12 @@ if(MDT_PREFIX_PATH)
 endif()
 
 # Specify where to find Qt
+# If Qt5 is not installed on a system known location,
+# or you want to use a specific version,
+# or you are on Windows, QT_PREFIX_PATH should be specified
+if(QT_PREFIX_PATH)
+  list(APPEND CMAKE_PREFIX_PATH "${QT_PREFIX_PATH}")
+endif()
 
 # On Windows, RPATH do not exist
 # To be able to run tests, we have to put all binaries in the same directory
@@ -446,6 +515,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# Rules to compile the application
 # On Windows, we want a GUI executable, not a console
 if(WIN32)
   add_executable(helloworld WIN32 HelloWorld.cpp)
@@ -454,6 +524,23 @@ else()
 endif()
 target_link_libraries(helloworld Qt5::Widgets)
 target_link_libraries(helloworld Mdt0::ItemModel)
+
+# Rules to install the application
+# See also CMake install() command
+# and BundleUtilities module documentation
+# for more details
+set(apps helloworld)
+install(
+  TARGETS ${apps}
+  BUNDLE DESTINATION . COMPONENT Runtime
+  RUNTIME DESTINATION bin COMPONENT Runtime
+)
+install(
+  CODE
+    "include(BundleUtilities)
+     fixup_bundle(\"${apps}\" \"\" \"${CMAKE_PREFIX_PATH}\")"
+  COMPONENT Runtime
+)
 
 # Add our test
 find_package(Qt5 COMPONENTS Test)
@@ -509,9 +596,22 @@ If Mdt was installed in a other place, cmake must know it:
 cmake -D MDT_PREFIX_PATH=~/opt/mdt/release ../../
 ```
 
+If Mdt was compiled using a Qt5 library that is not system wide installed,
+we also have to specify its installation prefix:
+```bash
+cmake -D MDT_PREFIX_PATH=~/opt/mdt/release -D QT_PREFIX_PATH=~/opt/qt/Qt5/5.9.1/gcc_64/ ../../
+```
+
 It is also possible to specify a installation prefix:
 ```bash
 cmake -D CMAKE_INSTALL_PREFIX=~/opt/helloworld/release ../../
+```
+
+For my personnal case, I also created a CMake cache file
+to specify compiler flags.
+To compile the application in debug mode, I use:
+```bash
+cmake -C ../../cmake/caches/DebugGcc.cmake -D MDT_PREFIX_PATH=~/opt/mdt/debug -D QT_PREFIX_PATH=~/opt/qt/Qt5/5.9.1/gcc_64 ../../
 ```
 
 Build (-j4 is for parallel build, allowing max. 4 processes):
@@ -523,6 +623,10 @@ To run all tests:
 ```bash
 make test
 ```
+
+## Deploy your project on Linux
+
+
 
 ## Cross compile your project for Windows on a Linux machine
 

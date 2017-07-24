@@ -24,7 +24,16 @@ set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
+# Specify where to find Qt
+# If Qt5 is not installed on a system known location,
+# or you want to use a specific version,
+# or you are on Windows, QT_PREFIX_PATH should be specified
+if(QT_PREFIX_PATH)
+  list(APPEND CMAKE_PREFIX_PATH "${QT_PREFIX_PATH}")
+endif()
+
 message("CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
+message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
 
 
 # On Windows, RPATH do not exist
