@@ -83,6 +83,9 @@
  *
  * \subsection translations_tr About using tr()
  *
+ *  \todo See QCoreApplication documentation, Q_DECLARE_TR_FUNCTIONS(context)
+ *        It really seems to be the answer to the problem, an maybe stops putting tons of errors during buid process !
+ *
  *  When a class is a subclass of QObject, simply using tr() works fine.
  *
  *  For a class that is not a subclass of QObject, Qt recommends using QCoreApplication::translate()
