@@ -1,6 +1,6 @@
 format 213
 "Qt" // Qt
-  revision 211
+  revision 212
   modified_by 2 "philippe"
   // class settings
   
@@ -8841,6 +8841,55 @@ ${inlines}
     end
 
     class 4161922 "QCommandLineOption"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 3612802 "QLibrary"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4168706 "QLibrary"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4692226 // <generalisation>
+	relation 4665986 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4692226 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    classdiagram 3612930 "QLibraryInfo"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4168834 "QLibraryInfo"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

@@ -2,82 +2,86 @@ format 213
 
 classcanvas 128002 class_ref 4158978 // DynamicLibraryInfo
   classdiagramsettings member_max_width 0 end
-  xyz 240.2 813.5 2000
+  xyz 953.6 873.1 2000
 end
-classcanvas 128130 class_ref 4159106 // LibraryDependencyGraph
+classcanvas 128258 class_ref 4159234 // Library
   classdiagramsettings member_max_width 0 end
-  xyz 736.1 811.2 2000
-end
-classcanvas 128258 class_ref 4159234 // LibraryScanner
-  classdiagramsettings member_max_width 0 end
-  xyz 669.1 40.3 2000
+  xyz 39.1 353.3 2000
 end
 classcanvas 128386 class_ref 4159490 // DynamicLibraryInfoList
   classdiagramsettings member_max_width 0 end
-  xyz 40 813.5 2000
+  xyz 753.8 873.1 2000
 end
 classcanvas 128770 class_ref 4159618 // DynamicLibraryExcludeList
   classdiagramsettings member_max_width 0 end
-  xyz 753.9 626.7 2000
+  xyz 839.7 479.2 2000
 end
 classcanvas 128898 class_ref 4160258 // DeployXYZ
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 626.7 2000
+  xyz 40.5 871.4 2000
 end
 classcanvas 129026 class_ref 4160386 // Qmake
   classdiagramsettings member_max_width 0 end
-  xyz 576.1 626.9 2000
+  xyz 301.9 871.2 2000
 end
 classcanvas 129154 class_ref 4160514 // Paths
   classdiagramsettings member_max_width 0 end
-  xyz 273.2 446.2 2000
+  xyz 269.4 567.5 2000
 end
 classcanvas 129282 class_ref 4151810 // QStandardPaths
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 546.6 476.2 2005
+  xyz 326.4 481.9 2005
 end
 classcanvas 129538 class_ref 4160642 // Error
   classdiagramsettings member_max_width 0 end
-  xyz 301.7 626.9 2000
+  xyz 478.5 871.2 2000
 end
 note 129666 "sa: QUrl"
-  xyzwh 328.8 353.8 2000 129 59
+  xyzwh 104.8 590.5 2000 129 59
 classcanvas 129922 class_ref 4160770 // QtConf
   classdiagramsettings member_max_width 0 end
-  xyz 456.1 811.2 2000
+  xyz 1042 40.7 2000
 end
 classcanvas 130050 class_ref 4160898 // Settings
   classdiagramsettings member_max_width 0 end
-  xyz 104.4 476.2 2000
+  xyz 352.4 729.7 2000
 end
 classcanvas 130178 class_ref 4161026 // QmlYxZ
   classdiagramsettings member_max_width 0 end
-  xyz 593.1 811.2 2005
+  xyz 40.1 1056.4 2005
 end
 classcanvas 130306 class_ref 4161282 // Translations
   classdiagramsettings member_max_width 0 end
-  xyz 744.6 354.9 2000
+  xyz 356.1 1056.4 2000
 end
 classcanvas 130562 class_ref 4161410 // SettingsCommandLineParser
   classdiagramsettings member_max_width 0 end
-  xyz 37.4 388 2000
+  xyz 40.6 710.7 2000
 end
 classcanvas 130690 class_ref 4161538 // Platform
   classdiagramsettings member_max_width 0 end
-  xyz 406.8 40.1 2000
+  xyz 576.7 479.4 2000
 end
 classcanvas 130818 class_ref 4161666 // ExecutableWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 40.7 125.35 2000
+  xyz 107.9 165.9 2000
 end
 classcanvas 130946 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 151.7 40.55 2006
+  xyz 218.9 40 2006
+end
+classcanvas 131714 class_ref 4168706 // QLibrary
+  classdiagramsettings member_max_width 0 end
+  xyz 399.1 354.9 2012
+end
+classcanvas 131970 class_ref 4168834 // QLibraryInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 183.9 1056.4 2000
 end
 relationcanvas 128642 relation_ref 4657666 // <directional composition>
   from ref 128386 z 2001 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 224 845 3000 no_multiplicity_b
+  multiplicity_a_pos 937 905 3000 no_multiplicity_b
 end
 relationcanvas 129410 relation_ref 4657922 // <dependency>
   from ref 129154 z 2006 to ref 129282
@@ -99,6 +103,32 @@ relationcanvas 131458 relation_ref 4658818 // <dependency>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-line 129794 -_-_
+relationcanvas 131842 relation_ref 4665986 // <generalisation>
+  geometry VHV unfixed
+  from ref 131714 z 2013 to point 431.8 126.8
+  line 132866 z 2013 to point 248 126.8
+  line 132994 z 2013 to ref 130946
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132354 relation_ref 4666114 // <generalisation>
+  geometry VHV unfixed
+  from ref 128258 z 2007 to point 156 126.8
+  line 132610 z 2007 to point 248 126.8
+  line 132738 z 2007 to ref 130946
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132482 relation_ref 4666242 // <dependency>
+  from ref 128258 z 2013 to ref 131714
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133122 relation_ref 4666370 // <dependency>
+  from ref 128258 z 2001 to ref 131970
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 129794 -_-_ decenter_begin 457 decenter_end 423
   from ref 129154 z 2001 to ref 129666
 end

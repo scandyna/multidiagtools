@@ -1,6 +1,6 @@
 format 213
 "DeployUtils" // Mdt::DeployUtils
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -48,38 +48,6 @@ format 213
     end
 
     class 4158978 "DynamicLibraryInfo"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 4159106 "LibraryDependencyGraph"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 4159234 "LibraryScanner"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -517,6 +485,38 @@ ${inlines}
 	    classrelation_ref 4685314 // <directional composition>
 	  b parent class_ref 4161794 // QCommandLineParser
       end
+
+      operation 5841154 "process"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "arguments" type class_ref 160770 // QStringList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5841282 "process"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "app" type class_ref 425730 // QCoreApplication
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 4160514 "Paths"
@@ -575,6 +575,66 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+    end
+
+    classdiagram 3613058 "Library"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4159234 "Library"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4692354 // <generalisation>
+	relation 4666114 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4692354 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 4692482 // <dependency>
+	relation 4666242 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4692482 // <dependency>
+	  b parent class_ref 4168706 // QLibrary
+      end
+
+      classrelation 4692610 // <dependency>
+	relation 4666370 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4692610 // <dependency>
+	  b parent class_ref 4168834 // QLibraryInfo
+      end
+
+      operation 5841410 "findLibrary"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "name" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -810,5 +870,4 @@ ${inlines}
       size A4
     end
   end
-
 end
