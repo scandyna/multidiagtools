@@ -1,0 +1,10 @@
+format 213
+
+classcanvas 128002 class_ref 4152066 // StandardPaths
+  classdiagramsettings member_max_width 0 end
+  xyz 538 98 2000
+end
+note 128130 "Use a standard Mdt directory to get database files, so that it is shared accross applications.
+Also, if app was installed \"standalone\", this problem is solved in Mdt::Aplication, not everywhere."
+  xyzwh 124.5 193.5 2000 625 105
+end

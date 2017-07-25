@@ -1,0 +1,22 @@
+format 213
+
+classcanvas 128002 class_ref 4152066 // StandardPaths
+  classdiagramsettings member_max_width 0 end
+  xyz 417 218 2000
+end
+classcanvas 128130 class_ref 4151810 // QStandardPaths
+  classdiagramsettings member_max_width 0 end
+  xyz 344 76 2000
+end
+classcanvas 128386 class_ref 4151938 // StandardLocation
+  classdiagramsettings member_max_width 0 end
+  xyz 42 42 2006
+end
+relationcanvas 128258 relation_ref 4649986 // <unidirectional association>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128514 ---+
+  from ref 128386 z 2007 to ref 128130
+end

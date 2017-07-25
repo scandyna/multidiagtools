@@ -1,26 +1,39 @@
-format 211
+format 213
 
 classcanvas 128130 class_ref 4058626 // QtSingleCoreApplication
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 35 130 2006
+  xyz 215 130 2006
 end
 classcanvas 128386 class_ref 425730 // QCoreApplication
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 58 42 2012
+  xyz 234 42 2012
 end
 classcanvas 128642 class_ref 4058754 // SingleCoreApplication
   classdiagramsettings member_max_width 0 end
-  xyz 43 218 2000
+  xyz 223 218 2000
 end
-note 129026 "Or, maybe, choosing single/multiples should just be a parameter."
-  xyzwh 302 126 2000 445 61
+note 129026 "Or, maybe, choosing single/multiples should just be a parameter.
+So We avoid multiplication of classes (and test each better!)"
+  xyzwh 41.5 345.5 2000 423 97
+classcanvas 129282 class_ref 4152322 // CoreApplicationImpl
+  classdiagramsettings member_max_width 0 end
+  xyz 41 218 2000
+end
 relationcanvas 128770 relation_ref 4561282 // <generalisation>
+  decenter_begin 470
+  decenter_end 473
   from ref 128642 z 2007 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 4561538 // <generalisation>
+  decenter_begin 473
   from ref 128130 z 2013 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 4650626 // <unidirectional association>
+  from ref 128642 z 2001 to ref 129282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

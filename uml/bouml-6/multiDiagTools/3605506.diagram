@@ -1,0 +1,104 @@
+format 213
+
+classcanvas 128002 class_ref 4158978 // DynamicLibraryInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 240.2 813.5 2000
+end
+classcanvas 128130 class_ref 4159106 // LibraryDependencyGraph
+  classdiagramsettings member_max_width 0 end
+  xyz 736.1 811.2 2000
+end
+classcanvas 128258 class_ref 4159234 // LibraryScanner
+  classdiagramsettings member_max_width 0 end
+  xyz 669.1 40.3 2000
+end
+classcanvas 128386 class_ref 4159490 // DynamicLibraryInfoList
+  classdiagramsettings member_max_width 0 end
+  xyz 40 813.5 2000
+end
+classcanvas 128770 class_ref 4159618 // DynamicLibraryExcludeList
+  classdiagramsettings member_max_width 0 end
+  xyz 753.9 626.7 2000
+end
+classcanvas 128898 class_ref 4160258 // DeployXYZ
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 626.7 2000
+end
+classcanvas 129026 class_ref 4160386 // Qmake
+  classdiagramsettings member_max_width 0 end
+  xyz 576.1 626.9 2000
+end
+classcanvas 129154 class_ref 4160514 // Paths
+  classdiagramsettings member_max_width 0 end
+  xyz 273.2 446.2 2000
+end
+classcanvas 129282 class_ref 4151810 // QStandardPaths
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 546.6 476.2 2005
+end
+classcanvas 129538 class_ref 4160642 // Error
+  classdiagramsettings member_max_width 0 end
+  xyz 301.7 626.9 2000
+end
+note 129666 "sa: QUrl"
+  xyzwh 328.8 353.8 2000 129 59
+classcanvas 129922 class_ref 4160770 // QtConf
+  classdiagramsettings member_max_width 0 end
+  xyz 456.1 811.2 2000
+end
+classcanvas 130050 class_ref 4160898 // Settings
+  classdiagramsettings member_max_width 0 end
+  xyz 104.4 476.2 2000
+end
+classcanvas 130178 class_ref 4161026 // QmlYxZ
+  classdiagramsettings member_max_width 0 end
+  xyz 593.1 811.2 2005
+end
+classcanvas 130306 class_ref 4161282 // Translations
+  classdiagramsettings member_max_width 0 end
+  xyz 744.6 354.9 2000
+end
+classcanvas 130562 class_ref 4161410 // SettingsCommandLineParser
+  classdiagramsettings member_max_width 0 end
+  xyz 37.4 388 2000
+end
+classcanvas 130690 class_ref 4161538 // Platform
+  classdiagramsettings member_max_width 0 end
+  xyz 406.8 40.1 2000
+end
+classcanvas 130818 class_ref 4161666 // ExecutableWrapper
+  classdiagramsettings member_max_width 0 end
+  xyz 40.7 125.35 2000
+end
+classcanvas 130946 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 151.7 40.55 2006
+end
+relationcanvas 128642 relation_ref 4657666 // <directional composition>
+  from ref 128386 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 224 845 3000 no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 4657922 // <dependency>
+  from ref 129154 z 2006 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131074 relation_ref 4658562 // <generalisation>
+  from ref 130818 z 2007 to ref 130946
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131330 relation_ref 4658690 // <directional composition>
+  from ref 130050 z 2001 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131458 relation_ref 4658818 // <dependency>
+  from ref 130562 z 2001 to ref 130050
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 129794 -_-_
+  from ref 129154 z 2001 to ref 129666
+end

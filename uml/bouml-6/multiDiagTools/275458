@@ -1,6 +1,6 @@
-format 211
+format 213
 "std" // std
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   // class settings
   
@@ -478,6 +478,49 @@ ${inlines}
 
     class 2132994 "unique_lock"
       visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+
+  classview 1874818 "functional"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3606274 "function"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4162178 "function"
+      visibility package 
+      nformals 2
+      formal name "R" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Args" type "class" explicit_default_value ""
+        explicit_extends ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};

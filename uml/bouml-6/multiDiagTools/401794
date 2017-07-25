@@ -1,6 +1,6 @@
-format 211
+format 213
 "Mdt" // Mdt
-  revision 34
+  revision 37
   modified_by 2 "philippe"
   // class settings
   
@@ -30,24 +30,6 @@ format 211
 
   package_ref 549506 // Algorithm
 
-  classview 1293698 "CoreApplication"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-  end
-
   classview 1848066 "Application_Core"
     
     classdiagramsettings member_max_width 0 end
@@ -64,6 +46,79 @@ format 211
     
     activitydiagramsettings
      end
+    classdiagram 3598466 "StandardPaths"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4152066 "StandardPaths"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4676098 // <unidirectional association>
+	relation 4649986 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4676098 // <unidirectional association>
+	  b parent class_ref 4151810 // QStandardPaths
+      end
+
+      operation 5825154 "mdtDataDirectoryPath"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 3598594 "CoreApplicationImpl"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4152322 "CoreApplicationImpl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4676482 // <unidirectional association>
+	relation 4650370 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4676482 // <unidirectional association>
+	  b parent class_ref 4152066 // StandardPaths
+      end
+    end
+
     classdiagram 3513090 "CoreApplication"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -89,6 +144,15 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 4587522 // <generalisation>
 	  b parent class_ref 425730 // QCoreApplication
+      end
+
+      classrelation 4676610 // <unidirectional association>
+	relation 4650498 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4676610 // <unidirectional association>
+	  b parent class_ref 4152322 // CoreApplicationImpl
       end
     end
 
@@ -118,6 +182,159 @@ ${inlines}
 	    classrelation_ref 4587394 // <generalisation>
 	  b parent class_ref 4058626 // QtSingleCoreApplication
       end
+
+      classrelation 4676738 // <unidirectional association>
+	relation 4650626 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4676738 // <unidirectional association>
+	  b parent class_ref 4152322 // CoreApplicationImpl
+      end
+    end
+
+    classdiagram 3606146 "ConsoleApp"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4162050 "AbstractConsoleApplicationMainFunction"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4685570 // <generalisation>
+	relation 4659330 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4685570 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 4685698 // <dependency>
+	relation 4659458 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4685698 // <dependency>
+	  b parent class_ref 425730 // QCoreApplication
+      end
+
+      operation 5834626 "getArguments"
+	class_operation public return_type class_ref 160770 // QStringList
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5834242 "runMain"
+	abstract cpp_virtual protected explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5834370 "aboutToQuit"
+	stereotype "slot"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5834498 "run"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+  end
+
+  classview 1867906 "Application_Gui"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3598978 "ApplicationGui"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4152450 "ApplicationGui"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4676994 // <generalisation>
+	relation 4650882 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4676994 // <generalisation>
+	  b parent class_ref 4152194 // QGuiApplication
+      end
+
+      classrelation 4677122 // <unidirectional association>
+	relation 4651010 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4677122 // <unidirectional association>
+	  b parent class_ref 4152322 // CoreApplicationImpl
+      end
     end
   end
 
@@ -139,7 +356,7 @@ ${inlines}
      end
     classdiagram 2427394 "Application"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size Legal-Landscape
     end
 
     class 2726658 "Application"
@@ -162,42 +379,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 3103362 // <generalisation>
 	  b parent class_ref 425346 // QtSingleApplication
-      end
-
-      attribute 2583938 "SystemDataDirectoryPath"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2584066 "LogDirectory"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2584194 "CacheDirectory"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
       end
 
       class 2733186 "MultipleInstancePermission"
@@ -257,6 +438,22 @@ ${items}};
 	
       end
 
+      operation 5825026 "setTestModeEnabled"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param in name "testMode" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 4077954 "init"
 	public explicit_return_type "bool"
 	nparams 1
@@ -274,7 +471,7 @@ ${items}};
       end
 
       operation 4078210 "debugEnvironment"
-	public explicit_return_type "void"
+	class_operation public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -302,11 +499,15 @@ ${items}};
 	
 	
       end
-    end
 
-    classdiagram 3519618 "SingleApplication"
-      classdiagramsettings member_max_width 0 end
-      size A4
+      classrelation 4676866 // <unidirectional association>
+	relation 4650754 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4676866 // <unidirectional association>
+	  b parent class_ref 4152322 // CoreApplicationImpl
+      end
     end
   end
 
@@ -868,6 +1069,8 @@ ${members}};
 
   package_ref 628354 // Usbtmc
 
+  package_ref 674178 // UicNumber
+
   package_ref 402562 // Modbus
 
   package_ref 402946 // Device
@@ -885,4 +1088,6 @@ ${members}};
   package_ref 496514 // CheckList
 
   package_ref 403202 // tools
+
+  package_ref 680706 // DeployUtils
 end

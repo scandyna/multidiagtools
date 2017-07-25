@@ -1,4 +1,4 @@
-# When AddressSanitizer is enabled (which is default in debug build of MultiDiagTools),
+# When AddressSanitizer is enabled (which is default in developper build of Mdt),
 # some leaks produced by other libraries are reported.
 # To avoid these reports, call tests with following command:
 # ASAN_OPTIONS=detect_leaks=1 LSAN_OPTIONS=suppressions=asan_suppressions.txt path/to/executable
