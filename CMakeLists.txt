@@ -105,6 +105,7 @@ add_subdirectory(libs/Sql)
 add_subdirectory(libs/ItemModel)
 add_subdirectory(libs/ItemEditor)
 add_subdirectory(libs/ItemEditor_Sql)
+add_subdirectory(libs/DeployUtils_Core)
 
 #################################################################################################################################################
 # Tools

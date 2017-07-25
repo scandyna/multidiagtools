@@ -626,7 +626,10 @@ make test
 
 ## Deploy your project on Linux
 
-
+TODO check if needed
+```bash
+sudo apt-get install patchelf
+```
 
 ## Cross compile your project for Windows on a Linux machine
 
