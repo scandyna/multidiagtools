@@ -9,4 +9,4 @@ set(SOURCE_FILES
 )
 
 add_executable(mdtdeployutils ${SOURCE_FILES})
-target_link_libraries(mdtdeployutils Application Qt5::Core)
+target_link_libraries(mdtdeployutils Application DeployUtils_Core Qt5::Core)

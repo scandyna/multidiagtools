@@ -2,81 +2,81 @@ format 213
 
 classcanvas 128002 class_ref 4158978 // DynamicLibraryInfo
   classdiagramsettings member_max_width 0 end
-  xyz 953.6 873.1 2000
+  xyz 953.8 873.1 2000
 end
 classcanvas 128258 class_ref 4159234 // Library
   classdiagramsettings member_max_width 0 end
-  xyz 39.1 353.3 2000
+  xyz 38.1 350.9 2000
 end
 classcanvas 128386 class_ref 4159490 // DynamicLibraryInfoList
   classdiagramsettings member_max_width 0 end
-  xyz 753.8 873.1 2000
+  xyz 753.4 873.1 2000
 end
 classcanvas 128770 class_ref 4159618 // DynamicLibraryExcludeList
   classdiagramsettings member_max_width 0 end
-  xyz 839.7 479.2 2000
+  xyz 839.1 479.4 2000
 end
 classcanvas 128898 class_ref 4160258 // DeployXYZ
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 871.4 2000
+  xyz 40.5 871 2000
 end
 classcanvas 129026 class_ref 4160386 // Qmake
   classdiagramsettings member_max_width 0 end
-  xyz 301.9 871.2 2000
+  xyz 301.7 871.4 2000
 end
 classcanvas 129154 class_ref 4160514 // Paths
   classdiagramsettings member_max_width 0 end
-  xyz 269.4 567.5 2000
+  xyz 269.2 567.3 2000
 end
 classcanvas 129282 class_ref 4151810 // QStandardPaths
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 326.4 481.9 2005
+  xyz 326.2 481.5 2005
 end
 classcanvas 129538 class_ref 4160642 // Error
   classdiagramsettings member_max_width 0 end
-  xyz 478.5 871.2 2000
+  xyz 478.5 871.4 2000
 end
 note 129666 "sa: QUrl"
-  xyzwh 104.8 590.5 2000 129 59
+  xyzwh 104.4 590.3 2000 129 59
 classcanvas 129922 class_ref 4160770 // QtConf
   classdiagramsettings member_max_width 0 end
-  xyz 1042 40.7 2000
+  xyz 1042 40.1 2000
 end
 classcanvas 130050 class_ref 4160898 // Settings
   classdiagramsettings member_max_width 0 end
-  xyz 352.4 729.7 2000
+  xyz 352.2 729.9 2000
 end
 classcanvas 130178 class_ref 4161026 // QmlYxZ
   classdiagramsettings member_max_width 0 end
-  xyz 40.1 1056.4 2005
+  xyz 40.3 1056 2005
 end
 classcanvas 130306 class_ref 4161282 // Translations
   classdiagramsettings member_max_width 0 end
-  xyz 356.1 1056.4 2000
+  xyz 356.3 1056 2000
 end
 classcanvas 130562 class_ref 4161410 // SettingsCommandLineParser
   classdiagramsettings member_max_width 0 end
-  xyz 40.6 710.7 2000
+  xyz 40.8 710.9 2000
 end
 classcanvas 130690 class_ref 4161538 // Platform
   classdiagramsettings member_max_width 0 end
-  xyz 576.7 479.4 2000
+  xyz 577.4 479.4 2000
 end
 classcanvas 130818 class_ref 4161666 // ExecutableWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 107.9 165.9 2000
+  xyz 107.9 165.7 2000
 end
 classcanvas 130946 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 218.9 40 2006
+  xyz 218.9 40.4 2006
 end
 classcanvas 131714 class_ref 4168706 // QLibrary
   classdiagramsettings member_max_width 0 end
-  xyz 399.1 354.9 2012
+  xyz 398.9 354.5 2012
 end
 classcanvas 131970 class_ref 4168834 // QLibraryInfo
   classdiagramsettings member_max_width 0 end
-  xyz 183.9 1056.4 2000
+  xyz 183.7 1056 2000
 end
 relationcanvas 128642 relation_ref 4657666 // <directional composition>
   from ref 128386 z 2001 to ref 128002
@@ -105,22 +105,17 @@ relationcanvas 131458 relation_ref 4658818 // <dependency>
 end
 relationcanvas 131842 relation_ref 4665986 // <generalisation>
   geometry VHV unfixed
-  from ref 131714 z 2013 to point 431.8 126.8
-  line 132866 z 2013 to point 248 126.8
+  from ref 131714 z 2013 to point 430.2 126.4
+  line 132866 z 2013 to point 248 126.4
   line 132994 z 2013 to ref 130946
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132354 relation_ref 4666114 // <generalisation>
   geometry VHV unfixed
-  from ref 128258 z 2007 to point 156 126.8
-  line 132610 z 2007 to point 248 126.8
+  from ref 128258 z 2007 to point 170 126.4
+  line 132610 z 2007 to point 248 126.4
   line 132738 z 2007 to ref 130946
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 132482 relation_ref 4666242 // <dependency>
-  from ref 128258 z 2013 to ref 131714
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

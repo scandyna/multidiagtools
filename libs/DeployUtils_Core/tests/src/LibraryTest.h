@@ -18,26 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_MAIN_H
-#define MDT_DEPLOY_UTILS_MAIN_H
+#ifndef LIBRARY_TEST_H
+#define LIBRARY_TEST_H
 
-#include "Mdt/AbstractConsoleApplicationMainFunction.h"
+#include "TestBase.h"
 
-/*! \brief Provides the ability to run a console application with Qt event loop running
- */
-class MdtDeployUtilsMain : public Mdt::AbstractConsoleApplicationMainFunction
+class LibraryTest : public TestBase
 {
  Q_OBJECT
 
- public:
+ private slots:
 
-  /*! \brief Constructor
-   */
-  explicit MdtDeployUtilsMain(QObject* parent = nullptr);
+  void initTestCase();
+  void cleanupTestCase();
 
-  /*! \brief This is the real main of the console application
-   */
-  int runMain() override;
 };
 
-#endif // #ifndef MDT_DEPLOY_UTILS_MAIN_H
+#endif // #ifndef LIBRARY_TEST_H

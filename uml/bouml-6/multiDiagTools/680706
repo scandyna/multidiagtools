@@ -269,62 +269,6 @@ ${inlines}
       
     end
 
-    class 4161538 "Platform"
-      visibility package stereotype "enum"
-      cpp_decl "${comment}enum ${name} {
-${items}
-};
-"
-      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
-${items};
-${members}}
-"
-      php_decl "${comment}${visibility}final class ${name} {
-${items}}
-"
-      python_2_2 python_decl "class ${name}:
-${docstring}${members}
-"
-      idl_decl "${comment}enum ${name} {
-${items}};
-"
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 3554818 "Linux"
-	public type class_ref 4161538 // Platform
-	cpp_decl "  ${name}${value},${comment}"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 3554946 "LinuxMinGw"
-	public type class_ref 4161538 // Platform
-	cpp_decl "  ${name}${value},${comment}"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 3554690 "WindowsMinGw"
-	public type class_ref 4161538 // Platform
-	cpp_decl "  ${name}${value},${comment}"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
     class 4161666 "ExecutableWrapper"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -519,6 +463,163 @@ ${inlines}
       end
     end
 
+    classdiagram 3613314 "Platform"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4161538 "Platform"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl "class ${name}${inherit}:
+${docstring}${members}
+"
+      idl_decl "${comment}${abstract}${custom}valuetype ${name}${inherit} {
+${members}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      class 4169090 "Os"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	attribute 3554818 "Linux"
+	  public type class_ref 4169090 // Os
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 3561730 "Windows"
+	  public type class_ref 4169090 // Os
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+      end
+
+      class 4169218 "Compiler"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	attribute 3561858 "Gcc"
+	  public type class_ref 4169218 // Compiler
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+      end
+
+      class 4169346 "Processor"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	attribute 3561986 "X86_32"
+	  public type class_ref 4169346 // Processor
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 3562114 "X86_64"
+	  public type class_ref 4169346 // Processor
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+      end
+    end
+
+    classdiagram 3613186 "Paths"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
     class 4160514 "Paths"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -583,6 +684,77 @@ ${inlines}
       size A4
     end
 
+    class 4169474 "LibraryName"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3562242 "Prefix"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3562370 "Name"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3562498 "Extension"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3562626 "Version"
+	private explicit_type ""
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 4692866 // <dependency>
+	relation 4666626 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4692866 // <dependency>
+	  b parent class_ref 4169090 // Os
+      end
+    end
+
     class 4159234 "Library"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -605,14 +777,6 @@ ${inlines}
 	  b parent class_ref 138626 // QObject
       end
 
-      classrelation 4692482 // <dependency>
-	relation 4666242 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 4692482 // <dependency>
-	  b parent class_ref 4168706 // QLibrary
-      end
-
       classrelation 4692610 // <dependency>
 	relation 4666370 -_->
 	  a public
@@ -621,10 +785,22 @@ ${inlines}
 	  b parent class_ref 4168834 // QLibraryInfo
       end
 
+      attribute 3562882 "IsDebugMode"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       operation 5841410 "findLibrary"
 	public explicit_return_type "bool"
 	nparams 1
-	  param in name "name" type class_ref 161026 // QString
+	  param in name "name" type class_ref 4169474 // LibraryName
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -635,6 +811,41 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4692738 // <dependency>
+	relation 4666498 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4692738 // <dependency>
+	  b parent class_ref 4169474 // LibraryName
+      end
+
+      operation 5841538 "absoluteFilePath"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 3563010 "AbsoluteFilePath"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 
@@ -868,6 +1079,22 @@ ${inlines}
     classdiagram 3605762 "DeployUtilsWindowsSandbox"
       classdiagramsettings member_max_width 0 end
       size A4
+    end
+
+    class 4168962 "PathList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 end

@@ -18,26 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_MAIN_H
-#define MDT_DEPLOY_UTILS_MAIN_H
+#ifndef MDT_DEPLOY_UTILS_LIBRARY_H
+#define MDT_DEPLOY_UTILS_LIBRARY_H
 
-#include "Mdt/AbstractConsoleApplicationMainFunction.h"
+#include <QString>
 
-/*! \brief Provides the ability to run a console application with Qt event loop running
- */
-class MdtDeployUtilsMain : public Mdt::AbstractConsoleApplicationMainFunction
-{
- Q_OBJECT
+namespace Mdt{ namespace DeployUtils{
 
- public:
-
-  /*! \brief Constructor
+  /*! \brief Provides some helper methods for libraries
    */
-  explicit MdtDeployUtilsMain(QObject* parent = nullptr);
+  class Library
+  {
+  public:
 
-  /*! \brief This is the real main of the console application
-   */
-  int runMain() override;
-};
+    bool findLibrary(const QString & name);
+  };
 
-#endif // #ifndef MDT_DEPLOY_UTILS_MAIN_H
+}} // namespace Mdt{ namespace DeployUtils{
+
+#endif // #ifndef MDT_DEPLOY_UTILS_LIBRARY_H

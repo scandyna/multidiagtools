@@ -19,51 +19,29 @@
  **
  ****************************************************************************/
 #include "MdtDeployUtilsMain.h"
+#include "Mdt/DeployUtils/SettingsCommandLineParser.h"
 #include <QCoreApplication>
-#include <QTimer>
 
+#include "Mdt/DeployUtils/Library.h"
 #include <QDebug>
 
 using namespace Mdt;
+using namespace Mdt::DeployUtils;
 
 MdtDeployUtilsMain::MdtDeployUtilsMain(QObject* parent)
  : AbstractConsoleApplicationMainFunction(parent)
 {
-//   auto *app = QCoreApplication::instance();
-//   Q_ASSERT(app != nullptr);
-// 
-// //   connect(app, &QCoreApplication::aboutToQuit, this, &MdtDeployUtilsMain::cleanup);
-//   // If we let 0ms, we have a lots of memory leaks about dbus reported by ASAN
-//   QTimer::singleShot(10, this, &MdtDeployUtilsMain::run);
-}
-
-MdtDeployUtilsMain::~MdtDeployUtilsMain()
-{
-  qDebug() << "DESTR ~MdtDeployUtilsMain()";
 }
 
 int MdtDeployUtilsMain::runMain()
 {
   qDebug() << "Main...";
   
-  return 3;
+  SettingsCommandLineParser parser;
+  parser.process(getArguments());
+  
+  Library lib;
+  lib.findLibrary("/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/qt5/bin/Qt5Core.dll");
+
+  return 0;
 }
-
-// int MdtDeployUtilsMain::mainImpl()
-// {
-//   qDebug() << "Main...";
-//   
-//   return 3;
-// }
-
-// void MdtDeployUtilsMain::run()
-// {
-//   int retCode = mainImpl();
-//   QCoreApplication::exit(retCode);
-// }
-
-// void MdtDeployUtilsMain::cleanup()
-// {
-//   qDebug() << "cleanup";
-//   this->~MdtDeployUtilsMain();
-// }

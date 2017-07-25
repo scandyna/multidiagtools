@@ -21,9 +21,6 @@
 #include "MdtDeployUtilsMain.h"
 #include "Mdt/Application.h"
 
-// #include <QTimer>
-// #include <QApplication>
-
 #include <QDebug>
 
 int main(int argc, char **argv)
@@ -38,18 +35,5 @@ int main(int argc, char **argv)
   // All code is exectued here
   MdtDeployUtilsMain mainImpl;
 
-//   QTimer::singleShot(
-//     10, // If we let 0, we have a lots ov memory leaks about dbus reported by ASAN
-//     [](){
-//       auto *app = Mdt::Application::instance();
-//       qDebug() << "The function..";
-//       app->exit(25);
-//     }
-//   );
-
-  qDebug() << "main: enter eventloop";
-  int ret = app.exec();
-  qDebug() << "main: eventloop finished";
-
-  return ret;
+  return app.exec();
 }

@@ -18,26 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_MAIN_H
-#define MDT_DEPLOY_UTILS_MAIN_H
+#include "PathList.h"
 
-#include "Mdt/AbstractConsoleApplicationMainFunction.h"
+namespace Mdt{ namespace DeployUtils{
 
-/*! \brief Provides the ability to run a console application with Qt event loop running
- */
-class MdtDeployUtilsMain : public Mdt::AbstractConsoleApplicationMainFunction
+void PathList::appendPath(const QString& path)
 {
- Q_OBJECT
+  Q_ASSERT(!path.trimmed().isEmpty());
 
- public:
+  mList.removeAll(path);
+  mList.append(path);
+}
 
-  /*! \brief Constructor
-   */
-  explicit MdtDeployUtilsMain(QObject* parent = nullptr);
+void PathList::prependPath(const QString& path)
+{
+  Q_ASSERT(!path.trimmed().isEmpty());
 
-  /*! \brief This is the real main of the console application
-   */
-  int runMain() override;
-};
+  mList.removeAll(path);
+  mList.prepend(path);
+}
 
-#endif // #ifndef MDT_DEPLOY_UTILS_MAIN_H
+}} // namespace Mdt{ namespace DeployUtils{

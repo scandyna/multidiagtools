@@ -18,26 +18,38 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_MAIN_H
-#define MDT_DEPLOY_UTILS_MAIN_H
+#include "SettingsCommandLineParser.h"
 
-#include "Mdt/AbstractConsoleApplicationMainFunction.h"
+#include <QDebug>
 
-/*! \brief Provides the ability to run a console application with Qt event loop running
- */
-class MdtDeployUtilsMain : public Mdt::AbstractConsoleApplicationMainFunction
+namespace Mdt{ namespace DeployUtils{
+
+SettingsCommandLineParser::SettingsCommandLineParser()
+ : mSourceFilePath({"s","source-file"}, tr("Path to the source file."), "source")
 {
- Q_OBJECT
+  mParser.setApplicationDescription(tr("Utilities to help deploying a application."));
+  mParser.addHelpOption();
+  mParser.addVersionOption();
+  mParser.addPositionalArgument("action", tr("Action to do.."));
+  mParser.addOption(mSourceFilePath);
+}
 
- public:
+void SettingsCommandLineParser::process(const QStringList & arguments)
+{
+  mParser.process(arguments);
+  displayValues();
+}
 
-  /*! \brief Constructor
-   */
-  explicit MdtDeployUtilsMain(QObject* parent = nullptr);
+void SettingsCommandLineParser::process(const QCoreApplication & app)
+{
+  mParser.process(app);
+  displayValues();
+}
 
-  /*! \brief This is the real main of the console application
-   */
-  int runMain() override;
-};
+void SettingsCommandLineParser::displayValues()
+{
+  qDebug() << "Positional args: " << mParser.positionalArguments();
+  qDebug() << "Source file: " << mParser.value(mSourceFilePath);
+}
 
-#endif // #ifndef MDT_DEPLOY_UTILS_MAIN_H
+}} // namespace Mdt{ namespace DeployUtils{

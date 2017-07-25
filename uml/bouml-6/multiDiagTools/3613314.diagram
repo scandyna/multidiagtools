@@ -1,0 +1,27 @@
+format 213
+
+classcanvas 128002 class_ref 4161538 // Platform
+  classdiagramsettings member_max_width 0 end
+  xyz 223 194 2000
+end
+classcanvas 128130 class_ref 4169090 // Os
+  classdiagramsettings member_max_width 0 end
+  xyz 330 163 2006
+end
+note 128386 "Notion of Host platform and target platform"
+  xyzwh 40.5 344.5 2000 341 57
+classcanvas 128514 class_ref 4169218 // Compiler
+  classdiagramsettings member_max_width 0 end
+  xyz 199 42 2006
+end
+classcanvas 128770 class_ref 4169346 // Processor
+  classdiagramsettings member_max_width 0 end
+  xyz 40 163 2006
+end
+line 128258 ---+
+  from ref 128130 z 2007 to ref 128002
+line 128642 ---+
+  from ref 128514 z 2007 to ref 128002
+line 128898 ---+
+  from ref 128770 z 2007 to ref 128002
+end

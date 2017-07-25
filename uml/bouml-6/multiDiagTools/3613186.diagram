@@ -1,0 +1,11 @@
+format 213
+
+classcanvas 128002 class_ref 4160514 // Paths
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 40.5 2000
+end
+classcanvas 128130 class_ref 4168962 // PathList
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 225.5 2000
+end
+end

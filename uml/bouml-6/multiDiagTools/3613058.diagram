@@ -2,19 +2,15 @@ format 213
 
 classcanvas 128002 class_ref 4159234 // Library
   classdiagramsettings member_max_width 0 end
-  xyz 38 162.75 2000
+  xyz 218 210 2000
 end
 classcanvas 128130 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 411 40.75 2006
-end
-classcanvas 128386 class_ref 4168706 // QLibrary
-  classdiagramsettings member_max_width 0 end
-  xyz 412.25 255.25 2012
+  xyz 320 125.25 2006
 end
 classcanvas 129026 class_ref 4168834 // QLibraryInfo
   classdiagramsettings member_max_width 0 end
-  xyz 312.5 170.75 2000
+  xyz 520.5 222.75 2000
 end
 note 129410 "Utilities:
  - Get complete name of a library for given platform
@@ -23,31 +19,44 @@ note 129410 "Utilities:
  - Find dependencies of a library
  - Find dependencies of a executable, and copy them to a destination
 "
-  xyzwh 40 381.5 2000 497 241
+  xyzwh 40.5 393.5 2000 497 241
+classcanvas 129538 class_ref 4159362 // LddWrapper
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 714.5 2000
+end
+classcanvas 129666 class_ref 4161538 // Platform
+  classdiagramsettings member_max_width 0 end
+  xyz 202 73.25 2000
+end
+classcanvas 129794 class_ref 4169474 // LibraryName
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 185 2000
+end
+classcanvas 129922 class_ref 4169090 // Os
+  classdiagramsettings member_max_width 0 end
+  xyz 54.25 39 2006
+end
 relationcanvas 128258 relation_ref 4666114 // <generalisation>
-  geometry VHV unfixed
-  from ref 128002 z 2007 to point 155 125
-  line 128770 z 2007 to point 441 125
-  line 128898 z 2007 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128514 relation_ref 4665986 // <generalisation>
-  decenter_begin 449
-  from ref 128386 z 2013 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128642 relation_ref 4666242 // <dependency>
-  geometry VH unfixed
-  decenter_end 422
-  from ref 128002 z 2013 to point 155 271
-  line 129282 z 2013 to ref 128386
+  from ref 128002 z 2007 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 4666370 // <dependency>
+  decenter_end 577
   from ref 128002 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 130050 ---+ decenter_end 422
+  from ref 129922 z 2007 to ref 129666
+relationcanvas 130178 relation_ref 4666498 // <dependency>
+  from ref 128002 z 2001 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 4666626 // <dependency>
+  decenter_end 532
+  from ref 129794 z 2007 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

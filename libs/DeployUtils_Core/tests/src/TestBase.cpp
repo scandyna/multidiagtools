@@ -18,26 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_MAIN_H
-#define MDT_DEPLOY_UTILS_MAIN_H
+#include "TestBase.h"
+#include <QTextStream>
+#include <QTextCodec>
 
-#include "Mdt/AbstractConsoleApplicationMainFunction.h"
-
-/*! \brief Provides the ability to run a console application with Qt event loop running
- */
-class MdtDeployUtilsMain : public Mdt::AbstractConsoleApplicationMainFunction
+bool TestBase::writeTemporaryTextFile(QTemporaryFile & file, const QString& data, const QByteArray& encoding)
 {
- Q_OBJECT
+  if(!file.open()){
+    qDebug() << "Could not create a temporary file";
+    return false;
+  }
+  auto *codec = QTextCodec::codecForName(encoding);
+  if(codec == nullptr){
+    qDebug() << "Could not find a codec for requested encoding: " << encoding;
+    return false;
+  }
+  QTextStream stream(&file);
+  stream.setCodec(codec);
+  stream << data;
+  file.close();
 
- public:
-
-  /*! \brief Constructor
-   */
-  explicit MdtDeployUtilsMain(QObject* parent = nullptr);
-
-  /*! \brief This is the real main of the console application
-   */
-  int runMain() override;
-};
-
-#endif // #ifndef MDT_DEPLOY_UTILS_MAIN_H
+  return true;
+}
