@@ -851,7 +851,7 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 3562242 "Prefix"
+      attribute 3562370 "Name"
 	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -863,8 +863,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 3562370 "Name"
-	private type class_ref 161026 // QString
+      attribute 3564418 "Version"
+	private type class_ref 4169858 // LibraryVersion
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -887,38 +887,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 3562498 "Extension"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 5842050 "setName"
-	public explicit_return_type "void"
-	nparams 3
-	  param in name "name" type class_ref 161026 // QString
-	  param in name "os" type class_ref 4169602 // OperatingSystem
-	  param in name "mode" type class_ref 4169730 // LibraryMode
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5849218 "matches"
-	public explicit_return_type "bool"
+      operation 5842050 "LibraryName"
+	public explicit_return_type ""
 	nparams 1
 	  param in name "name" type class_ref 161026 // QString
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -939,6 +909,37 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5849730 "toFullNameLinux"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5849218 "matches"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "name" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -1032,18 +1033,6 @@ ${inlines}
 	  b parent class_ref 4169858 // LibraryVersion
       end
 
-      attribute 3564418 "Version"
-	private type class_ref 4169858 // LibraryVersion
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       operation 5842690 "isALibraryName"
 	class_operation public explicit_return_type "bool"
 	nparams 2
@@ -1060,6 +1049,7 @@ ${inlines}
 	
 	
       end
+
     end
 
     class 4158978 "LibraryInfo"

@@ -37,8 +37,9 @@ class LibraryTest : public TestBase
   void libraryVersionSetStrTest_data();
   void libraryVersionBenchmark();
   void libraryVersionBenchmark_data();
-  
-//   void libraryNameSetNameTest();
+
+  void libraryNameFromStrTest();
+  void libraryNameFromStrTest_data();
 };
 
 #endif // #ifndef LIBRARY_TEST_H

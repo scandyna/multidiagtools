@@ -37,9 +37,10 @@ LibraryVersion::LibraryVersion(qint8 versionMajor, qint8 versionMinor, qint8 ver
   Q_ASSERT( (mVersionPatch < 0) || (mVersionMinor >= 0) );
 }
 
-LibraryVersion::LibraryVersion(const QString & version)
+LibraryVersion::LibraryVersion(const QStringRef & version)
 {
-  const auto stringList = version.splitRef('.', QString::SkipEmptyParts);
+//   const auto stringList = version.splitRef('.', QString::SkipEmptyParts);
+  const auto stringList = version.split('.', QString::SkipEmptyParts);
   bool vMajorOk = true;
   bool vMinorOk = true;
   bool vPatchOk = true;

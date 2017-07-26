@@ -2,15 +2,15 @@ format 213
 
 classcanvas 128002 class_ref 4159234 // Library
   classdiagramsettings member_max_width 0 end
-  xyz 39.25 169.25 2000
+  xyz 39.25 182.25 2000
 end
 classcanvas 128130 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 144.5 86.25 2006
+  xyz 138 99.25 2006
 end
 classcanvas 129026 class_ref 4168834 // QLibraryInfo
   classdiagramsettings member_max_width 0 end
-  xyz 416.5 903 2000
+  xyz 416.5 922.5 2000
 end
 note 129410 "Utilities:
  - Get complete name of a library for given platform
@@ -19,44 +19,47 @@ note 129410 "Utilities:
  - Find dependencies of a library
  - Find dependencies of a executable, and copy them to a destination
 "
-  xyzwh 40.5 582 2000 497 241
+  xyzwh 40.5 601.5 2000 497 241
 classcanvas 129538 class_ref 4159362 // LddWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 617.5 582 2000
+  xyz 617.5 601.5 2000
 end
 classcanvas 129666 class_ref 4161538 // Platform
   classdiagramsettings member_max_width 0 end
-  xyz 39 928.5 2000
+  xyz 39 948 2000
 end
 classcanvas 129794 class_ref 4169474 // LibraryName
   classdiagramsettings member_max_width 0 end
-  xyz 346.5 40.25 2000
+  xyz 341.5 39 2000
 end
 classcanvas 130434 class_ref 4169602 // OperatingSystem
   classdiagramsettings member_max_width 0 end
-  xyz 143 897.5 2006
+  xyz 143 917 2006
 end
 classcanvas 130690 class_ref 4169730 // LibraryMode
   classdiagramsettings member_max_width 0 end
-  xyz 525.5 396.5 2005
+  xyz 512.5 416 2005
 end
 classcanvas 131074 class_ref 4169858 // LibraryVersion
   classdiagramsettings member_max_width 0 end
-  xyz 905.5 106.25 2005
+  xyz 879.5 119.25 2005
 end
 classcanvas 131330 class_ref 4158978 // LibraryInfo
   classdiagramsettings member_max_width 0 end
-  xyz 299.25 397.25 2000
+  xyz 286.25 416.75 2000
+end
+classcanvas 131586 class_ref 4169602 // OperatingSystem
+  classdiagramsettings member_max_width 0 end
+  xyz 60 312 2005
 end
 relationcanvas 128258 relation_ref 4666114 // <generalisation>
-  decenter_begin 513
+  decenter_begin 486
   from ref 128002 z 2007 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130178 relation_ref 4666498 // <dependency>
-  decenter_begin 557
-  decenter_end 510
+  decenter_begin 442
   from ref 128002 z 2001 to ref 129794
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -72,8 +75,7 @@ relationcanvas 130818 relation_ref 4666882 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131202 relation_ref 4667010 // <directional composition>
-  decenter_begin 510
-  decenter_end 518
+  decenter_end 481
   from ref 129794 z 2006 to ref 131074
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

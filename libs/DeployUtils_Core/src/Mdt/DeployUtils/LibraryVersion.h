@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_LIBRARY_VERSION_H
 
 #include <QString>
+#include <QStringRef>
 #include <QtGlobal>
 
 namespace Mdt{ namespace DeployUtils{
@@ -50,7 +51,16 @@ namespace Mdt{ namespace DeployUtils{
      *
      * \sa isNull()
      */
-    LibraryVersion(const QString & version);
+    LibraryVersion(const QString & version)
+     : LibraryVersion(QStringRef(&version))
+    {
+    }
+
+    /*! \brief Construct a library version from a version string
+     *
+     * \sa LibraryVersion(const QString &)
+     */
+    LibraryVersion(const QStringRef & version);
 
     /*! \brief Copy construct a version from a other
      */

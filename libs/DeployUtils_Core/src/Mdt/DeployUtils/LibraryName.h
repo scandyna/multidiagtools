@@ -21,6 +21,9 @@
 #ifndef MDT_DEPLOY_UTILS_LIBRARY_NAME_H
 #define MDT_DEPLOY_UTILS_LIBRARY_NAME_H
 
+#include "LibraryVersion.h"
+#include <QString>
+
 namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Representation of a shared library name
@@ -29,13 +32,73 @@ namespace Mdt{ namespace DeployUtils{
   {
   public:
 
-    /*! \brief The the library name
+    /*! \brief Construct a null library name
      */
-    
+    LibraryName() = default;
+
+    /*! \brief Construct a library name from a name
+     *
+     * \a name can be passed without any prefix, extension, version.
+     * Example: Qt5Core
+     * A more platform specific name can also be passed,
+     *  for example libQt5Core.so
+     * A versionned version can also be passed,
+     *  for example libQt5Core.so.5 , libQt5Core.so.5.5 , libQt5Core.so.5.5.1
+     */
+    LibraryName(const QString & name);
+
+    /*! \brief Copy construct a library name from a other
+     */
+    LibraryName(const LibraryName &) = default;
+
+    /*! \brief Copy assign to this library name from a other
+     */
+    LibraryName & operator=(const LibraryName &) = default;
+
+    /*! \brief Move construct a library name from a other
+     */
+    LibraryName(LibraryName &&) = default;
+
+    /*! \brief Move assign to this library name from a other
+     */
+    LibraryName & operator=(LibraryName &&) = default;
+
+    /*! \brief Check is this library name is null
+     */
+    bool isNull() const
+    {
+      return mName.isEmpty();
+    }
+
+    /*! \brief Get library name
+     *
+     * Returns the library name without any prefix or suffix or version.
+     *  For example, if this library name was constructed with libQt5Core.so.5.5.1
+     *  this method returns Qt5Core
+     */
+    QString name() const
+    {
+      return mName;
+    }
+
+    /*! \brief Get library version
+     */
+    LibraryVersion version() const
+    {
+      return mVersion;
+    }
+
+    /*! \brief Get the full library name for Linux platform
+     *
+     * Returns the lib prefix, name, .so suffix,
+     *  and the version if available
+     */
+    QString toFullNameLinux() const;
 
   private:
 
-    
+    QString mName;
+    LibraryVersion mVersion;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{
