@@ -90,6 +90,13 @@ namespace Mdt{ namespace DeployUtils{
       return mList;
     }
 
+    /*! \brief Check if this path list is empty
+     */
+    bool isEmpty() const
+    {
+      return mList.isEmpty();
+    }
+
     /*! \brief Returns a const STL-style iterator pointing to the first item in the list
      */
     const_iterator begin() const
@@ -108,14 +115,14 @@ namespace Mdt{ namespace DeployUtils{
      */
     const_iterator end() const
     {
-      return mList.end();
+      return mList.cend();
     }
 
     /*! \brief Returns a const STL-style iterator pointing to the last item in the list
      */
     const_iterator cend() const
     {
-      return mList.end();
+      return mList.cend();
     }
 
    private:

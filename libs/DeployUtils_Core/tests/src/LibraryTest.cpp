@@ -21,7 +21,13 @@
 #include "LibraryTest.h"
 #include "Mdt/DeployUtils/LibraryVersion.h"
 #include "Mdt/DeployUtils/LibraryName.h"
+#include "Mdt/DeployUtils/LibraryInfo.h"
 #include "Mdt/DeployUtils/Library.h"
+#include <QtGlobal>
+#include <QTemporaryDir>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 
 using namespace Mdt::DeployUtils;
 
@@ -201,6 +207,74 @@ void LibraryTest::libraryNameToFullNameLinuxTest()
    */
   LibraryName name123("libQt5Core.so.1.2.3");
   QCOMPARE(name123.toFullNameLinux(), QString("libQt5Core.so.1.2.3"));
+}
+
+void LibraryTest::libraryInfoTest()
+{
+  LibraryInfo li;
+  QVERIFY(li.isNull());
+  li.setAbsoluteFilePath("/tmp/libA.so");
+  QVERIFY(!li.isNull());
+  QCOMPARE(li.absoluteFilePath(), QString("/tmp/libA.so"));
+}
+
+void LibraryTest::searchLibraryTest()
+{
+  QFETCH(QString, libraryFilePathToCreate);
+  QFETCH(QString, name);
+  QFETCH(PathList, pathList);
+  QFETCH(int, searchInSystemPaths);
+  QFETCH(bool, expectedOk);
+  /*
+   * Create a file if it not exists on the system
+   */
+  QTemporaryDir testRootDirectory;
+  if(!libraryFilePathToCreate.isEmpty()){
+    QVERIFY(createFileInTemporaryDirectory(testRootDirectory, libraryFilePathToCreate));
+    const PathList pathListCopy = pathList;
+    pathList = PathList();
+    for(const auto path : pathListCopy){
+      pathList.appendPath(testRootDirectory.path() + path);
+    }
+  }
+  /*
+   * Check
+   */
+  Library library;
+  QCOMPARE(library.findLibrary(name, pathList, static_cast<Library::SearchInSystemPaths>(searchInSystemPaths)), expectedOk);
+}
+
+void LibraryTest::searchLibraryTest_data()
+{
+  QTest::addColumn<QString>("libraryFilePathToCreate");
+  QTest::addColumn<QString>("name");
+  QTest::addColumn<PathList>("pathList");
+  QTest::addColumn<int>("searchInSystemPaths");
+  QTest::addColumn<bool>("expectedOk");
+
+  const bool ExistsOnSystem = true;
+  const bool NotExistsOnSystem = false;
+  const int IncludeSystemPaths = Library::IncludeSystemPaths;
+  const int ExcludeSystemPaths = Library::ExcludeSystemPaths;
+  const bool Exists = true;
+  const bool NotExists = false;
+
+#ifdef Q_OS_UNIX
+
+  QTest::newRow("libc.so|c||")
+    << "" << "c" << PathList{} << IncludeSystemPaths << Exists;
+
+  QTest::newRow("libc.so|c|/var|")
+    << "" << "c" << PathList{"/var"} << ExcludeSystemPaths << NotExists;
+
+  QTest::newRow("libNoExistingLib|NoExistingLib||")
+    << "" << "NoExistingLib" << PathList{} << IncludeSystemPaths << NotExists;
+
+  QTest::newRow("libMyLib.so|MyLib|/opt/MyProject/lib|")
+    << "/opt/MyProject/lib/libMyLib.so" << "c" << PathList{"/opt/MyProject/lib"} << IncludeSystemPaths << Exists;
+
+
+#endif // #ifdef Q_OS_UNIX
 }
 
 

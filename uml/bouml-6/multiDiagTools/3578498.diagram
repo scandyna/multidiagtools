@@ -1,4 +1,4 @@
-format 211
+format 213
 
 classcanvas 128002 class_ref 4131458 // ColumnSortOrderSetupWidget
   classdiagramsettings member_max_width 0 end

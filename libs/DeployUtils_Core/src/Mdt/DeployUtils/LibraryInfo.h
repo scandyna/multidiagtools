@@ -18,27 +18,42 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
-#define MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
+#ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_H
+#define MDT_DEPLOY_UTILS_LIBRARY_INFO_H
 
-#include "Mdt/Application.h"
-#include <QObject>
-#include <QByteArray>
 #include <QString>
-#include <QVariant>
-#include <QTemporaryFile>
-#include <QTemporaryDir>
-#include <QtTest/QtTest>
-#include <Qt>
 
-class TestBase : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace DeployUtils{
 
- protected:
+  /*! \brief Data value class that stores informations about a library
+   */
+  class LibraryInfo
+  {
+   public:
 
-  static bool createFileInTemporaryDirectory(const QTemporaryDir & testRootDirectory, const QString & absoluteFilePath);
-  static bool writeTemporaryTextFile(QTemporaryFile & file, const QString & data, const QByteArray & encoding = QByteArray("UTF-8"));
-};
+    /*! \brief Set absolute file path
+     */
+    void setAbsoluteFilePath(const QString & path);
 
-#endif // #ifndef MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
+    /*! \brief Get absolute file path
+     */
+    QString absoluteFilePath() const
+    {
+      return mAbsoluteFilePath;
+    }
+
+    /*! \brief Check if this library info is null
+     */
+    bool isNull() const
+    {
+      return mAbsoluteFilePath.isEmpty();
+    }
+
+   private:
+
+    QString mAbsoluteFilePath;
+  };
+
+}} // namespace Mdt{ namespace DeployUtils{
+
+#endif // #ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_H

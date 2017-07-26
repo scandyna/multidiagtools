@@ -42,8 +42,12 @@ class LibraryTest : public TestBase
   void libraryNameFromStrTest_data();
   void libraryNameFromStrBenchmark();
   void libraryNameFromStrBenchmark_data();
-
   void libraryNameToFullNameLinuxTest();
+
+  void libraryInfoTest();
+
+  void searchLibraryTest();
+  void searchLibraryTest_data();
 };
 
 #endif // #ifndef LIBRARY_TEST_H

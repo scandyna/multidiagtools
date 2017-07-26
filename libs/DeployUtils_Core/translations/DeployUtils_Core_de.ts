@@ -19,4 +19,12 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>Mdt::DeployUtils::Library</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/Library.cpp" line="72"/>
+        <source>Could not find library &apos;%1&apos; in following paths: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

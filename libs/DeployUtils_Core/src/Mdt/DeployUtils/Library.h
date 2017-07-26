@@ -21,17 +21,70 @@
 #ifndef MDT_DEPLOY_UTILS_LIBRARY_H
 #define MDT_DEPLOY_UTILS_LIBRARY_H
 
+#include "LibraryInfo.h"
+#include "PathList.h"
+#include "Mdt/Error.h"
 #include <QString>
+#include <QObject>
 
 namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Provides some helper methods for libraries
    */
-  class Library
+  class Library : public QObject
   {
-  public:
+   Q_OBJECT
 
-    bool findLibrary(const QString & name);
+   public:
+
+    /*! \brief Tell if search must include system paths or not
+     */
+    enum SearchInSystemPaths
+    {
+      IncludeSystemPaths, /*!< Also search in system path */
+      ExcludeSystemPaths  /*!< Do not search in system path */
+    };
+
+    /*! \brief Constructor
+     */
+    explicit Library(QObject* parent = nullptr);
+
+    // Copy disabled
+    Library(const Library &) = delete;
+    Library & operator=(const Library &) = delete;
+    // Move disabled
+    Library(Library &&) = delete;
+    Library & operator=(Library &&) = delete;
+
+    /*! \brief Fin a library
+     *
+     * \param name Name of the library.
+     *     Can be a name without any prefix or suffix (ex: Qt5Core),
+     *     or a more platform specific name (ex: libQt5Core.so).
+     *     For platform that supports versions in the library file name,
+     *     a versionned name can be done (ex: libQt5Core.so.5 , libQt5Core.so.5.6.2)
+     * \param pathList List of paths where to search the library
+     * \param searchInSystemPaths Tell if the search must include system paths
+     * \return True if the library was found, false if it was not found, or a error occured.
+     * \pre name must be a non empty string.
+     * \pre If \a searchInSystemPaths is ExcludeSystemPaths, pathList must contain at least 1 path
+     */
+    bool findLibrary(const QString & name, const PathList pathList = PathList(), SearchInSystemPaths searchInSystemPaths = IncludeSystemPaths);
+
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
+
+
+   private:
+
+    void addSystemPaths(PathList & pathList);
+
+    LibraryInfo mLibraryInfo;
+    Mdt::Error mLastError;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

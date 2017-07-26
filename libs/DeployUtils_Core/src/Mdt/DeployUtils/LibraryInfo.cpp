@@ -18,27 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
-#define MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
+#include "LibraryInfo.h"
 
-#include "Mdt/Application.h"
-#include <QObject>
-#include <QByteArray>
-#include <QString>
-#include <QVariant>
-#include <QTemporaryFile>
-#include <QTemporaryDir>
-#include <QtTest/QtTest>
-#include <Qt>
+namespace Mdt{ namespace DeployUtils{
 
-class TestBase : public QObject
+void LibraryInfo::setAbsoluteFilePath(const QString& path)
 {
- Q_OBJECT
+  mAbsoluteFilePath = path;
+}
 
- protected:
 
-  static bool createFileInTemporaryDirectory(const QTemporaryDir & testRootDirectory, const QString & absoluteFilePath);
-  static bool writeTemporaryTextFile(QTemporaryFile & file, const QString & data, const QByteArray & encoding = QByteArray("UTF-8"));
-};
-
-#endif // #ifndef MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
+}} // namespace Mdt{ namespace DeployUtils{

@@ -21,6 +21,27 @@
 #include "TestBase.h"
 #include <QTextStream>
 #include <QTextCodec>
+#include <QFile>
+#include <QFileInfo>
+#include <QDir>
+
+bool TestBase::createFileInTemporaryDirectory(const QTemporaryDir & testRootDirectory, const QString & absoluteFilePath)
+{
+  const QFileInfo fi(testRootDirectory.path() + absoluteFilePath);
+  auto dir = fi.absoluteDir();
+
+  if(!dir.mkpath(dir.absolutePath())){
+    qDebug() << "Unable to create directory " << dir.absolutePath();
+    return false;
+  }
+  QFile file(fi.absoluteFilePath());
+  if(!file.open(QFile::WriteOnly)){
+    qDebug() << "Unable to create file " << file.fileName() << ": " << file.errorString();
+    return false;
+  }
+
+  return true;
+}
 
 bool TestBase::writeTemporaryTextFile(QTemporaryFile & file, const QString& data, const QByteArray& encoding)
 {

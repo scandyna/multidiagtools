@@ -673,7 +673,7 @@ ${inlines}
     end
 
     classdiagram 3613058 "Library"
-      classdiagramsettings draw_all_relations no member_max_width 0 end
+      classdiagramsettings member_max_width 0 end
       size B-Landscape
     end
 
@@ -1153,12 +1153,58 @@ ${inlines}
 	
       end
 
-      classrelation 4692738 // <dependency>
-	relation 4666498 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 4692738 // <dependency>
-	  b parent class_ref 4169474 // LibraryName
+      classrelation 4700034 // <directional composition>
+	relation 4673794 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4700034 // <directional composition>
+	  b parent class_ref 4158978 // LibraryInfo
+      end
+
+      class 4176514 "SearchPaths"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	attribute 3571074 "IncludeStandrdPaths"
+	  public type class_ref 4176514 // SearchPaths
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 3571202 "ExcludeStandardPaths"
+	  public type class_ref 4176514 // SearchPaths
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
       end
     end
 
