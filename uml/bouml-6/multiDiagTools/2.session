@@ -25,24 +25,27 @@ diagrams
     120 98 100 A4 0 0
   classdiagram_ref 3605506 // DeployUtilsSnadbox
     955 911 90 B 0 0
-  classdiagram_ref 3605634 // DeployUtilsLinuxSandbox
-    120 98 90 A-Landscape 0 0
-  classdiagram_ref 3605762 // DeployUtilsWindowsSandbox
-    120 98 100 A4 0 0
   classdiagram_ref 3605890 // Settings
-    120 98 100 A-Landscape 0 0
-  active  classdiagram_ref 3606146 // ConsoleApp
-    955 911 100 A4 48 0
+    120 98 100 A-Landscape 4 0
+  active  classdiagram_ref 3613058 // Library
+    955 911 100 B 0 0
+  classdiagram_ref 3613186 // Paths
+    120 98 100 A4 0 0
+  classdiagram_ref 3613314 // Platform
+    120 98 100 A4 0 0
 end
 show_stereotypes
-selected operation_ref 5834626 // getArguments
+selected operation_ref 5842690 // isALibraryName
 open
-  class_ref 4162050 // AbstractConsoleApplicationMainFunction
-  classdiagram_ref 3605634 // DeployUtilsLinuxSandbox
+  attribute_ref 3563650 // VersionPatch
+  attribute_ref 3564290 // Mode
+  attribute_ref 3562498 // Extension
+  operation_ref 5841666 // name
+  operation_ref 5842434 // setVersion
+  operation_ref 5842562 // setOsFullName
   class_ref 4160002 // RPath
   class_ref 4161154 // DesktopFile
-  classdiagram_ref 3605762 // DeployUtilsWindowsSandbox
-  
-  package_ref 134786 // Qt
+  class_ref 4168962 // PathList
+  classview_ref 846978 // QtCore
 end
 end

@@ -2,6 +2,7 @@
 # List of source files
 set(SOURCE_FILES
     Mdt/DeployUtils/SettingsCommandLineParser.cpp
+    Mdt/DeployUtils/LibraryVersion.cpp
     Mdt/DeployUtils/LibraryName.cpp
     Mdt/DeployUtils/Library.cpp
     Mdt/DeployUtils/PathList.cpp

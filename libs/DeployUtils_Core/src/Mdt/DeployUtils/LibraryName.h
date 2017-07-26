@@ -23,12 +23,14 @@
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief
+  /*! \brief Representation of a shared library name
    */
   class LibraryName
   {
   public:
 
+    /*! \brief The the library name
+     */
     
 
   private:

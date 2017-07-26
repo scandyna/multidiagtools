@@ -32,6 +32,13 @@ class LibraryTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void libraryVersionTest();
+  void libraryVersionSetStrTest();
+  void libraryVersionSetStrTest_data();
+  void libraryVersionBenchmark();
+  void libraryVersionBenchmark_data();
+  
+//   void libraryNameSetNameTest();
 };
 
 #endif // #ifndef LIBRARY_TEST_H
