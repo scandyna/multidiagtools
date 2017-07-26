@@ -46,12 +46,10 @@ bool Library::findLibrary(const QString & name, const PathList pathList, Library
   if(searchInSystemPaths == IncludeSystemPaths){
     addSystemPaths(searchPathList);
   }
-  qDebug() << "Searchin library " << name << " ...";
   // Lambda to check if a file matches request library
   const auto matchFile = [libraryName, this](const QFileInfo & fileInfo){
     LibraryName currentFile(fileInfo.fileName());
     if(currentFile.name() == libraryName.name()){
-      qDebug() << " --> FOUND ! file: " << fileInfo.absoluteFilePath();
       mLibraryInfo.setAbsoluteFilePath(fileInfo.absoluteFilePath());
       return true;
     }
@@ -59,7 +57,6 @@ bool Library::findLibrary(const QString & name, const PathList pathList, Library
   };
   // Lambda that search the library in given path
   const auto searchInDirectory = [libraryName, matchFile](const QString & path){
-    qDebug() << " Try in " << path;
     const QDir currentDirectoy(path);
     const auto fileInfoList = currentDirectoy.entryInfoList();
     const auto it = std::find_if(fileInfoList.cbegin(), fileInfoList.cend(), matchFile);

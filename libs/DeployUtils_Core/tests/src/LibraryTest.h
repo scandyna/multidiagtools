@@ -48,6 +48,8 @@ class LibraryTest : public TestBase
 
   void searchLibraryTest();
   void searchLibraryTest_data();
+  void searchLibraryBenchmark();
+  void searchLibraryBenchmark_data();
 };
 
 #endif // #ifndef LIBRARY_TEST_H

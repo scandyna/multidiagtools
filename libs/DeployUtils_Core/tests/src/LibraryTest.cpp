@@ -252,8 +252,6 @@ void LibraryTest::searchLibraryTest_data()
   QTest::addColumn<int>("searchInSystemPaths");
   QTest::addColumn<bool>("expectedOk");
 
-  const bool ExistsOnSystem = true;
-  const bool NotExistsOnSystem = false;
   const int IncludeSystemPaths = Library::IncludeSystemPaths;
   const int ExcludeSystemPaths = Library::ExcludeSystemPaths;
   const bool Exists = true;
@@ -267,6 +265,9 @@ void LibraryTest::searchLibraryTest_data()
   QTest::newRow("libc.so|c|/var|")
     << "" << "c" << PathList{"/var"} << ExcludeSystemPaths << NotExists;
 
+  QTest::newRow("libc.so|c|/non/existing/path|")
+    << "" << "c" << PathList{"/non/existing/path"} << ExcludeSystemPaths << NotExists;
+
   QTest::newRow("libNoExistingLib|NoExistingLib||")
     << "" << "NoExistingLib" << PathList{} << IncludeSystemPaths << NotExists;
 
@@ -275,6 +276,43 @@ void LibraryTest::searchLibraryTest_data()
 
 
 #endif // #ifdef Q_OS_UNIX
+}
+
+void LibraryTest::searchLibraryBenchmark()
+{
+  QFETCH(QString, name);
+  QFETCH(PathList, pathList);
+  QFETCH(int, searchInSystemPaths);
+  QFETCH(bool, expectedOk);
+
+  Library library;
+  QBENCHMARK{
+    QCOMPARE(library.findLibrary(name, pathList, static_cast<Library::SearchInSystemPaths>(searchInSystemPaths)), expectedOk);
+  }
+}
+
+void LibraryTest::searchLibraryBenchmark_data()
+{
+  QTest::addColumn<QString>("name");
+  QTest::addColumn<PathList>("pathList");
+  QTest::addColumn<int>("searchInSystemPaths");
+  QTest::addColumn<bool>("expectedOk");
+
+  const int IncludeSystemPaths = Library::IncludeSystemPaths;
+  const int ExcludeSystemPaths = Library::ExcludeSystemPaths;
+  const bool Exists = true;
+  const bool NotExists = false;
+
+#ifdef Q_OS_UNIX
+
+  QTest::newRow("libc.so|c||")
+    << "c" << PathList{} << IncludeSystemPaths << Exists;
+
+  QTest::newRow("libc.so|c|/opt/lib44|")
+    << "c" << PathList{"/opt/lib44"} << ExcludeSystemPaths << NotExists;
+
+#endif // #ifdef Q_OS_UNIX
+
 }
 
 
