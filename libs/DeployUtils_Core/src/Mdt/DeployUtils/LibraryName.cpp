@@ -19,16 +19,13 @@
  **
  ****************************************************************************/
 #include "LibraryName.h"
-
+#include <QLatin1String>
+#include <QStringRef>
+#include <QRegularExpression>
+#include <QStringBuilder>
 #include <QLatin1String>
 
-#include <QVector>
-
-#include <QStringRef>
-
-#include <QRegularExpression>
-
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -49,34 +46,25 @@ LibraryName::LibraryName(const QString & name)
   if(extentionIndex >= 0){
     nameLen -= name.size() - extentionIndex;
   }
-//   qDebug() << "start: " << start << ", nameLen: " << nameLen;
   mName = name.mid(start, nameLen);
-//   qDebug() << "Name: " << mName;
   // Get version if available
   if( (extentionIndex >= 0 ) && (name.midRef(extentionIndex, 4) == QLatin1String(".so.")) ){
-    qDebug() << "Have maybe a version";
     const int versionStartIndex = extentionIndex + 4;
     const int versionLen = name.size() - versionStartIndex;
-    qDebug() << "start: " << versionStartIndex << " , len: " << versionLen;
     const auto versionString = name.midRef(versionStartIndex, versionLen);
-    qDebug() << "V: " << versionString;
     mVersion = LibraryVersion(versionString);
   }
-  
-//   qDebug() << "extentionIndex: " << extentionIndex;
-//   int N = name.size();
-//   int n = N - start - (N - extentionIndex);
-//   qDebug() << "N: " << N << " start: " << start << " ext: " << extentionIndex << "n: " << n;
-//   qDebug() << "name: " << name.mid(start, n);
-//   static const char *nameAndExtensionRegEx = "^.*(.so|.dll)";
-//   const auto nameAndExtensionParts = name.splitRef(QRegularExpression(nameAndExtensionRegEx,  QRegularExpression::CaseInsensitiveOption), QString::SkipEmptyParts);
-//   
-//   qDebug() << "nameAndExtensionParts: " << nameAndExtensionParts;
 }
 
 QString LibraryName::toFullNameLinux() const
 {
+  QString fullName = QLatin1String("lib") % mName % QLatin1String(".so");
 
+  if(!mVersion.isNull()){
+    fullName += QLatin1String(".") % mVersion.toString();
+  }
+
+  return fullName;
 }
 
 

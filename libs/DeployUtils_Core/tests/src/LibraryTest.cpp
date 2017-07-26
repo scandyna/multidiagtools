@@ -160,6 +160,50 @@ void LibraryTest::libraryNameFromStrTest_data()
   QTest::newRow("libpng12.so.0") << "libpng12.so.0" << "png12" << "0" << NotNull;
 }
 
+void LibraryTest::libraryNameFromStrBenchmark()
+{
+  QFETCH(QString, inputName);
+  QFETCH(QString, expectedName);
+  QFETCH(QString, expectedVersion);
+
+  QString libNameString;
+  LibraryVersion libVersion;
+  QBENCHMARK{
+    LibraryName libName(inputName);
+    libNameString = libName.name();
+    libVersion = libName.version();
+  }
+  QCOMPARE(libNameString, expectedName);
+  QCOMPARE(libVersion.toString(), expectedVersion);
+}
+
+void LibraryTest::libraryNameFromStrBenchmark_data()
+{
+  QTest::addColumn<QString>("inputName");
+  QTest::addColumn<QString>("expectedName");
+  QTest::addColumn<QString>("expectedVersion");
+
+  QTest::newRow("Qt5Core") << "Qt5Core" << "Qt5Core" << "";
+  QTest::newRow("libQt5Core") << "libQt5Core" << "Qt5Core" << "";
+  QTest::newRow("libQt5Core.so") << "libQt5Core.so" << "Qt5Core" << "";
+  QTest::newRow("libQt5Core.so.5.6.2") << "libQt5Core.so.5.6.2" << "Qt5Core" << "5.6.2";
+}
+
+void LibraryTest::libraryNameToFullNameLinuxTest()
+{
+  /*
+   * No version
+   */
+  LibraryName name0("Qt5Core");
+  QCOMPARE(name0.toFullNameLinux(), QString("libQt5Core.so"));
+  /*
+   * With version
+   */
+  LibraryName name123("libQt5Core.so.1.2.3");
+  QCOMPARE(name123.toFullNameLinux(), QString("libQt5Core.so.1.2.3"));
+}
+
+
 /*
  * Main
  */
