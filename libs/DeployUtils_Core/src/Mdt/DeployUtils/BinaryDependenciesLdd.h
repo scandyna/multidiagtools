@@ -18,21 +18,31 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef LDD_WRAPPER_TEST_H
-#define LDD_WRAPPER_TEST_H
+#ifndef MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_LDD_H
+#define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_LDD_H
 
-#include "TestBase.h"
+#include "BinaryDependenciesImplementationInterface.h"
 
-class LddWrapperTest : public TestBase
-{
- Q_OBJECT
+namespace Mdt{ namespace DeployUtils{
 
- private slots:
+  /*! \brief
+   */
+  class BinaryDependenciesLdd : public BinaryDependenciesImplementationInterface
+  {
+   Q_OBJECT
 
-  void initTestCase();
-  void cleanupTestCase();
+   public:
 
-  void runLddTest();
-};
+    /*! \brief Constructor
+     */
+    BinaryDependenciesLdd(QObject* parent = nullptr);
 
-#endif // #ifndef LDD_WRAPPER_TEST_H
+
+   private:
+
+    
+  };
+
+}} // namespace Mdt{ namespace DeployUtils{
+
+#endif // #ifndef MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_LDD_H

@@ -18,21 +18,33 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef LDD_WRAPPER_TEST_H
-#define LDD_WRAPPER_TEST_H
+#include "BinaryDependenciesTest.h"
 
-#include "TestBase.h"
-
-class LddWrapperTest : public TestBase
+void BinaryDependenciesTest::initTestCase()
 {
- Q_OBJECT
+}
 
- private slots:
+void BinaryDependenciesTest::cleanupTestCase()
+{
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+/*
+ * Tests
+ */
 
-  void runLddTest();
-};
+/*
+ * Main
+ */
 
-#endif // #ifndef LDD_WRAPPER_TEST_H
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  BinaryDependenciesTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+//   app.debugEnvironnement();
+
+  return QTest::qExec(&test, argc, argv);
+}

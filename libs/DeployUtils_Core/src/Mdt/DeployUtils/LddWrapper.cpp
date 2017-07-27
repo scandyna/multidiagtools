@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "LddWrapper.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -31,9 +31,7 @@ LddWrapper::LddWrapper(QObject* parent)
 
 bool LddWrapper::execFindDependencies(const QString & binaryFilePath)
 {
-  qDebug() << "LDD: exec on " << binaryFilePath;
-
-  if(!exec("ldd", {"--abcd",binaryFilePath})){
+  if(!exec("ldd", {binaryFilePath})){
     return false;
   }
   const auto stdErrorString = readAllStandardErrorString();

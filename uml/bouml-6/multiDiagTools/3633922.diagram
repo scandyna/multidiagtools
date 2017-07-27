@@ -18,7 +18,7 @@ classcanvas 128514 class_ref 4177282 // LddDependenciesParser
 end
 classcanvas 129026 class_ref 4161666 // ToolExecutableWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 41.2 255.1 2006
+  xyz 41.2 277.1 2006
 end
 relationcanvas 128258 relation_ref 4687746 // <generalisation>
   decenter_begin 507

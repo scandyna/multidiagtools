@@ -9,6 +9,10 @@ set(SOURCE_FILES
     Mdt/DeployUtils/PathList.cpp
     Mdt/DeployUtils/ToolExecutableWrapper.cpp
     Mdt/DeployUtils/LddWrapper.cpp
+    Mdt/DeployUtils/Platform.cpp
+    Mdt/DeployUtils/BinaryDependencies.cpp
+    Mdt/DeployUtils/BinaryDependenciesImplementationInterface.cpp
+    Mdt/DeployUtils/BinaryDependenciesLdd.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

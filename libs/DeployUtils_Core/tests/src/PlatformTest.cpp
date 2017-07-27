@@ -18,18 +18,16 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "LddWrapperTest.h"
-#include "Mdt/DeployUtils/LddWrapper.h"
-#include <QCoreApplication>
-#include <QtGlobal>
+#include "PlatformTest.h"
+#include "Mdt/DeployUtils/Platform.h"
 
 using namespace Mdt::DeployUtils;
 
-void LddWrapperTest::initTestCase()
+void PlatformTest::initTestCase()
 {
 }
 
-void LddWrapperTest::cleanupTestCase()
+void PlatformTest::cleanupTestCase()
 {
 }
 
@@ -37,15 +35,41 @@ void LddWrapperTest::cleanupTestCase()
  * Tests
  */
 
-void LddWrapperTest::runLddTest()
+void PlatformTest::simpleSetGetTest()
 {
-#ifndef Q_OS_UNIX
-  QSKIP("This test can only work on unixes.");
-#endif // #ifndef Q_OS_UNIX
+  Platform pf(OperatingSystem::Windows, Compiler::Gcc, Processor::X86_32);
+  QVERIFY(pf.operatingSystem() == OperatingSystem::Windows);
+  QVERIFY(pf.compiler() == Compiler::Gcc);
+  QVERIFY(pf.processor() == Processor::X86_32);
+}
 
-  LddWrapper ldd;
-  QVERIFY(ldd.execFindDependencies( QCoreApplication::applicationFilePath() ));
-  QVERIFY(!ldd.readAllStandardOutputString().isEmpty());
+void PlatformTest::nativePlatformTest()
+{
+  Platform pf;
+
+  // Check that the correct OS was choosen
+#ifdef Q_OS_LINUX
+  QVERIFY(pf.operatingSystem() == OperatingSystem::Linux);
+#else
+  QFAIL("Current OS is not supported");
+#endif
+
+  // Check that correct compiler was choosen
+#ifdef Q_CC_GNU
+  QVERIFY(pf.compiler() == Compiler::Gcc);
+#else
+  QFAIL("Current compiler is not supported");
+#endif
+
+  // Check that correct processor was choosen
+#ifdef Q_PROCESSOR_X86_32
+  QVERIFY(pf.processor() == Processor::X86_32);
+#elif defined Q_PROCESSOR_X86_64
+  QVERIFY(pf.processor() == Processor::X86_64);
+#else
+  QFAIL("Current processor architecture not supported");
+#endif
+
 }
 
 /*
@@ -55,7 +79,7 @@ void LddWrapperTest::runLddTest()
 int main(int argc, char **argv)
 {
   Mdt::Application app(argc, argv);
-  LddWrapperTest test;
+  PlatformTest test;
 
   if(!app.init()){
     return 1;

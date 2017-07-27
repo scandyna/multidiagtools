@@ -2,7 +2,7 @@ format 213
 
 classcanvas 128002 class_ref 4158978 // LibraryInfo
   classdiagramsettings member_max_width 0 end
-  xyz 952.7 871.2 2000
+  xyz 952.3 871.2 2000
 end
 classcanvas 128258 class_ref 4159234 // Library
   classdiagramsettings member_max_width 0 end
@@ -10,73 +10,73 @@ classcanvas 128258 class_ref 4159234 // Library
 end
 classcanvas 128386 class_ref 4159490 // LibraryInfoList
   classdiagramsettings member_max_width 0 end
-  xyz 752.9 875.6 2000
+  xyz 752.1 875.2 2000
 end
 classcanvas 128770 class_ref 4159618 // DynamicLibraryExcludeList
   classdiagramsettings member_max_width 0 end
-  xyz 839.5 479.6 2000
+  xyz 839.1 479.4 2000
 end
 classcanvas 128898 class_ref 4160258 // DeployXYZ
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 871.6 2000
+  xyz 40.5 871 2000
 end
 classcanvas 129026 class_ref 4160386 // Qmake
   classdiagramsettings member_max_width 0 end
-  xyz 301.5 871.6 2000
+  xyz 301.7 871.4 2000
 end
 classcanvas 129154 class_ref 4160514 // Paths
   classdiagramsettings member_max_width 0 end
-  xyz 269 567.1 2000
+  xyz 269.2 567.3 2000
 end
 classcanvas 129282 class_ref 4151810 // QStandardPaths
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 326 482.8 2005
+  xyz 326.2 482 2005
 end
 classcanvas 129538 class_ref 4160642 // Error
   classdiagramsettings member_max_width 0 end
-  xyz 477.3 871.6 2000
+  xyz 477.5 871.4 2000
 end
 note 129666 "sa: QUrl"
-  xyzwh 104.8 590 2000 129 59
+  xyzwh 104.2 590.2 2000 129 59
 classcanvas 129922 class_ref 4160770 // QtConf
   classdiagramsettings member_max_width 0 end
-  xyz 1042 40.5 2000
+  xyz 1042 40.1 2000
 end
 classcanvas 130050 class_ref 4160898 // Settings
   classdiagramsettings member_max_width 0 end
-  xyz 352 729.1 2000
+  xyz 352.2 729.9 2000
 end
 classcanvas 130178 class_ref 4161026 // QmlYxZ
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 1057.8 2005
+  xyz 40.3 1057 2005
 end
 classcanvas 130306 class_ref 4161282 // Translations
   classdiagramsettings member_max_width 0 end
-  xyz 356.5 1057.8 2000
+  xyz 356.3 1057 2000
 end
 classcanvas 130562 class_ref 4161410 // SettingsCommandLineParser
   classdiagramsettings member_max_width 0 end
-  xyz 40 710.1 2000
+  xyz 40.8 710.9 2000
 end
 classcanvas 130690 class_ref 4161538 // Platform
   classdiagramsettings member_max_width 0 end
-  xyz 577.2 479.9 2000
+  xyz 577 479.3 2000
 end
 classcanvas 130818 class_ref 4161666 // ToolExecutableWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 106.9 164.9 2000
+  xyz 106.9 165.1 2000
 end
 classcanvas 130946 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 218.9 40.8 2006
+  xyz 218.9 40.4 2006
 end
 classcanvas 131714 class_ref 4168706 // QLibrary
   classdiagramsettings member_max_width 0 end
-  xyz 397.1 354.7 2012
+  xyz 397.9 354.5 2012
 end
 classcanvas 131970 class_ref 4168834 // QLibraryInfo
   classdiagramsettings member_max_width 0 end
-  xyz 184 1056.8 2000
+  xyz 184 1056.2 2000
 end
 relationcanvas 128642 relation_ref 4657666 // <directional composition>
   from ref 128386 z 2001 to ref 128002
@@ -105,16 +105,16 @@ relationcanvas 131458 relation_ref 4658818 // <dependency>
 end
 relationcanvas 131842 relation_ref 4665986 // <generalisation>
   geometry VHV unfixed
-  from ref 131714 z 2013 to point 429.9 126.2
-  line 132866 z 2013 to point 248 126.2
+  from ref 131714 z 2013 to point 429.7 126.6
+  line 132866 z 2013 to point 248 126.6
   line 132994 z 2013 to ref 130946
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132354 relation_ref 4666114 // <generalisation>
   geometry VHV unfixed
-  from ref 128258 z 2007 to point 167.1 126.2
-  line 132610 z 2007 to point 248 126.2
+  from ref 128258 z 2007 to point 167.3 126.6
+  line 132610 z 2007 to point 248 126.6
   line 132738 z 2007 to ref 130946
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

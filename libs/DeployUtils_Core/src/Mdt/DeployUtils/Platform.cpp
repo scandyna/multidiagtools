@@ -18,21 +18,46 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef LDD_WRAPPER_TEST_H
-#define LDD_WRAPPER_TEST_H
+#include "Platform.h"
+#include <QtGlobal>
 
-#include "TestBase.h"
+namespace Mdt{ namespace DeployUtils{
 
-class LddWrapperTest : public TestBase
+Platform::Platform(OperatingSystem os, Compiler compiler, Processor processor)
+ : mOperatingSystem(os),
+   mCompiler(compiler),
+   mProcessor(processor)
 {
- Q_OBJECT
+}
 
- private slots:
+OperatingSystem Platform::nativeOperatingSystem()
+{
+#ifdef Q_OS_LINUX
+  return OperatingSystem::Linux;
+#else
+ #error "Current OS is not supported"
+#endif // OS
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+Compiler Platform::nativeCompiler()
+{
+#ifdef Q_CC_GNU
+  return Compiler::Gcc;
+#else
+ #error "Current compiler is not supported"
+#endif // Compiler
+}
 
-  void runLddTest();
-};
+Processor Platform::nativeProcessor()
+{
+#ifdef Q_PROCESSOR_X86_32
+  return Processor::X86_32;
+#elif defined Q_PROCESSOR_X86_64
+  return Processor::X86_64;
+#else
+ #error "Current processor is not supported"
+#endif // Compiler
+}
 
-#endif // #ifndef LDD_WRAPPER_TEST_H
+
+}} // namespace Mdt{ namespace DeployUtils{

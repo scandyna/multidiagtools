@@ -18,12 +18,13 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef LDD_WRAPPER_TEST_H
-#define LDD_WRAPPER_TEST_H
+#ifndef PLATFORM_TEST_H
+#define PLATFORM_TEST_H
 
 #include "TestBase.h"
+#include <QtGlobal>
 
-class LddWrapperTest : public TestBase
+class PlatformTest : public TestBase
 {
  Q_OBJECT
 
@@ -32,7 +33,9 @@ class LddWrapperTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void runLddTest();
+  void simpleSetGetTest();
+  void nativePlatformTest();
+
 };
 
-#endif // #ifndef LDD_WRAPPER_TEST_H
+#endif // #ifndef PLATFORM_TEST_H

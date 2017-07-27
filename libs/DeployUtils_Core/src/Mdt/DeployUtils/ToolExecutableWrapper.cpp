@@ -21,7 +21,7 @@
 #include "ToolExecutableWrapper.h"
 #include "Mdt/ErrorQProcess.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -42,10 +42,7 @@ QString ToolExecutableWrapper::readAllStandardErrorString()
 
 bool ToolExecutableWrapper::exec(const QString& exeName, const QStringList& arguments)
 {
-   qDebug() << "TEW::exec() - cmd: " << exeName << " , args: " << arguments;
-  
   mProcess.start(exeName, arguments);
-  
   if(!mProcess.waitForStarted()){
     const QString msg = tr("Failed to start command '%1 %2'.").arg(exeName, arguments.join(' '));
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
@@ -62,10 +59,6 @@ bool ToolExecutableWrapper::exec(const QString& exeName, const QStringList& argu
     return false;
 
   }
-  
-//   qDebug() << " std err: " << mProcess.readAllStandardError();
-//   qDebug() << " std out: " << mProcess.readAllStandardOutput();
-  
   return true;
 }
 

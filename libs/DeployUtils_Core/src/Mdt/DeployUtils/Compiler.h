@@ -18,21 +18,18 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef LDD_WRAPPER_TEST_H
-#define LDD_WRAPPER_TEST_H
+#ifndef MDT_DEPLOY_UTILS_COMPILER_H
+#define MDT_DEPLOY_UTILS_COMPILER_H
 
-#include "TestBase.h"
+namespace Mdt{ namespace DeployUtils{
 
-class LddWrapperTest : public TestBase
-{
- Q_OBJECT
+  /*! \brief Compiler enum
+   */
+  enum class Compiler
+  {
+    Gcc /*!< Gcc compiler */
+  };
 
- private slots:
+}} // namespace Mdt{ namespace DeployUtils{
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void runLddTest();
-};
-
-#endif // #ifndef LDD_WRAPPER_TEST_H
+#endif // #ifndef MDT_DEPLOY_UTILS_COMPILER_H

@@ -22,7 +22,7 @@
 <context>
     <name>Mdt::DeployUtils::LddWrapper</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/LddWrapper.cpp" line="41"/>
+        <location filename="../src/Mdt/DeployUtils/LddWrapper.cpp" line="39"/>
         <source>Execution of ldd %1 reported error: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -38,12 +38,12 @@
 <context>
     <name>Mdt::DeployUtils::ToolExecutableWrapper</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="50"/>
+        <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="47"/>
         <source>Failed to start command &apos;%1 %2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="58"/>
+        <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="55"/>
         <source>Error occured from command &apos;%1 %2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -18,12 +18,12 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef LDD_WRAPPER_TEST_H
-#define LDD_WRAPPER_TEST_H
+#ifndef BINARY_DEPENDENCIES_TEST_H
+#define BINARY_DEPENDENCIES_TEST_H
 
 #include "TestBase.h"
 
-class LddWrapperTest : public TestBase
+class BinaryDependenciesTest : public TestBase
 {
  Q_OBJECT
 
@@ -31,8 +31,6 @@ class LddWrapperTest : public TestBase
 
   void initTestCase();
   void cleanupTestCase();
-
-  void runLddTest();
 };
 
-#endif // #ifndef LDD_WRAPPER_TEST_H
+#endif // #ifndef BINARY_DEPENDENCIES_TEST_H
