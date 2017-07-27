@@ -69,7 +69,6 @@ void PlatformTest::nativePlatformTest()
 #else
   QFAIL("Current processor architecture not supported");
 #endif
-
 }
 
 /*

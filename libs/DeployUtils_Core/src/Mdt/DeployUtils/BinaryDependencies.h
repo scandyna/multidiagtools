@@ -21,11 +21,12 @@
 #ifndef MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_H
 #define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_H
 
+#include "Platform.h"
 #include <QObject>
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief
+  /*! \brief Find dependencies for a executable or a library
    */
   class BinaryDependencies : public QObject
   {
@@ -34,8 +35,12 @@ namespace Mdt{ namespace DeployUtils{
    public:
 
     /*! \brief Constructor
+     *
+     * Will chose a implementation (i.e. a tool, like ldd)
+     *  depending on current native platform and \a targetPlatform.
+     *  By default, \a targetPlatform is the native one.
      */
-    BinaryDependencies(QObject* parent = nullptr);
+    BinaryDependencies(Platform targetPlatform = Platform(), QObject* parent = nullptr);
 
    private:
 

@@ -50,15 +50,15 @@ bool ToolExecutableWrapper::exec(const QString& exeName, const QStringList& argu
     setLastError(error);
     return false;
   }
-  
   if(!mProcess.waitForFinished()){
     const QString msg = tr("Error occured from command '%1 %2'.").arg(exeName, arguments.join(' '));
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     error.stackError(mdtErrorFromQProcessQ(mProcess, this));
     setLastError(error);
     return false;
-
   }
+  /// \todo Should we use QProcess::exitCode() ? Se the doc
+
   return true;
 }
 

@@ -22,9 +22,24 @@
 
 namespace Mdt{ namespace DeployUtils{
 
-BinaryDependencies::BinaryDependencies(QObject* parent)
+BinaryDependencies::BinaryDependencies(Mdt::DeployUtils::Platform targetPlatform, QObject* parent)
  : QObject(parent)
 {
+  Platform nativePlatform;
+
+  /*
+   * On Linux we have different choices:
+   *  - ldd if target platform is also Linux
+   *  - objdump if target platform is Windows (cross-compiled sw)
+   */
+  if(nativePlatform.operatingSystem() == OperatingSystem::Linux){
+    if(targetPlatform.operatingSystem() == OperatingSystem::Linux){
+      /// LDD
+    }else if(targetPlatform.operatingSystem() == OperatingSystem::Windows){
+      /// Objsump
+    }
+  }
+  /// if null, Error (add a isValid() + assert in ather members, so the caller has a chance to log a error)
 }
 
 
