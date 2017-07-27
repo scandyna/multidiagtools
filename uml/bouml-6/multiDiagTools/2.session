@@ -1,4 +1,4 @@
-window_sizes 1280 963 319 955 911 0
+window_sizes 1920 1055 331 1583 1003 0
 cleanlooks_style
 diagrams
   classdiagram_ref 3571970 // SortSetupDialog
@@ -27,25 +27,44 @@ diagrams
     955 911 90 B 0 0
   classdiagram_ref 3605890 // Settings
     120 98 100 A-Landscape 4 0
-  active  classdiagram_ref 3613058 // Library
-    955 911 100 B 0 0
-  classdiagram_ref 3613186 // Paths
+  classdiagram_ref 3613058 // Library
+    955 911 100 C 0 25
+  classdiagram_ref 3620226 // Output
     120 98 100 A4 0 0
-  classdiagram_ref 3613314 // Platform
+  classdiagram_ref 3620482 // ToolsWrappers
     120 98 100 A4 0 0
+  classdiagram_ref 3605762 // DeployUtilsWindowsSandbox
+    120 98 100 A4 0 0
+  classdiagram_ref 3620610 // LddParser
+    120 98 100 A4 0 0
+  classdiagram_ref 3620738 // ObjdumpParser
+    120 98 100 A4 0 0
+  classdiagram_ref 3620866 // LddWrapper
+    943 911 100 A-Landscape 0 0
+  active  classdiagram_ref 3620098 // BinaryDependencies
+    1583 1003 100 A-Landscape 0 0
+  classdiagram_ref 3627394 // ObjdumpWrapper
+    120 98 100 A-Landscape 0 0
 end
 show_stereotypes
-selected operation_ref 5842690 // isALibraryName
+selected classdiagram_ref 3620098 // BinaryDependencies
 open
-  attribute_ref 3563650 // VersionPatch
-  attribute_ref 3564290 // Mode
-  attribute_ref 3562498 // Extension
-  operation_ref 5841666 // name
-  operation_ref 5842434 // setVersion
-  operation_ref 5842562 // setOsFullName
+  classdiagram_ref 3620738 // ObjdumpParser
+  class_ref 4176898 // DependenciesGrammar
+  classview_ref 1881346 // DeployUtils_Core
+  classview_ref 1881602 // Parsers
+  class_ref 4161538 // Platform
+  class_ref 4168962 // PathList
+  attribute_ref 3571458 // Dependencies
+  operation_ref 5850114 // dependencies
+  class_ref 4159362 // LddWrapper
+  operation_ref 5850370 // readPrivateHeaders
+  classdiagram_ref 3620482 // ToolsWrappers
+  operation_ref 5857026 // readAllStandardOutput
+  operation_ref 5857154 // readAllStandardError
+  classrelation_ref 4684802 // <generalisation>
   class_ref 4160002 // RPath
   class_ref 4161154 // DesktopFile
-  class_ref 4168962 // PathList
   classview_ref 846978 // QtCore
 end
 end

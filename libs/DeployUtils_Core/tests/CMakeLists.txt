@@ -28,3 +28,5 @@ endfunction()
 
 addDeployUtilsTest("PathTest")
 addDeployUtilsTest("LibraryTest")
+addDeployUtilsTest("LddParserTest")
+addDeployUtilsTest("LddWrapperTest")

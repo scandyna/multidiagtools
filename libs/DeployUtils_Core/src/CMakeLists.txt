@@ -7,6 +7,8 @@ set(SOURCE_FILES
     Mdt/DeployUtils/LibraryInfo.cpp
     Mdt/DeployUtils/Library.cpp
     Mdt/DeployUtils/PathList.cpp
+    Mdt/DeployUtils/ToolExecutableWrapper.cpp
+    Mdt/DeployUtils/LddWrapper.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

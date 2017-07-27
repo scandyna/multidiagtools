@@ -2,27 +2,26 @@ format 213
 
 classcanvas 128002 class_ref 4161538 // Platform
   classdiagramsettings member_max_width 0 end
-  xyz 191 202 2000
+  xyz 193 194 2000
 end
-note 128386 "Notion of Host platform and target platform"
-  xyzwh 40.5 352.5 2000 341 57
 classcanvas 128514 class_ref 4169218 // Compiler
   classdiagramsettings member_max_width 0 end
   xyz 39 182 2006
 end
 classcanvas 128770 class_ref 4169346 // Processor
   classdiagramsettings member_max_width 0 end
-  xyz 152 39 2006
+  xyz 208 295 2006
 end
 classcanvas 129026 class_ref 4169602 // OperatingSystem
   classdiagramsettings member_max_width 0 end
-  xyz 335 171 2000
+  xyz 183 39 2000
 end
 line 128642 ---+
   from ref 128514 z 2007 to ref 128002
-line 128898 ---+
+line 128898 ---+ decenter_end 475
   from ref 128770 z 2007 to ref 128002
 relationcanvas 129154 relation_ref 4666754 // <directional composition>
+  decenter_begin 475
   from ref 128002 z 2001 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
