@@ -49,6 +49,13 @@ namespace Mdt{ namespace DeployUtils{
      */
     QString readAllStandardErrorString();
 
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
+
    protected:
 
     /*! \brief Execute a command

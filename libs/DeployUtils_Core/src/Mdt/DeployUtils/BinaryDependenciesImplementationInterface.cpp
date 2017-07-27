@@ -27,5 +27,10 @@ BinaryDependenciesImplementationInterface::BinaryDependenciesImplementationInter
 {
 }
 
+void BinaryDependenciesImplementationInterface::setLastError(const Error& error)
+{
+  mLastError = error;
+}
+
 
 }} // namespace Mdt{ namespace DeployUtils{

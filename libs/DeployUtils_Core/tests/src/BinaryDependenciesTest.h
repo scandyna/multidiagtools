@@ -31,6 +31,8 @@ class BinaryDependenciesTest : public TestBase
 
   void initTestCase();
   void cleanupTestCase();
+
+  void runTest();
 };
 
 #endif // #ifndef BINARY_DEPENDENCIES_TEST_H

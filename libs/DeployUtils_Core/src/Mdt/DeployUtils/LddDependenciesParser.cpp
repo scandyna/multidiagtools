@@ -18,30 +18,28 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "BinaryDependenciesLdd.h"
-#include "LddWrapper.h"
+#include "LddDependenciesParser.h"
+#include "Impl/Ldd/DependenciesParserImpl.h"
 
-#include <QDebug>
+using namespace Mdt::PlainText;
 
 namespace Mdt{ namespace DeployUtils{
 
-BinaryDependenciesLdd::BinaryDependenciesLdd(QObject* parent)
- : BinaryDependenciesImplementationInterface(parent)
+LddDependenciesParser::LddDependenciesParser()
+ : mParser( std::make_unique< Impl::Ldd::DependenciesParserTemplate<StringConstIterator> >() )
 {
 }
 
-bool BinaryDependenciesLdd::findDependencies(const QString& binaryFilePath)
+LddDependenciesParser::~LddDependenciesParser()
 {
-  LddWrapper ldd;
+}
 
-  if(!ldd.execFindDependencies(binaryFilePath)){
-    setLastError(ldd.lastError());
-    return false;
-  }
+bool LddDependenciesParser::parse(const QString & data)
+{
+  StringConstIterator first = data.cbegin();
+  StringConstIterator last = data.cend();
 
-  qDebug() << ldd.readAllStandardOutputString().split('\n');
-  
-  return false;
+  return mParser->parseAll(first, last);
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

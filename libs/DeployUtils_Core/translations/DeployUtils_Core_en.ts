@@ -20,6 +20,14 @@
     </message>
 </context>
 <context>
+    <name>Mdt::DeployUtils::BinaryDependencies</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="36"/>
+        <source>Could not find a implementation for current platform.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::DeployUtils::LddWrapper</name>
     <message>
         <location filename="../src/Mdt/DeployUtils/LddWrapper.cpp" line="39"/>
@@ -43,7 +51,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="55"/>
+        <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="54"/>
         <source>Error occured from command &apos;%1 %2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>

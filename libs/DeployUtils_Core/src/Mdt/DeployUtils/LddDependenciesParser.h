@@ -18,57 +18,45 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_IMPLEMENTATION_INTERFACE_H
-#define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_IMPLEMENTATION_INTERFACE_H
+#ifndef MDT_DEPLOY_UTILS_LDD_DEPENDENCIES_PARSER_H
+#define MDT_DEPLOY_UTILS_LDD_DEPENDENCIES_PARSER_H
 
-#include "LibraryInfoList.h"
-#include "Mdt/Error.h"
-#include <QObject>
+#include "Mdt/PlainText/StringConstIterator.h"
+#include <QString>
+#include <memory>
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief
-   */
-  class BinaryDependenciesImplementationInterface : public QObject
-  {
-   Q_OBJECT
+  namespace Impl{ namespace Ldd{
 
+  template<typename SourceIterator>
+  class DependenciesParserTemplate;
+
+  }} // namespace Impl{ namespace Ldd{
+
+  /*! \brief Ldd dependencies parser
+   */
+  class LddDependenciesParser
+  {
    public:
 
     /*! \brief Constructor
      */
-    BinaryDependenciesImplementationInterface(QObject* parent = nullptr);
+    LddDependenciesParser();
 
-    /*! \brief Find dependencies for a executable or a library
+    /*! \brief Destructor
      */
-    virtual bool findDependencies(const QString & binaryFilePath) = 0;
+    ~LddDependenciesParser();
 
-    /*! \brief Get dependencies
+    /*! \brief Prase the ldd output data
      */
-    LibraryInfoList dependencies() const
-    {
-      return mDependencies;
-    }
-
-    /*! \brief Get last error
-     */
-    Mdt::Error lastError() const
-    {
-      return mLastError;
-    }
-
-   protected:
-
-    /*! \brief Set last error
-     */
-    void setLastError(const Mdt::Error & error);
+    bool parse(const QString & data);
 
    private:
 
-    LibraryInfoList mDependencies;
-    Mdt::Error mLastError;
+    std::unique_ptr< Impl::Ldd::DependenciesParserTemplate<Mdt::PlainText::StringConstIterator> >mParser;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{
 
-#endif // #ifndef MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_IMPLEMENTATION_INTERFACE_H
+#endif // #ifndef MDT_DEPLOY_UTILS_LDD_DEPENDENCIES_PARSER_H

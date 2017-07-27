@@ -18,30 +18,4 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "BinaryDependenciesLdd.h"
-#include "LddWrapper.h"
-
-#include <QDebug>
-
-namespace Mdt{ namespace DeployUtils{
-
-BinaryDependenciesLdd::BinaryDependenciesLdd(QObject* parent)
- : BinaryDependenciesImplementationInterface(parent)
-{
-}
-
-bool BinaryDependenciesLdd::findDependencies(const QString& binaryFilePath)
-{
-  LddWrapper ldd;
-
-  if(!ldd.execFindDependencies(binaryFilePath)){
-    setLastError(ldd.lastError());
-    return false;
-  }
-
-  qDebug() << ldd.readAllStandardOutputString().split('\n');
-  
-  return false;
-}
-
-}} // namespace Mdt{ namespace DeployUtils{
+#include "DependenciesParserImpl.h"

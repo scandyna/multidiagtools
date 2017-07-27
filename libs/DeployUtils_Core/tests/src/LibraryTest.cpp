@@ -22,6 +22,7 @@
 #include "Mdt/DeployUtils/LibraryVersion.h"
 #include "Mdt/DeployUtils/LibraryName.h"
 #include "Mdt/DeployUtils/LibraryInfo.h"
+#include "Mdt/DeployUtils/LibraryInfoList.h"
 #include "Mdt/DeployUtils/Library.h"
 #include <QtGlobal>
 #include <QTemporaryDir>
@@ -216,6 +217,24 @@ void LibraryTest::libraryInfoTest()
   li.setAbsoluteFilePath("/tmp/libA.so");
   QVERIFY(!li.isNull());
   QCOMPARE(li.absoluteFilePath(), QString("/tmp/libA.so"));
+}
+
+void LibraryTest::libraryInfoListTest()
+{
+  /*
+   * Initial state
+   */
+  LibraryInfoList list;
+  QCOMPARE(list.count(), 0);
+  QVERIFY(list.isEmpty());
+  /*
+   * Add a element
+   */
+  LibraryInfo li1;
+  li1.setAbsoluteFilePath("/tmp/lib1");
+  list.addLibrary(li1);
+  QCOMPARE(list.count(), 1);
+  QVERIFY(!list.isEmpty());
 }
 
 void LibraryTest::searchLibraryTest()

@@ -14,7 +14,7 @@ classcanvas 128386 class_ref 4159362 // LddWrapper
 end
 classcanvas 128514 class_ref 4177282 // LddDependenciesParser
   classdiagramsettings member_max_width 0 end
-  xyz 864.9 219.3 2000
+  xyz 865.3 211.3 2000
 end
 classcanvas 129026 class_ref 4161666 // ToolExecutableWrapper
   classdiagramsettings member_max_width 0 end

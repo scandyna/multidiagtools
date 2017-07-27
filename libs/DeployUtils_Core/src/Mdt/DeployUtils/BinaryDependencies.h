@@ -22,9 +22,15 @@
 #define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_H
 
 #include "Platform.h"
+#include "LibraryInfoList.h"
+#include "Mdt/Error.h"
 #include <QObject>
+#include <QString>
+#include <memory>
 
 namespace Mdt{ namespace DeployUtils{
+
+  class BinaryDependenciesImplementationInterface;
 
   /*! \brief Find dependencies for a executable or a library
    */
@@ -35,16 +41,39 @@ namespace Mdt{ namespace DeployUtils{
    public:
 
     /*! \brief Constructor
-     *
-     * Will chose a implementation (i.e. a tool, like ldd)
-     *  depending on current native platform and \a targetPlatform.
-     *  By default, \a targetPlatform is the native one.
      */
-    BinaryDependencies(Platform targetPlatform = Platform(), QObject* parent = nullptr);
+    BinaryDependencies(QObject* parent = nullptr);
+
+    /*! \brief Destructor
+     */
+    ~BinaryDependencies();
+
+    /*! \brief Check if valid
+     *
+     * Returns true if a implementation for native platform could be loaded,
+     *  otherwise false.
+     */
+    bool isValid() const;
+
+    /*! \brief Find dependencies for a executable or a library
+     */
+    bool findDependencies(const QString & binaryFilePath);
+
+    /*! \brief Get dependencies
+     */
+    LibraryInfoList dependencies() const;
+
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
 
    private:
 
-    
+    std::unique_ptr<BinaryDependenciesImplementationInterface> mImpl;
+    Mdt::Error mLastError;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

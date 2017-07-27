@@ -50,15 +50,17 @@ void PlatformTest::nativePlatformTest()
   // Check that the correct OS was choosen
 #ifdef Q_OS_LINUX
   QVERIFY(pf.operatingSystem() == OperatingSystem::Linux);
+#elif defined Q_OS_WIN
+  QVERIFY(pf.operatingSystem() == OperatingSystem::Windows);
 #else
-  QFAIL("Current OS is not supported");
+ #error "Current OS is not supported"
 #endif
 
   // Check that correct compiler was choosen
 #ifdef Q_CC_GNU
   QVERIFY(pf.compiler() == Compiler::Gcc);
 #else
-  QFAIL("Current compiler is not supported");
+ #error "Current compiler is not supported"
 #endif
 
   // Check that correct processor was choosen
@@ -67,7 +69,7 @@ void PlatformTest::nativePlatformTest()
 #elif defined Q_PROCESSOR_X86_64
   QVERIFY(pf.processor() == Processor::X86_64);
 #else
-  QFAIL("Current processor architecture not supported");
+ #error "Current processor is not supported"
 #endif
 }
 

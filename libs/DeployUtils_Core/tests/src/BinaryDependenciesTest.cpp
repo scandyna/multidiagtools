@@ -19,6 +19,10 @@
  **
  ****************************************************************************/
 #include "BinaryDependenciesTest.h"
+#include "Mdt/DeployUtils/BinaryDependencies.h"
+#include <QCoreApplication>
+
+using namespace Mdt::DeployUtils;
 
 void BinaryDependenciesTest::initTestCase()
 {
@@ -31,6 +35,15 @@ void BinaryDependenciesTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void BinaryDependenciesTest::runTest()
+{
+  BinaryDependencies deps;
+
+  QVERIFY(deps.isValid());
+  QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath() ));
+  QVERIFY(!deps.dependencies().isEmpty());
+}
 
 /*
  * Main

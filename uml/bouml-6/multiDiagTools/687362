@@ -1,6 +1,6 @@
 format 213
 "ObjdumpWindows" // Mdt::DeployUtils::Impl::ObjdumpWindows
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -64,6 +64,22 @@ ${inlines}
     end
 
     class 4177026 "DependenciesRecord"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 4184194 "ParserTemplate"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

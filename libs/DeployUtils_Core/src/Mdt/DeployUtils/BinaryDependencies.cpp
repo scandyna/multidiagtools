@@ -19,27 +19,51 @@
  **
  ****************************************************************************/
 #include "BinaryDependencies.h"
+#include "BinaryDependenciesImplementationInterface.h"
+#include "BinaryDependenciesLdd.h"
 
 namespace Mdt{ namespace DeployUtils{
 
-BinaryDependencies::BinaryDependencies(Mdt::DeployUtils::Platform targetPlatform, QObject* parent)
+BinaryDependencies::BinaryDependencies(QObject* parent)
  : QObject(parent)
 {
   Platform nativePlatform;
 
-  /*
-   * On Linux we have different choices:
-   *  - ldd if target platform is also Linux
-   *  - objdump if target platform is Windows (cross-compiled sw)
-   */
   if(nativePlatform.operatingSystem() == OperatingSystem::Linux){
-    if(targetPlatform.operatingSystem() == OperatingSystem::Linux){
-      /// LDD
-    }else if(targetPlatform.operatingSystem() == OperatingSystem::Windows){
-      /// Objsump
-    }
+    mImpl.reset(new BinaryDependenciesLdd);
   }
-  /// if null, Error (add a isValid() + assert in ather members, so the caller has a chance to log a error)
+  if(!mImpl){
+    const QString msg = tr("Could not find a implementation for current platform.");
+    mLastError = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    mLastError.commit();
+  }
+}
+
+BinaryDependencies::~BinaryDependencies()
+{
+}
+
+bool BinaryDependencies::isValid() const
+{
+  return (mImpl.get() != nullptr);
+}
+
+bool BinaryDependencies::findDependencies(const QString& binaryFilePath)
+{
+  Q_ASSERT(isValid());
+
+  if( !mImpl->findDependencies(binaryFilePath) ){
+    mLastError = mImpl->lastError();
+    return false;
+  }
+  return true;
+}
+
+LibraryInfoList BinaryDependencies::dependencies() const
+{
+  Q_ASSERT(isValid());
+
+  return mImpl->dependencies();
 }
 
 

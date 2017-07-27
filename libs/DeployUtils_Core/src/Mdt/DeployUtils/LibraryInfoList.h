@@ -18,57 +18,61 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_IMPLEMENTATION_INTERFACE_H
-#define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_IMPLEMENTATION_INTERFACE_H
+#ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_LIST_H
+#define MDT_DEPLOY_UTILS_LIBRARY_INFO_LIST_H
 
-#include "LibraryInfoList.h"
-#include "Mdt/Error.h"
-#include <QObject>
+#include "LibraryInfo.h"
+#include <QVector>
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief
+  /*! \brief Container that holds a list of LibraryInfo
    */
-  class BinaryDependenciesImplementationInterface : public QObject
+  class LibraryInfoList
   {
-   Q_OBJECT
-
    public:
 
-    /*! \brief Constructor
+    /*! \brief STL-style const iterator
      */
-    BinaryDependenciesImplementationInterface(QObject* parent = nullptr);
+    using const_iterator = QVector<LibraryInfo>::const_iterator;
 
-    /*! \brief Find dependencies for a executable or a library
+    /*! \brief Add a library info to the end of this list
      */
-    virtual bool findDependencies(const QString & binaryFilePath) = 0;
+    void addLibrary(const LibraryInfo & library);
 
-    /*! \brief Get dependencies
+    /*! \brief Get count of items in this list
      */
-    LibraryInfoList dependencies() const
+    int count() const
     {
-      return mDependencies;
+      return mList.count();
     }
 
-    /*! \brief Get last error
+    /*! \brief Check if this list is empty
      */
-    Mdt::Error lastError() const
+    bool isEmpty() const
     {
-      return mLastError;
+      return mList.isEmpty();
     }
 
-   protected:
-
-    /*! \brief Set last error
+    /*! \brief Returns an STL-style const iterator pointing to the first item in this list
      */
-    void setLastError(const Mdt::Error & error);
+    const_iterator cbegin() const
+    {
+      return mList.cbegin();
+    }
+
+    /*! \brief Returns an STL-style iterator pointing to the imaginary item after the last item in this list
+     */
+    const_iterator cend() const
+    {
+      return mList.cend();
+    }
 
    private:
 
-    LibraryInfoList mDependencies;
-    Mdt::Error mLastError;
+    QVector<LibraryInfo> mList;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{
 
-#endif // #ifndef MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_IMPLEMENTATION_INTERFACE_H
+#endif // #ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_LIST_H

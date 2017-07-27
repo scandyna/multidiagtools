@@ -37,6 +37,9 @@ namespace Mdt{ namespace DeployUtils{
      */
     BinaryDependenciesLdd(QObject* parent = nullptr);
 
+    /*! \brief Find dependencies for a executable or a library
+     */
+    bool findDependencies(const QString & binaryFilePath) override;
 
    private:
 

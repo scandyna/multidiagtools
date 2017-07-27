@@ -86,5 +86,10 @@
         <source>Reported from QFileDevice: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/Mdt/ErrorQProcess.cpp" line="47"/>
+        <source>Reported from QProcess: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

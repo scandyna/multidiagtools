@@ -34,6 +34,8 @@ OperatingSystem Platform::nativeOperatingSystem()
 {
 #ifdef Q_OS_LINUX
   return OperatingSystem::Linux;
+#elif defined Q_OS_WIN
+  return OperatingSystem::Windows;
 #else
  #error "Current OS is not supported"
 #endif // OS
