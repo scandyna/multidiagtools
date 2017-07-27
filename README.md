@@ -267,6 +267,16 @@ Note: while running winecfg, I had to enable the option that emulates a desktop,
 for some tools.
 This is described here: [https://doc.ubuntu-fr.org/wine](https://doc.ubuntu-fr.org/wine)
 
+#### Install other dependencies
+
+Later, we will see that some dependecies must be copied to be able to run the unit tests.
+For this, the objdump tool is needed.
+On Debian, objdump is part of the binutils package:
+```bash
+sudo apt-get install binutils
+```
+
+
 #### Install MXE
 
 MXE is a powerfull cross-compiler suite that will build all that we need.
