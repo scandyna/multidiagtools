@@ -210,6 +210,20 @@ namespace Mdt{ namespace PlainText{
 
     /*! \brief Get an STL-style const iterator pointing to the first item in the record list
      */
+    const_iterator begin() const
+    {
+      return mRecordList.cbegin();
+    }
+
+    /*! \brief Get an STL-style const iterator pointing past the last item in the record list
+     */
+    const_iterator end() const
+    {
+      return mRecordList.cend();
+    }
+
+    /*! \brief Get an STL-style const iterator pointing to the first item in the record list
+     */
     const_iterator cbegin() const
     {
       return mRecordList.cbegin();
