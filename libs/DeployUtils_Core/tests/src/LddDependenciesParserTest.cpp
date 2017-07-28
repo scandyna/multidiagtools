@@ -54,8 +54,6 @@ void LddDependenciesParserTest::recordGrammarTest()
   // Check
   QCOMPARE(ok, expectedOk);
   QCOMPARE(record, expectedRecord);
-
-  QFAIL("Not complete");
 }
 
 void LddDependenciesParserTest::recordGrammarTest_data()
@@ -74,8 +72,10 @@ void LddDependenciesParserTest::recordGrammarTest_data()
    << "\tlibc.so.6 => /lib/libc.so.6 (0x0123456789ABCDEF)" << QStringList{"libc.so.6","/lib/libc.so.6"} << Ok;
 
   QTest::newRow("linux-vdso.so.1 =>  (0x00007ffd4f1f7000)")
-   << "linux-vdso.so.1 =>  (0x00007ffd4f1f7000)" << QStringList{"linux-vdso.so.1",""} << Ok;
+   << "\tlinux-vdso.so.1 =>  (0x00007ffd4f1f7000)" << QStringList{"linux-vdso.so.1"} << Ok;
 
+  QTest::newRow("liba.so.0 => /opt/a b/ (0x0123456789ABCDEF)")
+   << "\tliba.so.0 => /opt/a b/liba.so.0 (0x0123456789ABCDEF)" << QStringList{"liba.so.0","/opt/a b/liba.so.0"} << Ok;
 }
 
 

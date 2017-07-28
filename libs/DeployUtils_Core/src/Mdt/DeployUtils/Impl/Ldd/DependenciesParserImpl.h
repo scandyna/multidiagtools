@@ -53,10 +53,13 @@ namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace Ldd{
       using qi::eol;
       using boost::spirit::standard_wide::char_;
 
+      ///mLibraryCommonName = +(char_ - lit(L' '));
+      ///mLinuxVdso = lit(L"linux-vdso.so.1") | lit(L"linux-gate.so.1") | lit(L"linux-vdso32.so.1") | lit(L"linux-vdso64.so.1");
+      ///mLibraryName = mLibraryCommonName | mLinuxVdso;
       mLibraryName = +(char_ - lit(L' '));
       mAddress = lit(L"(0x") >> +char_("0123456789abcdefABCDEF") >> lit(L')');
       mLibraryPath = +(char_ - lit(L" ("));
-      mRecordRule = +lit('\t') >> mLibraryName >> lit(L" => ") >> mLibraryPath >> lit(L' ') >> mAddress;
+      mRecordRule = +lit('\t') >> mLibraryName >> lit(L" => ") >> -mLibraryPath >> lit(L' ') >> mAddress;
       
 //       mCode = int_;
 //       mClass = char_("MIABCD");
@@ -69,6 +72,8 @@ namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace Ldd{
 //       mRecordRule = mCode >> *lit(L' ') >> lit(L':') >> +lit(L' ') >> mClass >> lit(L' ') >> mText >> eol
 //                     >> *lit(L' ') >> mStartDateTime >> lit(L", ") >> mEndDateTime >> *lit(L' ') >> mW;
 
+      BOOST_SPIRIT_DEBUG_NODE(mLibraryCommonName);
+      BOOST_SPIRIT_DEBUG_NODE(mLinuxVdso);
       BOOST_SPIRIT_DEBUG_NODE(mLibraryName);
       BOOST_SPIRIT_DEBUG_NODE(mLibraryPath);
       BOOST_SPIRIT_DEBUG_NODE(mAddress);
@@ -89,6 +94,8 @@ namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace Ldd{
 //     boost::spirit::qi::rule<SourceIterator, std::vector<QString>()> mStartDateTime;
 //     boost::spirit::qi::rule<SourceIterator, std::vector<QString>()> mEndDateTime;
 //     boost::spirit::qi::rule<SourceIterator, bool()> mW;
+    boost::spirit::qi::rule<SourceIterator, QString()> mLibraryCommonName;
+    boost::spirit::qi::rule<SourceIterator, QString()> mLinuxVdso;
     boost::spirit::qi::rule<SourceIterator, QString()> mLibraryName;
     boost::spirit::qi::rule<SourceIterator, QString()> mLibraryPath;
     boost::spirit::qi::rule<SourceIterator> mAddress;

@@ -32,6 +32,8 @@ class BinaryDependenciesTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void sandbox();
+
   void runTest();
 };
 
