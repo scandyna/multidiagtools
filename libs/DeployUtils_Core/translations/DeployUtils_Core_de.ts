@@ -28,6 +28,14 @@
     </message>
 </context>
 <context>
+    <name>Mdt::DeployUtils::BinaryDependenciesLdd</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="78"/>
+        <source>Parsing ldd output for file &apos;%1&apos; failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::DeployUtils::LddWrapper</name>
     <message>
         <location filename="../src/Mdt/DeployUtils/LddWrapper.cpp" line="39"/>

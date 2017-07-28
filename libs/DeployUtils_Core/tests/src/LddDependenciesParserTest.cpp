@@ -78,6 +78,9 @@ void LddDependenciesParserTest::recordGrammarTest_data()
 
   QTest::newRow("liba.so.0 => /opt/a b/ (0x0123456789ABCDEF)")
    << "\tliba.so.0 => /opt/a b/liba.so.0 (0x0123456789ABCDEF)" << StringRecord{"liba.so.0","/opt/a b/liba.so.0"} << Ok;
+
+  QTest::newRow("libn.so => not found")
+   << "\tlibn.so => not found" << StringRecord{"libn.so","not found"} << Ok;
 }
 
 void LddDependenciesParserTest::parserTest()

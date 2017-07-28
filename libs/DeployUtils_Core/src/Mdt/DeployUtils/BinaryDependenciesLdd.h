@@ -22,10 +22,11 @@
 #define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_LDD_H
 
 #include "BinaryDependenciesImplementationInterface.h"
+#include "Mdt/PlainText/StringRecordList.h"
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief
+  /*! \brief Binary dependencies ldd implementation
    */
   class BinaryDependenciesLdd : public BinaryDependenciesImplementationInterface
   {
@@ -41,9 +42,13 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool findDependencies(const QString & binaryFilePath) override;
 
-   private:
+    /*! \internal Fill dependencies, made public for unit tests
+     */
+    void fillAndSetDependencies(const PlainText::StringRecordList & data);
 
-    
+//    private:
+// 
+//     
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

@@ -24,19 +24,12 @@
 // Uncomment this line to enable parser debuging
 // #define BOOST_SPIRIT_DEBUG
 
-// #include "Mdt/PlainText/Record.h"
-// #include "Mdt/PlainText/RecordList.h"
 #include "Mdt/PlainText/StringRecord.h"
 #include "Mdt/PlainText/StringRecordList.h"
 #include "Mdt/PlainText/BoostSpiritQtTraits.h"
-// #include <boost/fusion/adapted/struct/adapt_struct.hpp>
-// #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/bind.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <QString>
-
-#include <QStringList>
-
 #include <string>
 #include <vector>
 #include <tuple>
@@ -58,12 +51,12 @@ namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace Ldd{
       mLibraryName = +(char_ - lit(L' '));
       mAddress = lit(L"(0x") >> +char_("0123456789abcdefABCDEF") >> lit(L')');
       mLibraryPath = +(char_ - lit(L" ("));
-      mRecordRule = +lit('\t') >> mLibraryName >> lit(L" => ") >> -mLibraryPath >> lit(L' ') >> mAddress;
+      mRecordRule = +lit('\t') >> mLibraryName >> lit(L" => ") >> -mLibraryPath >> -(lit(L' ') >> mAddress);
 
       BOOST_SPIRIT_DEBUG_NODE(mLibraryName);
       BOOST_SPIRIT_DEBUG_NODE(mLibraryPath);
       BOOST_SPIRIT_DEBUG_NODE(mAddress);
-      BOOST_SPIRIT_DEBUG_NODE(mRecordRule);
+//       BOOST_SPIRIT_DEBUG_NODE(mRecordRule);
     }
 
    private:
