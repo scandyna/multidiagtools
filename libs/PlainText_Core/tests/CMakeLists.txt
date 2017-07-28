@@ -1,6 +1,8 @@
 
 enable_testing()
 
+add_subdirectory(PlainTextTestUtils)
+
 find_package(Qt5 COMPONENTS Test)
 
 #=============== Qt5 plain text test library =====
@@ -20,8 +22,8 @@ set(SOURCE_FILES
   src/TestBase.cpp
 )
 
-add_library(mdtplaintexttest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtplaintexttest mdtplaintextqt5test PlainText_Core Application Qt5::Test)
+add_library(PlainTextTest SHARED ${SOURCE_FILES})
+target_link_libraries(PlainTextTest mdtplaintextqt5test PlainTextTestUtils PlainText_Core Application Qt5::Test)
 
 #=============== Helper functions ===========
 
@@ -30,7 +32,7 @@ function(addPlainTextTest testName)
   set(sourceFilePath "src/${testName}.cpp")
   string(TOLOWER ${complteTestName} executableName)
   add_executable(${executableName} ${sourceFilePath})
-  target_link_libraries(${executableName} mdtplaintexttest)
+  target_link_libraries(${executableName} PlainTextTest)
   add_test(NAME ${complteTestName} COMMAND ${executableName})
 #  message("Test name: ${complteTestName} , src: ${sourceFilePath} , exec: ${executableName}")
 endfunction()
