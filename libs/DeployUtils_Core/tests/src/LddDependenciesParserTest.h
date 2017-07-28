@@ -34,7 +34,9 @@ class LddDependenciesParserTest : public TestBase
 
   void recordGrammarTest();
   void recordGrammarTest_data();
-  
+
+  void parserTest();
+  void parserTest_data();
 };
 
 #endif // #ifndef LDD_DEPENDENCIES_PARSER_TEST_H

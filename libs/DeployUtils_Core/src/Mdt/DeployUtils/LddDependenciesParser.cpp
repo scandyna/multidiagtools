@@ -42,4 +42,9 @@ bool LddDependenciesParser::parse(const QString & data)
   return mParser->parseAll(first, last);
 }
 
+StringRecordList LddDependenciesParser::rawDependencies() const
+{
+  return mParser->rawDependencies();
+}
+
 }} // namespace Mdt{ namespace DeployUtils{

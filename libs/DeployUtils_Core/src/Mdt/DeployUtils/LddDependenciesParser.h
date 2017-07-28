@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_LDD_DEPENDENCIES_PARSER_H
 
 #include "Mdt/PlainText/StringConstIterator.h"
+#include "Mdt/PlainText/StringRecordList.h"
 #include <QString>
 #include <memory>
 
@@ -51,6 +52,10 @@ namespace Mdt{ namespace DeployUtils{
     /*! \brief Prase the ldd output data
      */
     bool parse(const QString & data);
+
+    /*! \brief Get parsed dependencies
+     */
+    Mdt::PlainText::StringRecordList rawDependencies() const;
 
    private:
 
