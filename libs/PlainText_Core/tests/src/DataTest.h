@@ -33,7 +33,11 @@ class DataTest : public TestBase
   void cleanupTestCase();
 
   void recordTest();
+  void recordQCompareTest();
+  void recordQCompareTest_data();
   void recordListTest();
+  void recordListQCompareTest();
+  void recordListQCompareTest_data();
 
   void stringRecordTest();
   void stringRecordListTest();

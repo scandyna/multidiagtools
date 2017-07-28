@@ -83,6 +83,27 @@ void DataTest::recordTest()
   QCOMPARE(record.data(2), QVariant("B"));
 }
 
+void DataTest::recordQCompareTest()
+{
+  QFETCH(Record, record);
+
+  const auto record1 = record;
+  const auto record2 = record;
+
+  QCOMPARE(record1, record2);
+}
+
+void DataTest::recordQCompareTest_data()
+{
+  QTest::addColumn<Record>("record");
+
+  QTest::newRow("") << Record{};
+  QTest::newRow("1") << Record{1};
+  QTest::newRow("1,2") << Record{1,2};
+  QTest::newRow("A") << Record{"A"};
+  QTest::newRow("1,A") << Record{1,"A"};
+}
+
 void DataTest::recordListTest()
 {
   RecordList list;
@@ -139,6 +160,27 @@ void DataTest::recordListTest()
   QCOMPARE(list2.rowCount(), list.rowCount());
 }
 
+void DataTest::recordListQCompareTest()
+{
+  QFETCH(RecordList, recordList);
+
+  const auto recordList1 = recordList;
+  const auto recordList2 = recordList;
+
+  QCOMPARE(recordList1, recordList2);
+}
+
+void DataTest::recordListQCompareTest_data()
+{
+  QTest::addColumn<RecordList>("recordList");
+
+  QTest::newRow("") << RecordList{};
+  QTest::newRow("{{1}}") << RecordList{{1}};
+  QTest::newRow("{{1,A}}") << RecordList{{1,"A"}};
+  QTest::newRow("{{1},{2}}") << RecordList{{1},{2}};
+  QTest::newRow("{{1,A},{2}}") << RecordList{{1,"A"},{2}};
+}
+
 void DataTest::stringRecordTest()
 {
   StringRecord record;
@@ -190,6 +232,12 @@ void DataTest::stringRecordTest()
   QCOMPARE(record.data(2), QString("B"));
   const auto it1 = std::find(record.cbegin(), record.cend(), QString("1"));
   QVERIFY(it1 == record.cbegin());
+  /*
+   * Check that we can use QCOMPARE
+   */
+  StringRecord record1{"A","B","C"};
+  StringRecord record2{"A","B","C"};
+  QCOMPARE(record1, record2);
 }
 
 void DataTest::stringRecordListTest()
@@ -236,6 +284,12 @@ void DataTest::stringRecordListTest()
   QCOMPARE(list.data(0, 1), QString("C"));
   QCOMPARE(list.data(1, 0), QString("4"));
   QCOMPARE(list.data(1, 1), QString("D"));
+  /*
+   * Check that we can use QCOMPARE
+   */
+  StringRecordList list1{{"A","B","C"},{"1","2"}};
+  StringRecordList list2{{"A","B","C"},{"1","2"}};
+  QCOMPARE(list1, list2);
 }
 
 /*
