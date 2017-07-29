@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,9 +24,14 @@
 #include <QString>
 #include <QLatin1String>
 #include <QChar>
+#include <algorithm>
 #include <utility>
 #include <vector>
+#include <iterator>
 #include <initializer_list>
+#include <type_traits>
+
+#include <functional>
 
 namespace Mdt{
 
@@ -124,6 +129,103 @@ namespace Algorithm{
    * \endcode
    */
   QString replaceNonEscapedTokens(const QString & str, const std::initializer_list< std::pair<QChar,QString> > & replaceList, const QChar & escape);
+
+/** \todo Add moveIf() in Mdt::Algorithm:
+ *
+ * \note Probably not a good idea
+ *
+ *  - Internaly, use std::partition
+ *  - Explain what SourceContainer requires: iterator, begin(), end()
+ *  - Explain what DestinationContainer requires: iterator, compatible with std::back_inserter, erase(const_iterator first, const_iterator last)
+ *                                                        erase: QVector has erase(iterator first, iterator last), check.
+ *
+ * template<typename ForwardIt, typename OutputIt, typename UnaryPredicate>
+ * void moveIf(ForwardIt first, ForwardIt last, OutputIt d_first, UnaryPredicate p);
+ *
+ * template<typename SourceContainer, typename DestinationContainer, typename UnaryPredicate>
+ * void moveIf(SourceContainer & sourceConatiner, DestinationContainer & destinationContainer, UnaryPredicate p);
+ */
+
+  /*! \brief Move a range of elements to a new location
+   *
+   * Move the elements, for which the predicate \a p returns true,
+   *  from range [\a first, \a last) to range \a d_first .
+   *
+   * \param first The beginnig of the source range
+   * \param last The end of the source range
+   * \param d_first 
+   * \param p The unary predicate which returns true if a element must be moved.
+   *          The signature of the predicate function should be equivalent to the following:
+   *          \code
+   *          bool pred(const Type & value);
+   *          \endcode
+   * \return A iterator past the end of the new source range.
+   * \pre \a first and \a last must meet the requirement of
+   *       [ValueSwappable](http://en.cppreference.com/w/cpp/concept/ValueSwappable)
+   *       and [ForwardIterator](http://en.cppreference.com/w/cpp/concept/ForwardIterator)
+   * \pre \a d_first must meet the requirement of
+   *        [OutputIterator](http://en.cppreference.com/w/cpp/concept/OutputIterator)
+   *
+   * Example:
+   * \code
+   * QStringList sourceList{"A","B","C"};
+   * QStringList destinationList;
+   *
+   * const auto predicate = [](const QString & value){
+   *   return value == QLatin1String("B");
+   * };
+   * auto it = Mdt::Algorithm::moveIf(sourceList.cbegin(), sourceList.cend(), std::back_inserter(destinationList), predicate);
+   * sourceList.erase(it, sourceList.cend());
+   * \endcode
+   * sourceList will contain A,C abd destinationList will contain B .
+   *
+   * \todo Check, think that cbegin()/cend() will not work
+   *
+   * \sa void moveIf(SourceContainer &, DestinationContainer &, UnaryPredicate)
+   */
+  template<typename ForwardIt, typename OutputIt, typename UnaryPredicate>
+  ForwardIt moveIf(ForwardIt first, ForwardIt last, OutputIt d_first, UnaryPredicate p)
+  {
+    using value_type = typename std::iterator_traits<ForwardIt>::value_type;
+    std::function<bool(const value_type &)> f = p;
+    auto itp = std::partition(first, last, std::not1(f)); // std::not1() is deprecated in C++17
+    std::move(itp, last, d_first);
+    return itp;
+  }
+
+  /*! \brief Move a range of elements to a new location
+   *
+   * Move the elements, for which the predicate \a p returns true,
+   *  from \a sourceConatiner to \a destinationContainer .
+   *
+   * \param p The unary predicate which returns true if a element must be moved.
+   *          The signature of the predicate function should be equivalent to the following:
+   *          \code
+   *          bool pred(const Type & value);
+   *          \endcode
+   * \pre \a SourceContainer requires STL compatible begin(), end() and erase() methods.
+   * \pre \a DestinationContainer requires a push_back() method that can be used by std::back_inserter .
+   *
+   * Example:
+   * \code
+   * QStringList sourceList{"A","B","C"};
+   * QStringList destinationList;
+   *
+   * const auto predicate = [](const QString & value){
+   *   return value == QLatin1String("B");
+   * };
+   * Mdt::Algorithm::moveIf(sourceList, destinationList, predicate);
+   * \endcode
+   * sourceList will contain A,C abd destinationList will contain B .
+   *
+   * \sa ForwardIt moveIf(ForwardIt, ForwardIt, OutputIt, UnaryPredicate)
+   */
+  template<typename SourceContainer, typename DestinationContainer, typename UnaryPredicate>
+  void moveIf(SourceContainer & sourceConatiner, DestinationContainer & destinationContainer, UnaryPredicate p)
+  {
+    auto it = moveIf(sourceConatiner.begin(), sourceConatiner.end(), std::back_inserter(destinationContainer), p);
+    sourceConatiner.erase(it, sourceConatiner.end());
+  }
 
 }} // namespace Mdt{ namespace Algorithm{
 

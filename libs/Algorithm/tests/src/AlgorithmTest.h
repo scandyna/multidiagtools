@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
+#include <QStringList>
 
 class AlgorithmTest : public QObject
 {
@@ -50,6 +51,22 @@ class AlgorithmTest : public QObject
   void replaceNonEscapedTokensTest();
   void replaceNonEscapedTokensTest_data();
   void replaceNonEscapedTokensBenchmark();
+
+  void moveIfTest();
+  void moveIfTest_data();
+  void moveIfQStringListBenchmark();
+  void moveIfQStringListBenchmark_data();
+  void moveIfQVectorQStringBenchmark();
+  void moveIfQVectorQStringBenchmark_data();
+  void moveIfStdVectorQStringBenchmark();
+  void moveIfStdVectorQStringBenchmark_data();
+
+ private:
+
+  void createMoveIfBenchmarkData();
+  static void prepareMoveIfBenchmarkData(QStringList & initialSourceList, QString & matchValue,
+                                         QStringList & expectedSourceList, QStringList & expectedDestinationList, int n);
+  static QStringList generateStringList(int size);
 };
 
 #endif // #ifndef MDT_ALGORITHM_TEST_H
