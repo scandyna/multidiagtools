@@ -236,6 +236,15 @@ namespace Mdt{ namespace PlainText{
       return mRecordList.cend();
     }
 
+    /*! \brief Removes all the items from begin up to (but not including) end
+     *
+     * Returns an iterator to the same item that end referred to before the call.
+     */
+    iterator erase(iterator begin, iterator end)
+    {
+      return mRecordList.erase(begin, end);
+    }
+
    private:
 
     QVector<RecordType> mRecordList;

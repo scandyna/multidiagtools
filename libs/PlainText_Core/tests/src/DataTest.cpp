@@ -158,6 +158,13 @@ void DataTest::recordListTest()
   RecordList list2;
   std::copy(list.cbegin(), list.cend(), std::back_inserter(list2));
   QCOMPARE(list2.rowCount(), list.rowCount());
+  /*
+   * Check STL style erase()
+   */
+  RecordList list3{{1},{2},{3}};
+  list3.erase( list3.begin()+1, list3.end() );
+  QCOMPARE(list3.rowCount(), 1);
+  QCOMPARE(list3.data(0, 0), QVariant(1));
 }
 
 void DataTest::recordListQCompareTest()
