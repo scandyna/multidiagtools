@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_LDD_H
 
 #include "BinaryDependenciesImplementationInterface.h"
+#include "Mdt/PlainText/StringRecord.h"
 #include "Mdt/PlainText/StringRecordList.h"
 
 namespace Mdt{ namespace DeployUtils{
@@ -44,11 +45,12 @@ namespace Mdt{ namespace DeployUtils{
 
     /*! \internal Fill dependencies, made public for unit tests
      */
-    void fillAndSetDependencies(const PlainText::StringRecordList & data);
+    void fillAndSetDependencies(PlainText::StringRecordList & data);
 
-//    private:
-// 
-//     
+   private:
+
+    static bool isLibraryNotFound(const PlainText::StringRecord & record);
+    static bool isLibraryNotInExcludeList(const PlainText::StringRecord & record);
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

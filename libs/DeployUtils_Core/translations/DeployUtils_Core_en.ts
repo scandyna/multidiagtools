@@ -2,6 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>Mdt::DeployUtils</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="28"/>
+        <source>Path to the source file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="30"/>
+        <source>Utilities to help deploying a application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="33"/>
+        <source>Action to do..</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
         <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="36"/>
@@ -12,7 +30,7 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependenciesLdd</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="58"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="64"/>
         <source>Parsing ldd output for file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -43,24 +61,6 @@
     <message>
         <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="54"/>
         <source>Error occured from command &apos;%1 %2&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SettingsCommandLineParser</name>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="28"/>
-        <source>Path to the source file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="30"/>
-        <source>Utilities to help deploying a application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="33"/>
-        <source>Action to do..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -21,8 +21,13 @@
 #include "BinaryDependenciesLdd.h"
 #include "LddWrapper.h"
 #include "LddDependenciesParser.h"
+#include "LibraryName.h"
+#include "Mdt/Algorithm.h"
 #include "Mdt/PlainText/StringRecord.h"
+#include <QString>
+#include <QLatin1String>
 #include <array>
+#include <algorithm>
 
 #include <QDebug>
 
@@ -32,12 +37,13 @@ namespace Mdt{ namespace DeployUtils{
  *
  * This was grabbed from https://github.com/probonopd/linuxdeployqt
  */
-static const std::array<const char * const, 40> LibrayExcludeListLinux =
+static const std::array<const char * const, 41> LibrayExcludeListLinux =
 {
   "asound", "com_err", "crypt", "c", "dl", "drm", "expat", "fontconfig", "gcc_s","gdk_pixbuf-2",
   "gdk-x11-2.0", "gio-2.0", "glib-2.0", "GL", "gobject-2.0", "gpg-error", "gssapi_krb5", "gtk-x11-2.0", "ICE", "idn",
   "k5crypto", "keyutils", "m", "nss3", "nssutil3", "p11-kit", "pangoft2-1", "pangocairo-1.0", "pango-1.0", "pthread",
-  "resolv", "rt", "selinux", "SM", "stdc++", "usb-1.0", "uuid", "X11", "xcb", "z"
+  "resolv", "rt", "selinux", "SM", "stdc++", "usb-1.0", "uuid", "X11", "xcb", "z",
+  "linux-vdso"
 };
 
 BinaryDependenciesLdd::BinaryDependenciesLdd(QObject* parent)
@@ -61,46 +67,60 @@ bool BinaryDependenciesLdd::findDependencies(const QString& binaryFilePath)
     return false;
   }
 
-  const auto list = parser.rawDependencies();
+  auto list = parser.rawDependencies();
+  qDebug() << "All:";
+  for(const auto & rec : list){
+    qDebug() << " Lib: " << rec.data(0);
+  }
+  fillAndSetDependencies(list);
+  qDebug() << "Excluded:";
+  for(const auto & rec : list){
+    qDebug() << " Lib: " << rec.data(0);
+  }
+/*
   for(const auto & rec : list){
     qDebug() << "Lib: " << rec.data(0);
     if(rec.columnCount() > 1){
       qDebug() << " path: " << rec.data(1);
     }
-  }
+  }*/
 
 //   qDebug() << ldd.readAllStandardOutputString().split('\n');
   
   return false;
 }
 
-/** \todo Add moveIf() in Mdt::Algorithm:
- *
- * \note Probably not a good idea
- *
- *  - Internaly, use std::partition
- *  - Explain what SourceContainer requires: iterator, begin(), end()
- *  - Explain what DestinationContainer requires: iterator, compatible with std::back_inserter, erase(const_iterator first, const_iterator last)
- *                                                        erase: QVector has erase(iterator first, iterator last), check.
- *
- * template<typename ForwardIt, typename OutputIt, typename UnaryPredicate>
- * void moveIf(ForwardIt first, ForwardIt last, OutputIt d_first, UnaryPredicate p);
- *
- * template<typename SourceContainer, typename DestinationContainer, typename UnaryPredicate>
- * void moveIf(SourceContainer & sourceConatiner, DestinationContainer & destinationContainer, UnaryPredicate p);
- */
-
-void BinaryDependenciesLdd::fillAndSetDependencies(const PlainText::StringRecordList & data)
+void BinaryDependenciesLdd::fillAndSetDependencies(PlainText::StringRecordList& data)
 {
-  // Move libraries that are not found to <notFoundDependencies> list - see moveIf - Try: write a static function as predicate
-  // NOTE: data will detach, and probably deep-copy, but this should allready be a bad situation if some libraries are not found.
+  PlainText::StringRecordList notFoundDependencies;
+  PlainText::StringRecordList dependencies;
+
+  // Move libraries that are not found to <notFoundDependencies> list
+  Mdt::Algorithm::moveIf( data, notFoundDependencies, isLibraryNotFound );
+  // Move libraries that are not in the exclude list to <dependencies>
+  Mdt::Algorithm::moveIf( data, dependencies, isLibraryNotInExcludeList );
+  /// \todo Build and set the resulting dependencies - of type LibraryInfoList
   
-  // Copy libraries, from data, that are not found, to <notFoundDependencies> - see std::copy_if()
-  
-  // Copy libraries, from data, that not exists in <notFoundDependencies>, ?? a other temp ? NOTE: moveIf ok ??
-  
-  // Copy libraries that are not in the exclude list to <dependencies> - see std::set_difference (needs < comp!, or sort both before ?), or std::copy_if
-  
+}
+
+bool BinaryDependenciesLdd::isLibraryNotFound(const PlainText::StringRecord& record)
+{
+  if(record.columnCount() < 2){
+    return false;
+  }
+  return (QString::compare( record.data(1), QLatin1String("not found"), Qt::CaseSensitive ) == 0);
+}
+
+bool BinaryDependenciesLdd::isLibraryNotInExcludeList(const PlainText::StringRecord & record)
+{
+  Q_ASSERT(record.columnCount() > 0);
+
+  const auto cmp = [record](const char * const excludeName){
+    LibraryName libName(record.data(0));
+    return ( QString::compare( libName.name(), QLatin1String(excludeName), Qt::CaseSensitive ) == 0);
+  };
+  const auto it = std::find_if( LibrayExcludeListLinux.cbegin(), LibrayExcludeListLinux.cend(), cmp );
+  return (it == LibrayExcludeListLinux.cend());
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

@@ -23,6 +23,7 @@
 #include "Mdt/PlainText/RecordList.h"
 #include "Mdt/PlainText/StringRecord.h"
 #include "Mdt/PlainText/StringRecordList.h"
+#include <QVector>
 #include <algorithm>
 #include <iterator>
 
@@ -245,6 +246,19 @@ void DataTest::stringRecordTest()
   StringRecord record1{"A","B","C"};
   StringRecord record2{"A","B","C"};
   QCOMPARE(record1, record2);
+  /*
+   * Check that we cann use STL std::move() algorithm
+   */
+  // QStringList -> StringRecord
+  QStringList list3{"A","B"};
+  StringRecord record3;
+  std::move( list3.begin(), list3.end(), std::back_inserter(record3) );
+  QCOMPARE( record3, StringRecord({"A","B"}) );
+  // StringRecord -> QStringList
+  StringRecord record4{"A","B","C"};
+  QStringList list4;
+  std::move( record4.begin(), record4.end(), std::back_inserter(list4) );
+  QCOMPARE( list4, QStringList({"A","B","C"}) );
 }
 
 void DataTest::stringRecordListTest()

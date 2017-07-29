@@ -32,36 +32,36 @@ void BinaryDependenciesTest::cleanupTestCase()
 {
 }
 
-/** Sandbox
- */
-
-#include <QLatin1String>
-
-constexpr char excludeStr[] = "excluse0";
-
-constexpr int arraySize = 3;
-constexpr char excludeArray[arraySize][9] =
-{
-  "excluse0",
-  "excluse1",
-  "other"
-};
-
-void BinaryDependenciesTest::sandbox()
-{
-  constexpr QLatin1String str(excludeStr);
-
-  qDebug() << "excludeStr: " << excludeStr << " , str: " << str;
-  
-  const QString lib = "excluse1";
-  
-  for(int i = 0; i < arraySize; ++i){
-    qDebug() << "Arr[" << i << "]: " << excludeArray[i];
-    if(lib == QLatin1String(excludeArray[i])){
-      qDebug() << "-> is excluded !";
-    }
-  }
-}
+// /** Sandbox
+//  */
+// 
+// #include <QLatin1String>
+// 
+// constexpr char excludeStr[] = "excluse0";
+// 
+// constexpr int arraySize = 3;
+// constexpr char excludeArray[arraySize][9] =
+// {
+//   "excluse0",
+//   "excluse1",
+//   "other"
+// };
+// 
+// void BinaryDependenciesTest::sandbox()
+// {
+//   constexpr QLatin1String str(excludeStr);
+// 
+//   qDebug() << "excludeStr: " << excludeStr << " , str: " << str;
+//   
+//   const QString lib = "excluse1";
+//   
+//   for(int i = 0; i < arraySize; ++i){
+//     qDebug() << "Arr[" << i << "]: " << excludeArray[i];
+//     if(lib == QLatin1String(excludeArray[i])){
+//       qDebug() << "-> is excluded !";
+//     }
+//   }
+// }
 
 
 /*
