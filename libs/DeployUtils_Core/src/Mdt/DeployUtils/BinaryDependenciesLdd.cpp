@@ -40,26 +40,6 @@ static const std::array<const char * const, 40> LibrayExcludeListLinux =
   "resolv", "rt", "selinux", "SM", "stdc++", "usb-1.0", "uuid", "X11", "xcb", "z"
 };
 
-// class LibrayExcludeListLinux
-// {
-//  public:
-// 
-//   
-// 
-//  private:
-// 
-//   static const int mListSize = 2;
-//   static const std::array<int, 2> mList;
-// };
-
-// constexpr int arraySize = 3;
-// constexpr char excludeArray[arraySize][9] =
-// {
-//   "excluse0",
-//   "excluse1",
-//   "other"
-// };
-
 BinaryDependenciesLdd::BinaryDependenciesLdd(QObject* parent)
  : BinaryDependenciesImplementationInterface(parent)
 {
@@ -74,7 +54,7 @@ bool BinaryDependenciesLdd::findDependencies(const QString& binaryFilePath)
   }
 
   LddDependenciesParser parser;
-  if(!parser.parse( ldd.readAllStandardOutputString() ) ){
+  if( !parser.parse( ldd.readAllStandardOutputString() ) ){
     const QString msg = tr("Parsing ldd output for file '%1' failed.").arg(binaryFilePath);
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     setLastError(error);
@@ -94,9 +74,33 @@ bool BinaryDependenciesLdd::findDependencies(const QString& binaryFilePath)
   return false;
 }
 
+/** \todo Add moveIf() in Mdt::Algorithm:
+ *
+ * \note Probably not a good idea
+ *
+ *  - Internaly, use std::partition
+ *  - Explain what SourceContainer requires: iterator, begin(), end()
+ *  - Explain what DestinationContainer requires: iterator, compatible with std::back_inserter, erase(const_iterator first, const_iterator last)
+ *                                                        erase: QVector has erase(iterator first, iterator last), check.
+ *
+ * template<typename ForwardIt, typename OutputIt, typename UnaryPredicate>
+ * void moveIf(ForwardIt first, ForwardIt last, OutputIt d_first, UnaryPredicate p);
+ *
+ * template<typename SourceContainer, typename DestinationContainer, typename UnaryPredicate>
+ * void moveIf(SourceContainer & sourceConatiner, DestinationContainer & destinationContainer, UnaryPredicate p);
+ */
+
 void BinaryDependenciesLdd::fillAndSetDependencies(const PlainText::StringRecordList & data)
 {
-
+  // Move libraries that are not found to <notFoundDependencies> list - see moveIf - Try: write a static function as predicate
+  // NOTE: data will detach, and probably deep-copy, but this should allready be a bad situation if some libraries are not found.
+  
+  // Copy libraries, from data, that are not found, to <notFoundDependencies> - see std::copy_if()
+  
+  // Copy libraries, from data, that not exists in <notFoundDependencies>, ?? a other temp ? NOTE: moveIf ok ??
+  
+  // Copy libraries that are not in the exclude list to <dependencies> - see std::set_difference (needs < comp!, or sort both before ?), or std::copy_if
+  
 }
 
 }} // namespace Mdt{ namespace DeployUtils{
