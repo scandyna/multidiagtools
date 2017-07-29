@@ -19,6 +19,14 @@
  **
  ****************************************************************************/
 #include "BinaryDependenciesLddTest.h"
+#include "Mdt/DeployUtils/LibraryInfo.h"
+#include "Mdt/DeployUtils/LibraryInfoList.h"
+#include "Mdt/DeployUtils/BinaryDependenciesLdd.h"
+#include "Mdt/PlainText/StringRecordList.h"
+#include "Mdt/PlainText/TestUtils.h"
+
+using namespace Mdt::DeployUtils;
+using namespace Mdt::PlainText;
 
 void BinaryDependenciesLddTest::initTestCase()
 {
@@ -31,6 +39,54 @@ void BinaryDependenciesLddTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void BinaryDependenciesLddTest::fillAndSetDependenciesTest()
+{
+  QFETCH(StringRecordList, dependencies);
+  QFETCH(LibraryInfoList, expectedDependencies);
+
+  BinaryDependenciesLdd bd;
+  bd.fillAndSetDependencies(dependencies);
+  QCOMPARE(bd.dependencies().count(), expectedDependencies.count());
+  for(int i = 0; i < bd.dependencies().count(); ++i){
+    QVERIFY(bd.dependencies().at(i) == expectedDependencies.at(i));
+  }
+  
+  QFAIL("Not complete");
+}
+
+void BinaryDependenciesLddTest::fillAndSetDependenciesTest_data()
+{
+  QTest::addColumn<StringRecordList>("dependencies");
+  QTest::addColumn<LibraryInfoList>("expectedDependencies");
+
+  LibraryInfo liQt5Core;
+  liQt5Core.setLibraryPlatformName("libQt5Core.so.5");
+  LibraryInfo liLinuxVdso;
+  liLinuxVdso.setLibraryPlatformName("linux-vdso.so.1");
+  LibraryInfoList liList;
+
+  ///liList.c
+  QTest::newRow("")
+    << StringRecordList{}
+    << LibraryInfoList{};
+// 
+//   QTest::newRow("")
+//     << StringRecordList{{"libQt5Core.so.5"}}
+//     << StringRecordList{{"libQt5Core.so.5"}};
+// 
+//   QTest::newRow("")
+//     << StringRecordList{{"linux-vdso.so.1"},{"libQt5Core.so.5"}}
+//     << StringRecordList{{"libQt5Core.so.5"}};
+
+
+}
+
+
+void BinaryDependenciesLddTest::fillAndSetDependenciesBenchmark()
+{
+  QFAIL("Not complete");
+}
 
 
 /*

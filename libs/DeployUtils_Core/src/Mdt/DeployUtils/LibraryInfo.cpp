@@ -27,5 +27,15 @@ void LibraryInfo::setAbsoluteFilePath(const QString& path)
   mAbsoluteFilePath = path;
 }
 
+void LibraryInfo::setLibraryPlatformName(const QString& name)
+{
+  setLibraryName( LibraryName(name) );
+}
+
+void LibraryInfo::setLibraryName(const LibraryName& libraryName)
+{
+  mLibraryName = libraryName;
+}
+
 
 }} // namespace Mdt{ namespace DeployUtils{

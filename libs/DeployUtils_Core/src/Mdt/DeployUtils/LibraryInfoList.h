@@ -23,6 +23,8 @@
 
 #include "LibraryInfo.h"
 #include <QVector>
+#include <QMetaType>
+#include <initializer_list>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -35,6 +37,33 @@ namespace Mdt{ namespace DeployUtils{
     /*! \brief STL-style const iterator
      */
     using const_iterator = QVector<LibraryInfo>::const_iterator;
+
+    /*! \brief Construct a empty library info list
+     */
+    LibraryInfoList() = default;
+
+    /*! \brief Construct a library info list from initializer lists
+     */
+    LibraryInfoList(std::initializer_list<LibraryInfo> list)
+     : mList(list)
+    {
+    }
+
+    /*! \brief Copy construct a library info list from a other
+     */
+    LibraryInfoList(const LibraryInfoList &) = default;
+
+    /*! \brief Copy assign a library info list this this one
+     */
+    LibraryInfoList & operator=(const LibraryInfoList &) = default;
+
+    /*! \brief Move construct a library info list from a other
+     */
+    LibraryInfoList(LibraryInfoList &&) = default;
+
+    /*! \brief Move assign a library info list this this one
+     */
+    LibraryInfoList & operator=(LibraryInfoList &&) = default;
 
     /*! \brief Add a library info to the end of this list
      */
@@ -53,6 +82,21 @@ namespace Mdt{ namespace DeployUtils{
     {
       return mList.isEmpty();
     }
+
+    /*! \brief Get library info list at index
+     *
+     * \pre \a index must be in a valid range ( 0 <= index < count() )
+     */
+    const LibraryInfo & at(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < count());
+      return mList.at(index);
+    }
+
+    /*! \brief Attempts to allocate memory for at least size elements
+     */
+    void reserve(int size);
 
     /*! \brief Returns an STL-style const iterator pointing to the first item in this list
      */
@@ -74,5 +118,6 @@ namespace Mdt{ namespace DeployUtils{
   };
 
 }} // namespace Mdt{ namespace DeployUtils{
+Q_DECLARE_METATYPE(Mdt::DeployUtils::LibraryInfoList)
 
 #endif // #ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_LIST_H

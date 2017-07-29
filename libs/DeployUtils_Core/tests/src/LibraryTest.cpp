@@ -214,9 +214,57 @@ void LibraryTest::libraryInfoTest()
 {
   LibraryInfo li;
   QVERIFY(li.isNull());
+  li.setLibraryPlatformName("libA.so");
   li.setAbsoluteFilePath("/tmp/libA.so");
   QVERIFY(!li.isNull());
+  QCOMPARE(li.libraryName().name(), QString("A"));
   QCOMPARE(li.absoluteFilePath(), QString("/tmp/libA.so"));
+}
+
+void LibraryTest::libraryInfoCompareTest()
+{
+  QFETCH(LibraryInfo, liA);
+  QFETCH(LibraryInfo, liB);
+  QFETCH(bool, expectedEqual);
+
+  if(expectedEqual){
+    QVERIFY( liA == liB );
+    QVERIFY( !(liA != liB) );
+  }else{
+    QVERIFY( liA != liB );
+    QVERIFY( !(liA == liB) );
+  }
+}
+
+void LibraryTest::libraryInfoCompareTest_data()
+{
+  QTest::addColumn<LibraryInfo>("liA");
+  QTest::addColumn<LibraryInfo>("liB");
+  QTest::addColumn<bool>("expectedEqual");
+
+  const bool Equal = true;
+  const bool NotEqual = false;
+  LibraryInfo li1;
+  LibraryInfo li2;
+
+  li1.setLibraryPlatformName("libA.so");
+  li1.setAbsoluteFilePath("/tmp/libA.so");
+  li2.setLibraryPlatformName("libA.so");
+  li2.setAbsoluteFilePath("/tmp/libA.so");
+  QTest::newRow("A/A") << li1 << li2 << Equal;
+
+  li1.setLibraryPlatformName("libA.so");
+  li1.setAbsoluteFilePath("/tmp/libA.so");
+  li2.setLibraryPlatformName("libB.so");
+  li2.setAbsoluteFilePath("/tmp/libB.so");
+  QTest::newRow("A/B") << li1 << li2 << NotEqual;
+
+  li1.setLibraryPlatformName("libA.so");
+  li1.setAbsoluteFilePath("/tmp/libA.so");
+  li2.setLibraryPlatformName("libA.so");
+  li2.setAbsoluteFilePath("/tmp/opt/libA.so");
+  QTest::newRow("A/A/diff path") << li1 << li2 << NotEqual;
+
 }
 
 void LibraryTest::libraryInfoListTest()
@@ -235,6 +283,13 @@ void LibraryTest::libraryInfoListTest()
   list.addLibrary(li1);
   QCOMPARE(list.count(), 1);
   QVERIFY(!list.isEmpty());
+  /*
+   * Check that we can use initializer_list
+   */
+  LibraryInfo li2;
+  li1.setAbsoluteFilePath("/tmp/lib2");
+  LibraryInfoList list2{li1, li2};
+  QCOMPARE(list2.count(), 2);
 }
 
 void LibraryTest::searchLibraryTest()

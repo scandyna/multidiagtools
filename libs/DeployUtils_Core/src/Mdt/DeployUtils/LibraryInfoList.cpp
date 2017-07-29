@@ -27,4 +27,9 @@ void LibraryInfoList::addLibrary(const LibraryInfo & library)
   mList.append(library);
 }
 
+void LibraryInfoList::reserve(int size)
+{
+  mList.reserve(size);
+}
+
 }} // namespace Mdt{ namespace DeployUtils{

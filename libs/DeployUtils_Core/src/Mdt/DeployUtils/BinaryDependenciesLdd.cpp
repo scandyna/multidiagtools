@@ -22,6 +22,7 @@
 #include "LddWrapper.h"
 #include "LddDependenciesParser.h"
 #include "LibraryName.h"
+#include "LibraryInfo.h"
 #include "Mdt/Algorithm.h"
 #include "Mdt/PlainText/StringRecord.h"
 #include <QString>
@@ -99,8 +100,14 @@ void BinaryDependenciesLdd::fillAndSetDependencies(PlainText::StringRecordList& 
   Mdt::Algorithm::moveIf( data, notFoundDependencies, isLibraryNotFound );
   // Move libraries that are not in the exclude list to <dependencies>
   Mdt::Algorithm::moveIf( data, dependencies, isLibraryNotInExcludeList );
-  /// \todo Build and set the resulting dependencies - of type LibraryInfoList
+  // \todo Build and set the resulting dependencies
+  setDependencies( stringRecordListToLibraryInfoList(dependencies) );
   
+  qDebug() << "Result:";
+  for(const auto & rec : dependencies){
+    qDebug() << " Lib: " << rec.data(0);
+  }
+
 }
 
 bool BinaryDependenciesLdd::isLibraryNotFound(const PlainText::StringRecord& record)
@@ -121,6 +128,24 @@ bool BinaryDependenciesLdd::isLibraryNotInExcludeList(const PlainText::StringRec
   };
   const auto it = std::find_if( LibrayExcludeListLinux.cbegin(), LibrayExcludeListLinux.cend(), cmp );
   return (it == LibrayExcludeListLinux.cend());
+}
+
+LibraryInfoList BinaryDependenciesLdd::stringRecordListToLibraryInfoList(const PlainText::StringRecordList& list)
+{
+  LibraryInfoList libraryInfoList;
+
+  libraryInfoList.reserve(list.rowCount());
+  for(const auto & record : list){
+    Q_ASSERT(record.columnCount() > 0);
+    LibraryInfo li;
+    li.setLibraryPlatformName( record.data(0) );
+    if(record.columnCount() > 1){
+      li.setAbsoluteFilePath( record.data(1) );
+    }
+    libraryInfoList.addLibrary(li);
+  }
+
+  return libraryInfoList;
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

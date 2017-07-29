@@ -45,6 +45,8 @@ class LibraryTest : public TestBase
   void libraryNameToFullNameLinuxTest();
 
   void libraryInfoTest();
+  void libraryInfoCompareTest();
+  void libraryInfoCompareTest_data();
   void libraryInfoListTest();
 
   void searchLibraryTest();

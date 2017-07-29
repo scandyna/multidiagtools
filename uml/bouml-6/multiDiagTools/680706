@@ -1,6 +1,6 @@
 format 213
 "DeployUtils" // Mdt::DeployUtils
-  revision 5
+  revision 6
   modified_by 2 "philippe"
   // class settings
   
@@ -953,6 +953,18 @@ ${inlines}
       
       attribute 3562882 "Mode"
 	private type class_ref 4169730 // LibraryMode
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3584514 "Name"
+	private type class_ref 4169474 // LibraryName
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

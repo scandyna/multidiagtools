@@ -27,6 +27,11 @@ BinaryDependenciesImplementationInterface::BinaryDependenciesImplementationInter
 {
 }
 
+void BinaryDependenciesImplementationInterface::setDependencies(const LibraryInfoList & dependencies)
+{
+  mDependencies = dependencies;
+}
+
 void BinaryDependenciesImplementationInterface::setLastError(const Error& error)
 {
   mLastError = error;

@@ -31,6 +31,10 @@ class BinaryDependenciesLddTest : public TestBase
 
   void initTestCase();
   void cleanupTestCase();
+
+  void fillAndSetDependenciesTest();
+  void fillAndSetDependenciesTest_data();
+  void fillAndSetDependenciesBenchmark();
 };
 
 #endif // #ifndef BINARY_DEPENDENCIES_LDD_TEST_H

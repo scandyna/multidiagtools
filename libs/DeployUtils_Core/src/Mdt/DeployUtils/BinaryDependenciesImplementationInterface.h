@@ -59,6 +59,10 @@ namespace Mdt{ namespace DeployUtils{
 
    protected:
 
+    /*! \brief Set dependencies
+     */
+    void setDependencies(const LibraryInfoList & dependencies);
+
     /*! \brief Set last error
      */
     void setLastError(const Mdt::Error & error);

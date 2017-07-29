@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_LDD_H
 
 #include "BinaryDependenciesImplementationInterface.h"
+#include "LibraryInfoList.h"
 #include "Mdt/PlainText/StringRecord.h"
 #include "Mdt/PlainText/StringRecordList.h"
 
@@ -51,6 +52,7 @@ namespace Mdt{ namespace DeployUtils{
 
     static bool isLibraryNotFound(const PlainText::StringRecord & record);
     static bool isLibraryNotInExcludeList(const PlainText::StringRecord & record);
+    static LibraryInfoList stringRecordListToLibraryInfoList(const PlainText::StringRecordList & list);
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

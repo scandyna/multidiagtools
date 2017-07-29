@@ -30,7 +30,7 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependenciesLdd</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="64"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="65"/>
         <source>Parsing ldd output for file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>

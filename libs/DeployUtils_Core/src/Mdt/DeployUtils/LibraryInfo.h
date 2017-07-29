@@ -21,7 +21,10 @@
 #ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_H
 #define MDT_DEPLOY_UTILS_LIBRARY_INFO_H
 
+#include "LibraryName.h"
 #include <QString>
+#include <QMetaType>
+// #include <initializer_list>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -30,6 +33,10 @@ namespace Mdt{ namespace DeployUtils{
   class LibraryInfo
   {
    public:
+
+//     /*! \brief Construct a null library info
+//      */
+//     LibraryInfo() = default;
 
     /*! \brief Set absolute file path
      */
@@ -42,18 +49,64 @@ namespace Mdt{ namespace DeployUtils{
       return mAbsoluteFilePath;
     }
 
+    /*! \brief Set library name
+     *
+     * \a name can be passed without any prefix, extension, version.
+     * Example: Qt5Core
+     * A more platform specific name can also be passed,
+     *  for example libQt5Core.so
+     * A versionned version can also be passed,
+     *  for example libQt5Core.so.5 , libQt5Core.so.5.5 , libQt5Core.so.5.5.1
+     */
+    void setLibraryPlatformName(const QString & name);
+
+    /*! \brief Set library name
+     */
+    void setLibraryName(const LibraryName & libraryName);
+
+    /*! \brief Get library name
+     */
+    LibraryName libraryName() const
+    {
+      return mLibraryName;
+    }
+
     /*! \brief Check if this library info is null
      */
     bool isNull() const
     {
-      return mAbsoluteFilePath.isEmpty();
+      return ( mLibraryName.isNull() || mAbsoluteFilePath.isEmpty() );
+    }
+
+    /*! \brief Check if library info a and b are equal
+     */
+    friend
+    bool operator==(const LibraryInfo & a, const LibraryInfo & b)
+    {
+      if( QString::compare( a.mAbsoluteFilePath, b.mAbsoluteFilePath, Qt::CaseSensitive ) != 0 ){
+        return false;
+      }
+      if( QString::compare( a.mLibraryName.name(), b.mLibraryName.name(), Qt::CaseSensitive ) != 0 ){
+        return false;
+      }
+      return true;
+    }
+
+    /*! \brief Check if library info a and b are different
+     */
+    friend
+    bool operator!=(const LibraryInfo & a, const LibraryInfo & b)
+    {
+      return !(a == b);
     }
 
    private:
 
+    LibraryName mLibraryName;
     QString mAbsoluteFilePath;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{
+Q_DECLARE_METATYPE(Mdt::DeployUtils::LibraryInfo)
 
 #endif // #ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_H
