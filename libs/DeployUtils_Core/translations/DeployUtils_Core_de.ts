@@ -34,6 +34,11 @@
         <source>Parsing ldd output for file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="74"/>
+        <source>Some dependencies have not been found for file &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Mdt::DeployUtils::LddWrapper</name>

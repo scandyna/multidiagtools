@@ -123,6 +123,13 @@ namespace Mdt{ namespace PlainText{
       return mRecordList.insert(before, record);
     }
 
+    /*! \brief Check if this record list is empty
+     */
+    bool isEmpty() const
+    {
+      return mRecordList.isEmpty();
+    }
+
     /*! \brief Get row count
      */
     int rowCount() const

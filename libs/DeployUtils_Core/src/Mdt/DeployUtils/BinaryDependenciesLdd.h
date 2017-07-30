@@ -25,6 +25,7 @@
 #include "LibraryInfoList.h"
 #include "Mdt/PlainText/StringRecord.h"
 #include "Mdt/PlainText/StringRecordList.h"
+#include <QStringList>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -56,6 +57,9 @@ namespace Mdt{ namespace DeployUtils{
 
     static bool isLibraryNotFound(const PlainText::StringRecord & record);
     static bool isLibraryNotInExcludeList(const PlainText::StringRecord & record);
+    static QStringList stringRecordListToStringNameList(const PlainText::StringRecordList & recordList);
+
+    PlainText::StringRecordList mNotFoundDependencies;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

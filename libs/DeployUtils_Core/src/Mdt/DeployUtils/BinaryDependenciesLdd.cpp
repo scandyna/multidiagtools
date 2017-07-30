@@ -30,7 +30,7 @@
 #include <array>
 #include <algorithm>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -69,35 +69,25 @@ bool BinaryDependenciesLdd::findDependencies(const QString& binaryFilePath)
   }
 
   auto list = parser.rawDependencies();
-  qDebug() << "All:";
-  for(const auto & rec : list){
-    qDebug() << " Lib: " << rec.data(0);
-  }
   fillAndSetDependencies(list);
-  qDebug() << "Excluded:";
-  for(const auto & rec : list){
-    qDebug() << " Lib: " << rec.data(0);
+  if(!mNotFoundDependencies.isEmpty()){
+    const QString msg = tr("Some dependencies have not been found for file '%1': %2")
+                        .arg( binaryFilePath, stringRecordListToStringNameList(mNotFoundDependencies).join(", ") );
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    setLastError(error);
+    return false;
   }
-/*
-  for(const auto & rec : list){
-    qDebug() << "Lib: " << rec.data(0);
-    if(rec.columnCount() > 1){
-      qDebug() << " path: " << rec.data(1);
-    }
-  }*/
 
-//   qDebug() << ldd.readAllStandardOutputString().split('\n');
-  
-  return false;
+  return true;
 }
 
 void BinaryDependenciesLdd::fillAndSetDependencies(PlainText::StringRecordList& data)
 {
-  PlainText::StringRecordList notFoundDependencies;
   PlainText::StringRecordList dependencies;
 
   // Move libraries that are not found to <notFoundDependencies> list
-  Mdt::Algorithm::moveIf( data, notFoundDependencies, isLibraryNotFound );
+  mNotFoundDependencies.clear();
+  Mdt::Algorithm::moveIf( data, mNotFoundDependencies, isLibraryNotFound );
   // Move libraries that are not in the exclude list to <dependencies>
   Mdt::Algorithm::moveIf( data, dependencies, isLibraryNotInExcludeList );
   // Build and set the resulting dependencies
@@ -140,6 +130,19 @@ bool BinaryDependenciesLdd::isLibraryNotInExcludeList(const PlainText::StringRec
   };
   const auto it = std::find_if( LibrayExcludeListLinux.cbegin(), LibrayExcludeListLinux.cend(), cmp );
   return (it == LibrayExcludeListLinux.cend());
+}
+
+QStringList BinaryDependenciesLdd::stringRecordListToStringNameList(const PlainText::StringRecordList& recordList)
+{
+  QStringList nameList;
+
+  nameList.reserve(recordList.rowCount());
+  for(const auto & record : recordList){
+    Q_ASSERT(record.columnCount() > 0);
+    nameList << record.data(0);
+  }
+
+  return nameList;
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

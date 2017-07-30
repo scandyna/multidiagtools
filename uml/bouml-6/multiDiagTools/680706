@@ -1,6 +1,6 @@
 format 213
 "DeployUtils" // Mdt::DeployUtils
-  revision 6
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -596,6 +596,11 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 3640450 "FileCopier"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
 
     classdiagram 3619842 "LibraryNameAndVersion"
@@ -1390,6 +1395,7 @@ ${inlines}
 	    classrelation_ref 4714882 // <generalisation>
 	  b parent class_ref 138626 // QObject
       end
+
     end
 
     classdiagram 3633922 "BinaryDependneciesLdd"
@@ -1829,20 +1835,103 @@ ${inlines}
       size A4
     end
 
-    classinstance 144770 ""
-      type class_ref 4159362 // LddWrapper
-      attributes
-        end
-      relations
-        end
-    end
+    class 4190722 "FileCopier"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5871106 "copyLibraries"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "libraries" type class_ref 4159490 // LibraryInfoList
+	  param in name "destDir" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
 
-    classinstance 144898 ""
-      type class_ref 4159746 // ObjdumpWrapper
-      attributes
-        end
-      relations
-        end
+      operation 5871234 "createDirectory"
+	private explicit_return_type "bool"
+	nparams 1
+	  param in name "dirPath" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 3591170 "LastError"
+	private type class_ref 182402 // Error
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5871362 "copyDirectory"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      class 4190850 "OverWriteMode"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+      end
     end
   end
 end

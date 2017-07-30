@@ -49,16 +49,6 @@ void BinaryDependenciesLddTest::fillAndSetDependenciesTest()
   BinaryDependenciesLdd bd;
   bd.fillAndSetDependencies(dependencies);
   QCOMPARE( toStringRecordList(bd.dependencies()), expectedDependencies );
-
-//   QFETCH(StringRecordList, dependencies);
-//   QFETCH(LibraryInfoList, expectedDependencies);
-// 
-//   BinaryDependenciesLdd bd;
-//   bd.fillAndSetDependencies(dependencies);
-//   QCOMPARE(bd.dependencies().count(), expectedDependencies.count());
-//   for(int i = 0; i < bd.dependencies().count(); ++i){
-//     QVERIFY(bd.dependencies().at(i) == expectedDependencies.at(i));
-//   }
 }
 
 void BinaryDependenciesLddTest::fillAndSetDependenciesTest_data()
@@ -83,31 +73,10 @@ void BinaryDependenciesLddTest::fillAndSetDependenciesTest_data()
     << createRecordList( QStringList{"linux-vdso.so.1","libQt5Core.so"}, prefixPath )
     << createRecordList( QStringList{"libQt5Core.so"}, prefixPath );
 
-//   LibraryInfo liQt5Core;
-//   liQt5Core.setLibraryPlatformName("libQt5Core.so.5");
-//   LibraryInfo liLinuxVdso;
-//   liLinuxVdso.setLibraryPlatformName("linux-vdso.so.1");
-//   LibraryInfoList liList;
-// 
-//   ///liList.c
-//   QTest::newRow("0")
-//     << StringRecordList{}
-//     << LibraryInfoList{};
-// 
-//   QTest::newRow("1")
-//     << StringRecordList{
-//         {liQt5Core.libraryName().toFullNameLinux(),liQt5Core.absoluteFilePath()}
-//        }
-//     << LibraryInfoList{liQt5Core};
-// 
-//   QTest::newRow("2")
-//     << StringRecordList{
-//         {liLinuxVdso.libraryName().toFullNameLinux(), liQt5Core.absoluteFilePath()},
-//         {liQt5Core.libraryName().toFullNameLinux(),liQt5Core.absoluteFilePath()}
-//        }
-//     << LibraryInfoList{liQt5Core};
+  QTest::newRow("NotFound")
+    << StringRecordList{{"libA.so","/usr/lib/libA.so"},{"libB.so","not found"}}
+    << StringRecordList{{"libA.so","/usr/lib/libA.so"}};
 }
-
 
 void BinaryDependenciesLddTest::fillAndSetDependenciesBenchmark()
 {
@@ -151,11 +120,6 @@ StringRecordList BinaryDependenciesLddTest::toStringRecordList(const LibraryInfo
 
   return recordList;
 }
-
-// StringRecord BinaryDependenciesLddTest::createRecord(const QString & libName, const QString & pathPrefix)
-// {
-//   return StringRecord{libName, pathPrefix+libName};
-// }
 
 StringRecordList BinaryDependenciesLddTest::createRecordList(const QStringList& libNameList, const QString& pathPrefix)
 {
