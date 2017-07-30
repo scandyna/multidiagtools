@@ -112,6 +112,20 @@ namespace Mdt{ namespace DeployUtils{
       return mList.cend();
     }
 
+    /*! \brief Returns an STL-style const iterator pointing to the first item in this list
+     */
+    const_iterator begin() const
+    {
+      return mList.cbegin();
+    }
+
+    /*! \brief Returns an STL-style iterator pointing to the imaginary item after the last item in this list
+     */
+    const_iterator end() const
+    {
+      return mList.cend();
+    }
+
    private:
 
     QVector<LibraryInfo> mList;

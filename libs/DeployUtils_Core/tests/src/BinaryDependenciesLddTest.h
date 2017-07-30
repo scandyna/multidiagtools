@@ -22,6 +22,11 @@
 #define BINARY_DEPENDENCIES_LDD_TEST_H
 
 #include "TestBase.h"
+#include "Mdt/PlainText/StringRecord.h"
+#include "Mdt/PlainText/StringRecordList.h"
+#include "Mdt/DeployUtils/LibraryInfoList.h"
+#include <QString>
+#include <QStringList>
 
 class BinaryDependenciesLddTest : public TestBase
 {
@@ -35,6 +40,14 @@ class BinaryDependenciesLddTest : public TestBase
   void fillAndSetDependenciesTest();
   void fillAndSetDependenciesTest_data();
   void fillAndSetDependenciesBenchmark();
+  void fillAndSetDependenciesBenchmark_data();
+
+ private:
+
+  static Mdt::PlainText::StringRecordList toStringRecordList(const Mdt::DeployUtils::LibraryInfoList & libraryInfoList);
+//   static Mdt::PlainText::StringRecord createRecord(const QString & libName, const QString & pathPrefix);
+  static Mdt::PlainText::StringRecordList createRecordList(const QStringList & libNameList, const QString & pathPrefix);
+  static Mdt::PlainText::StringRecordList generateLibraryRecordList(int n, const QString & pathPrefix);
 };
 
 #endif // #ifndef BINARY_DEPENDENCIES_LDD_TEST_H

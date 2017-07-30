@@ -20,10 +20,11 @@
  ****************************************************************************/
 #include "BinaryDependenciesLddTest.h"
 #include "Mdt/DeployUtils/LibraryInfo.h"
-#include "Mdt/DeployUtils/LibraryInfoList.h"
 #include "Mdt/DeployUtils/BinaryDependenciesLdd.h"
-#include "Mdt/PlainText/StringRecordList.h"
 #include "Mdt/PlainText/TestUtils.h"
+#include <QChar>
+#include <QByteArray>
+#include <algorithm>
 
 using namespace Mdt::DeployUtils;
 using namespace Mdt::PlainText;
@@ -43,51 +44,148 @@ void BinaryDependenciesLddTest::cleanupTestCase()
 void BinaryDependenciesLddTest::fillAndSetDependenciesTest()
 {
   QFETCH(StringRecordList, dependencies);
-  QFETCH(LibraryInfoList, expectedDependencies);
+  QFETCH(StringRecordList, expectedDependencies);
 
   BinaryDependenciesLdd bd;
   bd.fillAndSetDependencies(dependencies);
-  QCOMPARE(bd.dependencies().count(), expectedDependencies.count());
-  for(int i = 0; i < bd.dependencies().count(); ++i){
-    QVERIFY(bd.dependencies().at(i) == expectedDependencies.at(i));
-  }
-  
-  QFAIL("Not complete");
+  QCOMPARE( toStringRecordList(bd.dependencies()), expectedDependencies );
+
+//   QFETCH(StringRecordList, dependencies);
+//   QFETCH(LibraryInfoList, expectedDependencies);
+// 
+//   BinaryDependenciesLdd bd;
+//   bd.fillAndSetDependencies(dependencies);
+//   QCOMPARE(bd.dependencies().count(), expectedDependencies.count());
+//   for(int i = 0; i < bd.dependencies().count(); ++i){
+//     QVERIFY(bd.dependencies().at(i) == expectedDependencies.at(i));
+//   }
 }
 
 void BinaryDependenciesLddTest::fillAndSetDependenciesTest_data()
 {
   QTest::addColumn<StringRecordList>("dependencies");
+  QTest::addColumn<StringRecordList>("expectedDependencies");
+
+  const QString prefixPath = "/usr/lib/";
+
+  QTest::addColumn<StringRecordList>("dependencies");
   QTest::addColumn<LibraryInfoList>("expectedDependencies");
 
-  LibraryInfo liQt5Core;
-  liQt5Core.setLibraryPlatformName("libQt5Core.so.5");
-  LibraryInfo liLinuxVdso;
-  liLinuxVdso.setLibraryPlatformName("linux-vdso.so.1");
-  LibraryInfoList liList;
-
-  ///liList.c
-  QTest::newRow("")
+  QTest::newRow("0")
     << StringRecordList{}
-    << LibraryInfoList{};
-// 
-//   QTest::newRow("")
-//     << StringRecordList{{"libQt5Core.so.5"}}
-//     << StringRecordList{{"libQt5Core.so.5"}};
-// 
-//   QTest::newRow("")
-//     << StringRecordList{{"linux-vdso.so.1"},{"libQt5Core.so.5"}}
-//     << StringRecordList{{"libQt5Core.so.5"}};
+    << StringRecordList{};
 
+  QTest::newRow("1")
+    << createRecordList( QStringList{"libQt5Core.so"}, prefixPath )
+    << createRecordList( QStringList{"libQt5Core.so"}, prefixPath );
 
+  QTest::newRow("2")
+    << createRecordList( QStringList{"linux-vdso.so.1","libQt5Core.so"}, prefixPath )
+    << createRecordList( QStringList{"libQt5Core.so"}, prefixPath );
+
+//   LibraryInfo liQt5Core;
+//   liQt5Core.setLibraryPlatformName("libQt5Core.so.5");
+//   LibraryInfo liLinuxVdso;
+//   liLinuxVdso.setLibraryPlatformName("linux-vdso.so.1");
+//   LibraryInfoList liList;
+// 
+//   ///liList.c
+//   QTest::newRow("0")
+//     << StringRecordList{}
+//     << LibraryInfoList{};
+// 
+//   QTest::newRow("1")
+//     << StringRecordList{
+//         {liQt5Core.libraryName().toFullNameLinux(),liQt5Core.absoluteFilePath()}
+//        }
+//     << LibraryInfoList{liQt5Core};
+// 
+//   QTest::newRow("2")
+//     << StringRecordList{
+//         {liLinuxVdso.libraryName().toFullNameLinux(), liQt5Core.absoluteFilePath()},
+//         {liQt5Core.libraryName().toFullNameLinux(),liQt5Core.absoluteFilePath()}
+//        }
+//     << LibraryInfoList{liQt5Core};
 }
 
 
 void BinaryDependenciesLddTest::fillAndSetDependenciesBenchmark()
 {
-  QFAIL("Not complete");
+  QFETCH(StringRecordList, dependencies);
+  QFETCH(StringRecordList, expectedDependencies);
+
+  BinaryDependenciesLdd bd;
+  QBENCHMARK_ONCE{
+    bd.fillAndSetDependencies(dependencies);
+  }
+  QCOMPARE( toStringRecordList(bd.dependencies()), expectedDependencies );
 }
 
+void BinaryDependenciesLddTest::fillAndSetDependenciesBenchmark_data()
+{
+  QTest::addColumn<StringRecordList>("dependencies");
+  QTest::addColumn<StringRecordList>("expectedDependencies");
+
+  const QString prefixPath = "/usr/lib/";
+
+  QTest::newRow("10")
+    << generateLibraryRecordList(10, prefixPath)
+    << generateLibraryRecordList(10, prefixPath);
+
+  QTest::newRow("100")
+    << generateLibraryRecordList(100, prefixPath)
+    << generateLibraryRecordList(100, prefixPath);
+
+  QTest::newRow("1000")
+    << generateLibraryRecordList(1000, prefixPath)
+    << generateLibraryRecordList(1000, prefixPath);
+}
+
+StringRecordList BinaryDependenciesLddTest::toStringRecordList(const LibraryInfoList& libraryInfoList)
+{
+  StringRecordList recordList;
+
+  for(const auto & libraryInfo : libraryInfoList){
+    recordList.appendRecord( StringRecord{libraryInfo.libraryName().toFullNameLinux(), libraryInfo.absoluteFilePath()} );
+  }
+
+  return recordList;
+}
+
+// StringRecord BinaryDependenciesLddTest::createRecord(const QString & libName, const QString & pathPrefix)
+// {
+//   return StringRecord{libName, pathPrefix+libName};
+// }
+
+StringRecordList BinaryDependenciesLddTest::createRecordList(const QStringList& libNameList, const QString& pathPrefix)
+{
+  StringRecordList recList;
+
+  for(const auto & libName : libNameList){
+    recList.appendRecord( StringRecord{libName, pathPrefix+libName} );
+  }
+
+  return recList;
+}
+
+StringRecordList BinaryDependenciesLddTest::generateLibraryRecordList(int n, const QString & pathPrefix)
+{
+  QStringList libraryNameList;
+
+  /*
+   * Letters used to generate library names.
+   * The one that are in the exclude list must not be present here
+   * (else the benchmark will fail).
+   */
+  static const char letters[] = "abdefghijklnopqrstuvwxyABCDEFGHIJKLNOPQRSTUVWXYZ";
+  libraryNameList.reserve(n);
+  for(int i = 0; i < n; ++i){
+    const char c = letters[ i % ( sizeof(letters)-1 ) ];
+    libraryNameList.append( "lib" + QString( QChar(c) ) + ".so" );
+  }
+ 
+  return createRecordList(libraryNameList, pathPrefix);
+}
 
 /*
  * Main

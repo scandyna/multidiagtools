@@ -48,11 +48,14 @@ namespace Mdt{ namespace DeployUtils{
      */
     void fillAndSetDependencies(PlainText::StringRecordList & data);
 
+    /*! \internal Buid a library info list from a StringRecordList, made public for unit tests
+     */
+    static LibraryInfoList stringRecordListToLibraryInfoList(const PlainText::StringRecordList & list);
+
    private:
 
     static bool isLibraryNotFound(const PlainText::StringRecord & record);
     static bool isLibraryNotInExcludeList(const PlainText::StringRecord & record);
-    static LibraryInfoList stringRecordListToLibraryInfoList(const PlainText::StringRecordList & list);
   };
 
 }} // namespace Mdt{ namespace DeployUtils{
