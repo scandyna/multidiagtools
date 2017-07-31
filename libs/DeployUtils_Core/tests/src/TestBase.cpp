@@ -25,9 +25,9 @@
 #include <QFileInfo>
 #include <QDir>
 
-bool TestBase::createFileInTemporaryDirectory(const QTemporaryDir & testRootDirectory, const QString & absoluteFilePath)
+bool TestBase::createFile(const QString & filePath)
 {
-  const QFileInfo fi(testRootDirectory.path() + absoluteFilePath);
+  const QFileInfo fi(filePath);
   auto dir = fi.absoluteDir();
 
   if(!dir.mkpath(dir.absolutePath())){
@@ -39,8 +39,16 @@ bool TestBase::createFileInTemporaryDirectory(const QTemporaryDir & testRootDire
     qDebug() << "Unable to create file " << file.fileName() << ": " << file.errorString();
     return false;
   }
+  file.close();
 
   return true;
+}
+
+bool TestBase::createFileInTemporaryDirectory(const QTemporaryDir & testRootDirectory, const QString & absoluteFilePath)
+{
+  const QFileInfo fi(testRootDirectory.path() + absoluteFilePath);
+
+  return createFile(fi.absoluteFilePath());
 }
 
 bool TestBase::writeTemporaryTextFile(QTemporaryFile & file, const QString& data, const QByteArray& encoding)

@@ -35,7 +35,7 @@ BinaryDependencies::BinaryDependencies(QObject* parent)
   if(!mImpl){
     const QString msg = tr("Could not find a implementation for current platform.");
     mLastError = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    mLastError.commit();
+//     mLastError.commit();
   }
 }
 

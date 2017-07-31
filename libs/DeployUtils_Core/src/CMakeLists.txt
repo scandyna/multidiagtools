@@ -16,6 +16,7 @@ set(SOURCE_FILES
     Mdt/DeployUtils/BinaryDependencies.cpp
     Mdt/DeployUtils/BinaryDependenciesImplementationInterface.cpp
     Mdt/DeployUtils/BinaryDependenciesLdd.cpp
+    Mdt/DeployUtils/FileCopier.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

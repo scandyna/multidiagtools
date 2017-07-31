@@ -18,26 +18,28 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_MAIN_H
-#define MDT_DEPLOY_UTILS_MAIN_H
+#ifndef FILE_COPIER_TEST_H
+#define FILE_COPIER_TEST_H
 
-#include "Mdt/AbstractConsoleApplicationMainFunction.h"
+#include "TestBase.h"
+#include "Mdt/DeployUtils/LibraryInfoList.h"
+#include <QStringList>
 
-/*! \brief Provides the ability to run a console application with Qt event loop running
- */
-class MdtDeployUtilsMain : public Mdt::AbstractConsoleApplicationMainFunction
+class FileCopierTest : public TestBase
 {
  Q_OBJECT
 
- public:
+ private slots:
 
-  /*! \brief Constructor
-   */
-  explicit MdtDeployUtilsMain(QObject* parent = nullptr);
+  void initTestCase();
+  void cleanupTestCase();
 
-  /*! \brief This is the real main of the console application
-   */
-  int runMain() override;
+  void createDirectoryTest();
+  void copyLibrariesTest();
+
+ private:
+
+  static Mdt::DeployUtils::LibraryInfoList createLibraryInfoList(const QStringList & libNameList, const QString & pathPrefix);
 };
 
-#endif // #ifndef MDT_DEPLOY_UTILS_MAIN_H
+#endif // #ifndef FILE_COPIER_TEST_H

@@ -1,4 +1,4 @@
-format 210
+format 213
 
 classcanvas 128002 class_ref 2132098 // QDebugStateSaver
   classdiagramsettings member_max_width 0 end
@@ -15,5 +15,9 @@ end
 classcanvas 128386 class_ref 2132482 // QMessageLogger
   classdiagramsettings member_max_width 0 end
   xyz 317 351 2000
+end
+classcanvas 128514 class_ref 4191106 // QMessageLogContext
+  classdiagramsettings member_max_width 0 end
+  xyz 69 329 2005
 end
 end

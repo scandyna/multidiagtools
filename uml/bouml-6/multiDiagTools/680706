@@ -1,6 +1,6 @@
 format 213
 "DeployUtils" // Mdt::DeployUtils
-  revision 7
+  revision 8
   modified_by 2 "philippe"
   // class settings
   
@@ -231,6 +231,68 @@ ${inlines}
       
     end
 
+    classdiagram 3640578 "Logger"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4190978 "Logger"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3591298 "Level"
+	private explicit_type ""
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5871490 "info"
+	class_operation public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5871618 "operator<<"
+	class_operation public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     classdiagram 3605890 "Settings"
       classdiagramsettings member_max_width 0 end
       size A-Landscape
@@ -316,6 +378,45 @@ ${inlines}
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 3647106 "Action"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4197634 "AbstractAction"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4728450 // <generalisation>
+	relation 4702210 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4728450 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 5878146 "exec"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -601,6 +702,113 @@ ${inlines}
     classdiagram 3640450 "FileCopier"
       classdiagramsettings member_max_width 0 end
       size A4
+    end
+
+    class 4190722 "FileCopier"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5871106 "copyLibraries"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "libraries" type class_ref 4159490 // LibraryInfoList
+	  param in name "destDir" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 3591170 "LastError"
+	private type class_ref 182402 // Error
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5871234 "createDirectory"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "dirPath" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5871362 "copyDirectory"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      class 4190850 "OverWriteMode"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+      end
+
+      classrelation 4721794 // <generalisation>
+	relation 4695554 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4721794 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
     end
 
     classdiagram 3619842 "LibraryNameAndVersion"
@@ -1395,7 +1603,6 @@ ${inlines}
 	    classrelation_ref 4714882 // <generalisation>
 	  b parent class_ref 138626 // QObject
       end
-
     end
 
     classdiagram 3633922 "BinaryDependneciesLdd"
@@ -1835,7 +2042,7 @@ ${inlines}
       size A4
     end
 
-    class 4190722 "FileCopier"
+    class 4197762 "CopyBinaryDependenciesAction"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -1849,53 +2056,16 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 5871106 "copyLibraries"
-	public explicit_return_type "bool"
-	nparams 2
-	  param in name "libraries" type class_ref 4159490 // LibraryInfoList
-	  param in name "destDir" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
+      classrelation 4728322 // <generalisation>
+	relation 4702082 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4728322 // <generalisation>
+	  b parent class_ref 4197634 // AbstractAction
       end
 
-      operation 5871234 "createDirectory"
-	private explicit_return_type "bool"
-	nparams 1
-	  param in name "dirPath" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      attribute 3591170 "LastError"
-	private type class_ref 182402 // Error
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 5871362 "copyDirectory"
-	public explicit_return_type ""
+      operation 5878274 "exec"
+	cpp_virtual public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1909,28 +2079,28 @@ ${inlines}
 	
       end
 
-      class 4190850 "OverWriteMode"
-	visibility package stereotype "enum"
-	cpp_decl "${comment}enum ${name} {
-${items}
-};
+      attribute 3597826 "BinaryFilePath"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
-	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
-${items};
-${members}}
-"
-	php_decl "${comment}${visibility}final class ${name} {
-${items}}
-"
-	python_2_2 python_decl "class ${name}:
-${docstring}${members}
-"
-	idl_decl "${comment}enum ${name} {
-${items}};
-"
-	explicit_switch_type ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
 	mysql_decl ""
-	
+	MysqlColumn
+      end
+
+      attribute 3597954 "DestinationDirectory"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
   end

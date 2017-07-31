@@ -18,32 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
-#define MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
-
+#include "MdtCpBinDepsMain.h"
 #include "Mdt/Application.h"
-#include "Mdt/PlainText/TestUtils.h"
-#include <QObject>
-#include <QByteArray>
-#include <QString>
-#include <QVariant>
-#include <QTemporaryFile>
-#include <QTemporaryDir>
-#include <QtTest/QtTest>
-#include <Qt>
 
-class TestBase : public QObject
+#include <QDebug>
+
+int main(int argc, char **argv)
 {
- Q_OBJECT
+  Mdt::Application app(argc, argv);
 
- protected:
+  if(!app.init()){
+    return 1;
+  }
+//   app.debugEnvironnement();
 
-  // Create a file - Missing parent directories are created if needed
-  static bool createFile(const QString & filePath);
-  // Create a file in a new root temporary directory
-  static bool createFileInTemporaryDirectory(const QTemporaryDir & testRootDirectory, const QString & absoluteFilePath);
+  // All code is exectued here
+  MdtCpBinDepsMain mainImpl;
 
-  static bool writeTemporaryTextFile(QTemporaryFile & file, const QString & data, const QByteArray & encoding = QByteArray("UTF-8"));
-};
-
-#endif // #ifndef MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
+  return app.exec();
+}

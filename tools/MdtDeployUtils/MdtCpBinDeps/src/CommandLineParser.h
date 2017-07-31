@@ -18,26 +18,53 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_MAIN_H
-#define MDT_DEPLOY_UTILS_MAIN_H
+#ifndef COMMAND_LINE_PARSER_H
+#define COMMAND_LINE_PARSER_H
 
-#include "Mdt/AbstractConsoleApplicationMainFunction.h"
+#include <QCommandLineParser>
+#include <QCommandLineOption>
+#include <QString>
+#include <QStringList>
+#include <QCoreApplication>
 
-/*! \brief Provides the ability to run a console application with Qt event loop running
+/*! \brief Command line parser for MdtCpBinDeps
  */
-class MdtDeployUtilsMain : public Mdt::AbstractConsoleApplicationMainFunction
+class CommandLineParser
 {
- Q_OBJECT
+  Q_DECLARE_TR_FUNCTIONS(CommandLineParser)
 
- public:
+public:
 
   /*! \brief Constructor
    */
-  explicit MdtDeployUtilsMain(QObject* parent = nullptr);
+  CommandLineParser();
 
-  /*! \brief This is the real main of the console application
+  /*! \brief Process arguments given to the application
    */
-  int runMain() override;
+  bool process();
+
+  /*! \brief Get binary file path
+   */
+  QString binaryFilePath() const
+  {
+    return mBinaryFilePath;
+  }
+
+  /*! \brief Get destination directory path
+   */
+  QString destinationDirectoryPath() const
+  {
+    return mDestinationDirectoryPath;
+  }
+
+private:
+
+  bool checkAndSetArguments();
+
+  QString mBinaryFilePath;
+  QString mDestinationDirectoryPath;
+  QCommandLineParser mParser;
+  QCommandLineOption mDestinationDirectoryOption;
 };
 
-#endif // #ifndef MDT_DEPLOY_UTILS_MAIN_H
+#endif // #ifndef COMMAND_LINE_PARSER_H

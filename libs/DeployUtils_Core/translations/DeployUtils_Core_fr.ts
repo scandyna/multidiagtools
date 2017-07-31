@@ -2,24 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
-    <name>Mdt::DeployUtils</name>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="28"/>
-        <source>Path to the source file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="30"/>
-        <source>Utilities to help deploying a application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="33"/>
-        <source>Action to do..</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
         <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="36"/>
@@ -37,6 +19,24 @@
     <message>
         <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="74"/>
         <source>Some dependencies have not been found for file &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Mdt::DeployUtils::FileCopier</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="44"/>
+        <source>Could not create directory &apos;%1&apos; because it allready exists and is a file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="52"/>
+        <source>Could not create directory &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="76"/>
+        <source>Could not copy file &apos;%1&apos; to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -66,6 +66,24 @@
     <message>
         <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="54"/>
         <source>Error occured from command &apos;%1 %2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsCommandLineParser</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="28"/>
+        <source>Path to the source file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="30"/>
+        <source>Utilities to help deploying a application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="33"/>
+        <source>Action to do..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

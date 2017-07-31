@@ -65,8 +65,7 @@ bool ToolExecutableWrapper::exec(const QString& exeName, const QStringList& argu
 void ToolExecutableWrapper::setLastError(const Error& error)
 {
   mLastError = error;
-  
-  mLastError.commit();
+//   mLastError.commit();
 }
 
 }} // namespace Mdt{ namespace DeployUtils{
