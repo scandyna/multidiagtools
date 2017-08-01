@@ -10,8 +10,11 @@ set(SOURCE_FILES
     Mdt/DeployUtils/PathList.cpp
     Mdt/DeployUtils/ToolExecutableWrapper.cpp
     Mdt/DeployUtils/LddWrapper.cpp
+    Mdt/DeployUtils/ObjdumpWrapper.cpp
     Mdt/DeployUtils/Impl/Ldd/DependenciesParserImpl.cpp
     Mdt/DeployUtils/LddDependenciesParser.cpp
+    Mdt/DeployUtils/Impl/Objdump/DependenciesParserImplWindows.cpp
+    Mdt/DeployUtils/ObjdumpDependenciesParser.cpp
     Mdt/DeployUtils/Platform.cpp
     Mdt/DeployUtils/BinaryDependencies.cpp
     Mdt/DeployUtils/BinaryDependenciesImplementationInterface.cpp

@@ -62,6 +62,20 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool exec(const QString & exeName, const QStringList & arguments);
 
+    /*! \brief Returns last error from process
+     */
+    QProcess::ProcessError lastProcessError() const
+    {
+      return mProcess.error();
+    }
+
+    /*! \brief Get process arguments
+     */
+    QStringList processArguments() const
+    {
+      return mProcess.arguments();
+    }
+
     /*! \brief Set last error
      */
     void setLastError(const Mdt::Error & error);

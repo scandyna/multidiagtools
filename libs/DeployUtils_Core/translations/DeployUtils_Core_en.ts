@@ -2,6 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>Mdt::DeployUtils</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="28"/>
+        <source>Path to the source file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="30"/>
+        <source>Utilities to help deploying a application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="33"/>
+        <source>Action to do..</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
         <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="36"/>
@@ -35,7 +53,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="76"/>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="90"/>
+        <source>Could not remove destination file &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="101"/>
         <source>Could not copy file &apos;%1&apos; to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -57,6 +80,19 @@
     </message>
 </context>
 <context>
+    <name>Mdt::DeployUtils::ObjdumpWrapper</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/ObjdumpWrapper.cpp" line="47"/>
+        <source>Could not find objdump executable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/ObjdumpWrapper.cpp" line="86"/>
+        <source>Execution of objdump %1 reported error: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::DeployUtils::ToolExecutableWrapper</name>
     <message>
         <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="47"/>
@@ -66,24 +102,6 @@
     <message>
         <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="54"/>
         <source>Error occured from command &apos;%1 %2&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SettingsCommandLineParser</name>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="28"/>
-        <source>Path to the source file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="30"/>
-        <source>Utilities to help deploying a application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="33"/>
-        <source>Action to do..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1,6 +1,6 @@
 format 213
 "Qt" // Qt
-  revision 214
+  revision 215
   modified_by 2 "philippe"
   // class settings
   
@@ -8736,6 +8736,23 @@ ${items}};
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5884930 "findExecutable"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "exeName" type class_ref 161026 // QString
+	  param in name "paths" type class_ref 160770 // QStringList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

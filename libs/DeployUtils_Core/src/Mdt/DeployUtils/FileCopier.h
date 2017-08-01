@@ -21,6 +21,7 @@
 #ifndef MDT_DEPLOY_UTILS_FILE_COPIER_H
 #define MDT_DEPLOY_UTILS_FILE_COPIER_H
 
+#include "LibraryInfo.h"
 #include "LibraryInfoList.h"
 #include "Mdt/Error.h"
 #include <QObject>
@@ -64,6 +65,8 @@ namespace Mdt{ namespace DeployUtils{
     }
 
    private:
+
+    bool copyLibrary(const LibraryInfo & sourceLibrary, const QString & destinationDirectoryPath);
 
     /*! \brief Set last error
      */

@@ -2,23 +2,19 @@ format 213
 
 classcanvas 128002 class_ref 4176642 // BinaryDependenciesImplementationInterface
   classdiagramsettings member_max_width 0 end
-  xyz 281 352 2000
+  xyz 233 40 2000
 end
 classcanvas 128130 class_ref 4183810 // BinaryDependenciesLdd
   classdiagramsettings member_max_width 0 end
-  xyz 297 234 2006
+  xyz 249 202 2006
 end
 classcanvas 128386 class_ref 4159362 // LddWrapper
-  classdiagramsettings member_max_width 0 end
-  xyz 673 242 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 623 218 2000
 end
 classcanvas 128514 class_ref 4177282 // LddDependenciesParser
-  classdiagramsettings member_max_width 0 end
-  xyz 40 242 2000
-end
-classcanvas 129026 class_ref 4161666 // ToolExecutableWrapper
-  classdiagramsettings member_max_width 0 end
-  xyz 662 42 2006
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 40 218 2000
 end
 relationcanvas 128258 relation_ref 4687746 // <generalisation>
   from ref 128130 z 2007 to ref 128002
@@ -27,11 +23,6 @@ relationcanvas 128258 relation_ref 4687746 // <generalisation>
 end
 relationcanvas 128898 relation_ref 4688002 // <directional composition>
   from ref 128130 z 2007 to ref 128514
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 129154 relation_ref 4681218 // <generalisation>
-  from ref 128386 z 2007 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

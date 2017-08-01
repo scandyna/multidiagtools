@@ -106,6 +106,8 @@ void FileCopierTest::copyLibrariesTest()
     QFileInfo fi(filePath);
     QVERIFY(fi.exists());
   }
+  // Run the copy a second time (copier must not fail if destination file exists)
+  QVERIFY(fc.copyLibraries(libraryInfoList, destinationDirectoryPath));
 }
 
 LibraryInfoList FileCopierTest::createLibraryInfoList(const QStringList& libNameList, const QString& pathPrefix)

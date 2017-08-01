@@ -45,14 +45,14 @@ bool ToolExecutableWrapper::exec(const QString& exeName, const QStringList& argu
   mProcess.start(exeName, arguments);
   if(!mProcess.waitForStarted()){
     const QString msg = tr("Failed to start command '%1 %2'.").arg(exeName, arguments.join(' '));
-    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    auto error = mdtErrorNewTQ(QProcess::ProcessError, mProcess.error(), msg, Mdt::Error::Critical, this);
     error.stackError(mdtErrorFromQProcessQ(mProcess, this));
     setLastError(error);
     return false;
   }
   if(!mProcess.waitForFinished()){
     const QString msg = tr("Error occured from command '%1 %2'.").arg(exeName, arguments.join(' '));
-    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    auto error = mdtErrorNewTQ(QProcess::ProcessError, mProcess.error(), msg, Mdt::Error::Critical, this);
     error.stackError(mdtErrorFromQProcessQ(mProcess, this));
     setLastError(error);
     return false;
@@ -65,7 +65,7 @@ bool ToolExecutableWrapper::exec(const QString& exeName, const QStringList& argu
 void ToolExecutableWrapper::setLastError(const Error& error)
 {
   mLastError = error;
-//   mLastError.commit();
+  mLastError.commit();
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

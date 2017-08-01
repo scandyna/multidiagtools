@@ -19,11 +19,11 @@
  **
  ****************************************************************************/
 #include "FileCopier.h"
-#include "LibraryInfo.h"
 #include <QDir>
 #include <QFileInfo>
 #include <QFile>
 #include <QLatin1String>
+#include <QDateTime>
 
 // #include <QDebug>
 
@@ -65,18 +65,45 @@ bool FileCopier::copyLibraries(const LibraryInfoList & libraries, const QString 
     return false;
   }
   for(const auto & sourceLibrary : libraries){
-    QFileInfo sourceFileInfo(sourceLibrary.absoluteFilePath());
-    const auto fileName = sourceFileInfo.fileName();
-    const auto destinationFilePath = QDir::cleanPath( destinationDirectoryPath + QLatin1String("/") + fileName );
-    QFile sourceFile(sourceFileInfo.absoluteFilePath());
-    if( !sourceFile.copy(destinationFilePath) ){
-      const QString msg = tr("Could not copy file '%1' to '%2'")
-                          .arg(sourceFileInfo.absoluteFilePath(), destinationDirectoryPath);
+    if(!copyLibrary(sourceLibrary, destinationDirectoryPath)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool FileCopier::copyLibrary(const Mdt::DeployUtils::LibraryInfo& sourceLibrary, const QString& destinationDirectoryPath)
+{
+  QFileInfo sourceFileInfo(sourceLibrary.absoluteFilePath());
+  const auto fileName = sourceFileInfo.fileName();
+  const auto destinationFilePath = QDir::cleanPath( destinationDirectoryPath + QLatin1String("/") + fileName );
+  const QFileInfo destinationFileInfo(destinationFilePath);
+
+  // If destination exists, check if we have to update
+  if(destinationFileInfo.exists()){
+    if( destinationFileInfo.created() >= sourceFileInfo.created() ){
+      return true;
+    }
+    QFile destinationFile(destinationFileInfo.absoluteFilePath());
+    if(!destinationFile.remove()){
+      const QString msg = tr("Could not remove destination file '%1'")
+                          .arg(destinationFileInfo.absoluteFilePath());
       auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-      error.stackError( mdtErrorFromQFile(sourceFile, this) );
+      error.stackError( mdtErrorFromQFile(destinationFile, this) );
       setLastError(error);
       return false;
     }
+  }
+  // Copy the library
+  QFile sourceFile(sourceFileInfo.absoluteFilePath());
+  if( !sourceFile.copy(destinationFilePath) ){
+    const QString msg = tr("Could not copy file '%1' to '%2'")
+                        .arg(sourceFileInfo.absoluteFilePath(), destinationDirectoryPath);
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    error.stackError( mdtErrorFromQFile(sourceFile, this) );
+    setLastError(error);
+    return false;
   }
 
   return true;

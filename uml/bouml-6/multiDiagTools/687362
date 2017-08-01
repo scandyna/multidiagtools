@@ -1,6 +1,6 @@
 format 213
-"ObjdumpWindows" // Mdt::DeployUtils::Impl::ObjdumpWindows
-  revision 2
+"Objdump" // Mdt::DeployUtils::Impl::Objdump
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -47,7 +47,7 @@ format 213
       size A4
     end
 
-    class 4176898 "DependenciesGrammar"
+    class 4176898 "DependenciesGrammarWindows"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -63,7 +63,7 @@ ${inlines}
       
     end
 
-    class 4177026 "DependenciesRecord"
+    class 4177026 "DependenciesRecordWindows"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -79,7 +79,7 @@ ${inlines}
       
     end
 
-    class 4184194 "ParserTemplate"
+    class 4184194 "ParserTemplateWindows"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
