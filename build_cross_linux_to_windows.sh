@@ -5,7 +5,7 @@ print_help()
   echo ""
   echo "Helper script to cross compile Mdt on a Linux host for Windows"
   echo ""
-  echo "Usage: $0 --mxe-path=/path/to/mxe --install-prefix=/where/to/install/mdt --target=target"
+  echo "Usage: $0 --mxe-path=/path/to/mxe --install-prefix=/where/to/install/mdt --target=target path/to/source/root/of/mdt"
   echo ""
   echo "Options:"
   echo " --mxe-path: Path to the MXE installation. Must be set to MXE root/usr/bin (see MXE documentation for more details)"
@@ -18,6 +18,7 @@ print_help()
 MXE_PATH=""
 INSTALL_PREFIX="/usr/local"
 CMAKE_COMMAND=""
+SOURCE_DIRECTORY=""
 
 # Set CMake command depending on given target
 # Arguments:
@@ -63,6 +64,31 @@ set_install_prefix()
   INSTALL_PREFIX=${1/\~\//"$HOME/"}
 }
 
+# Set SOURCE_DIRECTORY
+# Arguments:
+#  $1 : path as given by the user
+set_source_directory()
+{
+  if [ "$SOURCE_DIRECTORY" != "" ]
+  then
+    echo "To many arguments given"
+    exit 1
+  fi
+
+  local path=${1/\~\//"$HOME/"}
+  SOURCE_DIRECTORY=`realpath "$path"`
+#   echo "SOURCE_DIRECTORY: $SOURCE_DIRECTORY"
+#   exit
+#   
+#   SOURCE_DIRECTORY=${1/\~\//"$HOME/"}
+
+  if [ ! -d "$SOURCE_DIRECTORY" ]
+  then
+    echo "Source directory path $SOURCE_DIRECTORY do not refer to a existing directory"
+    exit 1
+  fi
+}
+
 #
 # Main
 #
@@ -87,9 +113,10 @@ do
       set_cmake_command $value
       ;;
     *)
-      echo "Unknown argument: $key"
-      print_help
-      exit 1
+      set_source_directory "$key"
+#       echo "Unknown argument: $key"
+#       print_help
+#       exit 1
       ;;
   esac
   shift
@@ -111,8 +138,37 @@ then
   echo "Target is missing"
   exit 1
 fi
+if [ "$SOURCE_DIRECTORY" == "" ]
+then
+  echo "Source directory is missing"
+  exit 1
+fi
+
 
 echo "Using following setup:"
 echo " MXE_PATH: $MXE_PATH"
 echo " INSTALL_PREFIX: $INSTALL_PREFIX"
-echo " CMAKE_COMMAND $CMAKE_COMMAND"
+echo " CMAKE_COMMAND: $CMAKE_COMMAND"
+echo " SOURCE_DIRECTORY: $SOURCE_DIRECTORY"
+
+# Build Mdt deploy utils for this native platform
+echo "Building Mdt deploy utils ..."
+if [ ! -d DeployUtils ]
+then
+  mkdir DeployUtils
+fi
+cmake -E chdir DeployUtils cmake -C "$SOURCE_DIRECTORY/cmake/caches/ReleaseGcc.cmake" -D CMAKE_INSTALL_PREFIX="$INSTALL_PREFIX" "$SOURCE_DIRECTORY"
+cmake --build DeployUtils/tools/MdtDeployUtils -- -j4
+
+if [ $? -ne 0 ]
+then
+  echo "Error: Building Mdt deploy utils failed"
+  exit $?
+fi
+
+# Cross-build Mdt for Windows
+echo "Building Mdt for Windows ..."
+export PATH="$MXE_PATH":$PATH
+unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
+$CMAKE_COMMAND -C "$SOURCE_DIRECTORY/cmake/caches/ReleaseMxe.cmake" -D CMAKE_INSTALL_PREFIX="$INSTALL_PREFIX" -D IMPORT_DEPLOY_UTILS=DeployUtils/ImportDeployUtils.cmake "$SOURCE_DIRECTORY"
+$CMAKE_COMMAND --build . -- -j4

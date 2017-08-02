@@ -340,6 +340,21 @@ x86_64-w64-mingw32.shared.posix-cmake "$@"
 #### Cross compile Mdt for Windows
 
 Mdt uses CMake as build tool.
+Compilation will be done in 2 phases:
+ - Compile Mdt deploy utils for the native (Linux) platform
+ - Cross-compile Mdt for Windows using MXE
+For this, a helper script is avaliable in root of Mdt sources.
+
+Make shure you allready are in the correct build directory
+(f.ex. build/cross/win32/release)
+```bash
+../../../../build_cross_linux_to_windows.sh --mxe-path=~/opt/build/cross/mxe/usr/bin -t=win32 --install-prefix=~/opt/mdt/win32/release ../../../../
+```
+
+
+##### OLD section
+
+Mdt uses CMake as build tool.
 Here we will use the script we created,
 that calls the MXE CMake wrapper.
 

@@ -29,7 +29,7 @@ if(NOT CMAKE_CROSSCOMPILING)
   target_link_libraries(mdtcpbindeps Application DeployUtils_Core Qt5::Core)
 endif()
 
-add_custom_command(
+add_custom_target(
   COMMAND mdtcpbindeps
 )
 
