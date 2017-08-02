@@ -19,6 +19,7 @@ set(SOURCE_FILES
     Mdt/DeployUtils/BinaryDependencies.cpp
     Mdt/DeployUtils/BinaryDependenciesImplementationInterface.cpp
     Mdt/DeployUtils/BinaryDependenciesLdd.cpp
+    Mdt/DeployUtils/BinaryDependenciesObjdump.cpp
     Mdt/DeployUtils/FileCopier.cpp
 )
 

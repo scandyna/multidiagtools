@@ -18,12 +18,17 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef OBJDUMP_WRAPPER_TEST_H
-#define OBJDUMP_WRAPPER_TEST_H
+#ifndef BINARY_DEPENDENCIES_OBJDUMP_TEST_H
+#define BINARY_DEPENDENCIES_OBJDUMP_TEST_H
 
 #include "TestBase.h"
+#include "Mdt/PlainText/StringRecord.h"
+#include "Mdt/PlainText/StringRecordList.h"
+#include "Mdt/DeployUtils/LibraryInfoList.h"
+#include <QString>
+#include <QStringList>
 
-class ObjdumpWrapperTest : public TestBase
+class BinaryDependenciesObjdumpTest : public TestBase
 {
  Q_OBJECT
 
@@ -33,9 +38,17 @@ class ObjdumpWrapperTest : public TestBase
   void cleanupTestCase();
 
   void sandbox();
-  
 
-  void runObjdumpTest();
+//   void fillAndSetDependenciesTest();
+//   void fillAndSetDependenciesTest_data();
+//   void fillAndSetDependenciesBenchmark();
+//   void fillAndSetDependenciesBenchmark_data();
+
+//  private:
+// 
+//   static Mdt::PlainText::StringRecordList toStringRecordList(const Mdt::DeployUtils::LibraryInfoList & libraryInfoList);
+//   static Mdt::PlainText::StringRecordList createRecordList(const QStringList & libNameList, const QString & pathPrefix);
+//   static Mdt::PlainText::StringRecordList generateLibraryRecordList(int n, const QString & pathPrefix);
 };
 
-#endif // #ifndef OBJDUMP_WRAPPER_TEST_H
+#endif // #ifndef BINARY_DEPENDENCIES_OBJDUMP_TEST_H

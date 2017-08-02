@@ -18,24 +18,22 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef OBJDUMP_WRAPPER_TEST_H
-#define OBJDUMP_WRAPPER_TEST_H
+#include "BinaryDependenciesObjdump.h"
+#include "ObjdumpWrapper.h"
+#include "ObjdumpDependenciesParser.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace DeployUtils{
 
-class ObjdumpWrapperTest : public TestBase
+BinaryDependenciesObjdump::BinaryDependenciesObjdump(QObject* parent)
+ : BinaryDependenciesImplementationInterface(parent)
 {
- Q_OBJECT
+}
 
- private slots:
+bool BinaryDependenciesObjdump::findDependencies(const QString& binaryFilePath)
+{
 
-  void initTestCase();
-  void cleanupTestCase();
+  return false;
+}
 
-  void sandbox();
-  
 
-  void runObjdumpTest();
-};
-
-#endif // #ifndef OBJDUMP_WRAPPER_TEST_H
+}} // namespace Mdt{ namespace DeployUtils{

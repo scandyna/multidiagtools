@@ -2,24 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
-    <name>Mdt::DeployUtils</name>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="28"/>
-        <source>Path to the source file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="30"/>
-        <source>Utilities to help deploying a application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="33"/>
-        <source>Action to do..</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
         <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="36"/>
@@ -102,6 +84,24 @@
     <message>
         <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="54"/>
         <source>Error occured from command &apos;%1 %2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsCommandLineParser</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="28"/>
+        <source>Path to the source file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="30"/>
+        <source>Utilities to help deploying a application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="33"/>
+        <source>Action to do..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

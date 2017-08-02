@@ -18,24 +18,52 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef OBJDUMP_WRAPPER_TEST_H
-#define OBJDUMP_WRAPPER_TEST_H
+#include "BinaryDependenciesObjdumpTest.h"
+#include "Mdt/DeployUtils/LibraryInfo.h"
+#include "Mdt/DeployUtils/BinaryDependenciesObjdump.h"
+#include "Mdt/PlainText/TestUtils.h"
+#include <QChar>
+#include <QByteArray>
+#include <algorithm>
 
-#include "TestBase.h"
+using namespace Mdt::DeployUtils;
+using namespace Mdt::PlainText;
 
-class ObjdumpWrapperTest : public TestBase
+void BinaryDependenciesObjdumpTest::initTestCase()
 {
- Q_OBJECT
+}
 
- private slots:
+void BinaryDependenciesObjdumpTest::cleanupTestCase()
+{
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+/*
+ * Tests
+ */
 
-  void sandbox();
+void BinaryDependenciesObjdumpTest::sandbox()
+{
+  BinaryDependenciesObjdump bd;
   
+  QVERIFY(bd.findDependencies( QCoreApplication::applicationFilePath() ));
+  
+  
+}
 
-  void runObjdumpTest();
-};
 
-#endif // #ifndef OBJDUMP_WRAPPER_TEST_H
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  BinaryDependenciesObjdumpTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+//   app.debugEnvironnement();
+
+  return QTest::qExec(&test, argc, argv);
+}
