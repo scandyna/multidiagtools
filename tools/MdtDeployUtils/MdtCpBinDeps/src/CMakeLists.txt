@@ -17,11 +17,11 @@ message("CMAKE_HOST_SYSTEM_VERSION : ${CMAKE_HOST_SYSTEM_VERSION}")
 message("CMAKE_HOST_SYSTEM_PROCESSOR : ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 message("CMAKE_HOST_SYSTEM : ${CMAKE_HOST_SYSTEM}")
 
-# When cross-compiling, import the deploy utils executables from a file
-if(CMAKE_CROSSCOMPILING)
-  set(IMPORT_DEPLOY_UTILS "IMPORTFILE-NOTFOUND" CACHE FILEPATH "")
-  include(${IMPORT_DEPLOY_UTILS})
-endif()
+# # When cross-compiling, import the deploy utils executables from a file
+# if(CMAKE_CROSSCOMPILING)
+#   set(IMPORT_DEPLOY_UTILS "IMPORTFILE-NOTFOUND" CACHE FILEPATH "")
+#   include(${IMPORT_DEPLOY_UTILS})
+# endif()
 
 # Only build deploy utils if we do a native build
 if(NOT CMAKE_CROSSCOMPILING)
@@ -29,11 +29,11 @@ if(NOT CMAKE_CROSSCOMPILING)
   target_link_libraries(mdtcpbindeps Application DeployUtils_Core Qt5::Core)
 endif()
 
-add_custom_target(
-  COMMAND mdtcpbindeps
-)
+# add_custom_target(
+#   COMMAND mdtcpbindeps -h
+# )
 
-# Export the utils target to a file, so it can be imported by another build (se above)
+# Export the utils target to a file, so it can be imported by another build
 if(NOT CMAKE_CROSSCOMPILING)
   export(
     TARGETS mdtcpbindeps

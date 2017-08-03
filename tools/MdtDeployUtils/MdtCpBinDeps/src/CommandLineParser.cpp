@@ -27,7 +27,8 @@
 #include <QDebug>
 
 CommandLineParser::CommandLineParser()
-  : mDestinationDirectoryOption(QStringList{"d","destination"})
+  : mDestinationDirectoryOption(QStringList{"d","destination"})/*,
+    mTargetOperatingSystem("target-os")*/
 {
   mParser.setApplicationDescription(tr("Find binary dependencies of a executable or a library and copy them."));
   mParser.addHelpOption();
@@ -39,6 +40,9 @@ CommandLineParser::CommandLineParser()
   );
   mDestinationDirectoryOption.setValueName("directory");
   mParser.addOption(mDestinationDirectoryOption);
+//   mTargetOperatingSystem.setDescription(
+//     tr("When executable")
+//   );
   mParser.addPositionalArgument("binary-file", tr("executable or library for which dependencies must be copied."));
 }
 

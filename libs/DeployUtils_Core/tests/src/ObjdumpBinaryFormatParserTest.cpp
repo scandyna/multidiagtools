@@ -18,54 +18,59 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef COMMAND_LINE_PARSER_H
-#define COMMAND_LINE_PARSER_H
-
-#include <QCommandLineParser>
-#include <QCommandLineOption>
+#include "ObjdumpBinaryFormatParserTest.h"
+#include "Mdt/DeployUtils/Impl/Objdump/BinaryFormatParserImpl.h"
+#include "Mdt/DeployUtils/ObjdumpBinaryFormatParser.h"
 #include <QString>
 #include <QStringList>
-#include <QCoreApplication>
 
-/*! \brief Command line parser for MdtCpBinDeps
- */
-class CommandLineParser
+using namespace Mdt::DeployUtils;
+
+void ObjdumpBinaryFormatParserTest::initTestCase()
 {
-  Q_DECLARE_TR_FUNCTIONS(CommandLineParser)
+}
 
-public:
+void ObjdumpBinaryFormatParserTest::cleanupTestCase()
+{
+}
 
-  /*! \brief Constructor
-   */
-  CommandLineParser();
+/*
+ * Tests
+ */
 
-  /*! \brief Process arguments given to the application
-   */
-  bool process();
+void ObjdumpBinaryFormatParserTest::recordGrammarTest()
+{
+  QFAIL("Not complete");
+}
 
-  /*! \brief Get binary file path
-   */
-  QString binaryFilePath() const
-  {
-    return mBinaryFilePath;
+void ObjdumpBinaryFormatParserTest::recordGrammarTest_data()
+{
+
+}
+
+void ObjdumpBinaryFormatParserTest::parserTest()
+{
+  QFAIL("Not complete");
+}
+
+void ObjdumpBinaryFormatParserTest::parserTest_data()
+{
+
+}
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  ObjdumpBinaryFormatParserTest test;
+
+  if(!app.init()){
+    return 1;
   }
+//   app.debugEnvironnement();
 
-  /*! \brief Get destination directory path
-   */
-  QString destinationDirectoryPath() const
-  {
-    return mDestinationDirectoryPath;
-  }
-
-private:
-
-  bool checkAndSetArguments();
-
-  QString mBinaryFilePath;
-  QString mDestinationDirectoryPath;
-  QCommandLineParser mParser;
-  QCommandLineOption mDestinationDirectoryOption;
-//   QCommandLineOption mTargetOperatingSystem;
-};
-
-#endif // #ifndef COMMAND_LINE_PARSER_H
+  return QTest::qExec(&test, argc, argv);
+}

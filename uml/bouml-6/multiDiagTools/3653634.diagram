@@ -1,0 +1,48 @@
+format 213
+
+classcanvas 128002 class_ref 4204290 // BinaryFormat
+  classdiagramsettings member_max_width 0 end
+  xyz 264 255 2000
+end
+classcanvas 128130 class_ref 4159746 // ObjdumpWrapper
+  classdiagramsettings member_max_width 0 end
+  xyz 600 199 2000
+end
+note 128386 "Try to run objdump, if it fails to strt, try others (otools, ...)"
+  xyzwh 40.5 464.5 2000 409 79
+classcanvas 128514 class_ref 4204418 // ObjdumpBinaryFormatParser
+  classdiagramsettings member_max_width 0 end
+  xyz 274 38 2000
+end
+classcanvas 128898 class_ref 4169346 // Processor
+  classdiagramsettings member_max_width 0 end
+  xyz 592 59 2000
+end
+classcanvas 129026 class_ref 4169602 // OperatingSystem
+  classdiagramsettings member_max_width 0 end
+  xyz 39 59 2000
+end
+relationcanvas 128642 relation_ref 4722178 // <dependency>
+  decenter_begin 484
+  decenter_end 483
+  from ref 128002 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 4722306 // <dependency>
+  decenter_end 518
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 4722690 // <directional composition>
+  from ref 128514 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 4722818 // <directional composition>
+  from ref 128514 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

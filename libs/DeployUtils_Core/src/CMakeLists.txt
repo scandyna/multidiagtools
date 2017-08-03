@@ -15,6 +15,8 @@ set(SOURCE_FILES
     Mdt/DeployUtils/LddDependenciesParser.cpp
     Mdt/DeployUtils/Impl/Objdump/DependenciesParserImplWindows.cpp
     Mdt/DeployUtils/ObjdumpDependenciesParser.cpp
+    Mdt/DeployUtils/Impl/Objdump/BinaryFormatParserImpl.cpp
+    Mdt/DeployUtils/ObjdumpBinaryFormatParser.cpp
     Mdt/DeployUtils/Platform.cpp
     Mdt/DeployUtils/BinaryDependencies.cpp
     Mdt/DeployUtils/BinaryDependenciesImplementationInterface.cpp

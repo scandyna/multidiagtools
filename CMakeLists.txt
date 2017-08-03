@@ -147,6 +147,12 @@ if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
     NO_WARNINGS
   )
+  
+  mdt_copy_binary_dependencies_experimental(
+    TARGET mdtitemeditor_sqlcontrollertest
+    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+  )
+  
   # If we are doing cross-compilation,
   # recusrsive resolving do not work
   # We have to add manually libraries that are missing

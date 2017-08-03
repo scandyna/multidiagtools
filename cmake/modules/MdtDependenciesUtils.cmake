@@ -192,6 +192,58 @@ function(mdt_copy_binary_dependencies)
   add_dependencies(${target}_bin_deps ${target})
 endfunction()
 
+# When cross-compiling, import the deploy utils executables from a file
+# This will make target mdtcpbindeps available here
+if(CMAKE_CROSSCOMPILING)
+  set(IMPORT_DEPLOY_UTILS "IMPORTFILE-NOTFOUND" CACHE FILEPATH "")
+  include(${IMPORT_DEPLOY_UTILS})
+endif()
+
+# Copy dependencies of a binary target to a directory
+#
+# This can be used to copy needed dependencies to run unit test
+# on systems that not support RPATH (f.ex. Windows),
+# or to create selft-contained packages.
+#
+# Note that the copy is not done when this function is called.
+# Behind the scene, a target that depend on TARGET is created,
+# so the dependnecies are only evaluated after TARGET was built.
+#
+# Input arguments:
+#  TARGET:
+#   Name of the target for which to copy dependencies
+#  DESTINATION_DIRECTORY:
+#   Full path to the destination directory
+#
+function(mdt_copy_binary_dependencies_experimental)
+  # Parse arguments
+  set(oneValueArgs TARGET DESTINATION_DIRECTORY)
+  set(options NO_WARNINGS)
+  cmake_parse_arguments(VAR "${options}" "${oneValueArgs}" "" ${ARGN})
+  # Set our local variables and check the mandatory ones
+  set(target "${VAR_TARGET}")
+  if(NOT target)
+    message(FATAL_ERROR "mdt_copy_binary_dependencies(): TARGET argument is missing.")
+  endif()
+  set(destination_directory "${VAR_DESTINATION_DIRECTORY}")
+  if(NOT destination_directory)
+    message(FATAL_ERROR "mdt_copy_binary_dependencies(): DESTINATION_DIRECTORY argument is missing.")
+  endif()
+
+  # Create a new target that depends on TARGET
+  add_custom_target(
+    ${target}_bin_deps_experimental
+    ALL
+    COMMAND mdtcpbindeps
+            -d "${destination_directory}"
+            "$<TARGET_FILE:${target}>"
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+    VERBATIM
+  )
+  add_dependencies(${target}_bin_deps_experimental ${target})
+
+endfunction()
+
 # Find and copy a library
 #
 # Use this function to copy files that have not be detected

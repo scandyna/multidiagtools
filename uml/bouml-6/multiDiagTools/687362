@@ -1,6 +1,6 @@
 format 213
 "Objdump" // Mdt::DeployUtils::Impl::Objdump
-  revision 3
+  revision 4
   modified_by 2 "philippe"
   // class settings
   
@@ -42,12 +42,12 @@ format 213
     
     activitydiagramsettings
      end
-    classdiagram 3620738 "ObjdumpParser"
+    classdiagram 3620738 "ObjdumpDependenciesParser"
       classdiagramsettings member_max_width 0 end
       size A4
     end
 
-    class 4176898 "DependenciesGrammarWindows"
+    class 4177026 "DependenciesRecordGrammarWindows"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -63,7 +63,7 @@ ${inlines}
       
     end
 
-    class 4177026 "DependenciesRecordWindows"
+    class 4184194 "DependenciesParserTemplateWindows"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -79,7 +79,44 @@ ${inlines}
       
     end
 
-    class 4184194 "ParserTemplateWindows"
+    classdiagram 3653762 "ObjdumpFormatParser"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4204546 "FileFormatRecordGrammar"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 4204674 "FormatParserTemplate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 4204802 "ArchitectureRecordGrammar"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

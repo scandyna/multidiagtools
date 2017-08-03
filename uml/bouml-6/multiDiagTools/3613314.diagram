@@ -16,6 +16,10 @@ classcanvas 129026 class_ref 4169602 // OperatingSystem
   classdiagramsettings member_max_width 0 end
   xyz 35 39 2000
 end
+classcanvas 129538 class_ref 4204290 // BinaryFileFormat
+  classdiagramsettings member_max_width 0 end
+  xyz 292 449 2000
+end
 relationcanvas 129154 relation_ref 4666754 // <directional composition>
   decenter_begin 519
   decenter_end 517

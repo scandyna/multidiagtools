@@ -1,6 +1,6 @@
 format 213
 "DeployUtils" // Mdt::DeployUtils
-  revision 10
+  revision 11
   modified_by 2 "philippe"
   // class settings
   
@@ -1380,6 +1380,73 @@ ${items}};
       end
     end
 
+    classdiagram 3653634 "BinaryFormat"
+      classdiagramsettings member_max_width 0 end
+      size A-Landscape
+    end
+
+    class 4204290 "BinaryFormat"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5898114 "readFormat"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "binaryFilePath" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4748418 // <dependency>
+	relation 4722178 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4748418 // <dependency>
+	  b parent class_ref 4204418 // ObjdumpBinaryFormatParser
+      end
+
+      classrelation 4748546 // <dependency>
+	relation 4722306 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4748546 // <dependency>
+	  b parent class_ref 4159746 // ObjdumpWrapper
+      end
+
+      operation 5898242 "operatingSystem"
+	public return_type class_ref 4169602 // OperatingSystem
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     classdiagram 3620098 "BinaryDependencies"
       classdiagramsettings member_max_width 0 end
       size B
@@ -1717,6 +1784,52 @@ ${inlines}
       end
     end
 
+    class 4197762 "ObjdumpDependenciesParser"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5891458 "parse"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "data" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5891586 "rawDependencies"
+	public return_type class_ref 4104962 // StringRecordList
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     classdiagram 3620226 "Output"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -1891,10 +2004,10 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 5884802 "findObjdump"
+      operation 5898498 "execFindDependencies"
 	public explicit_return_type "bool"
 	nparams 1
-	  param in name "paths" type class_ref 4168962 // PathList
+	  param in name "binFile" type class_ref 161026 // QString
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1961,6 +2074,22 @@ ${inlines}
 	  b parent class_ref 4161666 // ToolExecutableWrapper
       end
 
+      operation 5884802 "findObjdump"
+	private explicit_return_type "bool"
+	nparams 1
+	  param in name "paths" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       attribute 3604482 "ObjdumpExecutable"
 	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -1979,6 +2108,22 @@ ${inlines}
 	    cpp default "#include in source"
 	    classrelation_ref 4734978 // <dependency>
 	  b parent class_ref 4151810 // QStandardPaths
+      end
+
+      operation 5898626 "execReadFormat"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "binFile" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -2085,7 +2230,7 @@ ${inlines}
       size A4
     end
 
-    class 4197762 "ObjdumpDependenciesParser"
+    class 4204418 "ObjdumpBinaryFormatParser"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -2099,7 +2244,7 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 5891458 "parse"
+      operation 5898370 "parseFormat"
 	public explicit_return_type "bool"
 	nparams 1
 	  param in name "data" type class_ref 161026 // QString
@@ -2115,12 +2260,77 @@ ${inlines}
 	
       end
 
-      operation 5891586 "rawDependencies"
-	public return_type class_ref 4104962 // StringRecordList
+      classrelation 4748930 // <directional composition>
+	relation 4722690 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4748930 // <directional composition>
+	  b parent class_ref 4169346 // Processor
+      end
+
+      classrelation 4749058 // <directional composition>
+	relation 4722818 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4749058 // <directional composition>
+	  b parent class_ref 4169602 // OperatingSystem
+      end
+
+      operation 5898754 "operatingSystem"
+	public return_type class_ref 4169602 // OperatingSystem
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5898882 "processor"
+	public return_type class_ref 4169346 // Processor
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5899010 "setOperatingSystem"
+	private explicit_return_type "bool"
+	nparams 1
+	  param in name "os" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5899138 "setProcessor"
+	private explicit_return_type "bool"
+	nparams 1
+	  param in name "proc" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

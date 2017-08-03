@@ -18,54 +18,34 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef COMMAND_LINE_PARSER_H
-#define COMMAND_LINE_PARSER_H
+#ifndef OBJDUMP_BINARY_FORMAT_PARSER_TEST_H
+#define OBJDUMP_BINARY_FORMAT_PARSER_TEST_H
 
-#include <QCommandLineParser>
-#include <QCommandLineOption>
+#include "TestBase.h"
 #include <QString>
 #include <QStringList>
-#include <QCoreApplication>
 
-/*! \brief Command line parser for MdtCpBinDeps
- */
-class CommandLineParser
+class ObjdumpBinaryFormatParserTest : public TestBase
 {
-  Q_DECLARE_TR_FUNCTIONS(CommandLineParser)
+ Q_OBJECT
 
-public:
+ private slots:
 
-  /*! \brief Constructor
-   */
-  CommandLineParser();
+  void initTestCase();
+  void cleanupTestCase();
 
-  /*! \brief Process arguments given to the application
-   */
-  bool process();
+  void recordGrammarTest();
+  void recordGrammarTest_data();
 
-  /*! \brief Get binary file path
-   */
-  QString binaryFilePath() const
-  {
-    return mBinaryFilePath;
-  }
+  void parserTest();
+  void parserTest_data();
 
-  /*! \brief Get destination directory path
-   */
-  QString destinationDirectoryPath() const
-  {
-    return mDestinationDirectoryPath;
-  }
-
-private:
-
-  bool checkAndSetArguments();
-
-  QString mBinaryFilePath;
-  QString mDestinationDirectoryPath;
-  QCommandLineParser mParser;
-  QCommandLineOption mDestinationDirectoryOption;
-//   QCommandLineOption mTargetOperatingSystem;
+//  private:
+// 
+//   static QString objdumpHeaderWindows();
+//   static QString objdumpEntryWindows(const QString & libraryName);
+//   static QString objdumpEntryListWindows(const QStringList & libraryNameList);
+//   static QString objdumpOutputWindows(const QStringList & libraryNameList);
 };
 
-#endif // #ifndef COMMAND_LINE_PARSER_H
+#endif // #ifndef OBJDUMP_BINARY_FORMAT_PARSER_TEST_H
