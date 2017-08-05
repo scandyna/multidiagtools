@@ -21,13 +21,28 @@
 #ifndef MDT_PLAIN_TEXT_BOOST_SPIRIT_QT_TRAITS_H
 #define MDT_PLAIN_TEXT_BOOST_SPIRIT_QT_TRAITS_H
 
+#include "StringConstIterator.h"
 #include <QChar>
 #include <QString>
 #include <QVariant>
+#include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/spirit/include/support_container.hpp>
+#include <algorithm>
+#include <iterator>
 
 namespace boost { namespace spirit { namespace traits
 {
+  /*! \internal Tell Qi how to store a result from a parser to a QString
+   */
+  template<>
+  struct assign_to_attribute_from_iterators<QString, Mdt::PlainText::StringConstIterator, void>
+  {
+    static void call(const Mdt::PlainText::StringConstIterator & first, const Mdt::PlainText::StringConstIterator & last, QString & attr)
+    {
+      std::copy( first, last, std::back_inserter(attr) );
+    }
+  };
+
   /*! \internal Make Qi recognize QString as a container
    */
   template <>

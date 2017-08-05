@@ -39,6 +39,7 @@ endfunction()
 
 #================= Tests ====================
 
+addPlainTextTest("BoostSpiritTraitsTest")
 addPlainTextTest("FileInputIteratorTest")
 addPlainTextTest("FileMultiPassIteratorTest")
 addPlainTextTest("StringIteratorTest")

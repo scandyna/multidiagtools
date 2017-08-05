@@ -46,11 +46,11 @@ struct StringConstIterator
 {
   static_assert(sizeof(wchar_t) >= 2, "wchar_t is < 16 bit");
 
-  typedef wchar_t value_type;
-  typedef std::ptrdiff_t difference_type;
-  typedef const value_type & reference;
-  typedef const value_type* pointer;
-  typedef std::random_access_iterator_tag iterator_category;
+  using value_type = wchar_t;
+  using reference = const value_type &;
+  using pointer = const value_type*;
+  using difference_type = QString::difference_type;
+  using iterator_category = std::random_access_iterator_tag;
 
   /*! \brief Default constructor
    *
@@ -123,12 +123,32 @@ struct StringConstIterator
     return tmp;
   }
 
-  /*! \brief Returns a iterator that is advanced by n positions
+  /*! \brief Returns a iterator resulting from \a a + \a n
    */
-  StringConstIterator operator+(difference_type n) const
+  friend
+  StringConstIterator operator+(const StringConstIterator & a, difference_type n)
   {
-    Q_ASSERT(mIndex != nullptr);
-    return StringConstIterator(mIndex + n);
+    Q_ASSERT(a.mIndex != nullptr);
+    return StringConstIterator(a.mIndex + n);
+  }
+
+  /*! \brief Returns a iterator resulting from \a n + \a a
+   */
+  friend
+  StringConstIterator operator+(difference_type n, const StringConstIterator & a)
+  {
+    Q_ASSERT(a.mIndex != nullptr);
+    return StringConstIterator(a.mIndex + n);
+  }
+
+  /*! \brief Returns the difference resulting from \a b - \a a
+   */
+  friend
+  difference_type operator-(const StringConstIterator & b, const StringConstIterator & a)
+  {
+    Q_ASSERT(a.mIndex != nullptr);
+    Q_ASSERT(b.mIndex != nullptr);
+    return b.mIndex - a.mIndex;
   }
 
   /*! \brief Returns a iterator that is rewind by n positions
@@ -172,14 +192,6 @@ struct StringConstIterator
     Q_ASSERT(mIndex != nullptr);
     return mIndex[i].unicode();
   }
-
-//   /*! \brief Get a pointer to value
-//    */
-//   pointer operator->() const
-//   {
-//     Q_ASSERT(index != nullptr);
-//     return &**this;
-//   }
 
   /*! \brief Returns true if iterator a refers to same item than iterator b
    */

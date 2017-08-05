@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_PLAIN_TEXT_CORE_STRING_ITERATOR_TEST_H
-#define MDT_PLAIN_TEXT_CORE_STRING_ITERATOR_TEST_H
+#ifndef MDT_PLAIN_TEXT_CORE_BOOST_SPIRIT_TRAITS_TEST_H
+#define MDT_PLAIN_TEXT_CORE_BOOST_SPIRIT_TRAITS_TEST_H
 
 #include "TestBase.h"
 
-class StringIteratorTest : public TestBase
+class BoostSpiritTraitsTest : public TestBase
 {
  Q_OBJECT
 
@@ -32,10 +32,11 @@ class StringIteratorTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void constIteratorTest();
-  void constIteratorRandomAccessIteratorRequirementsTest();
-  void constIteratorBenchmark();
-  void constIteratorStdCopyTest();
+  void charParserQStringTest();
+  void charParserQStringTest_data();
+
+  void stringParserQStringTest();
+
 };
 
-#endif // #ifndef MDT_PLAIN_TEXT_CORE_STRING_ITERATOR_TEST_H
+#endif // #ifndef MDT_PLAIN_TEXT_CORE_BOOST_SPIRIT_TRAITS_TEST_H

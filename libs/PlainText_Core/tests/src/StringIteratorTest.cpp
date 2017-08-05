@@ -20,6 +20,10 @@
  ****************************************************************************/
 #include "StringIteratorTest.h"
 #include "Mdt/PlainText/StringConstIterator.h"
+#include <QString>
+#include <algorithm>
+#include <iterator>
+#include <type_traits>
 
 using namespace Mdt::PlainText;
 
@@ -35,13 +39,20 @@ void StringIteratorTest::cleanupTestCase()
  * Tests
  */
 
+// Check requirements of a Iterator
+static_assert( std::is_copy_constructible<StringConstIterator>::value , "Mdt::PlainText::StringConstIterator is not copy constructible" );
+static_assert( std::is_copy_assignable<StringConstIterator>::value , "Mdt::PlainText::StringConstIterator is not copy assignable" );
+static_assert( std::is_destructible<StringConstIterator>::value , "Mdt::PlainText::StringConstIterator is not destructible" );
+// Check requirements of a ForwardIterator
+static_assert( std::is_default_constructible<StringConstIterator>::value , "Mdt::PlainText::StringConstIterator is not default constructible" );
+
+
 void StringIteratorTest::constIteratorTest()
 {
-  QString str;
+  const QString str = "ABCDEF";
   /*
    * Constructs and assignements
    */
-  str = "ABCDEF";
   // Direct assignement
   StringConstIterator it(str.cbegin());
   QCOMPARE(*it, wchar_t('A'));
@@ -119,6 +130,31 @@ void StringIteratorTest::constIteratorTest()
   QVERIFY(it >= first);
 }
 
+void StringIteratorTest::constIteratorRandomAccessIteratorRequirementsTest()
+{
+  const QString str = "ABCDEF";
+  const StringConstIterator first = str.cbegin();
+  StringConstIterator it;
+  StringConstIterator::difference_type n;
+  /*
+   * it + n
+   */
+  n = 1;
+  it = first + n;
+  QCOMPARE(*it, wchar_t('B'));
+  n = 2;
+  it = n + first;
+  QCOMPARE(*it, wchar_t('C'));
+  /*
+   * b - a
+   */
+  StringConstIterator a, b;
+  a = first + 1;
+  b = first + 3;
+  n = b - a;
+  QVERIFY( n == 2 );
+}
+
 void StringIteratorTest::constIteratorBenchmark()
 {
   QString source = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
@@ -136,6 +172,27 @@ void StringIteratorTest::constIteratorBenchmark()
     }
   }
   QCOMPARE((int)destination.size(), source.size());
+}
+
+void StringIteratorTest::constIteratorStdCopyTest()
+{
+  QString source;
+  QString destination;
+  StringConstIterator first, last;
+
+  source = "abcd";
+  destination.clear();
+  first = source.cbegin();
+  last = source.cend();
+  std::copy( first, last, std::back_inserter(destination) );
+  QCOMPARE(destination, source);
+
+  source = "éöàäèü$£";
+  destination.clear();
+  first = source.cbegin();
+  last = source.cend();
+  std::copy( first, last, std::back_inserter(destination) );
+  QCOMPARE(destination, source);
 }
 
 /*
