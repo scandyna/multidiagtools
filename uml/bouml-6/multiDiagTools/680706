@@ -1,6 +1,6 @@
 format 213
 "DeployUtils" // Mdt::DeployUtils
-  revision 11
+  revision 12
   modified_by 2 "philippe"
   // class settings
   
@@ -2020,6 +2020,22 @@ ${inlines}
 	
       end
 
+      operation 5898626 "execReadFormat"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "binFile" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 5831938 "readAllHeaders"
 	public explicit_return_type "bool"
 	nparams 1
@@ -2108,22 +2124,6 @@ ${inlines}
 	    cpp default "#include in source"
 	    classrelation_ref 4734978 // <dependency>
 	  b parent class_ref 4151810 // QStandardPaths
-      end
-
-      operation 5898626 "execReadFormat"
-	public explicit_return_type "bool"
-	nparams 1
-	  param in name "binFile" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
       end
     end
 

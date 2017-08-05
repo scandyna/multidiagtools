@@ -21,6 +21,8 @@
 #ifndef MDT_DEPLOY_UTILS_OBJDUMP_BINARY_FORMAT_PARSER_H
 #define MDT_DEPLOY_UTILS_OBJDUMP_BINARY_FORMAT_PARSER_H
 
+#include "OperatingSystem.h"
+#include "Processor.h"
 #include "Mdt/PlainText/StringConstIterator.h"
 
 // #include "Mdt/PlainText/StringRecordList.h"
@@ -30,12 +32,12 @@
 
 namespace Mdt{ namespace DeployUtils{
 
-//   namespace Impl{ namespace Objdump{
-// 
-//   template<typename SourceIterator>
-//   class DependenciesParserTemplateWindows;
-// 
-//   }} // namespace Impl{ namespace Objdump{
+  namespace Impl{ namespace Objdump{
+
+  template<typename SourceIterator>
+  class FormatParserTemplate;
+
+  }} // namespace Impl{ namespace Objdump{
 
   /*! \brief Objdump binary format parser
    */
@@ -55,9 +57,35 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool parse(const QString & data);
 
+    /*! \brief Get operating system
+     *
+     * Return only a valid value after parse() succeded
+     */
+    OperatingSystem operatindSystem() const
+    {
+      return mOperatingSystem;
+    }
+
+    /*! \brief Get processor
+     *
+     * Return only a valid value after parse() succeded
+     */
+    Processor processor() const
+    {
+      return mProcessor;
+    }
+
    private:
 
-//     std::unique_ptr< Impl::Objdump::DependenciesParserTemplateWindows<Mdt::PlainText::StringConstIterator> >mParser;
+    bool setOperatingSystem(const QString & os);
+    static bool isOsLinux(const QString & os);
+    static bool isOsWindows(const QString & os);
+    bool setProcessor(const QString & processor);
+    static bool compareEqual(const QString & str, const char * const cs);
+
+    OperatingSystem mOperatingSystem;
+    Processor mProcessor;
+    std::unique_ptr< Impl::Objdump::FormatParserTemplate<Mdt::PlainText::StringConstIterator> >mParser;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

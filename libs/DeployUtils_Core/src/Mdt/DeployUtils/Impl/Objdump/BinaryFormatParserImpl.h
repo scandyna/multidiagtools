@@ -22,7 +22,7 @@
 #define MDT_DEPLOY_UTILS_IMPL_OBJDUMP_BINARY_FORMAT_PARSER_IMPL_WINDOWS_H
 
 // Uncomment this line to enable parser debuging
-#define BOOST_SPIRIT_DEBUG
+// #define BOOST_SPIRIT_DEBUG
 
 #include "Mdt/PlainText/StringRecord.h"
 // #include "Mdt/PlainText/StringRecordList.h"
@@ -110,6 +110,53 @@ namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace Objdump{
     boost::spirit::qi::rule<SourceIterator, QString()> mArchitectureName;
     boost::spirit::qi::rule<SourceIterator> mOtherText;
     boost::spirit::qi::rule<SourceIterator, QString()> mArchitectureRule;
+  };
+
+  template<typename SourceIterator>
+  class FormatParserTemplate
+  {
+  public:
+
+    FormatParserTemplate()
+    {
+      namespace qi = boost::spirit::qi;
+      // Parsers
+      using qi::lit;
+      using qi::eol;
+      using boost::spirit::standard_wide::char_;
+      using boost::spirit::standard_wide::space;
+
+      mValueText = mFileFormat | mArchitecture;
+      mOtherText = *(char_ - mValueText);
+      mFormatRecordRule = mOtherText >> mFileFormat >> mOtherText >> mArchitecture >> mOtherText;
+    }
+
+    // Copy disabled
+    FormatParserTemplate(const FormatParserTemplate &) = delete;
+    FormatParserTemplate & operator=(const FormatParserTemplate &) = delete;
+    // Move disabled
+    FormatParserTemplate(FormatParserTemplate &&) = delete;
+    FormatParserTemplate & operator=(FormatParserTemplate &&) = delete;
+
+    bool parseAll(SourceIterator & first, SourceIterator last)
+    {
+      return boost::spirit::qi::parse(first, last, mFormatRecordRule, mRawFormatRecord);
+    }
+
+    Mdt::PlainText::StringRecord rawFormatRecord() const
+    {
+      return mRawFormatRecord;
+    }
+
+   private:
+
+    FileFormatGrammar<SourceIterator> mFileFormat;
+    ArchitectureGrammar<SourceIterator> mArchitecture;
+    boost::spirit::qi::rule<SourceIterator> mValueText;
+    boost::spirit::qi::rule<SourceIterator> mOtherText;
+//     DependenciesRecordGrammarWindows<SourceIterator> mRecord;
+    boost::spirit::qi::rule<SourceIterator, PlainText::StringRecord()> mFormatRecordRule;
+    Mdt::PlainText::StringRecord mRawFormatRecord;
   };
 
 }}}} // namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace Objdump{

@@ -22,6 +22,7 @@
 #include "Mdt/DeployUtils/Impl/Objdump/BinaryFormatParserImpl.h"
 #include "Mdt/DeployUtils/ObjdumpBinaryFormatParser.h"
 #include "Mdt/PlainText/StringConstIterator.h"
+#include "Mdt/PlainText/StringRecord.h"
 #include <QString>
 #include <QStringList>
 
@@ -208,12 +209,47 @@ void ObjdumpBinaryFormatParserTest::architectureGrammarTest_data()
 
 void ObjdumpBinaryFormatParserTest::parserTest()
 {
-  QFAIL("Not complete");
+  QFETCH(QString, sourceData);
+  QFETCH(OperatingSystem, expectedOperatingSystem);
+  QFETCH(Processor, expectedProcessor);
+  QFETCH(bool, expectedOk);
+
+//   qDebug() << sourceData;
+
+  ObjdumpBinaryFormatParser parser;
+  bool ok = parser.parse(sourceData);
+  QCOMPARE(ok, expectedOk);
+  if(ok){
+    QCOMPARE(parser.operatindSystem(), expectedOperatingSystem);
+    QCOMPARE(parser.processor(), expectedProcessor);
+  }
 }
 
 void ObjdumpBinaryFormatParserTest::parserTest_data()
 {
+  QTest::addColumn<QString>("sourceData");
+  QTest::addColumn<OperatingSystem>("expectedOperatingSystem");
+  QTest::addColumn<Processor>("expectedProcessor");
+  QTest::addColumn<bool>("expectedOk");
 
+  const bool Ok = true;
+  const bool Nok = false;
+
+  QTest::newRow("1")
+   << "\n"
+      "tests/mdtdeployutils_objdumpbinaryformatparsertest:     format de fichier elf64-x86-64\n"
+      "architecture: i386:x86-64, fanions 0x00000112:\n"
+      "EXEC_P, HAS_SYMS, D_PAGED\n"
+      "adresse de départ 0x00000000004078f0\n"
+   << OperatingSystem::Linux << Processor::X86_64 << Ok;
+
+  QTest::newRow("2")
+   << "\r\n"
+      "../../../cross/win32/release/bin/mdtalgorithmtest.exe:     format de fichier pei-i386\r\n"
+      "architecture: i386, fanions 0x0000013a:\r\n"
+      "EXEC_P, HAS_DEBUG, HAS_SYMS, HAS_LOCALS, D_PAGED\r\n"
+      "adresse de départ 0x004014e0\r\n"
+   << OperatingSystem::Windows << Processor::X86_32 << Ok;
 }
 
 /*

@@ -21,6 +21,8 @@
 #ifndef MDT_DEPLOY_UTILS_PROCESSOR_H
 #define MDT_DEPLOY_UTILS_PROCESSOR_H
 
+#include <QMetaType>
+
 namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Processor enum
@@ -31,7 +33,7 @@ namespace Mdt{ namespace DeployUtils{
     X86_64  /*!< X86 64 bit processor */
   };
 
-
 }} // namespace Mdt{ namespace DeployUtils{
+Q_DECLARE_METATYPE(Mdt::DeployUtils::Processor)
 
 #endif // #ifndef MDT_DEPLOY_UTILS_PROCESSOR_H

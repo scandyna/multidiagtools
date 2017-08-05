@@ -18,22 +18,21 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_OPERATING_SYSTEM_H
-#define MDT_DEPLOY_UTILS_OPERATING_SYSTEM_H
+#ifndef BINARY_FORMAT_TEST_H
+#define BINARY_FORMAT_TEST_H
 
-#include <QMetaType>
+#include "TestBase.h"
 
-namespace Mdt{ namespace DeployUtils{
+class BinaryFormatTest : public TestBase
+{
+ Q_OBJECT
 
-  /*! \brief OS enum
-   */
-  enum class OperatingSystem
-  {
-    Linux,  /*!< Linux OS */
-    Windows /*!< Windows OS */
-  };
+ private slots:
 
-}} // namespace Mdt{ namespace DeployUtils{
-Q_DECLARE_METATYPE(Mdt::DeployUtils::OperatingSystem)
+  void initTestCase();
+  void cleanupTestCase();
 
-#endif // #ifndef MDT_DEPLOY_UTILS_OPERATING_SYSTEM_H
+  void runTest();
+};
+
+#endif // #ifndef BINARY_FORMAT_TEST_H
