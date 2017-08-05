@@ -34,8 +34,11 @@ class ObjdumpBinaryFormatParserTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void recordGrammarTest();
-  void recordGrammarTest_data();
+  void fileFormatGrammarTest();
+  void fileFormatGrammarTest_data();
+
+  void architectureGrammarTest();
+  void architectureGrammarTest_data();
 
   void parserTest();
   void parserTest_data();
