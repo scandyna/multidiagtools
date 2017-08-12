@@ -23,10 +23,8 @@
 #include <boost/property_map/property_map.hpp>
 #include <vector>
 #include <utility>
-// #include <algorithm>
-// #include <iterator>
 
-#include <QDebug>
+// #include <QDebug>
 
 using namespace Mdt::DeployUtils::Impl::LibraryTree;
 
@@ -81,15 +79,11 @@ LibraryTreeNode LibraryTreeImpl::addLibrary(const QString& name, LibraryTreeNode
   boost::add_vertex(newNode.id(), VertexData(name), mGraph);
   boost::add_edge_by_label(parent.id(), newNode.id(), mGraph);
 
-  qDebug() << "Added library " << name << " , id: " << newNode.id() << " -> " << parent.id();
-  
   return newNode;
 }
 
 QStringList LibraryTreeImpl::getLibraryList(LibraryTreeNode parent) const
 {
-  qDebug() << "Get list for " << parent.id();
-
   QStringList list;
 
   if(boost::num_vertices(mGraph) < 2){
@@ -99,7 +93,6 @@ QStringList LibraryTreeImpl::getLibraryList(LibraryTreeNode parent) const
   const auto firstEndIt = boost::adjacenct_vertices(vertex, mGraph);
   for(auto it = firstEndIt.first; it != firstEndIt.second; ++it){
     list << boost::get(boost::vertex_bundle, mGraph)[*it].name;
-    qDebug() << " - lib: " << boost::get(boost::vertex_bundle, mGraph)[*it].name;
   }
 
   return list;
@@ -192,8 +185,6 @@ bool LibraryTree::containsNode(Mdt::DeployUtils::LibraryTreeNode node) const
 {
   Q_ASSERT(!node.isNull());
 
-  qDebug() << "Node " << node.id() << " exists: " << mImpl->containsNode(node);
-  
   return mImpl->containsNode(node);
 }
 

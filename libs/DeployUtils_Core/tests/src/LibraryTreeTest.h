@@ -32,21 +32,8 @@ class LibraryTreeTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void graphSandbox();
-
   void treeNodeTest();
   void treeTest();
-
-//   void fillAndSetDependenciesTest();
-//   void fillAndSetDependenciesTest_data();
-//   void fillAndSetDependenciesBenchmark();
-//   void fillAndSetDependenciesBenchmark_data();
-
-//  private:
-// 
-//   static Mdt::PlainText::StringRecordList toStringRecordList(const Mdt::DeployUtils::LibraryInfoList & libraryInfoList);
-//   static Mdt::PlainText::StringRecordList createRecordList(const QStringList & libNameList, const QString & pathPrefix);
-//   static Mdt::PlainText::StringRecordList generateLibraryRecordList(int n, const QString & pathPrefix);
 };
 
 #endif // #ifndef LIBRARY_TREE_TEST_TEST_H
