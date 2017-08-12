@@ -18,18 +18,20 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_OBJDUMP_WRAPPER_H
-#define MDT_DEPLOY_UTILS_OBJDUMP_WRAPPER_H
+#ifndef MDT_DEPLOY_UTILS_BINARY_FORMAT_H
+#define MDT_DEPLOY_UTILS_BINARY_FORMAT_H
 
-#include "ToolExecutableWrapper.h"
+#include "OperatingSystem.h"
+#include "Processor.h"
+#include "Mdt/Error.h"
+#include <QObject>
 #include <QString>
-#include <QStringList>
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief Wrapps a objdump executable
+  /*! \brief Read the format of a executable or a library
    */
-  class ObjdumpWrapper : public ToolExecutableWrapper
+  class BinaryFormat : public QObject
   {
    Q_OBJECT
 
@@ -37,35 +39,46 @@ namespace Mdt{ namespace DeployUtils{
 
     /*! \brief Constructor
      */
-    explicit ObjdumpWrapper(QObject* parent = nullptr);
+    explicit BinaryFormat(QObject* parent = nullptr);
 
-    /*! \brief Execute the command to find dependencies
-     *
-     * \param binaryFilePath Path to a executable or a library
+    /*! \brief Read the format of a executable or a library
      */
-    bool execFindDependencies(const QString & binaryFilePath);
+    bool readFormat(const QString & binaryFilePath);
 
-    /*! \brief Execute the command to read format
+    /*! \brief Get operating system
      *
-     * \param binaryFilePath Path to a executable or a library
+     * Return only a valid value after readFormat() succeded
      */
-    bool execReadFormat(const QString & binaryFilePath);
+    OperatingSystem operatindSystem() const
+    {
+      return mOperatingSystem;
+    }
+
+    /*! \brief Get processor
+     *
+     * Return only a valid value after readFormat() succeded
+     */
+    Processor processor() const
+    {
+      return mProcessor;
+    }
+
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
 
    private:
 
-    /*! \brief Find objdump executable
-     */
-    QString findObjdump();
+    void setLastError(const Mdt::Error & error);
 
-    /*! \brief Execute objdump command
-     *
-     * Will try to find objdump if not in exec path
-     */
-    bool execObjdump(const QStringList & arguments);
-
-    bool checkStdError();
+    OperatingSystem mOperatingSystem;
+    Processor mProcessor;
+    Mdt::Error mLastError;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{
 
-#endif // #ifndef MDT_DEPLOY_UTILS_OBJDUMP_WRAPPER_H
+#endif // #ifndef MDT_DEPLOY_UTILS_BINARY_FORMAT_H

@@ -21,19 +21,25 @@
 #include "BinaryDependencies.h"
 #include "BinaryDependenciesImplementationInterface.h"
 #include "BinaryDependenciesLdd.h"
+#include "BinaryDependenciesObjdump.h"
 
 namespace Mdt{ namespace DeployUtils{
 
-BinaryDependencies::BinaryDependencies(QObject* parent)
+BinaryDependencies::BinaryDependencies(OperatingSystem targetOperatingSystem, QObject* parent)
  : QObject(parent)
 {
-  Platform nativePlatform;
+//   Platform nativePlatform;
 
-  if(nativePlatform.operatingSystem() == OperatingSystem::Linux){
+//   if(nativePlatform.operatingSystem() == OperatingSystem::Linux){
+//     mImpl.reset(new BinaryDependenciesLdd);
+//   }
+  if(targetOperatingSystem == OperatingSystem::Linux){
     mImpl.reset(new BinaryDependenciesLdd);
+  }else if(targetOperatingSystem == OperatingSystem::Windows){
+    mImpl.reset(new BinaryDependenciesObjdump);
   }
   if(!mImpl){
-    const QString msg = tr("Could not find a implementation for current platform.");
+    const QString msg = tr("Could not find a implementation for target operating system.");
     mLastError = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
 //     mLastError.commit();
   }

@@ -25,6 +25,15 @@
 #include <QFileInfo>
 #include <QDir>
 
+QStringList TestBase::sortedStringListCs(const QStringList& inList)
+{
+  auto list = inList;
+
+  list.sort(Qt::CaseSensitive);
+
+  return list;
+}
+
 bool TestBase::createFile(const QString & filePath)
 {
   const QFileInfo fi(filePath);

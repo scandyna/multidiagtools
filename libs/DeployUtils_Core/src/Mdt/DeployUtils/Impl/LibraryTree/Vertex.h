@@ -18,47 +18,31 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "BinaryDependenciesTest.h"
-#include "Mdt/DeployUtils/BinaryDependencies.h"
-#include "Mdt/DeployUtils/Platform.h"
-#include <QCoreApplication>
+#ifndef MDT_DEPLOY_UTILS_IMPL_LIBRARY_TREE_VERTEX_H
+#define MDT_DEPLOY_UTILS_IMPL_LIBRARY_TREE_VERTEX_H
 
-using namespace Mdt::DeployUtils;
+#include <QString>
 
-void BinaryDependenciesTest::initTestCase()
-{
-}
+namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace LibraryTree{
 
-void BinaryDependenciesTest::cleanupTestCase()
-{
-}
+  struct VertexData
+  {
+    VertexData() = default;
 
-/*
- * Tests
- */
+    VertexData(const QString & name)
+     : name(name)
+    {
+    }
 
-void BinaryDependenciesTest::runTest()
-{
-  BinaryDependencies deps(Platform::nativeOperatingSystem());
+    VertexData(const VertexData &) = default;
+    VertexData & operator=(const VertexData &) = default;
 
-  QVERIFY(deps.isValid());
-  QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath() ));
-  QVERIFY(!deps.dependencies().isEmpty());
-}
+    VertexData(VertexData &&) = default;
+    VertexData & operator=(VertexData &&) = default;
 
-/*
- * Main
- */
+    QString name;
+  };
 
-int main(int argc, char **argv)
-{
-  Mdt::Application app(argc, argv);
-  BinaryDependenciesTest test;
+}}}} // namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace LibraryTree{
 
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
-
-  return QTest::qExec(&test, argc, argv);
-}
+#endif // #ifndef MDT_DEPLOY_UTILS_IMPL_LIBRARY_TREE_VERTEX_H

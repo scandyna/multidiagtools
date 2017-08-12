@@ -2,11 +2,17 @@
 # List of source files
 set(SOURCE_FILES
     Mdt/DeployUtils/SettingsCommandLineParser.cpp
+    
     Mdt/DeployUtils/LibraryVersion.cpp
     Mdt/DeployUtils/LibraryName.cpp
     Mdt/DeployUtils/LibraryInfo.cpp
     Mdt/DeployUtils/LibraryInfoList.cpp
     Mdt/DeployUtils/Library.cpp
+    Mdt/DeployUtils/Impl/LibraryTree/Vertex.cpp
+    Mdt/DeployUtils/Impl/LibraryTree/Graph.cpp
+    Mdt/DeployUtils/Impl/LibraryTree/LabeledGraph.cpp
+    Mdt/DeployUtils/LibraryTreeNode.cpp
+    Mdt/DeployUtils/LibraryTree.cpp
     Mdt/DeployUtils/PathList.cpp
     Mdt/DeployUtils/ToolExecutableWrapper.cpp
     Mdt/DeployUtils/LddWrapper.cpp
@@ -17,6 +23,7 @@ set(SOURCE_FILES
     Mdt/DeployUtils/ObjdumpDependenciesParser.cpp
     Mdt/DeployUtils/Impl/Objdump/BinaryFormatParserImpl.cpp
     Mdt/DeployUtils/ObjdumpBinaryFormatParser.cpp
+    Mdt/DeployUtils/BinaryFormat.cpp
     Mdt/DeployUtils/Platform.cpp
     Mdt/DeployUtils/BinaryDependencies.cpp
     Mdt/DeployUtils/BinaryDependenciesImplementationInterface.cpp

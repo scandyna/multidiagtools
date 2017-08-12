@@ -22,8 +22,8 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="36"/>
-        <source>Could not find a implementation for current platform.</source>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="42"/>
+        <source>Could not find a implementation for target operating system.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -37,6 +37,14 @@
     <message>
         <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="74"/>
         <source>Some dependencies have not been found for file &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Mdt::DeployUtils::BinaryFormat</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/BinaryFormat.cpp" line="42"/>
+        <source>Could not parse the binary format of file &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -82,12 +90,12 @@
 <context>
     <name>Mdt::DeployUtils::ObjdumpWrapper</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/ObjdumpWrapper.cpp" line="47"/>
+        <location filename="../src/Mdt/DeployUtils/ObjdumpWrapper.cpp" line="52"/>
         <source>Could not find objdump executable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/ObjdumpWrapper.cpp" line="86"/>
+        <location filename="../src/Mdt/DeployUtils/ObjdumpWrapper.cpp" line="91"/>
         <source>Execution of objdump %1 reported error: %2</source>
         <translation type="unfinished"></translation>
     </message>

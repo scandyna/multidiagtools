@@ -26,17 +26,26 @@
 #include <QObject>
 #include <QByteArray>
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 #include <QTemporaryFile>
 #include <QTemporaryDir>
 #include <QtTest/QtTest>
 #include <Qt>
+#include <initializer_list>
 
 class TestBase : public QObject
 {
  Q_OBJECT
 
  protected:
+
+  static QStringList sortedStringListCs(const QStringList & inList);
+
+  static QStringList sortedStringListCs(std::initializer_list<QString> inlist)
+  {
+    return sortedStringListCs(QStringList{inlist});
+  }
 
   // Create a file - Missing parent directories are created if needed
   static bool createFile(const QString & filePath);

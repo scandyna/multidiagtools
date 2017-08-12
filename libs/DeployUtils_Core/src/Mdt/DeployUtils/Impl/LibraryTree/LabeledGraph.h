@@ -18,47 +18,16 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "BinaryDependenciesTest.h"
-#include "Mdt/DeployUtils/BinaryDependencies.h"
-#include "Mdt/DeployUtils/Platform.h"
-#include <QCoreApplication>
+#ifndef MDT_DEPLOY_UTILS_IMPL_LIBRARY_TREE_LABELED_GRAPH_H
+#define MDT_DEPLOY_UTILS_IMPL_LIBRARY_TREE_LABELED_GRAPH_H
 
-using namespace Mdt::DeployUtils;
+#include "Graph.h"
+#include <boost/graph/labeled_graph.hpp>
 
-void BinaryDependenciesTest::initTestCase()
-{
-}
+namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace LibraryTree{
 
-void BinaryDependenciesTest::cleanupTestCase()
-{
-}
+  using LabeledGraph = boost::labeled_graph<Graph, int>;
 
-/*
- * Tests
- */
+}}}} // namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace LibraryTree{
 
-void BinaryDependenciesTest::runTest()
-{
-  BinaryDependencies deps(Platform::nativeOperatingSystem());
-
-  QVERIFY(deps.isValid());
-  QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath() ));
-  QVERIFY(!deps.dependencies().isEmpty());
-}
-
-/*
- * Main
- */
-
-int main(int argc, char **argv)
-{
-  Mdt::Application app(argc, argv);
-  BinaryDependenciesTest test;
-
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
-
-  return QTest::qExec(&test, argc, argv);
-}
+#endif // #ifndef MDT_DEPLOY_UTILS_IMPL_LIBRARY_TREE_LABELED_GRAPH_H

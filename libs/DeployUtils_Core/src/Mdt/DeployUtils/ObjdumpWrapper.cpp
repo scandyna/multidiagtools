@@ -38,6 +38,11 @@ bool ObjdumpWrapper::execFindDependencies(const QString& binaryFilePath)
   return execObjdump(QStringList{"-p",binaryFilePath});
 }
 
+bool ObjdumpWrapper::execReadFormat(const QString& binaryFilePath)
+{
+  return execObjdump(QStringList{"-f",binaryFilePath});
+}
+
 QString ObjdumpWrapper::findObjdump()
 {
   QString objdumpPath;

@@ -1,6 +1,6 @@
-format 211
+format 213
 "boost" // boost
-  revision 6
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -123,6 +123,29 @@ ${members}};
 	    classrelation_ref 2956290 // <directional composition>
 	  b parent class_ref 2537602 // Link
       end
+    end
+
+    class 4237954 "labeled_graph"
+      visibility package 
+      nformals 3
+      formal name "Graph" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Label" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Selector" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

@@ -1,6 +1,6 @@
 format 213
 "Impl" // Mdt::DeployUtils::Impl
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -26,7 +26,7 @@ format 213
   activitydiagramsettings
    end
   
-  package_ref 687362 // ObjdumpWindows
+  package_ref 687362 // Objdump
 
   classview 1881346 "DeployUtils_Core"
     
@@ -47,4 +47,6 @@ format 213
   end
 
   package_ref 687490 // Ldd
+
+  package_ref 694018 // LibraryTree
 end

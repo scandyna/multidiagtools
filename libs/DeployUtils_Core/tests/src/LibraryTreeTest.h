@@ -18,47 +18,35 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "BinaryDependenciesTest.h"
-#include "Mdt/DeployUtils/BinaryDependencies.h"
-#include "Mdt/DeployUtils/Platform.h"
-#include <QCoreApplication>
+#ifndef LIBRARY_TREE_TEST_TEST_H
+#define LIBRARY_TREE_TEST_TEST_H
 
-using namespace Mdt::DeployUtils;
+#include "TestBase.h"
 
-void BinaryDependenciesTest::initTestCase()
+class LibraryTreeTest : public TestBase
 {
-}
+ Q_OBJECT
 
-void BinaryDependenciesTest::cleanupTestCase()
-{
-}
+ private slots:
 
-/*
- * Tests
- */
+  void initTestCase();
+  void cleanupTestCase();
 
-void BinaryDependenciesTest::runTest()
-{
-  BinaryDependencies deps(Platform::nativeOperatingSystem());
+  void graphSandbox();
 
-  QVERIFY(deps.isValid());
-  QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath() ));
-  QVERIFY(!deps.dependencies().isEmpty());
-}
+  void treeNodeTest();
+  void treeTest();
 
-/*
- * Main
- */
+//   void fillAndSetDependenciesTest();
+//   void fillAndSetDependenciesTest_data();
+//   void fillAndSetDependenciesBenchmark();
+//   void fillAndSetDependenciesBenchmark_data();
 
-int main(int argc, char **argv)
-{
-  Mdt::Application app(argc, argv);
-  BinaryDependenciesTest test;
+//  private:
+// 
+//   static Mdt::PlainText::StringRecordList toStringRecordList(const Mdt::DeployUtils::LibraryInfoList & libraryInfoList);
+//   static Mdt::PlainText::StringRecordList createRecordList(const QStringList & libNameList, const QString & pathPrefix);
+//   static Mdt::PlainText::StringRecordList generateLibraryRecordList(int n, const QString & pathPrefix);
+};
 
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
-
-  return QTest::qExec(&test, argc, argv);
-}
+#endif // #ifndef LIBRARY_TREE_TEST_TEST_H

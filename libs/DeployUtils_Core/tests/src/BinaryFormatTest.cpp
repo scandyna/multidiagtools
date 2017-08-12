@@ -19,6 +19,11 @@
  **
  ****************************************************************************/
 #include "BinaryFormatTest.h"
+#include "Mdt/DeployUtils/BinaryFormat.h"
+#include "Mdt/DeployUtils/Platform.h"
+#include <QCoreApplication>
+
+using namespace Mdt::DeployUtils;
 
 void BinaryFormatTest::initTestCase()
 {
@@ -34,7 +39,11 @@ void BinaryFormatTest::cleanupTestCase()
 
 void BinaryFormatTest::runTest()
 {
-  QFAIL("Not complete");
+  BinaryFormat format;
+
+  QVERIFY( format.readFormat( QCoreApplication::applicationFilePath() ) );
+  QCOMPARE(format.operatindSystem(), Platform::nativeOperatingSystem());
+  QCOMPARE(format.processor(), Platform::nativeProcessor());
 }
 
 /*

@@ -22,6 +22,8 @@
 #define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_H
 
 #include "Platform.h"
+
+#include "OperatingSystem.h"
 #include "LibraryInfoList.h"
 #include "Mdt/Error.h"
 #include <QObject>
@@ -41,8 +43,11 @@ namespace Mdt{ namespace DeployUtils{
    public:
 
     /*! \brief Constructor
+     *
+     * Will instanciate a implementation depending on \a targetOperatingSystem .
+     *  The target operating system means the OS of the binary file to parse.
      */
-    BinaryDependencies(QObject* parent = nullptr);
+    BinaryDependencies(OperatingSystem targetOperatingSystem, QObject* parent = nullptr);
 
     /*! \brief Destructor
      */

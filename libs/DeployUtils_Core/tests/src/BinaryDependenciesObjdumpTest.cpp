@@ -24,6 +24,7 @@
 #include "Mdt/PlainText/TestUtils.h"
 #include <QChar>
 #include <QByteArray>
+#include <QString>
 #include <algorithm>
 
 using namespace Mdt::DeployUtils;
@@ -37,9 +38,6 @@ void BinaryDependenciesObjdumpTest::cleanupTestCase()
 {
 }
 
-/*
- * Tests
- */
 
 void BinaryDependenciesObjdumpTest::sandbox()
 {
@@ -49,6 +47,11 @@ void BinaryDependenciesObjdumpTest::sandbox()
   
   
 }
+
+/*
+ * Tests
+ */
+
 
 
 /*

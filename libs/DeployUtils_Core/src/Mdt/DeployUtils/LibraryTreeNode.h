@@ -18,47 +18,49 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "BinaryDependenciesTest.h"
-#include "Mdt/DeployUtils/BinaryDependencies.h"
-#include "Mdt/DeployUtils/Platform.h"
-#include <QCoreApplication>
+#ifndef MDT_DEPLOY_UTILS_LIBRARY_TREE_NODE_H
+#define MDT_DEPLOY_UTILS_LIBRARY_TREE_NODE_H
 
-using namespace Mdt::DeployUtils;
+namespace Mdt{ namespace DeployUtils{
 
-void BinaryDependenciesTest::initTestCase()
-{
-}
+  /*! \brief Node identifier used in LibraryTree
+   */
+  class LibraryTreeNode
+  {
+   public:
 
-void BinaryDependenciesTest::cleanupTestCase()
-{
-}
+    /*! \brief Construct a null tree node
+     */
+    constexpr LibraryTreeNode() noexcept = default;
 
-/*
- * Tests
- */
+    /*! \brief Construct a tree node
+     */
+    constexpr LibraryTreeNode(int id) noexcept
+     : mId(id)
+    {
+    }
 
-void BinaryDependenciesTest::runTest()
-{
-  BinaryDependencies deps(Platform::nativeOperatingSystem());
+    /*! \brief Get node id
+     */
+    constexpr int id() const noexcept
+    {
+      return mId;
+    }
 
-  QVERIFY(deps.isValid());
-  QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath() ));
-  QVERIFY(!deps.dependencies().isEmpty());
-}
+    /*! \brief Check if this tree node is null
+     *
+     * A tree noode is null if its id is 0
+     */
+    constexpr bool isNull() const noexcept
+    {
+      return ( mId == 0 );
+    }
 
-/*
- * Main
- */
+   private:
 
-int main(int argc, char **argv)
-{
-  Mdt::Application app(argc, argv);
-  BinaryDependenciesTest test;
+    int mId = 0;
+  };
 
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
+}} // namespace Mdt{ namespace DeployUtils{
 
-  return QTest::qExec(&test, argc, argv);
-}
+#endif // #ifndef MDT_DEPLOY_UTILS_LIBRARY_TREE_NODE_H

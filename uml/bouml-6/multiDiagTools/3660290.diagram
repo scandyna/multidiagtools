@@ -1,0 +1,71 @@
+format 213
+
+classcanvas 128002 class_ref 4211330 // LibraryTree
+  classdiagramsettings member_max_width 0 end
+  xyz 42 265 2000
+end
+classcanvas 128130 class_ref 4224386 // VertexData
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 488.5 2000
+end
+classcanvas 128258 class_ref 2574338 // adjacency_list
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 674 40 2005
+end
+classcanvas 128386 class_ref 4224514 // LibraryTreeNode
+  classdiagramsettings member_max_width 0 end
+  xyz 279.5 488.5 2000
+end
+classcanvas 128514 class_ref 4224642 // LabeledGraph
+  classdiagramsettings member_max_width 0 end
+  xyz 509 146 2000
+end
+classcanvas 129026 class_ref 4224770 // LibraryTreeNodeList
+  classdiagramsettings member_max_width 0 end
+  xyz 478.5 488.5 2000
+end
+classcanvas 129154 class_ref 4231298 // LibraryTreeImpl
+  classdiagramsettings member_max_width 0 end
+  xyz 121 131 2000
+end
+classcanvas 130050 class_ref 4237954 // labeled_graph
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 487 40 2005
+end
+classcanvas 130306 class_ref 4238082 // Graph
+  classdiagramsettings member_max_width 0 end
+  xyz 705 146 2010
+end
+relationcanvas 129538 relation_ref 4742786 // <directional composition>
+  decenter_begin 507
+  from ref 128002 z 2001 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 4742914 // <directional composition>
+  decenter_begin 454
+  decenter_end 434
+  from ref 129154 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 4749954 // <realization>
+  decenter_begin 448
+  decenter_end 469
+  from ref 130306 z 2011 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 4750082 // <realization>
+  from ref 128514 z 2006 to ref 130050
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130946 relation_ref 4750210 // <dependency>
+  decenter_begin 434
+  decenter_end 434
+  from ref 128514 z 2011 to ref 130306
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

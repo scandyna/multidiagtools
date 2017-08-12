@@ -18,47 +18,10 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "BinaryDependenciesTest.h"
-#include "Mdt/DeployUtils/BinaryDependencies.h"
-#include "Mdt/DeployUtils/Platform.h"
-#include <QCoreApplication>
+#include "LibraryTreeNode.h"
 
-using namespace Mdt::DeployUtils;
+namespace Mdt{ namespace DeployUtils{
 
-void BinaryDependenciesTest::initTestCase()
-{
-}
 
-void BinaryDependenciesTest::cleanupTestCase()
-{
-}
 
-/*
- * Tests
- */
-
-void BinaryDependenciesTest::runTest()
-{
-  BinaryDependencies deps(Platform::nativeOperatingSystem());
-
-  QVERIFY(deps.isValid());
-  QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath() ));
-  QVERIFY(!deps.dependencies().isEmpty());
-}
-
-/*
- * Main
- */
-
-int main(int argc, char **argv)
-{
-  Mdt::Application app(argc, argv);
-  BinaryDependenciesTest test;
-
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
-
-  return QTest::qExec(&test, argc, argv);
-}
+}} // namespace Mdt{ namespace DeployUtils{
