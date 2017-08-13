@@ -20,10 +20,6 @@ classcanvas 128514 class_ref 4224642 // LabeledGraph
   classdiagramsettings member_max_width 0 end
   xyz 509 146 2000
 end
-classcanvas 129026 class_ref 4224770 // LibraryTreeNodeList
-  classdiagramsettings member_max_width 0 end
-  xyz 478.5 488.5 2000
-end
 classcanvas 129154 class_ref 4231298 // LibraryTreeImpl
   classdiagramsettings member_max_width 0 end
   xyz 121 131 2000

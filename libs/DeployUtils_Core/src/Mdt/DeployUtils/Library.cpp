@@ -25,7 +25,7 @@
 #include <QFileInfo>
 #include <algorithm>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -50,6 +50,7 @@ bool Library::findLibrary(const QString & name, const PathList pathList, Library
   const auto matchFile = [libraryName, this](const QFileInfo & fileInfo){
     LibraryName currentFile(fileInfo.fileName());
     if(currentFile.name() == libraryName.name()){
+      mLibraryInfo.setLibraryName(libraryName);
       mLibraryInfo.setAbsoluteFilePath(fileInfo.absoluteFilePath());
       return true;
     }
@@ -78,16 +79,6 @@ bool Library::findLibrary(const QString & name, const PathList pathList, Library
 void Library::addSystemPaths(PathList & pathList)
 {
   pathList.appendPathList( PathList::getSystemLibraryPathList() );
-// #ifdef Q_OS_UNIX
-//   pathList.appendPath("/usr/lib");
-//   pathList.appendPath("/usr/lib/x86_64-linux-gnu");
-//   pathList.appendPath("/usr/lib32");
-//   pathList.appendPath("/usr/libx32");
-//   pathList.appendPath("/lib");
-//   pathList.appendPath("/lib32");
-//   pathList.appendPath("/lib64");
-//   pathList.appendPath("/libx32");
-// #endif // #ifdef Q_OS_UNIX
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

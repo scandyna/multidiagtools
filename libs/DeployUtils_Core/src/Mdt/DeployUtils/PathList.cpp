@@ -26,7 +26,7 @@
 #include <QDir>
 #include <QChar>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -55,9 +55,24 @@ void PathList::prependPath(const QString& path)
   mList.prepend(path);
 }
 
+void PathList::prependPathList(const PathList& pathList)
+{
+  for(const auto & path : pathList){
+    if(!path.trimmed().isEmpty()){
+      prependPath(path);
+    }
+  }
+}
+
+void PathList::clear()
+{
+  mList.clear();
+}
+
 PathList PathList::getSystemExecutablePathList()
 {
   PathList pathList;
+
   const auto pathEnv = QString::fromLocal8Bit( qgetenv("PATH") );
 #ifdef Q_OS_WIN
   const QChar separator(';');
@@ -65,11 +80,7 @@ PathList PathList::getSystemExecutablePathList()
   const QChar separator(':');
 #endif
   const auto rawPathList = pathEnv.split(separator);
-
-  qDebug() << "PATH: " << pathEnv << " , list: " << rawPathList;
-  
   for(const auto & path : rawPathList){
-    qDebug() << " Path: " << QDir::cleanPath(path);
     pathList.appendPath( QDir::cleanPath(path) );
   }
 
@@ -78,28 +89,30 @@ PathList PathList::getSystemExecutablePathList()
 
 PathList PathList::getSystemLibraryPathList()
 {
-//   PathList pathList;
-  
-
   /*
    * QLibraryInfo helps to find where Qt libraries are installed (I guess)
    * For the other, we guess what system library paths could exist
    */
-  
-  qDebug() << "Qt lib path: " << QLibraryInfo::location(QLibraryInfo::LibrariesPath);
-
 #ifdef Q_OS_UNIX
-  PathList pathList{"/usr/lib","/usr/lib/x86_64-linux-gnu","/usr/lib32","/usr/libx32","/lib","/lib32","/lib64","/libx32"};
+  PathList pathList = getSystemLibraryKnownPathListLinux();
 #endif // #ifdef Q_OS_UNIX
 #ifdef Q_OS_WIN
-  PathList pathList{"windows/syswow64","windows/system32","windows/system"};
+  PathList pathList = getSystemLibraryKnownPathListWindows();
   pathList.appendPathList( getSystemExecutablePathList() );
 #endif // #ifdef Q_OS_WIN
   pathList.appendPath( QLibraryInfo::location(QLibraryInfo::LibrariesPath) );
 
-  qDebug() << "Lib paths: " << pathList.toStringList();
-  
   return pathList;
+}
+
+PathList PathList::getSystemLibraryKnownPathListLinux()
+{
+  return PathList{"/usr/lib","/usr/lib/x86_64-linux-gnu","/usr/lib32","/usr/libx32","/lib","/lib32","/lib64","/libx32"};
+}
+
+PathList PathList::getSystemLibraryKnownPathListWindows()
+{
+  return PathList{"/windows/syswow64","/windows/system32","/windows/system"};
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

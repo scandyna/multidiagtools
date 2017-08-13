@@ -43,6 +43,7 @@ class ObjdumpDependenciesParserTest : public TestBase
  private:
 
   static QString objdumpHeaderWindows();
+  static QString objdumpImportTablesHeaderWindows();
   static QString objdumpEntryWindows(const QString & libraryName);
   static QString objdumpEntryListWindows(const QStringList & libraryNameList);
   static QString objdumpOutputWindows(const QStringList & libraryNameList);

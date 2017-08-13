@@ -52,6 +52,7 @@ BinaryDependenciesLdd::BinaryDependenciesLdd(QObject* parent)
 {
 }
 
+
 bool BinaryDependenciesLdd::findDependencies(const QString& binaryFilePath)
 {
   LddWrapper ldd;

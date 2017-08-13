@@ -2,35 +2,29 @@ format 213
 
 classcanvas 128002 class_ref 4197634 // BinaryDependenciesObjdump
   classdiagramsettings member_max_width 0 end
-  xyz 207 202 2000
+  xyz 209 210 2000
 end
 classcanvas 128130 class_ref 4176642 // BinaryDependenciesImplementationInterface
   classdiagramsettings member_max_width 0 end
-  xyz 125 40 2000
+  xyz 193 40 2000
 end
 classcanvas 128386 class_ref 4159746 // ObjdumpWrapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 42 202 2000
+  xyz 42 218 2000
 end
 classcanvas 128642 class_ref 4197762 // ObjdumpDependenciesParser
   classdiagramsettings member_max_width 0 end
-  xyz 178 287 2000
+  xyz 586 199 2000
 end
 classcanvas 128898 class_ref 4211330 // LibraryTree
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 448.5 2000
+  xyz 40.5 360.5 2000
 end
 classcanvas 129154 class_ref 4158978 // LibraryInfo
   classdiagramsettings member_max_width 0 end
-  xyz 568.5 40.5 2000
-end
-classcanvas 129282 class_ref 4217858 // SomeVertexMap
-  classdiagramsettings member_max_width 0 end
-  xyz 573.5 448.5 2000
+  xyz 605.5 360.5 2000
 end
 relationcanvas 128258 relation_ref 4715266 // <generalisation>
-  decenter_begin 477
-  decenter_end 487
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -41,7 +35,6 @@ relationcanvas 128514 relation_ref 4715394 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 4715522 // <directional composition>
-  decenter_begin 477
   from ref 128002 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

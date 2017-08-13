@@ -23,6 +23,9 @@
 
 #include "BinaryDependenciesImplementationInterface.h"
 #include "LibraryInfoList.h"
+#include "PathList.h"
+#include "LibraryTree.h"
+#include "LibraryTreeNode.h"
 #include "Mdt/PlainText/StringRecord.h"
 #include "Mdt/PlainText/StringRecordList.h"
 #include <QStringList>
@@ -45,6 +48,13 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool findDependencies(const QString & binaryFilePath) override;
 
+    /*! \brief Get a list of paths where libraries are searched
+     */
+    PathList librarySearchPathList() const
+    {
+      return mLibrarySearchPathList;
+    }
+
 //     /*! \internal Fill dependencies, made public for unit tests
 //      */
 //     void fillAndSetDependencies(PlainText::StringRecordList & data);
@@ -59,6 +69,12 @@ namespace Mdt{ namespace DeployUtils{
 //     static bool isLibraryNotInExcludeList(const PlainText::StringRecord & record);
 //     static QStringList stringRecordListToStringNameList(const PlainText::StringRecordList & recordList);
 
+    bool findAndAddDependenciesForNode(const QString & binaryFilePath, LibraryTreeNode node);
+    bool setLibrarySearchPathList(const QString & binaryFilePath);
+
+    LibraryTree mLibraryTree;
+    PathList mLibrarySearchPathList;
+    QStringList mAlreadyProcessedLibraries;
     PlainText::StringRecordList mNotFoundDependencies;
   };
 

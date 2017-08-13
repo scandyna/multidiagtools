@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_IMPLEMENTATION_INTERFACE_H
 
 #include "LibraryInfoList.h"
+#include "PathList.h"
 #include "Mdt/Error.h"
 #include <QObject>
 
@@ -38,6 +39,17 @@ namespace Mdt{ namespace DeployUtils{
     /*! \brief Constructor
      */
     BinaryDependenciesImplementationInterface(QObject* parent = nullptr);
+
+    /*! \brief Set a list of paths where to search dependencies first
+     */
+    void setLibrarySearchFirstPathList(const PathList & pathList);
+
+    /*! \brief Get the list of paths where to search dependencies first
+     */
+    PathList librarySearchFirstPathList() const
+    {
+      return mLibrarySearchFirstPathList;
+    }
 
     /*! \brief Find dependencies for a executable or a library
      */
@@ -70,6 +82,7 @@ namespace Mdt{ namespace DeployUtils{
    private:
 
     LibraryInfoList mDependencies;
+    PathList mLibrarySearchFirstPathList;
     Mdt::Error mLastError;
   };
 

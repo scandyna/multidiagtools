@@ -38,7 +38,8 @@ class PathTest : public TestBase
   void pathListAppendPathListTest_data();
   void pathListPrependTest();
   void pathListPrependTest_data();
-
+  void pathListPrependPathListTest();
+  void pathListPrependPathListTest_data();
 };
 
 #endif // #ifndef PATH_TEST_H

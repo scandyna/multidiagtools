@@ -101,7 +101,7 @@ void ObjdumpDependenciesParserTest::parserWindowsTest_data()
 
   QTest::newRow("0")
    << ""
-   << StringRecordList{} << Nok;
+   << StringRecordList{} << Ok;
 
   QTest::newRow("1")
    << "DLL Name: liba.dll"
@@ -122,6 +122,11 @@ void ObjdumpDependenciesParserTest::parserWindowsTest_data()
   QTest::newRow("5")
    << objdumpOutputWindows( QStringList{"libe.dll","libf.dll","libg.dll"} )
    << StringRecordList{{"libe.dll"},{"libf.dll"},{"libg.dll"}} << Ok;
+
+  // Library with no dependencies
+  QTest::newRow("6")
+    << objdumpHeaderWindows()
+    << StringRecordList{} << Ok;
 }
 
 /*
@@ -141,9 +146,12 @@ QString ObjdumpDependenciesParserTest::objdumpHeaderWindows()
          "DllCharacteristics  00000000\r\n"
          "\n"
          "The Data Directory\n"
-         "Entry 0 00000000 00000000 Export Directory [.edata (or where ever we found it)]\n"
-         "\n"
-         "Il y a une table d'importation dans .idata à 0x40a000\n"
+         "Entry 0 00000000 00000000 Export Directory [.edata (or where ever we found it)]\n";
+}
+
+QString ObjdumpDependenciesParserTest::objdumpImportTablesHeaderWindows()
+{
+  return "Il y a une table d'importation dans .idata à 0x40a000\n"
          "\n"
          "Les tables d'importation (contenus interprété de la section .idata)\n"
          "vma:            Hint    Temps     Avant    DLL       Premier\n"
@@ -172,7 +180,7 @@ QString ObjdumpDependenciesParserTest::objdumpEntryListWindows(const QStringList
 
 QString ObjdumpDependenciesParserTest::objdumpOutputWindows(const QStringList& libraryNameList)
 {
-  return objdumpHeaderWindows() + "\n" + objdumpEntryListWindows(libraryNameList) + "\n";
+  return objdumpHeaderWindows() + "\n" + objdumpImportTablesHeaderWindows() + "\n" + objdumpEntryListWindows(libraryNameList) + "\n";
 }
 
 /*

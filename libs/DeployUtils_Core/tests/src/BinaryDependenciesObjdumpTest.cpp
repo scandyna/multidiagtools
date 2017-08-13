@@ -27,6 +27,8 @@
 #include <QString>
 #include <algorithm>
 
+#include <QDebug>
+
 using namespace Mdt::DeployUtils;
 using namespace Mdt::PlainText;
 
@@ -43,9 +45,30 @@ void BinaryDependenciesObjdumpTest::sandbox()
 {
   BinaryDependenciesObjdump bd;
   
-  QVERIFY(bd.findDependencies( QCoreApplication::applicationFilePath() ));
+//   QVERIFY(bd.findDependencies( QCoreApplication::applicationFilePath() ));
   
+//   qDebug() << "Dir: " << QCoreApplication::applicationDirPath();
   
+  bd.setLibrarySearchFirstPathList(PathList{"/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/bin","/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/qt5/bin/","/home/philippe/.wine/drive_c/windows/syswow64/"});
+  QVERIFY(bd.findDependencies("/home/philippe/programmation/multiDiagTools/build/cross/win32/release/bin/clienteditor.exe"));
+}
+
+void BinaryDependenciesObjdumpTest::searchPathListTest()
+{
+  /*
+   * Simply check that directory of the serached binary is in the list,
+   * and that at least a other path exists (in all cases, some system paths are required)
+   * Also check that setting a library prefix is taken in account.
+   */
+  BinaryDependenciesObjdump bd;
+  bd.setLibrarySearchFirstPathList(PathList{"/some/prefix"});
+  bd.findDependencies( QCoreApplication::applicationFilePath() );
+  
+  qDebug() << "Paths: " << bd.librarySearchPathList().toStringList();
+  
+  QVERIFY( bd.librarySearchPathList().toStringList().size() >= 2 );
+  QCOMPARE( bd.librarySearchPathList().toStringList().at(0), QCoreApplication::applicationDirPath() );
+  QCOMPARE( bd.librarySearchPathList().toStringList().at(1), QString("/some/prefix") );
 }
 
 /*

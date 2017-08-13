@@ -71,6 +71,16 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool findLibrary(const QString & name, const PathList pathList = PathList(), SearchInSystemPaths searchInSystemPaths = IncludeSystemPaths);
 
+    /*! \brief Get library info
+     *
+     * Returns the information of the library
+     *  after a success call of findLibrary()
+     */
+    LibraryInfo libraryInfo() const
+    {
+      return mLibraryInfo;
+    }
+
     /*! \brief Get last error
      */
     Mdt::Error lastError() const

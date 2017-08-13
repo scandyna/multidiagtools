@@ -84,7 +84,7 @@ namespace Mdt{ namespace DeployUtils{
      */
     void appendPathList(const PathList & pathList);
 
-    /*! \brief Add a path to the end of this list
+    /*! \brief Add a path to the beginning of this list
      *
      * If \a path allready exists in this list,
      *  it will be moved to the beginning.
@@ -92,6 +92,20 @@ namespace Mdt{ namespace DeployUtils{
      * \pre \a path must not be a empty string
      */
     void prependPath(const QString & path);
+
+    /*! \brief Add a path list to the beginning of this list
+     *
+     * If a path in \a pathList allready exists in this list,
+     *  it will be moved to the beginning.
+     *
+     * If \a pathList contains a empty path,
+     *  it will not be added to this list.
+     */
+    void prependPathList(const PathList & pathList);
+
+    /*! \brief Clear this path list
+     */
+    void clear();
 
     /*! \brief Get a list of strings for this list
      */
@@ -149,6 +163,20 @@ namespace Mdt{ namespace DeployUtils{
      * \note The list of paths is built at each call of this method
      */
     static PathList getSystemLibraryPathList();
+
+    /*! \brief Get a list of system library paths for Linux
+     *
+     * Returns a hard-coded list of system library paths
+     *  that are known to exist on certains Linux distributions
+     */
+    static PathList getSystemLibraryKnownPathListLinux();
+
+    /*! \brief Get a list of system library paths for Windows
+     *
+     * Returns a hard-coded list of system library paths
+     *  that are known to exist Windows
+     */
+    static PathList getSystemLibraryKnownPathListWindows();
 
    private:
 

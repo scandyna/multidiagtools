@@ -39,6 +39,7 @@ class BinaryDependenciesObjdumpTest : public TestBase
 
   void sandbox();
 
+  void searchPathListTest();
 //   void fillAndSetDependenciesTest();
 //   void fillAndSetDependenciesTest_data();
 //   void fillAndSetDependenciesBenchmark();

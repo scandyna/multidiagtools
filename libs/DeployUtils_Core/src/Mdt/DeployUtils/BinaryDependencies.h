@@ -25,6 +25,7 @@
 
 #include "OperatingSystem.h"
 #include "LibraryInfoList.h"
+#include "PathList.h"
 #include "Mdt/Error.h"
 #include <QObject>
 #include <QString>
@@ -59,6 +60,26 @@ namespace Mdt{ namespace DeployUtils{
      *  otherwise false.
      */
     bool isValid() const;
+
+    /*! \brief Set a list of paths where to search dependencies first
+     *
+     * For target platforms which supports RPATH (like Linux),
+     *  this has no effects, because the implementation will use ldd,
+     *  which returns directly the full path for each dependency.
+     *
+     * For other target platforms, like Windows,
+     *  use this method to tell where to find libraries
+     *  that are not installed in a standard library location
+     *  (like Qt5, for example),
+     *  or a alternative library version must be used.
+     */
+    void setLibrarySearchFirstPathList(const PathList & pathList);
+
+    /*! \brief Get the list of paths where to search dependencies first
+     *
+     * \sa setLibrarySearchPrefixPathList()
+     */
+    PathList librarySearchFirstPathList() const;
 
     /*! \brief Find dependencies for a executable or a library
      */

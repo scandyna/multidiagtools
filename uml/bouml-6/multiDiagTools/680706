@@ -1,6 +1,6 @@
 format 213
 "DeployUtils" // Mdt::DeployUtils
-  revision 18
+  revision 20
   modified_by 2 "philippe"
   // class settings
   
@@ -658,6 +658,32 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      attribute 3643906 "List"
+	private type class_ref 160770 // QStringList
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5925762 "getSystemLibraryPathList"
+	class_operation public return_type class_ref 4168962 // PathList
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 3640450 "FileCopier"
@@ -1748,7 +1774,7 @@ ${inlines}
 
     classdiagram 3647106 "BinaryDependenciesObjdump"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A
     end
 
     class 4197634 "BinaryDependenciesObjdump"
@@ -1789,6 +1815,22 @@ ${inlines}
 "
 	    classrelation_ref 4741762 // <directional composition>
 	  b parent class_ref 4197762 // ObjdumpDependenciesParser
+      end
+
+      operation 5919234 "findDependencies"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 1
+	  param in name "binaryFilePath" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -2040,22 +2082,6 @@ ${members}};
 	mysql_decl ""
 	MysqlColumn
       end
-    end
-
-    class 4224770 "LibraryTreeNodeList"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
     end
 
     classdiagram 3620226 "Output"
@@ -2566,45 +2592,6 @@ ${inlines}
 	
 	
 	
-      end
-    end
-
-    class 4217858 "SomeVertexMap"
-      visibility package stereotype "map"
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 3611010 "VertexId"
-	private explicit_type ""
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 3611138 "DllName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
       end
     end
   end

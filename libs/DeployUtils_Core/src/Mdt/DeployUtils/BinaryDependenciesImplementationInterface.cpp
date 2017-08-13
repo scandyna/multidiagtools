@@ -27,6 +27,11 @@ BinaryDependenciesImplementationInterface::BinaryDependenciesImplementationInter
 {
 }
 
+void BinaryDependenciesImplementationInterface::setLibrarySearchFirstPathList(const PathList& pathList)
+{
+  mLibrarySearchFirstPathList = pathList;
+}
+
 void BinaryDependenciesImplementationInterface::setDependencies(const LibraryInfoList & dependencies)
 {
   mDependencies = dependencies;
@@ -35,6 +40,7 @@ void BinaryDependenciesImplementationInterface::setDependencies(const LibraryInf
 void BinaryDependenciesImplementationInterface::setLastError(const Error& error)
 {
   mLastError = error;
+  mLastError.commit();
 }
 
 

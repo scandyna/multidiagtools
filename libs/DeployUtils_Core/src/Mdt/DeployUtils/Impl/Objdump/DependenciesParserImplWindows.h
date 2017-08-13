@@ -75,7 +75,7 @@ namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace Objdump{
       using boost::spirit::standard_wide::space;
 
       mOtherText = *(char_ - mRecord);
-      mDependenciesRule = +( -mOtherText >> mRecord >> -mOtherText );
+      mDependenciesRule = *( -mOtherText >> mRecord >> -mOtherText );
       BOOST_SPIRIT_DEBUG_NODE(mOtherText);
     }
 

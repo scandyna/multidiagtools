@@ -54,6 +54,20 @@ bool BinaryDependencies::isValid() const
   return (mImpl.get() != nullptr);
 }
 
+void BinaryDependencies::setLibrarySearchFirstPathList(const PathList& pathList)
+{
+  Q_ASSERT(isValid());
+
+  mImpl->setLibrarySearchFirstPathList(pathList);
+}
+
+PathList BinaryDependencies::librarySearchFirstPathList() const
+{
+  Q_ASSERT(isValid());
+
+  return mImpl->librarySearchFirstPathList();
+}
+
 bool BinaryDependencies::findDependencies(const QString& binaryFilePath)
 {
   Q_ASSERT(isValid());

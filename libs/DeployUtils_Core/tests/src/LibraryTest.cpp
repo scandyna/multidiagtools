@@ -316,6 +316,10 @@ void LibraryTest::searchLibraryTest()
    */
   Library library;
   QCOMPARE(library.findLibrary(name, pathList, static_cast<Library::SearchInSystemPaths>(searchInSystemPaths)), expectedOk);
+  if(expectedOk){
+    QCOMPARE( library.libraryInfo().libraryName().name(), LibraryName(name).name() );
+    QVERIFY( !library.libraryInfo().absoluteFilePath().isEmpty() );
+  }
 }
 
 void LibraryTest::searchLibraryTest_data()
@@ -392,6 +396,16 @@ void LibraryTest::searchLibraryBenchmark_data()
     << "c" << PathList{"/opt/lib44"} << ExcludeSystemPaths << NotExists;
 
 #endif // #ifdef Q_OS_UNIX
+
+#ifdef Q_OS_WIN
+
+  QTest::newRow("hal.dll|hal||")
+    << "hal" << PathList{} << IncludeSystemPaths << Exists;
+
+  QTest::newRow("libc.so|c|/opt/lib44|")
+    << "c" << PathList{"/opt/lib44"} << ExcludeSystemPaths << NotExists;
+
+#endif // #ifdef Q_OS_WIN
 
 }
 

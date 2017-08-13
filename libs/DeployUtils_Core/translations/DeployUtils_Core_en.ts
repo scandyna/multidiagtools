@@ -30,13 +30,26 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependenciesLdd</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="65"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="66"/>
         <source>Parsing ldd output for file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="74"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="75"/>
         <source>Some dependencies have not been found for file &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Mdt::DeployUtils::BinaryDependenciesObjdump</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="94"/>
+        <source>Parsing objdump output for file &apos;%1&apos; failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="136"/>
+        <source>File &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -82,7 +95,7 @@
 <context>
     <name>Mdt::DeployUtils::Library</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/Library.cpp" line="69"/>
+        <location filename="../src/Mdt/DeployUtils/Library.cpp" line="70"/>
         <source>Could not find library &apos;%1&apos; in one of the following paths: %2</source>
         <translation type="unfinished"></translation>
     </message>
