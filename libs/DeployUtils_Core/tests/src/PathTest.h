@@ -34,6 +34,8 @@ class PathTest : public TestBase
 
   void pathListAppendTest();
   void pathListAppendTest_data();
+  void pathListAppendPathListTest();
+  void pathListAppendPathListTest_data();
   void pathListPrependTest();
   void pathListPrependTest_data();
 

@@ -348,8 +348,14 @@ void LibraryTest::searchLibraryTest_data()
   QTest::newRow("libMyLib.so|MyLib|/opt/MyProject/lib|")
     << "/opt/MyProject/lib/libMyLib.so" << "c" << PathList{"/opt/MyProject/lib"} << IncludeSystemPaths << Exists;
 
-
 #endif // #ifdef Q_OS_UNIX
+
+#ifdef Q_OS_WIN
+
+  QTest::newRow("hal.dll|hal||")
+    << "" << "hal" << PathList{} << IncludeSystemPaths << Exists;
+
+#endif // #ifdef Q_OS_WIN
 }
 
 void LibraryTest::searchLibraryBenchmark()

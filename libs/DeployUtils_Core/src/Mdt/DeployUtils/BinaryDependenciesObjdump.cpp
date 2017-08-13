@@ -21,6 +21,7 @@
 #include "BinaryDependenciesObjdump.h"
 #include "ObjdumpWrapper.h"
 #include "ObjdumpDependenciesParser.h"
+#include "LibraryTree.h"
 
 namespace Mdt{ namespace DeployUtils{
 

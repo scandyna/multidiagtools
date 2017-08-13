@@ -74,6 +74,56 @@ void PathTest::pathListAppendTest_data()
   QTest::newRow("{A,B,C},B,{A,C,B}") << initialList << "B" << expectedList;
 }
 
+void PathTest::pathListAppendPathListTest()
+{
+  QFETCH(PathList, initialList);
+  QFETCH(PathList, pathList);
+  QFETCH(PathList, expectedList);
+
+  PathList list = initialList;
+
+  QCOMPARE(list.toStringList(), initialList.toStringList());
+  list.appendPathList(pathList);
+  QCOMPARE(list.toStringList(), expectedList.toStringList());
+}
+
+void PathTest::pathListAppendPathListTest_data()
+{
+  QTest::addColumn<PathList>("initialList");
+  QTest::addColumn<PathList>("pathList");
+  QTest::addColumn<PathList>("expectedList");
+
+  QTest::newRow("0")
+    << PathList{}
+    << PathList{}
+    << PathList{};
+
+  QTest::newRow("1")
+    << PathList{"A"}
+    << PathList{}
+    << PathList{"A"};
+
+  QTest::newRow("2")
+    << PathList{"A"}
+    << PathList{""}
+    << PathList{"A"};
+
+  QTest::newRow("3")
+    << PathList{}
+    << PathList{"A"}
+    << PathList{"A"};
+
+  QTest::newRow("4")
+    << PathList{"A"}
+    << PathList{"A"}
+    << PathList{"A"};
+
+  QTest::newRow("5")
+    << PathList{"A"}
+    << PathList{"B"}
+    << PathList{"A","B"};
+}
+
 void PathTest::pathListPrependTest()
 {
   QFETCH(PathList, initialList);

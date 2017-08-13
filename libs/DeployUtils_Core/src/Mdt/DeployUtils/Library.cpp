@@ -77,16 +77,17 @@ bool Library::findLibrary(const QString & name, const PathList pathList, Library
 
 void Library::addSystemPaths(PathList & pathList)
 {
-#ifdef Q_OS_UNIX
-  pathList.appendPath("/usr/lib");
-  pathList.appendPath("/usr/lib/x86_64-linux-gnu");
-  pathList.appendPath("/usr/lib32");
-  pathList.appendPath("/usr/libx32");
-  pathList.appendPath("/lib");
-  pathList.appendPath("/lib32");
-  pathList.appendPath("/lib64");
-  pathList.appendPath("/libx32");
-#endif // #ifdef Q_OS_UNIX
+  pathList.appendPathList( PathList::getSystemLibraryPathList() );
+// #ifdef Q_OS_UNIX
+//   pathList.appendPath("/usr/lib");
+//   pathList.appendPath("/usr/lib/x86_64-linux-gnu");
+//   pathList.appendPath("/usr/lib32");
+//   pathList.appendPath("/usr/libx32");
+//   pathList.appendPath("/lib");
+//   pathList.appendPath("/lib32");
+//   pathList.appendPath("/lib64");
+//   pathList.appendPath("/libx32");
+// #endif // #ifdef Q_OS_UNIX
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

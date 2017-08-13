@@ -19,6 +19,14 @@
  **
  ****************************************************************************/
 #include "PathList.h"
+#include <QList>
+#include <QtGlobal>
+#include <QByteArray>
+#include <QLibraryInfo>
+#include <QDir>
+#include <QChar>
+
+#include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -30,12 +38,68 @@ void PathList::appendPath(const QString& path)
   mList.append(path);
 }
 
+void PathList::appendPathList(const PathList & pathList)
+{
+  for(const auto & path : pathList){
+    if(!path.trimmed().isEmpty()){
+      appendPath(path);
+    }
+  }
+}
+
 void PathList::prependPath(const QString& path)
 {
   Q_ASSERT(!path.trimmed().isEmpty());
 
   mList.removeAll(path);
   mList.prepend(path);
+}
+
+PathList PathList::getSystemExecutablePathList()
+{
+  PathList pathList;
+  const auto pathEnv = QString::fromLocal8Bit( qgetenv("PATH") );
+#ifdef Q_OS_WIN
+  const QChar separator(';');
+#else
+  const QChar separator(':');
+#endif
+  const auto rawPathList = pathEnv.split(separator);
+
+  qDebug() << "PATH: " << pathEnv << " , list: " << rawPathList;
+  
+  for(const auto & path : rawPathList){
+    qDebug() << " Path: " << QDir::cleanPath(path);
+    pathList.appendPath( QDir::cleanPath(path) );
+  }
+
+  return pathList;
+}
+
+PathList PathList::getSystemLibraryPathList()
+{
+//   PathList pathList;
+  
+
+  /*
+   * QLibraryInfo helps to find where Qt libraries are installed (I guess)
+   * For the other, we guess what system library paths could exist
+   */
+  
+  qDebug() << "Qt lib path: " << QLibraryInfo::location(QLibraryInfo::LibrariesPath);
+
+#ifdef Q_OS_UNIX
+  PathList pathList{"/usr/lib","/usr/lib/x86_64-linux-gnu","/usr/lib32","/usr/libx32","/lib","/lib32","/lib64","/libx32"};
+#endif // #ifdef Q_OS_UNIX
+#ifdef Q_OS_WIN
+  PathList pathList{"windows/syswow64","windows/system32","windows/system"};
+  pathList.appendPathList( getSystemExecutablePathList() );
+#endif // #ifdef Q_OS_WIN
+  pathList.appendPath( QLibraryInfo::location(QLibraryInfo::LibrariesPath) );
+
+  qDebug() << "Lib paths: " << pathList.toStringList();
+  
+  return pathList;
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

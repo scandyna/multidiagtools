@@ -74,6 +74,16 @@ namespace Mdt{ namespace DeployUtils{
      */
     void appendPath(const QString & path);
 
+    /*! \brief Add a path list to the end of this list
+     *
+     * If a path in \a pathList allready exists in this list,
+     *  it will be moved to the end.
+     *
+     * If \a pathList contains a empty path,
+     *  it will not be added to this list.
+     */
+    void appendPathList(const PathList & pathList);
+
     /*! \brief Add a path to the end of this list
      *
      * If \a path allready exists in this list,
@@ -124,6 +134,21 @@ namespace Mdt{ namespace DeployUtils{
     {
       return mList.cend();
     }
+
+    /*! \brief Get a list of system executable paths
+     *
+     * Will get paths from the PATH environment variable,
+     *  which should be set on most operating systems.
+     *
+     * \note The list of paths is built at each call of this method
+     */
+    static PathList getSystemExecutablePathList();
+
+    /*! \brief Get a list of system library paths
+     *
+     * \note The list of paths is built at each call of this method
+     */
+    static PathList getSystemLibraryPathList();
 
    private:
 
