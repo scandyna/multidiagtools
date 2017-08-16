@@ -48,9 +48,20 @@ void BinaryDependenciesObjdumpTest::sandbox()
 //   QVERIFY(bd.findDependencies( QCoreApplication::applicationFilePath() ));
   
 //   qDebug() << "Dir: " << QCoreApplication::applicationDirPath();
+  PathList searchPathList{
+    "/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/bin",
+    "/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/qt5/bin/"/*,
+    "/home/philippe/.wine/drive_c/windows/syswow64/"*/
+  };
+  bd.setLibrarySearchFirstPathList(searchPathList);
+//   QVERIFY(bd.findDependencies("/home/philippe/programmation/multiDiagTools/build/cross/win32/release/bin/clienteditor.exe"));
+  bd.findDependencies("/home/philippe/programmation/multiDiagTools/build/cross/win32/release/bin/clienteditor.exe");
   
-  bd.setLibrarySearchFirstPathList(PathList{"/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/bin","/home/philippe/opt/build/cross/mxe/usr/i686-w64-mingw32.shared.posix/qt5/bin/","/home/philippe/.wine/drive_c/windows/syswow64/"});
-  QVERIFY(bd.findDependencies("/home/philippe/programmation/multiDiagTools/build/cross/win32/release/bin/clienteditor.exe"));
+  qDebug() << "Searched in:";
+  const auto paths = bd.librarySearchPathList();
+  for(const auto & path : paths){
+    qDebug() << " " << path;
+  }
 }
 
 void BinaryDependenciesObjdumpTest::searchPathListTest()

@@ -22,17 +22,32 @@
 #include "ObjdumpWrapper.h"
 #include "ObjdumpDependenciesParser.h"
 #include "Library.h"
+#include "LibraryName.h"
 #include "Mdt/PlainText/StringRecord.h"
 #include "Mdt/PlainText/StringRecordList.h"
 #include <QFileInfo>
 #include <QDir>
 #include <QString>
+#include <array>
+#include <algorithm>
 
 #include <QDebug>
 
 using namespace Mdt::PlainText;
 
 namespace Mdt{ namespace DeployUtils{
+
+/*! \internal List of library to not deploy
+ *
+ * A good starting point can be found on Wikipedia:
+ * https://en.wikipedia.org/wiki/Microsoft_Windows_library_files
+ */
+static const std::array<const char * const, 24> LibrayExcludeListWindows =
+{
+  "Hal", "NTDLL", "KERNEL32", "GDI32", "USER32", "COMCTL32", "WS2_32", "ADVAPI32", "NETAPI32", "SHSCRAP",
+  "WINMM", "MSVCRT", "mpr", "ole32", "shell32", "version", "crypt32", "eay32", "dnsapi", "iphlpapi",
+  "ssleay32", "opengl32", "UxTheme", "dwmapi"
+};
 
 BinaryDependenciesObjdump::BinaryDependenciesObjdump(QObject* parent)
  : BinaryDependenciesImplementationInterface(parent)
@@ -100,11 +115,15 @@ bool BinaryDependenciesObjdump::findAndAddDependenciesForNode(const QString& bin
   const auto rawDependenciesRecordList = parser.rawDependencies();
   for(const auto & record : rawDependenciesRecordList){
     Q_ASSERT(record.columnCount() == 1);
-    Library library;
-    /// \todo Once exclude list(s) done, change here
-    if( library.findLibrary(record.data(0), mLibrarySearchPathList, Library::ExcludeSystemPaths) ){
+    if(!isLibraryInExcludeList(record)){
+      Library library;
+      if( !library.findLibrary(record.data(0), mLibrarySearchPathList, Library::ExcludeSystemPaths) ){
+        const QString msg = tr("Could not find library '%1'.").arg(record.data(0));
+        auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+        setLastError(error);
+        return false;
+      }
       qDebug() << "  Dep: " << record.data(0);
-//       qDebug() << "  Path: " << library.libraryInfo().absoluteFilePath();
       mAlreadyProcessedLibraries.append(binaryFilePath);
       const auto libraryFilePath = library.libraryInfo().absoluteFilePath();
       const auto libraryNode = mLibraryTree.addLibrary( libraryFilePath, node );
@@ -112,12 +131,37 @@ bool BinaryDependenciesObjdump::findAndAddDependenciesForNode(const QString& bin
 //         qDebug() << "Fail for " << binaryFilePath;
         return false;
       }
-    }else{
-      qDebug() << "  NOT found: " << record.data(0);
     }
+//     Library library;
+//     /// \todo Once exclude list(s) done, change here
+//     if( library.findLibrary(record.data(0), mLibrarySearchPathList, Library::ExcludeSystemPaths) ){
+//       qDebug() << "  Dep: " << record.data(0);
+// //       qDebug() << "  Path: " << library.libraryInfo().absoluteFilePath();
+//       mAlreadyProcessedLibraries.append(binaryFilePath);
+//       const auto libraryFilePath = library.libraryInfo().absoluteFilePath();
+//       const auto libraryNode = mLibraryTree.addLibrary( libraryFilePath, node );
+//       if(!findAndAddDependenciesForNode( libraryFilePath, libraryNode )){
+// //         qDebug() << "Fail for " << binaryFilePath;
+//         return false;
+//       }
+//     }else{
+//       qDebug() << "  NOT found: " << record.data(0);
+//     }
   }
 
   return true;
+}
+
+bool BinaryDependenciesObjdump::isLibraryInExcludeList(const StringRecord & record)
+{
+  Q_ASSERT(record.columnCount() > 0);
+
+  const auto cmp = [record](const char * const excludeName){
+    LibraryName libName(record.data(0));
+    return ( QString::compare( libName.name(), QLatin1String(excludeName), Qt::CaseInsensitive ) == 0);
+  };
+  const auto it = std::find_if( LibrayExcludeListWindows.cbegin(), LibrayExcludeListWindows.cend(), cmp );
+  return (it != LibrayExcludeListWindows.cend());
 }
 
 bool BinaryDependenciesObjdump::setLibrarySearchPathList(const QString& binaryFilePath)

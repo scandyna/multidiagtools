@@ -69,8 +69,7 @@ namespace Mdt{ namespace DeployUtils{
      *
      * For other target platforms, like Windows,
      *  use this method to tell where to find libraries
-     *  that are not installed in a standard library location
-     *  (like Qt5, for example),
+     *  that are not installed in a standard library location,
      *  or a alternative library version must be used.
      */
     void setLibrarySearchFirstPathList(const PathList & pathList);

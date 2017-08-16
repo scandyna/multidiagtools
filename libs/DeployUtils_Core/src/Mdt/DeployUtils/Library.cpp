@@ -58,7 +58,11 @@ bool Library::findLibrary(const QString & name, const PathList pathList, Library
   };
   // Lambda that search the library in given path
   const auto searchInDirectory = [libraryName, matchFile](const QString & path){
-    const QDir currentDirectoy(path);
+    QDir currentDirectoy(path);
+    // Benchmarking, shows that using filters is slower
+    // currentDirectoy.setFilter( QDir::Files );
+    // currentDirectoy.setNameFilters( QStringList{"*.so.*","*.dll"} );
+    currentDirectoy.setSorting(QDir::NoSort);
     const auto fileInfoList = currentDirectoy.entryInfoList();
     const auto it = std::find_if(fileInfoList.cbegin(), fileInfoList.cend(), matchFile);
     return (it != fileInfoList.cend());

@@ -70,6 +70,7 @@ namespace Mdt{ namespace DeployUtils{
 //     static QStringList stringRecordListToStringNameList(const PlainText::StringRecordList & recordList);
 
     bool findAndAddDependenciesForNode(const QString & binaryFilePath, LibraryTreeNode node);
+    static bool isLibraryInExcludeList(const PlainText::StringRecord & record);
     bool setLibrarySearchPathList(const QString & binaryFilePath);
 
     LibraryTree mLibraryTree;
