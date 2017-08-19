@@ -155,6 +155,9 @@ cmake -C ../../cmake/caches/ReleaseGcc.cmake -D QT_PREFIX_PATH=~/opt/qt/Qt5/5.9.
 ```
 
 This is my personnal case to build Mdt in debug mode, and install it locally:
+# TODO BUG After make install, Mdt depends on system wide installed Qt5, Nok !
+# See: https://stackoverflow.com/questions/30398238/cmake-rpath-not-working-could-not-find-shared-object-file
+#  and: https://cmake.org/Wiki/CMake_RPATH_handling
 ```bash
 cmake -C ../../cmake/caches/DebugGcc.cmake -D QT_PREFIX_PATH=~/opt/qt/Qt5/5.9.1/gcc_64/ -D CMAKE_INSTALL_PREFIX=~/opt/mdt/debug ../../
 ```
