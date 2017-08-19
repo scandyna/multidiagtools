@@ -38,30 +38,29 @@ MdtCpBinDepsMain::MdtCpBinDepsMain(QObject* parent)
 
 int MdtCpBinDepsMain::runMain()
 {
-  QString binaryFilePath;
-  QString destinationDirectoryPath;
-  {
-    CommandLineParser parser;
-    if(!parser.process()){
-      return 1;
-    }
-    binaryFilePath = parser.binaryFilePath();
-    destinationDirectoryPath = parser.destinationDirectoryPath();
-  }
-  qDebug() << "Main: file: " << binaryFilePath << " , dest: " << destinationDirectoryPath;
-
-  BinaryDependencies binDeps;
-  if(!binDeps.isValid()){
-    qDebug() << binDeps.lastError().text();
+//   QString binaryFilePath;
+//   QString destinationDirectoryPath;
+//   {
+  CommandLineParser parser;
+  if(!parser.process()){
     return 1;
   }
-  if(!binDeps.findDependencies(binaryFilePath)){
+//     binaryFilePath = parser.binaryFilePath();
+//     destinationDirectoryPath = parser.destinationDirectoryPath();
+//   }
+  qDebug() << "Main: file: " << parser.binaryFilePath() << " , dest: " << parser.destinationDirectoryPath();
+
+  /// \todo Adapt
+  BinaryDependencies binDeps;
+  binDeps.setLibrarySearchFirstPathList(parser.librarySearchFirstPathList());
+  binDeps.setLibrarySearchFirstPathSuffixList(parser.librarySearchFirstPathSuffixList());
+  if(!binDeps.findDependencies(parser.binaryFilePath())){
     qDebug() << binDeps.lastError().text();
     return 1;
   }
 
   FileCopier cp;
-  if(!cp.copyLibraries(binDeps.dependencies(), destinationDirectoryPath)){
+  if(!cp.copyLibraries(binDeps.dependencies(), parser.destinationDirectoryPath())){
     qDebug() << cp.lastError().text();
     return 1;
   }

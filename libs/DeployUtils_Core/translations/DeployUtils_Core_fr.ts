@@ -2,27 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
-    <name>Mdt::DeployUtils</name>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="28"/>
-        <source>Path to the source file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="30"/>
-        <source>Utilities to help deploying a application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="33"/>
-        <source>Action to do..</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="93"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="77"/>
+        <source>File &apos;%1&apos; does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="109"/>
         <source>Could not find a tool to get dependencies for file &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -43,19 +30,14 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependenciesObjdump</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="109"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="119"/>
         <source>Parsing objdump output for file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="121"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="131"/>
         <source>Could not find library &apos;%1&apos;.
 Searched in %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="181"/>
-        <source>File &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -80,12 +62,12 @@ Searched in %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="90"/>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="97"/>
         <source>Could not remove destination file &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="101"/>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="108"/>
         <source>Could not copy file &apos;%1&apos; to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -129,6 +111,24 @@ Searched in %2</source>
     <message>
         <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="54"/>
         <source>Error occured from command &apos;%1 %2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsCommandLineParser</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="28"/>
+        <source>Path to the source file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="30"/>
+        <source>Utilities to help deploying a application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/SettingsCommandLineParser.cpp" line="33"/>
+        <source>Action to do..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

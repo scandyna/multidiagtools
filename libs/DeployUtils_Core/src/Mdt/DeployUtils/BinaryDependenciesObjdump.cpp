@@ -42,12 +42,17 @@ namespace Mdt{ namespace DeployUtils{
  * A good starting point can be found on Wikipedia:
  * https://en.wikipedia.org/wiki/Microsoft_Windows_library_files
  */
-static const std::array<const char * const, 24> LibrayExcludeListWindows =
+static const std::array<const char * const, 23> LibrayExcludeListWindows =
 {
   "Hal", "NTDLL", "KERNEL32", "GDI32", "USER32", "COMCTL32", "WS2_32", "ADVAPI32", "NETAPI32", "SHSCRAP",
-  "WINMM", "MSVCRT", "mpr", "ole32", "shell32", "version", "crypt32", "eay32", "dnsapi", "iphlpapi",
-  "ssleay32", "opengl32", "UxTheme", "dwmapi"
+  "WINMM", "MSVCRT", "mpr", "ole32", "shell32", "version", "crypt32", "dnsapi", "iphlpapi","opengl32",
+  "UxTheme", "dwmapi"
 };
+
+/*
+ * Libraries I don't really know if they must be excluded:
+ *  - eay32 , ssleay32 (OpenSSL)
+ */
 
 BinaryDependenciesObjdump::BinaryDependenciesObjdump(QObject* parent)
  : BinaryDependenciesImplementationInterface(parent)
@@ -56,26 +61,31 @@ BinaryDependenciesObjdump::BinaryDependenciesObjdump(QObject* parent)
 
 bool BinaryDependenciesObjdump::findDependencies(const QString& binaryFilePath)
 {
-  if(!setLibrarySearchPathList(binaryFilePath)){
-    return false;
-  }
+  setLibrarySearchPathList();
   qDebug() << "Search libraries in:";
   for(const auto & path : mLibrarySearchPathList){
     qDebug() << " " << path;
   }
-
+  // Find dependencies recursively
   const auto node = mLibraryTree.setRootBinary(binaryFilePath);
   mAlreadyProcessedLibraries.clear();
   if(!findAndAddDependenciesForNode(binaryFilePath, node)){
     return false;
   }
-
-  const auto libs = mLibraryTree.toFlatList();
+  // Store dependencies
   qDebug() << "Found deps:";
+  const auto libs = mLibraryTree.toFlatList();
+  LibraryInfoList libraryInfoList;
   for(const auto lib : libs){
+    LibraryInfo libraryInfo;
+    QFileInfo fi(lib);
+    libraryInfo.setAbsoluteFilePath(fi.absoluteFilePath());
+    libraryInfo.setLibraryPlatformName(fi.fileName());
+    libraryInfoList.addLibrary(libraryInfo);
     qDebug() << " lib: " << lib;
   }
-  
+  setDependencies(libraryInfoList);
+
   return true;
 }
 
@@ -165,9 +175,9 @@ bool BinaryDependenciesObjdump::isLibraryInExcludeList(const StringRecord & reco
   return (it != LibrayExcludeListWindows.cend());
 }
 
-bool BinaryDependenciesObjdump::setLibrarySearchPathList(const QString& binaryFilePath)
+void BinaryDependenciesObjdump::setLibrarySearchPathList()
 {
-  mLibrarySearchPathList.clear();
+  mLibrarySearchPathList = librarySearchFirstPathList();
 #ifdef Q_OS_WIN
   mLibrarySearchPathList.appendPathList( PathList::getSystemLibraryPathList() );
 #else
@@ -176,17 +186,17 @@ bool BinaryDependenciesObjdump::setLibrarySearchPathList(const QString& binaryFi
    */
   mLibrarySearchPathList.appendPathList( PathList::getSystemLibraryKnownPathListWindows() );
 #endif // #ifdef Q_OS_WIN
-  QFileInfo fi(binaryFilePath);
-  if(!fi.exists()){
-    const auto msg = tr("File '%1' does not exist.").arg(binaryFilePath);
-    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    setLastError(error);
-    return false;
-  }
-  mLibrarySearchPathList.prependPathList( librarySearchFirstPathList() );
-  mLibrarySearchPathList.prependPath( fi.absoluteDir().absolutePath() );
-
-  return true;
+//   QFileInfo fi(binaryFilePath);
+//   if(!fi.exists()){
+//     const auto msg = tr("File '%1' does not exist.").arg(binaryFilePath);
+//     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+//     setLastError(error);
+//     return false;
+//   }
+//   mLibrarySearchPathList.prependPathList( librarySearchFirstPathList() );
+//   mLibrarySearchPathList.prependPath( fi.absoluteDir().absolutePath() );
+// 
+//   return true;
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

@@ -21,6 +21,7 @@
 #ifndef COMMAND_LINE_PARSER_H
 #define COMMAND_LINE_PARSER_H
 
+#include "Mdt/DeployUtils/PathList.h"
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QString>
@@ -57,14 +58,32 @@ public:
     return mDestinationDirectoryPath;
   }
 
+  /*! \brief Get the list of paths where to search dependencies first
+   */
+  Mdt::DeployUtils::PathList librarySearchFirstPathList() const
+  {
+    return mLibrarySearchFirstPathList;
+  }
+
+  /*! \brief Get the list of paths suffixes for paths where to search dependencies first
+   */
+  QStringList librarySearchFirstPathSuffixList() const
+  {
+    return mLibrarySearchFirstPathSuffixList;
+  }
+
 private:
 
   bool checkAndSetArguments();
 
   QString mBinaryFilePath;
   QString mDestinationDirectoryPath;
+  Mdt::DeployUtils::PathList mLibrarySearchFirstPathList;
+  QStringList mLibrarySearchFirstPathSuffixList;
   QCommandLineParser mParser;
   QCommandLineOption mDestinationDirectoryOption;
+  QCommandLineOption mLibrarySearchFirstPathListOption;
+  QCommandLineOption mPathSuffixesOption;
 //   QCommandLineOption mTargetOperatingSystem;
 };
 

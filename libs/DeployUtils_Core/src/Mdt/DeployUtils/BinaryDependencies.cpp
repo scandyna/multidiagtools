@@ -23,100 +23,113 @@
 #include "BinaryDependenciesLdd.h"
 #include "BinaryDependenciesObjdump.h"
 #include "BinaryFormat.h"
+#include <QFileInfo>
+#include <QDir>
+
+// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
 BinaryDependencies::BinaryDependencies(QObject* parent)
  : QObject(parent)
 {
-//   Platform nativePlatform;
-
-//   if(nativePlatform.operatingSystem() == OperatingSystem::Linux){
-//     mImpl.reset(new BinaryDependenciesLdd);
-//   }
-//   if(targetOperatingSystem == OperatingSystem::Linux){
-//     mImpl.reset(new BinaryDependenciesLdd);
-//   }else if(targetOperatingSystem == OperatingSystem::Windows){
-//     mImpl.reset(new BinaryDependenciesObjdump);
-//   }
-//   if(!mImpl){
-//     const QString msg = tr("Could not find a implementation for target operating system.");
-//     mLastError = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-// //     mLastError.commit();
-//   }
 }
 
 BinaryDependencies::~BinaryDependencies()
 {
 }
 
-// bool BinaryDependencies::isValid() const
-// {
-//   return (mImpl.get() != nullptr);
-// }
-
 void BinaryDependencies::setLibrarySearchFirstPathList(const PathList& pathList)
 {
   mLibrarySearchFirstPathList = pathList;
-//   Q_ASSERT(isValid());
-// 
-//   mImpl->setLibrarySearchFirstPathList(pathList);
 }
 
-// PathList BinaryDependencies::librarySearchFirstPathList() const
-// {
-//   Q_ASSERT(isValid());
-// 
-//   return mImpl->librarySearchFirstPathList();
-// }
-
-bool BinaryDependencies::findDependencies(const QString& binaryFilePath)
+void BinaryDependencies::setLibrarySearchFirstPathSuffixList(const QStringList & suffixList)
 {
-//   Q_ASSERT(isValid());
+  mLibrarySearchFirstPathSuffixList = suffixList;
+}
 
+PathList BinaryDependencies::getLibrarySearchFirstPathList(BinaryFileDirectoryInclude binaryFileDirectoryInclude) const
+{
+  PathList paths;
+
+  if( (binaryFileDirectoryInclude == IncludeBinaryFileDirectory) && (!mBinaryFileDirectoryPath.isEmpty()) ){
+    paths.appendPath(mBinaryFileDirectoryPath);
+  }
+  if(!mLibrarySearchFirstPathList.isEmpty()){
+    const auto & librarySearchFirstPathList = mLibrarySearchFirstPathList;
+    const auto & suffixList = mLibrarySearchFirstPathSuffixList;
+    for(const auto & path : librarySearchFirstPathList){
+      paths.appendPath(path);
+      for(const auto & suffix : suffixList){
+        paths.appendPath( QDir::cleanPath(path + "/" + suffix) );
+      }
+    }
+  }
+
+  return paths;
+}
+
+bool BinaryDependencies::setBinaryFile(const QString& filePath)
+{
+  QFileInfo fi(filePath);
+  if(!fi.exists()){
+    const auto msg = tr("File '%1' does not exist.").arg(filePath);
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    setLastError(error);
+    return false;
+  }
+  mBinaryFilePath = filePath;
+  mBinaryFileDirectoryPath = fi.absoluteDir().absolutePath();
+
+  return true;
+}
+
+bool BinaryDependencies::findDependencies()
+{
   // Choose a implementation regarding binary file format
   BinaryFormat bfmt;
-  if(!bfmt.readFormat(binaryFilePath)){
+  if(!bfmt.readFormat(mBinaryFilePath)){
     setLastError(bfmt.lastError());
     return false;
   }
+  BinaryFileDirectoryInclude binaryFileDirectoryInclude;
   std::unique_ptr<BinaryDependenciesImplementationInterface> impl;
   switch(bfmt.operatindSystem()){
     case OperatingSystem::Linux:
+      binaryFileDirectoryInclude = ExcludeBinaryFileDirectory;
       impl.reset(new BinaryDependenciesLdd);
       break;
     case OperatingSystem::Windows:
+      binaryFileDirectoryInclude = IncludeBinaryFileDirectory;
       impl.reset(new BinaryDependenciesObjdump);
       break;
   }
   if(!impl){
-    const QString msg = tr("Could not find a tool to get dependencies for file '%1'.").arg(binaryFilePath);
+    const QString msg = tr("Could not find a tool to get dependencies for file '%1'.").arg(mBinaryFilePath);
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     setLastError(error);
     return false;
   }
   // Setup implementation and run
-  impl->setLibrarySearchFirstPathList(mLibrarySearchFirstPathList);
-  if(!impl->findDependencies(binaryFilePath)){
+  impl->setLibrarySearchFirstPathList( getLibrarySearchFirstPathList(binaryFileDirectoryInclude) );
+  if(!impl->findDependencies(mBinaryFilePath)){
     setLastError(impl->lastError());
     return false;
   }
   // Store result
   mDependencies = impl->dependencies();
 
-//   if( !mImpl->findDependencies(binaryFilePath) ){
-//     mLastError = mImpl->lastError();
-//     return false;
-//   }
   return true;
 }
 
-// LibraryInfoList BinaryDependencies::dependencies() const
-// {
-//   Q_ASSERT(isValid());
-// 
-//   return mImpl->dependencies();
-// }
+bool BinaryDependencies::findDependencies(const QString& binaryFilePath)
+{
+  if(!setBinaryFile(binaryFilePath)){
+    return false;
+  }
+  return findDependencies();
+}
 
 void BinaryDependencies::setLastError(const Error& error)
 {

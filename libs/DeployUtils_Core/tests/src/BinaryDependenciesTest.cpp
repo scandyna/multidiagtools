@@ -20,8 +20,13 @@
  ****************************************************************************/
 #include "BinaryDependenciesTest.h"
 #include "Mdt/DeployUtils/BinaryDependencies.h"
+#include "Mdt/DeployUtils/PathList.h"
 #include "Mdt/DeployUtils/Platform.h"
 #include <QCoreApplication>
+#include <QStringList>
+#include <QTemporaryFile>
+#include <QFileInfo>
+#include <QDir>
 
 // #include <QDebug>
 
@@ -41,15 +46,52 @@ void BinaryDependenciesTest::cleanupTestCase()
 
 void BinaryDependenciesTest::searchPathListTest()
 {
-
-  QFAIL("Not complete");
+  QStringList searchPaths;
+  /*
+   * Initial state
+   */
+  BinaryDependencies deps;
+  QCOMPARE( deps.getLibrarySearchFirstPathList(BinaryDependencies::IncludeBinaryFileDirectory).toStringList(), QStringList() );
+  QCOMPARE( deps.getLibrarySearchFirstPathList(BinaryDependencies::ExcludeBinaryFileDirectory).toStringList(), QStringList() );
+  /*
+   * Set binary file
+   */
+  QTemporaryFile binaryFile;
+  QVERIFY(binaryFile.open());
+  const auto binaryFileDirectory = QFileInfo(binaryFile).absoluteDir().absolutePath();
+  QVERIFY( deps.setBinaryFile(binaryFile.fileName()) );
+  searchPaths = deps.getLibrarySearchFirstPathList(BinaryDependencies::IncludeBinaryFileDirectory).toStringList();
+  QCOMPARE( searchPaths.size(), 1 );
+  QCOMPARE( searchPaths.at(0), binaryFileDirectory );
+  QCOMPARE( deps.getLibrarySearchFirstPathList(BinaryDependencies::ExcludeBinaryFileDirectory).toStringList(), QStringList() );
+  /*
+   * Set library search first paths
+   */
+  deps.setLibrarySearchFirstPathList( PathList({"/opt/liba","/opt/libb"}) );
+  searchPaths = deps.getLibrarySearchFirstPathList(BinaryDependencies::IncludeBinaryFileDirectory).toStringList();
+  QCOMPARE( searchPaths.size(), 3 );
+  QCOMPARE( searchPaths.at(0), binaryFileDirectory );
+  QCOMPARE( searchPaths.at(1), QString("/opt/liba") );
+  QCOMPARE( searchPaths.at(2), QString("/opt/libb") );
+  QCOMPARE( deps.getLibrarySearchFirstPathList(BinaryDependencies::ExcludeBinaryFileDirectory).toStringList(),
+            QStringList({"/opt/liba","/opt/libb"}) );
+  /*
+   * Add suffixes
+   */
+  deps.setLibrarySearchFirstPathSuffixList(QStringList({"bin","qt5/bin"}));
+  searchPaths = deps.getLibrarySearchFirstPathList(BinaryDependencies::IncludeBinaryFileDirectory).toStringList();
+  QCOMPARE( searchPaths.size(), 7 );
+  QCOMPARE( searchPaths.at(0), binaryFileDirectory );
+  QCOMPARE( searchPaths.at(1), QString("/opt/liba") );
+  QCOMPARE( searchPaths.at(2), QString("/opt/liba/bin") );
+  QCOMPARE( deps.getLibrarySearchFirstPathList(BinaryDependencies::ExcludeBinaryFileDirectory).toStringList(),
+            QStringList({"/opt/liba","/opt/liba/bin","/opt/liba/qt5/bin","/opt/libb","/opt/libb/bin","/opt/libb/qt5/bin"}) );
 }
 
 void BinaryDependenciesTest::runTest()
 {
   BinaryDependencies deps;
 
-//   QVERIFY(deps.isValid());
   QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath() ));
   QVERIFY(!deps.dependencies().isEmpty());
 }

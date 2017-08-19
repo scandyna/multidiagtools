@@ -30,11 +30,11 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
-#include <memory>
+// #include <memory>
 
 namespace Mdt{ namespace DeployUtils{
 
-  class BinaryDependenciesImplementationInterface;
+//   class BinaryDependenciesImplementationInterface;
 
   /*! \brief Find dependencies for a executable or a library
    */
@@ -43,6 +43,16 @@ namespace Mdt{ namespace DeployUtils{
    Q_OBJECT
 
    public:
+
+    /*! \brief Option to include binary file's directory to library search paths
+     *
+     * \sa getLibrarySearchPathList()
+     */
+    enum BinaryFileDirectoryInclude
+    {
+      IncludeBinaryFileDirectory, /*!< Include binary file's directory to the libraries search paths */
+      ExcludeBinaryFileDirectory  /*!< Do not include binary file's directory to the libraries search paths */
+    };
 
     /*! \brief Constructor
      */
@@ -74,15 +84,6 @@ namespace Mdt{ namespace DeployUtils{
      */
     void setLibrarySearchFirstPathList(const PathList & pathList);
 
-    /*! \brief Get the list of paths where to search dependencies first
-     *
-     * \sa setLibrarySearchFirstPathList()
-     */
-    PathList librarySearchFirstPathList() const
-    {
-      return mLibrarySearchFirstPathList;
-    }
-
     /*! \brief Specify addional subdirectories to check
      *
      * Specify addional subdirectories to check below each directory
@@ -96,10 +97,11 @@ namespace Mdt{ namespace DeployUtils{
      */
     void setLibrarySearchFirstPathSuffixList(const QStringList & suffixList);
 
-    /*! \brief Get the list of all library search pathes
+    /*! \brief Get a list of paths where to search dependencies first
      *
-     * If a executable or a library have allready been set
-     *  with setBinaryFile(), its directory will be at first place in the list.
+     * If a executable or a library have allready been set with setBinaryFile(),
+     *  and \a binaryFileDirectoryInclude is IncludeBinaryFileDirectory,
+     *  binary file's directory will be at first place in the list.
      *  If paths have been added with setLibrarySearchFirstPathList(),
      *  they will follow in the list.
      *  No system library paths will be added to this list.
@@ -107,7 +109,7 @@ namespace Mdt{ namespace DeployUtils{
      *
      * \note The path list will be rebuilt at each call of this method.
      */
-    PathList getLibrarySearchPathList() const;
+    PathList getLibrarySearchFirstPathList(BinaryFileDirectoryInclude binaryFileDirectoryInclude) const;
 
     /*! \brief Set library or executable
      */
@@ -142,10 +144,11 @@ namespace Mdt{ namespace DeployUtils{
 
     void setLastError(const Mdt::Error & error);
 
-//     std::unique_ptr<BinaryDependenciesImplementationInterface> mImpl;
-    
     LibraryInfoList mDependencies;
+    QString mBinaryFilePath;
+    QString mBinaryFileDirectoryPath;
     PathList mLibrarySearchFirstPathList;
+    QStringList mLibrarySearchFirstPathSuffixList;
     Mdt::Error mLastError;
   };
 

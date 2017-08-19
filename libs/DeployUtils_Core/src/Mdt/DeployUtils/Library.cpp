@@ -49,7 +49,7 @@ bool Library::findLibrary(const QString & name, const PathList pathList, Library
   // Lambda to check if a file matches request library
   const auto matchFile = [libraryName, this](const QFileInfo & fileInfo){
     LibraryName currentFile(fileInfo.fileName());
-    if(currentFile.name() == libraryName.name()){
+    if( QString::compare( currentFile.name(), libraryName.name(), Qt::CaseInsensitive ) == 0 ){
       mLibraryInfo.setLibraryName(libraryName);
       mLibraryInfo.setAbsoluteFilePath(fileInfo.absoluteFilePath());
       return true;

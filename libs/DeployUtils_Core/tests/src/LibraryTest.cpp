@@ -402,6 +402,9 @@ void LibraryTest::searchLibraryBenchmark_data()
   QTest::newRow("hal.dll|hal||")
     << "hal" << PathList{} << IncludeSystemPaths << Exists;
 
+  QTest::newRow("HAL.dll|hal||")
+    << "HAL" << PathList{} << IncludeSystemPaths << Exists;
+
   QTest::newRow("libc.so|c|/opt/lib44|")
     << "c" << PathList{"/opt/lib44"} << ExcludeSystemPaths << NotExists;
 
