@@ -76,7 +76,7 @@ bool BinaryDependenciesObjdump::findDependencies(const QString& binaryFilePath)
     qDebug() << " lib: " << lib;
   }
   
-  return false;
+  return true;
 }
 
 bool BinaryDependenciesObjdump::findAndAddDependenciesForNode(const QString& binaryFilePath, LibraryTreeNode node)
@@ -118,7 +118,8 @@ bool BinaryDependenciesObjdump::findAndAddDependenciesForNode(const QString& bin
     if(!isLibraryInExcludeList(record)){
       Library library;
       if( !library.findLibrary(record.data(0), mLibrarySearchPathList, Library::ExcludeSystemPaths) ){
-        const QString msg = tr("Could not find library '%1'.").arg(record.data(0));
+        const QString msg = tr("Could not find library '%1'.\nSearched in %2")
+        .arg(record.data(0)).arg(mLibrarySearchPathList.toStringList().join(", "));
         auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
         setLastError(error);
         return false;

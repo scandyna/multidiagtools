@@ -43,5 +43,4 @@ void BinaryDependenciesImplementationInterface::setLastError(const Error& error)
   mLastError.commit();
 }
 
-
 }} // namespace Mdt{ namespace DeployUtils{

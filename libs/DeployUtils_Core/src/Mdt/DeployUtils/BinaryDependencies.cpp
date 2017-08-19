@@ -22,10 +22,11 @@
 #include "BinaryDependenciesImplementationInterface.h"
 #include "BinaryDependenciesLdd.h"
 #include "BinaryDependenciesObjdump.h"
+#include "BinaryFormat.h"
 
 namespace Mdt{ namespace DeployUtils{
 
-BinaryDependencies::BinaryDependencies(OperatingSystem targetOperatingSystem, QObject* parent)
+BinaryDependencies::BinaryDependencies(QObject* parent)
  : QObject(parent)
 {
 //   Platform nativePlatform;
@@ -33,58 +34,93 @@ BinaryDependencies::BinaryDependencies(OperatingSystem targetOperatingSystem, QO
 //   if(nativePlatform.operatingSystem() == OperatingSystem::Linux){
 //     mImpl.reset(new BinaryDependenciesLdd);
 //   }
-  if(targetOperatingSystem == OperatingSystem::Linux){
-    mImpl.reset(new BinaryDependenciesLdd);
-  }else if(targetOperatingSystem == OperatingSystem::Windows){
-    mImpl.reset(new BinaryDependenciesObjdump);
-  }
-  if(!mImpl){
-    const QString msg = tr("Could not find a implementation for target operating system.");
-    mLastError = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-//     mLastError.commit();
-  }
+//   if(targetOperatingSystem == OperatingSystem::Linux){
+//     mImpl.reset(new BinaryDependenciesLdd);
+//   }else if(targetOperatingSystem == OperatingSystem::Windows){
+//     mImpl.reset(new BinaryDependenciesObjdump);
+//   }
+//   if(!mImpl){
+//     const QString msg = tr("Could not find a implementation for target operating system.");
+//     mLastError = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+// //     mLastError.commit();
+//   }
 }
 
 BinaryDependencies::~BinaryDependencies()
 {
 }
 
-bool BinaryDependencies::isValid() const
-{
-  return (mImpl.get() != nullptr);
-}
+// bool BinaryDependencies::isValid() const
+// {
+//   return (mImpl.get() != nullptr);
+// }
 
 void BinaryDependencies::setLibrarySearchFirstPathList(const PathList& pathList)
 {
-  Q_ASSERT(isValid());
-
-  mImpl->setLibrarySearchFirstPathList(pathList);
+  mLibrarySearchFirstPathList = pathList;
+//   Q_ASSERT(isValid());
+// 
+//   mImpl->setLibrarySearchFirstPathList(pathList);
 }
 
-PathList BinaryDependencies::librarySearchFirstPathList() const
-{
-  Q_ASSERT(isValid());
-
-  return mImpl->librarySearchFirstPathList();
-}
+// PathList BinaryDependencies::librarySearchFirstPathList() const
+// {
+//   Q_ASSERT(isValid());
+// 
+//   return mImpl->librarySearchFirstPathList();
+// }
 
 bool BinaryDependencies::findDependencies(const QString& binaryFilePath)
 {
-  Q_ASSERT(isValid());
+//   Q_ASSERT(isValid());
 
-  if( !mImpl->findDependencies(binaryFilePath) ){
-    mLastError = mImpl->lastError();
+  // Choose a implementation regarding binary file format
+  BinaryFormat bfmt;
+  if(!bfmt.readFormat(binaryFilePath)){
+    setLastError(bfmt.lastError());
     return false;
   }
+  std::unique_ptr<BinaryDependenciesImplementationInterface> impl;
+  switch(bfmt.operatindSystem()){
+    case OperatingSystem::Linux:
+      impl.reset(new BinaryDependenciesLdd);
+      break;
+    case OperatingSystem::Windows:
+      impl.reset(new BinaryDependenciesObjdump);
+      break;
+  }
+  if(!impl){
+    const QString msg = tr("Could not find a tool to get dependencies for file '%1'.").arg(binaryFilePath);
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    setLastError(error);
+    return false;
+  }
+  // Setup implementation and run
+  impl->setLibrarySearchFirstPathList(mLibrarySearchFirstPathList);
+  if(!impl->findDependencies(binaryFilePath)){
+    setLastError(impl->lastError());
+    return false;
+  }
+  // Store result
+  mDependencies = impl->dependencies();
+
+//   if( !mImpl->findDependencies(binaryFilePath) ){
+//     mLastError = mImpl->lastError();
+//     return false;
+//   }
   return true;
 }
 
-LibraryInfoList BinaryDependencies::dependencies() const
+// LibraryInfoList BinaryDependencies::dependencies() const
+// {
+//   Q_ASSERT(isValid());
+// 
+//   return mImpl->dependencies();
+// }
+
+void BinaryDependencies::setLastError(const Error& error)
 {
-  Q_ASSERT(isValid());
-
-  return mImpl->dependencies();
+  mLastError = error;
 }
-
 
 }} // namespace Mdt{ namespace DeployUtils{

@@ -42,6 +42,13 @@ namespace Mdt{ namespace DeployUtils{
      */
     PathList() = default;
 
+    /*! \brief Construct a path list from a QStringList
+     */
+    explicit PathList(const QStringList & list)
+     : mList(list)
+    {
+    }
+
     /*! \brief Construct a path list from \a list
      */
     PathList(std::initializer_list<QString> list)

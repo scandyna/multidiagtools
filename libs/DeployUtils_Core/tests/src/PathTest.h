@@ -32,6 +32,7 @@ class PathTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void pathListStringListTest();
   void pathListAppendTest();
   void pathListAppendTest_data();
   void pathListAppendPathListTest();

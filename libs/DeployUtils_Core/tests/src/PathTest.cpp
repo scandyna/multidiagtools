@@ -35,6 +35,20 @@ void PathTest::cleanupTestCase()
  * Tests
  */
 
+void PathTest::pathListStringListTest()
+{
+  /*
+   * Construct from a initializer list
+   */
+  PathList pl1{"a","b"};
+  QCOMPARE(pl1.toStringList(), QStringList({"a","b"}));
+  /*
+   * Construct from an QStringList
+   */
+  PathList pl2(QStringList{"c","d"});
+  QCOMPARE(pl2.toStringList(), QStringList({"c","d"}));
+}
+
 void PathTest::pathListAppendTest()
 {
   QFETCH(PathList, initialList);

@@ -22,8 +22,8 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="42"/>
-        <source>Could not find a implementation for target operating system.</source>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="93"/>
+        <source>Could not find a tool to get dependencies for file &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -49,11 +49,12 @@
     </message>
     <message>
         <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="121"/>
-        <source>Could not find library &apos;%1&apos;.</source>
+        <source>Could not find library &apos;%1&apos;.
+Searched in %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="180"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="181"/>
         <source>File &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>

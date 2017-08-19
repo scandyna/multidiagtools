@@ -23,6 +23,8 @@
 #include "Mdt/DeployUtils/Platform.h"
 #include <QCoreApplication>
 
+// #include <QDebug>
+
 using namespace Mdt::DeployUtils;
 
 void BinaryDependenciesTest::initTestCase()
@@ -37,11 +39,17 @@ void BinaryDependenciesTest::cleanupTestCase()
  * Tests
  */
 
+void BinaryDependenciesTest::searchPathListTest()
+{
+
+  QFAIL("Not complete");
+}
+
 void BinaryDependenciesTest::runTest()
 {
-  BinaryDependencies deps(Platform::nativeOperatingSystem());
+  BinaryDependencies deps;
 
-  QVERIFY(deps.isValid());
+//   QVERIFY(deps.isValid());
   QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath() ));
   QVERIFY(!deps.dependencies().isEmpty());
 }
