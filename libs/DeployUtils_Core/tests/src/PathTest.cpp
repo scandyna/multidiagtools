@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "PathTest.h"
 #include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/DeployUtils/SearchPathList.h"
 
 using namespace Mdt::DeployUtils;
 
@@ -45,7 +46,7 @@ void PathTest::pathListStringListTest()
   /*
    * Construct from an QStringList
    */
-  PathList pl2(QStringList{"c","d"});
+  auto pl2 = PathList::fromStringList({"c","d"});
   QCOMPARE(pl2.toStringList(), QStringList({"c","d"}));
 }
 
@@ -235,6 +236,96 @@ void PathTest::pathListPrependPathListTest_data()
     << PathList{"A"}
     << PathList{"B","C"}
     << PathList{"B","C","A"};
+}
+
+//   QStringList searchPaths;
+//   /*
+//    * Initial state
+//    */
+//   BinaryDependencies deps;
+//   QCOMPARE( deps.getLibrarySearchFirstPathList(BinaryDependencies::IncludeBinaryFileDirectory).toStringList(), QStringList() );
+//   QCOMPARE( deps.getLibrarySearchFirstPathList(BinaryDependencies::ExcludeBinaryFileDirectory).toStringList(), QStringList() );
+//   /*
+//    * Set binary file
+//    */
+//   QTemporaryFile binaryFile;
+//   QVERIFY(binaryFile.open());
+//   const auto binaryFileDirectory = QFileInfo(binaryFile).absoluteDir().absolutePath();
+//   QVERIFY( deps.setBinaryFile(binaryFile.fileName()) );
+//   searchPaths = deps.getLibrarySearchFirstPathList(BinaryDependencies::IncludeBinaryFileDirectory).toStringList();
+//   QCOMPARE( searchPaths.size(), 1 );
+//   QCOMPARE( searchPaths.at(0), binaryFileDirectory );
+//   QCOMPARE( deps.getLibrarySearchFirstPathList(BinaryDependencies::ExcludeBinaryFileDirectory).toStringList(), QStringList() );
+//   /*
+//    * Set library search first paths
+//    */
+//   deps.setLibrarySearchFirstPathList( PathList({"/opt/liba","/opt/libb"}) );
+//   searchPaths = deps.getLibrarySearchFirstPathList(BinaryDependencies::IncludeBinaryFileDirectory).toStringList();
+//   QCOMPARE( searchPaths.size(), 3 );
+//   QCOMPARE( searchPaths.at(0), binaryFileDirectory );
+//   QCOMPARE( searchPaths.at(1), QString("/opt/liba") );
+//   QCOMPARE( searchPaths.at(2), QString("/opt/libb") );
+//   QCOMPARE( deps.getLibrarySearchFirstPathList(BinaryDependencies::ExcludeBinaryFileDirectory).toStringList(),
+//             QStringList({"/opt/liba","/opt/libb"}) );
+//   /*
+//    * Add suffixes
+//    */
+//   deps.setLibrarySearchFirstPathSuffixList(QStringList({"bin","qt5/bin"}));
+//   searchPaths = deps.getLibrarySearchFirstPathList(BinaryDependencies::IncludeBinaryFileDirectory).toStringList();
+//   QCOMPARE( searchPaths.size(), 7 );
+//   QCOMPARE( searchPaths.at(0), binaryFileDirectory );
+//   QCOMPARE( searchPaths.at(1), QString("/opt/liba") );
+//   QCOMPARE( searchPaths.at(2), QString("/opt/liba/bin") );
+//   QCOMPARE( deps.getLibrarySearchFirstPathList(BinaryDependencies::ExcludeBinaryFileDirectory).toStringList(),
+//             QStringList({"/opt/liba","/opt/liba/bin","/opt/liba/qt5/bin","/opt/libb","/opt/libb/bin","/opt/libb/qt5/bin"}) );
+
+void PathTest::searchPathListTest()
+{
+  /*
+   * Initial state
+   */
+  SearchPathList spl;
+  QCOMPARE(spl.toStringList(), QStringList({}));
+  /*
+   * Set a path prefix
+   */
+  spl.setPathPrefixList({"/opt/liba"});
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/liba"}));
+  /*
+   * Set a path suffix
+   */
+  spl.setPathSuffixList({"bin"});
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/liba","/opt/liba/bin"}));
+  /*
+   * Prepend a path
+   */
+  spl.prependPath("/opt/appc");
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/appc","/opt/liba","/opt/liba/bin"}));
+  /*
+   * Append a path
+   */
+  spl.appendPath("/opt/appd");
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/appc","/opt/liba","/opt/liba/bin","/opt/appd"}));
+  /*
+   * Clear
+   */
+  spl.clear();
+  QCOMPARE(spl.toStringList(), QStringList({}));
+  /*
+   * Set a list of path prefixes
+   */
+  spl.setPathPrefixList({"/opt/liba","/opt/libb"});
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/liba","/opt/libb"}));
+  /*
+   * Prepend a path
+   */
+  spl.prependPath("/opt/appc");
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/appc","/opt/liba","/opt/libb"}));
+  /*
+   * Set a list of path suffixes
+   */
+  spl.setPathSuffixList({"bin","lib"});
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/appc","/opt/liba","/opt/liba/bin","/opt/liba/lib","/opt/libb","/opt/libb/bin","/opt/libb/lib"}));
 }
 
 /*

@@ -1,0 +1,92 @@
+format 213
+
+classcanvas 128002 class_ref 4244610 // QtPluginInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 202 501 2000
+end
+classcanvas 128130 class_ref 4244738 // QtModuleInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 41 512 2000
+end
+classcanvas 128386 class_ref 4244866 // QtPackageInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 41 408 2000
+end
+classcanvas 129026 class_ref 4244994 // QtPluginTable
+  classdiagramsettings member_max_width 0 end
+  xyz 377.75 143.25 2000
+end
+classcanvas 129538 class_ref 4251650 // QtPluginInfoList
+  classdiagramsettings member_max_width 0 end
+  xyz 226 632 2000
+end
+classcanvas 129794 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 157.5 40.75 2006
+end
+classcanvas 130434 class_ref 4251778 // Plugin
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 124.25 2000
+end
+classcanvas 131330 class_ref 4251906 // QtPluginDirectoryInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 37 624 2000
+end
+classcanvas 131714 class_ref 4159490 // LibraryInfoList
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 137.5 261.75 2000
+end
+classcanvas 132226 class_ref 4252034 // QtPluginTableItem
+  classdiagramsettings member_max_width 0 end
+  xyz 457.75 242.75 2000
+end
+classcanvas 132610 class_ref 4252162 // SearchPathList
+  classdiagramsettings member_max_width 0 end
+  xyz 444 411 2000
+end
+relationcanvas 128258 relation_ref 4756738 // <directional composition>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 186 552 3000 no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 4756866 // <directional composition>
+  decenter_begin 529
+  decenter_end 529
+  from ref 128386 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 88 485 3000 no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 4763522 // <directional composition>
+  decenter_begin 529
+  from ref 129538 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 272 593 3000 no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 4764034 // <generalisation>
+  from ref 130434 z 2007 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131458 relation_ref 4764162 // <directional composition>
+  from ref 131330 z 2001 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131970 relation_ref 4764418 // <directional composition>
+  from ref 130434 z 2001 to ref 131714
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132098 relation_ref 4764546 // <dependency>
+  decenter_begin 464
+  decenter_end 442
+  from ref 130434 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132482 relation_ref 4764674 // <directional composition>
+  from ref 129026 z 2001 to ref 132226
+  no_role_a no_role_b
+  multiplicity_a_pos 528 215 3000 no_multiplicity_b
+end
+end

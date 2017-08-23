@@ -42,13 +42,6 @@ namespace Mdt{ namespace DeployUtils{
      */
     PathList() = default;
 
-    /*! \brief Construct a path list from a QStringList
-     */
-    explicit PathList(const QStringList & list)
-     : mList(list)
-    {
-    }
-
     /*! \brief Construct a path list from \a list
      */
     PathList(std::initializer_list<QString> list)
@@ -121,6 +114,13 @@ namespace Mdt{ namespace DeployUtils{
       return mList;
     }
 
+    /*! \brief Get a path list from a string list
+     */
+    static PathList fromStringList(const QStringList & paths)
+    {
+      return PathList(paths);
+    }
+
     /*! \brief Check if this path list is empty
      */
     bool isEmpty() const
@@ -186,6 +186,13 @@ namespace Mdt{ namespace DeployUtils{
     static PathList getSystemLibraryKnownPathListWindows();
 
    private:
+
+    /*! \brief Construct a path list from a QStringList
+     */
+    explicit PathList(const QStringList & list)
+     : mList(list)
+    {
+    }
 
     QStringList mList;
   };

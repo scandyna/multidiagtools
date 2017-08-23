@@ -14,6 +14,7 @@ set(SOURCE_FILES
     Mdt/DeployUtils/LibraryTreeNode.cpp
     Mdt/DeployUtils/LibraryTree.cpp
     Mdt/DeployUtils/PathList.cpp
+    Mdt/DeployUtils/SearchPathList.cpp
     Mdt/DeployUtils/ToolExecutableWrapper.cpp
     Mdt/DeployUtils/LddWrapper.cpp
     Mdt/DeployUtils/ObjdumpWrapper.cpp
