@@ -1,6 +1,6 @@
 format 213
 "DeployUtils" // Mdt::DeployUtils
-  revision 32
+  revision 33
   modified_by 2 "philippe"
   // class settings
   
@@ -319,70 +319,6 @@ ${inlines}
 "
 	    classrelation_ref 4684930 // <directional composition>
 	  b parent class_ref 4160514 // Paths
-      end
-    end
-
-    class 4161410 "SettingsCommandLineParser"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4685058 // <dependency>
-	relation 4658818 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 4685058 // <dependency>
-	  b parent class_ref 4160898 // Settings
-      end
-
-      classrelation 4685314 // <directional composition>
-	relation 4659074 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4685314 // <directional composition>
-	  b parent class_ref 4161794 // QCommandLineParser
-      end
-
-      operation 5841154 "process"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "arguments" type class_ref 160770 // QStringList
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5841282 "process"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "app" type class_ref 425730 // QCoreApplication
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
       end
     end
 
@@ -3294,6 +3230,5 @@ ${inlines}
 	  b parent class_ref 4251650 // QtPluginInfoList
       end
     end
-
   end
 end
