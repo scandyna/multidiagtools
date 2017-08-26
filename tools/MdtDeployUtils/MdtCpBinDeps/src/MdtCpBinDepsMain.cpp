@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "MdtCpBinDepsMain.h"
 #include "CommandLineParser.h"
+#include "Mdt/DeployUtils/SearchPathList.h"
 #include "Mdt/DeployUtils/BinaryDependencies.h"
 #include "Mdt/DeployUtils/FileCopier.h"
 #include <QCoreApplication>
@@ -49,6 +50,10 @@ int MdtCpBinDepsMain::runMain()
 //     destinationDirectoryPath = parser.destinationDirectoryPath();
 //   }
   qDebug() << "Main: file: " << parser.binaryFilePath() << " , dest: " << parser.destinationDirectoryPath();
+
+  SearchPathList searchFirstPathList;
+  searchFirstPathList.setPathPrefixList(parser.librarySearchFirstPathList());
+  searchFirstPathList.setPathSuffixList(parser.librarySearchFirstPathSuffixList()); /// \todo Or hard coded ?
 
   /// \todo Adapt
   BinaryDependencies binDeps;

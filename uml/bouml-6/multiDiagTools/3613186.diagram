@@ -2,19 +2,15 @@ format 213
 
 classcanvas 128002 class_ref 4160514 // Paths
   classdiagramsettings member_max_width 0 end
-  xyz 529.5 40.5 2000
+  xyz 40.5 328.5 2000
 end
 classcanvas 128130 class_ref 4168962 // PathList
   classdiagramsettings member_max_width 0 end
-  xyz 391 472 2000
+  xyz 391 95 2000
 end
 classcanvas 128258 class_ref 4252162 // SearchPathList
   classdiagramsettings member_max_width 0 end
-  xyz 40 417 2000
-end
-classcanvas 128514 class_ref 4183938 // BinaryDependencies
-  classdiagramsettings member_max_width 0 end
-  xyz 40.5 40.5 2000
+  xyz 40 40 2000
 end
 relationcanvas 128386 relation_ref 4764802 // <directional composition>
   from ref 128258 z 2001 to ref 128130

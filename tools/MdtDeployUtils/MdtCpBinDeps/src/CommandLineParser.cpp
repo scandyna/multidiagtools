@@ -94,7 +94,7 @@ bool CommandLineParser::checkAndSetArguments()
     mDestinationDirectoryPath = binaryFileInfo.absoluteDir().absolutePath();
   }
   // Library search first paths
-  mLibrarySearchFirstPathList = PathList( mParser.value(mLibrarySearchFirstPathListOption).split(';', QString::SkipEmptyParts) );
+  mLibrarySearchFirstPathList = PathList::fromStringList( mParser.value(mLibrarySearchFirstPathListOption).split(';', QString::SkipEmptyParts) );
   mLibrarySearchFirstPathSuffixList = mParser.value(mPathSuffixesOption).split(';', QString::SkipEmptyParts);
   qDebug() << "Lib search: " << mParser.value(mLibrarySearchFirstPathListOption);
   qDebug() << "Suffixes: " << mParser.value(mPathSuffixesOption);

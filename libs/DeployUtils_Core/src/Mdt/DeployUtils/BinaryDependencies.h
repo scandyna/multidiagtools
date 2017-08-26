@@ -91,7 +91,7 @@ namespace Mdt{ namespace DeployUtils{
      *  For example, if /opt/liba and /opt/libb have been set as
      *  paths to search first, and \a suffixList contains bin qt5/bin,
      *  libraries will be searched in
-     *  /opt/liba/bin, /opt/liba/qt5/bin, /opt/libb/bin, /opt/libb/qt5/bin .
+     *  /opt/liba, /opt/liba/bin, /opt/liba/qt5/bin, /opt/libb, /opt/libb/bin, /opt/libb/qt5/bin .
      *
      * \sa setLibrarySearchFirstPathList()
      */
