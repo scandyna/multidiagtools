@@ -46,7 +46,7 @@
  *      it should return a mdtExpected.
  *      For coherence reason, the error should also be stored in lastError.
  *   - If the function can fail, and it is static,
- *      it should return a mdtExpected.
+ *      it should return a Mdt::Expected.
  *
  * Value classes should not have functions that can fail,
  *  because they do not, for example, read files.
