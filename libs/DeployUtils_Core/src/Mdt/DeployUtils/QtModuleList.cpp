@@ -18,41 +18,33 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "LibraryInfoList.h"
+#include "QtModuleList.h"
 #include <algorithm>
 #include <iterator>
 
 namespace Mdt{ namespace DeployUtils{
 
-LibraryInfoList::LibraryInfoList(std::initializer_list<LibraryInfo> list)
+QtModuleList::QtModuleList(std::initializer_list<QtModule> list)
 {
+  mList.reserve(list.size());
   std::unique_copy( list.begin(), list.end(), std::back_inserter(mList) );
 }
 
-void LibraryInfoList::addLibrary(const LibraryInfo & library)
+void QtModuleList::addModule(QtModule module)
 {
-  if(mList.contains(library)){
+  if(module == QtModule::Unknown){
     return;
   }
-  mList.append(library);
-}
-
-void LibraryInfoList::addLibraries(const LibraryInfoList & libraries)
-{
-  for(const auto & library : libraries){
-    addLibrary(library);
+  if(mList.contains(module)){
+    return;
   }
+  mList.append(module);
 }
 
-void LibraryInfoList::push_back(const LibraryInfo & library)
+void QtModuleList::clear()
 {
-  addLibrary(library);
-//   mList.push_back(library);
+  mList.clear();
 }
 
-void LibraryInfoList::reserve(int size)
-{
-  mList.reserve(size);
-}
 
 }} // namespace Mdt{ namespace DeployUtils{

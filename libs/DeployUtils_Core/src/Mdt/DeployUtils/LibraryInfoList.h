@@ -38,16 +38,20 @@ namespace Mdt{ namespace DeployUtils{
      */
     using const_iterator = QVector<LibraryInfo>::const_iterator;
 
+    /*! \brief STL value type
+     */
+    using value_type = QVector<LibraryInfo>::value_type;
+
     /*! \brief Construct a empty library info list
      */
     LibraryInfoList() = default;
 
     /*! \brief Construct a library info list from initializer lists
      */
-    LibraryInfoList(std::initializer_list<LibraryInfo> list)
-     : mList(list)
-    {
-    }
+    LibraryInfoList(std::initializer_list<LibraryInfo> list);
+//      : mList(list)
+//     {
+//     }
 
     /*! \brief Copy construct a library info list from a other
      */
@@ -66,8 +70,25 @@ namespace Mdt{ namespace DeployUtils{
     LibraryInfoList & operator=(LibraryInfoList &&) = default;
 
     /*! \brief Add a library info to the end of this list
+     *
+     * If \a library allready exists,
+     *  it will not be added.
      */
     void addLibrary(const LibraryInfo & library);
+
+    /*! \brief Add a library info to the end of this list
+     *
+     * This method is used for STL compatibility
+     *  and is the same as addLibrary()
+     */
+    void push_back(const LibraryInfo & library);
+
+    /*! \brief Add a list of libraries to this list
+     *
+     * Will add each libraries from \a libraries
+     *  that not actually exists in this list.
+     */
+    void addLibraries(const LibraryInfoList & libraries);
 
     /*! \brief Get count of items in this list
      */

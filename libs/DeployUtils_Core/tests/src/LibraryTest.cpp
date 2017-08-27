@@ -283,13 +283,25 @@ void LibraryTest::libraryInfoListTest()
   list.addLibrary(li1);
   QCOMPARE(list.count(), 1);
   QVERIFY(!list.isEmpty());
+  // Chck that ading twice does not work
+  list.addLibrary(li1);
+  QCOMPARE(list.count(), 1);
   /*
    * Check that we can use initializer_list
    */
   LibraryInfo li2;
-  li1.setAbsoluteFilePath("/tmp/lib2");
+  li2.setAbsoluteFilePath("/tmp/lib2");
   LibraryInfoList list2{li1, li2};
   QCOMPARE(list2.count(), 2);
+  /*
+   * A libraries
+   */
+  LibraryInfoList list3;
+  list3.addLibraries(list2);
+  QCOMPARE(list3.count(), list2.count());
+  // Check that no duplicate is added
+  list3.addLibraries(list2);
+  QCOMPARE(list3.count(), list2.count());
 }
 
 void LibraryTest::searchLibraryTest()

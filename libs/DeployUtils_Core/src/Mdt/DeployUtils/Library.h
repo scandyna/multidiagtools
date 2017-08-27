@@ -56,7 +56,7 @@ namespace Mdt{ namespace DeployUtils{
     Library(Library &&) = delete;
     Library & operator=(Library &&) = delete;
 
-    /*! \brief Fin a library
+    /*! \brief Find a library
      *
      * \param name Name of the library.
      *     Can be a name without any prefix or suffix (ex: Qt5Core),
