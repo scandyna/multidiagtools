@@ -1,6 +1,6 @@
-format 213
+format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 33
+  revision 36
   modified_by 2 "philippe"
   // class settings
   
@@ -2470,6 +2470,40 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 5994242 "findLibraryPlugins"
+	public return_type class_ref 4159490 // LibraryInfoList
+	nparams 2
+	  param in name "qtLibrary" type class_ref 4158978 // LibraryInfo
+	  param in name "pathPrefixList" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5994370 "findLibrariesPlugins"
+	public return_type class_ref 4159490 // LibraryInfoList
+	nparams 2
+	  param in name "qtLibraries" type class_ref 4159490 // LibraryInfoList
+	  param in name "pathPrefixList" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 5973890 "findLibraryPluginsDependencies"
 	public return_type class_ref 4159490 // LibraryInfoList
 	nparams 2
@@ -2504,10 +2538,74 @@ ${inlines}
 	
       end
 
-      operation 5939714 "getLibraries"
+      operation 5939714 "getQtLibraries"
 	class_operation public return_type class_ref 4159490 // LibraryInfoList
 	nparams 1
 	  param in name "libraries" type class_ref 4159490 // LibraryInfoList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5993730 "module"
+	class_operation public return_type class_ref 4265218 // QtModule
+	nparams 1
+	  param in name "qtLibrary" type class_ref 4158978 // LibraryInfo
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5993986 "getModules"
+	class_operation public return_type class_ref 4265346 // QtModuleList
+	nparams 1
+	  param in name "qtLibraries" type class_ref 4159490 // LibraryInfoList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5980546 "getPluginsDirectories"
+	class_operation public return_type class_ref 160770 // QStringList
+	nparams 1
+	  param in name "module" type class_ref 4265218 // QtModule
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5993858 "getPluginsDirectories"
+	class_operation public return_type class_ref 160770 // QStringList
+	nparams 1
+	  param in name "modules" type class_ref 4265346 // QtModuleList
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -2558,11 +2656,36 @@ ${inlines}
 	
 	
       end
+
     end
 
     classdiagram 3673346 "Plugin"
       classdiagramsettings member_max_width 0 end
       size C-Landscape
+    end
+
+    class 4265218 "QtModule"
+      visibility package stereotype "enum"
+      cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+      php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+      python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+      idl_decl "${comment}enum ${name} {
+${items}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
 
     class 4244994 "QtPluginTable"
@@ -2580,12 +2703,12 @@ ${inlines}
       mysql_decl ""
       
       operation 5967234 "getPlugins"
-	class_operation public explicit_return_type ""
+	class_operation public return_type class_ref 4159490 // LibraryInfoList
 	nparams 1
-	  param in name "qtLibrary" type class_ref 4158978 // LibraryInfo
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+	  param in name "module" type class_ref 4265218 // QtModule
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -2596,9 +2719,9 @@ ${inlines}
       end
 
       operation 5973762 "getPlugins"
-	class_operation public explicit_return_type ""
+	class_operation public return_type class_ref 4159490 // LibraryInfoList
 	nparams 1
-	  param in name "qtLibraries" type class_ref 4159490 // LibraryInfoList
+	  param in name "modules" type class_ref 4265346 // QtModuleList
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -2792,6 +2915,42 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+    end
+
+    class 4251906 "QtPluginDirectoryInfo"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3664642 "Name"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 4790402 // <directional composition>
+	relation 4764162 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4790402 // <directional composition>
+	  b parent class_ref 4251650 // QtPluginInfoList
       end
     end
 
@@ -3195,7 +3354,7 @@ ${inlines}
       size A4
     end
 
-    class 4251906 "QtPluginDirectoryInfo"
+    class 4265346 "QtModuleList"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -3209,25 +3368,13 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 3664642 "Name"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+      classrelation 4824450 // <directional composition>
+	relation 4798210 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      classrelation 4790402 // <directional composition>
-	relation 4764162 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4790402 // <directional composition>
-	  b parent class_ref 4251650 // QtPluginInfoList
+	    classrelation_ref 4824450 // <directional composition>
+	  b parent class_ref 4265218 // QtModule
       end
     end
   end

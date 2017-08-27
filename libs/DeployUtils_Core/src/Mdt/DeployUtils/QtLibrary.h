@@ -27,7 +27,9 @@
 #include "QtModuleList.h"
 #include "PathList.h"
 #include "Mdt/Error.h"
-#include "Mdt/Expected.h"
+
+// #include "Mdt/Expected.h"
+
 #include <QObject>
 #include <QString>
 #include <QStringList>
@@ -55,13 +57,13 @@ namespace Mdt{ namespace DeployUtils{
      * Searching is done by trying known plugins subdirectories for each prefix path
      *  (qt5/plugins, plugins).
      */
-    Mdt::Expected<LibraryInfoList> findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList);
+    LibraryInfoList findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList);
 
     /*! \brief Find plugins for a list of Qt libraries
      *
      * \sa findLibraryPlugins()
      */
-    Mdt::Expected<LibraryInfoList> findLibrariesPlugins(const LibraryInfoList & qtLibraries, const PathList & searchFirstPathPrefixList);
+    LibraryInfoList findLibrariesPlugins(const LibraryInfoList & qtLibraries, const PathList & searchFirstPathPrefixList);
 
     /*! \brief Get Qt libraries out of \a libraries
      */

@@ -21,7 +21,7 @@
 #include "QtLibrary.h"
 #include "SearchPathList.h"
 
-#include "Library.h"
+// #include "Library.h"
 
 #include <QLatin1String>
 #include <QDir>
@@ -34,9 +34,8 @@
 
 namespace Mdt{ namespace DeployUtils{
 
-Expected<LibraryInfoList> QtLibrary::findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList)
+LibraryInfoList QtLibrary::findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList)
 {
-  Expected<LibraryInfoList> expPlugins;
   LibraryInfoList plugins;
 
   PathList pathPrefixList = searchFirstPathPrefixList;
@@ -45,49 +44,30 @@ Expected<LibraryInfoList> QtLibrary::findLibraryPlugins(const LibraryInfo & qtLi
   searchPathList.setPathPrefixList(pathPrefixList);
   searchPathList.setPathSuffixList({"qt5/plugins","plugins"});
 
-//   Library library;
-//   if(!library.findLibrary(qtLibrary.libraryName().name(), pathList, Library::ExcludeSystemPaths)){
-//     expPlugins = library.lastError();
-//     return expPlugins;
-//   }
-
   const auto pluginDirectories = getPluginsDirectories( module(qtLibrary) );
   qDebug() << "Plugins dirs: " << pluginDirectories;
   const auto pathList = searchPathList.pathList();
   for(const auto & path : pathList){
-    qDebug() << "Searching in " << path;
+//     qDebug() << "Searching in " << path;
     plugins = findPluginsInDirectories(path, pluginDirectories);
     if(!plugins.isEmpty()){
       break;
     }
   }
 
-//   for(const auto & path : pathList){
-//     qDebug() << "Searching in " << path;
-//     QDir dir(path);
-//   }
-
-  expPlugins = plugins;
-
-  return expPlugins;
+  return plugins;
 }
 
-Expected<LibraryInfoList> QtLibrary::findLibrariesPlugins(const LibraryInfoList& qtLibraries, const PathList& searchFirstPathPrefixList)
+LibraryInfoList QtLibrary::findLibrariesPlugins(const LibraryInfoList& qtLibraries, const PathList& searchFirstPathPrefixList)
 {
-  Expected<LibraryInfoList> expPlugins;
   LibraryInfoList plugins;
 
   for(const auto & library : qtLibraries){
     const auto itemPlugins = findLibraryPlugins(library, searchFirstPathPrefixList);
-    if(!itemPlugins.hasValue()){
-      expPlugins = itemPlugins;
-      return expPlugins;
-    }
-    plugins.addLibraries(itemPlugins.value());
+    plugins.addLibraries(itemPlugins);
   }
-  expPlugins = plugins;
 
-  return expPlugins;
+  return plugins;
 }
 
 LibraryInfoList QtLibrary::getQtLibraries(const LibraryInfoList & libraries)

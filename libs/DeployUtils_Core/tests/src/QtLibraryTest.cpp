@@ -245,17 +245,20 @@ void QtLibraryTest::pluginsDirectoriesTest_data()
 void QtLibraryTest::findLibrariesPluginsTest()
 {
   QtLibrary qtLibrary;
-  PathList searchFirstPrefixPaths = PathList::fromStringList( QString(PREFIX_PATH).split(';', QString::SkipEmptyParts) );
+  const auto prefix = QString::fromLocal8Bit(PREFIX_PATH);
+  PathList searchFirstPrefixPaths = PathList::fromStringList( prefix.split(';', QString::SkipEmptyParts) );
+  LibraryInfo qtCore;
   LibraryInfo qtGui;
   LibraryInfoList qtLibraries;
 
   qDebug() << "Prefixes: " << searchFirstPrefixPaths.toStringList();
 
+  qtCore.setLibraryPlatformName("Qt5Core");
   qtGui.setLibraryPlatformName("Qt5Gui");
+  qtLibraries.addLibrary(qtCore);
   qtLibraries.addLibrary(qtGui);
-  const auto expPlugins = qtLibrary.findLibrariesPlugins(qtLibraries, searchFirstPrefixPaths);
-  QVERIFY(expPlugins.hasValue());
-  QVERIFY(!expPlugins.value().isEmpty());
+  const auto plugins = qtLibrary.findLibrariesPlugins(qtLibraries, searchFirstPrefixPaths);
+  QVERIFY(!plugins.isEmpty());
 }
 
 /*

@@ -1,0 +1,27 @@
+format 214
+
+classcanvas 128002 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 40.5 328.5 2000
+end
+classcanvas 128130 class_ref 4258690 // Object
+  classdiagramsettings member_max_width 0 end
+  xyz 39 127 2000
+end
+classcanvas 128386 class_ref 182402 // Error
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 130 42 2000
+end
+note 128642 "Do not inherit QObject:
+ - Subclasses mostly inherit from a QObject inherited class (f.ex. QAbstractItemModel)
+Maybe, rename (something Functionnal ? <- confusing with functionnal coding..)
+-> Name: FunctionalType ?"
+  xyzwh 306 98 2000 717 149
+relationcanvas 128514 relation_ref 4791682 // <directional composition>
+  from ref 128130 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128770 -_-_ decenter_end 523
+  from ref 128130 z 2001 to ref 128642
+end
