@@ -30,6 +30,10 @@
 
 // #include <QDebug>
 
+#ifndef PREFIX_PATH
+ #error "PREFIX_PATH missing"
+#endif
+
 using namespace Mdt::DeployUtils;
 
 void BinaryDependenciesTest::initTestCase()
@@ -90,9 +94,11 @@ void BinaryDependenciesTest::searchPathListTest()
 
 void BinaryDependenciesTest::runTest()
 {
+  const auto prefix = QString::fromLocal8Bit(PREFIX_PATH);
+  PathList searchFirstPrefixPaths = PathList::fromStringList( prefix.split(';', QString::SkipEmptyParts) );
   BinaryDependencies deps;
 
-  QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath() ));
+  QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath(), searchFirstPrefixPaths));
   QVERIFY(!deps.dependencies().isEmpty());
 }
 

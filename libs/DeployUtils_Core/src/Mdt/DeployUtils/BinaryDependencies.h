@@ -21,20 +21,14 @@
 #ifndef MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_H
 #define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_H
 
-// #include "Platform.h"
-
-// #include "OperatingSystem.h"
 #include "LibraryInfoList.h"
 #include "PathList.h"
 #include "Mdt/Error.h"
 #include <QObject>
 #include <QString>
 #include <QStringList>
-// #include <memory>
 
 namespace Mdt{ namespace DeployUtils{
-
-//   class BinaryDependenciesImplementationInterface;
 
   /*! \brief Find dependencies for a executable or a library
    */
@@ -48,7 +42,7 @@ namespace Mdt{ namespace DeployUtils{
      *
      * \sa getLibrarySearchPathList()
      */
-    enum BinaryFileDirectoryInclude
+    enum BinaryFileDirectoryInclusion
     {
       IncludeBinaryFileDirectory, /*!< Include binary file's directory to the libraries search paths */
       ExcludeBinaryFileDirectory  /*!< Do not include binary file's directory to the libraries search paths */
@@ -61,13 +55,6 @@ namespace Mdt{ namespace DeployUtils{
     /*! \brief Destructor
      */
     ~BinaryDependencies();
-
-//     /*! \brief Check if valid
-//      *
-//      * Returns true if a implementation for native platform could be loaded,
-//      *  otherwise false.
-//      */
-//     bool isValid() const;
 
     /*! \brief Set a list of paths where to search dependencies first
      *
@@ -109,7 +96,7 @@ namespace Mdt{ namespace DeployUtils{
      *
      * \note The path list will be rebuilt at each call of this method.
      */
-    PathList getLibrarySearchFirstPathList(BinaryFileDirectoryInclude binaryFileDirectoryInclude) const;
+    PathList getLibrarySearchFirstPathList(BinaryFileDirectoryInclusion binaryFileDirectoryInclude) const;
 
     /*! \brief Set library or executable
      */
@@ -125,6 +112,18 @@ namespace Mdt{ namespace DeployUtils{
      *  setBinaryFile() then findDependencies().
      */
     bool findDependencies(const QString & binaryFilePath);
+
+    /*! \brief Find dependencies for a executable or a library
+     *
+     * For target platforms that do not support RPATH (like DLL based systems),
+     *  dependencies must be searched in several directories.
+     *  Dependning on implementation, dependencies will be searched in the directory of \a binaryFilePath first.
+     *  Then, dependencies will be searched, for each path in \a searchFirstPathPrefixList ,
+     *  in known subdirectories (like lib, bin, qt5/lib, qt5/bin).
+     *  Finally, depending of the implementation, dependencies can also be serached in
+     *  in system paths.
+     */
+    bool findDependencies(const QString & binaryFilePath, const PathList & searchFirstPathPrefixList);
 
     /*! \brief Get dependencies
      */

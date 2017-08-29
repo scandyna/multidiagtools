@@ -22,6 +22,7 @@
 #include "CommandLineParser.h"
 #include "Mdt/DeployUtils/SearchPathList.h"
 #include "Mdt/DeployUtils/BinaryDependencies.h"
+#include "Mdt/DeployUtils/QtLibrary.h"
 #include "Mdt/DeployUtils/FileCopier.h"
 #include <QCoreApplication>
 #include <QString>
@@ -51,21 +52,40 @@ int MdtCpBinDepsMain::runMain()
 //   }
   qDebug() << "Main: file: " << parser.binaryFilePath() << " , dest: " << parser.destinationDirectoryPath();
 
-  SearchPathList searchFirstPathList;
-  searchFirstPathList.setPathPrefixList(parser.librarySearchFirstPathList());
-  searchFirstPathList.setPathSuffixList(parser.librarySearchFirstPathSuffixList()); /// \todo Or hard coded ?
+//   SearchPathList searchFirstPathList;
+//   searchFirstPathList.setPathPrefixList(parser.librarySearchFirstPathList());
+//   searchFirstPathList.setPathSuffixList(parser.librarySearchFirstPathSuffixList()); /// \todo Or hard coded ?
 
-  /// \todo Adapt
+  LibraryInfoList dependencies;
+  const auto pathPrefixList = parser.librarySearchFirstPathList();
+  /*
+   * Find dependencies for given binary file
+   */
   BinaryDependencies binDeps;
-  binDeps.setLibrarySearchFirstPathList(parser.librarySearchFirstPathList());
-  binDeps.setLibrarySearchFirstPathSuffixList(parser.librarySearchFirstPathSuffixList());
-  if(!binDeps.findDependencies(parser.binaryFilePath())){
+//   binDeps.setLibrarySearchFirstPathList(parser.librarySearchFirstPathList());
+///   binDeps.setLibrarySearchFirstPathSuffixList(parser.librarySearchFirstPathSuffixList());
+  if(!binDeps.findDependencies(parser.binaryFilePath(), pathPrefixList)){
     qDebug() << binDeps.lastError().text();
     return 1;
   }
+  dependencies = binDeps.dependencies();
+  /*
+   * Find dependencies of dependent Qt libraries plugins
+   */
+  QtLibrary qtLibrary;
+  const auto qtLibraries = qtLibrary.getQtLibraries(binDeps.dependencies());
+  const auto qtPlugins = qtLibrary.findLibrariesPlugins(qtLibraries, pathPrefixList);
+  for(const auto & plugin : qtPlugins){
+    if(!binDeps.findDependencies(plugin.absoluteFilePath(), pathPrefixList)){
+      qDebug() << binDeps.lastError().text();
+      return 1;
+    }
+    // LibraryInfoList takes care about duplicates
+    dependencies.addLibraries(binDeps.dependencies());
+  }
 
   FileCopier cp;
-  if(!cp.copyLibraries(binDeps.dependencies(), parser.destinationDirectoryPath())){
+  if(!cp.copyLibraries(dependencies, parser.destinationDirectoryPath())){
     qDebug() << cp.lastError().text();
     return 1;
   }

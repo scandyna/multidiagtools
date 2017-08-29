@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 36
+  revision 38
   modified_by 2 "philippe"
   // class settings
   
@@ -1830,10 +1830,29 @@ ${inlines}
 
       operation 5863682 "findDependencies"
 	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+	nparams 2
+	  param in name "binary" type class_ref 161026 // QString
+	  param in name "sfPaths" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6000898 "findDependencies"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "libraries" type class_ref 4159490 // LibraryInfoList
+	  param in name "sfPaths" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -1977,6 +1996,18 @@ ${inlines}
 	abstract cpp_virtual public explicit_return_type "bool"
 	nparams 1
 	  param in name "binaryFilePath" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 6001026 "findDependencies"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 1
+	  param in name "libraries" type class_ref 4159490 // LibraryInfoList
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	
@@ -2504,40 +2535,6 @@ ${inlines}
 	
       end
 
-      operation 5973890 "findLibraryPluginsDependencies"
-	public return_type class_ref 4159490 // LibraryInfoList
-	nparams 2
-	  param in name "qtLibrary" type class_ref 4158978 // LibraryInfo
-	  param in name "pathPrefixList" type class_ref 4168962 // PathList
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5960706 "findLibrariesPluginsDependencies"
-	public return_type class_ref 4159490 // LibraryInfoList
-	nparams 2
-	  param in name "qtLibraries" type class_ref 4159490 // LibraryInfoList
-	  param in name "pathPrefixList" type class_ref 4168962 // PathList
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 5939714 "getQtLibraries"
 	class_operation public return_type class_ref 4159490 // LibraryInfoList
 	nparams 1
@@ -2656,7 +2653,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     classdiagram 3673346 "Plugin"

@@ -50,12 +50,11 @@ namespace Mdt{ namespace DeployUtils{
      *  using getPluginsDirectories(QtModule),
      *  the find the existing ones.
      *
-     * \a searchFirstPathPrefixList is a list of paths to the root of a Qt library.
+     * \a searchFirstPathPrefixList is a list of paths to the root of a Qt installation.
      * Plugins are serached first in each item of \a searchFirstPathPrefixList,
-     *  then in system library prefix paths (/usr/lib, /usr/lib/x86_64-linux-gnu, ...)
-     *
-     * Searching is done by trying known plugins subdirectories for each prefix path
-     *  (qt5/plugins, plugins).
+     *  then in system library prefix paths.
+     *  For each path in all mentionned path prefixes, plugins are searched in
+     *  qt5/plugins, then plugins subdirectories.
      */
     LibraryInfoList findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList);
 

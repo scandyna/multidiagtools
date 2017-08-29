@@ -289,6 +289,7 @@ void PathTest::searchPathListTest()
   /*
    * Set a path prefix
    */
+  spl.setIncludePathPrefixes(true);
   spl.setPathPrefixList({"/opt/liba"});
   QCOMPARE(spl.toStringList(), QStringList({"/opt/liba"}));
   /*
@@ -307,9 +308,15 @@ void PathTest::searchPathListTest()
   spl.appendPath("/opt/appd");
   QCOMPARE(spl.toStringList(), QStringList({"/opt/appc","/opt/liba","/opt/liba/bin","/opt/appd"}));
   /*
+   * Specify to not include path prefixes
+   */
+  spl.setIncludePathPrefixes(false);
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/appc","/opt/liba/bin","/opt/appd"}));
+  /*
    * Clear
    */
   spl.clear();
+  spl.setIncludePathPrefixes(true);
   QCOMPARE(spl.toStringList(), QStringList({}));
   /*
    * Set a list of path prefixes
@@ -326,6 +333,22 @@ void PathTest::searchPathListTest()
    */
   spl.setPathSuffixList({"bin","lib"});
   QCOMPARE(spl.toStringList(), QStringList({"/opt/appc","/opt/liba","/opt/liba/bin","/opt/liba/lib","/opt/libb","/opt/libb/bin","/opt/libb/lib"}));
+  /*
+   * Clear
+   * - By default, path prefixes are not included
+   */
+  spl.clear();
+  QCOMPARE(spl.toStringList(), QStringList({}));
+  /*
+   * Set a list of path prefixes
+   */
+  spl.setPathPrefixList({"/opt/liba","/opt/libb"});
+  QCOMPARE(spl.toStringList(), QStringList({}));
+  /*
+   * Set a list of path suffixes
+   */
+  spl.setPathSuffixList({"bin","lib"});
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/liba/bin","/opt/liba/lib","/opt/libb/bin","/opt/libb/lib"}));
 }
 
 /*

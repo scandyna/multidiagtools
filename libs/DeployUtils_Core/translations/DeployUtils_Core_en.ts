@@ -4,12 +4,14 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="77"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="78"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="141"/>
         <source>File &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="109"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="110"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="166"/>
         <source>Could not find a tool to get dependencies for file &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>

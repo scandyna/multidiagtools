@@ -33,6 +33,20 @@ namespace Mdt{ namespace DeployUtils{
   {
    public:
 
+//     /*! \brief Specify if path prefixes must be part of the search list
+//      */
+//     enum PathPrefixInclusion
+//     {
+//       IncludePathPrefixes,  /*!<  */
+//       ExcludePathPrefixes   /*!<  */
+//     };
+
+    /*! \brief Specify if path prefixes must be part of the search paths
+     *
+     * By default, path prefixes are not part of the search path.
+     */
+    void setIncludePathPrefixes(bool include);
+
     /*! \brief Set a list of path prefix
      *
      * A path prefix is typically the root of a library distribution,
@@ -40,16 +54,19 @@ namespace Mdt{ namespace DeployUtils{
      */
     void setPathPrefixList(const PathList & pathList);
 
-    /*! \brief Specify addional subdirectories to check
+    /*! \brief Specify subdirectories to check
      *
-     * Specify addional subdirectories to check below each directory
+     * Specify subdirectories to check below each directory
      *  in those specified with setPathPrefixList().
      *  For example, if /opt/liba and /opt/libb have been set as
      *  path prefixes, and \a suffixList contains bin qt5/bin,
-     *  libraries will be searched in
+     *  path list will contain
+     *  /opt/liba/bin, /opt/liba/qt5/bin, /opt/libb/bin, /opt/libb/qt5/bin .
+     *  If includePathPrefixes is set, path list will contain
      *  /opt/liba, /opt/liba/bin, /opt/liba/qt5/bin, /opt/libb, /opt/libb/bin, /opt/libb/qt5/bin .
      *
      * \sa setPathPrefixList()
+     * \sa setIncludePathPrefixes()
      */
     void setPathSuffixList(const QStringList & suffixList);
 
@@ -91,6 +108,7 @@ namespace Mdt{ namespace DeployUtils{
 
     void updatePathList();
 
+    bool mIncludePathPrefixes = false;
     PathList mPathList;
     PathList mPathListToPrepend;
     PathList mPathListToAppend;

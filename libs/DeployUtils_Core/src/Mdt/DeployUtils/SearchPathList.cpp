@@ -26,6 +26,12 @@
 
 namespace Mdt{ namespace DeployUtils{
 
+void SearchPathList::setIncludePathPrefixes(bool include)
+{
+  mIncludePathPrefixes = include;
+  updatePathList();
+}
+
 void SearchPathList::setPathPrefixList(const PathList& pathList)
 {
   mPathPrefixList = pathList;
@@ -52,6 +58,7 @@ void SearchPathList::appendPath(const QString& path)
 
 void SearchPathList::clear()
 {
+  mIncludePathPrefixes = false;
   mPathList.clear();
   mPathListToPrepend.clear();
   mPathListToAppend.clear();
@@ -66,7 +73,9 @@ void SearchPathList::updatePathList()
   const auto & prefixList = mPathPrefixList;
   const auto & suffixList = mPathSuffixList;
   for(const auto & path : prefixList){
-    mPathList.appendPath(path);
+    if(mIncludePathPrefixes){
+      mPathList.appendPath(path);
+    }
     for(const auto & suffix : suffixList){
       mPathList.appendPath( QDir::cleanPath(path % QLatin1String("/") % suffix) );
     }

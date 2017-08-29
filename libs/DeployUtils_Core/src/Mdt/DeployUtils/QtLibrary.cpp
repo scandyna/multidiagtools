@@ -48,7 +48,7 @@ LibraryInfoList QtLibrary::findLibraryPlugins(const LibraryInfo & qtLibrary, con
   qDebug() << "Plugins dirs: " << pluginDirectories;
   const auto pathList = searchPathList.pathList();
   for(const auto & path : pathList){
-//     qDebug() << "Searching in " << path;
+    qDebug() << "Searching in " << path;
     plugins = findPluginsInDirectories(path, pluginDirectories);
     if(!plugins.isEmpty()){
       break;
