@@ -32,7 +32,6 @@ class BinaryDependenciesTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void searchPathListTest();
   void runTest();
 };
 

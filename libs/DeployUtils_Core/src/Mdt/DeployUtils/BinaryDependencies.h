@@ -38,16 +38,6 @@ namespace Mdt{ namespace DeployUtils{
 
    public:
 
-    /*! \brief Option to include binary file's directory to library search paths
-     *
-     * \sa getLibrarySearchPathList()
-     */
-    enum BinaryFileDirectoryInclusion
-    {
-      IncludeBinaryFileDirectory, /*!< Include binary file's directory to the libraries search paths */
-      ExcludeBinaryFileDirectory  /*!< Do not include binary file's directory to the libraries search paths */
-    };
-
     /*! \brief Constructor
      */
     BinaryDependencies(QObject* parent = nullptr);
@@ -55,63 +45,6 @@ namespace Mdt{ namespace DeployUtils{
     /*! \brief Destructor
      */
     ~BinaryDependencies();
-
-    /*! \brief Set a list of paths where to search dependencies first
-     *
-     * For target platforms which supports RPATH (like Linux),
-     *  this has no effects, because the implementation will use ldd,
-     *  which returns directly the full path for each dependency.
-     *
-     * For other target platforms, like Windows,
-     *  use this method to tell where to find libraries
-     *  that are not installed in a standard library location,
-     *  or a alternative library version must be used.
-     *
-     * \sa setLibrarySearchFirstPathSuffixList()
-     */
-    void setLibrarySearchFirstPathList(const PathList & pathList);
-
-    /*! \brief Specify addional subdirectories to check
-     *
-     * Specify addional subdirectories to check below each directory
-     *  in those specified with setLibrarySearchFirstPathList().
-     *  For example, if /opt/liba and /opt/libb have been set as
-     *  paths to search first, and \a suffixList contains bin qt5/bin,
-     *  libraries will be searched in
-     *  /opt/liba, /opt/liba/bin, /opt/liba/qt5/bin, /opt/libb, /opt/libb/bin, /opt/libb/qt5/bin .
-     *
-     * \sa setLibrarySearchFirstPathList()
-     */
-    void setLibrarySearchFirstPathSuffixList(const QStringList & suffixList);
-
-    /*! \brief Get a list of paths where to search dependencies first
-     *
-     * If a executable or a library have allready been set with setBinaryFile(),
-     *  and \a binaryFileDirectoryInclude is IncludeBinaryFileDirectory,
-     *  binary file's directory will be at first place in the list.
-     *  If paths have been added with setLibrarySearchFirstPathList(),
-     *  they will follow in the list.
-     *  No system library paths will be added to this list.
-     *  Each implementation will do it itself.
-     *
-     * \note The path list will be rebuilt at each call of this method.
-     */
-    PathList getLibrarySearchFirstPathList(BinaryFileDirectoryInclusion binaryFileDirectoryInclude) const;
-
-    /*! \brief Set library or executable
-     */
-    bool setBinaryFile(const QString & filePath);
-
-    /*! \brief Find dependencies for executable or library
-     */
-    bool findDependencies();
-
-    /*! \brief Find dependencies for a executable or a library
-     *
-     * This is the same as calling
-     *  setBinaryFile() then findDependencies().
-     */
-    bool findDependencies(const QString & binaryFilePath);
 
     /*! \brief Find dependencies for a executable or a library
      *
@@ -144,10 +77,6 @@ namespace Mdt{ namespace DeployUtils{
     void setLastError(const Mdt::Error & error);
 
     LibraryInfoList mDependencies;
-    QString mBinaryFilePath;
-    QString mBinaryFileDirectoryPath;
-    PathList mLibrarySearchFirstPathList;
-    QStringList mLibrarySearchFirstPathSuffixList;
     Mdt::Error mLastError;
   };
 
