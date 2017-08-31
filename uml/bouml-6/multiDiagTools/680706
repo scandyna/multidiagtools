@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 39
+  revision 40
   modified_by 2 "philippe"
   // class settings
   
@@ -1685,7 +1685,7 @@ ${inlines}
 
     classdiagram 3620098 "BinaryDependencies"
       classdiagramsettings member_max_width 0 end
-      size B
+      size Legal-Landscape
     end
 
     class 4183938 "BinaryDependencies"
@@ -3257,6 +3257,29 @@ ${inlines}
 "
 	    classrelation_ref 4824450 // <directional composition>
 	  b parent class_ref 4265218 // QtModule
+      end
+    end
+
+    class 4271874 "BinaryDependenciesImplIfaceTester"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4830978 // <generalisation>
+	relation 4804738 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4830978 // <generalisation>
+	  b parent class_ref 4176642 // BinaryDependenciesImplementationInterface
       end
     end
   end

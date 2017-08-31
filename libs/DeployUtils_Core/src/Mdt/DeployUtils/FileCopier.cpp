@@ -86,12 +86,12 @@ bool FileCopier::copyLibrary(const Mdt::DeployUtils::LibraryInfo& sourceLibrary,
   const auto destinationFilePath = QDir::cleanPath( destinationDirectoryPath + QLatin1String("/") + fileName );
   const QFileInfo destinationFileInfo(destinationFilePath);
 
-  // If destination exists, check if we have to update
-  qDebug() << "copy " << sourceFileInfo.fileName() << " ...";
+  // If destination exists, check if we are to update
   if(destinationFileInfo.exists()){
     if( destinationFileInfo.created() >= sourceFileInfo.created() ){
       return true;
     }
+    qDebug() << "remove " << destinationFileInfo.fileName();
     QFile destinationFile(destinationFileInfo.absoluteFilePath());
     if(!destinationFile.remove()){
       const QString msg = tr("Could not remove destination file '%1'")
@@ -103,6 +103,7 @@ bool FileCopier::copyLibrary(const Mdt::DeployUtils::LibraryInfo& sourceLibrary,
     }
   }
   // Copy the library
+  qDebug() << "copy " << sourceFileInfo.fileName() << " ...";
   QFile sourceFile(sourceFileInfo.absoluteFilePath());
   if( !sourceFile.copy(destinationFilePath) ){
     const QString msg = tr("Could not copy file '%1' to '%2'")

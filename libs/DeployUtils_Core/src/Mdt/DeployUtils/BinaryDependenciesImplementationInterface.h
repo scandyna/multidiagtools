@@ -55,6 +55,15 @@ namespace Mdt{ namespace DeployUtils{
      */
     virtual bool findDependencies(const QString & binaryFilePath) = 0;
 
+    /*! \brief Find dependencies for a lits of libraries
+     *
+     * This default implementation simply calls findDependencies(const QString &)
+     *  for each library in \a libraries .
+     *
+     * \pre libraries must not be a empty list
+     */
+    virtual bool findDependencies(const LibraryInfoList & libraries);
+
     /*! \brief Get dependencies
      */
     LibraryInfoList dependencies() const

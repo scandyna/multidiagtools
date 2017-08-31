@@ -67,6 +67,7 @@ bool BinaryDependenciesObjdump::findDependencies(const QString& binaryFilePath)
     qDebug() << " " << path;
   }
   // Find dependencies recursively
+  mLibraryTree.clear();
   const auto node = mLibraryTree.setRootBinary(binaryFilePath);
   mAlreadyProcessedLibraries.clear();
   if(!findAndAddDependenciesForNode(binaryFilePath, node)){
@@ -89,6 +90,44 @@ bool BinaryDependenciesObjdump::findDependencies(const QString& binaryFilePath)
   return true;
 }
 
+bool BinaryDependenciesObjdump::findDependencies(const LibraryInfoList & libraries)
+{
+  Q_ASSERT(!libraries.isEmpty());
+
+  setLibrarySearchPathList();
+  qDebug() << "Search libraries in:";
+  for(const auto & path : mLibrarySearchPathList){
+    qDebug() << " " << path;
+  }
+  // Find dependencies recursively
+  mAlreadyProcessedLibraries.clear();
+  mLibraryTree.clear();
+  const auto node = mLibraryTree.setRootBinary(libraries.at(0).absoluteFilePath());
+  for(const auto & library : libraries){
+    qDebug() << "Process " << library.libraryName().name();
+    Q_ASSERT(!library.absoluteFilePath().isEmpty());
+    if(!findAndAddDependenciesForNode(library.absoluteFilePath(), node)){
+      return false;
+    }
+  }
+  // Store dependencies
+  qDebug() << "Found deps:";
+  const auto libs = mLibraryTree.toFlatList();
+  LibraryInfoList libraryInfoList;
+  for(const auto lib : libs){
+    LibraryInfo libraryInfo;
+    QFileInfo fi(lib);
+    libraryInfo.setAbsoluteFilePath(fi.absoluteFilePath());
+    libraryInfo.setLibraryPlatformName(fi.fileName());
+    libraryInfoList.addLibrary(libraryInfo);
+    qDebug() << " lib: " << lib;
+  }
+  setDependencies(libraryInfoList);
+
+  return true;
+
+}
+
 bool BinaryDependenciesObjdump::findAndAddDependenciesForNode(const QString& binaryFilePath, LibraryTreeNode node)
 {
   /*
@@ -100,6 +139,7 @@ bool BinaryDependenciesObjdump::findAndAddDependenciesForNode(const QString& bin
 //   qDebug() << "Process " << QFileInfo(binaryFilePath).fileName();
   
   if(mAlreadyProcessedLibraries.contains(binaryFilePath)){
+//     qDebug() << "  Add to tree: " << QFileInfo(binaryFilePath).fileName();
     mLibraryTree.addLibrary(binaryFilePath, node);
     return true;
   }

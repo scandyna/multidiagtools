@@ -32,6 +32,22 @@ void BinaryDependenciesImplementationInterface::setLibrarySearchFirstPathList(co
   mLibrarySearchFirstPathList = pathList;
 }
 
+bool BinaryDependenciesImplementationInterface::findDependencies(const LibraryInfoList & libraries)
+{
+  Q_ASSERT(!libraries.isEmpty());
+
+  LibraryInfoList allDependencies;
+  for(const auto & library : libraries){
+    Q_ASSERT(!library.absoluteFilePath().isEmpty());
+    if(!findDependencies(library.absoluteFilePath())){
+      return false;
+    }
+    allDependencies.addLibraries(mDependencies);
+  }
+  mDependencies = allDependencies;
+  return true;
+}
+
 void BinaryDependenciesImplementationInterface::setDependencies(const LibraryInfoList & dependencies)
 {
   mDependencies = dependencies;

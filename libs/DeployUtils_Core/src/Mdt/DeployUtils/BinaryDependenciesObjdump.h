@@ -48,6 +48,10 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool findDependencies(const QString & binaryFilePath) override;
 
+    /*! \brief Find dependencies for a list of libraries
+     */
+    bool findDependencies(const LibraryInfoList & libraries) override;
+
     /*! \brief Get a list of paths where libraries are searched
      */
     PathList librarySearchPathList() const

@@ -4,12 +4,12 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="49"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="123"/>
         <source>File &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="74"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="147"/>
         <source>Could not find a tool to get dependencies for file &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -30,12 +30,12 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependenciesObjdump</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="119"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="159"/>
         <source>Parsing objdump output for file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="131"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="171"/>
         <source>Could not find library &apos;%1&apos;.
 Searched in %2</source>
         <translation type="unfinished"></translation>
@@ -67,7 +67,7 @@ Searched in %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="108"/>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="109"/>
         <source>Could not copy file &apos;%1&apos; to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>

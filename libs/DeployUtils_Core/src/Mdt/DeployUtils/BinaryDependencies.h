@@ -27,8 +27,13 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <memory>
+
+class QFileInfo;
 
 namespace Mdt{ namespace DeployUtils{
+
+  class BinaryDependenciesImplementationInterface;
 
   /*! \brief Find dependencies for a executable or a library
    */
@@ -58,6 +63,14 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool findDependencies(const QString & binaryFilePath, const PathList & searchFirstPathPrefixList);
 
+    /*! \brief Find dependencies for a lits of libraries
+     *
+     * \sa findDependencies(const QString &, const PathList &)
+     * \note It is assumed that each library has the same binary format (PA, or elf, or ...)
+     * \pre Each library list libraries must have its full path set
+     */
+    bool findDependencies(const LibraryInfoList & libraries, const PathList & searchFirstPathPrefixList);
+
     /*! \brief Get dependencies
      */
     LibraryInfoList dependencies() const
@@ -74,6 +87,7 @@ namespace Mdt{ namespace DeployUtils{
 
    private:
 
+    std::unique_ptr<BinaryDependenciesImplementationInterface> initImpl(const QFileInfo & binaryFileInfo, const PathList & searchFirstPathPrefixList);
     void setLastError(const Mdt::Error & error);
 
     LibraryInfoList mDependencies;

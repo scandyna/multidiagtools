@@ -75,14 +75,19 @@ int MdtCpBinDepsMain::runMain()
   QtLibrary qtLibrary;
   const auto qtLibraries = qtLibrary.getQtLibraries(binDeps.dependencies());
   const auto qtPlugins = qtLibrary.findLibrariesPlugins(qtLibraries, pathPrefixList);
-  for(const auto & plugin : qtPlugins){
-    if(!binDeps.findDependencies(plugin.absoluteFilePath(), pathPrefixList)){
-      qDebug() << binDeps.lastError().text();
-      return 1;
-    }
-    // LibraryInfoList takes care about duplicates
-    dependencies.addLibraries(binDeps.dependencies());
+  if(!binDeps.findDependencies(qtPlugins, pathPrefixList)){
+    qDebug() << binDeps.lastError().text();
+    return 1;
   }
+  dependencies.addLibraries(binDeps.dependencies());
+//   for(const auto & plugin : qtPlugins){
+//     if(!binDeps.findDependencies(plugin.absoluteFilePath(), pathPrefixList)){
+//       qDebug() << binDeps.lastError().text();
+//       return 1;
+//     }
+//     // LibraryInfoList takes care about duplicates
+//     dependencies.addLibraries(binDeps.dependencies());
+//   }
 
   FileCopier cp;
   if(!cp.copyLibraries(dependencies, parser.destinationDirectoryPath())){

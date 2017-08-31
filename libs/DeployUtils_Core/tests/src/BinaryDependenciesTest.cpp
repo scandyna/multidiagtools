@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "BinaryDependenciesTest.h"
+#include "Mdt/DeployUtils/BinaryDependenciesImplementationInterface.h"
 #include "Mdt/DeployUtils/BinaryDependencies.h"
 #include "Mdt/DeployUtils/PathList.h"
 #include "Mdt/DeployUtils/Platform.h"
@@ -44,9 +45,62 @@ void BinaryDependenciesTest::cleanupTestCase()
 {
 }
 
+class BinaryDependenciesImplementationInterfaceTester : public BinaryDependenciesImplementationInterface
+{
+ public:
+
+  bool findDependencies(const QString& binaryFilePath) override;
+};
+
+bool BinaryDependenciesImplementationInterfaceTester::findDependencies(const QString& binaryFilePath)
+{
+  QFileInfo binaryFileInfo(binaryFilePath);
+  LibraryInfo li;
+  li.setLibraryPlatformName(binaryFileInfo.fileName() + "_dep");
+  li.setAbsoluteFilePath(binaryFileInfo.absoluteFilePath() + "_dep");
+  LibraryInfoList dependencies;
+  dependencies.addLibrary(li);
+  setDependencies(dependencies);
+
+  return true;
+}
+
 /*
  * Tests
  */
+
+void BinaryDependenciesTest::implementationInterfaceTest()
+{
+  BinaryDependenciesImplementationInterfaceTester bdt;
+  BinaryDependenciesImplementationInterface *bdi = &bdt;
+  /*
+   * Fin dependencies for 1 binary
+   */
+  QVERIFY(bdi->findDependencies("exe1"));
+  QCOMPARE(bdi->dependencies().count(), 1);
+  QCOMPARE(bdi->dependencies().at(0).libraryName().name(), QString("exe1_dep"));
+  /*
+   * Check running a second time
+   */
+  QVERIFY(bdi->findDependencies("exe2"));
+  QCOMPARE(bdi->dependencies().count(), 1);
+  QCOMPARE(bdi->dependencies().at(0).libraryName().name(), QString("exe2_dep"));
+  /*
+   * Check finding dependencies for a list of libraries
+   */
+  LibraryInfoList libraries;
+  LibraryInfo lib;
+  lib.setLibraryPlatformName("a");
+  lib.setAbsoluteFilePath("/opt/lib/a");
+  libraries.addLibrary(lib);
+  lib.setLibraryPlatformName("b");
+  lib.setAbsoluteFilePath("/opt/lib/b");
+  libraries.addLibrary(lib);
+  QVERIFY(bdi->findDependencies(libraries));
+  QCOMPARE(bdi->dependencies().count(), 2);
+  QCOMPARE(bdi->dependencies().at(0).libraryName().name(), QString("a_dep"));
+  QCOMPARE(bdi->dependencies().at(1).libraryName().name(), QString("b_dep"));
+}
 
 void BinaryDependenciesTest::runTest()
 {
