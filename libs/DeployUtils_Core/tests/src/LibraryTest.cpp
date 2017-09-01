@@ -210,6 +210,51 @@ void LibraryTest::libraryNameToFullNameLinuxTest()
   QCOMPARE(name123.toFullNameLinux(), QString("libQt5Core.so.1.2.3"));
 }
 
+void LibraryTest::osFromLibraryNameTest()
+{
+  QFETCH(QString, fullName);
+  QFETCH(OperatingSystem, expectedOs);
+
+  QCOMPARE(LibraryName::operatingSystem(fullName), expectedOs);
+}
+
+void LibraryTest::osFromLibraryNameTest_data()
+{
+  QTest::addColumn<QString>("fullName");
+  QTest::addColumn<OperatingSystem>("expectedOs");
+
+  QTest::newRow("") << "" << OperatingSystem::Unknown;
+  QTest::newRow("A") << "A" << OperatingSystem::Unknown;
+  QTest::newRow("A.so") << "A.so" << OperatingSystem::Linux;
+  QTest::newRow("A.so.1") << "A.so.1" << OperatingSystem::Linux;
+  QTest::newRow("A.so.1.2") << "A.so.1.2" << OperatingSystem::Linux;
+  QTest::newRow("A.so.1.2.3") << "A.so.1.2.3" << OperatingSystem::Linux;
+  QTest::newRow("A.dll") << "A.dll" << OperatingSystem::Windows;
+  QTest::newRow("A.dll") << "A.DLL" << OperatingSystem::Windows;
+}
+
+void LibraryTest::osFromLibraryNameBenchmark()
+{
+  QFETCH(QString, fullName);
+  QFETCH(OperatingSystem, expectedOs);
+
+  OperatingSystem os;
+  QBENCHMARK{
+    os = LibraryName::operatingSystem(fullName);
+  }
+  QCOMPARE(os, expectedOs);
+}
+
+void LibraryTest::osFromLibraryNameBenchmark_data()
+{
+  QTest::addColumn<QString>("fullName");
+  QTest::addColumn<OperatingSystem>("expectedOs");
+
+  QTest::newRow("A.so") << "A.so" << OperatingSystem::Linux;
+  QTest::newRow("A.so.1.2.3") << "A.so.1.2.3" << OperatingSystem::Linux;
+  QTest::newRow("A.dll") << "A.dll" << OperatingSystem::Windows;
+}
+
 void LibraryTest::libraryInfoTest()
 {
   LibraryInfo li;

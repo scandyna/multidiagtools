@@ -22,7 +22,10 @@
 #define MDT_DEPLOY_UTILS_LIBRARY_NAME_H
 
 #include "LibraryVersion.h"
+#include "OperatingSystem.h"
 #include <QString>
+
+class QStringRef;
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -95,7 +98,17 @@ namespace Mdt{ namespace DeployUtils{
      */
     QString toFullNameLinux() const;
 
+    /*! \brief Deduce the operating system of a library from its file name
+     *
+     * Will use the file extension of \a fullName to deduce
+     *  the library operating system.
+     */
+    static OperatingSystem operatingSystem(const QString & fullName);
+
   private:
+
+    static LibraryVersion parseExtension(const QString & fullName, QStringRef & extension);
+    static bool compareExtension(const QStringRef & extension, const char * const s);
 
     QString mName;
     LibraryVersion mVersion;

@@ -39,20 +39,15 @@ LibraryName::LibraryName(const QString & name)
   if(name.startsWith(QLatin1String("lib"), Qt::CaseInsensitive)){
     start = 3;
   }
-  // Isolate extension, and maybe version, from the rest
-  static const char *extensionRegEx = "(.so|.dll)";
-  int extentionIndex = name.lastIndexOf( QRegularExpression(extensionRegEx,  QRegularExpression::CaseInsensitiveOption) );
-  int nameLen = name.size() - start;
-  if(extentionIndex >= 0){
-    nameLen -= name.size() - extentionIndex;
-  }
-  mName = name.mid(start, nameLen);
-  // Get version if available
-  if( (extentionIndex >= 0 ) && (name.midRef(extentionIndex, 4) == QLatin1String(".so.")) ){
-    const int versionStartIndex = extentionIndex + 4;
-    const int versionLen = name.size() - versionStartIndex;
-    const auto versionString = name.midRef(versionStartIndex, versionLen);
-    mVersion = LibraryVersion(versionString);
+  // Get extension and so version
+  QStringRef extension;
+  mVersion = parseExtension(name, extension);
+  // Extract name
+  if(extension.isNull()){
+    mName = name.mid(start);
+  }else{
+    const int extensionSize = name.size() - extension.position();
+    mName = name.mid(start, name.size() - start - extensionSize - 1 );
   }
 }
 
@@ -67,5 +62,45 @@ QString LibraryName::toFullNameLinux() const
   return fullName;
 }
 
+OperatingSystem LibraryName::operatingSystem(const QString & fullName)
+{
+  QStringRef extension;
+  parseExtension(fullName, extension);
+  if(extension.isNull()){
+    return OperatingSystem::Unknown;
+  }
+  if(compareExtension(extension, "so")){
+    return OperatingSystem::Linux;
+  }
+  if(compareExtension(extension, "dll")){
+    return OperatingSystem::Windows;
+  }
+  return OperatingSystem::Unknown;
+}
+
+LibraryVersion LibraryName::parseExtension(const QString& fullName, QStringRef& extension)
+{
+  static const char *extensionRegEx = "(.so|.dll)";
+  const int extentionIndex = fullName.lastIndexOf( QRegularExpression(extensionRegEx,  QRegularExpression::CaseInsensitiveOption) );
+  if(extentionIndex >= 0){
+    /*
+     * Extract extension
+     * We can have a versionned so name or simple extension
+     */
+    if(fullName.midRef(extentionIndex, 4) == QLatin1String(".so.")){
+      extension = fullName.midRef(extentionIndex+1, 2);
+      const int versionStartIndex = extentionIndex + 4;
+      const int versionLen = fullName.size() - versionStartIndex;
+      return LibraryVersion( fullName.midRef(versionStartIndex, versionLen) );
+    }
+    extension = fullName.midRef(extentionIndex+1);
+  }
+  return LibraryVersion();
+}
+
+bool LibraryName::compareExtension(const QStringRef & extension, const char*const s)
+{
+  return ( QStringRef::compare(extension, QLatin1String(s), Qt::CaseInsensitive) == 0 );
+}
 
 }} // namespace Mdt{ namespace DeployUtils{
