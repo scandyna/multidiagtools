@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "LibraryName.h"
 #include <QLatin1String>
-#include <QStringRef>
 #include <QRegularExpression>
 #include <QStringBuilder>
 #include <QLatin1String>
@@ -29,25 +28,28 @@
 
 namespace Mdt{ namespace DeployUtils{
 
-LibraryName::LibraryName(const QString & name)
+LibraryName::LibraryName(const QString & fullName)
 {
-  if(name.isEmpty()){
+  if(fullName.isEmpty()){
     return;
   }
+  mFullName = fullName;
   // Isolate the lib prefix
   int start = 0;
-  if(name.startsWith(QLatin1String("lib"), Qt::CaseInsensitive)){
+  if(fullName.startsWith(QLatin1String("lib"), Qt::CaseInsensitive)){
+    mPrefix = mFullName.left(3);
     start = 3;
   }
   // Get extension and so version
   QStringRef extension;
-  mVersion = parseExtension(name, extension);
+  mVersion = parseExtension(mFullName, extension);
+  mExtension = extension.toString();
   // Extract name
   if(extension.isNull()){
-    mName = name.mid(start);
+    mName = mFullName.mid(start);
   }else{
-    const int extensionSize = name.size() - extension.position();
-    mName = name.mid(start, name.size() - start - extensionSize - 1 );
+    const int extensionSize = fullName.size() - extension.position();
+    mName = mFullName.mid( start, fullName.size() - start - extensionSize - 1 );
   }
 }
 

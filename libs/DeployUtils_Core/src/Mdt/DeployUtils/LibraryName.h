@@ -24,6 +24,7 @@
 #include "LibraryVersion.h"
 #include "OperatingSystem.h"
 #include <QString>
+#include <QStringRef>
 
 class QStringRef;
 
@@ -41,14 +42,14 @@ namespace Mdt{ namespace DeployUtils{
 
     /*! \brief Construct a library name from a name
      *
-     * \a name can be passed without any prefix, extension, version.
+     * \a fullName can be passed without any prefix, extension, version.
      * Example: Qt5Core
      * A more platform specific name can also be passed,
      *  for example libQt5Core.so
      * A versionned version can also be passed,
      *  for example libQt5Core.so.5 , libQt5Core.so.5.5 , libQt5Core.so.5.5.1
      */
-    LibraryName(const QString & name);
+    LibraryName(const QString & fullName);
 
     /*! \brief Copy construct a library name from a other
      */
@@ -70,18 +71,37 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool isNull() const
     {
-      return mName.isEmpty();
+      return mFullName.isEmpty();
+    }
+
+    /*! \brief Get library name prefix
+     *
+     * Returns the library name prefix if it was set.
+     */
+    QString prefix() const
+    {
+      return mPrefix;
     }
 
     /*! \brief Get library name
      *
-     * Returns the library name without any prefix or suffix or version.
+     * Returns the library name without any prefix or extension or version.
      *  For example, if this library name was constructed with libQt5Core.so.5.5.1
      *  this method returns Qt5Core
      */
     QString name() const
     {
       return mName;
+    }
+
+    /*! \brief Get library name extension
+     *
+     * Returns the extension if it was set.
+     *  For versionned so names, only 'so' is returned.
+     */
+    QString extension() const
+    {
+      return mExtension;
     }
 
     /*! \brief Get library version
@@ -91,9 +111,18 @@ namespace Mdt{ namespace DeployUtils{
       return mVersion;
     }
 
+    /*! \brief Get library full name
+     *
+     * Returns the library name as it was set.
+     */
+    QString fullName() const
+    {
+      return mFullName;
+    }
+
     /*! \brief Get the full library name for Linux platform
      *
-     * Returns the lib prefix, name, .so suffix,
+     * Returns the lib prefix, name, .so extension,
      *  and the version if available
      */
     QString toFullNameLinux() const;
@@ -110,7 +139,10 @@ namespace Mdt{ namespace DeployUtils{
     static LibraryVersion parseExtension(const QString & fullName, QStringRef & extension);
     static bool compareExtension(const QStringRef & extension, const char * const s);
 
+    QString mFullName;
+    QString mPrefix;
     QString mName;
+    QString mExtension;
     LibraryVersion mVersion;
   };
 

@@ -134,37 +134,43 @@ void LibraryTest::libraryVersionBenchmark_data()
 void LibraryTest::libraryNameFromStrTest()
 {
   QFETCH(QString, inputName);
+  QFETCH(QString, expectedPrefix);
   QFETCH(QString, expectedName);
+  QFETCH(QString, expectedExtension);
   QFETCH(QString, expectedVersion);
   QFETCH(bool, expectedIsNull);
 
   LibraryName libName(inputName);
   QCOMPARE(libName.isNull(), expectedIsNull);
+  QCOMPARE(libName.fullName(), inputName);
+  QCOMPARE(libName.prefix(), expectedPrefix);
   QCOMPARE(libName.name(), expectedName);
+  QCOMPARE(libName.extension(), expectedExtension);
   QCOMPARE(libName.version().toString(), expectedVersion);
 }
 
 void LibraryTest::libraryNameFromStrTest_data()
 {
   QTest::addColumn<QString>("inputName");
+  QTest::addColumn<QString>("expectedPrefix");
   QTest::addColumn<QString>("expectedName");
+  QTest::addColumn<QString>("expectedExtension");
   QTest::addColumn<QString>("expectedVersion");
   QTest::addColumn<bool>("expectedIsNull");
 
   const bool Null = true;
   const bool NotNull = false;
 
-  QTest::newRow("") << "" << "" << "" << Null;
-  QTest::newRow("Qt5Core") << "Qt5Core" << "Qt5Core" << "" << NotNull;
-  QTest::newRow("libQt5Core") << "libQt5Core" << "Qt5Core" << "" << NotNull;
-  QTest::newRow("libQt5Core.so") << "libQt5Core.so" << "Qt5Core" << "" << NotNull;
-  QTest::newRow("libQt5Core.so.5") << "libQt5Core.so.5" << "Qt5Core" << "5" << NotNull;
-  QTest::newRow("libQt5Core.so.5.6") << "libQt5Core.so.5.6" << "Qt5Core" << "5.6" << NotNull;
-  QTest::newRow("libQt5Core.so.5.6.2") << "libQt5Core.so.5.6.2" << "Qt5Core" << "5.6.2" << NotNull;
-  QTest::newRow("Qt5Core.dll") << "Qt5Core.dll" << "Qt5Core" << "" << NotNull;
-  QTest::newRow("libpng12.so") << "libpng12.so" << "png12" << "" << NotNull;
-  QTest::newRow("libpng12.so.0") << "libpng12.so.0" << "png12" << "0" << NotNull;
-  QTest::newRow("libpng12.so.0") << "libpng12.so.0" << "png12" << "0" << NotNull;
+  QTest::newRow("") << "" << "" << "" << "" << "" << Null;
+  QTest::newRow("Qt5Core") << "Qt5Core" << "" << "Qt5Core" << "" << "" << NotNull;
+  QTest::newRow("libQt5Core") << "libQt5Core" << "lib" << "Qt5Core" << "" << "" << NotNull;
+  QTest::newRow("libQt5Core.so") << "libQt5Core.so" << "lib" << "Qt5Core" << "so" << "" << NotNull;
+  QTest::newRow("libQt5Core.so.5") << "libQt5Core.so.5" << "lib" << "Qt5Core" << "so" << "5" << NotNull;
+  QTest::newRow("libQt5Core.so.5.6") << "libQt5Core.so.5.6" << "lib" << "Qt5Core" << "so" << "5.6" << NotNull;
+  QTest::newRow("libQt5Core.so.5.6.2") << "libQt5Core.so.5.6.2" << "lib" << "Qt5Core" << "so" << "5.6.2" << NotNull;
+  QTest::newRow("Qt5Core.dll") << "Qt5Core.dll" << "" << "Qt5Core" << "dll" << "" << NotNull;
+  QTest::newRow("libpng12.so") << "libpng12.so" << "lib" << "png12" << "so" << "" << NotNull;
+  QTest::newRow("libpng12.so.0") << "libpng12.so.0" << "lib" << "png12" << "so" << "0" << NotNull;
 }
 
 void LibraryTest::libraryNameFromStrBenchmark()
