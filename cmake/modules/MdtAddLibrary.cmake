@@ -92,7 +92,7 @@ function(mdt_add_library)
   set(library_name ${PROJECT_NAME}${target_name})
   set(library_version ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
   set_target_properties(${target_name} PROPERTIES
-    LIBRARY_OUTPUT_NAME ${library_name}
+    OUTPUT_NAME ${library_name}
     VERSION ${library_version}
   )
   # For unix, create a separate component with debug symbols
