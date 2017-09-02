@@ -36,20 +36,6 @@ class BinaryDependenciesObjdumpTest : public TestBase
 
   void initTestCase();
   void cleanupTestCase();
-
-  void sandbox();
-
-  void searchPathListTest();
-//   void fillAndSetDependenciesTest();
-//   void fillAndSetDependenciesTest_data();
-//   void fillAndSetDependenciesBenchmark();
-//   void fillAndSetDependenciesBenchmark_data();
-
-//  private:
-// 
-//   static Mdt::PlainText::StringRecordList toStringRecordList(const Mdt::DeployUtils::LibraryInfoList & libraryInfoList);
-//   static Mdt::PlainText::StringRecordList createRecordList(const QStringList & libNameList, const QString & pathPrefix);
-//   static Mdt::PlainText::StringRecordList generateLibraryRecordList(int n, const QString & pathPrefix);
 };
 
 #endif // #ifndef BINARY_DEPENDENCIES_OBJDUMP_TEST_H

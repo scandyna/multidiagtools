@@ -24,9 +24,6 @@
 #include "OperatingSystem.h"
 #include "Processor.h"
 #include "Mdt/PlainText/StringConstIterator.h"
-
-// #include "Mdt/PlainText/StringRecordList.h"
-
 #include <QString>
 #include <memory>
 

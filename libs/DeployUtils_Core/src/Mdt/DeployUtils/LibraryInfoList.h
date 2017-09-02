@@ -49,9 +49,6 @@ namespace Mdt{ namespace DeployUtils{
     /*! \brief Construct a library info list from initializer lists
      */
     LibraryInfoList(std::initializer_list<LibraryInfo> list);
-//      : mList(list)
-//     {
-//     }
 
     /*! \brief Copy construct a library info list from a other
      */

@@ -57,11 +57,14 @@ void PathList::prependPath(const QString& path)
 
 void PathList::prependPathList(const PathList& pathList)
 {
+  const PathList existingPaths = *this;
+  clear();
   for(const auto & path : pathList){
     if(!path.trimmed().isEmpty()){
-      prependPath(path);
+      appendPath(path);
     }
   }
+  appendPathList(existingPaths);
 }
 
 void PathList::clear()

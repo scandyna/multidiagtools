@@ -56,8 +56,8 @@ bool BinaryDependenciesImplementationInterfaceTester::findDependencies(const QSt
 {
   QFileInfo binaryFileInfo(binaryFilePath);
   LibraryInfo li;
-  li.setLibraryPlatformName(binaryFileInfo.fileName() + "_dep");
-  li.setAbsoluteFilePath(binaryFileInfo.absoluteFilePath() + "_dep");
+  li.setLibraryPlatformName(binaryFileInfo.baseName() + "_dep.so");
+  li.setAbsoluteFilePath(binaryFileInfo.absoluteFilePath() + "_dep.so");
   LibraryInfoList dependencies;
   dependencies.addLibrary(li);
   setDependencies(dependencies);
@@ -90,11 +90,11 @@ void BinaryDependenciesTest::implementationInterfaceTest()
    */
   LibraryInfoList libraries;
   LibraryInfo lib;
-  lib.setLibraryPlatformName("a");
-  lib.setAbsoluteFilePath("/opt/lib/a");
+  lib.setLibraryPlatformName("a.so");
+  lib.setAbsoluteFilePath("/opt/lib/a.so");
   libraries.addLibrary(lib);
-  lib.setLibraryPlatformName("b");
-  lib.setAbsoluteFilePath("/opt/lib/b");
+  lib.setLibraryPlatformName("b.so");
+  lib.setAbsoluteFilePath("/opt/lib/b.so");
   libraries.addLibrary(lib);
   QVERIFY(bdi->findDependencies(libraries));
   QCOMPARE(bdi->dependencies().count(), 2);

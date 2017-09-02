@@ -101,13 +101,13 @@ void BinaryDependenciesLddTest::fillAndSetDependenciesBenchmark_data()
     << generateLibraryRecordList(10, prefixPath)
     << generateLibraryRecordList(10, prefixPath);
 
-  QTest::newRow("100")
-    << generateLibraryRecordList(100, prefixPath)
-    << generateLibraryRecordList(100, prefixPath);
+  QTest::newRow("20")
+    << generateLibraryRecordList(20, prefixPath)
+    << generateLibraryRecordList(20, prefixPath);
 
-  QTest::newRow("1000")
-    << generateLibraryRecordList(1000, prefixPath)
-    << generateLibraryRecordList(1000, prefixPath);
+  QTest::newRow("30")
+    << generateLibraryRecordList(30, prefixPath)
+    << generateLibraryRecordList(30, prefixPath);
 }
 
 StringRecordList BinaryDependenciesLddTest::toStringRecordList(const LibraryInfoList& libraryInfoList)

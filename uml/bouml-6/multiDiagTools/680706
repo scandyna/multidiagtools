@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 42
+  revision 43
   modified_by 2 "philippe"
   // class settings
   
@@ -445,30 +445,6 @@ ${inlines}
     classdiagram 3605890 "Settings"
       classdiagramsettings member_max_width 0 end
       size A-Landscape
-    end
-
-    class 4160898 "Settings"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4684930 // <directional composition>
-	relation 4658690 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4684930 // <directional composition>
-	  b parent class_ref 4160514 // Paths
-      end
     end
 
     classdiagram 3613314 "Platform"

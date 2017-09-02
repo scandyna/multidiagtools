@@ -34,10 +34,6 @@ namespace Mdt{ namespace DeployUtils{
   {
    public:
 
-//     /*! \brief Construct a null library info
-//      */
-//     LibraryInfo() = default;
-
     /*! \brief Set absolute file path
      */
     void setAbsoluteFilePath(const QString & path);

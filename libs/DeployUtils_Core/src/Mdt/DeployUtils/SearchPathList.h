@@ -33,14 +33,6 @@ namespace Mdt{ namespace DeployUtils{
   {
    public:
 
-//     /*! \brief Specify if path prefixes must be part of the search list
-//      */
-//     enum PathPrefixInclusion
-//     {
-//       IncludePathPrefixes,  /*!<  */
-//       ExcludePathPrefixes   /*!<  */
-//     };
-
     /*! \brief Specify if path prefixes must be part of the search paths
      *
      * By default, path prefixes are not part of the search path.

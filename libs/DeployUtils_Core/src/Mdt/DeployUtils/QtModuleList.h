@@ -45,9 +45,6 @@ namespace Mdt{ namespace DeployUtils{
     /*! \brief Construct a module list from \a list
      */
     QtModuleList(std::initializer_list<QtModule> list);
-//      : mList(list)
-//     {
-//     }
 
     /*! \brief Copy construct a module list from a other
      */

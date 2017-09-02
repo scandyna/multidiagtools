@@ -47,7 +47,6 @@ void LibraryInfoList::addLibraries(const LibraryInfoList & libraries)
 void LibraryInfoList::push_back(const LibraryInfo & library)
 {
   addLibrary(library);
-//   mList.push_back(library);
 }
 
 void LibraryInfoList::reserve(int size)
