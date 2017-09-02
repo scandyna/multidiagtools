@@ -132,6 +132,8 @@ std::unique_ptr<BinaryDependenciesImplementationInterface> BinaryDependencies::i
     return impl;
   }
   switch(bfmt.operatindSystem()){
+    case OperatingSystem::Unknown:
+      break;
     case OperatingSystem::Linux:
       impl.reset(new BinaryDependenciesLdd);
       break;

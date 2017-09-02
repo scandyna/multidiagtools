@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "QtLibrary.h"
 #include "SearchPathList.h"
+#include "LibraryName.h"
 
 // #include "Library.h"
 
@@ -47,9 +48,12 @@ LibraryInfoList QtLibrary::findLibraryPlugins(const LibraryInfo & qtLibrary, con
   const auto pluginDirectories = getPluginsDirectories( module(qtLibrary) );
   qDebug() << "Plugins dirs: " << pluginDirectories;
   const auto pathList = searchPathList.pathList();
+  const auto os = LibraryName::operatingSystem(qtLibrary.libraryName().fullName());
+  Q_ASSERT(os != OperatingSystem::Unknown);
+
   for(const auto & path : pathList){
     qDebug() << "Searching in " << path;
-    plugins = findPluginsInDirectories(path, pluginDirectories);
+    plugins = findPluginsInDirectories(path, pluginDirectories, os);
     if(!plugins.isEmpty()){
       break;
     }
@@ -250,7 +254,7 @@ bool QtLibrary::compareLibraries(const QString & a, const char*const b)
   return ( QString::compare(a, QLatin1String(b), Qt::CaseInsensitive) == 0 );
 }
 
-LibraryInfoList QtLibrary::findPluginsInDirectories(const QString & pathPrefix, const QStringList& directories)
+LibraryInfoList QtLibrary::findPluginsInDirectories(const QString & pathPrefix, const QStringList& directories, OperatingSystem os)
 {
   LibraryInfoList plugins;
 
@@ -260,11 +264,14 @@ LibraryInfoList QtLibrary::findPluginsInDirectories(const QString & pathPrefix, 
       qDebug() << " dir: " << dir.absolutePath();
       const auto fiList = dir.entryInfoList(QDir::Files);
       for(const auto & fi : fiList){
-        qDebug() << "  Plugin: " << fi.fileName();
-        LibraryInfo li;
-        li.setLibraryPlatformName(fi.fileName());
-        li.setAbsoluteFilePath(fi.absoluteFilePath());
-        plugins.addLibrary(li);
+        // When do cross compilation, don't bring wrong libraries to the list
+        if(LibraryName::operatingSystem(fi.fileName()) == os){
+          qDebug() << "  Plugin: " << fi.fileName();
+          LibraryInfo li;
+          li.setLibraryPlatformName(fi.fileName());
+          li.setAbsoluteFilePath(fi.absoluteFilePath());
+          plugins.addLibrary(li);
+        }
       }
     }
   }

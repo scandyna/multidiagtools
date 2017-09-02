@@ -2,62 +2,41 @@ format 214
 
 classcanvas 128002 class_ref 4176642 // BinaryDependenciesImplementationInterface
   classdiagramsettings member_max_width 0 end
-  xyz 449 221 2000
+  xyz 369 225 2000
 end
 classcanvas 129538 class_ref 4183810 // BinaryDependenciesLdd
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 792 530 2000
+  xyz 244 538 2000
 end
 classcanvas 130050 class_ref 4183938 // BinaryDependencies
   classdiagramsettings member_max_width 0 end
-  xyz 39 41 2005
+  xyz 323 41 2005
 end
 classcanvas 131586 class_ref 4197634 // BinaryDependenciesObjdump
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 271 530 2006
+  xyz 447 538 2006
 end
 note 132354 "Only instanciated in findDependencies()"
-  xyzwh 122 311 2000 285 51
-note 132994 "findDependencies(libraries):
- Default implementation calls findDependencies(binary) for each library.
-Subclass can implement a more optimized version."
-  xyzwh 855 292 2000 459 89
-classcanvas 133250 class_ref 4271874 // BinaryDependenciesImplIfaceTester
-  classdiagramsettings member_max_width 0 end
-  xyz 512 530 2000
-end
+  xyzwh 42 319 2000 285 51
 relationcanvas 129666 relation_ref 4687746 // <generalisation>
   geometry VHV unfixed
-  decenter_begin 473
-  from ref 129538 z 2001 to point 869 488
-  line 132738 z 2001 to point 630 488
+  from ref 129538 z 2001 to point 326 496
+  line 132738 z 2001 to point 550 496
   line 132866 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131458 relation_ref 4688770 // <unidirectional association>
-  geometry HV unfixed
-  from ref 130050 z 2006 to point 630 110
-  line 132610 z 2006 to ref 128002
+  from ref 130050 z 2006 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131714 relation_ref 4715266 // <generalisation>
-  geometry VHV unfixed
   decenter_begin 517
-  from ref 131586 z 2007 to point 373 488
-  line 133506 z 2007 to point 630 488
-  line 133634 z 2007 to ref 128002
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 133378 relation_ref 4804738 // <generalisation>
-  from ref 133250 z 2001 to ref 128002
+  from ref 131586 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 line 132482 -_-_
   from ref 131458 z 2007 to ref 132354
-line 133122 -_-_
-  from ref 132994 z 2001 to ref 128002
 end

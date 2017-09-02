@@ -29,8 +29,9 @@ namespace Mdt{ namespace DeployUtils{
    */
   enum class OperatingSystem
   {
-    Linux,  /*!< Linux OS */
-    Windows /*!< Windows OS */
+    Unknown,  /*!< Unknown OS */
+    Linux,    /*!< Linux OS */
+    Windows   /*!< Windows OS */
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

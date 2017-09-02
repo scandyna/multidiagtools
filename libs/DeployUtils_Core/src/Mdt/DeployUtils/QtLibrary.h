@@ -26,6 +26,7 @@
 #include "QtModule.h"
 #include "QtModuleList.h"
 #include "PathList.h"
+#include "OperatingSystem.h"
 #include "Mdt/Error.h"
 
 // #include "Mdt/Expected.h"
@@ -48,7 +49,7 @@ namespace Mdt{ namespace DeployUtils{
      *
      * Will first deduce Qt plugins directories attached to \a qtLibrary
      *  using getPluginsDirectories(QtModule),
-     *  the find the existing ones.
+     *  then find the existing ones.
      *
      * \a searchFirstPathPrefixList is a list of paths to the root of a Qt installation.
      * Plugins are serached first in each item of \a searchFirstPathPrefixList,
@@ -94,7 +95,7 @@ namespace Mdt{ namespace DeployUtils{
 
     static bool isQtLibrary(const LibraryInfo & libraryInfo);
     static bool compareLibraries(const QString & a, const char * const b);
-    LibraryInfoList findPluginsInDirectories(const QString & pathPrefix, const QStringList & directories);
+    LibraryInfoList findPluginsInDirectories(const QString & pathPrefix, const QStringList & directories, OperatingSystem os);
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

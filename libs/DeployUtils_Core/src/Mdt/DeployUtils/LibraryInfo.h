@@ -51,16 +51,16 @@ namespace Mdt{ namespace DeployUtils{
 
     /*! \brief Set library name
      *
-     * \a name can be passed without any prefix, extension, version.
-     * Example: Qt5Core
-     * A more platform specific name can also be passed,
-     *  for example libQt5Core.so
-     * A versionned version can also be passed,
-     *  for example libQt5Core.so.5 , libQt5Core.so.5.5 , libQt5Core.so.5.5.1
+     * \a name should be the full library file name (f.ex. libQt5Core.so, or Qt5Core.dll).
+     *  To specify only the library name (like Qt5Core), use setLibraryName().
+     *
+     * \pre \a name must at least have a library name and a extension.
      */
     void setLibraryPlatformName(const QString & name);
 
     /*! \brief Set library name
+     *
+     * \sa LibraryName
      */
     void setLibraryName(const LibraryName & libraryName);
 

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "QtLibraryTest.h"
 #include "Mdt/DeployUtils/QtLibrary.h"
+#include "Mdt/DeployUtils/Platform.h"
 #include "Mdt/PlainText/TestUtils.h"
 
 using namespace Mdt::DeployUtils;
@@ -253,8 +254,18 @@ void QtLibraryTest::findLibrariesPluginsTest()
 
   qDebug() << "Prefixes: " << searchFirstPrefixPaths.toStringList();
 
-  qtCore.setLibraryPlatformName("Qt5Core");
-  qtGui.setLibraryPlatformName("Qt5Gui");
+  switch(Platform::nativeOperatingSystem()){
+    case OperatingSystem::Linux:
+      qtCore.setLibraryPlatformName("libQt5Core.so");
+      qtGui.setLibraryPlatformName("libQt5Gui.so");
+      break;
+    case OperatingSystem::Windows:
+      qtCore.setLibraryPlatformName("Qt5Core.dll");
+      qtGui.setLibraryPlatformName("Qt5Gui.dll");
+      break;
+    case OperatingSystem::Unknown:
+      QFAIL("OS not supported");
+  }
   qtLibraries.addLibrary(qtCore);
   qtLibraries.addLibrary(qtGui);
   const auto plugins = qtLibrary.findLibrariesPlugins(qtLibraries, searchFirstPrefixPaths);

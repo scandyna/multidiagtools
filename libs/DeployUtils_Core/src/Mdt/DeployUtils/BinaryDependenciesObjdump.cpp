@@ -144,7 +144,7 @@ bool BinaryDependenciesObjdump::findAndAddDependenciesForNode(const QString& bin
     return true;
   }
 
-  qDebug() << " Find deps for " << QFileInfo(binaryFilePath).fileName() << " ...";
+//   qDebug() << " Find deps for " << QFileInfo(binaryFilePath).fileName() << " ...";
   
   /// \todo If binaryFilePath allready exists in the tree,
   
