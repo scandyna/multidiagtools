@@ -4,7 +4,7 @@ Mdt is a library that should help (in some future) interacting with some common 
 But, today it's just a set of C++ classes, and nothing is complete. Mdt is based on Qt5, but some part of code is platform dependent.
 The branch master is just very old, and work progress only in experimental branch.
 
-## Licnce
+## Licence
 
 ## Libraries
 
