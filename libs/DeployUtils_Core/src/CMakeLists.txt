@@ -1,6 +1,8 @@
 
 # List of source files
 set(SOURCE_FILES
+    Mdt/DeployUtils/ConsoleStream.cpp
+    Mdt/DeployUtils/Console.cpp
     Mdt/DeployUtils/LibraryVersion.cpp
     Mdt/DeployUtils/LibraryName.cpp
     Mdt/DeployUtils/LibraryInfo.cpp

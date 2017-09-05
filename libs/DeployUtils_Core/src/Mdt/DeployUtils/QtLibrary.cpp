@@ -21,9 +21,7 @@
 #include "QtLibrary.h"
 #include "SearchPathList.h"
 #include "LibraryName.h"
-
-// #include "Library.h"
-
+#include "Console.h"
 #include <QLatin1String>
 #include <QDir>
 #include <QFileInfo>
@@ -51,8 +49,13 @@ LibraryInfoList QtLibrary::findLibraryPlugins(const LibraryInfo & qtLibrary, con
   const auto os = LibraryName::operatingSystem(qtLibrary.libraryName().fullName());
   Q_ASSERT(os != OperatingSystem::Unknown);
 
+  Console::setLevel(5);
+  
+  Console::info(2) << " Find plugins for library " << qtLibrary.libraryName().name();
+
   for(const auto & path : pathList){
-    qDebug() << "Searching in " << path;
+    Console::info(3) << "  Searching in " << path << " ...";
+//     qDebug() << "Searching in " << path;
     plugins = findPluginsInDirectories(path, pluginDirectories, os);
     if(!plugins.isEmpty()){
       break;

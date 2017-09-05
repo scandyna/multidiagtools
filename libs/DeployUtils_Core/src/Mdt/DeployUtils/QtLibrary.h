@@ -28,9 +28,6 @@
 #include "PathList.h"
 #include "OperatingSystem.h"
 #include "Mdt/Error.h"
-
-// #include "Mdt/Expected.h"
-
 #include <QObject>
 #include <QString>
 #include <QStringList>
