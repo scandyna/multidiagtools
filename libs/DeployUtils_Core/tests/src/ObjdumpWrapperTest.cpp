@@ -27,37 +27,6 @@
 
 using namespace Mdt::DeployUtils;
 
-/**
- * Sandbox
- */
-
-#include <QProcess>
-#include <QProcessEnvironment>
-
-void ObjdumpWrapperTest::sandbox()
-{
-//   qDebug() << "Env: " << QProcessEnvironment::systemEnvironment().toStringList();
-//   qDebug() << "PATH: " << QProcessEnvironment::systemEnvironment().value("PATH");
-  
-  QProcess process;
-  QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-//   env.insert("PATH", "");
-  process.setProcessEnvironment(env);
-  qDebug() << "PATH: " << process.processEnvironment().value("PATH");
-  
-  process.start("*objdump", QStringList{"--help"});
-  if(!process.waitForStarted()){
-    qDebug() << process.errorString();
-    return;
-  }
-  if(!process.waitForFinished()){
-    qDebug() << process.errorString();
-    return;
-  }
-  qDebug() << "out: " << process.readAllStandardOutput();
-}
-
-
 void ObjdumpWrapperTest::initTestCase()
 {
 }
@@ -77,6 +46,9 @@ void ObjdumpWrapperTest::runObjdumpTest()
 #endif
 
   ObjdumpWrapper objdump;
+  if(objdump.findObjdump().isEmpty()){
+    QSKIP("Could not find objdump executable");
+  }
   QVERIFY(objdump.execFindDependencies( QCoreApplication::applicationFilePath() ));
   QVERIFY(!objdump.readAllStandardOutputString().isEmpty());
 }

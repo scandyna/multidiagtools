@@ -32,9 +32,6 @@ class ObjdumpWrapperTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
-  
-
   void runObjdumpTest();
 };
 

@@ -1,23 +1,27 @@
-format 213
+format 214
 
 classcanvas 128002 class_ref 2132098 // QDebugStateSaver
   classdiagramsettings member_max_width 0 end
-  xyz 510 129 2000
+  xyz 289.5 227.5 2000
 end
 classcanvas 128130 class_ref 2132226 // QDebug
   classdiagramsettings member_max_width 0 end
-  xyz 124 136 2000
+  xyz 40.5 227.5 2000
 end
 classcanvas 128258 class_ref 2132354 // QLoggingCategory
   classdiagramsettings member_max_width 0 end
-  xyz 131 375 2000
+  xyz 40.5 597.5 2000
 end
 classcanvas 128386 class_ref 2132482 // QMessageLogger
   classdiagramsettings member_max_width 0 end
-  xyz 317 351 2000
+  xyz 40.5 412.5 2000
 end
 classcanvas 128514 class_ref 4191106 // QMessageLogContext
   classdiagramsettings member_max_width 0 end
-  xyz 69 329 2005
+  xyz 305.5 40.5 2005
+end
+classcanvas 128642 class_ref 4278786 // QtMsgType
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 40.5 2005
 end
 end

@@ -214,24 +214,15 @@ endif()
 #   Name of the target for which to copy dependencies
 #  DESTINATION_DIRECTORY:
 #   Full path to the destination directory
-#  LIBRARY_SEARCH_FIRST_PATH_LIST (optional):
-#   A list of full paths to directories where to find libraries first.
-#   By default, libraries are only searched in system library paths.
-#   For platforms that supports RPATH (like Linux),
-#   this has no effect, because internall ldd is used,
-#   which resolves full path of each library directly (by using RPATHs).
-#  PATH_SUFFIXES (optional):
-#   Specify addional subdirectories to check below each directory
-#   in those specified by LIBRARY_SEARCH_FIRST_PATH_LIST .
-#   For example, if LIBRARY_SEARCH_FIRST_PATH_LIST is /opt/liba /opt/libb
-#   and PATH_SUFFIXES contains bin qt5/bin, libraries will be searched in
-#   /opt/liba/bin, /opt/liba/qt5/bin, /opt/libb/bin, /opt/libb/qt5/bin
+#  SEARCH_FIRST_PATH_PREFIX_LIST (optional):
+#   A list of full paths to directories where to find libraries and plugins first.
+#   For libraries, this option is only used for binaries that do not support RPATH (for example .exe or .dll).
+#   Internally, searching is done in known subdirectories of each specified directory (for example bin, qt5/bin).
 #
 function(mdt_copy_binary_dependencies_experimental)
   # Parse arguments
   set(oneValueArgs TARGET DESTINATION_DIRECTORY)
-  set(multiValueArgs LIBRARY_SEARCH_FIRST_PATH_LIST PATH_SUFFIXES)
-#   set(options NO_WARNINGS)
+  set(multiValueArgs SEARCH_FIRST_PATH_PREFIX_LIST)
   cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   # Set our local variables and check the mandatory ones
   set(target "${VAR_TARGET}")
@@ -242,20 +233,19 @@ function(mdt_copy_binary_dependencies_experimental)
   if(NOT destination_directory)
     message(FATAL_ERROR "mdt_copy_binary_dependencies(): DESTINATION_DIRECTORY argument is missing.")
   endif()
-  set(library_search_first_path_list ${VAR_LIBRARY_SEARCH_FIRST_PATH_LIST})
+  set(search_first_path_prefix_list ${VAR_SEARCH_FIRST_PATH_PREFIX_LIST})
   set(path_suffixes ${VAR_PATH_SUFFIXES})
 
-  message("library_search_first_path_list: ${library_search_first_path_list}")
-  message("path_suffixes: ${path_suffixes}")
-  
+  message("search_first_path_prefix_list: ${search_first_path_prefix_list}")
+
   # Create a new target that depends on TARGET
   add_custom_target(
     ${target}_bin_deps_experimental
     ALL
     COMMAND mdtcpbindeps
             -d "${destination_directory}"
-            -p "${library_search_first_path_list}"
-            -s "${path_suffixes}"
+            -p "${search_first_path_prefix_list}"
+            --verbose 1
             "$<TARGET_FILE:${target}>"
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
     VERBATIM

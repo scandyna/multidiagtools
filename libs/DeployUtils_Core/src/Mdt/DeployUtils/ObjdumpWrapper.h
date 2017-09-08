@@ -51,11 +51,13 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool execReadFormat(const QString & binaryFilePath);
 
-   private:
-
     /*! \brief Find objdump executable
+     *
+     * \note This method is called automatically by find*() methods.
      */
     QString findObjdump();
+
+   private:
 
     /*! \brief Execute objdump command
      *

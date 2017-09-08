@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "BinaryFormatTest.h"
 #include "Mdt/DeployUtils/BinaryFormat.h"
+#include "Mdt/DeployUtils/ObjdumpWrapper.h"
 #include "Mdt/DeployUtils/Platform.h"
 #include <QCoreApplication>
 
@@ -39,6 +40,11 @@ void BinaryFormatTest::cleanupTestCase()
 
 void BinaryFormatTest::runTest()
 {
+  ObjdumpWrapper objdump;
+  if(objdump.findObjdump().isEmpty()){
+    QSKIP("Could not find objdump executable");
+  }
+
   BinaryFormat format;
 
   QVERIFY( format.readFormat( QCoreApplication::applicationFilePath() ) );

@@ -24,10 +24,11 @@
 #include "Mdt/DeployUtils/BinaryDependencies.h"
 #include "Mdt/DeployUtils/QtLibrary.h"
 #include "Mdt/DeployUtils/FileCopier.h"
+#include "Mdt/DeployUtils/Console.h"
 #include <QCoreApplication>
 #include <QString>
 
-#include <QDebug>
+// #include <QDebug>
 
 using namespace Mdt::DeployUtils;
 
@@ -40,62 +41,44 @@ MdtCpBinDepsMain::MdtCpBinDepsMain(QObject* parent)
 
 int MdtCpBinDepsMain::runMain()
 {
-//   QString binaryFilePath;
-//   QString destinationDirectoryPath;
-//   {
   CommandLineParser parser;
   if(!parser.process()){
     return 1;
   }
-//     binaryFilePath = parser.binaryFilePath();
-//     destinationDirectoryPath = parser.destinationDirectoryPath();
-//   }
-  qDebug() << "Main: file: " << parser.binaryFilePath() << " , dest: " << parser.destinationDirectoryPath();
-
-//   SearchPathList searchFirstPathList;
-//   searchFirstPathList.setPathPrefixList(parser.librarySearchFirstPathList());
-//   searchFirstPathList.setPathSuffixList(parser.librarySearchFirstPathSuffixList()); /// \todo Or hard coded ?
+  Console::setLevel(parser.verboseLevel());
 
   LibraryInfoList dependencies;
-  const auto pathPrefixList = parser.librarySearchFirstPathList();
+  const auto pathPrefixList = parser.searchFirstPathPrefixList();
   /*
    * Find dependencies for given binary file
    */
+  Console::info(1) << "Searching dependencies for " << parser.binaryFilePath();
   BinaryDependencies binDeps;
-//   binDeps.setLibrarySearchFirstPathList(parser.librarySearchFirstPathList());
-///   binDeps.setLibrarySearchFirstPathSuffixList(parser.librarySearchFirstPathSuffixList());
   if(!binDeps.findDependencies(parser.binaryFilePath(), pathPrefixList)){
-    qDebug() << binDeps.lastError().text();
+    Console::error() << "Searching dependencies failed: " << binDeps.lastError();
     return 1;
   }
   dependencies = binDeps.dependencies();
   /*
    * Find dependencies of dependent Qt libraries plugins
    */
+  Console::info(1) << "Searching dependencies for Qt plugins";
   QtLibrary qtLibrary;
   const auto qtLibraries = qtLibrary.getQtLibraries(binDeps.dependencies());
   const auto qtPlugins = qtLibrary.findLibrariesPlugins(qtLibraries, pathPrefixList);
   if(!binDeps.findDependencies(qtPlugins, pathPrefixList)){
-    qDebug() << binDeps.lastError().text();
+    Console::error() << "Searching dependencies for Qt plugins failed: " << binDeps.lastError();
     return 1;
   }
   dependencies.addLibraries(binDeps.dependencies());
-//   for(const auto & plugin : qtPlugins){
-//     if(!binDeps.findDependencies(plugin.absoluteFilePath(), pathPrefixList)){
-//       qDebug() << binDeps.lastError().text();
-//       return 1;
-//     }
-//     // LibraryInfoList takes care about duplicates
-//     dependencies.addLibraries(binDeps.dependencies());
-//   }
 
+  Console::info(1) << "Copy dependencies to " << parser.destinationDirectoryPath();
   FileCopier cp;
   if(!cp.copyLibraries(dependencies, parser.destinationDirectoryPath())){
-    qDebug() << cp.lastError().text();
+    Console::error() << "Copy dependencies failed: " << cp.lastError();
     return 1;
   }
-
-  qDebug() << "Copy done";
+  Console::info(1) << "Copy of dependencies successfully done";
 
   return 0;
 }

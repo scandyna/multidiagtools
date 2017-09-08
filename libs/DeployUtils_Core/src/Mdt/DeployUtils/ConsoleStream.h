@@ -27,9 +27,21 @@
 
 class QDebug;
 
+namespace Mdt{
+
+  class Error;
+
+} // namespace Mdt{
+
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief
+  /*! \brief Used to implement Console
+   *
+   * This class uses QDebug internally,
+   *  but was designed to expose it in the public headers.
+   *  This permits to use QDebug for debuging,
+   *  and, when finished, remove the QDebug include,
+   *  which permits the compiler to throw a error if we forgot a qDebug() somewhere.
    */
   class ConsoleStream
   {
@@ -39,13 +51,20 @@ namespace Mdt{ namespace DeployUtils{
      */
     ConsoleStream(QtMsgType msgType, int minLevel, int level);
 
+    /*! \brief Writes \a str to the stream and returns a reference to the stream
+     */
+    ConsoleStream & operator<<(const char * str);
+
+    /*! \brief Writes \a str to the stream and returns a reference to the stream
+     */
     ConsoleStream & operator<<(const QString & str);
-//     ConsoleStream & operator<<(const QDebug & dbg, const QString & str);
+
+    /*! \brief Writes \a error to the stream and returns a reference to the stream
+     */
+    ConsoleStream & operator<<(const Mdt::Error & error);
 
    private:
 
-//     int mMinLevel;
-//     int mLevel;
     std::shared_ptr<QDebug> mDbg;
   };
 

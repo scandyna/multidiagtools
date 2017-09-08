@@ -1,6 +1,6 @@
 format 214
 "Mdt" // Mdt
-  revision 40
+  revision 41
   modified_by 2 "philippe"
   // class settings
   
@@ -1149,6 +1149,8 @@ ${members}};
   package_ref 621826 // TextStorage
 
   package_ref 641538 // ItemCopier
+
+  package_ref 700546 // Comm_Bus_sandbox
 
   package_ref 402306 // SerialPort
 

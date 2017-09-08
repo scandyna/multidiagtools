@@ -24,6 +24,7 @@
 #include "BinaryDependenciesObjdump.h"
 #include "BinaryFormat.h"
 #include "SearchPathList.h"
+#include "Console.h"
 #include <QFileInfo>
 #include <QDir>
 
@@ -82,6 +83,7 @@ bool BinaryDependencies::findDependencies(const QString & binaryFilePath, const 
     return false;
   }
   // Process
+  Console::info(2) << " searching dependencies for " << binaryFileInfo.fileName();
   if(!impl->findDependencies(binaryFileInfo.absoluteFilePath())){
     setLastError(impl->lastError());
     return false;

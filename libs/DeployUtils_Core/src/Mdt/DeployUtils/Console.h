@@ -22,19 +22,41 @@
 #define MDT_DEPLOY_UTILS_CONSOLE_H
 
 #include "ConsoleStream.h"
-// class QDebug;
 
 namespace Mdt{ namespace DeployUtils{
 
-//   class ConsoleStream;
-
   /*! \brief Display messages to the console
+   *
+   * Console can be used to display mesages to the user
+   *  in a console application.
+   *  It provides a basic filter mechanisme, based on levels.
+   *
+   * In the main:
+   * \code
+   * Console::setLevel(2);
+   * \endcode
+   * This configures Console to output all messages
+   *  that are at least of level 2
+   *  (messages of level 0, 1 and 2 are diplayed, messages with greater levels are not).
+   *
+   * Somewhere in the code:
+   * \code
+   * Console::info(1) << "Starting processing ...";
+   * \endcode
+   * This message will be displayed with obove configuration.
+   *
+   * \code
+   * Console::info(3) << "  Format of file" << someFile << ": " << someFormat;
+   * \endcode
+   * This message will not be displayed with above configuration.
    */
   class Console
   {
    public:
 
     /*! \brief Set level
+     *
+     * \pre \a level must be >= 0
      */
     static void setLevel(int level);
 
@@ -47,11 +69,15 @@ namespace Mdt{ namespace DeployUtils{
 
     /*! \brief Display a information
      *
-     * \a minlevel
+     * \a minlevel is the minimum level required so that the message is diplayed.
+     * \pre \a minlevel must be >= 0
      */
     static ConsoleStream info(int minlevel);
-//     static QDebug info(int minlevel);
 
+    /*! \brief Display a error
+     */
+    static ConsoleStream error();
+    
    private:
 
     static int Level;

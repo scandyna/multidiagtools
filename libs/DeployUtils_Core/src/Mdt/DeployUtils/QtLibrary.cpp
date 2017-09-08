@@ -29,7 +29,7 @@
 #include <algorithm>
 #include <iterator>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -44,18 +44,13 @@ LibraryInfoList QtLibrary::findLibraryPlugins(const LibraryInfo & qtLibrary, con
   searchPathList.setPathSuffixList({"qt5/plugins","plugins"});
 
   const auto pluginDirectories = getPluginsDirectories( module(qtLibrary) );
-  qDebug() << "Plugins dirs: " << pluginDirectories;
   const auto pathList = searchPathList.pathList();
   const auto os = LibraryName::operatingSystem(qtLibrary.libraryName().fullName());
   Q_ASSERT(os != OperatingSystem::Unknown);
 
-  Console::setLevel(5);
-  
-  Console::info(2) << " Find plugins for library " << qtLibrary.libraryName().name();
-
+  Console::info(2) << " searching plugins for library " << qtLibrary.libraryName().name();
   for(const auto & path : pathList){
-    Console::info(3) << "  Searching in " << path << " ...";
-//     qDebug() << "Searching in " << path;
+    Console::info(3) << "  searching in " << path << " ...";
     plugins = findPluginsInDirectories(path, pluginDirectories, os);
     if(!plugins.isEmpty()){
       break;
@@ -264,12 +259,11 @@ LibraryInfoList QtLibrary::findPluginsInDirectories(const QString & pathPrefix, 
   for(const auto & directory : directories){
     QDir dir( QDir::cleanPath(pathPrefix + "/" + directory) );
     if(dir.exists()){
-      qDebug() << " dir: " << dir.absolutePath();
       const auto fiList = dir.entryInfoList(QDir::Files);
       for(const auto & fi : fiList){
         // When do cross compilation, don't bring wrong libraries to the list
         if(LibraryName::operatingSystem(fi.fileName()) == os){
-          qDebug() << "  Plugin: " << fi.fileName();
+          Console::info(4) << "   found " << fi.fileName();
           LibraryInfo li;
           li.setLibraryPlatformName(fi.fileName());
           li.setAbsoluteFilePath(fi.absoluteFilePath());

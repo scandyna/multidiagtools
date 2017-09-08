@@ -4,12 +4,12 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="123"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="125"/>
         <source>File &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="149"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="151"/>
         <source>Could not find a tool to get dependencies for file &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -30,12 +30,12 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependenciesObjdump</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="159"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="146"/>
         <source>Parsing objdump output for file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="171"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="158"/>
         <source>Could not find library &apos;%1&apos;.
 Searched in %2</source>
         <translation type="unfinished"></translation>
@@ -52,22 +52,22 @@ Searched in %2</source>
 <context>
     <name>Mdt::DeployUtils::FileCopier</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="44"/>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="45"/>
         <source>Could not create directory &apos;%1&apos; because it allready exists and is a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="52"/>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="53"/>
         <source>Could not create directory &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="97"/>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="92"/>
         <source>Could not remove destination file &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="109"/>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="104"/>
         <source>Could not copy file &apos;%1&apos; to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>

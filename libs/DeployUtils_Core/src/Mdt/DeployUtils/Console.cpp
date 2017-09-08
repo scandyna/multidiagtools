@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "Console.h"
 #include "ConsoleStream.h"
-// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -28,22 +27,21 @@ int Console::Level = 1;
 
 void Console::setLevel(int level)
 {
+  Q_ASSERT(level >= 0);
+
   Console::Level = level;
 }
 
 ConsoleStream Console::info(int minlevel)
 {
+  Q_ASSERT(minlevel >= 0);
+
   return ConsoleStream(QtInfoMsg, minlevel, Console::level());
 }
 
-// QDebug Console::info(int minlevel)
-// {
-//   QDebug dbg(QtInfoMsg);
-// //   dbg.resetFormat();
-//   dbg.noquote();
-//   dbg.nospace();
-// 
-//   return dbg;
-// }
+ConsoleStream Console::error()
+{
+  return ConsoleStream(QtWarningMsg, 0, Console::level());
+}
 
 }} // namespace Mdt{ namespace DeployUtils{

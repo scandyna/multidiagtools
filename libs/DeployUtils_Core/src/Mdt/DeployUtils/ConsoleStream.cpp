@@ -19,16 +19,14 @@
  **
  ****************************************************************************/
 #include "ConsoleStream.h"
+#include "Mdt/Error.h"
 #include <QDebug>
 
-#include <iostream>
+// #include <iostream>
 
 namespace Mdt{ namespace DeployUtils{
 
 ConsoleStream::ConsoleStream(QtMsgType msgType, int minLevel, int level)
-//  : mMinLevel(minLevel),
-//    mLevel(level),
-//    mDbg(std::make_shared<QDebug>(msgType))
 {
 //   std::cout << "ConsoleStream::ConsoleStream()" << std::endl;
   if(minLevel <= level){
@@ -38,29 +36,30 @@ ConsoleStream::ConsoleStream(QtMsgType msgType, int minLevel, int level)
   }
 }
 
-ConsoleStream & ConsoleStream::operator<<(const QString & str)
+ConsoleStream& ConsoleStream::operator<<(const char* str)
 {
-//   std::cout << " operator<<(const QString & str)" << std::endl;
-//   QDebug dbg(QtInfoMsg);
-// //   dbg.resetFormat();
-//   dbg.noquote();
-//   dbg.nospace();
-//   if(mMinLevel >= mLevel){
-//     *mDbg << str;
-//   }
+//   std::cout << " operator<<(const char * str)" << std::endl;
   if(mDbg){
     *mDbg << str;
   }
-
   return *this;
 }
 
-// ConsoleStream& ConsoleStream::operator<<(const QDebug& dbg, const QString& str)
-// {
-//   std::cout << " operator<<(const QDebug& dbg, const QString & str)" << std::endl;
-//   dbg << str;
-// 
-//   return *this;
-// }
+ConsoleStream & ConsoleStream::operator<<(const QString & str)
+{
+//   std::cout << " operator<<(const QString & str)" << std::endl;
+  if(mDbg){
+    *mDbg << str;
+  }
+  return *this;
+}
+
+ConsoleStream& ConsoleStream::operator<<(const Error & error)
+{
+  if(mDbg){
+    *mDbg << error.text();
+  }
+  return *this;
+}
 
 }} // namespace Mdt{ namespace DeployUtils{

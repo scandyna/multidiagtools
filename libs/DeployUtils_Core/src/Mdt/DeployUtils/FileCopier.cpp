@@ -19,13 +19,14 @@
  **
  ****************************************************************************/
 #include "FileCopier.h"
+#include "Console.h"
 #include <QDir>
 #include <QFileInfo>
 #include <QFile>
 #include <QLatin1String>
 #include <QDateTime>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -64,12 +65,6 @@ bool FileCopier::copyLibraries(const LibraryInfoList & libraries, const QString 
   if(!createDirectory(destinationDirectoryPath)){
     return false;
   }
-  
-  qDebug() << "Libs to copy:";
-  for(const auto & sourceLibrary : libraries){
-    qDebug() << " lib: " << sourceLibrary.libraryName().name();
-  }
-  
   for(const auto & sourceLibrary : libraries){
     if(!copyLibrary(sourceLibrary, destinationDirectoryPath)){
       return false;
@@ -89,9 +84,9 @@ bool FileCopier::copyLibrary(const Mdt::DeployUtils::LibraryInfo& sourceLibrary,
   // If destination exists, check if we are to update
   if(destinationFileInfo.exists()){
     if( destinationFileInfo.created() >= sourceFileInfo.created() ){
+      Console::info(3) << " allready up to date: " << sourceFileInfo.fileName();
       return true;
     }
-    qDebug() << "remove " << destinationFileInfo.fileName();
     QFile destinationFile(destinationFileInfo.absoluteFilePath());
     if(!destinationFile.remove()){
       const QString msg = tr("Could not remove destination file '%1'")
@@ -103,7 +98,7 @@ bool FileCopier::copyLibrary(const Mdt::DeployUtils::LibraryInfo& sourceLibrary,
     }
   }
   // Copy the library
-  qDebug() << "copy " << sourceFileInfo.fileName() << " ...";
+  Console::info(2) << " copy " << sourceFileInfo.fileName();
   QFile sourceFile(sourceFileInfo.absoluteFilePath());
   if( !sourceFile.copy(destinationFilePath) ){
     const QString msg = tr("Could not copy file '%1' to '%2'")

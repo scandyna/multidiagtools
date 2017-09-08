@@ -58,18 +58,18 @@ public:
     return mDestinationDirectoryPath;
   }
 
-  /*! \brief Get the list of paths where to search dependencies first
+  /*! \brief Get the list of paths prefixes where to search dependencies first
    */
-  Mdt::DeployUtils::PathList librarySearchFirstPathList() const
+  Mdt::DeployUtils::PathList searchFirstPathPrefixList() const
   {
-    return mLibrarySearchFirstPathList;
+    return mSearchFirstPathPrefixList;
   }
 
-  /*! \brief Get the list of paths suffixes for paths where to search dependencies first
+  /*! \brief Get verbose level
    */
-  QStringList librarySearchFirstPathSuffixList() const
+  int verboseLevel() const
   {
-    return mLibrarySearchFirstPathSuffixList;
+    return mVerboseLevel;
   }
 
 private:
@@ -78,13 +78,12 @@ private:
 
   QString mBinaryFilePath;
   QString mDestinationDirectoryPath;
-  Mdt::DeployUtils::PathList mLibrarySearchFirstPathList;
-  QStringList mLibrarySearchFirstPathSuffixList;
+  Mdt::DeployUtils::PathList mSearchFirstPathPrefixList;
+  int mVerboseLevel = 1;
   QCommandLineParser mParser;
   QCommandLineOption mDestinationDirectoryOption;
-  QCommandLineOption mLibrarySearchFirstPathListOption;
-  QCommandLineOption mPathSuffixesOption;
-//   QCommandLineOption mTargetOperatingSystem;
+  QCommandLineOption mSearchFirstPathPrefixListOption;
+  QCommandLineOption mVerboseLevelOption;
 };
 
 #endif // #ifndef COMMAND_LINE_PARSER_H

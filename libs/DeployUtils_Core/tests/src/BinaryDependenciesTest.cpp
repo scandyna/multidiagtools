@@ -29,6 +29,10 @@
 #include <QFileInfo>
 #include <QDir>
 
+#ifdef Q_OS_WIN
+ #include "Mdt/DeployUtils/ObjdumpWrapper.h"
+#endif
+
 // #include <QDebug>
 
 #ifndef PREFIX_PATH
@@ -104,6 +108,13 @@ void BinaryDependenciesTest::implementationInterfaceTest()
 
 void BinaryDependenciesTest::runTest()
 {
+#ifdef Q_OS_WIN
+  ObjdumpWrapper objdump;
+  if(objdump.findObjdump().isEmpty()){
+    QSKIP("Could not find objdump executable");
+  }
+#endif
+
   const auto prefix = QString::fromLocal8Bit(PREFIX_PATH);
   PathList searchFirstPrefixPaths = PathList::fromStringList( prefix.split(';', QString::SkipEmptyParts) );
   BinaryDependencies deps;

@@ -151,8 +151,7 @@ if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
   mdt_copy_binary_dependencies_experimental(
     TARGET mdtitemeditor_sqlcontrollertest
     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-    LIBRARY_SEARCH_FIRST_PATH_LIST ${CMAKE_PREFIX_PATH}
-    PATH_SUFFIXES "bin" "qt5/bin"
+    SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
   )
 
   # If we are doing cross-compilation,

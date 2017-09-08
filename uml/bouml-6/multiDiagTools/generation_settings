@@ -1,6 +1,6 @@
 
   cpp_default_defs 
-  cpp_h_extension "h" cpp_src_extension "cpp" java_extension "java" php_extension "php" python_extension "py" idl_extension "idl"
+  cpp_h_extension "h" cpp_src_extension "cpp" cpp_h_add_extensions "" cpp_src_add_extensions "" java_extension "java" php_extension "php" python_extension "py" idl_extension "idl"
   cpp_inline_dont_force_incl_in_h
   cpp_type_by_value_force_its_incl_in_header
 

@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 43
+  revision 46
   modified_by 2 "philippe"
   // class settings
   
@@ -236,63 +236,6 @@ ${inlines}
       size B
     end
 
-    class 4190978 "Logger"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 3591298 "Level"
-	private explicit_type ""
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 5871490 "info"
-	class_operation public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5871618 "operator<<"
-	class_operation public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
     class 4271874 "Console"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -348,6 +291,22 @@ ${inlines}
       end
 
       operation 6014338 "info"
+	class_operation public return_type class_ref 4278530 // ConsoleStream
+	nparams 1
+	  param in name "minLevel" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6028290 "info"
 	class_operation public return_type class_ref 2132226 // QDebug
 	nparams 1
 	  param in name "minLevel" explicit_type "int"
@@ -364,7 +323,7 @@ ${inlines}
       end
 
       operation 6014722 "error"
-	class_operation public return_type class_ref 4272002 // ConsoleError
+	class_operation public explicit_return_type "ConsoleError"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -378,25 +337,17 @@ ${inlines}
 	
       end
 
-      classrelation 4831106 // <unidirectional association>
-	relation 4804866 --->
+      classrelation 4838018 // <unidirectional association>
+	relation 4811778 --->
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 4831106 // <unidirectional association>
-	  b parent class_ref 4272002 // ConsoleError
-      end
-
-      classrelation 4831234 // <dependency>
-	relation 4804994 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 4831234 // <dependency>
-	  b parent class_ref 2132226 // QDebug
+	    classrelation_ref 4838018 // <unidirectional association>
+	  b parent class_ref 4278530 // ConsoleStream
       end
     end
 
-    class 4272002 "ConsoleError"
+    class 4278530 "ConsoleStream"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -410,13 +361,51 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 6014850 "operator<<"
-	class_operation public return_type class_ref 4272002 // ConsoleError
-	nparams 1
-	  param in name "error" type class_ref 182402 // Error
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+      attribute 3685250 "MinLevel"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3692162 "Level"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3685634 "Dbg"
+	private type class_ref 2132226 // QDebug
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 6021634 "ConsoleStream"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "msgType" type class_ref 4278786 // QtMsgType
+	  param in name "minLevel" explicit_type "int"
+	  param in name "level" explicit_type "int"
+	cpp_decl "  ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${volatile}${throw} 
 {
   ${body}}
 "
@@ -426,12 +415,40 @@ ${inlines}
 	
       end
 
-      operation 6014978 "operator<<"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      operation 6021506 "operator<<"
+	cpp_inline public return_type class_ref 4278530 // ConsoleStream
+	nparams 2
+	  param in name "s" type class_ref 4278530 // ConsoleStream
+	  param in name "str" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4837890 // <directional composition>
+	relation 4811650 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4837890 // <directional composition>
+	  b parent class_ref 2132226 // QDebug
+      end
+
+      operation 6028162 "operator<<"
+	public return_type class_ref 2132226 // QDebug
+	nparams 2
+	  param in name "dbg" type class_ref 2132226 // QDebug
+	  param in name "str" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -3400,5 +3417,6 @@ ${inlines}
 	  b parent class_ref 4265218 // QtModule
       end
     end
+
   end
 end

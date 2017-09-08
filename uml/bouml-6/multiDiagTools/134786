@@ -1,6 +1,6 @@
 format 214
 "Qt" // Qt
-  revision 219
+  revision 220
   modified_by 2 "philippe"
   // class settings
   
@@ -7803,6 +7803,51 @@ ${inlines}
       size A4
     end
 
+    class 4278786 "QtMsgType"
+      visibility package stereotype "enum"
+      cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+      php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+      python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+      idl_decl "${comment}enum ${name} {
+${items}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3685378 "QtDebugMsg"
+	public type class_ref 4278786 // QtMsgType
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3685506 "QtInfoMsg"
+	public type class_ref 4278786 // QtMsgType
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
     class 2132098 "QDebugStateSaver"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -7907,6 +7952,7 @@ ${inlines}
 	
 	
       end
+
     end
 
     class 2132354 "QLoggingCategory"
@@ -8937,6 +8983,7 @@ ${inlines}
       mysql_decl ""
       
     end
+
   end
 
   classview 860802 "QSerialPort"

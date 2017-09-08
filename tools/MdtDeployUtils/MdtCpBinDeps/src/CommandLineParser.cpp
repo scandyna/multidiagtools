@@ -19,21 +19,20 @@
  **
  ****************************************************************************/
 #include "CommandLineParser.h"
+#include "Mdt/DeployUtils/Console.h"
 #include <QStringList>
 #include <QFileInfo>
 #include <QDir>
 #include <QCoreApplication>
 
-#include <QDebug>
+// #include <QDebug>
 
 using namespace Mdt::DeployUtils;
 
-/// \todo Specify format of lists (should be ; separated string, simply, and fully CMake compatible, no platform specific stuff, spaces problem, ...)
-
 CommandLineParser::CommandLineParser()
   : mDestinationDirectoryOption(QStringList{"d","destination"}),
-    mLibrarySearchFirstPathListOption(QStringList{"p","search-first-path-list"}),
-    mPathSuffixesOption(QStringList{"s","path-suffixes"})
+    mSearchFirstPathPrefixListOption(QStringList{"p","prefix-path"}),
+    mVerboseLevelOption("verbose")
 {
   mParser.setApplicationDescription(tr("Find binary dependencies of a executable or a library and copy them."));
   mParser.addHelpOption();
@@ -45,25 +44,19 @@ CommandLineParser::CommandLineParser()
   );
   mDestinationDirectoryOption.setValueName("directory");
   mParser.addOption(mDestinationDirectoryOption);
-  mLibrarySearchFirstPathListOption.setDescription(
-    tr("If set, libraries will be searched in specified directories first. "
-       "Note: this has no effect for executable or library that support RPATH (like Linux), "
-       "because the location of each library is automatically resolved by ldd")
+  mSearchFirstPathPrefixListOption.setDescription(
+    tr("If set, libraries and plugins will be searched in specified directories first. "
+       "For libraries, this option is only used for binaries that do not support RPATH (for example .exe or .dll). "
+       "Internally, searching is done in known subdirectories of each specified directory (for example bin, qt5/bin). "
+       "Note: the list must be a string with ; separated values (This makes passing lists from CMake easy, and avoids platform specific issues).")
   );
-  mLibrarySearchFirstPathListOption.setValueName("path-list");
-  mParser.addOption(mLibrarySearchFirstPathListOption);
-  mPathSuffixesOption.setDescription(
-    tr("Specify addional subdirectories to check below each directory "
-       "in those specified by search-first-path-list."
-       "For example, if search-first-path-list is /opt/liba /opt/libb "
-       "and path-suffixes contains bin qt5/bin, libraries will be searched in"
-       "/opt/liba/bin, /opt/liba/qt5/bin, /opt/libb/bin, /opt/libb/qt5/bin")
+  mSearchFirstPathPrefixListOption.setValueName("path-list");
+  mParser.addOption(mSearchFirstPathPrefixListOption);
+  mVerboseLevelOption.setDescription(
+    tr("Level of details to display (0-4).")
   );
-  mPathSuffixesOption.setValueName("suffixes");
-  mParser.addOption(mPathSuffixesOption);
-//   mTargetOperatingSystem.setDescription(
-//     tr("When executable")
-//   );
+  mVerboseLevelOption.setValueName("level");
+  mParser.addOption(mVerboseLevelOption);
   mParser.addPositionalArgument("binary-file", tr("executable or library for which dependencies must be copied."));
 }
 
@@ -78,11 +71,11 @@ bool CommandLineParser::checkAndSetArguments()
 {
   // Binary file path
   if(mParser.positionalArguments().isEmpty()){
-    qDebug() << "binary-file argument is missing";
+    Console::error() << "binary-file argument is missing";
     return false;
   }
   if(mParser.positionalArguments().size() > 1){
-    qDebug() << "to many arguments passed.";
+    Console::error() << "to many arguments passed (expected a binary-file only).";
     return false;
   }
   Q_ASSERT(mParser.positionalArguments().size() == 1);
@@ -93,11 +86,17 @@ bool CommandLineParser::checkAndSetArguments()
   if(mDestinationDirectoryPath.isEmpty()){
     mDestinationDirectoryPath = binaryFileInfo.absoluteDir().absolutePath();
   }
-  // Library search first paths
-  mLibrarySearchFirstPathList = PathList::fromStringList( mParser.value(mLibrarySearchFirstPathListOption).split(';', QString::SkipEmptyParts) );
-  mLibrarySearchFirstPathSuffixList = mParser.value(mPathSuffixesOption).split(';', QString::SkipEmptyParts);
-  qDebug() << "Lib search: " << mParser.value(mLibrarySearchFirstPathListOption);
-  qDebug() << "Suffixes: " << mParser.value(mPathSuffixesOption);
+  // Library search first prefix paths
+  mSearchFirstPathPrefixList = PathList::fromStringList( mParser.value(mSearchFirstPathPrefixListOption).split(';', QString::SkipEmptyParts) );
+  // Verbose level
+  if(mParser.isSet(mVerboseLevelOption)){
+    bool ok;
+    mVerboseLevel = mParser.value(mVerboseLevelOption).toInt(&ok);
+    if(!ok || (mVerboseLevel < 0)){
+      Console::error() << "Invalid verbose level:" << mParser.value(mVerboseLevelOption) << " Possible values: 0-4";
+      return false;
+    }
+  }
 
   return true;
 }
