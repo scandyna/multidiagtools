@@ -199,7 +199,7 @@ if(CMAKE_CROSSCOMPILING)
   include(${IMPORT_DEPLOY_UTILS})
 endif()
 
-# Copy dependencies of a binary target to a directory
+# Copy dependencies of a list of binary targets to a directory
 #
 # This can be used to copy needed dependencies to run unit test
 # on systems that not support RPATH (f.ex. Windows),
@@ -209,9 +209,11 @@ endif()
 # Behind the scene, a target that depend on TARGET is created,
 # so the dependnecies are only evaluated after TARGET was built.
 #
+# Note: to prevent failures during the copy, only call this function once per destination directory.
+#
 # Input arguments:
-#  TARGET:
-#   Name of the target for which to copy dependencies
+#  TARGETS:
+#   List containing names of the targets for which to copy dependencies
 #  DESTINATION_DIRECTORY:
 #   Full path to the destination directory
 #  SEARCH_FIRST_PATH_PREFIX_LIST (optional):
@@ -221,13 +223,13 @@ endif()
 #
 function(mdt_copy_binary_dependencies_experimental)
   # Parse arguments
-  set(oneValueArgs TARGET DESTINATION_DIRECTORY)
-  set(multiValueArgs SEARCH_FIRST_PATH_PREFIX_LIST)
+  set(oneValueArgs DESTINATION_DIRECTORY)
+  set(multiValueArgs TARGETS SEARCH_FIRST_PATH_PREFIX_LIST)
   cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   # Set our local variables and check the mandatory ones
-  set(target "${VAR_TARGET}")
-  if(NOT target)
-    message(FATAL_ERROR "mdt_copy_binary_dependencies(): TARGET argument is missing.")
+  set(targets "${VAR_TARGETS}")
+  if(NOT targets)
+    message(FATAL_ERROR "mdt_copy_binary_dependencies(): TARGETS argument is missing.")
   endif()
   set(destination_directory "${VAR_DESTINATION_DIRECTORY}")
   if(NOT destination_directory)
@@ -236,21 +238,27 @@ function(mdt_copy_binary_dependencies_experimental)
   set(search_first_path_prefix_list ${VAR_SEARCH_FIRST_PATH_PREFIX_LIST})
   set(path_suffixes ${VAR_PATH_SUFFIXES})
 
-  message("search_first_path_prefix_list: ${search_first_path_prefix_list}")
+  # Create the list of targets files
+  set(target_file_list)
+  foreach(target ${targets})
+    list(APPEND target_file_list "$<TARGET_FILE:${target}>")
+  endforeach()
 
-  # Create a new target that depends on TARGET
+  # Create a new target that depends on destination
+  get_filename_component(destination_name "${destination_directory}" NAME)
+  set(bin_deps_target "${destination_name}_bin_deps")
   add_custom_target(
-    ${target}_bin_deps_experimental
+    "${bin_deps_target}"
     ALL
     COMMAND mdtcpbindeps
-            -d "${destination_directory}"
             -p "${search_first_path_prefix_list}"
             --verbose 1
-            "$<TARGET_FILE:${target}>"
+            "${target_file_list}"
+            "${destination_directory}"
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
     VERBATIM
   )
-  add_dependencies(${target}_bin_deps_experimental ${target})
+  add_dependencies("${bin_deps_target}" ${targets})
 
 endfunction()
 

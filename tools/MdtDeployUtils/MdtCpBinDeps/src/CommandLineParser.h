@@ -44,11 +44,11 @@ public:
    */
   bool process();
 
-  /*! \brief Get binary file path
+  /*! \brief Get the list of path to binary files
    */
-  QString binaryFilePath() const
+  QStringList binaryFilePathList() const
   {
-    return mBinaryFilePath;
+    return mBinaryFilesPathList;
   }
 
   /*! \brief Get destination directory path
@@ -76,12 +76,12 @@ private:
 
   bool checkAndSetArguments();
 
-  QString mBinaryFilePath;
+  QStringList mBinaryFilesPathList;
   QString mDestinationDirectoryPath;
   Mdt::DeployUtils::PathList mSearchFirstPathPrefixList;
   int mVerboseLevel = 1;
   QCommandLineParser mParser;
-  QCommandLineOption mDestinationDirectoryOption;
+//   QCommandLineOption mDestinationDirectoryOption;
   QCommandLineOption mSearchFirstPathPrefixListOption;
   QCommandLineOption mVerboseLevelOption;
 };

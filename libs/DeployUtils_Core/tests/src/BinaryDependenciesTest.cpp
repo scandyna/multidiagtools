@@ -29,11 +29,11 @@
 #include <QFileInfo>
 #include <QDir>
 
+// #include <QDebug>
+
 #ifdef Q_OS_WIN
  #include "Mdt/DeployUtils/ObjdumpWrapper.h"
 #endif
-
-// #include <QDebug>
 
 #ifndef PREFIX_PATH
  #error "PREFIX_PATH missing"
@@ -118,9 +118,29 @@ void BinaryDependenciesTest::runTest()
   const auto prefix = QString::fromLocal8Bit(PREFIX_PATH);
   PathList searchFirstPrefixPaths = PathList::fromStringList( prefix.split(';', QString::SkipEmptyParts) );
   BinaryDependencies deps;
+  LibraryInfoList dependencies;
 
+  /*
+   * Find dependencies for a single binary
+   */
   QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath(), searchFirstPrefixPaths));
-  QVERIFY(!deps.dependencies().isEmpty());
+  dependencies = deps.dependencies();
+  QVERIFY(!dependencies.isEmpty());
+  /*
+   * Find dependencie for a list of binaries.
+   * No binary passed must exists in the dependencies
+   */
+  QStringList binaries;
+  binaries << QCoreApplication::applicationFilePath() << dependencies.at(0).absoluteFilePath();
+  QVERIFY(deps.findDependencies( binaries, searchFirstPrefixPaths));
+  dependencies = deps.dependencies();
+  QVERIFY(!dependencies.isEmpty());
+  QStringList dependenciesStrList;
+  for(const auto & li : dependencies){
+    dependenciesStrList.append(li.absoluteFilePath());
+  }
+  QVERIFY(!dependenciesStrList.contains(binaries.at(0)));
+  QVERIFY(!dependenciesStrList.contains(binaries.at(1)));
 }
 
 /*

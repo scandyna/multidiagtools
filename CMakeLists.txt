@@ -122,34 +122,55 @@ include(MdtDependenciesUtils)
 if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
   # Because I not found a proper way to get a list of all existing tests,
   # just put some of them that have the most dependencies.
-  mdt_copy_binary_dependencies(
-    TARGET QtSingleApplication
-    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-    NO_WARNINGS
-  )
-  mdt_copy_binary_dependencies(
-    TARGET Application
-    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-    NO_WARNINGS
-  )
-  mdt_copy_binary_dependencies(
-    TARGET mdterrortest
-    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-    NO_WARNINGS
-  )
-  mdt_copy_binary_dependencies(
-    TARGET mdterror_widgetstest
-    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-    NO_WARNINGS
-  )
-  mdt_copy_binary_dependencies(
-    TARGET mdtitemeditor_sqlcontrollertest
-    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-    NO_WARNINGS
-  )
+#   mdt_copy_binary_dependencies(
+#     TARGET QtSingleApplication
+#     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#     NO_WARNINGS
+#   )
+#   mdt_copy_binary_dependencies(
+#     TARGET Application
+#     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#     NO_WARNINGS
+#   )
+#   mdt_copy_binary_dependencies(
+#     TARGET mdterrortest
+#     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#     NO_WARNINGS
+#   )
+#   mdt_copy_binary_dependencies(
+#     TARGET mdterror_widgetstest
+#     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#     NO_WARNINGS
+#   )
+#   mdt_copy_binary_dependencies(
+#     TARGET mdtitemeditor_sqlcontrollertest
+#     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#     NO_WARNINGS
+#   )
+
+#   mdt_copy_binary_dependencies_experimental(
+#     TARGET QtSingleApplication
+#     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
+#   )
+#   mdt_copy_binary_dependencies_experimental(
+#     TARGET Application
+#     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
+#   )
+#   mdt_copy_binary_dependencies_experimental(
+#     TARGET mdterrortest
+#     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
+#   )
+#   mdt_copy_binary_dependencies_experimental(
+#     TARGET mdterror_widgetstest
+#     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
+#   )
 
   mdt_copy_binary_dependencies_experimental(
-    TARGET mdtitemeditor_sqlcontrollertest
+    TARGETS mdtitemeditor_sqlcontrollertest mdterror_widgetstest mdterrortest Application QtSingleApplication
     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
   )
@@ -157,14 +178,14 @@ if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
   # If we are doing cross-compilation,
   # recusrsive resolving do not work
   # We have to add manually libraries that are missing
-  if(CMAKE_CROSSCOMPILING AND MINGW)
-    mdt_find_and_copy_libraries(
-      LIBRARIES
-        libpcre2-16-0 zlib1 libeay32 ssleay32 libharfbuzz-0 libpng16-16 libfreetype-6 libglib-2.0-0
-        libbz2 libintl-8 libpcre-1 libiconv-2
-      DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-    )
-  endif()
+#   if(CMAKE_CROSSCOMPILING AND MINGW)
+#     mdt_find_and_copy_libraries(
+#       LIBRARIES
+#         libpcre2-16-0 zlib1 libeay32 ssleay32 libharfbuzz-0 libpng16-16 libfreetype-6 libglib-2.0-0
+#         libbz2 libintl-8 libpcre-1 libiconv-2
+#       DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#     )
+#   endif()
 endif()
 
 #################################################################################################################################################

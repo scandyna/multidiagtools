@@ -94,6 +94,27 @@ bool BinaryDependencies::findDependencies(const QString & binaryFilePath, const 
   return true;
 }
 
+bool BinaryDependencies::findDependencies(const QStringList & binariesFilePaths, const PathList & searchFirstPathPrefixList)
+{
+  if(binariesFilePaths.isEmpty()){
+    return true;
+  }
+  QFileInfo binaryFileInfo(binariesFilePaths.at(0));
+  auto impl = initImpl(binaryFileInfo, searchFirstPathPrefixList);
+  if(!impl){
+    return false;
+  }
+  // Process
+  if(!impl->findDependencies(binariesFilePaths)){
+    setLastError(impl->lastError());
+    return false;
+  }
+  // Store result
+  mDependencies = impl->dependencies();
+
+  return true;
+}
+
 bool BinaryDependencies::findDependencies(const LibraryInfoList & libraries, const PathList & searchFirstPathPrefixList)
 {
   if(libraries.isEmpty()){

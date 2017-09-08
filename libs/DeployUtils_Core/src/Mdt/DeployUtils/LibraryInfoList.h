@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_LIBRARY_INFO_LIST_H
 
 #include "LibraryInfo.h"
+#include <QString>
 #include <QVector>
 #include <QMetaType>
 #include <initializer_list>
@@ -101,6 +102,10 @@ namespace Mdt{ namespace DeployUtils{
       return mList.isEmpty();
     }
 
+    /*! \brief Check if this list contains library
+     */
+    bool containsLibraryAbsoluteFilePath(const QString & filePath) const;
+
     /*! \brief Get library info list at index
      *
      * \pre \a index must be in a valid range ( 0 <= index < count() )
@@ -111,6 +116,10 @@ namespace Mdt{ namespace DeployUtils{
       Q_ASSERT(index < count());
       return mList.at(index);
     }
+
+    /*! \brief Clear this list
+     */
+    void clear();
 
     /*! \brief Attempts to allocate memory for at least size elements
      */

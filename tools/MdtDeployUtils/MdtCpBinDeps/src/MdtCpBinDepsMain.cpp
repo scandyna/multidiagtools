@@ -52,9 +52,9 @@ int MdtCpBinDepsMain::runMain()
   /*
    * Find dependencies for given binary file
    */
-  Console::info(1) << "Searching dependencies for " << parser.binaryFilePath();
+  Console::info(1) << "Searching dependencies";
   BinaryDependencies binDeps;
-  if(!binDeps.findDependencies(parser.binaryFilePath(), pathPrefixList)){
+  if(!binDeps.findDependencies(parser.binaryFilePathList(), pathPrefixList)){
     Console::error() << "Searching dependencies failed: " << binDeps.lastError();
     return 1;
   }

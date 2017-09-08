@@ -63,6 +63,13 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool findDependencies(const QString & binaryFilePath, const PathList & searchFirstPathPrefixList);
 
+    /*! \brief Find dependencies for a list of executables and/or libraries
+     *
+     * \sa findDependencies(const QString &, const PathList &)
+     * \note It is assumed that each binary file has the same binary format (PA, or elf, or ...)
+     */
+    bool findDependencies(const QStringList & binariesFilePaths, const PathList & searchFirstPathPrefixList);
+
     /*! \brief Find dependencies for a lits of libraries
      *
      * \sa findDependencies(const QString &, const PathList &)

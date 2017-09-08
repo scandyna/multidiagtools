@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 {
   Mdt::Application app(argc, argv);
 
-  if(!app.init()){
+  if(!app.init(Mdt::Application::SingleInstanceOnly)){
     return 1;
   }
 //   app.debugEnvironnement();

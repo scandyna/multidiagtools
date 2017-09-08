@@ -49,6 +49,19 @@ void LibraryInfoList::push_back(const LibraryInfo & library)
   addLibrary(library);
 }
 
+bool LibraryInfoList::containsLibraryAbsoluteFilePath(const QString & filePath) const
+{
+  const auto pred = [filePath](const LibraryInfo & fi){
+    return ( QString::compare(fi.absoluteFilePath(), filePath, Qt::CaseSensitive) == 0 );
+  };
+  return ( std::find_if(mList.cbegin(), mList.cend(), pred) != mList.cend() );
+}
+
+void LibraryInfoList::clear()
+{
+  mList.clear();
+}
+
 void LibraryInfoList::reserve(int size)
 {
   mList.reserve(size);

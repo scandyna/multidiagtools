@@ -62,28 +62,28 @@ BinaryDependenciesObjdump::BinaryDependenciesObjdump(QObject* parent)
 
 bool BinaryDependenciesObjdump::findDependencies(const QString& binaryFilePath)
 {
-  setLibrarySearchPathList();
-  Console::info(3) << "  search libraries in:\n   " << mLibrarySearchPathList.toStringList().join("\n   ");
-  // Find dependencies recursively
-  mLibraryTree.clear();
-  const auto node = mLibraryTree.setRootBinary(binaryFilePath);
-  mAlreadyProcessedLibraries.clear();
+  Q_ASSERT(!binaryFilePath.isEmpty());
+  const auto node = init(binaryFilePath);
   if(!findAndAddDependenciesForNode(binaryFilePath, node)){
     return false;
   }
-  // Store dependencies
-  Console::info(3) << "  found dependencies:";
-  const auto libs = mLibraryTree.toFlatList();
-  LibraryInfoList libraryInfoList;
-  for(const auto lib : libs){
-    LibraryInfo libraryInfo;
-    QFileInfo fi(lib);
-    libraryInfo.setAbsoluteFilePath(fi.absoluteFilePath());
-    libraryInfo.setLibraryPlatformName(fi.fileName());
-    libraryInfoList.addLibrary(libraryInfo);
-    Console::info(3) << "   " << fi.fileName();
+  storeDependencies();
+
+  return true;
+}
+
+bool BinaryDependenciesObjdump::findDependencies(const QStringList & binariesFilePaths)
+{
+  Q_ASSERT(!binariesFilePaths.isEmpty());
+
+  const auto node = init(binariesFilePaths.at(0));
+  for(const auto & filePath : binariesFilePaths){
+    Q_ASSERT(!filePath.isEmpty());
+    if(!findAndAddDependenciesForNode(filePath, node)){
+      return false;
+    }
   }
-  setDependencies(libraryInfoList);
+  storeDependencies();
 
   return true;
 }
@@ -92,31 +92,14 @@ bool BinaryDependenciesObjdump::findDependencies(const LibraryInfoList & librari
 {
   Q_ASSERT(!libraries.isEmpty());
 
-  setLibrarySearchPathList();
-  Console::info(3) << " search libraries in:\n   " << mLibrarySearchPathList.toStringList().join("\n   ");
-  // Find dependencies recursively
-  mAlreadyProcessedLibraries.clear();
-  mLibraryTree.clear();
-  const auto node = mLibraryTree.setRootBinary(libraries.at(0).absoluteFilePath());
+  const auto node = init(libraries.at(0).absoluteFilePath());
   for(const auto & library : libraries){
     Q_ASSERT(!library.absoluteFilePath().isEmpty());
     if(!findAndAddDependenciesForNode(library.absoluteFilePath(), node)){
       return false;
     }
   }
-  // Store dependencies
-  Console::info(3) << "  found dependencies:";
-  const auto libs = mLibraryTree.toFlatList();
-  LibraryInfoList libraryInfoList;
-  for(const auto lib : libs){
-    LibraryInfo libraryInfo;
-    QFileInfo fi(lib);
-    libraryInfo.setAbsoluteFilePath(fi.absoluteFilePath());
-    libraryInfo.setLibraryPlatformName(fi.fileName());
-    libraryInfoList.addLibrary(libraryInfo);
-    Console::info(3) << "   " << fi.fileName();
-  }
-  setDependencies(libraryInfoList);
+  storeDependencies();
 
   return true;
 
@@ -196,6 +179,34 @@ void BinaryDependenciesObjdump::setLibrarySearchPathList()
    */
   mLibrarySearchPathList.appendPathList( PathList::getSystemLibraryKnownPathListWindows() );
 #endif // #ifdef Q_OS_WIN
+}
+
+LibraryTreeNode BinaryDependenciesObjdump::init(const QString & binaryFilePath)
+{
+  Q_ASSERT(!binaryFilePath.isEmpty());
+
+  setLibrarySearchPathList();
+  Console::info(3) << "  search libraries in:\n   " << mLibrarySearchPathList.toStringList().join("\n   ");
+  mAlreadyProcessedLibraries.clear();
+  mLibraryTree.clear();
+
+  return mLibraryTree.setRootBinary(binaryFilePath);
+}
+
+void BinaryDependenciesObjdump::storeDependencies()
+{
+  Console::info(3) << "  found dependencies:";
+  const auto libs = mLibraryTree.toFlatList();
+  LibraryInfoList libraryInfoList;
+  for(const auto lib : libs){
+    LibraryInfo libraryInfo;
+    QFileInfo fi(lib);
+    libraryInfo.setAbsoluteFilePath(fi.absoluteFilePath());
+    libraryInfo.setLibraryPlatformName(fi.fileName());
+    libraryInfoList.addLibrary(libraryInfo);
+    Console::info(3) << "   " << fi.fileName();
+  }
+  setDependencies(libraryInfoList);
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

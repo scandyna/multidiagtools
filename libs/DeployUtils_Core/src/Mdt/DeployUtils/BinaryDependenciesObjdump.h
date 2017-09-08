@@ -48,6 +48,10 @@ namespace Mdt{ namespace DeployUtils{
      */
     bool findDependencies(const QString & binaryFilePath) override;
 
+    /*! \brief Find dependencies for a list of binaries
+     */
+    bool findDependencies(const QStringList & binariesFilePaths) override;
+
     /*! \brief Find dependencies for a list of libraries
      */
     bool findDependencies(const LibraryInfoList & libraries) override;
@@ -59,23 +63,13 @@ namespace Mdt{ namespace DeployUtils{
       return mLibrarySearchPathList;
     }
 
-//     /*! \internal Fill dependencies, made public for unit tests
-//      */
-//     void fillAndSetDependencies(PlainText::StringRecordList & data);
-// 
-//     /*! \internal Buid a library info list from a StringRecordList, made public for unit tests
-//      */
-//     static LibraryInfoList stringRecordListToLibraryInfoList(const PlainText::StringRecordList & list);
-
    private:
-
-//     static bool isLibraryNotFound(const PlainText::StringRecord & record);
-//     static bool isLibraryNotInExcludeList(const PlainText::StringRecord & record);
-//     static QStringList stringRecordListToStringNameList(const PlainText::StringRecordList & recordList);
 
     bool findAndAddDependenciesForNode(const QString & binaryFilePath, LibraryTreeNode node);
     static bool isLibraryInExcludeList(const PlainText::StringRecord & record);
     void setLibrarySearchPathList();
+    LibraryTreeNode init(const QString & binaryFilePath);
+    void storeDependencies();
 
     LibraryTree mLibraryTree;
     PathList mLibrarySearchPathList;

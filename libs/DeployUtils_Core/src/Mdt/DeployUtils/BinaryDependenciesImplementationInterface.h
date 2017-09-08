@@ -24,6 +24,8 @@
 #include "LibraryInfoList.h"
 #include "PathList.h"
 #include "Mdt/Error.h"
+#include <QString>
+#include <QStringList>
 #include <QObject>
 
 namespace Mdt{ namespace DeployUtils{
@@ -55,12 +57,21 @@ namespace Mdt{ namespace DeployUtils{
      */
     virtual bool findDependencies(const QString & binaryFilePath) = 0;
 
+    /*! \brief Find dependencies for a lits of binaries
+     *
+     * This default implementation simply calls findDependencies(const QString &)
+     *  for each binary file in \a binariesFilePaths .
+     *
+     * \pre \a binariesFilePaths must not be a empty list
+     */
+    virtual bool findDependencies(const QStringList & binariesFilePaths);
+
     /*! \brief Find dependencies for a lits of libraries
      *
      * This default implementation simply calls findDependencies(const QString &)
      *  for each library in \a libraries .
      *
-     * \pre libraries must not be a empty list
+     * \pre \a libraries must not be a empty list
      */
     virtual bool findDependencies(const LibraryInfoList & libraries);
 
@@ -84,11 +95,22 @@ namespace Mdt{ namespace DeployUtils{
      */
     void setDependencies(const LibraryInfoList & dependencies);
 
+    /*! \brief Set dependencies
+     */
+    void setDependencies(const LibraryInfoList & dependencies, const QStringList & librariesToExclude);
+
+    /*! \brief Set dependencies
+     */
+    void setDependencies(const LibraryInfoList & dependencies, const LibraryInfoList & librariesToExclude);
+
     /*! \brief Set last error
      */
     void setLastError(const Mdt::Error & error);
 
    private:
+
+    static bool listContainsLibrary(const QStringList & list, const LibraryInfo & li);
+    static bool listContainsLibrary(const LibraryInfoList & list, const LibraryInfo & li);
 
     LibraryInfoList mDependencies;
     PathList mLibrarySearchFirstPathList;

@@ -326,6 +326,7 @@ void LibraryTest::libraryInfoListTest()
   LibraryInfoList list;
   QCOMPARE(list.count(), 0);
   QVERIFY(list.isEmpty());
+  QVERIFY(!list.containsLibraryAbsoluteFilePath("/tmp/lib1"));
   /*
    * Add a element
    */
@@ -334,6 +335,7 @@ void LibraryTest::libraryInfoListTest()
   list.addLibrary(li1);
   QCOMPARE(list.count(), 1);
   QVERIFY(!list.isEmpty());
+  QVERIFY(list.containsLibraryAbsoluteFilePath("/tmp/lib1"));
   // Chck that ading twice does not work
   list.addLibrary(li1);
   QCOMPARE(list.count(), 1);

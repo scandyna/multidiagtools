@@ -19,6 +19,10 @@
  **
  ****************************************************************************/
 #include "BinaryDependenciesImplementationInterface.h"
+#include "LibraryName.h"
+#include <QFileInfo>
+#include <iterator>
+#include <algorithm>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -30,6 +34,23 @@ BinaryDependenciesImplementationInterface::BinaryDependenciesImplementationInter
 void BinaryDependenciesImplementationInterface::setLibrarySearchFirstPathList(const PathList& pathList)
 {
   mLibrarySearchFirstPathList = pathList;
+}
+
+bool BinaryDependenciesImplementationInterface::findDependencies(const QStringList& binariesFilePaths)
+{
+  Q_ASSERT(!binariesFilePaths.isEmpty());
+
+  LibraryInfoList allDependencies;
+  for(const auto & filePath : binariesFilePaths){
+    Q_ASSERT(!filePath.isEmpty());
+    if(!findDependencies(filePath)){
+      return false;
+    }
+    allDependencies.addLibraries(mDependencies);
+  }
+  setDependencies(allDependencies, binariesFilePaths);
+
+  return true;
 }
 
 bool BinaryDependenciesImplementationInterface::findDependencies(const LibraryInfoList & libraries)
@@ -44,7 +65,8 @@ bool BinaryDependenciesImplementationInterface::findDependencies(const LibraryIn
     }
     allDependencies.addLibraries(mDependencies);
   }
-  mDependencies = allDependencies;
+  setDependencies(allDependencies, libraries);
+
   return true;
 }
 
@@ -53,10 +75,45 @@ void BinaryDependenciesImplementationInterface::setDependencies(const LibraryInf
   mDependencies = dependencies;
 }
 
+void BinaryDependenciesImplementationInterface::setDependencies(const LibraryInfoList & dependencies, const QStringList & librariesToExclude)
+{
+  const auto pred = [librariesToExclude](const LibraryInfo & li){
+    return !listContainsLibrary(librariesToExclude, li);
+  };
+  mDependencies.clear();
+  std::copy_if( dependencies.cbegin(), dependencies.cend(), std::back_inserter(mDependencies), pred );
+}
+
+void BinaryDependenciesImplementationInterface::setDependencies(const LibraryInfoList & dependencies, const LibraryInfoList & librariesToExclude)
+{
+  const auto pred = [librariesToExclude](const LibraryInfo & li){
+    return !listContainsLibrary(librariesToExclude, li);
+  };
+  mDependencies.clear();
+  std::copy_if( dependencies.cbegin(), dependencies.cend(), std::back_inserter(mDependencies), pred );
+}
+
 void BinaryDependenciesImplementationInterface::setLastError(const Error& error)
 {
   mLastError = error;
   mLastError.commit();
+}
+
+bool BinaryDependenciesImplementationInterface::listContainsLibrary(const QStringList& list, const LibraryInfo& li)
+{
+  const auto pred = [li](const QString & filePath){
+    const auto libName = LibraryName( QFileInfo(filePath).fileName() );
+    return ( QString::compare( libName.name(), li.libraryName().name(), Qt::CaseSensitive ) == 0 );
+  };
+  return ( std::find_if(list.cbegin(), list.cend(), pred) != list.cend() );
+}
+
+bool BinaryDependenciesImplementationInterface::listContainsLibrary(const LibraryInfoList& list, const LibraryInfo& li)
+{
+  const auto pred = [li](const LibraryInfo & lia){
+    return ( QString::compare( lia.libraryName().name(), li.libraryName().name(), Qt::CaseSensitive ) == 0 );
+  };
+  return ( std::find_if(list.cbegin(), list.cend(), pred) != list.cend() );
 }
 
 }} // namespace Mdt{ namespace DeployUtils{

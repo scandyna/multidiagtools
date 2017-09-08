@@ -30,20 +30,20 @@
 using namespace Mdt::DeployUtils;
 
 CommandLineParser::CommandLineParser()
-  : mDestinationDirectoryOption(QStringList{"d","destination"}),
+  : /*mDestinationDirectoryOption(QStringList{"d","destination"}),*/
     mSearchFirstPathPrefixListOption(QStringList{"p","prefix-path"}),
     mVerboseLevelOption("verbose")
 {
-  mParser.setApplicationDescription(tr("Find binary dependencies of a executable or a library and copy them."));
+  mParser.setApplicationDescription(tr("Find binary dependencies of executable(s) or library(ies) and copy them."));
   mParser.addHelpOption();
 //   mParser.addVersionOption();
-  mDestinationDirectoryOption.setDescription(
-    tr("Dependencies will be copied to destination. "
-       "If destination directory does not exist, it will be created first. "
-       "If this option is omitted, the directory in which binary-file lives is considered.")
-  );
-  mDestinationDirectoryOption.setValueName("directory");
-  mParser.addOption(mDestinationDirectoryOption);
+//   mDestinationDirectoryOption.setDescription(
+//     tr("Dependencies will be copied to destination. "
+//        "If destination directory does not exist, it will be created first. "
+//        "If this option is omitted, the directory in which binary-file lives is considered.")
+//   );
+//   mDestinationDirectoryOption.setValueName("directory");
+//   mParser.addOption(mDestinationDirectoryOption);
   mSearchFirstPathPrefixListOption.setDescription(
     tr("If set, libraries and plugins will be searched in specified directories first. "
        "For libraries, this option is only used for binaries that do not support RPATH (for example .exe or .dll). "
@@ -57,7 +57,16 @@ CommandLineParser::CommandLineParser()
   );
   mVerboseLevelOption.setValueName("level");
   mParser.addOption(mVerboseLevelOption);
-  mParser.addPositionalArgument("binary-file", tr("executable or library for which dependencies must be copied."));
+  mParser.addPositionalArgument(
+    "binary-files",
+    tr("list of executables or libraries for which dependencies must be copied."
+       "Note: the list must be a string with ; separated values (This makes passing lists from CMake easy, and avoids platform specific issues).")
+  );
+  mParser.addPositionalArgument(
+    "destination",
+    tr("Dependencies will be copied to destination. "
+       "If destination directory does not exist, it will be created first. ")
+  );
 }
 
 bool CommandLineParser::process()
@@ -69,23 +78,34 @@ bool CommandLineParser::process()
 
 bool CommandLineParser::checkAndSetArguments()
 {
-  // Binary file path
-  if(mParser.positionalArguments().isEmpty()){
-    Console::error() << "binary-file argument is missing";
+  if(mParser.positionalArguments().size() != 2){
+    Console::error() << "expected 2 arguments (binary-files and destination)";
     return false;
   }
-  if(mParser.positionalArguments().size() > 1){
-    Console::error() << "to many arguments passed (expected a binary-file only).";
-    return false;
-  }
-  Q_ASSERT(mParser.positionalArguments().size() == 1);
-  QFileInfo binaryFileInfo(mParser.positionalArguments().at(0));
-  mBinaryFilePath = binaryFileInfo.absoluteFilePath();
-  // Destination directory
-  mDestinationDirectoryPath = mParser.value(mDestinationDirectoryOption);
-  if(mDestinationDirectoryPath.isEmpty()){
-    mDestinationDirectoryPath = binaryFileInfo.absoluteDir().absolutePath();
-  }
+  Q_ASSERT(mParser.positionalArguments().size() == 2);
+  // Liste of binaries
+  mBinaryFilesPathList = mParser.positionalArguments().at(0).split(';', QString::SkipEmptyParts);
+  // Destination
+  mDestinationDirectoryPath = mParser.positionalArguments().at(1);
+
+//   // Binary file path
+//   if(mParser.positionalArguments().isEmpty()){
+//     Console::error() << "binary-files argument is missing";
+//     return false;
+//   }
+//   if(mParser.positionalArguments().size() > 1){
+//     Console::error() << "to many arguments passed (expected a binary-file only).";
+//     return false;
+//   }
+//   Q_ASSERT(mParser.positionalArguments().size() == 1);
+//   mBinaryFilesPathList = mParser.positionalArguments().at(0).split(';', QString::SkipEmptyParts);
+//   QFileInfo binaryFileInfo(mParser.positionalArguments().at(0));
+//   mBinaryFilePathList = binaryFileInfo.absoluteFilePath();
+//   // Destination directory
+//   mDestinationDirectoryPath = mParser.value(mDestinationDirectoryOption);
+//   if(mDestinationDirectoryPath.isEmpty()){
+//     mDestinationDirectoryPath = binaryFileInfo.absoluteDir().absolutePath();
+//   }
   // Library search first prefix paths
   mSearchFirstPathPrefixList = PathList::fromStringList( mParser.value(mSearchFirstPathPrefixListOption).split(';', QString::SkipEmptyParts) );
   // Verbose level
