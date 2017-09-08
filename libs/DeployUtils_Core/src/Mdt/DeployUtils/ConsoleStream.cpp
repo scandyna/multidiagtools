@@ -22,13 +22,10 @@
 #include "Mdt/Error.h"
 #include <QDebug>
 
-// #include <iostream>
-
 namespace Mdt{ namespace DeployUtils{
 
 ConsoleStream::ConsoleStream(QtMsgType msgType, int minLevel, int level)
 {
-//   std::cout << "ConsoleStream::ConsoleStream()" << std::endl;
   if(minLevel <= level){
     mDbg.reset(new QDebug(msgType));
     mDbg->noquote();
@@ -38,7 +35,6 @@ ConsoleStream::ConsoleStream(QtMsgType msgType, int minLevel, int level)
 
 ConsoleStream& ConsoleStream::operator<<(const char* str)
 {
-//   std::cout << " operator<<(const char * str)" << std::endl;
   if(mDbg){
     *mDbg << str;
   }

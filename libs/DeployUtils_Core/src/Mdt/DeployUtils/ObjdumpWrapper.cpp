@@ -23,7 +23,7 @@
 #include <QProcess>
 #include <QStandardPaths>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 

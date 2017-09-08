@@ -81,7 +81,6 @@ private:
   Mdt::DeployUtils::PathList mSearchFirstPathPrefixList;
   int mVerboseLevel = 1;
   QCommandLineParser mParser;
-//   QCommandLineOption mDestinationDirectoryOption;
   QCommandLineOption mSearchFirstPathPrefixListOption;
   QCommandLineOption mVerboseLevelOption;
 };

@@ -102,7 +102,6 @@ bool BinaryDependenciesObjdump::findDependencies(const LibraryInfoList & librari
   storeDependencies();
 
   return true;
-
 }
 
 bool BinaryDependenciesObjdump::findAndAddDependenciesForNode(const QString& binaryFilePath, LibraryTreeNode node)
