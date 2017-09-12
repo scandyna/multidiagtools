@@ -9,16 +9,16 @@ find_package(Qt5
 )
 
 set(SOURCE_FILES
-  Mdt/StandardPaths.cpp
+#   Mdt/StandardPaths.cpp
   Mdt/Application.cpp
-  Mdt/AbstractConsoleApplicationMainFunction.cpp
+#   Mdt/AbstractConsoleApplicationMainFunction.cpp
 )
 
 mdt_add_library(
   NAME Application
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES QtSingleApplication Error
+  LINK_DEPENDENCIES QtSingleApplication Error Application_Core
 )
 mdt_set_library_description(
   NAME Application

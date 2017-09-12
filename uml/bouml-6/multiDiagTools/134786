@@ -1,6 +1,6 @@
 format 214
 "Qt" // Qt
-  revision 220
+  revision 222
   modified_by 2 "philippe"
   // class settings
   
@@ -5503,6 +5503,21 @@ ${inlines}
 	    classrelation_ref 4685442 // <generalisation>
 	  b parent class_ref 138626 // QObject
       end
+
+      operation 6048770 "exec"
+	class_operation public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 4152194 "QGuiApplication"
@@ -7952,7 +7967,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     class 2132354 "QLoggingCategory"
@@ -8982,8 +8996,56 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-    end
+      class 4305794 "LibraryLocation"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	attribute 3699074 "TranslationsPath"
+	  public type class_ref 4305794 // LibraryLocation
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+      end
 
+      operation 6049026 "location"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "loc" type class_ref 4305794 // LibraryLocation
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
   end
 
   classview 860802 "QSerialPort"

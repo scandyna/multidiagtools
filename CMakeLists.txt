@@ -51,7 +51,8 @@ endif()
 enable_testing()
 
 # Config file
-# TODO should be moved somwhere (like Globals library) ?
+# TODO should be moved somwhere
+# NOTE: Version informations are corrently available in libs/Application_Core
 configure_file(
   "${CMAKE_SOURCE_DIR}/config.h.in"
   "${CMAKE_BINARY_DIR}/config.h"
@@ -94,6 +95,7 @@ include(MdtAddLibrary)
 add_subdirectory(libs/QtSolutions)
 add_subdirectory(libs/Error)
 add_subdirectory(libs/Error_Widgets)
+add_subdirectory(libs/Application_Core)
 add_subdirectory(libs/Application)
 add_subdirectory(libs/Algorithm)
 add_subdirectory(libs/Expected)
