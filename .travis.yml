@@ -3,4 +3,4 @@ install: g++
 
 language: cpp
 
-script: g++ TravisCiTest.cpp
+script: 'g++ TravisCiTest.cpp'
