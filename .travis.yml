@@ -1,6 +1,8 @@
 
-install: g++
-
 language: cpp
 
-script: 'g++ TravisCiTest.cpp'
+install:
+- g++
+
+script:
+- g++ TravisCiTest.cpp
