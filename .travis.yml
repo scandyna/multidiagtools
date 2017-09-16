@@ -1,9 +1,8 @@
 
 language: cpp
 
-install:
-- g++
+compiler:
+- gcc
 
 script:
-- ls -l
 - g++ TravisCiTest.cpp
