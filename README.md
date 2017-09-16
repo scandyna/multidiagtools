@@ -1,4 +1,4 @@
-https://travis-ci.org/scandyna/multidiagtools.svg?branch=travis-ci-experiment
+[![Build Status](https://travis-ci.org/scandyna/multidiagtools.svg?branch=experimental)](https://travis-ci.org/scandyna/multidiagtools)
 
 # About Mdt
 
