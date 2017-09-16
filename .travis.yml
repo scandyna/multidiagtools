@@ -1,0 +1,6 @@
+
+install: make get-deps
+
+language: cpp
+
+script: g++ TravisCiTest.cpp
