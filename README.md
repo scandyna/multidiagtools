@@ -1,3 +1,5 @@
+https://travis-ci.org/scandyna/multidiagtools.svg?branch=travis-ci-experiment
+
 # About Mdt
 
 Mdt is a library that should help (in some future) interacting with some common instruments.
