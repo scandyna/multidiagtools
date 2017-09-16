@@ -1,5 +1,5 @@
 
-install: make g++
+install: g++
 
 language: cpp
 
