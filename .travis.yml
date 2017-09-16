@@ -1,5 +1,5 @@
 
-install: make get-deps
+install: make g++
 
 language: cpp
 
