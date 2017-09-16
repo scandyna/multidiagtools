@@ -45,9 +45,5 @@ int main(int argc, char **argv)
   Mdt::Application app(argc, argv);
   ErrorWidgetsTest errorTest;
 
-  if(!app.init()){
-    return 1;
-  }
-
   return QTest::qExec(&errorTest, argc, argv);
 }

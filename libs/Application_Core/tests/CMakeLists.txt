@@ -16,7 +16,7 @@ target_link_libraries(mdtapplicationcoretest Application_Core Qt5::Test)
 
 #=============== Helper functions ===========
 
-function(addApplicationTest testName)
+function(addApplicationCoreTest testName)
   set(complteTestName "MdtApplication_${testName}")
   set(sourceFilePath "src/${testName}.cpp")
   string(TOLOWER ${complteTestName} executableName)
@@ -28,6 +28,6 @@ endfunction()
 
 #================= Tests ====================
 
-addApplicationTest("StandardPathsTest")
-addApplicationTest("CoreApplicationImplTest")
-addApplicationTest("CoreApplicationTest")
+addApplicationCoreTest("StandardPathsTest")
+addApplicationCoreTest("CoreApplicationImplTest")
+addApplicationCoreTest("CoreApplicationTest")

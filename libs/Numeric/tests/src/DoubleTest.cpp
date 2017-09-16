@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "DoubleTest.h"
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 #include "Mdt/Numeric/Double.h"
 
 #include <QDebug>
@@ -360,12 +360,8 @@ void DoubleTest::mathOperatorsTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   DoubleTest test;
-
-  if(!app.init()){
-    return 1;
-  }
 
   return QTest::qExec(&test, argc, argv);
 }

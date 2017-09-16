@@ -18,7 +18,7 @@ set(SOURCES_FILES
 )
 
 add_library(mdtitemeditortest SHARED ${SOURCES_FILES})
-target_link_libraries(mdtitemeditortest ItemEditor Application Qt5::Test)
+target_link_libraries(mdtitemeditortest ItemEditor Application_Widgets Qt5::Test)
 
 #=============== Helper functions ===========
 

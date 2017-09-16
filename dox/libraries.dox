@@ -21,6 +21,8 @@
 
 /*! \page libraries_page Libraries
  *
+ * \ref libs_application
+ *
  * \ref mdtsql_page
  *
  * \ref libs_itemeditor

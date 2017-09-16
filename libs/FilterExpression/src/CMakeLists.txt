@@ -3,10 +3,7 @@ set(SOURCE_FILES
     Mdt/FilterExpression/LikeExpressionRegexTransform.cpp
 )
 
-find_package(
-  Qt5
-  COMPONENTS Core
-)
+find_package(Qt5 COMPONENTS Core)
 
 # Get Boost include directory if not allready set
 # We only use header onyl libraries, so we not use COMPONENTS

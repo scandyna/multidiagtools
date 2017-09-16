@@ -15,4 +15,4 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5 COMPONENTS Widgets)
 
 add_executable(clienteditor ${SOURCE_FILES})
-target_link_libraries(clienteditor ItemEditor Application Qt5::Widgets)
+target_link_libraries(clienteditor ItemEditor Application_Widgets Qt5::Widgets)

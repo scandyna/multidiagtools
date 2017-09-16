@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "LikeExpressionTest.h"
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 #include "Mdt/FilterExpression/LikeExpressionTerminal.h"
 #include "Mdt/FilterExpression/LikeExpressionRegexTransform.h"
 #include <boost/proto/matches.hpp>
@@ -350,12 +350,8 @@ void LikeExpressionTest::likeExpressionRegexTest_data()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   LikeExpressionTest test;
-
-  if(!app.init()){
-    return 1;
-  }
 
   return QTest::qExec(&test, argc, argv);
 }

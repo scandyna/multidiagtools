@@ -97,13 +97,8 @@ void BoostSpiritTraitsTest::stringParserQStringTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   BoostSpiritTraitsTest test;
-
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
 
   return QTest::qExec(&test, argc, argv);
 }

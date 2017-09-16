@@ -1,7 +1,4 @@
 
-# config.h is generated in the root of the build tree
-# include_directories("${CMAKE_BINARY_DIR}")
-
 find_package(Qt5 COMPONENTS Core)
 
 configure_file(
@@ -23,7 +20,7 @@ mdt_add_library(
   HEADERS_DIRECTORY .
   LINK_DEPENDENCIES Error Qt5::Core
 )
-target_compile_definitions(Application_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII)
+target_compile_definitions(Application_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 
 mdt_set_library_description(
   NAME Application_Core

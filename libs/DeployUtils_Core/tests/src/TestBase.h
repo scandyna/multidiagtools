@@ -21,7 +21,7 @@
 #ifndef MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
 #define MDT_DEPLOY_UTILS_CORE_TEST_BASE_H
 
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 #include "Mdt/PlainText/TestUtils.h"
 #include <QObject>
 #include <QByteArray>

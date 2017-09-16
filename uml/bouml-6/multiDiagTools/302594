@@ -1,6 +1,6 @@
-format 211
+format 214
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 87
+  revision 88
   modified_by 2 "philippe"
   // class settings
   
@@ -888,7 +888,7 @@ ${inlines}
       end
 
       attribute 2301058 "DestinationRelatedTable"
-	private type class_ref 910210 // mdtSqlTableSchema
+	private explicit_type ""
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1969,7 +1969,7 @@ ${inlines}
       end
 
       attribute 2191106 "LastError"
-	protected type class_ref 182402 // mdtError
+	protected type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2183,7 +2183,7 @@ ${inlines}
       end
 
       operation 3008514 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2301,7 +2301,7 @@ ${inlines}
       end
 
       attribute 1965570 "SourceTable"
-	private type class_ref 910210 // mdtSqlTableSchema
+	private explicit_type ""
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2325,7 +2325,7 @@ ${inlines}
       end
 
       attribute 1965698 "DestinationTable"
-	private type class_ref 910210 // mdtSqlTableSchema
+	private explicit_type ""
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2597,7 +2597,7 @@ ${inlines}
       end
 
       attribute 2411266 "SourceCsvSettings"
-	private type class_ref 2050434 // mdtCsvParserSettings
+	private type class_ref 2050434 // CsvParserSettings
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2633,7 +2633,7 @@ ${inlines}
       end
 
       attribute 2191234 "DestinationTable"
-	private type class_ref 910210 // mdtSqlTableSchema
+	private explicit_type ""
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2674,7 +2674,7 @@ ${inlines}
       operation 3835906 "setSourceCsvSettings"
 	public explicit_return_type "bool"
 	nparams 1
-	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	  param in name "settings" type class_ref 2050434 // CsvParserSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -2688,7 +2688,7 @@ ${inlines}
       end
 
       operation 3836162 "sourceCsvSettings"
-	public return_type class_ref 2050434 // mdtCsvParserSettings
+	public return_type class_ref 2050434 // CsvParserSettings
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3229,7 +3229,7 @@ ${inlines}
       end
 
       operation 3324930 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3255,7 +3255,7 @@ ${inlines}
       end
 
       attribute 2205058 "LastError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3455,7 +3455,7 @@ ${inlines}
 	public explicit_return_type "bool"
 	nparams 2
 	  param in name "csv" type class_ref 161026 // QString
-	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	  param in name "settings" type class_ref 2050434 // CsvParserSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
@@ -3596,7 +3596,7 @@ ${inlines}
 	nparams 3
 	  param in name "file" type class_ref 432386 // QFileInfo
 	  param in name "fileEncoding" type class_ref 236162 // QByteArray
-	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	  param in name "settings" type class_ref 2050434 // CsvParserSettings
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
@@ -3770,7 +3770,7 @@ ${inlines}
       end
 
       attribute 2321410 "CsvSettings"
-	private type class_ref 2050434 // mdtCsvParserSettings
+	private type class_ref 2050434 // CsvParserSettings
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -4812,7 +4812,7 @@ ${inlines}
 	public explicit_return_type "void"
 	nparams 2
 	  param in name "row" explicit_type "int"
-	  param in name "error" type class_ref 182402 // mdtError
+	  param in name "error" type class_ref 182402 // Error
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
@@ -5086,7 +5086,7 @@ ${inlines}
       end
 
       attribute 2328194 "RowCopyError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	multiplicity "*"
 	stereotype "vector"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
@@ -5817,7 +5817,7 @@ ${inlines}
 	public explicit_return_type "void"
 	nparams 2
 	  param in name "mappingModelRow" explicit_type "int"
-	  param in name "error" type class_ref 182402 // mdtError
+	  param in name "error" type class_ref 182402 // Error
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
@@ -5869,7 +5869,7 @@ ${inlines}
 	stereotype "signal"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "error" type class_ref 182402 // mdtError
+	  param in name "error" type class_ref 182402 // Error
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}

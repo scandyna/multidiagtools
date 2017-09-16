@@ -7,5 +7,5 @@ find_package(Qt5
 
 # Target MdtAlgorithTestTest
 add_executable(mdtalgorithmtest src/AlgorithmTest.cpp)
-target_link_libraries(mdtalgorithmtest Algorithm Application Qt5::Test)
+target_link_libraries(mdtalgorithmtest Algorithm Application_Core Qt5::Test)
 add_test(NAME MdtAlgorithTestTest COMMAND mdtalgorithmtest)

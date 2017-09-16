@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "FilterExpressionTest.h"
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 #include "Mdt/FilterExpression/LiteralValue.h"
 // #include "Mdt/FilterExpression/LikeExpressionTerminal.h"
 // #include <QString>
@@ -86,12 +86,8 @@ void FilterExpressionTest::literalValueTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   FilterExpressionTest test;
-
-  if(!app.init()){
-    return 1;
-  }
 
   return QTest::qExec(&test, argc, argv);
 }

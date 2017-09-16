@@ -54,11 +54,8 @@ int main(int argc, char **argv) \
 { \
   Mdt::Application app(argc, argv); \
   TestClass test; \
-  if(!app.init()){ \
-    return 1; \
-  } \
   if(debugEnv){ \
-    app.debugEnvironnement(); \
+    app.debugEnvironment(); \
   } \
   return QTest::qExec(&test, argc, argv); \
 }

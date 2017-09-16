@@ -19,7 +19,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtsqltest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtsqltest Sql Application Qt5::Test)
+target_link_libraries(mdtsqltest Sql Application_Widgets Qt5::Test)
 
 #=============== Helper functions ===========
 

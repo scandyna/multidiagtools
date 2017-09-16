@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -83,24 +83,27 @@
  *
  * \subsection translations_tr About using tr()
  *
- *  \todo See QCoreApplication documentation, Q_DECLARE_TR_FUNCTIONS(context)
- *        It really seems to be the answer to the problem, an maybe stops putting tons of errors during buid process !
- *
  *  When a class is a subclass of QObject, simply using tr() works fine.
  *
  *  For a class that is not a subclass of QObject, Qt recommends using QCoreApplication::translate()
  *   and provide the class name as context, so that Qt Linguist can display it the proper way to the translator.
  *   Previously, many classes in Mdt libraries have added a tr() static member function, that simply called QObject::tr().
- *   This is bad, because Qt Linguist also displayed all strings as QObject context,
- *   and also trows a error message about missing Q_OBJECT macro when ts files are generated.
- *   The recommanded solution is to create a macro in the source file (not in the header!).
- *   For example, in MyClass.cpp:
+ *   This is bad, because Qt Linguist also displayed all strings as QObject context.
+ *   The recommanded solution is to use Q_DECLARE_TR_FUNCTIONS() provided in QCoreApplication
+ *   For example, in MyClass.h:
  *   \code
  *    #include <QCoreApplication>
  *
- *    #define tr(sourceText) QCoreApplication::translate("MyClass", sourceText)
+ *    class MyClass
+ *    {
+ *      Q_DECLARE_TR_FUNCTIONS(MyClass)
  *
- *    // In some method
- *    const auto msg = tr("Some message");
+ *     public:
+ *
+ *      MyClass();
+ *    };
  *   \endcode
+ *
+ *  Note that Qt Linguist trows error messages when a class uses tr() and it does not provide the Q_OBJECT macro,
+ *   despite the fact that translation file are generated and works.
  */

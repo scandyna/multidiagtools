@@ -15,4 +15,4 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5 COMPONENTS Widgets)
 
 add_executable(sqlclienteditor ${SOURCE_FILES})
-target_link_libraries(sqlclienteditor ItemEditor_Sql Application Qt5::Widgets)
+target_link_libraries(sqlclienteditor ItemEditor_Sql Application_Widgets Qt5::Widgets)

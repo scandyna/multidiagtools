@@ -26,7 +26,7 @@ message("CMAKE_HOST_SYSTEM : ${CMAKE_HOST_SYSTEM}")
 # Only build deploy utils if we do a native build
 if(NOT CMAKE_CROSSCOMPILING)
   add_executable(mdtcpbindeps ${SOURCE_FILES})
-  target_link_libraries(mdtcpbindeps Application DeployUtils_Core Qt5::Core)
+  target_link_libraries(mdtcpbindeps Application_Core DeployUtils_Core Qt5::Core)
 endif()
 
 # add_custom_target(

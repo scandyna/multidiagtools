@@ -37,9 +37,6 @@ int main(int argc, char **argv)
 {
   // Setup application
   Mdt::Application app(argc, argv);
-  if(!app.init()){
-    return 1;
-  }
   // Setup database
   auto db = QSqlDatabase::addDatabase("QSQLITE");
   if(!db.isValid()){

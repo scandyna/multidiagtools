@@ -1,9 +1,7 @@
 
 enable_testing()
 
-find_package(Qt5
-  COMPONENTS Test
-)
+find_package(Qt5 COMPONENTS Test)
 
 # Target MdtErrorTest
 add_executable(mdterrortest src/ErrorTest.cpp)

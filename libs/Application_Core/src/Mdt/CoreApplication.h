@@ -30,6 +30,8 @@ namespace Mdt{
   class CoreApplicationImpl;
 
   /*! \brief CoreApplication adds some helper to QCoreApplication for application initialization
+   *
+   * \sa QCoreApplication
    */
   class CoreApplication : public QCoreApplication
   {
@@ -44,6 +46,13 @@ namespace Mdt{
     /*! \brief Destroy the core application object
      */
     ~CoreApplication();
+
+    // Copy disabled
+    CoreApplication(const CoreApplication &) = delete;
+    CoreApplication & operator=(const CoreApplication &) = delete;
+    // Move disabled
+    CoreApplication(CoreApplication &&) = delete;
+    CoreApplication & operator=(CoreApplication &&) = delete;
 
     /*! \brief Enable file logging
      *

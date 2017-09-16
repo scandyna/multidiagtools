@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "AlgorithmTest.h"
 #include "Mdt/Algorithm.h"
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 #include <QString>
 #include <QLatin1String>
 #include <QChar>
@@ -508,12 +508,10 @@ QStringList AlgorithmTest::generateStringList(int size)
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   AlgorithmTest test;
 
-  if(!app.init()){
-    return 1;
-  }
+//   app.debugEnvironment();
 
   return QTest::qExec(&test, argc, argv);
 }

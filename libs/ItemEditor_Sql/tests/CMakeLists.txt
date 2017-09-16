@@ -17,7 +17,7 @@ set(SOURCES_FILES
 )
 
 add_library(mdtitemeditorsqltest SHARED ${SOURCES_FILES})
-target_link_libraries(mdtitemeditorsqltest ItemEditor_Sql mdtitemeditortest Application Qt5::Test)
+target_link_libraries(mdtitemeditorsqltest ItemEditor_Sql mdtitemeditortest Application_Widgets Qt5::Test)
 
 #=============== Helper functions ===========
 

@@ -51,12 +51,9 @@ void BinaryDependenciesObjdumpTest::cleanupTestCase()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   BinaryDependenciesObjdumpTest test;
 
-  if(!app.init()){
-    return 1;
-  }
 //   app.debugEnvironnement();
 
   return QTest::qExec(&test, argc, argv);

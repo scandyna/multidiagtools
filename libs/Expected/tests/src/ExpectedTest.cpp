@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "ExpectedTest.h"
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 #include "Mdt/Expected.h"
 
 // #include <QDebug>
@@ -303,12 +303,9 @@ void ExpectedTest::expectedBenchmark()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   ExpectedTest test;
 
-  if(!app.init()){
-    return 1;
-  }
 //   app.debugEnvironnement();
 
   return QTest::qExec(&test, argc, argv);

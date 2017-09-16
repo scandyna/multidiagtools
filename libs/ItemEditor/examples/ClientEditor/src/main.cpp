@@ -37,9 +37,6 @@ int main(int argc, char **argv)
 {
   // Setup application
   Mdt::Application app(argc, argv);
-  if(!app.init()){
-    return 1;
-  }
   // Setup Client widget
 //   auto *clientWidget = new ClientWidget;
 //   // Setup Address widget

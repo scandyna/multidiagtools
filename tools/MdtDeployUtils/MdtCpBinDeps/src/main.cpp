@@ -19,18 +19,13 @@
  **
  ****************************************************************************/
 #include "MdtCpBinDepsMain.h"
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 
 #include <QDebug>
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
-
-  if(!app.init(Mdt::Application::MultipleInstanceAllowed)){
-    return 1;
-  }
-//   app.debugEnvironnement();
+  Mdt::CoreApplication app(argc, argv);
 
   // All code is exectued here
   MdtCpBinDepsMain mainImpl;

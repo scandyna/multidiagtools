@@ -1,8 +1,7 @@
 
 
-find_package(Qt5
-  COMPONENTS Core
-)
+find_package(Qt5 COMPONENTS Core)
+
 # set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(SOURCE_FILES

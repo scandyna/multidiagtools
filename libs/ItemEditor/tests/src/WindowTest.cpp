@@ -189,10 +189,5 @@ int main(int argc, char **argv)
   Mdt::Application app(argc, argv);
   WindowTest test;
 
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
-
   return QTest::qExec(&test, argc, argv);
 }

@@ -96,7 +96,13 @@ add_subdirectory(libs/QtSolutions)
 add_subdirectory(libs/Error)
 add_subdirectory(libs/Error_Widgets)
 add_subdirectory(libs/Application_Core)
-add_subdirectory(libs/Application)
+add_subdirectory(libs/Application_Core_Single)
+
+# add_subdirectory(libs/Application)
+
+add_subdirectory(libs/Application_Widgets)
+add_subdirectory(libs/Application_Widgets_Single)
+
 add_subdirectory(libs/Algorithm)
 add_subdirectory(libs/Expected)
 add_subdirectory(libs/FilterExpression)
@@ -172,7 +178,7 @@ if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
 #   )
 
   mdt_copy_binary_dependencies_experimental(
-    TARGETS mdtitemeditor_sqlcontrollertest mdterror_widgetstest mdterrortest Application QtSingleApplication
+    TARGETS mdtitemeditor_sqlcontrollertest mdterror_widgetstest mdterrortest Application_Widgets QtSingleApplication
     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
   )

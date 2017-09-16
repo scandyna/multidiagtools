@@ -130,12 +130,9 @@ LibraryInfoList FileCopierTest::createLibraryInfoList(const QStringList& libName
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   FileCopierTest test;
 
-  if(!app.init()){
-    return 1;
-  }
 //   app.debugEnvironnement();
 
   return QTest::qExec(&test, argc, argv);

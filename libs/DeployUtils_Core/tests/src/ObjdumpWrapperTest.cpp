@@ -59,13 +59,10 @@ void ObjdumpWrapperTest::runObjdumpTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   ObjdumpWrapperTest test;
 
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
+//   app.debugEnvironment();
 
   return QTest::qExec(&test, argc, argv);
 }

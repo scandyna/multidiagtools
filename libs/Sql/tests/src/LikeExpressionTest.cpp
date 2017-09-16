@@ -47,9 +47,5 @@ int main(int argc, char **argv)
   Mdt::Application app(argc, argv);
   LikeExpressionTest test;
 
-  if(!app.init()){
-    return 1;
-  }
-
   return QTest::qExec(&test, argc, argv);
 }
