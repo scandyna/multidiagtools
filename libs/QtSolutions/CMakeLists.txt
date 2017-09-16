@@ -1,5 +1,3 @@
 
-add_subdirectory(QtSingleApplication)
-
 add_subdirectory(QtSingleApplication_Core)
 add_subdirectory(QtSingleApplication_Widgets)
