@@ -4,19 +4,23 @@ branches:
   - travis-ci-experiment
 
 language: cpp
-os: linux
 dist: trusty
 
-addons:
- apt:
-  sources:
-   - sourceline: 'ppa:ubuntu-toolchain-r/test'
-  packages:
-   - gcc-5
-   - g++-5
+matrix:
+ include:
+  - os: linux
+    addons:
+     apt:
+      sources:
+       - ppa:ubuntu-toolchain-r/test
+      packages:
+       - g++-5
+    env:
+     - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+       
 
-compiler:
- - gcc
+before_install:
+ - eval "${MATRIX_EVAL}"
 
 script:
- - g++ TravisCiTest.cpp
+ - ${CXX} TravisCiTest.cpp
