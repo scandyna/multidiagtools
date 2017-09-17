@@ -16,11 +16,33 @@ matrix:
       packages:
        - g++-5
     env:
-     - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-
+   #  - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+     - COMPILER=g++-5
+     - CACHE_FILE="ReleaseGcc.cmake"
+  - os: linux
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+       - llvm-toolchain-precise-3.8
+      packages:
+       - clang-3.8
+    env:
+    # - MATRIX_EVAL="CC=clang-3.8 && CXX=clang++-3.8"
+     - COMPILER=clang++-3.8
 
 before_install:
- - eval "${MATRIX_EVAL}"
+ - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
+ - sudo apt-get -qq update
+ # - eval "${CXX}"
+ # - eval "${MATRIX_EVAL}"
+ 
+install:
+ - sudo apt-get install -y cmake
+ - sudo apt-get install -y libboost-dev
+ - yes | sudo apt-get install -y qt58base qt58x11extras qt58imageformats qt58svg
 
 script:
- - ${CXX} TravisCiTest.cpp --std=c++14
+ - echo ${CACHE_FILE}
+ - ${COMPILER} --version
+ - ${COMPILER} TravisCiTest.cpp --std=c++14
