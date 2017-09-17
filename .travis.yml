@@ -17,7 +17,8 @@ matrix:
        - g++-5
     env:
    #  - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-     - COMPILER=g++-5
+     - C_COMPILER=gcc-5
+     - CXX_COMPILER=g++-5
      - CACHE_FILE="ReleaseGcc.cmake"
   - os: linux
     addons:
@@ -29,7 +30,8 @@ matrix:
        - clang-3.8
     env:
     # - MATRIX_EVAL="CC=clang-3.8 && CXX=clang++-3.8"
-     - COMPILER=clang++-3.8
+     - C_COMPILER=clang-3.8
+     - CXX_COMPILER=clang++-3.8
 
 before_install:
  - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
@@ -44,10 +46,11 @@ install:
 
 script:
  - echo ${CACHE_FILE}
- - ${COMPILER} --version
- - ${COMPILER} TravisCiTest.cpp --std=c++14
+ - ${C_COMPILER} --version
+ - ${CXX_COMPILER} --version
+ - ${CXX_COMPILER} TravisCiTest.cpp --std=c++14
  - mkdir build
  - cd build
- - cmake -C ../cmake/caches/${CACHE_FILE} -D CMAKE_CXX_COMPILER=${COMPILER} ..
+ - cmake -C ../cmake/caches/${CACHE_FILE} -D CMAKE_C_COMPILER=${C_COMPILER} -D CMAKE_CXX_COMPILER=${CXX_COMPILER} -D QT_PREFIX_PATH=/opt/qt58 ..
  - make -j4
  - make test
