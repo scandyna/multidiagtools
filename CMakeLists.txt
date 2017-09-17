@@ -34,6 +34,7 @@ endif()
 
 message("CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+message("CMAKE_CXX_COMPILER_VERSION: ${CMAKE_CXX_COMPILER_VERSION}")
 
 
 # On Windows, RPATH do not exist
@@ -53,10 +54,10 @@ enable_testing()
 # Config file
 # TODO should be moved somwhere
 # NOTE: Version informations are corrently available in libs/Application_Core
-configure_file(
-  "${CMAKE_SOURCE_DIR}/config.h.in"
-  "${CMAKE_BINARY_DIR}/config.h"
-)
+# configure_file(
+#   "${CMAKE_SOURCE_DIR}/config.h.in"
+#   "${CMAKE_BINARY_DIR}/config.h"
+# )
 
 #################################################################################################################################################
 # Compiler options
@@ -92,34 +93,31 @@ include(MdtAddLibrary)
 # Libraries
 #################################################################################################################################################
 
-add_subdirectory(libs/QtSolutions)
+# add_subdirectory(libs/QtSolutions)
 add_subdirectory(libs/Error)
-add_subdirectory(libs/Error_Widgets)
-add_subdirectory(libs/Application_Core)
-add_subdirectory(libs/Application_Core_Single)
-
-# add_subdirectory(libs/Application)
-
-add_subdirectory(libs/Application_Widgets)
-add_subdirectory(libs/Application_Widgets_Single)
-
-add_subdirectory(libs/Algorithm)
-add_subdirectory(libs/Expected)
-add_subdirectory(libs/FilterExpression)
-add_subdirectory(libs/Numeric)
-add_subdirectory(libs/PlainText_Core)
-# add_subdirectory(libs/SerialPort)
-add_subdirectory(libs/Sql)
-add_subdirectory(libs/ItemModel)
-add_subdirectory(libs/ItemEditor)
-add_subdirectory(libs/ItemEditor_Sql)
-add_subdirectory(libs/DeployUtils_Core)
+# add_subdirectory(libs/Error_Widgets)
+# add_subdirectory(libs/Application_Core)
+# add_subdirectory(libs/Application_Core_Single)
+# add_subdirectory(libs/Application_Widgets)
+# add_subdirectory(libs/Application_Widgets_Single)
+# 
+# add_subdirectory(libs/Algorithm)
+# add_subdirectory(libs/Expected)
+# add_subdirectory(libs/FilterExpression)
+# add_subdirectory(libs/Numeric)
+# add_subdirectory(libs/PlainText_Core)
+# # add_subdirectory(libs/SerialPort)
+# add_subdirectory(libs/Sql)
+# add_subdirectory(libs/ItemModel)
+# add_subdirectory(libs/ItemEditor)
+# add_subdirectory(libs/ItemEditor_Sql)
+# add_subdirectory(libs/DeployUtils_Core)
 
 #################################################################################################################################################
 # Tools
 #################################################################################################################################################
 
-add_subdirectory(tools)
+# add_subdirectory(tools)
 
 #################################################################################################################################################
 # Unit tests

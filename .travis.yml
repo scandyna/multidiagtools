@@ -46,3 +46,8 @@ script:
  - echo ${CACHE_FILE}
  - ${COMPILER} --version
  - ${COMPILER} TravisCiTest.cpp --std=c++14
+ - mkdir build
+ - cd build
+ - cmake -C ../cmake/caches/${CACHE_FILE} -D CMAKE_CXX_COMPILER=${COMPILER} ..
+ - make -j4
+ - make test
