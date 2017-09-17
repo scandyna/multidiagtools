@@ -16,7 +16,8 @@ matrix:
       packages:
        - g++-5
     env:
-     - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+   #  - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+     - CXX=g++-5
      - CACHE_FILE="ReleaseGcc.cmake"
   - os: linux
     addons:
@@ -27,12 +28,13 @@ matrix:
       packages:
        - clang-3.8
     env:
-     - MATRIX_EVAL="CC=clang-3.8 && CXX=clang++-3.8"
+    # - MATRIX_EVAL="CC=clang-3.8 && CXX=clang++-3.8"
+     - CXX=clang++-3.8
 
 before_install:
  - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
  - sudo apt-get -qq update
- - eval "${MATRIX_EVAL}"
+ # - eval "${MATRIX_EVAL}"
  
 install:
  - sudo apt-get install -y cmake
