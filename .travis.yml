@@ -1,5 +1,10 @@
 
+branches:
+ only:
+  - travis-ci-experiment
+
 language: cpp
+os: linux
 dist: trusty
 
 compiler:
