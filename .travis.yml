@@ -13,11 +13,11 @@ matrix:
      apt:
       sources:
        - ubuntu-toolchain-r-test
+       - beineri-opt-qt58
       packages:
        - g++-5
        - cmake
        - libboost-dev
-       - qtbase5-dev
     env:
      - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
   - os: linux
@@ -39,4 +39,3 @@ before_install:
 
 script:
  - ${CXX} TravisCiTest.cpp --std=c++14
- - qmake -version
