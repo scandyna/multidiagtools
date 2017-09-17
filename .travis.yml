@@ -17,6 +17,7 @@ matrix:
        - g++-5
     env:
      - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+     - CACHE_FILE="ReleaseGcc.cmake"
   - os: linux
     addons:
      apt:
