@@ -24,7 +24,7 @@ matrix:
      apt:
       sources:
        - ubuntu-toolchain-r-test
-       - llvm-toolchain-trusty-3.8
+       - llvm-toolchain-precise-3.8
       packages:
        - clang-3.8
     env:
@@ -34,6 +34,7 @@ matrix:
 before_install:
  - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
  - sudo apt-get -qq update
+ - eval "${CXX}"
  # - eval "${MATRIX_EVAL}"
  
 install:
