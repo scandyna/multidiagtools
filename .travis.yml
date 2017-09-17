@@ -17,10 +17,10 @@ matrix:
        - g++-5
     env:
      - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-       
+
 
 before_install:
  - eval "${MATRIX_EVAL}"
 
 script:
- - ${CXX} TravisCiTest.cpp
+ - ${CXX} TravisCiTest.cpp --std=c++14
