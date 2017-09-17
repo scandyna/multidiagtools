@@ -11,7 +11,7 @@ before_install:
  - sudo apt-get -qq update
 
 install:
- - sudo apt-get install --yes qt58base
+ - sudo apt-get install --yes qt58-meta-minimal
 
 matrix:
  include:
