@@ -20,7 +20,7 @@ open
   classview_ref 1901186 // Sandbox
   classview_ref 1867778 // UicNumber_Core
   
-  package_ref 707074 // UnitTest
+package_ref 707074 // UnitTest
   classview_ref 300162 // QtSolutions
 end
 end
