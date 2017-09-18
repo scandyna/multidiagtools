@@ -267,7 +267,7 @@ function(mdt_add_qt_designer_plugin_library)
   endif()
   # Find external dependencies
   find_package(Qt5 QUIET OPTIONAL_COMPONENTS Designer)
-  if(NOT Designer_FOUND)
+  if(NOT TARGET Qt5::Designer)
     message(WARNING "${plugin_name} will not be built because Qt5 Designer is not available.")
     return()
   endif()
