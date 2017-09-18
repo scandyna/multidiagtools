@@ -52,7 +52,7 @@ mdt_add_library(
   NAME DeployUtils_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Error PlainText_Core Algorithm Qt5::Core
+  LINK_DEPENDENCIES Error_Core PlainText_Core Algorithm Qt5::Core
 )
 mdt_set_library_description(
   NAME DeployUtils_Core

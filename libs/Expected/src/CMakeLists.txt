@@ -7,7 +7,7 @@ mdt_add_library(
   NAME Expected
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Error
+  LINK_DEPENDENCIES Error_Core
 )
 mdt_set_library_description(
   NAME Expected

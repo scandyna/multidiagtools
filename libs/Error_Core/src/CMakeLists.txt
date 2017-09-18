@@ -13,12 +13,12 @@ set(SOURCE_FILES
 )
 
 mdt_add_library(
-  NAME Error
+  NAME Error_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
   LINK_DEPENDENCIES Qt5::Core Threads::Threads
 )
 mdt_set_library_description(
-  NAME Error
+  NAME Error_Core
   DESCRIPTION "Error helps for error messages passing, displaying and logging."
 )

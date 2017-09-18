@@ -12,7 +12,7 @@ mdt_add_library(
   NAME Error_Widgets
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Error Qt5::Widgets
+  LINK_DEPENDENCIES Error_Core Qt5::Widgets
 )
 mdt_set_library_description(
   NAME Error_Widgets

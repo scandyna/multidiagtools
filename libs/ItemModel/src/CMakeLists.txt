@@ -62,7 +62,7 @@ mdt_add_library(
   NAME ItemModel
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Error Algorithm FilterExpression Qt5::Core Qt5::Gui
+  LINK_DEPENDENCIES Error_Core Algorithm FilterExpression Qt5::Core Qt5::Gui
 )
 mdt_set_library_description(
   NAME ItemModel

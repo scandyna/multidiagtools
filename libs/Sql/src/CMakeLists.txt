@@ -55,7 +55,7 @@ mdt_add_library(
   NAME Sql
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Expected Error Error_Widgets Algorithm FilterExpression Qt5::Sql
+  LINK_DEPENDENCIES Expected Error_Core Error_Widgets Algorithm FilterExpression Qt5::Sql
 )
 mdt_set_library_description(
   NAME Sql
