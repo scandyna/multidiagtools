@@ -1,8 +1,0 @@
-format 76
-
-note 128002 "There are many situations that needs multi table edition + data storage.
-Sometimes, tables are linked 1->n, but sometimes 1->1.
-
-Date storage: should have some common methods, like isValid(), clear(), ..."
-  xyzwh 40 69 2000 587 175
-end

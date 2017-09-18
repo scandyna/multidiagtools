@@ -1,3 +1,0 @@
-class PortManagerStateMachine
-!!!1549314.cpp!!!	PortManagerStateMachine()
-  _current_state = 0;
