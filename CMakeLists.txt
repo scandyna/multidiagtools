@@ -50,14 +50,6 @@ endif()
 # Must be placed before any add_subdirectory() command, else tests that are defined in sub-directories will be ignored
 enable_testing()
 
-# Config file
-# TODO should be moved somwhere
-# NOTE: Version informations are corrently available in libs/Application_Core
-configure_file(
-  "${CMAKE_SOURCE_DIR}/config.h.in"
-  "${CMAKE_BINARY_DIR}/config.h"
-)
-
 #################################################################################################################################################
 # Compiler options
 #################################################################################################################################################
