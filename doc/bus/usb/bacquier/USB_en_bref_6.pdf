@@ -1,657 +1,0 @@
-%PDF-1.2 
-%‚„œ”
- 
-14 0 obj
-<<
-/Length 15 0 R
->>
-stream
-BT28.32 52.56  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD -0.0096  Tc 0.0336  Tw ( CHAP 6) Tj46.56 0  TD 0  Tc 0.024  Tw ( ) Tj55.44 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (1) Tj6.72 0  TD -0.084  Tc (/6) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (18/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) Tj-453.6 -13.8  TD ( ) Tj0 764.88  TD /F1 9.96  Tf0.0243  Tc -0.0502  Tw (Document traduit du site ) Tj129.12 0  TD 0.0139  Tc -0.0398  Tw (Beyond Logic Chapitre 6) TjET157.44 802.2 122.28 0.6 re fBT279.72 803.64  TD/F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) Tj-254.76 -13.2  TD ( ) Tj3.36 0  TD ( ) Tj3.36 0  TD /F2 12  Tf0  Tw ( ) Tj180.36 -27  TD /F1 24  Tf-0.0109  Tc -0.0371  Tw (L'USB en bref) Tj164.4 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) Tj-199.08 -18.36  TD /F3 13.56  Tf0.0132  Tc 0.0137  Tw (Donner un sens au standard USB) Tj227.16 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-359.76 -23.88  TD /F4 12  Tf0.0033  Tc -0.0273  Tw (Le Paquet d'installation) Tj159.12 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj3 0  TD ( ) Tj-162.12 -26.76  TD /F1 9.96  Tf0.0235  Tc -0.0494  Tw (Tout appareil USB doit r\351pondre aux paquets d'installation sur le c) Tj334.56 0  TD 0.0289  Tc -0.0548  Tw (anal de communication par ) Tj-334.56 -12.12  TD 0.0249  Tc -0.0422  Tw (d\351faut. Les paquets d'installation sont utilis\351s pour la d\351tection et configuration de l'appareil et ) Tj0 -12.12  TD 0.0179  Tc -0.0438  Tw (v\351hiculent des fonctions courantes telles que la mise en place de l'adresse de l'appareil USB, la ) Tj0 -12  TD 0.0104  Tc -0.0363  Tw (demande d'un descripteur d'appa) Tj167.88 0  TD 0.0256  Tc -0.0515  Tw (reil ou la v\351rification de l'\351tat d'une terminaison. ) Tj248.4 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-416.28 -26.28  TD /F1 9.96  Tf0.0028  Tc -0.0287  Tw (Un h\364te USB conforme s'attend \340 ce que toutes les requ\352tes soient trait\351es dans une p\351riode ) Tj0 -12.12  TD 0.0089  Tc -0.0273  Tw (maximale de 5 secondes. Il pr\351cise aussi des temps plus stricts pour des requ\352tes particuli\350res : ) Tj489.72 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-489.72 -26.04  TD /F1 9.96  Tf-0.0088  Tc -0.0171  Tw (Les requ\352te) Tj58.44 0  TD 0.007  Tc -0.0329  Tw (s standards d'appareils sans \351tage de donn\351es doivent \352tre accomplies en 50 ms. ) Tj414.36 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-472.8 -26.28  TD /F1 9.96  Tf-0.0016  Tc -0.0243  Tw (Les requ\352tes standards d'appareils avec un \351tage de donn\351es doivent commencer \340 renvoyer les ) Tj0 -12.12  TD -0  Tc -0.0255  Tw (donn\351es 500 ms apr\350s la requ\352te. ) Tj175.08 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-157.08 -26.28  TD /F5 9.96  Tf-0.0216  Tc (\267) Tj4.56 0  TD 0  Tc 0.03  Tw ( ) Tj13.44 0  TD /F1 9.96  Tf0.0046  Tc -0.0305  Tw (Chaque paquet de donn\351es doit \352tre envoy\351 dans l) Tj255.84 0  TD 0.0141  Tc -0.04  Tw (es 500 ms de la transmission r\351ussie ) Tj-255.84 -12.12  TD 0.0119  Tc -0.0378  Tw (du paquet pr\351c\351dent.) Tj107.64 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-125.64 -12.12  TD /F5 9.96  Tf-0.0216  Tc 0  Tw (\267) Tj4.56 0  TD 0  Tc 0.03  Tw ( ) Tj13.44 0  TD /F1 9.96  Tf0.0143  Tc -0.0322  Tw (L'\351tage d'\351tat doit \352tre accompli dans les 50 ms apr\350s la transmission du dernier paquet ) Tj0 -12  TD -0.0088  Tc -0.0171  Tw (de donn\351es.) Tj61.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-97.08 -26.28  TD /F1 9.96  Tf0.0243  Tc 0.0698  Tw (L'instruction ) Tj64.92 0  TD /F4 9.96  Tf-0.0149  Tc 0  Tw (SetAdress) Tj56.16 0  TD /F1 9.96  Tf0.0224  Tc -0.0374  Tw ( \(qui contient une phase de donn\351es\) doit traiter l'instruction et ) Tj-121.08 -12.24  TD -0.0259  Tc 0  Tw (retourn) Tj36.96 0  TD 0.0064  Tc -0.0323  Tw (er l'\351tat dans ces 50 ms. L'appareil a donc 2 ms pour changer d'adresse avant que la ) Tj-36.96 -12  TD -0.0025  Tc -0.0234  Tw (prochaine requ\352te ne soit envoy\351e. ) Tj180.48 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-180.48 -26.28  TD /F1 9.96  Tf0.0132  Tc -0.0306  Tw (Ces temporisations sont tr\350s acceptables m\352me pour les appareils les plus lents, mais peuvent ) Tj0 -12.12  TD 0.0069  Tc -0.0329  Tw (\352tre restrictifs pendant les mises au poi) Tj198.96 0  TD 0.0127  Tc -0.0386  Tw (nt. 50 ms ne sont pas suffisants pour l'envoi de ) Tj-198.96 -12.12  TD 0.0062  Tc -0.0246  Tw (caract\350res de mise au point \340 9600bds vers un port s\351rie asynchrone ou bien pour un ) Tj0 -12.24  TD 0.0052  Tc -0.0311  Tw (\351mulateur/d\351bogueur de faire du pas \340 pas ou d'arr\352ter l'ex\351cution du programme pour ) Tj0 -12.12  TD 0.0025  Tc -0.0284  Tw (examiner les registres internes. En co) Tj189.72 0  TD 0.0011  Tc -0.027  Tw (ns\351quence, l'USB demande des m\351thodes diff\351rentes de ) Tj-189.72 -12  TD 0.0043  Tc -0.0302  Tw (mises au point des autres projets \340 base de microcontr\364leur. ) Tj309.12 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-309.12 -26.28  TD /F3 9.96  Tf0.0022  Tc -0.0281  Tw (En lisant le DDK XP \( Kit D\351veloppement \), vous noterez que le driver contr\364leur d'h\364te a ) Tj0 -12.24  TD 0.0132  Tc -0.0391  Tw (maintenant une instruction USBUSER_OP_SEND_ONE_PACK) Tj303.48 0  TD -0.0058  Tc -0.0201  Tw (ET qui comporte le commentaire ) Tj-303.48 -12.12  TD 0.0042  Tc -0.0301  Tw (suivant : " Cette API \(Application Programme Interface\) est utilis\351e pour appliquer le 'pas \340 pas' ) Tj0 -12.12  TD 0.009  Tc -0.0349  Tw (en tant qu'outil de d\351veloppement pour une transaction USB ". Alors qu'un tel outil n'a pas ) Tj0 -12  TD -0.008  Tc -0.018  Tw (encore \351t\351 produit, nous ne pouvon) Tj178.92 0  TD -0.0062  Tc -0.0197  Tw (s qu'esp\351rer en voir bient\364t un sur le march\351.) Tj229.92 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD ( ) Tj-412.32 -26.16  TD ( ) Tj0 -26.16  TD ( ) TjT* ( ) TjT* ( ) TjT* ( ) TjT* ( ) TjT* ( ) TjETendstream
-endobj
-15 0 obj
-6030
-endobj
-4 0 obj
-<<
-/Type /Page
-/Parent 5 0 R
-/Resources <<
-/Font 20 0 R
-/ProcSet 2 0 R
->>
-/Contents 14 0 R
->>
-endobj
-20 0 obj
-<<
-/F0 6 0 R
-/F1 8 0 R
-/F2 10 0 R
-/F3 12 0 R
-/F4 16 0 R
-/F5 18 0 R
->>
-endobj
-24 0 obj
-<<
-/Length 25 0 R
->>
-stream
-BT28.32 52.56  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD -0.0096  Tc 0.0336  Tw ( CHAP 6) Tj46.56 0  TD 0  Tc 0.024  Tw ( ) Tj55.44 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (2) Tj6.72 0  TD -0.084  Tc (/6) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (18/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) Tj-453.6 -13.8  TD ( ) Tj23.16 755.88  TD /F1 9.96  Tf0.0173  Tc -0.0357  Tw (Chaque requ\352te commence avec un paquet d'installation de 8 octets qui a le format suivant : ) Tj473.64 0  TD /F2 12  Tf0  Tc 0  Tw ( ) TjET0 0 1 rg 104.16 761.28 44.04 11.4 re fBT104.28 763.56  TD1 1 1 rg /F6 9.96  Tf-0.0068  Tc (D\351calage) Tj43.68 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 98.88 772.68 54.48 8.64 re f98.88 761.28 5.28 11.4 re f148.2 761.28 5.16 11.4 re f98.88 752.76 54.48 8.52 re f161.52 761.28 73.44 11.4 re fBT181.32 763.56  TD1 1 1 rg /F6 9.96  Tf0.0171  Tc 0  Tw (Champ) Tj33.84 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 156.24 772.68 84 8.64 re f156.24 761.28 5.28 11.4 re f234.96 761.28 5.28 11.4 re f156.24 752.76 84 8.52 re f248.52 761.28 25.68 11.4 re fBT248.52 763.56  TD1 1 1 rg /F6 9.96  Tf0.0154  Tc 0  Tw (Taille) Tj25.56 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 243.24 772.68 36.12 8.64 re f243.24 761.28 5.28 11.4 re f274.2 761.28 5.16 11.4 re f243.24 752.76 36.12 8.52 re f287.52 761.28 44.04 11.4 re fBT294.24 763.56  TD1 1 1 rg /F6 9.96  Tf0.0054  Tc 0  Tw (Valeur) Tj30.36 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 282.24 772.68 54.6 8.64 re f282.24 761.28 5.28 11.4 re f331.56 761.28 5.28 11.4 re f282.24 752.76 54.6 8.52 re f345 761.28 146.16 11.4 re fBT390.6 763.56  TD1 1 1 rg /F6 9.96  Tf0.0045  Tc 0  Tw (Description) Tj54.84 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 339.72 772.68 156.72 8.64 re f339.72 761.28 5.28 11.4 re f491.16 761.28 5.28 11.4 re f339.72 752.76 156.72 8.52 re f1 1 0.502 rg 104.16 733.08 44.04 11.52 re fBT123.36 735.36  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (0) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 98.88 744.6 54.48 5.28 re f98.88 733.08 5.28 11.52 re f148.2 733.08 5.16 11.52 re f98.88 566.88 54.48 166.2 re f161.52 733.08 73.44 11.52 re fBT161.64 735.36  TD0 0 0 rg /F0 9.96  Tf0.001  Tc 0  Tw (bmRequestType) Tj73.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 156.24 744.6 84 5.28 re f156.24 733.08 5.28 11.52 re f234.96 733.08 5.28 11.52 re f156.24 566.88 84 166.2 re f248.52 733.08 25.68 11.52 re fBT258.48 735.36  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (1) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 243.24 744.6 36.12 5.28 re f243.24 733.08 5.28 11.52 re f274.2 733.08 5.16 11.52 re f243.24 566.88 36.12 166.2 re f287.52 733.08 44.04 11.52 re fBT292.32 735.36  TD0 0 0 rg /F0 9.96  Tf-0.0344  Tc 0  Tw (Bit) Tj11.52 0  TD 0.0433  Tc (-) Tj3.36 0  TD -0.0174  Tc (Map) Tj19.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 282.24 744.6 54.6 5.28 re f282.24 733.08 5.28 11.52 re f331.56 733.08 5.28 11.52 re f282.24 566.88 54.6 166.2 re f345 733.08 146.16 11.52 re fBT345 735.48  TD0 0 0 rg /F6 9.96  Tf0.0042  Tc -0.013  Tw (D7 Direction de transfert de ) TjET1 1 0.502 rg 345 721.56 146.16 11.52 re fBT345 723.96  TD0 0 0 rg 0.0046  Tc -0.0135  Tw (phase de ) Tj45.96 0  TD 0.0121  Tc 0  Tw (donn\351es) Tj41.04 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 710.04 146.16 11.52 re fBT345 712.32  TD0 0 0 rg /F0 9.96  Tf-0.0133  Tc 0.0044  Tw (0 = H\364te vers l'appareil) Tj101.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 698.52 146.16 11.52 re fBT345 700.8  TD0 0 0 rg /F0 9.96  Tf-0.0143  Tc 0.0054  Tw (1 = Appareil vers H\364te) Tj98.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 687.12 146.16 11.4 re fBT345 689.4  TD0 0 0 rg /F6 9.96  Tf-0.0012  Tc -0.0077  Tw (D6..5 Type) Tj49.8 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 675.6 146.16 11.52 re fBT345 677.88  TD0 0 0 rg /F0 9.96  Tf-0.0111  Tc 0.0022  Tw (0 =00= Standard) Tj73.92 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 664.08 146.16 11.52 re fBT345 666.36  TD0 0 0 rg /F0 9.96  Tf-0  Tc -0.0085  Tw (1 =01= Classe) Tj64.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 652.56 146.16 11.52 re fBT345 654.84  TD0 0 0 rg /F0 9.96  Tf-0.0104  Tc 0.0016  Tw (2 =10= Constructeur) Tj90.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 641.04 146.16 11.52 re fBT345 643.32  TD0 0 0 rg /F0 9.96  Tf-0.014  Tc 0.0051  Tw (3 =11= R\351serv\351) Tj70.68 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 629.52 146.16 11.52 re fBT345 631.92  TD0 0 0 rg /F6 9.96  Tf-0.0033  Tc -0.0056  Tw (D4..0 Destinataire) Tj83.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 618.12 146.16 11.4 re fBT345 620.28  TD0 0 0 rg /F0 9.96  Tf-0.0248  Tc 0.0159  Tw (0 = Appareil) Tj53.16 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 606.6 146.16 11.52 re fBT345 608.88  TD0 0 0 rg /F0 9.96  Tf0.0156  Tc -0.0244  Tw (1 = Interface) Tj55.68 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 595.08 146.16 11.52 re fBT345 597.36  TD0 0 0 rg /F0 9.96  Tf0.0166  Tc -0.0255  Tw (2 = Terminaison) Tj71.88 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 583.56 146.16 11.52 re fBT345 585.84  TD0 0 0 rg /F0 9.96  Tf0  Tc -0.0091  Tw (3 = Autre) Tj40.56 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) TjET1 1 0.502 rg 345 572.04 146.16 11.52 re fBT345 574.32  TD0 0 0 rg /F0 9.96  Tf-0.0099  Tc 0.001  Tw (4..31 = Reserv\351) Tj70.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 339.72 744.6 156.72 5.28 re f339.72 572.04 5.28 172.56 re f491.16 572.04 5.28 172.56 re f339.72 566.88 156.72 5.16 re f104.16 547.08 44.04 11.52 re fBT123.36 549.36  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (1) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 98.88 558.6 54.48 5.28 re f98.88 547.08 5.28 11.52 re f148.2 547.08 5.16 11.52 re f98.88 541.8 54.48 5.28 re f161.52 547.08 73.44 11.52 re fBT176.88 549.36  TD0 0 0 rg /F0 9.96  Tf0.0114  Tc 0  Tw (bRequest) Tj42.6 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 156.24 558.6 84 5.28 re f156.24 547.08 5.28 11.52 re f234.96 547.08 5.28 11.52 re f156.24 541.8 84 5.28 re f248.52 547.08 25.68 11.52 re fBT258.48 549.36  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (1) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 243.24 558.6 36.12 5.28 re f243.24 547.08 5.28 11.52 re f274.2 547.08 5.16 11.52 re f243.24 541.8 36.12 5.28 re f287.52 547.08 44.04 11.52 re fBT295.08 549.36  TD0 0 0 rg /F0 9.96  Tf-0.0374  Tc 0  Tw (Valeur) Tj28.68 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 282.24 558.6 54.6 5.28 re f282.24 547.08 5.28 11.52 re f331.56 547.08 5.28 11.52 re f282.24 541.8 54.6 5.28 re f345 547.08 146.16 11.52 re fBT345 549.36  TD0 0 0 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (Re) Tj12.72 0  TD -0.016  Tc (qu\352te) Tj24.84 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 339.72 558.6 156.72 5.28 re f339.72 547.08 5.28 11.52 re f491.16 547.08 5.28 11.52 re f339.72 541.8 156.72 5.28 re f104.16 516.6 44.04 11.52 re fBT123.36 518.88  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (2) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 98.88 528.12 54.48 10.68 re f98.88 516.6 5.28 11.52 re f148.2 516.6 5.16 11.52 re f98.88 505.68 54.48 10.92 re f161.52 516.6 73.44 11.52 re fBT182.04 518.88  TD0 0 0 rg /F0 9.96  Tf-0.0431  Tc 0  Tw (wValue) Tj32.4 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 156.24 528.12 84 10.68 re f156.24 516.6 5.28 11.52 re f234.96 516.6 5.28 11.52 re f156.24 505.68 84 10.92 re f248.52 516.6 25.68 11.52 re fBT258.48 518.88  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (2) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 243.24 528.12 36.12 10.68 re f243.24 516.6 5.28 11.52 re f274.2 516.6 5.16 11.52 re f243.24 505.68 36.12 10.92 re f287.52 516.6 44.04 11.52 re fBT295.08 518.88  TD0 0 0 rg /F0 9.96  Tf-0.0374  Tc 0  Tw (Valeur) Tj28.68 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 282.24 528.12 54.6 10.68 re f282.24 516.6 5.28 11.52 re f331.56 516.6 5.28 11.52 re f282.24 505.68 54.6 10.92 re f345 516.6 146.16 11.52 re fBT345 518.88  TD0 0 0 rg /F0 9.96  Tf-0.0374  Tc 0  Tw (Valeur) Tj28.68 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 339.72 528.12 156.72 10.68 re f339.72 516.6 5.28 11.52 re f491.16 516.6 5.28 11.52 re f339.72 505.68 156.72 10.92 re f104.16 480.36 44.04 11.52 re fBT123.36 482.64  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (4) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 98.88 491.88 54.48 10.92 re f98.88 480.36 5.28 11.52 re f148.2 480.36 5.16 11.52 re f98.88 469.2 54.48 11.16 re f161.52 480.36 73.44 11.52 re fBT182.52 482.64  TD0 0 0 rg /F0 9.96  Tf-0.0389  Tc 0  Tw (wIndex) Tj31.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 156.24 491.88 84 10.92 re f156.24 480.36 5.28 11.52 re f234.96 480.36 5.28 11.52 re f156.24 469.2 84 11.16 re f248.52 480.36 25.68 11.52 re fBT258.48 482.64  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (2) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 243.24 491.88 36.12 10.92 re f243.24 480.36 5.28 11.52 re f274.2 480.36 5.16 11.52 re f243.24 469.2 36.12 11.16 re f287.52 486.12 44.04 11.52 re fBT290.4 488.4  TD0 0 0 rg /F0 9.96  Tf-0.0054  Tc -0.0035  Tw (Index ou ) TjET1 1 0.502 rg 287.52 474.6 44.04 11.52 re fBT288.48 476.88  TD0 0 0 rg -0.0089  Tc 0  Tw (D\351calage) Tj42 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 282.24 497.64 54.6 5.16 re f282.24 474.6 5.28 23.04 re f331.56 474.6 5.28 23.04 re f282.24 469.2 54.6 5.4 re f345 480.36 146.16 11.52 re fBT345 482.64  TD0 0 0 rg /F0 9.96  Tf-0.0244  Tc 0  Tw (Index) Tj24.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 339.72 491.88 156.72 10.92 re f339.72 480.36 5.28 11.52 re f491.16 480.36 5.28 11.52 re f339.72 469.2 156.72 11.16 re f104.16 443.88 44.04 11.4 re fBT123.36 446.04  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (6) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 98.88 455.28 54.48 11.04 re f98.88 443.88 5.28 11.4 re f148.2 443.88 5.16 11.4 re f98.88 432.72 54.48 11.16 re f161.52 443.88 73.44 11.4 re fBT179.52 446.04  TD0 0 0 rg /F0 9.96  Tf-0.0298  Tc 0  Tw (wLength) Tj37.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 156.24 455.28 84 11.04 re f156.24 443.88 5.28 11.4 re f234.96 443.88 5.28 11.4 re f156.24 432.72 84 11.16 re f248.52 443.88 25.68 11.4 re fBT258.48 446.04  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (2) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 243.24 455.28 36.12 11.04 re f243.24 443.88 5.28 11.4 re f274.2 443.88 5.16 11.4 re f243.24 432.72 36.12 11.16 re f287.52 443.88 44.04 11.4 re fBT287.52 446.04  TD0 0 0 rg /F0 9.96  Tf0.0095  Tc 0  Tw (Compteur) Tj43.92 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 282.24 455.28 54.6 11.04 re f282.24 443.88 5.28 11.4 re f331.56 443.88 5.28 11.4 re f282.24 432.72 54.6 11.16 re f345 449.64 146.16 11.4 re fBT345 451.8  TD0 0 0 rg /F0 9.96  Tf0.0196  Tc -0.0285  Tw (Nombres d'octets \340 transf\351rer s'il ) TjET1 1 0.502 rg 345 438.12 146.16 11.52 re fBT345 440.4  TD0 0 0 rg -0.0307  Tc 0.0219  Tw (y a une phase de donn\351es) Tj116.88 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 339.72 461.04 156.72 5.28 re f339.72 438.12 5.28 22.92 re f491.16 438.12 5.28 22.92 re f339.72 432.72 156.72 5.4 re fBT51.48 411.48  TD0 0 0 rg /F1 9.96  Tf0.0029  Tc 0.0312  Tw (Le champ ) Tj51.84 0  TD /F4 9.96  Tf0.0008  Tc 0  Tw (bmRequestType) Tj89.88 0  TD /F1 9.96  Tf0.0064  Tc -0.0323  Tw ( d\351terminera le sens de la requ\352te, le type de la requ\352te et le ) Tj-141.72 -12.12  TD 0.0325  Tc -0.0584  Tw (destinataire d\351sig) Tj89.28 0  TD -0  Tc 0.0147  Tw (n\351. Le champ ) Tj71.16 0  TD /F4 9.96  Tf-0.0049  Tc 0  Tw (bRequest) Tj52.44 0  TD /F1 9.96  Tf0.0187  Tc -0.0447  Tw ( indique la requ\352te formul\351e. ) Tj149.52 0  TD /F4 9.96  Tf0.0008  Tc 0  Tw (bmRequestType) Tj89.88 0  TD /F1 9.96  Tf-0.0165  Tc 0.0506  Tw ( est ) Tj-452.28 -12.24  TD 0.0087  Tc -0.0246  Tw (g\351n\351ralement analys\351 et l'ex\351cution est raccord\351e \340 un num\351ro d'identificateurs comme un ) Tj0 -12.12  TD 0.0121  Tc -0.038  Tw (gestionnaire de requ\352te d'un appareil standard, un gestionnaire de requ\352te d'une interface ) TjT* 0.0274  Tc 0  Tw (standar) Tj37.92 0  TD 0.0133  Tc -0.03  Tw (d, un gestionnaire de requ\352te de terminaison standard, un gestionnaire de requ\352te d'un ) Tj-37.92 -12.12  TD 0.0126  Tc -0.0385  Tw (appareil de classe, etc\205. La fa\347on d'ex\351cuter le paquet d'installation vous appartient. D'autres ) Tj0 -12.24  TD 0.0043  Tc -0.0302  Tw (pourraient choisir d'ex\351cuter en premier ) Tj205.44 0  TD /F4 9.96  Tf-0.0049  Tc 0  Tw (bRequest) Tj52.44 0  TD /F1 9.96  Tf0.0176  Tc -0.0435  Tw ( puis de d\351terminer le ) Tj114.12 0  TD 0.0185  Tc -0.0444  Tw (type et le destinataire ) Tj-372 -12  TD -0.0052  Tc -0.0207  Tw (bas\351 sur chaque requ\352te. ) Tj130.92 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-130.92 -26.28  TD /F1 9.96  Tf0.0093  Tc -0.0353  Tw (Les requ\352tes standards sont communes \340 tous les appareils USB et seront d\351taill\351s dans les ) Tj0 -12.12  TD 0.0083  Tc -0.0342  Tw (prochaines pages. Les requ\352tes de classe sont communes aux classes de drivers \(pilote logiciel\). ) TjT* 0.0027  Tc 0.0114  Tw (Par exemple, tout ) Tj92.88 0  TD 0.0098  Tc -0.0357  Tw (appareil \351tant conforme \340 la classe HID aura un ensemble commun de ) Tj-92.88 -12.24  TD 0.0104  Tc -0.0271  Tw (requ\352tes sp\351cifiques de classe. Ils diff\350reront d'un appareil conforme \340 la classe communication ) Tj0 -12.12  TD 0.003  Tc -0.0289  Tw (et diff\350reront encore d'un appareil conforme \340 la m\351moire de masse \(de grande capacit\351 de ) Tj0 -12  TD -0.0567  Tc 0  Tw (st) Tj9.12 0  TD -0.0107  Tc -0.0152  Tw (ockage\). ) Tj46.8 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-55.92 -26.28  TD /F1 9.96  Tf0.0027  Tc -0.0211  Tw (Et pour finir, les requ\352tes d\351finies par le constructeur. Ce sont des requ\352tes que vous pouvez ) Tj0 -12.24  TD 0.0129  Tc -0.0288  Tw (attribuer en tant que concepteur d'appareil USB. Elles sont normalement diff\351rentes d'un ) Tj0 -12  TD 0.0181  Tc -0.0441  Tw (appareil \340 un autre, mais d\351pendent de votre r\351alisation et de) Tj312.84 0  TD 0.0285  Tc -0.0544  Tw ( votre imagination. ) Tj99.24 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-412.08 -26.28  TD /F1 9.96  Tf0.0026  Tc -0.0285  Tw (Une requ\352te commune peut \352tre dirig\351 vers des destinataires diff\351rents et bas\351e sur les ) Tj0 -12.12  TD 0.0045  Tc -0.0195  Tw (fonctions diff\351rentes ex\351cut\351e par le destinataire. Par exemple une requ\352te standard ) Tj429.84 0  TD /F4 9.96  Tf-0.0088  Tc 0  Tw (GetStatus) Tj54.96 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj-484.8 -12.12  TD 0.0186  Tc -0.0445  Tw (peut \352tre dirig\351e sur l'appareil, l'interface ou la ) Tj240.12 0  TD 0.0231  Tc -0.0319  Tw (terminaison. Quand elle est dirig\351e sur un ) Tj-240.12 -12.24  TD 0.0214  Tc -0.0393  Tw (appareil, ce dernier retourne des drapeaux \(flags\) indiquant l'\351tat de la station d'activation et si ) Tj0 -12  TD 0.0313  Tc -0.0572  Tw (l'appareil est auto) Tj90.12 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0331  Tc (aliment\351.) Tj47.16 0  TD 0  Tc -0.0259  Tw ( ) TjETendstream
-endobj
-25 0 obj
-16277
-endobj
-21 0 obj
-<<
-/Type /Page
-/Parent 5 0 R
-/Resources <<
-/Font <<
-/F0 6 0 R 
-/F1 8 0 R 
-/F2 10 0 R 
-/F4 16 0 R 
-/F6 22 0 R 
->>
-/ProcSet 2 0 R
->>
-/Contents 24 0 R
->>
-endobj
-27 0 obj
-<<
-/Length 28 0 R
->>
-stream
-BT28.32 52.56  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD -0.0096  Tc 0.0336  Tw ( CHAP 6) Tj46.56 0  TD 0  Tc 0.024  Tw ( ) Tj55.44 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (3) Tj6.72 0  TD -0.084  Tc (/6) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (18/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) Tj-453.6 -13.8  TD ( ) Tj23.16 756  TD /F1 9.96  Tf-0.0259  Tw ( ) Tj0 -26.28  TD 0.0088  Tc -0.0347  Tw (Toutefois si la m\352me requ\352te est dirig\351e sur l'interface il renvoie toujours Z\351ro) Tj395.64 0  TD 0.037  Tc -0.0629  Tw (, ou bien si elle ) Tj-395.64 -12  TD 0.0225  Tc -0.0484  Tw (\351tait dirig\351e sur une terminaison, l'appareil retournerait le drapeau Halt pour la terminaison. ) Tj469.8 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-469.8 -26.28  TD /F1 9.96  Tf-0.0042  Tc -0.0217  Tw (Les champs ) Tj62.16 0  TD /F4 9.96  Tf-0.0341  Tc 0  Tw (wValue) Tj40.92 0  TD /F1 9.96  Tf-0.0102  Tc 0.0443  Tw ( et ) Tj16.8 0  TD /F4 9.96  Tf-0.0265  Tc 0  Tw (wIndex) Tj42.48 0  TD /F1 9.96  Tf-0.0022  Tc -0.0237  Tw ( permettent le passage de param\350tres avec la requ\352te. ) Tj-162.36 -12.24  TD /F4 9.96  Tf-0.0051  Tc 0  Tw (wLength) Tj48.36 0  TD /F1 9.96  Tf0.0098  Tc -0.0358  Tw ( est utilis\351 pour pr\351ciser le nombre d'octets \340 trans) Tj256.56 0  TD 0.012  Tc -0.0379  Tw (f\351rer au cas o\371 il existerait une ) Tj-304.92 -12  TD -0.0029  Tc -0.023  Tw (phase de donn\351e. ) Tj92.52 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-92.52 -26.16  TD /F4 9.96  Tf-0.0124  Tc -0.0339  Tw (Les Requ\352tes standard) Tj127.2 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-130.68 -26.28  TD /F1 9.96  Tf0.0195  Tc -0.0379  Tw (La section 9.4 de la sp\351cification USB d\351taille les requ\352tes " d'appareils standard " exig\351es qui ) Tj0 -12.12  TD 0.0201  Tc -0.046  Tw (doivent \352tre appliqu\351es pour chaque appareil USB. Le standard fournit un tableau un) Tj427.92 0  TD 0.0463  Tc -0.0722  Tw (ique ) Tj-427.92 -12.12  TD 0.0088  Tc -0.0347  Tw (regroupant des articles par requ\352te. Consid\351rant que la plupart des \(micro\)programmes ) Tj0 -12.24  TD 0.015  Tc -0.0317  Tw (analyseront le paquet d'installation par destinataire, nous choisirons de s\351parer les requ\352tes en ) Tj0 -12  TD 0.0295  Tc -0.0554  Tw (fonction du destinataire pour une \351tude et une application plus sim) Tj338.16 0  TD 0.0261  Tc -0.052  Tw (ple. ) Tj22.08 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-360.24 -26.16  TD /F4 9.96  Tf-0.0149  Tc -0.0315  Tw (Les Requ\352tes d'appareil standard) Tj186.24 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-189.72 -26.28  TD /F1 9.96  Tf0.0182  Tc -0.0441  Tw (Il y a actuellement 8 requ\352tes d'appareil standard, chacune \351tant d\351taill\351e dans le tableau ci) Tj467.16 0  TD 0.0382  Tc 0  Tw (-) Tj-467.16 -12.12  TD -0.0226  Tc (dessous:) Tj44.52 0  TD /F2 12  Tf0  Tc ( ) TjET0 0 1 rg 64.32 510.36 77.88 11.52 re fBT64.32 512.76  TD1 1 1 rg /F6 9.96  Tf0.0124  Tc (bmRequestType) Tj77.64 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 59.04 521.88 88.44 5.28 re f59.04 510.36 5.28 11.52 re f142.2 510.36 5.28 11.52 re f59.04 505.08 88.44 5.28 re f155.64 510.36 110.04 11.52 re fBT187.92 512.76  TD1 1 1 rg /F6 9.96  Tf-0.0022  Tc 0  Tw (bRequest) Tj45.48 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 150.36 521.88 120.6 5.28 re f150.36 510.36 5.28 11.52 re f265.68 510.36 5.28 11.52 re f150.36 505.08 120.6 5.28 re f279.24 510.36 59.52 11.52 re fBT291.72 512.76  TD1 1 1 rg /F6 9.96  Tf0.0196  Tc 0  Tw (wValue) Tj34.44 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 273.96 521.88 70.08 5.28 re f273.96 510.36 5.28 11.52 re f338.76 510.36 5.28 11.52 re f273.96 505.08 70.08 5.28 re f352.2 510.36 41.04 11.52 re fBT355.68 512.76  TD1 1 1 rg /F6 9.96  Tf0.0326  Tc 0  Tw (wIndex) Tj33.96 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 346.92 521.88 51.6 5.28 re f346.92 510.36 5.28 11.52 re f393.24 510.36 5.28 11.52 re f346.92 505.08 51.6 5.28 re f406.68 510.36 51.24 11.52 re fBT411.6 512.76  TD1 1 1 rg /F6 9.96  Tf0.0478  Tc 0  Tw (wLength) Tj41.28 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 401.4 521.88 61.8 5.28 re f401.4 510.36 5.28 11.52 re f457.92 510.36 5.28 11.52 re f401.4 505.08 61.8 5.28 re f471.36 510.36 59.52 11.52 re fBT480 512.76  TD1 1 1 rg /F6 9.96  Tf0.0084  Tc 0  Tw (Donn\351es) Tj42.12 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 466.08 521.88 70.08 5.28 re f466.08 510.36 5.28 11.52 re f530.88 510.36 5.28 11.52 re f466.08 505.08 70.08 5.28 re f1 1 0.502 rg 64.32 479.64 77.88 11.52 re fBT76.92 481.92  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (1000 0000b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 491.16 88.44 11.04 re f59.04 479.64 5.28 11.52 re f142.2 479.64 5.28 11.52 re f59.04 468.6 88.44 11.04 re f155.64 479.64 110.04 11.52 re fBT162.24 481.92  TD0 0 0 rg /F0 9.96  Tf0.0191  Tc -0.028  Tw (GET_STATUS \(0x00\)) Tj96.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 491.16 120.6 11.04 re f150.36 479.64 5.28 11.52 re f265.68 479.64 5.28 11.52 re f150.36 468.6 120.6 11.04 re f279.24 479.64 59.52 11.52 re fBT298.68 481.92  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 273.96 491.16 70.08 11.04 re f273.96 479.64 5.28 11.52 re f338.76 479.64 5.28 11.52 re f273.96 468.6 70.08 11.04 re f352.2 479.64 41.04 11.52 re fBT362.4 481.92  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 346.92 491.16 51.6 11.04 re f346.92 479.64 5.28 11.52 re f393.24 479.64 5.28 11.52 re f346.92 468.6 51.6 11.04 re f406.68 479.64 51.24 11.52 re fBT420.6 481.92  TD0 0 0 rg /F0 9.96  Tf-0.0217  Tc 0  Tw (Deux) Tj23.28 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.4 491.16 61.8 11.04 re f401.4 479.64 5.28 11.52 re f457.92 479.64 5.28 11.52 re f401.4 468.6 61.8 11.04 re f471.36 485.4 59.52 11.52 re fBT485.4 487.68  TD0 0 0 rg /F0 9.96  Tf-0.0191  Tc 0.0102  Tw (Etat de ) TjET1 1 0.502 rg 471.36 473.88 59.52 11.52 re fBT481.44 476.16  TD0 0 0 rg -0.0172  Tc 0  Tw (l'ap) Tj15.12 0  TD -0.0187  Tc (pareil) Tj24.24 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 466.08 496.92 70.08 5.28 re f466.08 473.88 5.28 23.04 re f530.88 473.88 5.28 23.04 re f466.08 468.6 70.08 5.28 re f64.32 443.16 77.88 11.52 re fBT76.92 445.44  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (0000 0000b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 454.68 88.44 11.04 re f59.04 443.16 5.28 11.52 re f142.2 443.16 5.28 11.52 re f59.04 432.12 88.44 11.04 re f155.64 448.92 110.04 11.52 re fBT168 451.2  TD0 0 0 rg /F0 9.96  Tf-0.0021  Tc -0.0067  Tw (CLEAR_FEATURE ) TjET1 1 0.502 rg 155.64 437.4 110.04 11.52 re fBT196.44 439.68  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x01\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 460.44 120.6 5.28 re f150.36 437.4 5.28 23.04 re f265.68 437.4 5.28 23.04 re f150.36 432.12 120.6 5.28 re f279.24 448.92 59.52 11.52 re fBT281.04 451.2  TD0 0 0 rg /F0 9.96  Tf-0.0097  Tc 0.0008  Tw (S\351lecteur de ) TjET1 1 0.502 rg 279.24 437.4 59.52 11.52 re fBT291.48 439.68  TD0 0 0 rg 0.005  Tc 0  Tw (fonction) Tj34.92 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 273.96 460.44 70.08 5.28 re f273.96 437.4 5.28 23.04 re f338.76 437.4 5.28 23.04 re f273.96 432.12 70.08 5.28 re f352.2 443.16 41.04 11.52 re fBT362.4 445.44  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 346.92 454.68 51.6 11.04 re f346.92 443.16 5.28 11.52 re f393.24 443.16 5.28 11.52 re f346.92 432.12 51.6 11.04 re f406.68 443.16 51.24 11.52 re fBT421.92 445.44  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.4 454.68 61.8 11.04 re f401.4 443.16 5.28 11.52 re f457.92 443.16 5.28 11.52 re f401.4 432.12 61.8 11.04 re f471.36 443.16 59.52 11.52 re fBT486.96 445.44  TD0 0 0 rg /F0 9.96  Tf-0.0073  Tc 0  Tw (Acune) Tj28.2 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 466.08 454.68 70.08 11.04 re f466.08 443.16 5.28 11.52 re f530.88 443.16 5.28 11.52 re f466.08 432.12 70.08 11.04 re f64.32 406.68 77.88 11.52 re fBT76.92 408.96  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (0000 0000b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 418.2 88.44 10.92 re f59.04 406.68 5.28 11.52 re f142.2 406.68 5.28 11.52 re f59.04 395.52 88.44 11.16 re f155.64 406.68 110.04 11.52 re fBT159.36 408.96  TD0 0 0 rg /F0 9.96  Tf0.0059  Tc -0.0148  Tw (SET_FEATURE \(0x03\)) Tj102.6 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 418.2 120.6 10.92 re f150.36 406.68 5.28 11.52 re f265.68 406.68 5.28 11.52 re f150.36 395.52 120.6 11.16 re f279.24 412.44 59.52 11.52 re fBT281.04 414.72  TD0 0 0 rg /F0 9.96  Tf-0.0097  Tc 0.0008  Tw (S\351lecteur de ) TjET1 1 0.502 rg 279.24 400.92 59.52 11.52 re fBT291.48 403.2  TD0 0 0 rg 0.005  Tc 0  Tw (fonction) Tj34.92 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 273.96 423.96 70.08 5.16 re f273.96 400.92 5.28 23.04 re f338.76 400.92 5.28 23.04 re f273.96 395.52 70.08 5.4 re f352.2 406.68 41.04 11.52 re fBT362.4 408.96  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 346.92 418.2 51.6 10.92 re f346.92 406.68 5.28 11.52 re f393.24 406.68 5.28 11.52 re f346.92 395.52 51.6 11.16 re f406.68 406.68 51.24 11.52 re fBT421.92 408.96  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.4 418.2 61.8 10.92 re f401.4 406.68 5.28 11.52 re f457.92 406.68 5.28 11.52 re f401.4 395.52 61.8 11.16 re f471.36 406.68 59.52 11.52 re fBT484.2 408.96  TD0 0 0 rg /F0 9.96  Tf-0.0091  Tc 0  Tw (Aucune) Tj33.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 466.08 418.2 70.08 10.92 re f466.08 406.68 5.28 11.52 re f530.88 406.68 5.28 11.52 re f466.08 395.52 70.08 11.16 re f64.32 370.2 77.88 11.52 re fBT76.92 372.48  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (0000 0000b) Tj52.44 0  TD /F2 12  Tf0  Tc 0  Tw ( ) TjET1 1 0.502 rg 59.04 381.72 88.44 10.92 re f59.04 370.2 5.28 11.52 re f142.2 370.2 5.28 11.52 re f59.04 359.04 88.44 11.16 re f155.64 370.2 110.04 11.52 re fBT158.64 372.48  TD0 0 0 rg /F0 9.96  Tf-0.0072  Tc -0.0016  Tw (SET_ADDRESS \(0x05\)) Tj104.04 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 381.72 120.6 10.92 re f150.36 370.2 5.28 11.52 re f265.68 370.2 5.28 11.52 re f150.36 359.04 120.6 11.16 re f279.24 375.96 59.52 11.52 re fBT281.04 378.24  TD0 0 0 rg /F0 9.96  Tf0.0013  Tc -0.0102  Tw (Addresse de ) TjET1 1 0.502 rg 279.24 364.44 59.52 11.52 re fBT289.32 366.72  TD0 0 0 rg -0.0181  Tc 0  Tw (l'appareil) Tj39.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 273.96 387.48 70.08 5.16 re f273.96 364.44 5.28 23.04 re f338.76 364.44 5.28 23.04 re f273.96 359.04 70.08 5.4 re f352.2 370.2 41.04 11.52 re fBT362.4 372.48  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 346.92 381.72 51.6 10.92 re f346.92 370.2 5.28 11.52 re f393.24 370.2 5.28 11.52 re f346.92 359.04 51.6 11.16 re f406.68 370.2 51.24 11.52 re fBT421.92 372.48  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.4 381.72 61.8 10.92 re f401.4 370.2 5.28 11.52 re f457.92 370.2 5.28 11.52 re f401.4 359.04 61.8 11.16 re f471.36 370.2 59.52 11.52 re fBT484.2 372.48  TD0 0 0 rg /F0 9.96  Tf-0.0091  Tc 0  Tw (Aucune) Tj33.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 466.08 381.72 70.08 10.92 re f466.08 370.2 5.28 11.52 re f530.88 370.2 5.28 11.52 re f466.08 359.04 70.08 11.16 re f64.32 327.96 77.88 11.4 re fBT76.92 330.12  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (1000 0000b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 339.36 88.44 16.8 re f59.04 327.96 5.28 11.4 re f142.2 327.96 5.28 11.4 re f59.04 311.16 88.44 16.8 re f155.64 333.72 110.04 11.4 re fBT164.88 335.88  TD0 0 0 rg /F0 9.96  Tf0.0176  Tc -0.0265  Tw (GET_DESCRIPTOR ) TjET1 1 0.502 rg 155.64 322.2 110.04 11.52 re fBT196.44 324.48  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x06\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 345.12 120.6 11.04 re f150.36 322.2 5.28 22.92 re f265.68 322.2 5.28 22.92 re f150.36 311.16 120.6 11.04 re f279.24 339.48 59.52 11.4 re fBT291.12 341.64  TD0 0 0 rg /F0 9.96  Tf-0.1344  Tc 0  Tw (Typ) Tj16.44 0  TD -0.0178  Tc 0.0089  Tw (e de ) TjET1 1 0.502 rg 279.24 327.96 59.52 11.52 re fBT283.44 330.24  TD0 0 0 rg 0.0077  Tc -0.0166  Tw (Descripteur ) TjET1 1 0.502 rg 279.24 316.44 59.52 11.52 re fBT292.08 318.72  TD0 0 0 rg -0.0276  Tc 0.0187  Tw (& Index) Tj33.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 273.96 350.88 70.08 5.28 re f273.96 316.44 5.28 34.44 re f338.76 316.44 5.28 34.44 re f273.96 311.16 70.08 5.28 re f352.2 339.48 41.04 11.4 re fBT355.56 341.64  TD0 0 0 rg /F0 9.96  Tf0.0011  Tc -0.01  Tw (Z\351ro ou ) TjET1 1 0.502 rg 352.2 327.96 41.04 11.52 re fBT360.84 330.24  TD0 0 0 rg -0.0089  Tc -0  Tw (ID de ) TjET1 1 0.502 rg 352.2 316.44 41.04 11.52 re fBT353.64 318.72  TD0 0 0 rg -0.0238  Tc 0  Tw (Langues) Tj38.16 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 346.92 350.88 51.6 5.28 re f346.92 316.44 5.28 34.44 re f393.24 316.44 5.28 34.44 re f346.92 311.16 51.6 5.28 re f406.68 339.48 51.24 11.4 re fBT411.24 341.64  TD0 0 0 rg /F0 9.96  Tf-0.0101  Tc 0.0012  Tw (Longueur ) TjET1 1 0.502 rg 406.68 327.96 51.24 11.52 re fBT426.72 330.24  TD0 0 0 rg -0.0178  Tc 0.0089  Tw (du ) TjET1 1 0.502 rg 406.68 316.44 51.24 11.52 re fBT406.68 318.72  TD0 0 0 rg -0.0032  Tc 0  Tw (Descripteur) Tj51 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.4 350.88 61.8 5.28 re f401.4 316.44 5.28 34.44 re f457.92 316.44 5.28 34.44 re f401.4 311.16 61.8 5.28 re f471.36 327.96 59.52 11.4 re fBT475.56 330.12  TD0 0 0 rg /F0 9.96  Tf-0.0032  Tc 0  Tw (Descripteur) Tj51 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 466.08 339.36 70.08 16.8 re f466.08 327.96 5.28 11.4 re f530.88 327.96 5.28 11.4 re f466.08 311.16 70.08 16.8 re f64.32 279.96 77.88 11.4 re fBT76.92 282.12  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (0000 0000b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 291.36 88.44 16.8 re f59.04 279.96 5.28 11.4 re f142.2 279.96 5.28 11.4 re f59.04 263.16 88.44 16.8 re f155.64 285.72 110.04 11.4 re fBT165.48 287.88  TD0 0 0 rg /F0 9.96  Tf0.0109  Tc -0.0198  Tw (SET_DESCRIPTOR ) TjET1 1 0.502 rg 155.64 274.2 110.04 11.52 re fBT196.44 276.48  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x07\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 297.12 120.6 11.04 re f150.36 274.2 5.28 22.92 re f265.68 274.2 5.28 22.92 re f150.36 263.16 120.6 11.04 re f279.24 291.48 59.52 11.4 re fBT291.12 293.64  TD0 0 0 rg /F0 9.96  Tf-0.0361  Tc 0.0272  Tw (Type de ) TjET1 1 0.502 rg 279.24 279.96 59.52 11.52 re fBT283.44 282.24  TD0 0 0 rg 0.0077  Tc -0.0166  Tw (Descripteur ) TjET1 1 0.502 rg 279.24 268.44 59.52 11.52 re fBT292.08 270.72  TD0 0 0 rg -0.0276  Tc 0.0187  Tw (& Index) Tj33.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 273.96 302.88 70.08 5.28 re f273.96 268.44 5.28 34.44 re f338.76 268.44 5.28 34.44 re f273.96 263.16 70.08 5.28 re f352.2 291.48 41.04 11.4 re fBT355.56 293.64  TD0 0 0 rg /F0 9.96  Tf0.0011  Tc -0.01  Tw (Z\351ro ou ) TjET1 1 0.502 rg 352.2 279.96 41.04 11.52 re fBT360.84 282.24  TD0 0 0 rg -0.0089  Tc -0  Tw (ID de ) TjET1 1 0.502 rg 352.2 268.44 41.04 11.52 re fBT353.64 270.72  TD0 0 0 rg -0.0238  Tc 0  Tw (Langues) Tj38.16 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 346.92 302.88 51.6 5.28 re f346.92 268.44 5.28 34.44 re f393.24 268.44 5.28 34.44 re f346.92 263.16 51.6 5.28 re f406.68 291.48 51.24 11.4 re fBT411.24 293.64  TD0 0 0 rg /F0 9.96  Tf-0.0101  Tc 0.0012  Tw (Longueur ) TjET1 1 0.502 rg 406.68 279.96 51.24 11.52 re fBT426.72 282.24  TD0 0 0 rg -0.0178  Tc 0.0089  Tw (du ) TjET1 1 0.502 rg 406.68 268.44 51.24 11.52 re fBT406.68 270.72  TD0 0 0 rg -0.0032  Tc 0  Tw (Descripteur) Tj51 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.4 302.88 61.8 5.28 re f401.4 268.44 5.28 34.44 re f457.92 268.44 5.28 34.44 re f401.4 263.16 61.8 5.28 re f471.36 279.96 59.52 11.4 re fBT475.56 282.12  TD0 0 0 rg /F0 9.96  Tf-0.0032  Tc 0  Tw (Descripteur) Tj51 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 466.08 291.36 70.08 16.8 re f466.08 279.96 5.28 11.4 re f530.88 279.96 5.28 11.4 re f466.08 263.16 70.08 16.8 re f64.32 237.72 77.88 11.4 re fBT76.92 239.88  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (1000 0000b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 249.12 88.44 11.04 re f59.04 237.72 5.28 11.4 re f142.2 237.72 5.28 11.4 re f59.04 226.56 88.44 11.16 re f155.64 243.48 110.04 11.4 re fBT155.64 245.64  TD0 0 0 rg /F0 9.96  Tf0.0276  Tc -0.0365  Tw (GET_CONFIGURATION ) TjET1 1 0.502 rg 155.64 231.96 110.04 11.52 re fBT196.44 234.24  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x08\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 254.88 120.6 5.28 re f150.36 231.96 5.28 22.92 re f265.68 231.96 5.28 22.92 re f150.36 226.56 120.6 5.4 re f279.24 237.72 59.52 11.4 re fBT298.68 239.88  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 273.96 249.12 70.08 11.04 re f273.96 237.72 5.28 11.4 re f338.76 237.72 5.28 11.4 re f273.96 226.56 70.08 11.16 re f352.2 237.72 41.04 11.4 re fBT362.4 239.88  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 346.92 249.12 51.6 11.04 re f346.92 237.72 5.28 11.4 re f393.24 237.72 5.28 11.4 re f346.92 226.56 51.6 11.16 re f406.68 237.72 51.24 11.4 re fBT429.48 239.88  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (1) Tj5.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.4 249.12 61.8 11.04 re f401.4 237.72 5.28 11.4 re f457.92 237.72 5.28 11.4 re f401.4 226.56 61.8 11.16 re f471.36 243.48 59.52 11.4 re fBT479.88 245.64  TD0 0 0 rg /F0 9.96  Tf-0.0325  Tc 0  Tw (Vale) Tj19.8 0  TD -0.0025  Tc -0.0064  Tw (ur de ) TjET1 1 0.502 rg 471.36 231.96 59.52 11.52 re fBT471.48 234.24  TD0 0 0 rg -0.0055  Tc 0  Tw (Configuration) Tj59.16 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 466.08 254.88 70.08 5.28 re f466.08 231.96 5.28 22.92 re f530.88 231.96 5.28 22.92 re f466.08 226.56 70.08 5.4 re f64.32 201.12 77.88 11.52 re fBT76.92 203.4  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (0000 0000b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 212.64 88.44 11.04 re f59.04 201.12 5.28 11.52 re f142.2 201.12 5.28 11.52 re f59.04 190.08 88.44 11.04 re f155.64 206.88 110.04 11.52 re fBT156.24 209.16  TD0 0 0 rg /F0 9.96  Tf0.0221  Tc -0.031  Tw (SET_CONFIGURATION ) TjET1 1 0.502 rg 155.64 195.48 110.04 11.4 re fBT196.44 197.64  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x09\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 218.4 120.6 5.28 re f150.36 195.48 5.28 22.92 re f265.68 195.48 5.28 22.92 re f150.36 190.08 120.6 5.4 re f279.24 206.88 59.52 11.52 re fBT287.76 209.16  TD0 0 0 rg /F0 9.96  Tf-0.0175  Tc 0.0086  Tw (Valeur de ) TjET1 1 0.502 rg 279.24 195.48 59.52 11.4 re fBT279.36 197.64  TD0 0 0 rg -0.0055  Tc 0  Tw (Configuration) Tj59.16 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 273.96 218.4 70.08 5.28 re f273.96 195.48 5.28 22.92 re f338.76 195.48 5.28 22.92 re f273.96 190.08 70.08 5.4 re f352.2 201.12 41.04 11.52 re fBT362.4 203.4  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 346.92 212.64 51.6 11.04 re f346.92 201.12 5.28 11.52 re f393.24 201.12 5.28 11.52 re f346.92 190.08 51.6 11.04 re f406.68 201.12 51.24 11.52 re fBT421.92 203.4  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.4 212.64 61.8 11.04 re f401.4 201.12 5.28 11.52 re f457.92 201.12 5.28 11.52 re f401.4 190.08 61.8 11.04 re f471.36 201.12 59.52 11.52 re fBT484.2 203.4  TD0 0 0 rg /F0 9.96  Tf-0.0091  Tc 0  Tw (Aucune) Tj33.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 466.08 212.64 70.08 11.04 re f466.08 201.12 5.28 11.52 re f530.88 201.12 5.28 11.52 re f466.08 190.08 70.08 11.04 re fBT51.48 168.96  TD0 0 0 rg /F3 9.96  Tf-0.0259  Tw ( ) Tj0 -26.16  TD ( ) TjT* ( ) TjETendstream
-endobj
-28 0 obj
-21605
-endobj
-26 0 obj
-<<
-/Type /Page
-/Parent 5 0 R
-/Resources <<
-/Font 29 0 R
-/ProcSet 2 0 R
->>
-/Contents 27 0 R
->>
-endobj
-29 0 obj
-<<
-/F0 6 0 R
-/F1 8 0 R
-/F2 10 0 R
-/F3 12 0 R
-/F4 16 0 R
-/F6 22 0 R
->>
-endobj
-33 0 obj
-<<
-/Length 34 0 R
->>
-stream
-BT28.32 52.56  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD -0.0096  Tc 0.0336  Tw ( CHAP 6) Tj46.56 0  TD 0  Tc 0.024  Tw ( ) Tj55.44 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (4) Tj6.72 0  TD -0.084  Tc (/6) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (18/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) Tj-453.6 -13.8  TD ( ) Tj23.16 756  TD /F3 9.96  Tf-0.0259  Tw ( ) Tj0 -26.28  TD -0.0121  Tc -0.0138  Tw (La requ\352te ) Tj56.88 0  TD /F7 9.96  Tf-0.0088  Tc 0  Tw (GetStatus) Tj54.96 0  TD /F3 9.96  Tf-0.0043  Tc -0.0217  Tw ( dirig\351e vers l'appareil retournera 2 octets pendant l'\351tage de donn\351es ) Tj-111.84 -12.12  TD 0  Tc -0.0261  Tw (suivant le format :) Tj93.48 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) TjET0 0 1 rg 49.56 726.12 18.36 11.52 re fBT49.56 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc (D15) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 44.28 737.64 28.92 5.28 re f44.28 726.12 5.28 11.52 re f67.92 726.12 5.28 11.52 re f44.28 720.84 28.92 5.28 re f81.36 726.12 18.36 11.52 re fBT81.36 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D14) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 76.08 737.64 28.92 5.28 re f76.08 726.12 5.28 11.52 re f99.72 726.12 5.28 11.52 re f76.08 720.84 28.92 5.28 re f113.28 726.12 18.36 11.52 re fBT113.28 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D13) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 108 737.64 28.8 5.28 re f108 726.12 5.28 11.52 re f131.64 726.12 5.16 11.52 re f108 720.84 28.8 5.28 re f145.08 726.12 18.36 11.52 re fBT145.08 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D12) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 139.8 737.64 28.92 5.28 re f139.8 726.12 5.28 11.52 re f163.44 726.12 5.28 11.52 re f139.8 720.84 28.92 5.28 re f176.88 726.12 18.36 11.52 re fBT176.88 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D11) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 171.6 737.64 28.92 5.28 re f171.6 726.12 5.28 11.52 re f195.24 726.12 5.28 11.52 re f171.6 720.84 28.92 5.28 re f208.8 726.12 18.36 11.52 re fBT208.8 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D10) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 203.52 737.64 28.92 5.28 re f203.52 726.12 5.28 11.52 re f227.16 726.12 5.28 11.52 re f203.52 720.84 28.92 5.28 re f240.6 726.12 12.84 11.52 re fBT240.6 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D9) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 235.32 737.64 23.4 5.28 re f235.32 726.12 5.28 11.52 re f253.44 726.12 5.28 11.52 re f235.32 720.84 23.4 5.28 re f266.88 726.12 12.84 11.52 re fBT266.88 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D8) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 261.6 737.64 23.4 5.28 re f261.6 726.12 5.28 11.52 re f279.72 726.12 5.28 11.52 re f261.6 720.84 23.4 5.28 re f293.28 726.12 12.84 11.52 re fBT293.28 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D7) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 288 737.64 23.28 5.28 re f288 726.12 5.28 11.52 re f306.12 726.12 5.16 11.52 re f288 720.84 23.28 5.28 re f319.56 726.12 12.84 11.52 re fBT319.56 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D6) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 314.28 737.64 23.28 5.28 re f314.28 726.12 5.28 11.52 re f332.4 726.12 5.16 11.52 re f314.28 720.84 23.28 5.28 re f345.84 726.12 12.84 11.52 re fBT345.84 728.4  TD1 1 1 rg /F0 9.96  Tf0.0089  Tc 0  Tw (D) Tj7.2 0  TD -0.0178  Tc (5) Tj5.52 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 340.56 737.64 23.4 5.28 re f340.56 726.12 5.28 11.52 re f358.68 726.12 5.28 11.52 re f340.56 720.84 23.4 5.28 re f372.12 726.12 12.84 11.52 re fBT372.12 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D4) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 366.84 737.64 23.4 5.28 re f366.84 726.12 5.28 11.52 re f384.96 726.12 5.28 11.52 re f366.84 720.84 23.4 5.28 re f398.4 726.12 12.84 11.52 re fBT398.4 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D3) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 393.12 737.64 23.4 5.28 re f393.12 726.12 5.28 11.52 re f411.24 726.12 5.28 11.52 re f393.12 720.84 23.4 5.28 re f424.68 726.12 12.84 11.52 re fBT424.68 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D2) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 419.4 737.64 23.4 5.28 re f419.4 726.12 5.28 11.52 re f437.52 726.12 5.28 11.52 re f419.4 720.84 23.4 5.28 re f451.08 726.12 43.44 11.52 re fBT466.44 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D1) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 445.8 737.64 53.88 5.28 re f445.8 726.12 5.28 11.52 re f494.52 726.12 5.16 11.52 re f445.8 720.84 53.88 5.28 re f507.96 726.12 37.8 11.52 re fBT520.44 728.4  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D0) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 502.68 737.64 48.36 5.28 re f502.68 726.12 5.28 11.52 re f545.76 726.12 5.28 11.52 re f502.68 720.84 48.36 5.28 re fBT225 692.04  TD0 0 0 rg /F0 9.96  Tf-0  Tc 0  Tw (Reserv\351) Tj37.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 451.08 701.28 43.44 11.52 re fBT451.32 703.56  TD0 0 0 rg /F0 9.96  Tf-0.0217  Tc 0.0128  Tw (Activation ) TjET1 1 0.502 rg 451.08 689.76 43.44 11.52 re fBT471.12 692.04  TD0 0 0 rg 0.0433  Tc -0.0522  Tw (\340 ) TjET1 1 0.502 rg 451.08 678.24 43.44 11.52 re fBT454.2 680.52  TD0 0 0 rg 0.0136  Tc 0  Tw (distance) Tj37.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 445.8 712.8 53.88 5.16 re f445.8 678.24 5.28 34.56 re f494.52 678.24 5.16 34.56 re f445.8 672.96 53.88 5.28 re f507.96 695.52 37.8 11.52 re fBT516.6 697.8  TD0 0 0 rg /F0 9.96  Tf-0.0219  Tc 0.013  Tw (Auto ) TjET1 1 0.502 rg 507.96 684 37.8 11.52 re fBT507.96 686.28  TD0 0 0 rg 0.0051  Tc 0  Tw (aliment\351) Tj37.68 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 502.68 707.04 48.36 10.92 re f502.68 684 5.28 23.04 re f545.76 684 5.28 23.04 re f502.68 672.96 48.36 11.04 re fBT51.48 651.6  TD0 0 0 rg /F3 9.96  Tf0.0054  Tc -0.0313  Tw (Si D0 est \340 1, ceci indique que l'appareil est auto aliment\351. S'il est \340 0, l'appareil est aliment\351 ) Tj0 -12.12  TD -0  Tc -0.0256  Tw (par le bus. Si D1 est \340 1, l'activation \340 distance de l'appareil est valid\351e et ce dernier p) Tj436.08 0  TD 0.0116  Tc 0.0824  Tw (eut ) Tj-436.08 -12.12  TD 0  Tc -0.0262  Tw (r\351veiller l'h\364te pendant le mode veille. Le bit d'activation \340 distance peut \352tre positionn\351 par les ) Tj0 -12.12  TD -0.0156  Tc -0.0103  Tw (requ\352tes ) Tj47.04 0  TD /F7 9.96  Tf-0.0084  Tc 0  Tw (SetFeature) Tj61.08 0  TD /F3 9.96  Tf-0.0102  Tc 0.0443  Tw ( et ) Tj16.8 0  TD /F7 9.96  Tf-0.021  Tc 0  Tw (ClearFeature) Tj71.52 0  TD /F3 9.96  Tf-0.0043  Tc -0.0216  Tw ( gr\342ce \340 un s\351lecteur de fonction de ) Tj-196.44 -12.12  TD 0.0073  Tc 0  Tw (DEVICE_REMOTE_WAKEUP\(0x01\).) Tj173.52 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-177 -26.28  TD /F3 9.96  Tf-0.0216  Tc -0.0043  Tw (Les requ\352tes ) Tj67.08 0  TD /F7 9.96  Tf-0.021  Tc -0.0253  Tw (Clear Feature) Tj74.88 0  TD /F3 9.96  Tf-0.0102  Tc 0.0443  Tw ( et ) Tj16.8 0  TD /F7 9.96  Tf-0.0084  Tc -0.0379  Tw (Set Feature) Tj64.44 0  TD /F3 9.96  Tf0.0089  Tc 0.0251  Tw ( peuvent ) Tj47.52 0  TD -0.0052  Tc -0.0207  Tw (\352tre utilis\351es pour positionner des ) Tj-270.72 -12.12  TD -0.0032  Tc -0.0228  Tw (fonctions bool\351ennes. Quand le destinataire d\351sign\351 est l'appareil, les 2 seuls s\351lecteurs de ) Tj0 -12.12  TD -0.0028  Tc -0.0232  Tw (fonctions disponibles sont DEVICE_REMOTE_WAKEUP et TEST_MODE. Test mode permet \340 ) TjT* -0.0063  Tc -0.0196  Tw (l'appareil de pr\351senter diverses conditions. ) Tj218.28 0  TD -0.0025  Tc -0.0062  Tw (A leur \351gard, des pr\351cisions suppl\351mentaires sont ) Tj-218.28 -12.12  TD 0  Tc -0.026  Tw (fournies dans la sp\351cification USB, version 2.0.) Tj236.04 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-239.52 -26.28  TD /F7 9.96  Tf-0.0136  Tc -0.0327  Tw (Set Address) Tj66.48 0  TD /F3 9.96  Tf0.0061  Tc -0.032  Tw ( est utilis\351 pendant l'\351num\351ration pour attribuer une adresse unique \340 l'appareil ) Tj-66.48 -12.12  TD -0.014  Tc -0.0119  Tw (USB. L'adresse est pr\351cis\351e dans ) Tj168.6 0  TD /F7 9.96  Tf-0.0341  Tc 0  Tw (wValue) Tj40.92 0  TD /F3 9.96  Tf0.0093  Tc -0.0352  Tw ( et peut valoir au maxim) Tj123.72 0  TD -0.002  Tc 0  Tw (um 127. Cette requ\352te est ) Tj-333.24 -12.12  TD 0.0043  Tc -0.0303  Tw (unique dans le sens ou l'appareil ne positionnera pas son adresse tant que la phase d'\351tat ne ) Tj0 -12.12  TD -0.0122  Tc -0.0138  Tw (sera pas achev\351 \(voir ) Tj111.12 0  TD 0.0028  Tc -0.0287  Tw (transfert de commande) TjET162.6 464.28 117.36 0.6 re fBT279.96 465.72  TD-0.0102  Tc -0.0157  Tw (\). Toutes les autres requ\352tes) Tj144.48 0  TD -0.0073  Tc -0.0186  Tw ( doivent \352tre ) Tj-372.96 -12.12  TD 0.007  Tc -0.0329  Tw (termin\351es avant la phase d'\351tat.) Tj162.6 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-166.08 -26.28  TD /F7 9.96  Tf-0.0079  Tc -0.0384  Tw (Set Descriptor/Get Descriptor) Tj167.4 0  TD /F3 9.96  Tf0  Tc -0.0267  Tw ( est utilis\351 pour renvoyer le descripteur indiqu\351 dans wValue. ) Tj-167.4 -12.12  TD -0.0046  Tc -0.0214  Tw (Une requ\352te pour le descripteur de configuration retournera le descripteur d'appareil et, tous les ) Tj0 -12  TD -0.002  Tc -0.0239  Tw (descripteurs d'in) Tj82.68 0  TD -0.0062  Tc -0.0198  Tw (terfaces et de terminaisons dans la m\352me requ\352te.) Tj256.08 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-324.24 -26.28  TD /F5 9.96  Tf-0.0216  Tc (\267) Tj4.56 0  TD 0  Tc 0.03  Tw ( ) Tj13.44 0  TD /F3 9.96  Tf-0.0377  Tc 0.0118  Tw (Les ) Tj20.04 0  TD 0.0009  Tc -0.0268  Tw (descripteurs de terminaisons) TjET107.52 375.48 144.6 0.6 re fBT252.12 376.92  TD-0.0039  Tc -0.022  Tw ( ne peuvent pas \352tre accessibles directement par une ) Tj-164.64 -12.12  TD -0.0104  Tc -0.0155  Tw (requ\352te de GetDescriptor / SetDescriptor.) Tj209.28 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-227.28 -12.24  TD /F5 9.96  Tf-0.0216  Tc 0  Tw (\267) Tj4.56 0  TD 0  Tc 0.03  Tw ( ) Tj13.44 0  TD /F3 9.96  Tf-0.0419  Tc 0  Tw (Le) Tj11.4 0  TD -0.0292  Tc 0.0032  Tw (s ) Tj8.64 0  TD -0.0096  Tc -0.0163  Tw (descripteurs d'interfaces) TjET107.52 351.12 122.4 0.6 re fBT229.92 352.56  TD-0.0053  Tc -0.0206  Tw ( ne peuvent pas \352tre accessibles directement par une requ\352te ) Tj-142.44 -12.12  TD -0.0096  Tc -0.0163  Tw (de GetDescriptor / SetDescriptor.) Tj167.4 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-185.4 -12.12  TD /F5 9.96  Tf-0.0216  Tc 0  Tw (\267) Tj4.56 0  TD 0  Tc 0.03  Tw ( ) Tj13.44 0  TD /F3 9.96  Tf-0.0377  Tc 0.0118  Tw (Les ) Tj20.04 0  TD -0.0045  Tc -0.0215  Tw (descripteurs de cha\356nes) TjET107.52 326.88 117.96 0.6 re fBT225.48 328.32  TD0.0156  Tc -0.0415  Tw ( incluent une IDentification de langues dans ) Tj224.52 0  TD /F7 9.96  Tf-0.0265  Tc 0  Tw (wIndex) Tj42.48 0  TD /F3 9.96  Tf-0.0021  Tc -0.0238  Tw ( pour ) Tj-405 -12.12  TD 0  Tc -0.0263  Tw (autoriser le support de plusieurs langues.) Tj208.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-244.08 -26.16  TD /F7 9.96  Tf-0.013  Tc -0.0333  Tw (Get Configuration/Set Configuration) Tj203.16 0  TD /F3 9.96  Tf0.003  Tc -0.0289  Tw ( est utilis\351 pour demander ou positionner la ) Tj-203.16 -12.24  TD 0.0076  Tc -0.0335  Tw (configuration de l'appareil actu) Tj155.16 0  TD -0.0031  Tc -0.0228  Tw (el. Dans le cas d'une requ\352te ) Tj149.16 0  TD /F7 9.96  Tf-0.0142  Tc 0  Tw (GetConfiguration) Tj95.28 0  TD /F3 9.96  Tf-0.0082  Tc -0.0177  Tw (, un octet sera ) Tj-399.6 -12.12  TD 0.0053  Tc -0.0312  Tw (renvoy\351 pendant la phase de donn\351e indiquant l'\351tat de l'appareil. Une valeur z\351ro signifie que ) Tj0 -12.12  TD 0.001  Tc -0.0269  Tw (l'appareil n'est pas configur\351 et une valeur diff\351rente de z\351ro indique que l'appareil est configu) Tj475.08 0  TD -0.0448  Tc 0.0189  Tw (r\351. ) Tj-475.08 -12.24  TD /F7 9.96  Tf-0.0113  Tc 0  Tw (SetConfiguration) Tj94.32 0  TD /F3 9.96  Tf0.0048  Tc -0.0307  Tw ( est utilis\351 pour valider un appareil. Il doit contenir la valeur de ) Tj-94.32 -12.12  TD /F7 9.96  Tf-0.0195  Tc 0  Tw (bConfigurationValue) Tj114.24 0  TD /F3 9.96  Tf0.0451  Tc -0.011  Tw ( du ) Tj19.56 0  TD -0.004  Tc -0.022  Tw (descripteur de configuration) TjET185.28 227.76 140.76 0.6 re fBT326.04 229.2  TD0.0086  Tc -0.0346  Tw ( voulu dans l'octet de poids faible) Tj168 0  TD -0.0106  Tc -0.0153  Tw ( de ) Tj-442.56 -12  TD 0.0021  Tc -0.028  Tw (wValue pour s\351lectionner quelle configuration valider.) Tj269.4 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD ( ) Tj-272.88 -26.16  TD ( ) Tj0 -26.16  TD ( ) TjT* ( ) Tj0 -27  TD /F2 12  Tf0  Tw ( ) TjETendstream
-endobj
-34 0 obj
-13600
-endobj
-30 0 obj
-<<
-/Type /Page
-/Parent 5 0 R
-/Resources <<
-/Font 35 0 R
-/ProcSet 2 0 R
->>
-/Contents 33 0 R
->>
-endobj
-35 0 obj
-<<
-/F0 6 0 R
-/F1 8 0 R
-/F2 10 0 R
-/F3 12 0 R
-/F5 18 0 R
-/F7 31 0 R
->>
-endobj
-37 0 obj
-<<
-/Length 38 0 R
->>
-stream
-BT28.32 52.56  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD -0.0096  Tc 0.0336  Tw ( CHAP 6) Tj46.56 0  TD 0  Tc 0.024  Tw ( ) Tj55.44 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (5) Tj6.72 0  TD -0.084  Tc (/6) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (18/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) Tj-453.6 -13.8  TD ( ) Tj23.16 756  TD /F4 9.96  Tf-0.0102  Tc -0.0361  Tw (Les Requ\352tes d'Interface standard) Tj192.72 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-196.2 -26.28  TD /F1 9.96  Tf0.0231  Tc -0.0404  Tw (La sp\351cification actuelle d\351finit 5 requ\352tes d'interface standard qui sont d\351taill\351es dans le tableau ) Tj0 -12.12  TD -0.0591  Tc 0  Tw (ci) Tj8.04 0  TD 0.0382  Tc (-) Tj4.56 0  TD 0.0008  Tc -0.0268  Tw (dessous : Il est int\351ressant de noter que, seules 2 ) Tj255.36 0  TD 0.0036  Tc -0.0295  Tw (requ\352tes donnent quelque chose de ) Tj-267.96 -12.24  TD 0.0107  Tc -0.0366  Tw (compr\351hensible. ) Tj85.92 0  TD /F2 12  Tf0  Tc 0  Tw ( ) TjET0 0 1 rg 72 714 77.88 11.52 re fBT72 716.4  TD1 1 1 rg /F6 9.96  Tf0.0124  Tc (bmRequestType) Tj77.64 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 66.72 725.52 88.44 5.28 re f66.72 714 5.28 11.52 re f149.88 714 5.28 11.52 re f66.72 708.72 88.44 5.28 re f163.32 714 85.68 11.52 re fBT183.36 716.4  TD1 1 1 rg /F6 9.96  Tf-0.0022  Tc 0  Tw (bRequest) Tj45.48 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 158.04 725.52 96.12 5.28 re f158.04 714 5.28 11.52 re f249 714 5.16 11.52 re f158.04 708.72 96.12 5.28 re f262.44 714 69 11.52 re fBT279.72 716.4  TD1 1 1 rg /F6 9.96  Tf0.0196  Tc 0  Tw (wValue) Tj34.44 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 257.16 725.52 79.44 5.28 re f257.16 714 5.28 11.52 re f331.44 714 5.16 11.52 re f257.16 708.72 79.44 5.28 re f344.88 714 44.04 11.52 re fBT349.8 716.4  TD1 1 1 rg /F6 9.96  Tf0.0326  Tc 0  Tw (wIndex) Tj33.96 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 339.6 725.52 54.48 5.28 re f339.6 714 5.28 11.52 re f388.92 714 5.16 11.52 re f339.6 708.72 54.48 5.28 re f402.36 714 44.04 11.52 re fBT403.68 716.4  TD1 1 1 rg /F6 9.96  Tf0.0478  Tc 0  Tw (wLength) Tj41.28 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 397.08 725.52 54.6 5.28 re f397.08 714 5.28 11.52 re f446.4 714 5.28 11.52 re f397.08 708.72 54.6 5.28 re f459.84 714 63.48 11.52 re fBT470.4 716.4  TD1 1 1 rg /F6 9.96  Tf0.0084  Tc 0  Tw (Donn\351es) Tj42.12 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 454.56 725.52 74.04 5.28 re f454.56 714 5.28 11.52 re f523.32 714 5.28 11.52 re f454.56 708.72 74.04 5.28 re f1 1 0.502 rg 72 683.4 77.88 11.4 re fBT84.6 685.56  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (1000 0001b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 66.72 694.8 88.44 11.04 re f66.72 683.4 5.28 11.4 re f149.88 683.4 5.28 11.4 re f66.72 672.24 88.44 11.16 re f163.32 689.16 85.68 11.4 re fBT173.28 691.32  TD0 0 0 rg /F0 9.96  Tf0.0332  Tc -0.0421  Tw (GET_STATUS ) TjET1 1 0.502 rg 163.32 677.64 85.68 11.52 re fBT191.88 679.92  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x00\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 158.04 700.56 96.12 5.28 re f158.04 677.64 5.28 22.92 re f249 677.64 5.16 22.92 re f158.04 672.24 96.12 5.4 re f262.44 683.4 69 11.4 re fBT286.68 685.56  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 257.16 694.8 79.44 11.04 re f257.16 683.4 5.28 11.4 re f331.44 683.4 5.16 11.4 re f257.16 672.24 79.44 11.16 re f344.88 683.4 44.04 11.4 re fBT347.4 685.56  TD0 0 0 rg /F0 9.96  Tf0.0273  Tc 0  Tw (Interface) Tj38.88 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 339.6 694.8 54.48 11.04 re f339.6 683.4 5.28 11.4 re f388.92 683.4 5.16 11.4 re f339.6 672.24 54.48 11.16 re f402.36 683.4 44.04 11.4 re fBT412.68 685.56  TD0 0 0 rg /F0 9.96  Tf-0.0217  Tc 0  Tw (Deux) Tj23.28 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 397.08 694.8 54.6 11.04 re f397.08 683.4 5.28 11.4 re f446.4 683.4 5.28 11.4 re f397.08 672.24 54.6 11.16 re f459.84 689.16 63.48 11.4 re fBT475.8 691.32  TD0 0 0 rg /F0 9.96  Tf-0.0191  Tc 0.0102  Tw (Etat de ) TjET1 1 0.502 rg 459.84 677.64 63.48 11.52 re fBT470.04 679.92  TD0 0 0 rg 0.0193  Tc 0  Tw (l'Interface) Tj42.96 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 454.56 700.56 74.04 5.28 re f454.56 677.64 5.28 22.92 re f523.32 677.64 5.28 22.92 re f454.56 672.24 74.04 5.4 re f72 646.8 77.88 11.52 re fBT84.6 649.08  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (0000 0001b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 66.72 658.32 88.44 11.04 re f66.72 646.8 5.28 11.52 re f149.88 646.8 5.28 11.52 re f66.72 635.76 88.44 11.04 re f163.32 652.56 85.68 11.52 re fBT163.44 654.84  TD0 0 0 rg /F0 9.96  Tf-0.0021  Tc -0.0067  Tw (CLEAR_FEATURE ) TjET1 1 0.502 rg 163.32 641.16 85.68 11.4 re fBT191.88 643.32  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x01\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 158.04 664.08 96.12 5.28 re f158.04 641.16 5.28 22.92 re f249 641.16 5.16 22.92 re f158.04 635.76 96.12 5.4 re f262.44 652.56 69 11.52 re fBT269.04 654.84  TD0 0 0 rg /F0 9.96  Tf-0.0097  Tc 0.0008  Tw (S\351lecteur de ) TjET1 1 0.502 rg 262.44 641.16 69 11.4 re fBT277.8 643.32  TD0 0 0 rg -0.0046  Tc 0  Tw (Fonction) Tj38.16 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 257.16 664.08 79.44 5.28 re f257.16 641.16 5.28 22.92 re f331.44 641.16 5.16 22.92 re f257.16 635.76 79.44 5.4 re f344.88 646.8 44.04 11.52 re fBT347.4 649.08  TD0 0 0 rg /F0 9.96  Tf0.0273  Tc 0  Tw (Interface) Tj38.88 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 339.6 658.32 54.48 11.04 re f339.6 646.8 5.28 11.52 re f388.92 646.8 5.16 11.52 re f339.6 635.76 54.48 11.04 re f402.36 646.8 44.04 11.52 re fBT414.12 649.08  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 397.08 658.32 54.6 11.04 re f397.08 646.8 5.28 11.52 re f446.4 646.8 5.28 11.52 re f397.08 635.76 54.6 11.04 re f459.84 646.8 63.48 11.52 re fBT474.6 649.08  TD0 0 0 rg /F0 9.96  Tf-0.0091  Tc 0  Tw (Aucune) Tj33.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 454.56 658.32 74.04 11.04 re f454.56 646.8 5.28 11.52 re f523.32 646.8 5.28 11.52 re f454.56 635.76 74.04 11.04 re f72 610.32 77.88 11.52 re fBT84.6 612.6  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0  Tw (00) Tj11.04 0  TD 0.0089  Tw (00 0001b) Tj41.4 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 66.72 621.84 88.44 11.04 re f66.72 610.32 5.28 11.52 re f149.88 610.32 5.28 11.52 re f66.72 599.28 88.44 11.04 re f163.32 616.08 85.68 11.52 re fBT170.28 618.36  TD0 0 0 rg /F0 9.96  Tf0.0115  Tc -0.0204  Tw (SET_FEATURE ) TjET1 1 0.502 rg 163.32 604.56 85.68 11.52 re fBT191.88 606.84  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x03\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 158.04 627.6 96.12 5.28 re f158.04 604.56 5.28 23.04 re f249 604.56 5.16 23.04 re f158.04 599.28 96.12 5.28 re f262.44 616.08 69 11.52 re fBT269.04 618.36  TD0 0 0 rg /F0 9.96  Tf-0.0097  Tc 0.0008  Tw (S\351lecteur de ) TjET1 1 0.502 rg 262.44 604.56 69 11.52 re fBT277.8 606.84  TD0 0 0 rg -0.0046  Tc 0  Tw (Fonction) Tj38.16 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 257.16 627.6 79.44 5.28 re f257.16 604.56 5.28 23.04 re f331.44 604.56 5.16 23.04 re f257.16 599.28 79.44 5.28 re f344.88 610.32 44.04 11.52 re fBT347.4 612.6  TD0 0 0 rg /F0 9.96  Tf0.0273  Tc 0  Tw (Interface) Tj38.88 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 339.6 621.84 54.48 11.04 re f339.6 610.32 5.28 11.52 re f388.92 610.32 5.16 11.52 re f339.6 599.28 54.48 11.04 re f402.36 610.32 44.04 11.52 re fBT414.12 612.6  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 397.08 621.84 54.6 11.04 re f397.08 610.32 5.28 11.52 re f446.4 610.32 5.28 11.52 re f397.08 599.28 54.6 11.04 re f459.84 610.32 63.48 11.52 re fBT474.6 612.6  TD0 0 0 rg /F0 9.96  Tf-0.0091  Tc 0  Tw (Aucune) Tj33.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 454.56 621.84 74.04 11.04 re f454.56 610.32 5.28 11.52 re f523.32 610.32 5.28 11.52 re f454.56 599.28 74.04 11.04 re f72 573.84 77.88 11.52 re fBT84.6 576.12  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (1000 0001b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 66.72 585.36 88.44 11.04 re f66.72 573.84 5.28 11.52 re f149.88 573.84 5.28 11.52 re f66.72 562.8 88.44 11.04 re f163.32 579.6 85.68 11.52 re fBT164.76 581.88  TD0 0 0 rg /F0 9.96  Tf0.017  Tc -0.0259  Tw (GET_INTERFACE ) TjET1 1 0.502 rg 163.32 568.08 85.68 11.52 re fBT191.4 570.36  TD0 0 0 rg -0.0087  Tc 0  Tw (\(0x0A\)) Tj29.4 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 158.04 591.12 96.12 5.28 re f158.04 568.08 5.28 23.04 re f249 568.08 5.16 23.04 re f158.04 562.8 96.12 5.28 re f262.44 573.84 69 11.52 re fBT286.68 576.12  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 257.16 585.36 79.44 11.04 re f257.16 573.84 5.28 11.52 re f331.44 573.84 5.16 11.52 re f257.16 562.8 79.44 11.04 re f344.88 573.84 44.04 11.52 re fBT347.4 576.12  TD0 0 0 rg /F0 9.96  Tf0.0273  Tc 0  Tw (Interface) Tj38.88 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 339.6 585.36 54.48 11.04 re f339.6 573.84 5.28 11.52 re f388.92 573.84 5.16 11.52 re f339.6 562.8 54.48 11.04 re f402.36 573.84 44.04 11.52 re fBT417.96 576.12  TD0 0 0 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (Un) Tj12.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 397.08 585.36 54.6 11.04 re f397.08 573.84 5.28 11.52 re f446.4 573.84 5.28 11.52 re f397.08 562.8 54.6 11.04 re f459.84 579.6 63.48 11.52 re fBT465.12 581.88  TD0 0 0 rg /F0 9.96  Tf0.0082  Tc -0.0171  Tw (Interface de ) TjET1 1 0.502 rg 459.84 568.08 63.48 11.52 re fBT459.84 570.36  TD0 0 0 rg 0.032  Tc 0  Tw (remplacement) Tj63.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 454.56 591.12 74.04 5.28 re f454.56 568.08 5.28 23.04 re f523.32 568.08 5.28 23.04 re f454.56 562.8 74.04 5.28 re f72 537.36 77.88 11.52 re fBT84.6 539.64  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (0000 0001b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 66.72 548.88 88.44 11.04 re f66.72 537.36 5.28 11.52 re f149.88 537.36 5.28 11.52 re f66.72 526.32 88.44 11.04 re f163.32 543.12 85.68 11.52 re fBT165.36 545.4  TD0 0 0 rg /F0 9.96  Tf0.0097  Tc -0.0186  Tw (SET_INTERFACE ) TjET1 1 0.502 rg 163.32 531.6 85.68 11.52 re fBT191.88 533.88  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x11\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 158.04 554.64 96.12 5.28 re f158.04 531.6 5.28 23.04 re f249 531.6 5.16 23.04 re f158.04 526.32 96.12 5.28 re f262.44 543.12 69 11.52 re fBT262.56 545.4  TD0 0 0 rg /F0 9.96  Tf-0  Tc -0.0086  Tw (Positionnement ) TjET1 1 0.502 rg 262.44 531.6 69 11.52 re fBT277.8 533.88  TD0 0 0 rg -0.0157  Tc 0  Tw (alternatif) Tj38.16 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 257.16 554.64 79.44 5.28 re f257.16 531.6 5.28 23.04 re f331.44 531.6 5.16 23.04 re f257.16 526.32 79.44 5.28 re f344.88 537.36 44.04 11.52 re fBT347.4 539.64  TD0 0 0 rg /F0 9.96  Tf0.0273  Tc 0  Tw (Interface) Tj38.88 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 339.6 548.88 54.48 11.04 re f339.6 537.36 5.28 11.52 re f388.92 537.36 5.16 11.52 re f339.6 526.32 54.48 11.04 re f402.36 537.36 44.04 11.52 re fBT414.12 539.64  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 397.08 548.88 54.6 11.04 re f397.08 537.36 5.28 11.52 re f446.4 537.36 5.28 11.52 re f397.08 526.32 54.6 11.04 re f459.84 537.36 63.48 11.52 re fBT474.6 539.64  TD0 0 0 rg /F0 9.96  Tf-0.0091  Tc 0  Tw (Aucune) Tj33.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 454.56 548.88 74.04 11.04 re f454.56 537.36 5.28 11.52 re f523.32 537.36 5.28 11.52 re f454.56 526.32 74.04 11.04 re fBT51.48 504.96  TD0 0 0 rg /F7 9.96  Tf-0.0265  Tc 0  Tw (wIndex) Tj42.48 0  TD /F3 9.96  Tf-0.0051  Tc -0.0209  Tw ( est normalement u) Tj98.64 0  TD -0.0142  Tc -0.0117  Tw (tilis\351 pour pr\351ciser l'interface de r\351f\351rence pour des requ\352tes li\351es \340 ) Tj-141.12 -12.12  TD -0.0076  Tc -0.0183  Tw (l'interface. Voir son format dans le sch\351ma ci) Tj226.32 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD -0.0156  Tc (dessous.) Tj43.56 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) TjET0 0 1 rg 64.32 462.72 18.36 11.52 re fBT64.32 465  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc (D15) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 59.04 474.24 28.92 5.28 re f59.04 462.72 5.28 11.52 re f82.68 462.72 5.28 11.52 re f59.04 457.44 28.92 5.28 re f96.24 462.72 18.36 11.52 re fBT96.24 465  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D14) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 90.96 474.24 28.92 5.28 re f90.96 462.72 5.28 11.52 re f114.6 462.72 5.28 11.52 re f90.96 457.44 28.92 5.28 re f128.04 462.72 18.36 11.52 re fBT128.04 465  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D13) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 122.76 474.24 28.92 5.28 re f122.76 462.72 5.28 11.52 re f146.4 462.72 5.28 11.52 re f122.76 457.44 28.92 5.28 re f159.96 462.72 18.36 11.52 re fBT159.96 465  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D12) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 154.68 474.24 28.92 5.28 re f154.68 462.72 5.28 11.52 re f178.32 462.72 5.28 11.52 re f154.68 457.44 28.92 5.28 re f191.76 462.72 18.36 11.52 re fBT191.76 465  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D11) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 186.48 474.24 28.92 5.28 re f186.48 462.72 5.28 11.52 re f210.12 462.72 5.28 11.52 re f186.48 457.44 28.92 5.28 re f223.68 462.72 18.36 11.52 re fBT223.68 465  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D10) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 218.4 474.24 28.8 5.28 re f218.4 462.72 5.28 11.52 re f242.04 462.72 5.16 11.52 re f218.4 457.44 28.8 5.28 re f255.48 462.72 13.56 11.52 re fBT255.84 465  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D9) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 250.2 474.24 24.12 5.28 re f250.2 462.72 5.28 11.52 re f269.04 462.72 5.28 11.52 re f250.2 457.44 24.12 5.28 re f282.48 462.72 22.68 11.52 re fBT287.4 465  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D8) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 277.2 474.24 33.36 5.28 re f277.2 462.72 5.28 11.52 re f305.16 462.72 5.4 11.52 re f277.2 457.44 33.36 5.28 re f318.72 462.72 13.56 11.52 re fBT319.08 465  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D7) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 313.44 474.24 24.12 5.28 re f313.44 462.72 5.28 11.52 re f332.28 462.72 5.28 11.52 re f313.44 457.44 24.12 5.28 re f345.72 462.72 13.56 11.52 re fBT346.08 465  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D6) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 340.44 474.24 24.12 5.28 re f340.44 462.72 5.28 11.52 re f359.28 462.72 5.28 11.52 re f340.44 457.44 24.12 5.28 re f372.84 462.72 13.56 11.52 re fBT373.2 465  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D5) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 367.56 474.24 24.12 5.28 re f367.56 462.72 5.28 11.52 re f386.4 462.72 5.28 11.52 re f367.56 457.44 24.12 5.28 re f399.84 462.72 13.56 11.52 re fBT400.2 465  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D4) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 394.56 474.24 24.12 5.28 re f394.56 462.72 5.28 11.52 re f413.4 462.72 5.28 11.52 re f394.56 457.44 24.12 5.28 re f426.96 462.72 13.56 11.52 re fBT427.32 465  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D3) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 421.68 474.24 24.12 5.28 re f421.68 462.72 5.28 11.52 re f440.52 462.72 5.28 11.52 re f421.68 457.44 24.12 5.28 re f453.96 462.72 13.56 11.52 re fBT454.32 465  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D2) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 448.68 474.24 24.12 5.28 re f448.68 462.72 5.28 11.52 re f467.52 462.72 5.28 11.52 re f448.68 457.44 24.12 5.28 re f481.08 462.72 13.68 11.52 re fBT481.44 465  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D1) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 475.8 474.24 24.12 5.28 re f475.8 462.72 5.28 11.52 re f494.76 462.72 5.16 11.52 re f475.8 457.44 24.12 5.28 re f508.08 462.72 22.8 11.52 re fBT513.12 465  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D0) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 502.8 474.24 33.36 5.28 re f502.8 462.72 5.28 11.52 re f530.88 462.72 5.28 11.52 re f502.8 457.44 33.36 5.28 re fBT166.2 440.04  TD0 0 0 rg /F0 9.96  Tf-0  Tc 0  Tw (Reserv\351) Tj37.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 318.72 437.76 212.16 11.52 re fBT382.44 440.04  TD0 0 0 rg /F0 9.96  Tf0.0275  Tc -0.0364  Tw (Num\351ro d'Interface) Tj84.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 313.44 449.28 222.72 5.28 re f313.44 437.76 5.28 11.52 re f530.88 437.76 5.28 11.52 re f313.44 432.48 222.72 5.28 re fBT51.48 411.24  TD0 0 0 rg /F7 9.96  Tf-0.0088  Tc -0.0375  Tw (Get Status) Tj58.32 0  TD /F3 9.96  Tf-0.0075  Tc -0.0185  Tw ( est utilis\351 pour retourner l'\351) Tj143.16 0  TD -0.0033  Tc -0.0093  Tw (tat de l'interface. Une telle requ\352te \340 l'interface doit ) Tj-201.48 -12.12  TD -0.0034  Tc -0.0225  Tw (renvoyer 2 octets de valeur 0x00, 0x00. \( Les 2 octets sont r\351serv\351s pour une utilisation future\).) Tj486.72 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-490.2 -26.28  TD /F3 9.96  Tf-0.0216  Tc -0.0043  Tw (Les requ\352tes ) Tj67.08 0  TD /F7 9.96  Tf-0.021  Tc 0  Tw (ClearFeature) Tj71.52 0  TD /F3 9.96  Tf-0.0102  Tc 0.0443  Tw ( et ) Tj16.8 0  TD /F7 9.96  Tf-0.0084  Tc 0  Tw (SetFeature) Tj61.08 0  TD /F3 9.96  Tf-0.0021  Tc -0.0239  Tw ( peuvent \352tre utilis\351es pour positionner des fonctions ) Tj-216.48 -12.12  TD 0.0077  Tc 0  Tw (bool\351) Tj26.88 0  TD 0  Tc -0.0266  Tw (ennes. Quand le destinataire d\351sign\351 est l'interface, la sp\351cification USB actuelle r\351vision 2 ) Tj-26.88 -12  TD -0.0032  Tc -0.0227  Tw (pr\351cise qu'il n'y a pas de fonctions d'interface.) Tj232.2 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-235.68 -26.28  TD /F7 9.96  Tf-0.0128  Tc -0.0335  Tw (Get Interface) Tj74.4 0  TD /F3 9.96  Tf-0.0102  Tc 0.0443  Tw ( et ) Tj16.8 0  TD /F7 9.96  Tf-0.009  Tc -0.0373  Tw (Set Interface) Tj73.44 0  TD /F3 9.96  Tf-0  Tc -0.0257  Tw ( r\350gle le positionnement de ) Tj140.52 0  TD -0.0054  Tc -0.0205  Tw (l'interface de remplacement) TjET356.64 321 139.92 0.6 re fBT496.56 322.44  TD0.0119  Tc 0.0021  Tw ( qui est ) Tj-445.08 -12  TD 0.0066  Tc -0.0326  Tw (d\351crit plus en d\351tails dans le ) Tj147 0  TD -0.0079  Tc -0.018  Tw (descripteur d'interface) TjET198.48 309 112.08 0.6 re fBT310.56 310.44  TD-0.0254  Tc 0  Tw (.) Tj3.6 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD ( ) Tj-266.16 -26.16  TD ( ) Tj0 -26.16  TD ( ) TjT* ( ) TjT* ( ) TjT* ( ) TjT* ( ) TjT* ( ) Tj0 -27  TD /F2 12  Tf0  Tw ( ) TjETendstream
-endobj
-38 0 obj
-20324
-endobj
-36 0 obj
-<<
-/Type /Page
-/Parent 5 0 R
-/Resources <<
-/Font 39 0 R
-/ProcSet 2 0 R
->>
-/Contents 37 0 R
->>
-endobj
-39 0 obj
-<<
-/F0 6 0 R
-/F1 8 0 R
-/F2 10 0 R
-/F3 12 0 R
-/F4 16 0 R
-/F6 22 0 R
-/F7 31 0 R
->>
-endobj
-41 0 obj
-<<
-/Length 42 0 R
->>
-stream
-BT28.32 52.56  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD -0.0096  Tc 0.0336  Tw ( CHAP 6) Tj46.56 0  TD 0  Tc 0.024  Tw ( ) Tj55.44 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (6) Tj6.72 0  TD -0.084  Tc (/6) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (18/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) Tj-453.6 -13.8  TD ( ) Tj23.16 756  TD /F4 9.96  Tf-0.0145  Tc -0.0318  Tw (Les Requ\352tes de terminaisons standard) Tj220.2 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-223.68 -26.28  TD /F1 9.96  Tf-0.0106  Tc -0.0153  Tw (Les requ\352tes de te) Tj92.52 0  TD 0.0112  Tc -0.0372  Tw (rminaisons standard sont au nombre de 4, list\351es ci) Tj260.88 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD -0.0076  Tc 0.0417  Tw (dessous : ) Tj51.48 0  TD /F2 12  Tf0  Tc 0  Tw ( ) TjET0 0 1 rg 64.32 738.36 77.88 11.52 re fBT64.32 740.76  TD1 1 1 rg /F6 9.96  Tf0.0124  Tc (bmRequestType) Tj77.64 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 59.04 749.88 88.44 5.28 re f59.04 738.36 5.28 11.52 re f142.2 738.36 5.28 11.52 re f59.04 733.08 88.44 5.28 re f155.64 738.36 98.28 11.52 re fBT182.04 740.76  TD1 1 1 rg /F6 9.96  Tf-0.0022  Tc 0  Tw (bRequest) Tj45.48 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 150.36 749.88 108.84 5.28 re f150.36 738.36 5.28 11.52 re f253.92 738.36 5.28 11.52 re f150.36 733.08 108.84 5.28 re f267.48 738.36 55.92 11.52 re fBT278.16 740.76  TD1 1 1 rg /F6 9.96  Tf0.0196  Tc 0  Tw (wValue) Tj34.44 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 262.2 749.88 66.48 5.28 re f262.2 738.36 5.28 11.52 re f323.4 738.36 5.28 11.52 re f262.2 733.08 66.48 5.28 re f336.96 738.36 55.92 11.52 re fBT347.16 740.76  TD1 1 1 rg /F6 9.96  Tf0.017  Tc 0  Tw (Windex) Tj35.52 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 331.68 749.88 66.48 5.28 re f331.68 738.36 5.28 11.52 re f392.88 738.36 5.28 11.52 re f331.68 733.08 66.48 5.28 re f406.32 738.36 56.04 11.52 re fBT413.64 740.76  TD1 1 1 rg /F6 9.96  Tf0.0478  Tc 0  Tw (wLength) Tj41.28 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 401.04 749.88 66.6 5.28 re f401.04 738.36 5.28 11.52 re f462.36 738.36 5.28 11.52 re f401.04 733.08 66.6 5.28 re f475.8 738.36 55.08 11.52 re fBT482.28 740.76  TD1 1 1 rg /F6 9.96  Tf0.0084  Tc 0  Tw (Donn\351es) Tj42.12 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 470.52 749.88 65.64 5.28 re f470.52 738.36 5.28 11.52 re f530.88 738.36 5.28 11.52 re f470.52 733.08 65.64 5.28 re f1 1 0.502 rg 64.32 707.64 77.88 11.52 re fBT76.92 709.92  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (1000 0010b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 719.16 88.44 11.04 re f59.04 707.64 5.28 11.52 re f142.2 707.64 5.28 11.52 re f59.04 696.6 88.44 11.04 re f155.64 707.64 98.28 11.52 re fBT156.36 709.92  TD0 0 0 rg /F0 9.96  Tf0.0191  Tc -0.028  Tw (GET_STATUS \(0x00\)) Tj96.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 719.16 108.84 11.04 re f150.36 707.64 5.28 11.52 re f253.92 707.64 5.28 11.52 re f150.36 696.6 108.84 11.04 re f267.48 707.64 55.92 11.52 re fBT285.12 709.92  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 262.2 719.16 66.48 11.04 re f262.2 707.64 5.28 11.52 re f323.4 707.64 5.28 11.52 re f262.2 696.6 66.48 11.04 re f336.96 707.64 55.92 11.52 re fBT337.32 709.92  TD0 0 0 rg /F0 9.96  Tf0.0264  Tc 0  Tw (Terminaison) Tj55.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 331.68 719.16 66.48 11.04 re f331.68 707.64 5.28 11.52 re f392.88 707.64 5.28 11.52 re f331.68 696.6 66.48 11.04 re f406.32 707.64 56.04 11.52 re fBT422.64 709.92  TD0 0 0 rg /F0 9.96  Tf-0.0217  Tc 0  Tw (Deux) Tj23.28 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.04 719.16 66.6 11.04 re f401.04 707.64 5.28 11.52 re f462.36 707.64 5.28 11.52 re f401.04 696.6 66.6 11.04 re f475.8 713.4 55.08 11.52 re fBT482.4 715.68  TD0 0 0 rg /F0 9.96  Tf-0.0229  Tc 0.014  Tw (Etat de la ) TjET1 1 0.502 rg 475.8 701.88 55.08 11.52 re fBT475.8 704.16  TD0 0 0 rg 0.0264  Tc 0  Tw (Terminaison) Tj55.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 470.52 724.92 65.64 5.28 re f470.52 701.88 5.28 23.04 re f530.88 701.88 5.28 23.04 re f470.52 696.6 65.64 5.28 re f64.32 671.16 77.88 11.52 re fBT76.92 673.44  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (0000 0010b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 682.68 88.44 11.04 re f59.04 671.16 5.28 11.52 re f142.2 671.16 5.28 11.52 re f59.04 660.12 88.44 11.04 re f155.64 676.92 98.28 11.52 re fBT162.12 679.2  TD0 0 0 rg /F0 9.96  Tf-0.0021  Tc -0.0067  Tw (CLEAR_FEATURE ) TjET1 1 0.502 rg 155.64 665.4 98.28 11.52 re fBT190.56 667.68  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x01\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 688.44 108.84 5.28 re f150.36 665.4 5.28 23.04 re f253.92 665.4 5.28 23.04 re f150.36 660.12 108.84 5.28 re f267.48 676.92 55.92 11.52 re fBT274.44 679.2  TD0 0 0 rg /F0 9.96  Tf-0.0079  Tc -0.001  Tw (S\351lecteur ) TjET1 1 0.502 rg 267.48 665.4 55.92 11.52 re fBT269.4 667.68  TD0 0 0 rg -0.0072  Tc -0.0017  Tw (de Fonction) Tj51.96 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 262.2 688.44 66.48 5.28 re f262.2 665.4 5.28 23.04 re f323.4 665.4 5.28 23.04 re f262.2 660.12 66.48 5.28 re f336.96 671.16 55.92 11.52 re fBT337.32 673.44  TD0 0 0 rg /F0 9.96  Tf0.0332  Tc 0  Tw (Terminai) Tj39 0  TD 0.0082  Tc (son) Tj16.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 331.68 682.68 66.48 11.04 re f331.68 671.16 5.28 11.52 re f392.88 671.16 5.28 11.52 re f331.68 660.12 66.48 11.04 re f406.32 671.16 56.04 11.52 re fBT423.96 673.44  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.04 682.68 66.6 11.04 re f401.04 671.16 5.28 11.52 re f462.36 671.16 5.28 11.52 re f401.04 660.12 66.6 11.04 re f475.8 671.16 55.08 11.52 re fBT486.48 673.44  TD0 0 0 rg /F0 9.96  Tf-0.0091  Tc 0  Tw (Aucune) Tj33.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 470.52 682.68 65.64 11.04 re f470.52 671.16 5.28 11.52 re f530.88 671.16 5.28 11.52 re f470.52 660.12 65.64 11.04 re f64.32 634.68 77.88 11.52 re fBT76.92 636.96  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (0000 0010b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 646.2 88.44 10.92 re f59.04 634.68 5.28 11.52 re f142.2 634.68 5.28 11.52 re f59.04 623.52 88.44 11.16 re f155.64 640.44 98.28 11.52 re fBT168.96 642.72  TD0 0 0 rg /F0 9.96  Tf0.0115  Tc -0.0204  Tw (SET_FEATURE ) TjET1 1 0.502 rg 155.64 628.92 98.28 11.52 re fBT190.56 631.2  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x03\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 651.96 108.84 5.16 re f150.36 628.92 5.28 23.04 re f253.92 628.92 5.28 23.04 re f150.36 623.52 108.84 5.4 re f267.48 640.44 55.92 11.52 re fBT274.44 642.72  TD0 0 0 rg /F0 9.96  Tf-0.0079  Tc -0.001  Tw (S\351lecteur ) TjET1 1 0.502 rg 267.48 628.92 55.92 11.52 re fBT269.4 631.2  TD0 0 0 rg -0.0072  Tc -0.0017  Tw (de Fonction) Tj51.96 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 262.2 651.96 66.48 5.16 re f262.2 628.92 5.28 23.04 re f323.4 628.92 5.28 23.04 re f262.2 623.52 66.48 5.4 re f336.96 634.68 55.92 11.52 re fBT337.32 636.96  TD0 0 0 rg /F0 9.96  Tf0.0264  Tc 0  Tw (Terminaison) Tj55.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 331.68 646.2 66.48 10.92 re f331.68 634.68 5.28 11.52 re f392.88 634.68 5.28 11.52 re f331.68 623.52 66.48 11.16 re f406.32 634.68 56.04 11.52 re fBT423.96 636.96  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.04 646.2 66.6 10.92 re f401.04 634.68 5.28 11.52 re f462.36 634.68 5.28 11.52 re f401.04 623.52 66.6 11.16 re f475.8 634.68 55.08 11.52 re fBT486.48 636.96  TD0 0 0 rg /F0 9.96  Tf-0.0091  Tc 0  Tw (Aucune) Tj33.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 470.52 646.2 65.64 10.92 re f470.52 634.68 5.28 11.52 re f530.88 634.68 5.28 11.52 re f470.52 623.52 65.64 11.16 re f64.32 598.2 77.88 11.52 re fBT76.92 600.48  TD0 0 0 rg /F0 9.96  Tf-0.0178  Tc 0.0089  Tw (1000 0010b) Tj52.44 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 59.04 609.72 88.44 10.92 re f59.04 598.2 5.28 11.52 re f142.2 598.2 5.28 11.52 re f59.04 587.04 88.44 11.16 re f155.64 603.96 98.28 11.52 re fBT167.28 606.24  TD0 0 0 rg /F0 9.96  Tf-0.0234  Tc 0.0146  Tw (SYNCH_FRAME ) TjET1 1 0.502 rg 155.64 592.44 98.28 11.52 re fBT190.56 594.72  TD0 0 0 rg -0.0044  Tc 0  Tw (\(0x12\)) Tj28.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 150.36 615.48 108.84 5.16 re f150.36 592.44 5.28 23.04 re f253.92 592.44 5.28 23.04 re f150.36 587.04 108.84 5.4 re f267.48 598.2 55.92 11.52 re fBT285.12 600.48  TD0 0 0 rg /F0 9.96  Tf0.0406  Tc 0  Tw (Z\351ro) Tj20.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 262.2 609.72 66.48 10.92 re f262.2 598.2 5.28 11.52 re f323.4 598.2 5.28 11.52 re f262.2 587.04 66.48 11.16 re f336.96 598.2 55.92 11.52 re fBT337.32 600.48  TD0 0 0 rg /F0 9.96  Tf0.0264  Tc 0  Tw (Terminaison) Tj55.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 331.68 609.72 66.48 10.92 re f331.68 598.2 5.28 11.52 re f392.88 598.2 5.28 11.52 re f331.68 587.04 66.48 11.16 re f406.32 598.2 56.04 11.52 re fBT422.64 600.48  TD0 0 0 rg /F0 9.96  Tf-0.0217  Tc 0  Tw (Deux) Tj23.28 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 401.04 609.72 66.6 10.92 re f401.04 598.2 5.28 11.52 re f462.36 598.2 5.28 11.52 re f401.04 587.04 66.6 11.16 re f475.8 603.96 55.08 11.52 re fBT478.56 606.24  TD0 0 0 rg /F0 9.96  Tf0.0233  Tc -0.0322  Tw (Num\351ro de ) TjET1 1 0.502 rg 475.8 592.44 55.08 11.52 re fBT488.76 594.72  TD0 0 0 rg 0.1251  Tc 0  Tw (Trame) Tj29.16 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 470.52 615.48 65.64 5.16 re f470.52 592.44 5.28 23.04 re f530.88 592.44 5.28 23.04 re f470.52 587.04 65.64 5.4 re fBT51.48 565.8  TD0 0 0 rg /F3 9.96  Tf0.0029  Tc 0.0312  Tw (Le champ ) Tj51.84 0  TD /F7 9.96  Tf-0.0265  Tc 0  Tw (wIndex) Tj42.48 0  TD /F3 9.96  Tf-0.0057  Tc -0.0202  Tw ( est normalement utilis\351 pour pr\351ciser la terminaison de r\351f\351rence et la ) Tj-94.32 -12.12  TD -0.0108  Tc 0  Tw (dire) Tj19.08 0  TD -0.0045  Tc -0.0215  Tw (ction pour les requ\352tes li\351es \340 la terminaison. Voir son format dans le sch\351ma ci) Tj402.36 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD -0.0156  Tc (dessous.) Tj43.56 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) TjET0 0 1 rg 64.32 523.56 18.36 11.52 re fBT64.32 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc (D15) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 59.04 535.08 28.92 5.28 re f59.04 523.56 5.28 11.52 re f82.68 523.56 5.28 11.52 re f59.04 518.28 28.92 5.28 re f96.24 523.56 18.36 11.52 re fBT96.24 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D14) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 90.96 535.08 28.92 5.28 re f90.96 523.56 5.28 11.52 re f114.6 523.56 5.28 11.52 re f90.96 518.28 28.92 5.28 re f128.04 523.56 18.36 11.52 re fBT128.04 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D13) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 122.76 535.08 28.92 5.28 re f122.76 523.56 5.28 11.52 re f146.4 523.56 5.28 11.52 re f122.76 518.28 28.92 5.28 re f159.96 523.56 18.36 11.52 re fBT159.96 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D12) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 154.68 535.08 28.92 5.28 re f154.68 523.56 5.28 11.52 re f178.32 523.56 5.28 11.52 re f154.68 518.28 28.92 5.28 re f191.76 523.56 18.36 11.52 re fBT191.76 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D11) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 186.48 535.08 28.92 5.28 re f186.48 523.56 5.28 11.52 re f210.12 523.56 5.28 11.52 re f186.48 518.28 28.92 5.28 re f223.68 523.56 18.36 11.52 re fBT223.68 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D10) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 218.4 535.08 28.8 5.28 re f218.4 523.56 5.28 11.52 re f242.04 523.56 5.16 11.52 re f218.4 518.28 28.8 5.28 re f255.48 523.56 13.56 11.52 re fBT255.84 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D9) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 250.2 535.08 24.12 5.28 re f250.2 523.56 5.28 11.52 re f269.04 523.56 5.28 11.52 re f250.2 518.28 24.12 5.28 re f282.48 523.56 22.68 11.52 re fBT287.4 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D8) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 277.2 535.08 33.36 5.28 re f277.2 523.56 5.28 11.52 re f305.16 523.56 5.4 11.52 re f277.2 518.28 33.36 5.28 re f318.72 523.56 13.56 11.52 re fBT319.08 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D7) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 313.44 535.08 24.12 5.28 re f313.44 523.56 5.28 11.52 re f332.28 523.56 5.28 11.52 re f313.44 518.28 24.12 5.28 re f345.72 523.56 13.56 11.52 re fBT346.08 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D6) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 340.44 535.08 24.12 5.28 re f340.44 523.56 5.28 11.52 re f359.28 523.56 5.28 11.52 re f340.44 518.28 24.12 5.28 re f372.84 523.56 13.56 11.52 re fBT373.2 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D5) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 367.56 535.08 24.12 5.28 re f367.56 523.56 5.28 11.52 re f386.4 523.56 5.28 11.52 re f367.56 518.28 24.12 5.28 re f399.84 523.56 18.12 11.52 re fBT402.48 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D4) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 394.56 535.08 28.68 5.28 re f394.56 523.56 5.28 11.52 re f417.96 523.56 5.28 11.52 re f394.56 518.28 28.68 5.28 re f431.52 523.56 13.56 11.52 re fBT431.88 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D3) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 426.24 535.08 24.12 5.28 re f426.24 523.56 5.28 11.52 re f445.08 523.56 5.28 11.52 re f426.24 518.28 24.12 5.28 re f458.52 523.56 13.68 11.52 re fBT458.88 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D2) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 453.24 535.08 24.12 5.28 re f453.24 523.56 5.28 11.52 re f472.2 523.56 5.16 11.52 re f453.24 518.28 24.12 5.28 re f485.64 523.56 13.68 11.52 re fBT486 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D1) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 480.36 535.08 24.12 5.28 re f480.36 523.56 5.28 11.52 re f499.32 523.56 5.16 11.52 re f480.36 518.28 24.12 5.28 re f512.76 523.56 18.12 11.52 re fBT515.4 525.84  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D0) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 507.48 535.08 28.68 5.28 re f507.48 523.56 5.28 11.52 re f530.88 523.56 5.28 11.52 re f507.48 518.28 28.68 5.28 re fBT166.2 500.88  TD0 0 0 rg /F0 9.96  Tf-0  Tc 0  Tw (Reserv\351) Tj37.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 318.72 498.6 13.56 11.52 re fBT319.08 500.88  TD0 0 0 rg /F0 9.96  Tf-0.0396  Tc 0  Tw (Dir) Tj12.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 313.44 510.12 24.12 5.28 re f313.44 498.6 5.28 11.52 re f332.28 498.6 5.28 11.52 re f313.44 481.8 24.12 16.8 re fBT363.24 500.88  TD0 0 0 rg /F0 9.96  Tf-0  Tc 0  Tw (Reserv\351) Tj37.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 431.52 498.6 99.48 11.52 re fBT456.48 500.88  TD0 0 0 rg /F0 9.96  Tf0.0233  Tc -0.0322  Tw (Num\351ro de ) TjET1 1 0.502 rg 431.52 487.08 99.48 11.52 re fBT453.6 489.36  TD0 0 0 rg 0.0264  Tc 0  Tw (Terminaison) Tj55.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 426.24 510.12 109.92 5.28 re f426.24 487.08 5.28 23.04 re f531 487.08 5.16 23.04 re f426.24 481.8 109.92 5.28 re fBT51.48 460.56  TD0 0 0 rg /F7 9.96  Tf-0.0088  Tc 0  Tw (GetStatus) Tj54.96 0  TD /F3 9.96  Tf0.0022  Tc -0.0281  Tw ( renvoie 2 octets indiquant l'\351tat \(Arr\352t\351/Bloqu\351\) d'u) Tj264 0  TD -0.0044  Tc -0.0215  Tw (ne terminaison. Le format des 2 ) Tj-318.96 -12.24  TD -0.0151  Tc -0.0108  Tw (octets renvoy\351s est illustr\351 ci) Tj146.04 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD -0.0156  Tc (dessous.) Tj43.56 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) TjET0 0 1 rg 64.32 418.2 18.36 11.52 re fBT64.32 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc (D15) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 59.04 429.72 28.92 5.28 re f59.04 418.2 5.28 11.52 re f82.68 418.2 5.28 11.52 re f59.04 412.92 28.92 5.28 re f96.24 418.2 18.36 11.52 re fBT96.24 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D14) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 90.96 429.72 28.92 5.28 re f90.96 418.2 5.28 11.52 re f114.6 418.2 5.28 11.52 re f90.96 412.92 28.92 5.28 re f128.04 418.2 18.36 11.52 re fBT128.04 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D13) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 122.76 429.72 28.92 5.28 re f122.76 418.2 5.28 11.52 re f146.4 418.2 5.28 11.52 re f122.76 412.92 28.92 5.28 re f159.96 418.2 18.36 11.52 re fBT159.96 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D12) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 154.68 429.72 28.92 5.28 re f154.68 418.2 5.28 11.52 re f178.32 418.2 5.28 11.52 re f154.68 412.92 28.92 5.28 re f191.76 418.2 18.36 11.52 re fBT191.76 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D11) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 186.48 429.72 28.92 5.28 re f186.48 418.2 5.28 11.52 re f210.12 418.2 5.28 11.52 re f186.48 412.92 28.92 5.28 re f223.68 418.2 18.36 11.52 re fBT223.68 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0089  Tc 0  Tw (D10) Tj18.24 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 218.4 429.72 28.8 5.28 re f218.4 418.2 5.28 11.52 re f242.04 418.2 5.16 11.52 re f218.4 412.92 28.8 5.28 re f255.48 418.2 13.08 11.52 re fBT255.6 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D9) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 250.2 429.72 23.64 5.28 re f250.2 418.2 5.28 11.52 re f268.56 418.2 5.28 11.52 re f250.2 412.92 23.64 5.28 re f282 418.2 13.08 11.52 re fBT282.12 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D8) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 276.72 429.72 23.64 5.28 re f276.72 418.2 5.28 11.52 re f295.08 418.2 5.28 11.52 re f276.72 412.92 23.64 5.28 re f308.64 418.2 13.08 11.52 re fBT308.76 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D7) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 303.36 429.72 23.64 5.28 re f303.36 418.2 5.28 11.52 re f321.72 418.2 5.28 11.52 re f303.36 412.92 23.64 5.28 re f335.28 418.2 13.08 11.52 re fBT335.4 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D6) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 330 429.72 23.64 5.28 re f330 418.2 5.28 11.52 re f348.36 418.2 5.28 11.52 re f330 412.92 23.64 5.28 re f361.8 418.2 13.08 11.52 re fBT361.92 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D5) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 356.52 429.72 23.64 5.28 re f356.52 418.2 5.28 11.52 re f374.88 418.2 5.28 11.52 re f356.52 412.92 23.64 5.28 re f388.44 418.2 13.08 11.52 re fBT388.56 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D4) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 383.16 429.72 23.64 5.28 re f383.16 418.2 5.28 11.52 re f401.52 418.2 5.28 11.52 re f383.16 412.92 23.64 5.28 re f415.08 418.2 13.08 11.52 re fBT415.2 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D3) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 409.8 429.72 23.64 5.28 re f409.8 418.2 5.28 11.52 re f428.16 418.2 5.28 11.52 re f409.8 412.92 23.64 5.28 re f441.6 418.2 13.08 11.52 re fBT441.72 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D2) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 436.32 429.72 23.64 5.28 re f436.32 418.2 5.28 11.52 re f454.68 418.2 5.28 11.52 re f436.32 412.92 23.64 5.28 re f468.24 418.2 31.44 11.52 re fBT477.48 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D1) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 462.96 429.72 41.88 5.28 re f462.96 418.2 5.28 11.52 re f499.68 418.2 5.16 11.52 re f462.96 412.92 41.88 5.28 re f513.12 418.2 17.88 11.52 re fBT515.64 420.48  TD1 1 1 rg /F0 9.96  Tf-0.0044  Tc 0  Tw (D0) Tj12.72 0  TD 0 0 0 rg /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 507.84 429.72 28.32 5.28 re f507.84 418.2 5.28 11.52 re f531 418.2 5.16 11.52 re f507.84 412.92 28.32 5.28 re f1 1 1 rg 64.32 393.36 435.24 11.4 re fBT263.4 395.52  TD0 0 0 rg /F0 9.96  Tf-0  Tc 0  Tw (Reserv\351) Tj37.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 1 rg 59.04 404.76 445.8 5.28 re f59.04 393.36 5.28 11.4 re f499.56 393.36 5.28 11.4 re f59.04 387.96 445.8 5.4 re f1 1 0.502 rg 513.12 393.36 17.88 11.4 re fBT513.12 395.52  TD0 0 0 rg /F0 9.96  Tf-0.0172  Tc 0  Tw (Halt) Tj17.64 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 507.84 404.76 28.32 5.28 re f507.84 393.36 5.28 11.4 re f531 393.36 5.16 11.4 re f507.84 387.96 28.32 5.4 re fBT51.48 366.72  TD0 0 0 rg /F7 9.96  Tf-0.021  Tc 0  Tw (ClearFeature) Tj71.52 0  TD /F3 9.96  Tf-0.0102  Tc 0.0443  Tw ( et ) Tj16.8 0  TD /F7 9.96  Tf-0.0084  Tc 0  Tw (SetFeature) Tj61.08 0  TD /F3 9.96  Tf0  Tc -0.0263  Tw ( sont utilis\351s pour positionner les fonctions de la terminaison. Le ) Tj-149.4 -12.12  TD 0.0126  Tc -0.0386  Tw (standard d\351fini ) Tj78.6 0  TD 0.0027  Tc -0.0166  Tw (actuellement un s\351lecteur de fonction de terminaison : ENDPOINT_HALT \(0x00\) ) Tj-78.6 -12.24  TD -0.0021  Tc -0.0238  Tw (qui permet \340 l'h\364te de bloquer et d'effacer une terminaison. Seules les terminaisons autres que ) Tj0 -12  TD 0  Tc -0.026  Tw (la terminaison par d\351faut sont conseill\351es pour avoir cette fonctionnalit\351.) Tj366.72 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-370.2 -26.28  TD /F3 9.96  Tf-0.0276  Tc 0.0017  Tw (Une req) Tj39.36 0  TD -0.0053  Tc -0.0206  Tw (u\352te ) Tj25.56 0  TD /F7 9.96  Tf-0.0064  Tc 0  Tw (SynchFrame) Tj68.76 0  TD /F3 9.96  Tf-0.0016  Tc -0.0244  Tw ( est utilis\351e pour rapporter une trame de synchronisation de ) Tj-133.68 -12.12  TD 0.0135  Tc 0  Tw (terminaison.) Tj62.76 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-89.4 -22.08  TD /F0 12  Tf0.024  Tw ( ) TjETendstream
-endobj
-42 0 obj
-23724
-endobj
-40 0 obj
-<<
-/Type /Page
-/Parent 5 0 R
-/Resources <<
-/Font 43 0 R
-/ProcSet 2 0 R
->>
-/Contents 41 0 R
->>
-endobj
-43 0 obj
-<<
-/F0 6 0 R
-/F1 8 0 R
-/F2 10 0 R
-/F3 12 0 R
-/F4 16 0 R
-/F6 22 0 R
-/F7 31 0 R
->>
-endobj
-6 0 obj
-<<
-/Type /Font
-/Subtype /TrueType
-/Name /F0
-/BaseFont /Arial
-/FirstChar 31
-/LastChar 255
-/Widths [ 750 278 278 355 556 556 889 667 191 333 333 389 584 278 333 278 
-278 556 556 556 556 556 556 556 556 556 556 278 278 584 584 584 
-556 1015 667 667 722 722 667 611 778 722 278 500 667 556 833 722 
-778 667 778 722 667 611 722 667 944 667 667 611 278 278 278 469 
-556 333 556 556 500 556 556 278 556 556 222 222 500 222 833 556 
-556 556 556 333 500 278 556 500 722 500 500 500 334 260 334 584 
-750 556 750 222 556 333 1000 556 556 333 1000 667 333 667 611 611 
-611 750 222 222 333 333 350 556 1000 333 1000 500 333 500 375 500 
-500 278 333 333 556 556 667 260 556 333 737 667 556 584 333 737 
-611 400 549 333 222 333 576 537 278 333 556 500 556 556 333 292 
-500 722 667 667 667 667 556 722 722 722 667 667 667 667 278 278 
-722 722 722 722 778 778 778 778 584 722 722 722 722 722 667 611 
-611 333 556 556 556 556 222 500 500 500 556 556 556 556 278 278 
-615 556 556 556 556 556 556 556 549 333 556 556 556 556 500 278 
-333 ]
-/Encoding /WinAnsiEncoding
-/FontDescriptor 7 0 R
->>
-endobj
-7 0 obj
-<<
-/Type /FontDescriptor
-/FontName /Arial
-/Flags 32
-/FontBBox [ -250 -220 1224 900 ]
-/MissingWidth 750
-/StemV 80
-/StemH 80
-/ItalicAngle 0
-/CapHeight 900
-/XHeight 630
-/Ascent 900
-/Descent -220
-/Leading 150
-/MaxWidth 1020
-/AvgWidth 440
->>
-endobj
-8 0 obj
-<<
-/Type /Font
-/Subtype /TrueType
-/Name /F1
-/BaseFont /Verdana
-/FirstChar 31
-/LastChar 255
-/Widths [ 1000 352 394 459 818 636 1076 727 269 454 454 636 818 364 454 364 
-454 636 636 636 636 636 636 636 636 636 636 454 454 818 818 818 
-545 1000 684 686 698 771 632 575 775 751 421 455 693 557 843 748 
-787 603 787 695 684 616 732 684 989 685 615 685 454 454 454 818 
-636 636 601 623 521 623 596 352 623 633 274 344 592 274 973 633 
-607 623 623 427 521 394 633 592 818 592 592 525 635 454 635 818 
-1000 636 1000 269 636 459 818 636 636 636 1521 684 454 1070 1000 1000 
-1000 1000 269 269 459 459 545 636 1000 636 977 521 454 981 1000 1000 
-615 352 394 636 636 636 636 454 636 636 1000 545 645 818 454 1000 
-636 542 818 542 542 636 642 636 364 636 542 545 645 1000 1000 1000 
-545 684 684 684 684 684 684 984 698 632 632 632 632 421 421 421 
-421 775 748 787 787 787 787 787 818 787 732 732 732 732 615 605 
-620 601 601 601 601 601 601 955 521 596 596 596 596 274 274 274 
-274 612 633 607 607 607 607 607 818 607 633 633 633 633 592 623 
-592 ]
-/Encoding /WinAnsiEncoding
-/FontDescriptor 9 0 R
->>
-endobj
-9 0 obj
-<<
-/Type /FontDescriptor
-/FontName /Verdana
-/Flags 32
-/FontBBox [ -250 -205 1822 1000 ]
-/MissingWidth 1000
-/StemV 92
-/StemH 92
-/ItalicAngle 0
-/CapHeight 1000
-/XHeight 700
-/Ascent 1000
-/Descent -205
-/Leading 205
-/MaxWidth 1518
-/AvgWidth 506
->>
-endobj
-10 0 obj
-<<
-/Type /Font
-/Subtype /TrueType
-/Name /F2
-/BaseFont /TimesNewRoman
-/FirstChar 31
-/LastChar 255
-/Widths [ 778 250 333 408 500 500 833 778 180 333 333 500 564 250 333 250 
-278 500 500 500 500 500 500 500 500 500 500 278 278 564 564 564 
-444 921 722 667 667 722 611 556 722 722 333 389 722 611 889 722 
-722 556 722 667 556 611 722 722 944 722 722 611 333 278 333 469 
-500 333 444 500 444 500 444 333 500 500 278 278 500 278 778 500 
-500 500 500 333 389 278 500 500 722 500 500 444 480 200 480 541 
-778 500 778 333 500 444 1000 500 500 333 1000 556 333 556 611 611 
-611 778 333 333 444 444 350 500 1000 333 980 389 333 389 427 444 
-444 250 333 333 611 500 722 200 500 333 760 556 500 564 333 760 
-611 400 549 333 278 333 576 453 250 333 444 389 500 611 333 406 
-444 667 722 722 722 722 611 667 667 667 611 611 611 611 333 333 
-722 722 722 722 722 722 722 722 564 667 722 722 722 722 722 611 
-500 333 444 444 444 444 278 444 444 444 444 444 444 444 278 278 
-646 500 500 500 500 500 500 500 549 333 500 500 500 500 500 278 
-333 ]
-/Encoding /WinAnsiEncoding
-/FontDescriptor 11 0 R
->>
-endobj
-11 0 obj
-<<
-/Type /FontDescriptor
-/FontName /TimesNewRoman
-/Flags 34
-/FontBBox [ -250 -240 1200 900 ]
-/MissingWidth 780
-/StemV 73
-/StemH 73
-/ItalicAngle 0
-/CapHeight 900
-/XHeight 630
-/Ascent 900
-/Descent -240
-/Leading 180
-/MaxWidth 1000
-/AvgWidth 400
->>
-endobj
-12 0 obj
-<<
-/Type /Font
-/Subtype /TrueType
-/Name /F3
-/BaseFont /Verdana,Italic
-/FirstChar 31
-/LastChar 255
-/Widths [ 1000 352 394 459 818 636 1076 727 269 454 454 636 818 364 454 364 
-454 636 636 636 636 636 636 636 636 636 636 454 454 818 818 818 
-545 1000 683 686 698 766 632 575 775 751 421 455 693 557 843 748 
-787 603 787 695 684 616 732 683 990 685 615 685 454 454 454 818 
-636 636 601 623 521 623 596 352 622 633 274 344 587 274 973 633 
-607 623 623 427 521 394 633 591 818 592 591 525 635 454 635 818 
-1000 636 1000 269 636 459 818 636 636 636 1519 684 454 1070 1000 1000 
-1000 1000 269 269 459 459 545 636 1000 636 977 521 454 980 1000 1000 
-615 352 394 636 636 636 636 454 636 636 1000 545 645 818 454 1000 
-636 542 818 542 542 636 642 636 364 636 542 545 645 1000 1000 1000 
-545 683 683 683 683 683 683 989 698 632 632 632 632 421 421 421 
-421 766 748 787 787 787 787 787 818 787 732 732 732 732 615 605 
-620 601 601 601 601 601 601 955 521 596 596 596 596 274 274 274 
-274 612 633 607 607 607 607 607 818 607 633 633 633 633 591 623 
-591 ]
-/Encoding /WinAnsiEncoding
-/FontDescriptor 13 0 R
->>
-endobj
-13 0 obj
-<<
-/Type /FontDescriptor
-/FontName /Verdana,Italic
-/Flags 96
-/FontBBox [ -250 -212 1826 1009 ]
-/MissingWidth 1000
-/StemV 92
-/StemH 92
-/ItalicAngle -11
-/CapHeight 1009
-/XHeight 706
-/Ascent 1009
-/Descent -212
-/Leading 221
-/MaxWidth 1522
-/AvgWidth 504
->>
-endobj
-16 0 obj
-<<
-/Type /Font
-/Subtype /TrueType
-/Name /F4
-/BaseFont /Verdana,Bold
-/FirstChar 31
-/LastChar 255
-/Widths [ 1000 342 402 587 867 711 1272 862 332 543 543 711 867 361 480 361 
-689 711 711 711 711 711 711 711 711 711 711 402 402 867 867 867 
-617 964 776 762 724 830 683 650 811 837 546 555 771 637 948 847 
-850 733 850 782 710 682 812 764 1128 764 737 692 543 689 543 867 
-711 711 668 699 588 699 664 422 699 712 342 403 671 342 1058 712 
-687 699 699 497 593 456 712 650 979 669 651 597 711 543 711 867 
-1000 711 1000 332 711 587 1049 711 711 711 1777 710 543 1135 1000 1000 
-1000 1000 332 332 587 587 711 711 1000 711 964 593 543 1068 1000 1000 
-737 342 402 711 711 711 711 543 711 711 964 598 850 867 480 964 
-711 587 867 598 598 711 721 711 361 711 598 598 850 1182 1182 1182 
-617 776 776 776 776 776 776 1094 724 683 683 683 683 546 546 546 
-546 830 847 850 850 850 850 850 867 850 812 812 812 812 737 735 
-713 668 668 668 668 668 668 1018 588 664 664 664 664 342 342 342 
-342 679 712 687 687 687 687 687 867 687 712 712 712 712 651 699 
-651 ]
-/Encoding /WinAnsiEncoding
-/FontDescriptor 17 0 R
->>
-endobj
-17 0 obj
-<<
-/Type /FontDescriptor
-/FontName /Verdana,Bold
-/Flags 16416
-/FontBBox [ -250 -210 2136 1000 ]
-/MissingWidth 1000
-/StemV 182
-/StemH 182
-/ItalicAngle 0
-/CapHeight 1000
-/XHeight 700
-/Ascent 1000
-/Descent -210
-/Leading 210
-/MaxWidth 1780
-/AvgWidth 570
->>
-endobj
-18 0 obj
-<<
-/Type /Font
-/Subtype /TrueType
-/Name /F5
-/BaseFont /Symbol
-/FirstChar 31
-/LastChar 255
-/Widths [ 600 250 333 713 500 549 833 778 439 333 333 500 549 250 549 250 
-278 500 500 500 500 500 500 500 500 500 500 278 278 549 549 549 
-444 549 722 667 722 612 611 763 603 722 333 631 722 686 889 722 
-722 768 741 556 592 611 690 439 768 645 795 611 333 863 333 658 
-500 500 631 549 549 494 439 521 411 603 329 603 549 549 576 521 
-549 549 521 549 603 439 576 713 686 493 686 494 480 200 480 549 
-600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
-600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
-600 600 620 247 549 167 713 500 753 753 753 753 1042 987 603 987 
-603 400 549 411 549 549 713 494 460 549 549 549 549 1000 603 1000 
-658 823 686 795 987 768 768 823 768 768 713 713 713 713 713 713 
-713 768 713 790 790 890 823 549 250 713 603 603 1042 987 603 987 
-603 494 329 790 790 786 713 384 384 384 384 384 384 494 494 494 
-494 600 329 274 686 686 686 384 384 384 384 384 384 494 494 494 
-600 ]
-/FontDescriptor 19 0 R
->>
-endobj
-19 0 obj
-<<
-/Type /FontDescriptor
-/FontName /Symbol
-/Flags 6
-/FontBBox [ -250 -217 1258 1000 ]
-/MissingWidth 602
-/StemV 110
-/StemH 110
-/ItalicAngle 0
-/CapHeight 1000
-/XHeight 700
-/Ascent 1000
-/Descent -217
-/Leading 217
-/MaxWidth 1048
-/AvgWidth 602
->>
-endobj
-22 0 obj
-<<
-/Type /Font
-/Subtype /TrueType
-/Name /F6
-/BaseFont /Arial,Bold
-/FirstChar 31
-/LastChar 255
-/Widths [ 750 278 333 474 556 556 889 722 238 333 333 389 584 278 333 278 
-278 556 556 556 556 556 556 556 556 556 556 333 333 584 584 584 
-611 975 722 722 722 722 667 611 778 722 278 556 722 611 833 722 
-778 667 778 722 667 611 722 667 944 667 667 611 333 278 333 584 
-556 333 556 611 556 611 556 333 611 611 278 278 556 278 889 611 
-611 611 611 389 556 333 611 556 778 556 556 500 389 280 389 584 
-750 556 750 278 556 500 1000 556 556 333 1000 667 333 667 611 611 
-611 750 278 278 500 500 350 556 1000 333 1000 556 333 556 479 500 
-500 278 333 333 611 556 722 280 556 333 737 667 556 584 333 737 
-611 400 549 333 278 333 576 556 278 333 556 556 556 611 333 385 
-500 722 722 722 722 722 611 722 722 722 667 667 667 667 278 278 
-722 722 722 722 778 778 778 778 584 722 722 722 722 722 667 611 
-611 389 556 556 556 556 278 556 556 556 556 556 556 556 278 278 
-719 611 611 611 611 611 611 611 549 389 611 611 611 611 556 333 
-333 ]
-/Encoding /WinAnsiEncoding
-/FontDescriptor 23 0 R
->>
-endobj
-23 0 obj
-<<
-/Type /FontDescriptor
-/FontName /Arial,Bold
-/Flags 16416
-/FontBBox [ -250 -229 1229 928 ]
-/MissingWidth 747
-/StemV 154
-/StemH 154
-/ItalicAngle 0
-/CapHeight 928
-/XHeight 649
-/Ascent 928
-/Descent -229
-/Leading 193
-/MaxWidth 1024
-/AvgWidth 482
->>
-endobj
-31 0 obj
-<<
-/Type /Font
-/Subtype /TrueType
-/Name /F7
-/BaseFont /Verdana,BoldItalic
-/FirstChar 31
-/LastChar 255
-/Widths [ 1000 342 402 587 867 711 1272 862 332 543 543 711 867 361 480 361 
-689 711 711 711 711 711 711 711 711 711 711 402 402 867 867 867 
-617 964 776 762 724 830 683 650 811 837 546 555 771 637 948 847 
-850 733 850 782 710 682 812 764 1128 764 737 692 543 689 543 867 
-711 711 668 699 588 699 664 422 699 712 342 403 671 342 1058 712 
-686 699 699 497 593 456 712 649 979 669 651 597 711 543 711 867 
-1000 711 1000 332 711 587 1049 711 711 711 1777 710 543 1135 1000 1000 
-1000 1000 332 332 587 587 711 711 1000 711 964 593 543 1068 1000 1000 
-737 342 402 711 711 711 711 543 711 711 964 598 850 867 480 964 
-711 587 867 598 598 711 721 711 361 711 598 598 850 1182 1182 1182 
-617 776 776 776 776 776 776 1094 724 683 683 683 683 546 546 546 
-546 830 847 850 850 850 850 850 867 850 812 812 812 812 737 735 
-713 668 668 668 668 668 668 1018 588 664 664 664 664 342 342 342 
-342 679 712 686 686 686 686 686 867 686 712 712 712 712 651 699 
-651 ]
-/Encoding /WinAnsiEncoding
-/FontDescriptor 32 0 R
->>
-endobj
-32 0 obj
-<<
-/Type /FontDescriptor
-/FontName /Verdana,BoldItalic
-/Flags 16480
-/FontBBox [ -250 -205 2140 1000 ]
-/MissingWidth 1000
-/StemV 181
-/StemH 181
-/ItalicAngle -11
-/CapHeight 1000
-/XHeight 700
-/Ascent 1000
-/Descent -205
-/Leading 205
-/MaxWidth 1783
-/AvgWidth 566
->>
-endobj
-2 0 obj
-[ /PDF /Text  ]
-endobj
-5 0 obj
-<<
-/Kids [4 0 R 21 0 R 26 0 R 30 0 R 36 0 R 40 0 R ]
-/Count 6
-/Type /Pages
-/MediaBox [ 0 0 595 842 ]
->>
-endobj
-1 0 obj
-<<
-/Creator <FEFF004D006900630072006F0073006F0066007400200057006F007200640020>
-/CreationDate (D:20020618184908)
-/Title <FEFF005500530042005F0065006E005F0062007200650066005F0036002E005000440046>
-/Author <FEFF004200650072006E006100720064>
-/Producer (Acrobat PDFWriter 4.0 pour Windows)
->>
-endobj
-3 0 obj
-<<
-/Pages 5 0 R
-/Type /Catalog
-/DefaultGray 44 0 R
-/DefaultRGB  45 0 R
->>
-endobj
-44 0 obj
-[/CalGray
-<<
-/WhitePoint [0.9505 1 1.0891 ]
-/Gamma 0.2468 
->>
-]
-endobj
-45 0 obj
-[/CalRGB
-<<
-/WhitePoint [0.9505 1 1.0891 ]
-/Gamma [0.2468 0.2468 0.2468 ]
-/Matrix [0.4361 0.2225 0.0139 0.3851 0.7169 0.0971 0.1431 0.0606 0.7141 ]
->>
-]
-endobj
-xref
-0 46
-0000000000 65535 f
-0000114806 00000 n
-0000114645 00000 n
-0000115117 00000 n
-0000006136 00000 n
-0000114679 00000 n
-0000103388 00000 n
-0000104502 00000 n
-0000104773 00000 n
-0000105903 00000 n
-0000106180 00000 n
-0000107302 00000 n
-0000107582 00000 n
-0000108721 00000 n
-0000000021 00000 n
-0000006112 00000 n
-0000109008 00000 n
-0000110148 00000 n
-0000110436 00000 n
-0000111524 00000 n
-0000006256 00000 n
-0000022715 00000 n
-0000111801 00000 n
-0000112921 00000 n
-0000006352 00000 n
-0000022690 00000 n
-0000044590 00000 n
-0000022899 00000 n
-0000044565 00000 n
-0000044711 00000 n
-0000058493 00000 n
-0000113203 00000 n
-0000114349 00000 n
-0000044807 00000 n
-0000058468 00000 n
-0000058614 00000 n
-0000079120 00000 n
-0000058710 00000 n
-0000079095 00000 n
-0000079241 00000 n
-0000103159 00000 n
-0000079349 00000 n
-0000103134 00000 n
-0000103280 00000 n
-0000115214 00000 n
-0000115302 00000 n
-trailer
-<<
-/Size 46
-/Root 3 0 R
-/Info 1 0 R
-/ID [<d626aa2f5370c1609668b104a14f5f57><d626aa2f5370c1609668b104a14f5f57>]
->>
-startxref
-115480
-%%EOF
