@@ -136,7 +136,7 @@ void Error::setSource(const QString& fileName, int fileLine, const QObject*const
   Q_ASSERT(obj != nullptr);
   Q_ASSERT(obj->metaObject() != nullptr);
 
-  setSource(fileName, fileLine, obj->metaObject()->className(), functionName);
+  setSource(fileName, fileLine, QLatin1String(obj->metaObject()->className()), functionName);
 }
 
 void Error::commit()
@@ -210,7 +210,7 @@ Error Error::fromQFileDevice(const QFileDevice & fileDevice, const QString & sou
   Q_ASSERT(obj != nullptr);
   Q_ASSERT(obj->metaObject() != nullptr);
 
-  return fromQFileDevice(fileDevice, sourceCodeFile, line, obj->metaObject()->className(), functionName);
+  return fromQFileDevice(fileDevice, sourceCodeFile, line, QLatin1String(obj->metaObject()->className()), functionName);
 }
 
 } // namespace Mdt{

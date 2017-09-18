@@ -23,6 +23,7 @@
 #include <QProcess>
 #include <QObject>
 #include <QMetaObject>
+#include <QLatin1String>
 
 namespace Mdt{
 
@@ -56,7 +57,7 @@ Error ErrorQProcess::fromQProcess(const QProcess& process, const QString& file, 
   Q_ASSERT(obj != nullptr);
   Q_ASSERT(obj->metaObject() != nullptr);
 
-  return fromQProcess(process, file, line, obj->metaObject()->className(), functionName);
+  return fromQProcess(process, file, line, QLatin1String(obj->metaObject()->className()), functionName);
 }
 
 } // namespace Mdt{

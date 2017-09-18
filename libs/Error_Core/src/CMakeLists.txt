@@ -18,6 +18,8 @@ mdt_add_library(
   HEADERS_DIRECTORY .
   LINK_DEPENDENCIES Qt5::Core Threads::Threads
 )
+target_compile_definitions(Error_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
+
 mdt_set_library_description(
   NAME Error_Core
   DESCRIPTION "Error helps for error messages passing, displaying and logging."

@@ -87,7 +87,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorQProcess.cpp" line="47"/>
+        <location filename="../src/Mdt/ErrorQProcess.cpp" line="48"/>
         <source>Reported from QProcess: %1</source>
         <translation type="unfinished"></translation>
     </message>

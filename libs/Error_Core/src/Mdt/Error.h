@@ -23,6 +23,7 @@
 
 #include <QExplicitlySharedDataPointer>
 #include <QString>
+#include <QLatin1String>
 #include <QSharedData>
 #include <QMetaType>
 #include <type_traits>  // std::is_same
@@ -387,9 +388,11 @@ namespace Mdt{
         const QString functionName = pvShared->functionName;
         QString caller;
         if(!functionName.isEmpty()){
-          caller = " Error object source: " + functionName + " in file " + pvShared->fileName + ", line " + QString::number(pvShared->lineNumber);
+          caller = QString(QLatin1String(" Error object source: %1 in file %2, line %3"))
+                   .arg(functionName, pvShared->fileName)
+                   .arg(pvShared->lineNumber);
         }
-        msg = "Requested type T is not the same as stored error type." + caller;
+        msg = QLatin1String("Requested type T is not the same as stored error type.") + caller;
       }
       Q_ASSERT_X(std::type_index(typeid(T)) == pvShared->userErrorType, "T Error::error() const", msg.toStdString().c_str());
       Q_ASSERT(dynamic_cast<const ErrorPrivate<T>*>(pvShared.constData()) != nullptr);

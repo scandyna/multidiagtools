@@ -116,7 +116,7 @@ QString FileBackend::getErrorString(const Error & error) const
   QString lineBegin;
 
   // Prepare line beginning
-  lineBegin = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss") + QStringLiteral(" ") \
+  lineBegin = QDateTime::currentDateTime().toString(QLatin1String("yyyy.MM.dd hh:mm:ss")) + QStringLiteral(" ") \
             % errorLevelText(error.level()) % QStringLiteral(": ");
   // Build message
   str = lineBegin % QStringLiteral("In ") % error.functionName() % QStringLiteral("\n") \
