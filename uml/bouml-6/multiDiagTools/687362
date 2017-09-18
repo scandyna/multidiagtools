@@ -1,0 +1,135 @@
+format 213
+"Objdump" // Mdt::DeployUtils::Impl::Objdump
+  revision 6
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1881474 "Parsers"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3620738 "ObjdumpDependenciesParser"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4177026 "DependenciesRecordGrammarWindows"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 4184194 "DependenciesParserTemplateWindows"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 3653762 "ObjdumpFormatParser"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4204546 "FileFormatGrammar"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 4204674 "FormatParserTemplate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 4204802 "ArchitectureGrammar"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+end

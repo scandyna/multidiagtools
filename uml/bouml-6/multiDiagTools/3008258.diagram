@@ -1,0 +1,39 @@
+format 211
+
+classcanvas 128002 class_ref 2960770 // SelectFieldItem
+  classdiagramsettings member_max_width 0 end
+  xyz 311 39 2000
+end
+classcanvas 128130 class_ref 1994882 // SelectField
+  classdiagramsettings member_max_width 0 end
+  xyz 424 288 2006
+end
+classcanvas 128642 class_ref 3350274 // static_visitor
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 40.5 488.5 2005
+end
+classcanvas 128770 class_ref 3424002 // SelectAllField
+  classdiagramsettings member_max_width 0 end
+  xyz 887 122 2000
+end
+classcanvas 129026 class_ref 3424130 // SelectFieldRawSql
+  classdiagramsettings member_max_width 0 end
+  xyz 39 106 2000
+end
+relationcanvas 128258 relation_ref 3324418 // <directional composition>
+  decenter_begin 505
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3789570 // <directional composition>
+  from ref 128002 z 2001 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3789698 // <directional composition>
+  from ref 128002 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

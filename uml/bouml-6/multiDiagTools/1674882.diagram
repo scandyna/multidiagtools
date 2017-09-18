@@ -1,0 +1,57 @@
+format 209
+
+classcanvas 128002 class_ref 1994626 // Table
+  classdiagramsettings member_max_width 0 end
+  xyz 506 208 2000
+end
+classcanvas 128130 class_ref 1994754 // Schema
+  classdiagramsettings member_max_width 0 end
+  xyz 49 82 2000
+end
+classcanvas 128386 class_ref 1994882 // SelectField
+  classdiagramsettings member_max_width 0 end
+  xyz 524 60 2000
+end
+classcanvas 129026 class_ref 1995138 // JoinClause
+  classdiagramsettings member_max_width 0 end
+  xyz 88 318 2000
+end
+classcanvas 129282 class_ref 1995266 // JoinKey
+  classdiagramsettings member_max_width 0 end
+  xyz 466 380 2000
+end
+classcanvas 129666 class_ref 910210 // mdtSqlSchemaTable
+  classdiagramsettings member_max_width 0 end
+  xyz 247 590 2005
+end
+classcanvas 129794 class_ref 1719426 // mdtSqlForeignKeySetting
+  classdiagramsettings member_max_width 0 end
+  xyz 36 490 2000
+end
+classcanvas 129922 class_ref 1988098 // mdtSqlForeignKey
+  classdiagramsettings member_max_width 0 end
+  xyz 1 538 2000
+end
+note 130050 "Possibilité de demander au DatabaseSchema de jretournet un JoinClause en précisant 2 tables à joindre."
+  xyzwh 23 185 2000 407 69
+relationcanvas 128898 relation_ref 2329090 // <directional composition>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 488 236 3000 no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2329218 // <directional composition>
+  from ref 129026 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 488 273 3000 no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2329346 // <directional composition>
+  from ref 129026 z 2001 to ref 129282
+  no_role_a no_role_b
+  multiplicity_a_pos 450 422 3000 no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 2329474 // <directional composition>
+  from ref 128130 z 2001 to ref 128386
+  no_role_a no_role_b
+  multiplicity_a_pos 508 128 3000 no_multiplicity_b
+end
+end

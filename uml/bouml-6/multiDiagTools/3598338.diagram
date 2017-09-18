@@ -1,0 +1,13 @@
+format 213
+
+classcanvas 128002 class_ref 4151810 // QStandardPaths
+  classdiagramsettings member_max_width 0 end
+  xyz 344 76 2000
+end
+classcanvas 128130 class_ref 4151938 // StandardLocation
+  classdiagramsettings member_max_width 0 end
+  xyz 42 42 2006
+end
+line 128258 ---+
+  from ref 128130 z 2007 to ref 128002
+end

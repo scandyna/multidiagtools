@@ -1,0 +1,29 @@
+format 211
+"dbschema" // mdttools::mdttesttool::mdt::dbschema
+  revision 1
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+end

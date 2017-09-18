@@ -1,0 +1,11 @@
+format 211
+
+classcanvas 128130 class_ref 1787266 // mdtFieldMappingSplitParameters
+  classdiagramsettings member_max_width 0 end
+  xyz 120 41 3005
+end
+classcanvas 128386 class_ref 1787394 // mdtFieldMappingCatParameters
+  classdiagramsettings member_max_width 0 end
+  xyz 466 375 2006
+end
+end

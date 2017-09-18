@@ -1,0 +1,16 @@
+format 211
+
+classcanvas 128002 class_ref 3247362 // JoinConstraintField
+  classdiagramsettings member_max_width 0 end
+  xyz 40 38 2000
+end
+classcanvas 128130 class_ref 3247490 // TableFieldTerminal
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 216 40 2006
+end
+relationcanvas 128258 relation_ref 3676674 // <dependency>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

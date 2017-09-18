@@ -1,0 +1,30 @@
+format 207
+
+classcanvas 128002 class_ref 1295362 // mdtTtTestData
+  classdiagramsettings member_max_width 0 end
+  xyz 30 382 2000
+end
+classcanvas 128130 class_ref 1295490 // mdtTtTestModelData
+  classdiagramsettings member_max_width 0 end
+  xyz 547 412 3005
+end
+classcanvas 128386 class_ref 1067266 // mdtSqlRecord
+  classdiagramsettings member_max_width 0 end
+  xyz 206 43 3011
+end
+relationcanvas 128258 relation_ref 1591170 // <directional composition>
+  from ref 128002 z 3006 to ref 128130
+  role_a_pos 459 440 3000 no_role_b
+  multiplicity_a_pos 529 470 3000 no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 1591042 // <generalisation>
+  from ref 128002 z 3012 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 1591298 // <generalisation>
+  from ref 128130 z 3012 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

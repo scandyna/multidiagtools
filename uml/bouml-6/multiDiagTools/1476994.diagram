@@ -1,0 +1,67 @@
+format 209
+
+pseudostatecanvas 128002 pseudostate_ref 214146 // initial
+   xyz 62 103 2000
+end
+statecanvas 128130 state_ref 276354 // Original
+  
+  xyzwh 272 93 2000 89 43
+end
+pseudostatecanvas 128386 pseudostate_ref 214274 // choice
+   xyz 136 95 2000
+end
+statecanvas 128770 state_ref 276482 // Enabled
+  
+  xyzwh 280 258 2000 71 43
+end
+statecanvas 128898 state_ref 276610 // Disabled
+  
+  xyzwh 502 260 2000 75 43
+end
+statecanvas 130050 state_ref 276866 // Keep
+  
+  xyzwh 124 258 2000 53 43
+end
+transitioncanvas 128514 transition_ref 327170 // <transition>
+  
+  from ref 128002 z 2001 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 128642 transition_ref 327298 // <transition>
+  
+  from ref 128386 z 2001 label "[keep === false]" xyz 167 92 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129282 transition_ref 327554 // <transition>
+  decenter_begin 483
+  
+  from ref 128130 z 2001 label "enable" xyz 294.5 187.5 3000 to ref 128770
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129410 transition_ref 327682 // <transition>
+  geometry HV
+  
+  from ref 128130 z 2001 label "disable" xyz 418 97.5 3000 to point 537 112
+  line 129666 z 2001 to ref 128898
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129794 transition_ref 327810 // <transition>
+  decenter_begin 209
+  decenter_end 209
+  
+  from ref 128770 z 2001 label "disable" xyz 400 248.5 3000 to ref 128898
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129922 transition_ref 327938 // <transition>
+  decenter_begin 790
+  decenter_end 790
+  
+  from ref 128898 z 2001 label "enable" xyz 406 284 3000 to ref 128770
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130178 transition_ref 328066 // <transition>
+  
+  from ref 128386 z 2001 label "else" xyz 136.5 186 3000 to ref 130050
+  write_horizontally default show_definition default drawing_language default
+end
+end

@@ -1,0 +1,19 @@
+format 211
+
+classcanvas 128002 class_ref 2775682 // ForeignKey
+  classdiagramsettings member_max_width 0 end
+  xyz 41 103 2000
+end
+classcanvas 128130 class_ref 2775554 // PrimaryKey
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 344.5 2000
+end
+classcanvas 128258 class_ref 2782466 // Index
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 483.5 2000
+end
+classcanvas 128898 class_ref 2824706 // AutoIncrementPrimaryKey
+  classdiagramsettings member_max_width 0 end
+  xyz 309.5 344.5 2000
+end
+end

@@ -1,0 +1,223 @@
+format 211
+
+classcanvas 128002 class_ref 894978 // QGraphicsTextItem
+  classdiagramsettings member_max_width 0 end
+  xyz 1387.15 242.75 2000
+end
+classcanvas 128130 class_ref 895106 // QGraphicsObject
+  classdiagramsettings member_max_width 0 end
+  xyz 1396.4 160.45 2006
+end
+classcanvas 128386 class_ref 895234 // QGraphicsItem
+  classdiagramsettings member_max_width 0 end
+  xyz 1401.15 41.45 2012
+end
+classcanvas 128642 class_ref 895362 // QGraphicsItemGroup
+  classdiagramsettings member_max_width 0 end
+  xyz 1557.75 160.45 2018
+end
+classcanvas 128898 class_ref 895490 // QGraphicsLineItem
+  classdiagramsettings member_max_width 0 end
+  xyz 414.7 160.45 2018
+end
+classcanvas 129154 class_ref 895618 // QGraphicsScene
+  classdiagramsettings member_max_width 0 end
+  xyz 1263.45 608.35 2000
+end
+classcanvas 129282 class_ref 895746 // QGraphicsView
+  classdiagramsettings member_max_width 0 end
+  xyz 1112.6 608.35 2000
+end
+classcanvas 129410 class_ref 895874 // QAbstractScrollArea
+  classdiagramsettings member_max_width 0 end
+  xyz 1099.85 526.05 2006
+end
+classcanvas 129666 class_ref 896002 // QFrame
+  classdiagramsettings member_max_width 0 end
+  xyz 1136.6 444.75 2012
+end
+classcanvas 129922 class_ref 316162 // QWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 1137.85 362.45 2018
+end
+classcanvas 130178 class_ref 138626 // QObject
+  classdiagramsettings member_max_width 0 end
+  xyz 1293.7 160.45 2024
+end
+classcanvas 132226 class_ref 2247298 // QEvent
+  classdiagramsettings member_max_width 0 end
+  xyz 87.9 730.45 2000
+end
+classcanvas 132354 class_ref 2247426 // QGraphicsSceneEvent
+  classdiagramsettings member_max_width 0 end
+  xyz 38.9 813.15 2000
+end
+classcanvas 132610 class_ref 896386 // QAbstractGraphicsShapeItem
+  classdiagramsettings member_max_width 0 end
+  xyz 582 160.45 2018
+end
+classcanvas 134146 class_ref 896258 // QGraphicsEllipseItem
+  classdiagramsettings member_max_width 0 end
+  xyz 40.1 280.15 2024
+end
+classcanvas 134402 class_ref 2567170 // QGraphicsPathItem
+  classdiagramsettings member_max_width 0 end
+  xyz 791.3 280.15 2000
+end
+classcanvas 134658 class_ref 2567298 // QGraphicsPolygonItem
+  classdiagramsettings member_max_width 0 end
+  xyz 968.6 280.15 2005
+end
+classcanvas 134914 class_ref 2567426 // QGraphicsRectItem
+  classdiagramsettings member_max_width 0 end
+  xyz 614 280.15 2000
+end
+classcanvas 135042 class_ref 2567426 // QGraphicsRectItem
+  classdiagramsettings member_max_width 0 end
+  xyz 441.65 280.15 2000
+end
+classcanvas 135426 class_ref 2567554 // QGraphicsSimpleTextItem
+  classdiagramsettings member_max_width 0 end
+  xyz 228.1 280.15 2000
+end
+relationcanvas 128258 relation_ref 1095938 // <generalisation>
+  decenter_begin 525
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 1096194 // <generalisation>
+  decenter_end 532
+  from ref 128130 z 2013 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 1096322 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 532
+  from ref 128642 z 2019 to point 1628 122.8
+  line 130690 z 2019 to point 1455 122.8
+  line 130818 z 2019 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 1096578 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 532
+  from ref 128898 z 2019 to point 479 122.8
+  line 133122 z 2019 to point 1455 122.8
+  line 133250 z 2019 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 1097474 // <generalisation>
+  from ref 129282 z 2007 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 1097730 // <generalisation>
+  from ref 129410 z 2013 to ref 129666
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 1097602 // <generalisation>
+  from ref 129666 z 2019 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 2457474 // <generalisation>
+  geometry VHV unfixed
+  from ref 129922 z 2025 to point 1168 324.2
+  line 132866 z 2025 to point 1323.5 324.2
+  line 132994 z 2025 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 1096066 // <generalisation>
+  from ref 128130 z 2025 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 1097218 // <generalisation>
+  decenter_begin 521
+  from ref 129154 z 2025 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131970 relation_ref 2525058 // <unidirectional association>
+  decenter_begin 418
+  decenter_end 418
+  from ref 129282 z 2001 to ref 129154
+  no_role_a no_role_b
+  multiplicity_a_pos 1245 633 3000 multiplicity_b_pos 1232 633 3000
+end
+relationcanvas 132098 relation_ref 2525186 // <composition>
+  decenter_begin 418
+  decenter_end 558
+  from ref 129154 z 2013 to point 1741.1 626.6
+  line 136450 z 2013 to point 1741.1 65.9
+  line 136578 z 2013 to ref 128386
+  no_role_a no_role_b
+  multiplicity_a_pos 1517 72 3000 multiplicity_b_pos 1391 633 3000
+end
+relationcanvas 132482 relation_ref 2525314 // <generalisation>
+  from ref 132354 z 2001 to ref 132226
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132738 relation_ref 1097858 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 532
+  from ref 132610 z 2019 to point 680 122.8
+  line 135682 z 2019 to point 1455 122.8
+  line 135810 z 2019 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134274 relation_ref 1097986 // <generalisation>
+  geometry VHV unfixed
+  from ref 134146 z 2025 to point 113.5 242.8
+  line 135938 z 2025 to point 680.4 242.8
+  line 136066 z 2025 to ref 132610
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134530 relation_ref 2929794 // <generalisation>
+  geometry VHV unfixed
+  from ref 134402 z 2019 to point 857.3 242.8
+  line 136962 z 2019 to point 680.4 242.8
+  line 137090 z 2019 to ref 132610
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134786 relation_ref 2929922 // <generalisation>
+  geometry VHV unfixed
+  from ref 134658 z 2019 to point 1046.6 242.8
+  line 137218 z 2019 to point 680.4 242.8
+  line 137346 z 2019 to ref 132610
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135170 relation_ref 2930050 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 474
+  from ref 135042 z 2019 to point 503 242.8
+  line 136706 z 2019 to point 661 242.8
+  line 136834 z 2019 to ref 132610
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135298 relation_ref 2930050 // <generalisation>
+  from ref 134914 z 2019 to ref 132610
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135554 relation_ref 2930178 // <generalisation>
+  geometry VHV unfixed
+  from ref 135426 z 2019 to point 315.9 242.8
+  line 136194 z 2019 to point 680.4 242.8
+  line 136322 z 2019 to ref 132610
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -1,0 +1,52 @@
+format 211
+
+classcanvas 128002 class_ref 3008130 // _View
+  classdiagramsettings member_max_width 0 end
+  xyz 46 240 2000
+end
+classcanvas 128130 class_ref 3008258 // _Selections
+  classdiagramsettings member_max_width 0 end
+  xyz 217 66 2000
+end
+classcanvas 128258 class_ref 3008386 // _Delegate
+  classdiagramsettings member_max_width 0 end
+  xyz 413 240 2000
+end
+classcanvas 128386 class_ref 3008514 // _Model
+  classdiagramsettings member_max_width 0 end
+  xyz 242 406 2000
+end
+relationcanvas 128514 relation_ref 3379074 // <unidirectional association>
+  geometry VH
+  from ref 128002 z 2001 to point 69 85
+  line 129666 z 2001 to ref 128130
+  role_a_pos 176 65 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 3379202 // <unidirectional association>
+  from ref 128002 z 2001 to ref 128258
+  role_a_pos 365 239 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3379330 // <unidirectional association>
+  geometry HV
+  from ref 128130 z 2001 to point 448 85
+  line 129922 z 2001 to ref 128258
+  role_a_pos 460 217 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3379458 // <unidirectional association>
+  geometry HVr
+  from ref 128258 z 2001 to point 448 425
+  line 130050 z 2001 to ref 128386
+  role_a_pos 310 405 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3379586 // <unidirectional association>
+  geometry VHr
+  from ref 128386 z 2001 to point 69 425
+  line 130178 z 2001 to ref 128002
+  role_a_pos 81 290 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

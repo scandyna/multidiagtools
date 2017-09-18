@@ -1,0 +1,566 @@
+format 204
+"linux" // mdtport::linux
+  revision 21
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 201346 "mdtPortPosix"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 255490 "mdtPortPosix"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 249730 "mdtPortPosix"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 424194 "mdtPortPosix"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 424322 "~mdtPortPosix"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 272002 // <generalisation>
+	relation 271746 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 272002 // <generalisation>
+	  b parent class_ref 249474 // mdtAbstractPort
+      end
+
+      operation 492930 "setAttributes"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "portName" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 426242 "open"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 1
+	  param in name "path" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 426370 "close"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 426498 "setReadTimeout"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "timeout" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 426626 "setWriteTimeout"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "timeout" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 426754 "waitEventRead"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 601730 "read"
+	public explicit_return_type "qInt64"
+	nparams 2
+	  param out name "data" explicit_type "char"
+	multiplicity "*"
+	  param in name "maxSize" explicit_type "qInt64"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 427010 "flushIn"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 427138 "waitEventWriteReady"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 601858 "write"
+	public explicit_return_type "qInt64"
+	nparams 2
+	  param in name "data" explicit_type "char"
+	multiplicity "*"
+	  param in name "maxSize" explicit_type "qInt64"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 427394 "flushOut"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 333698 "pvFd"
+	protected explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 333826 "pvReadTimeout"
+	private explicit_type "struct timeval"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 333954 "pvWriteTimeout"
+	private explicit_type "struct timeval"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 543874 "pvPortLock"
+	private type class_ref 432258 // mdtPortLock
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+  end
+
+  classview 306946 "mdtPortLock"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    associated_deployment_view deploymentview_ref 226178 // mdtPortLock
+    classdiagram 435586 "mdtPortLock"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 432258 "mdtPortLock"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 832770 "mdtPortLock"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 832898 "~mdtPortLock"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 542722 "pvPort"
+	private type class_ref 432386 // QFileInfo
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 542978 "pvLockfiles"
+	private explicit_type "QFileInfoList"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 543234 "pvWritableLockDirectories"
+	private type class_ref 160770 // QStringList
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 833410 "openLocked"
+	public explicit_return_type "int"
+	nparams 2
+	  param in name "portName" type class_ref 161026 // QString
+	  param in name "flags" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 833794 "isLocked"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 833538 "unlock"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 833282 "scanForLockDirectories"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 833666 "buildLockFilesList"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 543362 "pvIsLocked"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 834050 "createLockFile"
+	private explicit_return_type "bool"
+	nparams 1
+	  param in name "file" type class_ref 432386 // QFileInfo
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 543490 "pvLock"
+	private explicit_type "struct flock"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 543618 "pvFd"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+  end
+
+  deploymentview 226178 "mdtPortLock"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 203394 "mdtPortLock"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 432258 // mdtPortLock
+      end
+    end
+  end
+end

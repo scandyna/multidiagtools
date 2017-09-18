@@ -1,0 +1,29 @@
+format 211
+
+classcanvas 128002 class_ref 2649858 // Resistance
+  classdiagramsettings member_max_width 0 end
+  xyz 215 320 2000
+end
+classcanvas 128130 class_ref 2649602 // Double
+  classdiagramsettings member_max_width 0 end
+  xyz 42 122 2000
+end
+classcanvas 128514 class_ref 2663426 // PhysicsType
+  classdiagramsettings member_max_width 0 end
+  xyz 225 35 2000
+end
+note 128898 "For strict unit typed (using Boost Units):
+Maybe add some other part/library, that offers some facility (includes correct header files, defines using correct namespaces and types, natural convertion from some PhysicsType to boost units strong type, etc.."
+  xyzwh 40.5 504.5 2000 503 113
+relationcanvas 128770 relation_ref 3040002 // <generalisation>
+  decenter_begin 487
+  from ref 128002 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3040130 // <directional composition>
+  from ref 128514 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

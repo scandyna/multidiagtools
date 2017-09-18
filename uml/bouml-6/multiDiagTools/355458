@@ -1,0 +1,240 @@
+format 211
+"sandbox" // mdttools::resource::sandbox
+  revision 1
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1038978 "sandbox"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2075906 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2419842 "Resource"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2419970 "HumainResource"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2718594 // <generalisation>
+	relation 2701826 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2718594 // <generalisation>
+	  b parent class_ref 2419842 // Resource
+      end
+    end
+
+    class 2420098 "InfrastructureResource"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2718722 // <generalisation>
+	relation 2701954 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2718722 // <generalisation>
+	  b parent class_ref 2419842 // Resource
+      end
+    end
+
+    class 2420226 "Planning"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2420354 "Task"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2420482 "TimeLine"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2420610 "Constraint"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2420738 "InsfrastructurePlanning"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2420866 "HumainResourcePlanning"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2420994 "Cost"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2421122 "Occupation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+end

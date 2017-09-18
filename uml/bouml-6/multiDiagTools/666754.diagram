@@ -1,0 +1,97 @@
+format 209
+
+classcanvas 128002 class_ref 679042 // mdtSqlFieldHandler
+  classdiagramsettings member_max_width 0 end
+  xyz 26 199 2000
+end
+classcanvas 128130 class_ref 138626 // QObject
+  classdiagramsettings member_max_width 0 end
+  xyz 106 72 2000
+end
+classcanvas 128386 class_ref 404738 // QSqlField
+  classdiagramsettings member_max_width 0 end
+  xyz 434 55 2000
+end
+classcanvas 128642 class_ref 505218 // QComboBox
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 573 554 2000
+end
+classcanvas 128770 class_ref 679810 // QAbstractButton
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 553 308 2000
+end
+classcanvas 128898 class_ref 679170 // QLineEdit
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 541 873 2000
+end
+classcanvas 129026 class_ref 679298 // QSpinBox
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 585 498 2000
+end
+classcanvas 129154 class_ref 679554 // QDateTimeEdit
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 560 379 2000
+end
+classcanvas 129282 class_ref 679682 // QDoubleSpinBox
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 553 440 2005
+end
+classcanvas 130178 class_ref 699778 // mdtSqlFieldHandlerAbstractDataWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 483 649 2000
+end
+classcanvas 130306 class_ref 699906 // mdtSqlFieldHandlerLineEdit
+  classdiagramsettings member_max_width 0 end
+  xyz 78 754 2000
+end
+relationcanvas 128258 relation_ref 831618 // <generalisation>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 831746 // <unidirectional association>
+  from ref 128002 z 2001 to ref 128386
+  role_a_pos 481 136 3000 no_role_b
+  multiplicity_a_pos 541 166 3000 no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 832898 // <unidirectional association>
+  from ref 128002 z 2001 to ref 128770
+  role_a_pos 429 318 3000 no_role_b
+  multiplicity_a_pos 518 348 3000 no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 833026 // <unidirectional association>
+  from ref 128002 z 2001 to ref 129154
+  role_a_pos 444 379 3000 no_role_b
+  multiplicity_a_pos 525 409 3000 no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 833154 // <unidirectional association>
+  from ref 128002 z 2006 to ref 129282
+  role_a_pos 427 430 3000 no_role_b
+  multiplicity_a_pos 518 460 3000 no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 833282 // <unidirectional association>
+  from ref 128002 z 2001 to ref 129026
+  role_a_pos 505 488 3000 no_role_b
+  multiplicity_a_pos 550 518 3000 no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 833410 // <unidirectional association>
+  from ref 128002 z 2001 to ref 128642
+  role_a_pos 475 535 3000 no_role_b
+  multiplicity_a_pos 538 565 3000 no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 880770 // <generalisation>
+  from ref 130306 z 2001 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 880898 // <unidirectional association>
+  from ref 130306 z 2001 to ref 128898
+  role_a_pos 469 866 3000 no_role_b
+  multiplicity_a_pos 508 896 3000 no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 881026 // <directional composition>
+  from ref 128002 z 2001 to ref 130178
+  role_a_pos 415 632 3000 no_role_b
+  multiplicity_a_pos 476 662 3000 no_multiplicity_b
+end
+end

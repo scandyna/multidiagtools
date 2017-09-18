@@ -1,0 +1,16 @@
+format 207
+
+classcanvas 128002 class_ref 478466 // mdtUsbDeviceDescriptor
+  classdiagramsettings member_max_width 0 end
+  xyz 35 198 2000
+end
+classcanvas 128130 class_ref 1443970 // libusb_device_descriptor
+  classdiagramsettings member_max_width 0 end
+  xyz 512 191 2000
+end
+relationcanvas 128258 relation_ref 1837698 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  role_a_pos 426 337 3000 no_role_b
+  multiplicity_a_pos 494 367 3000 no_multiplicity_b
+end
+end

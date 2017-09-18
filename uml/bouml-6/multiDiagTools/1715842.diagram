@@ -1,0 +1,13 @@
+format 210
+
+classcanvas 128002 class_ref 2065026 // mdtErrorStack
+  classdiagramsettings member_max_width 0 end
+  xyz 69 164 2000
+end
+classcanvas 128130 class_ref 182402 // mdtError
+  classdiagramsettings member_max_width 0 end
+  xyz 75 285 2000
+end
+note 128386 "To get templated error, what can static_assert do ?"
+  xyzwh 41 731 2000 345 53
+end

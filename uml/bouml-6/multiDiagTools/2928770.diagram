@@ -1,0 +1,29 @@
+format 211
+
+classcanvas 128002 class_ref 3280514 // callable
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 518 42 2000
+end
+classcanvas 128130 class_ref 3281282 // GetLogicalAndSql
+  classdiagramsettings member_max_width 0 end
+  xyz 41 170 2006
+end
+classcanvas 128386 class_ref 3281410 // GetLogicalOrSql
+  classdiagramsettings member_max_width 0 end
+  xyz 421 170 2006
+end
+relationcanvas 128258 relation_ref 3690626 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 486
+  from ref 128130 z 2007 to point 205 128
+  line 128642 z 2007 to point 590 128
+  line 128770 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3690754 // <generalisation>
+  from ref 128386 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

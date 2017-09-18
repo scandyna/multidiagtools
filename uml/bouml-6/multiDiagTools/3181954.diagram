@@ -1,0 +1,60 @@
+format 211
+
+classcanvas 128002 class_ref 3068802 // AbstractEditorWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 407.75 142.3 2000
+end
+classcanvas 128130 class_ref 316162 // QWidget
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 556.4 41.45 2006
+end
+classcanvas 128386 class_ref 3648002 // AbstractController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 40.5 582.8 2000
+end
+classcanvas 128514 class_ref 3910914 // AbstractEditorLayout
+  classdiagramsettings member_max_width 0 end
+  xyz 80.25 186.3 2000
+end
+classcanvas 128642 class_ref 3911554 // QVBoxLayout
+  classdiagramsettings hide_attributes yes hide_operations yes hide_getset_operations no member_max_width 0 end
+  xyz 174.25 101.75 2000
+end
+classcanvas 128898 class_ref 3911426 // QHBoxLayout
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 174.25 456.85 2000
+end
+relationcanvas 128258 relation_ref 3441794 // <generalisation>
+  decenter_begin 490
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 4353666 // <generalisation>
+  decenter_begin 487
+  decenter_end 465
+  from ref 128514 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 4353794 // <directional composition>
+  decenter_begin 487
+  decenter_end 465
+  from ref 128514 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 4353922 // <directional composition>
+  decenter_end 422
+  from ref 128514 z 2007 to point 40 301
+  line 129410 z 2007 to point 40 60
+  line 129538 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 4354050 // <directional composition>
+  from ref 128002 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

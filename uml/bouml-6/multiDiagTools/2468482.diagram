@@ -1,0 +1,80 @@
+format 211
+
+classcanvas 128002 class_ref 2775042 // Field
+  classdiagramsettings member_max_width 0 end
+  xyz 315.3 228 2000
+end
+classcanvas 128130 class_ref 2782466 // Index
+  classdiagramsettings member_max_width 0 end
+  xyz 480.5 648.5 2000
+end
+classcanvas 128258 class_ref 2775554 // PrimaryKey
+  classdiagramsettings member_max_width 0 end
+  xyz 680.5 40.5 2000
+end
+classcanvas 128386 class_ref 2775682 // ForeignKey
+  classdiagramsettings member_max_width 0 end
+  xyz 57 425 2000
+end
+classcanvas 128898 class_ref 2775810 // Table
+  classdiagramsettings member_max_width 0 end
+  xyz 40 268 2006
+end
+classcanvas 129794 class_ref 2789378 // Collation
+  classdiagramsettings member_max_width 0 end
+  xyz 290.9 40 2000
+end
+classcanvas 130562 class_ref 2775426 // Driver
+  classdiagramsettings member_max_width 0 end
+  xyz 39 739 2000
+end
+classcanvas 130690 class_ref 2775298 // DriverType
+  classdiagramsettings member_max_width 0 end
+  xyz 319 735 2006
+end
+classcanvas 131458 class_ref 2774914 // FieldType
+  classdiagramsettings member_max_width 0 end
+  xyz 522 295 2006
+end
+classcanvas 132098 class_ref 2817922 // DriverInfoModel
+  classdiagramsettings member_max_width 0 end
+  xyz 50 647 3011
+end
+classcanvas 132354 class_ref 2824706 // AutoIncrementPrimaryKey
+  classdiagramsettings member_max_width 0 end
+  xyz 749.5 648.5 2000
+end
+relationcanvas 129154 relation_ref 3128322 // <directional composition>
+  from ref 128898 z 2007 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 299 336 3000 no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 3127682 // <directional composition>
+  from ref 130562 z 2007 to ref 130690
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131586 relation_ref 3170434 // <directional composition>
+  from ref 128002 z 2007 to ref 131458
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131714 relation_ref 3184130 // <directional composition>
+  decenter_begin 520
+  decenter_end 516
+  from ref 128002 z 2001 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 3197442 // <directional composition>
+  from ref 132098 z 3012 to ref 130562
+  no_role_a no_role_b
+  multiplicity_a_pos 145 716 3000 no_multiplicity_b
+end
+relationcanvas 133250 relation_ref 3273986 // <dependency>
+  decenter_begin 517
+  from ref 128386 z 2007 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -1,0 +1,54 @@
+format 211
+
+classcanvas 128002 class_ref 3225602 // or_
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 316 40 2005
+end
+classcanvas 128130 class_ref 3301378 // when
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 493 312 2005
+end
+classcanvas 128386 class_ref 3280770 // GetCompareEqualToSql
+  classdiagramsettings member_max_width 0 end
+  xyz 37 402 2000
+end
+classcanvas 128514 class_ref 3280514 // callable
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 134 314 2006
+end
+classcanvas 128770 class_ref 3301506 // CompareEqualToSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 457 418 2011
+end
+classcanvas 129026 class_ref 3301634 // CompareEqualitySqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 41 186 2011
+end
+classcanvas 129282 class_ref 3281026 // ComparisonSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 289 186 2011
+end
+relationcanvas 128642 relation_ref 3683458 // <generalisation>
+  from ref 128386 z 2007 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3697538 // <generalisation>
+  from ref 128770 z 2012 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3697666 // <generalisation>
+  geometry VHV unfixed
+  from ref 129026 z 2012 to point 142 144
+  line 129538 z 2012 to point 374 144
+  line 129666 z 2012 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 3683714 // <generalisation>
+  from ref 129282 z 2012 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

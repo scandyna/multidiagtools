@@ -1,0 +1,77 @@
+format 211
+
+note 128002 "Think about \"pluggins\", mean f.ex. CAN232, ..."
+  xyzwh 82 36 2000 399 59
+note 128130 "Really, use QSerialPort, it's now avaliable, runs on many platforms, is debugged, tested, ...
+And, if allready using QTcpSocket (with success), why not QSerialPort ???"
+  xyzwh 91 129 2000 521 83
+note 128258 "Error: emit  QSerialPort::SerialPortError from thread, and create a mdtError from GUI thread ?"
+  xyzwh 101 248 2000 531 79
+classcanvas 128386 class_ref 2194050 // mdtSerialPortXY
+  classdiagramsettings member_max_width 0 end
+  xyz 330 437 2000
+end
+note 128514 "Think about asynch connect/open (then use wait if needed..)"
+  xyzwh 423 609 2000 343 105
+note 128642 "Think about Q_OBJECT problem with template class"
+  xyzwh 61 623 2000 231 87
+classcanvas 128770 class_ref 2092162 // QSerialPort
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 652 368 2005
+end
+classcanvas 128898 class_ref 222722 // QThread
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 464 339 2005
+end
+note 129026 "signal/slot: remeber, check at sinal emition time by default. Check influance.."
+  xyzwh 128 758 2000 615 45
+classcanvas 129154 class_ref 2233730 // mdtSerialPort
+  classdiagramsettings member_max_width 0 end
+  xyz 95 438 2000
+end
+classcanvas 129282 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 112 338 2011
+end
+classcanvas 129666 class_ref 2233858 // SomeSerialPortSpecializationXY
+  classdiagramsettings member_max_width 0 end
+  xyz 278 550 2005
+end
+classcanvas 129922 class_ref 2233986 // SomeSerialPortSpecialization
+  classdiagramsettings member_max_width 0 end
+  xyz 30 553 2010
+end
+classcanvas 130306 class_ref 2234114 // CompletionHandler
+  classdiagramsettings member_max_width 0 end
+  xyz 661 182 2000
+end
+note 130434 "See: Proactor Model"
+  xyzwh 529 72 2000 223 47
+relationcanvas 129410 relation_ref 1508354 // <generalisation>
+  from ref 128898 z 2012 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 2518146 // <generalisation>
+  from ref 129154 z 2012 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 2518274 // <generalisation>
+  from ref 129666 z 2006 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 2518402 // <generalisation>
+  from ref 129922 z 2011 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 2518530 // <directional composition>
+  from ref 129922 z 2011 to ref 129666
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 130562 -_-_
+  from ref 130434 z 2001 to ref 130306
+end

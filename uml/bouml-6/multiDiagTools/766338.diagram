@@ -1,0 +1,81 @@
+format 204
+
+classcanvas 128002 class_ref 370434 // QDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 120 68 2000
+end
+classcanvas 128130 class_ref 812034 // mdtClArticleLinkDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 31 449 2000
+end
+classcanvas 128258 class_ref 713090 // mdtSqlSelectionDialog
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 396 341 2006
+end
+classcanvas 128770 class_ref 505218 // QComboBox
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 576 656 2000
+end
+note 129026 "Selection dialog is used for Start and End connection."
+  xyzwh 600 319 2000 177 91
+note 129282 "At pop-up, dialog must show current selected link, if exists:
+ - Link type name (resistor, diode, bridge, ...) in a combobox
+ - Unit  (not editable, is dependant of choosen link type)
+ - Value
+ - Direction
+ - Start and End connector name + contact name"
+  xyzwh 40 926 2000 447 149
+classcanvas 129410 class_ref 812162 // Ui::mdtClArticleLinkDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 20 319 2006
+end
+classcanvas 129922 class_ref 174338 // QSqlQueryModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 572 488 2012
+end
+note 130306 "Used for LinkType and LinkDirection display/select"
+  xyzwh 559 730 2000 153 57
+note 130818 "Used for LinkType , LinkDirection  and start/end connection"
+  xyzwh 562.5 551.5 2000 161 77
+relationcanvas 128386 relation_ref 895362 // <generalisation>
+  from ref 128258 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 1012482 // <dependency>
+  from ref 128130 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 1012610 // <generalisation>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 1012866 // <generalisation>
+  from ref 128130 z 2007 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 1012994 // <directional composition>
+  from ref 128130 z 2001 to ref 128770
+  no_role_a no_role_b
+  multiplicity_a_pos 564 684 3000 no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 895234 // <unidirectional association>
+  from ref 128258 z 2013 to ref 129922
+  role_a_pos 550 474 3000 no_role_b
+  multiplicity_a_pos 581 504 3000 no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 1013122 // <directional composition>
+  from ref 128130 z 2013 to ref 129922
+  no_role_a no_role_b
+  multiplicity_a_pos 561 538 3000 no_multiplicity_b
+end
+line 129154 -_-_
+  from ref 129026 z 2007 to ref 128258
+line 130690 -_-_
+  from ref 130306 z 2001 to ref 128770
+line 130946 -_-_
+  from ref 130818 z 2013 to ref 129922
+end

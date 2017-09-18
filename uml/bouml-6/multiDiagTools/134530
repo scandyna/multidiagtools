@@ -1,0 +1,38 @@
+format 204
+"mdtTest" // mdtTest
+  revision 5
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  package_ref 135170 // mdttest
+
+  package_ref 134914 // mdtutils
+
+  package_ref 168450 // mdtport
+
+  package_ref 148354 // mdtserialport
+
+  package_ref 161794 // mdtdevice
+end

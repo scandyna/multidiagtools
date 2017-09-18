@@ -1,0 +1,133 @@
+format 214
+
+classcanvas 128002 class_ref 322818 // QIODevice
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 289.1 369.75 2000
+end
+classcanvas 128130 class_ref 222722 // QThread
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 449.2 249.15 2005
+end
+classcanvas 128258 class_ref 329346 // QAbstractSocket
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 120.7 497.05 2010
+end
+classcanvas 128514 class_ref 329474 // QTcpSocket
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 140.05 584.15 2016
+end
+classcanvas 128770 class_ref 2092162 // QSerialPort
+  classdiagramsettings member_max_width 0 end
+  xyz 282.75 497.05 2006
+end
+classcanvas 130050 class_ref 4285442 // SomePortImpl
+  classdiagramsettings member_max_width 0 end
+  xyz 669.5 343.1 2000
+end
+classcanvas 130178 class_ref 4285570 // SomePortThread
+  classdiagramsettings member_max_width 0 end
+  xyz 423.2 369.75 2000
+end
+note 133378 "How does behave a const QByteArray memebr ?
+ex: vector<const QByteArray>"
+  xyzwh 40.5 710.1 2000 331 81
+note 133506 "Should be able to select a thread,
+because 1 thread per port could be to expensive.
+Example: all ports on 2-3 threads, but never the GUI thread..
+
+Maybe better:
+1 thread for NetWorking
+1 thread for SerialPort
+1 thread for USB
+etc..
+(Accessing the same I/O is maybe sequetial)
+Or..."
+  xyzwh 41.25 41.3 2000 367 253
+classcanvas 133762 class_ref 4292098 // Fifo
+  classdiagramsettings member_max_width 0 end
+  xyz 451.5 710.1 2000
+end
+classcanvas 133890 class_ref 4298754 // PortThreadPool
+  classdiagramsettings member_max_width 0 end
+  xyz 687.5 249.15 2000
+end
+classcanvas 134146 class_ref 4298882 // HighLevelPort
+  classdiagramsettings member_max_width 0 end
+  xyz 595.5 489.05 2000
+end
+classcanvas 134530 class_ref 4299010 // SomePortThreadImpl
+  classdiagramsettings member_max_width 0 end
+  xyz 409.2 456.85 2005
+end
+classcanvas 135426 class_ref 4306050 // AbstractCompletionHandler
+  classdiagramsettings member_max_width 0 end
+  xyz 657 714 2000
+end
+relationcanvas 128386 relation_ref 399618 // <generalisation>
+  geometry VHV unfixed
+  from ref 128258 z 2011 to point 178 455
+  line 129026 z 2011 to point 326 455
+  line 129154 z 2011 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 399746 // <generalisation>
+  decenter_begin 460
+  from ref 128514 z 2017 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2410626 // <generalisation>
+  decenter_begin 541
+  from ref 128770 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 4818306 // <generalisation>
+  from ref 130178 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 4818818 // <unidirectional association>
+  decenter_end 577
+  from ref 130050 z 2001 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131458 relation_ref 4818946 // <unidirectional association>
+  decenter_begin 577
+  decenter_end 577
+  from ref 130178 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134402 relation_ref 4825986 // <unidirectional association>
+  from ref 134146 z 2001 to ref 130050
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134658 relation_ref 4826114 // <unidirectional association>
+  from ref 130178 z 2006 to ref 134530
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134786 relation_ref 4826242 // <directional composition>
+  decenter_begin 422
+  decenter_end 422
+  from ref 133890 z 2006 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 525 277 3000 no_multiplicity_b
+end
+relationcanvas 134914 relation_ref 4826370 // <unidirectional association>
+  from ref 130050 z 2001 to ref 133890
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 133634 -_-_ geometry VHV unfixed decenter_begin 964 decenter_end 100
+  from ref 133506 z 2001 to point 392 335
+  line 135170 z 2001 to point 432 335
+  line 135298 z 2001 to ref 130178
+line 134018 -_-_ geometry VH unfixed
+  from ref 133890 z 2001 to point 741 165
+  line 135042 z 2001 to ref 133506
+end

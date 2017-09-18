@@ -1,0 +1,11 @@
+format 211
+
+classcanvas 128002 class_ref 2064002 // ErrorDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 163.5 2000
+end
+classcanvas 128130 class_ref 370434 // QDialog
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 40.5 40.5 2000
+end
+end

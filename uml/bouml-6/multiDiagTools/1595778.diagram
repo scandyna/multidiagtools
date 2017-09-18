@@ -1,0 +1,58 @@
+format 211
+
+classcanvas 129794 class_ref 910210 // mdtSqlTableSchema
+  classdiagramsettings member_max_width 0 end
+  xyz 265 42 3017
+end
+classcanvas 130178 class_ref 1808130 // mdtSqlTableSchemaModel
+  classdiagramsettings member_max_width 0 end
+  xyz 250 130 3023
+end
+classcanvas 130434 class_ref 1867394 // mdtSqlTableSetupWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 250 218 3029
+end
+classcanvas 130690 class_ref 1801346 // mdtSqlFieldSetupWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 471 130 3029
+end
+classcanvas 131458 class_ref 1854338 // mdtSqlDatabaseDialogSqlite
+  classdiagramsettings member_max_width 0 end
+  xyz 40 346 2000
+end
+classcanvas 131586 class_ref 1854210 // mdtSqlDatabaseSqlite
+  classdiagramsettings member_max_width 0 end
+  xyz 272 346 2006
+end
+classcanvas 131970 class_ref 1801346 // mdtSqlFieldSetupWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 39 130 3029
+end
+relationcanvas 130306 relation_ref 2133250 // <unidirectional association>
+  decenter_begin 480
+  from ref 130178 z 3024 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 2187522 // <directional composition>
+  decenter_end 480
+  from ref 130434 z 3030 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 2194178 // <unidirectional association>
+  from ref 130690 z 3030 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131714 relation_ref 2173826 // <unidirectional association>
+  from ref 131458 z 2007 to ref 131586
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132098 relation_ref 2194178 // <unidirectional association>
+  from ref 131970 z 3030 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -1,0 +1,35 @@
+format 211
+
+classcanvas 128002 class_ref 146946 // QAbstractItemModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 225 158 2000
+end
+classcanvas 128130 class_ref 3015170 // EventCatchItemDelegate
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 40.5 40.5 2000
+end
+classcanvas 128258 class_ref 404610 // QDataWidgetMapper
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 41 158 3005
+end
+note 128514 "Using QAbstractItemView based views:
+- Delegate createEditor() / destroyEditor is called"
+  xyzwh 48 266 2000 573 69
+note 128642 "QDataWidgetMapper does NOT call createEditor() / destroyEditor on delegate !
+
+Must find a other way (Qt property system on mapped widget can help catch  beginn of edition.
+
+For end of edition:
+ - Simply set submit strategy to manual, and editing is done when s QDataWidgetMapper::submit() returns successfully"
+  xyzwh 47 349 2000 733 131
+note 128770 "If a model is shared, should we also catch dataChanged() ?
+
+-> If yes, is there a way to revert ? What about locking ????
+  ->> Possibly just to complex for the moment."
+  xyzwh 54 530 2000 595 127
+relationcanvas 128386 relation_ref 491010 // <association>
+  from ref 128258 z 3006 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 192 187 3000 no_multiplicity_b
+end
+end

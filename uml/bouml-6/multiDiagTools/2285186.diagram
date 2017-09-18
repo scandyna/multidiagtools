@@ -1,0 +1,11 @@
+format 213
+
+classcanvas 128002 class_ref 2574338 // adjacency_list
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 185.5 2005
+end
+classcanvas 128130 class_ref 4237954 // labeled_graph
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 40.5 2000
+end
+end

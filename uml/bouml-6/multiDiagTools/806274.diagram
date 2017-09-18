@@ -1,0 +1,105 @@
+format 76
+
+statecanvas 128002 state_ref 170882 // DeviceSetup
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 211 120 2000 129 57
+end
+statecanvas 128130 state_ref 171138 // DeviceError
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 207 516 2000 151 73
+end
+statecanvas 128258 state_ref 177922 // Busy
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 535 270 2000 151 73
+end
+statecanvas 128386 state_ref 170626 // Ready
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 196 272 2000 151 73
+end
+pseudostatecanvas 128514 pseudostate_ref 167938 // initial
+   xyz 52 300 2000
+end
+statecanvas 129410 state_ref 198274 // DeviceSetupBusy
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 537 114 2000 151 73
+end
+statecanvas 129922 state_ref 198402 // DeviceErrorBusy
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 545 516 2000 151 73
+end
+transitioncanvas 128642 transition_ref 194690 // <transition>
+  
+  from ref 128514 z 2001 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 128770 transition_ref 194818 // pmBusyEvent
+  decenter_begin 104
+  decenter_end 150
+  
+  from ref 128386 z 2001 label "pmBusyEvent" xyz 394 262 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 128898 transition_ref 194946 // pmReadyEvent
+  decenter_begin 726
+  decenter_end 698
+  
+  from ref 128258 z 2001 label "pmReadyEvent" xyz 390 305 2001 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129026 transition_ref 195074 // appDeviceSetupEvent
+  decenter_begin 136
+  decenter_end 86
+  
+  from ref 128386 z 2001 label "appDeviceSetupEvent" xyz 146 215 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129154 transition_ref 195202 // deviceSetupDoneEvent
+  decenter_begin 856
+  decenter_end 740
+  
+  from ref 128002 z 2001 label "deviceSetupDoneEvent" xyz 240 235 2001 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129282 transition_ref 195330 // deviceErrorEvent
+  decenter_begin 231
+  decenter_end 164
+  
+  from ref 128386 z 2001 label "deviceErrorEvent" xyz 178 411 2001 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129538 transition_ref 195458 // pmBusyEvent
+  decenter_begin 157
+  decenter_end 202
+  
+  from ref 128002 z 2001 label "pmBusyEvent" xyz 391 112 2001 to ref 129410
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129794 transition_ref 195586 // pmReadyEvent
+  decenter_begin 739
+  decenter_end 842
+  
+  from ref 129410 z 2001 label "pmReadyEvent" xyz 387 151 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130562 transition_ref 195842 // deviceErrorGoneEvent
+  decenter_begin 634
+  decenter_end 708
+  
+  from ref 128130 z 2001 label "deviceErrorGoneEvent" xyz 241 458 2001 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130690 transition_ref 204290 // pmBusyEvent
+  decenter_begin 300
+  decenter_end 300
+  
+  from ref 128130 z 2001 label "pmBusyEvent" xyz 404 520 3000 to ref 129922
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130818 transition_ref 204418 // pmReadyEvent
+  decenter_begin 753
+  decenter_end 753
+  
+  from ref 129922 z 2001 label "pmReadyEvent" xyz 400 554 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+end

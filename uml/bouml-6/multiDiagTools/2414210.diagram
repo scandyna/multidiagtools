@@ -1,0 +1,67 @@
+format 211
+
+note 128002 "AddProxyModel()"
+  xyzwh 40.5 326.9 2000 391 69
+classcanvas 128130 class_ref 2753410 // RowChangeEventMapper
+  classdiagramsettings member_max_width 0 end
+  xyz 401.2 40.5 2000
+end
+classcanvas 128258 class_ref 3021826 // ItemSelectionModel
+  classdiagramsettings member_max_width 0 end
+  xyz 40.8 40.5 2000
+end
+classcanvas 128386 class_ref 2706434 // NavigationActions
+  classdiagramsettings member_max_width 0 end
+  xyz 511.5 326.9 2006
+end
+classcanvas 128642 class_ref 2684802 // AbstractItemViewController
+  classdiagramsettings member_max_width 0 end
+  xyz 595.6 122.2 2000
+end
+classcanvas 128770 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings member_max_width 0 end
+  xyz 410.05 203.9 2006
+end
+classcanvas 129026 class_ref 146946 // QAbstractItemModel
+  classdiagramsettings member_max_width 0 end
+  xyz 414.05 122.2 2012
+end
+classcanvas 129538 class_ref 2160258 // QAbstractItemView
+  classdiagramsettings member_max_width 0 end
+  xyz 220.25 122.2 2018
+end
+classcanvas 129794 class_ref 1382914 // QItemSelectionModel
+  classdiagramsettings member_max_width 0 end
+  xyz 216.4 40.5 2024
+end
+relationcanvas 129154 relation_ref 141186 // <generalisation>
+  from ref 128770 z 2013 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 3106562 // <unidirectional association>
+  from ref 128130 z 2013 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 2458242 // <unidirectional association>
+  from ref 129538 z 2019 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 3393538 // <generalisation>
+  from ref 128258 z 2025 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 2458370 // <unidirectional association>
+  from ref 129538 z 2025 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 3499266 // <unidirectional association>
+  from ref 128130 z 2025 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

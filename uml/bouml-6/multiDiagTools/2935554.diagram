@@ -1,0 +1,16 @@
+format 211
+
+classcanvas 128002 class_ref 3323010 // JoinConstraintExpressionGrammar
+  classdiagramsettings member_max_width 0 end
+  xyz 42 146 2000
+end
+classcanvas 128130 class_ref 3225602 // or_
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 100 40 2005
+end
+relationcanvas 128258 relation_ref 3719938 // <generalisation>
+  from ref 128002 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

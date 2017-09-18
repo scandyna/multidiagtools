@@ -1,0 +1,16 @@
+format 211
+
+classcanvas 128002 class_ref 2600834 // LinkTypePk
+  classdiagramsettings member_max_width 0 end
+  xyz 40 36 2000
+end
+classcanvas 128130 class_ref 2600962 // LinkType
+  classdiagramsettings member_max_width 0 end
+  xyz 450 150 2000
+end
+relationcanvas 128258 relation_ref 2985346 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -1,0 +1,109 @@
+format 214
+
+classcanvas 128002 class_ref 4244610 // QtPluginInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 210 613 2000
+end
+classcanvas 128130 class_ref 4244738 // QtModuleInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 241 512 2000
+end
+classcanvas 128386 class_ref 4244866 // QtPackageInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 401 512 2000
+end
+classcanvas 129026 class_ref 4244994 // QtPluginTable
+  classdiagramsettings member_max_width 0 end
+  xyz 838.75 226.5 2000
+end
+classcanvas 129538 class_ref 4251650 // QtPluginInfoList
+  classdiagramsettings member_max_width 0 end
+  xyz 54 632 2000
+end
+classcanvas 129794 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 476 40.75 2006
+end
+classcanvas 131330 class_ref 4251906 // QtPluginDirectoryInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 37 736 2000
+end
+classcanvas 132226 class_ref 4252034 // QtPluginTableItem
+  classdiagramsettings member_max_width 0 end
+  xyz 925.75 346.75 2000
+end
+classcanvas 132610 class_ref 4252162 // SearchPathList
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 896.5 510.5 2000
+end
+classcanvas 132866 class_ref 4183938 // BinaryDependencies
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 39.5 245.5 2012
+end
+classcanvas 134786 class_ref 4251522 // QtLibrary
+  classdiagramsettings member_max_width 0 end
+  xyz 222.25 160.5 2020
+end
+classcanvas 138882 class_ref 4265218 // QtModule
+  classdiagramsettings member_max_width 0 end
+  xyz 738 508 2000
+end
+classcanvas 139010 class_ref 4265346 // QtModuleList
+  classdiagramsettings member_max_width 0 end
+  xyz 600 520 2000
+end
+relationcanvas 128258 relation_ref 4756738 // <directional composition>
+  decenter_begin 462
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 280 586 3000 no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 4756866 // <directional composition>
+  from ref 128386 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 369 550 3000 no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 4763522 // <directional composition>
+  from ref 129538 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 194 662 3000 no_multiplicity_b
+end
+relationcanvas 131458 relation_ref 4764162 // <directional composition>
+  from ref 131330 z 2001 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132482 relation_ref 4764674 // <directional composition>
+  from ref 129026 z 2001 to ref 132226
+  no_role_a no_role_b
+  multiplicity_a_pos 999 319 3000 no_multiplicity_b
+end
+relationcanvas 132994 relation_ref 4688514 // <generalisation>
+  geometry VHV unfixed
+  from ref 132866 z 2013 to point 109 125
+  line 139266 z 2013 to point 506 125
+  line 139394 z 2013 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134914 relation_ref 4763650 // <generalisation>
+  from ref 134786 z 2021 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 137346 relation_ref 4778498 // <dependency>
+  from ref 134786 z 2021 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 138754 relation_ref 4785026 // <dependency>
+  from ref 134786 z 2021 to ref 132866
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 139138 relation_ref 4798210 // <directional composition>
+  from ref 139010 z 2001 to ref 138882
+  no_role_a no_role_b
+  multiplicity_a_pos 722 552 3000 no_multiplicity_b
+end
+end

@@ -1,0 +1,46 @@
+format 211
+
+classcanvas 128130 class_ref 2537474 // GraphImpl
+  classdiagramsettings member_max_width 0 end
+  xyz 41 152 2000
+end
+classcanvas 128258 class_ref 2537602 // EdgeData
+  classdiagramsettings member_max_width 0 end
+  xyz 42 319 2000
+end
+classcanvas 128514 class_ref 1739010 // mdtClUnitConnectionPkData
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 328.5 40.5 2000
+end
+classcanvas 128770 class_ref 1672962 // mdtClLinkPkData
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 248 297 2000
+end
+classcanvas 129026 class_ref 2537730 // Vertex
+  classdiagramsettings member_max_width 0 end
+  xyz 161 150 2000
+end
+classcanvas 129154 class_ref 2537858 // Edge
+  classdiagramsettings member_max_width 0 end
+  xyz 37 42 2000
+end
+classcanvas 129282 class_ref 2537986 // GraphVisitor
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 504.5 2000
+end
+relationcanvas 128898 relation_ref 2873474 // <directional composition>
+  from ref 128258 z 2001 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2873602 // <directional composition>
+  from ref 128130 z 2001 to ref 129026
+  no_role_a no_role_b
+  multiplicity_a_pos 145 197 3000 no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 2873730 // <directional composition>
+  from ref 128130 z 2001 to ref 129154
+  no_role_a no_role_b
+  multiplicity_a_pos 65 120 3000 no_multiplicity_b
+end
+end

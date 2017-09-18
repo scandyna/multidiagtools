@@ -1,0 +1,254 @@
+format 211
+"ModelViewPresenter" // principes::ModelViewPresenter
+  revision 2
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1111298 "MVP"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2191234 "OutputBoundary"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2513026 "Presenter"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2859010 // <generalisation>
+	relation 2841730 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2859010 // <generalisation>
+	  b parent class_ref 2513154 // Boundary
+      end
+
+      classrelation 2859138 // <unidirectional association>
+	relation 2841858 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2859138 // <unidirectional association>
+	  b parent class_ref 2513282 // ViewModel
+      end
+
+      classrelation 2859522 // <unidirectional association>
+	relation 2842242 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2859522 // <unidirectional association>
+	  b parent class_ref 2513538 // ResponseModel
+      end
+    end
+
+    class 2513154 "Boundary"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2859394 // <unidirectional association>
+	relation 2842114 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2859394 // <unidirectional association>
+	  b parent class_ref 2513538 // ResponseModel
+      end
+    end
+
+    class 2513282 "ViewModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2513410 "View"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2859266 // <unidirectional association>
+	relation 2841986 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2859266 // <unidirectional association>
+	  b parent class_ref 2513282 // ViewModel
+      end
+    end
+
+    class 2513538 "ResponseModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2513666 "Interactor"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2859650 // <unidirectional association>
+	relation 2842370 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2859650 // <unidirectional association>
+	  b parent class_ref 2513154 // Boundary
+      end
+
+      classrelation 2859778 // <unidirectional association>
+	relation 2842498 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2859778 // <unidirectional association>
+	  b parent class_ref 2513538 // ResponseModel
+      end
+
+      classrelation 2859906 // <unidirectional association>
+	relation 2842626 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2859906 // <unidirectional association>
+	  b parent class_ref 2513794 // Entity1
+      end
+
+      classrelation 2860034 // <unidirectional association>
+	relation 2842754 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2860034 // <unidirectional association>
+	  b parent class_ref 2513922 // EntityN
+      end
+    end
+
+    class 2513794 "Entity1"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2513922 "EntityN"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+end

@@ -1,0 +1,25 @@
+format 206
+
+classcanvas 128002 class_ref 1147010 // mdtTtTestLinkDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 233 316 2000
+end
+classcanvas 128130 class_ref 370434 // QDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 34 43 2000
+end
+classcanvas 128386 class_ref 1153922 // Ui::mdtTtTestLinkDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 457 118 2000
+end
+relationcanvas 128258 relation_ref 1439106 // <generalisation>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 1439234 // <generalisation>
+  from ref 128002 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

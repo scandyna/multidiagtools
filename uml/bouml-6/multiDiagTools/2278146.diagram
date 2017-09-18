@@ -1,0 +1,16 @@
+format 211
+
+classcanvas 128002 class_ref 2566786 // UnitConnectionPkList
+  classdiagramsettings member_max_width 0 end
+  xyz 41 122 2000
+end
+classcanvas 128642 class_ref 2580866 // UnitConnectionPk
+  classdiagramsettings member_max_width 0 end
+  xyz 393 37 2000
+end
+relationcanvas 128770 relation_ref 2952194 // <directional composition>
+  from ref 128002 z 2001 to ref 128642
+  no_role_a no_role_b
+  multiplicity_a_pos 377 154 3000 no_multiplicity_b
+end
+end

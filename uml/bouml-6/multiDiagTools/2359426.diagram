@@ -1,0 +1,18 @@
+format 211
+
+classcanvas 128002 class_ref 2643074 // Error
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 40.5 2000
+end
+note 128130 "Macro should be:
+mdtErrorFromQSqlQuery()
+-> A function call , so NOT MdtErrorFromQSqlQuery()
+"
+  xyzwh 47 151 2000 615 93
+note 128258 "macro:
+Mdt::Sql::Error::fromQSqlQuery()
+ - Possible ?
+ - Somewhat long/ugly ??
+ - Note: probably no auto-completion on \"namespaces\" if a macro.."
+  xyzwh 52 266 2000 687 107
+end

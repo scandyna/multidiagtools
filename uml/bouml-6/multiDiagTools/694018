@@ -1,0 +1,147 @@
+format 213
+"LibraryTree" // Mdt::DeployUtils::Impl::LibraryTree
+  revision 3
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1888130 "LibraryTree"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3666818 "LibraryTreeGraph"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4224386 "VertexData"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3617666 "LibraryName"
+	public type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 4238082 "Graph"
+      visibility package stereotype "typedef" base_type class_ref 2574338 // adjacency_list
+      nactuals 6
+      actual class class_ref 2574338 // adjacency_list
+        rank 0 explicit_value ""
+      actual class class_ref 2574338 // adjacency_list
+        rank 1 explicit_value ""
+      actual class class_ref 2574338 // adjacency_list
+        rank 2 explicit_value ""
+      actual class class_ref 2574338 // adjacency_list
+        rank 3 explicit_value ""
+      actual class class_ref 2574338 // adjacency_list
+        rank 4 explicit_value ""
+      actual class class_ref 2574338 // adjacency_list
+        rank 5 explicit_value ""
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4776194 // <realization>
+	relation 4749954 -_-|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4776194 // <realization>
+	  b parent class_ref 2574338 // adjacency_list
+      end
+    end
+
+    class 4224642 "LabeledGraph"
+      visibility package stereotype "typedef" base_type class_ref 4237954 // labeled_graph
+      nactuals 3
+      actual class class_ref 4237954 // labeled_graph
+        rank 0 explicit_value ""
+      actual class class_ref 4237954 // labeled_graph
+        rank 1 explicit_value ""
+      actual class class_ref 4237954 // labeled_graph
+        rank 2 explicit_value ""
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4776322 // <realization>
+	relation 4750082 -_-|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4776322 // <realization>
+	  b parent class_ref 4237954 // labeled_graph
+      end
+
+      classrelation 4776450 // <dependency>
+	relation 4750210 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4776450 // <dependency>
+	  b parent class_ref 4238082 // Graph
+      end
+    end
+  end
+end

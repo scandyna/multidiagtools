@@ -1,0 +1,48 @@
+format 211
+
+classcanvas 128002 class_ref 3594754 // RelationFilterProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 42 218 2000
+end
+classcanvas 128130 class_ref 719874 // QSortFilterProxyModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 202 42 2000
+end
+classcanvas 128898 class_ref 3695362 // RelationFilterExpression
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 200 322 2000
+end
+classcanvas 129154 class_ref 3735810 // RelationKeyCopier
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 559 226 2000
+end
+classcanvas 129410 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 40.5 448.5 2006
+end
+classcanvas 129666 class_ref 3762306 // SortFilterProxyModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 207 130 2006
+end
+relationcanvas 129026 relation_ref 4130434 // <directional composition>
+  decenter_end 473
+  from ref 128002 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 4164098 // <directional composition>
+  from ref 128002 z 2001 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 4170626 // <generalisation>
+  from ref 129666 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 4177154 // <generalisation>
+  from ref 128002 z 2007 to ref 129666
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

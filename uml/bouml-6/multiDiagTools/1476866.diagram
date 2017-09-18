@@ -1,0 +1,11 @@
+format 211
+
+classcanvas 128002 class_ref 1719426 // mdtSqlForeignKeySetting
+  classdiagramsettings member_max_width 0 end
+  xyz 225 311 2000
+end
+classcanvas 128130 class_ref 2886274 // mdtSqlTableSchemaForeignKeyInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 131 191 2000
+end
+end

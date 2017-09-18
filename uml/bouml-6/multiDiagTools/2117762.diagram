@@ -1,0 +1,30 @@
+format 211
+
+classcanvas 128002 class_ref 2036994 // Record
+  classdiagramsettings member_max_width 0 end
+  xyz 168 260 2000
+end
+classcanvas 128130 class_ref 2085506 // RecordFormat
+  classdiagramsettings member_max_width 0 end
+  xyz 117 39 2006
+end
+classcanvas 128386 class_ref 2050562 // mdtCsvData
+  classdiagramsettings member_max_width 0 end
+  xyz 39 298 2006
+end
+note 128642 "Think about real class with iterators for access ?"
+  xyzwh 40.5 456.5 2000 389 57
+note 128770 "Records should store QString ?"
+  xyzwh 36 405 2000 401 43
+relationcanvas 128258 relation_ref 2722818 // <dependency>
+  decenter_begin 488
+  from ref 128130 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2376578 // <directional composition>
+  from ref 128386 z 2007 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 152 330 3000 no_multiplicity_b
+end
+end

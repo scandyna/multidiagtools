@@ -1,0 +1,77 @@
+format 209
+
+classcanvas 128002 class_ref 1867394 // mdtSqlTableSetupWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 34 230 2000
+end
+classcanvas 128130 class_ref 910210 // mdtSqlSchemaTable
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 640 356 2000
+end
+classcanvas 128258 class_ref 1808130 // mdtSqlTableSchemaModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 621 242 2006
+end
+classcanvas 128514 class_ref 316162 // QWidget
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 122 88 2000
+end
+classcanvas 128770 class_ref 1867522 // Ui::mdtSqlTableSetupWidget
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 281 90 2000
+end
+classcanvas 129922 class_ref 405122 // QSqlDatabase
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 649 167 2000
+end
+note 130562 "Should be renamed mdtSqlTableSchema"
+  xyzwh 462 494 2000 279 53
+note 130818 "Should be renamed mdtSqlTableSchemaWidget ??"
+  xyzwh 41 385 2000 359 57
+note 131074 "!!! NOTE on table copy !!!
+
+Because reversing a schema is not reliable (loss of imformations), we should be able to hrecreate a schema (for example by a existing SQL script or some definition of a SQL schema), then map tables and fields, then import data to this new schema !!
+
+If a widget proposes to create a table based on sa source table, the user must be warned that this functionnality is not propoerly supported (field tapes, no FK support, no index supposrt, etc...) !!!
+
+For database schema, set a flag (a hint) for tables that are populated by creation tim, and that sould not be touched after.."
+  xyzwh 30 564 2000 697 211
+relationcanvas 128386 relation_ref 2133250 // <unidirectional association>
+  from ref 128258 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 2187266 // <generalisation>
+  geometry VHV unfixed
+  from ref 128002 z 2001 to point 274 180
+  line 129538 z 2001 to point 152 180
+  line 129666 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2187394 // <generalisation>
+  geometry VHV
+  from ref 128002 z 2001 to point 275 179
+  line 129026 z 2001 to point 377 179
+  line 129154 z 2001 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 2187522 // <directional composition>
+  from ref 128002 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 2187650 // <unidirectional association>
+  geometry VH
+  decenter_begin 813
+  from ref 128002 z 2001 to point 427 186
+  line 130434 z 2001 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 130690 -_-_
+  from ref 130562 z 2001 to ref 128130
+line 130946 -_-_
+  from ref 130818 z 2001 to ref 128002
+end

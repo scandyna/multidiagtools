@@ -1,0 +1,66 @@
+format 211
+
+classcanvas 128002 class_ref 3211394 // FilterKey
+  classdiagramsettings member_max_width 0 end
+  xyz 383.5 498.286 2000
+end
+classcanvas 128130 class_ref 3211522 // FilterRecord
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 498.286 2000
+end
+classcanvas 128258 class_ref 3211650 // Expression
+  classdiagramsettings member_max_width 0 end
+  xyz 305.143 272.393 2000
+end
+note 128386 "Tree..."
+  xyzwh 111.464 126.036 2000 113 47
+note 128642 "Should go to a specific module."
+  xyzwh 220.143 40.0357 2000 255 47
+note 128898 "For various support, do in each specific module ?
+ - SQL
+ - Column indexes"
+  xyzwh 470.964 250.393 2000 383 87
+classcanvas 129154 class_ref 3211778 // SqlFilterExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 47.25 295.429 2000
+end
+classcanvas 129282 class_ref 3211906 // CppFilterExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 41.1786 212.5 2000
+end
+note 129666 "Could be reused for a WHERE expression.."
+  xyzwh 198.143 377.821 2000 299 41
+classcanvas 130690 class_ref 3218434 // Column
+  classdiagramsettings member_max_width 0 end
+  xyz 492 101 2000
+end
+classcanvas 130818 class_ref 3218562 // Field
+  classdiagramsettings member_max_width 0 end
+  xyz 598 101 2000
+end
+relationcanvas 129410 relation_ref 3641858 // <dependency>
+  decenter_begin 651
+  from ref 129282 z 2001 to point 224 240
+  line 130434 z 2001 to point 224 292
+  line 130562 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 3641986 // <dependency>
+  decenter_begin 348
+  decenter_end 790
+  from ref 129154 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128514 -_-_ decenter_begin 209 decenter_end 659
+  from ref 128258 z 2001 to point 264 277
+  line 129922 z 2001 to point 264 157
+  line 130050 z 2001 to ref 128386
+line 128770 -_-_
+  from ref 128642 z 2001 to ref 128258
+line 129026 -_-_
+  from ref 128258 z 2001 to ref 128898
+line 129794 -_-_
+  from ref 129666 z 2001 to ref 128258
+end

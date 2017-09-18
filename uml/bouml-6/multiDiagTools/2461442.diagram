@@ -1,0 +1,29 @@
+format 211
+
+classcanvas 128002 class_ref 2775554 // PrimaryKey
+  classdiagramsettings member_max_width 0 end
+  xyz 42 36 2000
+end
+classcanvas 128130 class_ref 2775042 // Field
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 410 77 2000
+end
+classcanvas 128386 class_ref 2824706 // AutoIncrementPrimaryKey
+  classdiagramsettings member_max_width 0 end
+  xyz 443.5 408.5 2000
+end
+note 129666 "See:
+ - UUID
+ - SERIAL
+ - BIGSERIAL
+ - TEXT
+ - TIMESTAMP
+ - TIMESTAMPTZ
+ - NUMERIC"
+  xyzwh 40.5 408.5 2000 323 205
+relationcanvas 130178 relation_ref 3810050 // <dependency>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

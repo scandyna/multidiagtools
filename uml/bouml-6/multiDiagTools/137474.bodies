@@ -1,0 +1,114 @@
+class zmsDiagFrameCsv
+!!!143106.cpp!!!	zmsDiagFrameCsv()
+  pvFrame = 0;
+  pvFldSep = ';';
+  pvEndlSeq = "\n";
+!!!143234.cpp!!!	setFrame(inout frame : zmsDiagFrame) : void
+  pvFrame = frame;
+!!!143362.cpp!!!	genCsv() : string
+  assert(pvFrame != 0);
+  
+  // On vide le contenu du flux
+  pvStream.str("");
+  
+  // Header
+  pvStream << "Date: " << timestamp() << pvEndlSeq;
+
+  pvStream << "Local address" << pvFldSep << "0x" << hex << pvFrame->localDeviceAddress() << pvEndlSeq;
+  pvStream << "Number of UST fount" << pvFldSep << dec << pvFrame->ustCount() << pvEndlSeq;
+  pvStream << "First UST address" << pvFldSep << "0x" << hex << pvFrame->firstUstAddress() << pvEndlSeq;
+  pvStream << "Second UST address" << pvFldSep << "0x" << hex << pvFrame->secondUstAddress() << pvEndlSeq;
+  pvStream << "Third UST address" << pvFldSep << "0x" << hex << pvFrame->thirdUstAddress() << pvEndlSeq;
+  pvStream << "Fourth UST address" << pvFldSep << "0x" << hex << pvFrame->fourthUstAddress() << pvEndlSeq;
+  pvStream << "Coupling train 1 Loc set" << pvFldSep << boolToStr(pvFrame->couplingLocTrain1set()) << pvEndlSeq;
+  pvStream << "Coupling train 1 Bt  set" << pvFldSep << boolToStr(pvFrame->couplingBtTrain1set()) << pvEndlSeq;
+  pvStream << "Coupling train 2 Loc set" << pvFldSep << boolToStr(pvFrame->couplingLocTrain2set()) << pvEndlSeq;
+  pvStream << "Coupling train 2 Bt  set" << pvFldSep << boolToStr(pvFrame->couplingBtTrain2set()) << pvEndlSeq;
+  pvStream << "Coupling train 3 Loc set" << pvFldSep << boolToStr(pvFrame->couplingLocTrain3set()) << pvEndlSeq;
+  pvStream << "Coupling train 3 Bt  set" << pvFldSep << boolToStr(pvFrame->couplingBtTrain3set()) << pvEndlSeq;
+  pvStream << "Coupling train 4 Loc set" << pvFldSep << boolToStr(pvFrame->couplingLocTrain4set()) << pvEndlSeq;
+  pvStream << "Coupling train 4 Bt  set" << pvFldSep << boolToStr(pvFrame->couplingBtTrain4set()) << pvEndlSeq;
+  pvStream << "Direction switch set to" << pvFldSep;
+  if(pvFrame->setDirectionSwitchToA()){
+    pvStream << "A";
+  }else{
+    pvStream << "B";
+  }
+  pvStream << pvEndlSeq;
+  pvStream << "Bus bypass" << pvFldSep << boolToStr(pvFrame->bypassBus()) << pvEndlSeq;
+  pvStream << "Set terminal resistor" << pvFldSep << boolToStr(pvFrame->setTerminalResistor()) << pvEndlSeq;
+  pvStream << "Direction to master" << pvFldSep;
+  if(pvFrame->directionToMasterIsB()){
+    pvStream << "B";
+  }else{
+    pvStream << "A";
+  }
+  pvStream << pvEndlSeq;
+  pvStream << "ZMS init complete" << pvFldSep << boolToStr(pvFrame->zmsInitComplete()) << pvEndlSeq;
+  pvStream << "Mode bus end open" << pvFldSep << boolToStr(pvFrame->modeBusEndOpen()) << pvEndlSeq;
+  pvStream << "Master must begin search to direction" << pvFldSep;
+  if(pvFrame->masterSearchBeginDirectionB()){
+    pvStream << "B";
+  }else{
+    pvStream << "A";
+  }
+  pvStream << pvEndlSeq;
+  pvStream << "Consider master function" << pvFldSep << boolToStr(pvFrame->considerMasterFunction()) << pvEndlSeq;
+  pvStream << "Run data transmission" << pvFldSep << boolToStr(pvFrame->runDataTransmission()) << pvEndlSeq;
+  pvStream << "ZMS-NET is mode master" << pvFldSep << boolToStr(pvFrame->zmsNetModeMaster()) << pvEndlSeq;
+  pvStream << "ZMS-NET program counter value" << pvFldSep << pvFrame->zmsNetProgramCounterValue() << pvEndlSeq;
+  pvStream << "MICAS mode" << pvFldSep << "0x" << hex << pvFrame->micasMode() << pvEndlSeq;
+  pvStream << "MICAS program counter value" << dec << pvFldSep << pvFrame->micasProgramCounterValue() << pvEndlSeq;
+  pvStream << "Transmission state UST1" << pvFldSep << pvFrame->ust1TransmissionState() << pvEndlSeq;
+  pvStream << "Transmission counter UST1" << pvFldSep << pvFrame->ust1TransmissionCounterValue() << pvEndlSeq;
+  pvStream << "Transmission state UST2" << pvFldSep << pvFrame->ust2TransmissionState() << pvEndlSeq;
+  pvStream << "Transmission counter UST2" << pvFldSep << pvFrame->ust2TransmissionCounterValue() << pvEndlSeq;
+  pvStream << "Transmission state UST3" << pvFldSep << pvFrame->ust3TransmissionState() << pvEndlSeq;
+  pvStream << "Transmission counter UST3" << pvFldSep << pvFrame->ust3TransmissionCounterValue() << pvEndlSeq;
+  pvStream << "Transmission state UST4" << pvFldSep << pvFrame->ust4TransmissionState() << pvEndlSeq;
+  pvStream << "Transmission counter UST4" << pvFldSep << pvFrame->ust4TransmissionCounterValue() << pvEndlSeq;
+  pvStream << "Transmission counter from master" << pvFldSep << pvFrame->fromMasterTransmissionCounter() << pvEndlSeq;
+  pvStream << "Coupling criteria failure" << pvFldSep << boolToStr(pvFrame->couplingCriteriaFailure()) << pvEndlSeq;
+  pvStream << "Emergency control enabled" << pvFldSep << boolToStr(pvFrame->emergencyControlEnabled()) << pvEndlSeq;
+  pvStream << "Emergency mode diseabled" << pvFldSep << boolToStr(pvFrame->emergencyModeDiseabled()) << pvEndlSeq;
+  pvStream << "ZMS-NET blocked because frontal coupling" << pvFldSep << boolToStr(pvFrame->zmsNetBlockedBecauseFrontCoupling()) << pvEndlSeq;
+  pvStream << "Search timeout" << pvFldSep << boolToStr(pvFrame->searchTimeout()) << pvEndlSeq;
+  pvStream << "ZMS init running" << pvFldSep << boolToStr(pvFrame->zmsInitRunning()) << pvEndlSeq;
+  pvStream << "Full output authorized" << pvFldSep << boolToStr(pvFrame->fullOutputAuthorized()) << pvEndlSeq;
+  pvStream << "Coupling Criteria OK" << pvFldSep << boolToStr(pvFrame->coupligCriteriaOk()) << pvEndlSeq;
+  pvStream << "All devices counter are running" << pvFldSep << boolToStr(pvFrame->allDevicesProgramCounterRunning()) << pvEndlSeq;
+  pvStream << "Transmission OK" << pvFldSep << boolToStr(pvFrame->transmissionOk()) << pvEndlSeq;
+  pvStream << "ZMS init OK" << pvFldSep << boolToStr(pvFrame->zmsInitOk()) << pvEndlSeq;
+  pvStream << "ZMS-NET is ON" << pvFldSep << boolToStr(pvFrame->zmsNetON()) << pvEndlSeq;
+
+  return pvStream.str();
+!!!143490.cpp!!!	timestamp() : string
+  time_t timeStamp;
+  char strTimeStamp[20] = {'\0'};
+
+  timeStamp = time(0);
+  strftime(strTimeStamp, 20, "%Y-%m-%d %X", localtime(&timeStamp));
+
+  return strTimeStamp;
+!!!143618.cpp!!!	setFieldSeparator(in sep : char) : void
+  pvFldSep = sep;
+!!!143746.cpp!!!	setEndlineSequence(in seq : string) : void
+  pvEndlSeq = seq;
+!!!143874.cpp!!!	writeToFile(in filePath : string) : bool
+  ofstream file(filePath.c_str(), ios::out | ios::app);
+  if(!file){
+    cerr << "zmsDiagFrameCsv::writeToFile(): unable to open/create file for write, file: " << filePath << endl;
+    return false;
+  }
+  // Ecriture
+  file << "********************************************************************" << pvEndlSeq;
+  file << pvStream.str();
+  file.close();
+  
+  return true;
+!!!144002.cpp!!!	boolToStr(in val : bool) : string
+  if(val == true){
+    return "yes";
+  }else{
+    return "no ";
+  }

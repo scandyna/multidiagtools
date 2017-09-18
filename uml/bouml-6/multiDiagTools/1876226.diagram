@@ -1,0 +1,11 @@
+format 210
+
+classcanvas 128002 class_ref 895746 // QGraphicsView
+  classdiagramsettings member_max_width 0 end
+  xyz 168 274 2000
+end
+classcanvas 128130 class_ref 316162 // QWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 129 457 2000
+end
+end

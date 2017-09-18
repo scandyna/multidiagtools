@@ -1,0 +1,11 @@
+format 211
+
+classcanvas 128002 class_ref 3588098 // FilterGrammar
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 40.5 2000
+end
+classcanvas 128130 class_ref 3588226 // RelationFilterGrammar
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 165.5 2000
+end
+end

@@ -1,0 +1,103 @@
+format 211
+
+classcanvas 128002 class_ref 2739714 // QWebSocket
+  classdiagramsettings member_max_width 0 end
+  xyz 366.75 314.75 2000
+end
+classcanvas 128130 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 378.5 191.25 2006
+end
+classcanvas 128386 class_ref 2739842 // QWebSocketServer
+  classdiagramsettings member_max_width 0 end
+  xyz 189.75 314.75 2012
+end
+classcanvas 128642 class_ref 146946 // QAbstractItemModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 502 314.75 2012
+end
+classcanvas 129538 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 494.75 399.25 2018
+end
+classcanvas 129922 class_ref 2740098 // Protocol
+  classdiagramsettings member_max_width 0 end
+  xyz 117.5 41.75 2000
+end
+classcanvas 131458 class_ref 174210 // QSqlTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 515 568.25 2029
+end
+classcanvas 131586 class_ref 174338 // QSqlQueryModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 509.75 483.75 2035
+end
+note 132482 "Here again, could find a solution to split some fields in diffrent tables ? (case of SQL f.ex. ...)
+--> Should be done in application specific model"
+  xyzwh 314.5 45.5 2000 373 97
+classcanvas 132994 class_ref 2746882 // ServerTable
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 124.75 2000
+end
+relationcanvas 128258 relation_ref 3091714 // <generalisation>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3091842 // <generalisation>
+  geometry VHV unfixed
+  from ref 128386 z 2013 to point 255 274
+  line 129154 z 2013 to point 408 274
+  line 129282 z 2013 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 902018 // <generalisation>
+  geometry VHV unfixed
+  from ref 128642 z 2013 to point 571 274
+  line 130562 z 2013 to point 408 274
+  line 130690 z 2013 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 141186 // <generalisation>
+  decenter_begin 523
+  from ref 129538 z 2019 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131714 relation_ref 175106 // <generalisation>
+  decenter_begin 528
+  decenter_end 523
+  from ref 131586 z 2036 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131842 relation_ref 174978 // <generalisation>
+  decenter_end 528
+  from ref 131458 z 2036 to ref 131586
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133378 relation_ref 3099650 // <association>
+  decenter_end 581
+  from ref 132994 z 2019 to point 684 151
+  line 133890 z 2019 to point 684 424
+  line 134018 z 2019 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133506 relation_ref 3099778 // <unidirectional association>
+  from ref 132994 z 2001 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133634 relation_ref 3099906 // <dependency>
+  geometry VH unfixed
+  decenter_end 581
+  from ref 132994 z 2013 to point 148 336
+  line 133762 z 2013 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

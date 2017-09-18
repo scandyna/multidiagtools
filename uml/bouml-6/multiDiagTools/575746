@@ -1,0 +1,211 @@
+format 211
+"Qt" // Qt::Qt
+  revision 4
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1445762 "Enums"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2660738 "Key"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3041794 "Key"
+      visibility package stereotype "enum"
+      cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+      php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+      python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+      idl_decl "${comment}enum ${name} {
+${items}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2660866 "KeyboardModifier"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3041922 "KeyboardModifier"
+      visibility package stereotype "enum"
+      cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+      php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+      python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+      idl_decl "${comment}enum ${name} {
+${items}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2873090 "NoModifier"
+	public type class_ref 3041922 // KeyboardModifier
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2873218 "ShiftModifier"
+	public type class_ref 3041922 // KeyboardModifier
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2873346 "ControlModifier"
+	public type class_ref 3041922 // KeyboardModifier
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2873474 "AltModifier"
+	public type class_ref 3041922 // KeyboardModifier
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2873602 "MetaModifier"
+	public type class_ref 3041922 // KeyboardModifier
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2873730 "KeypadModifier"
+	public type class_ref 3041922 // KeyboardModifier
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2873858 "GroupSwitchModifier"
+	public type class_ref 3041922 // KeyboardModifier
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 3048706 "KeyboardModifiers"
+      visibility package stereotype "typedef" base_type class_ref 3048578 // QFlags
+      nactuals 1
+      actual class class_ref 3048578 // QFlags
+        rank 0 value class_ref 3041922 // KeyboardModifier
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3431938 // <realization>
+	relation 3413506 -_-|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3431938 // <realization>
+	  b parent class_ref 3048578 // QFlags
+      end
+
+      classrelation 3432066 // <dependency>
+	relation 3413634 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3432066 // <dependency>
+	  b parent class_ref 3041922 // KeyboardModifier
+      end
+    end
+  end
+end

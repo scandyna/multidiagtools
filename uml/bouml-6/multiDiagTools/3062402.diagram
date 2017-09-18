@@ -1,0 +1,77 @@
+format 211
+
+classcanvas 128002 class_ref 3483522 // FilterProxyModelExpressionContainer
+  classdiagramsettings member_max_width 0 end
+  xyz 195.4 50 2000
+end
+classcanvas 128130 class_ref 3498626 // FilterProxyModelExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 495.4 39 2006
+end
+classcanvas 128386 class_ref 3499010 // FilterProxyModelExpressionEval
+  classdiagramsettings member_max_width 0 end
+  xyz 219.4 258 2006
+end
+classcanvas 128642 class_ref 3498882 // ModelRow
+  classdiagramsettings member_max_width 0 end
+  xyz 40.9 672.9 2000
+end
+classcanvas 128770 class_ref 3498370 // FilterProxyModelEval
+  classdiagramsettings member_max_width 0 end
+  xyz 39.6 258 2000
+end
+classcanvas 128898 class_ref 3225602 // or_
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 48.4 152.2 2006
+end
+classcanvas 129154 class_ref 3498498 // CheckEqualTo
+  classdiagramsettings member_max_width 0 end
+  xyz 703.8 514.2 2000
+end
+classcanvas 129282 class_ref 3498754 // GetTerminalValue
+  classdiagramsettings member_max_width 0 end
+  xyz 41.6 511.6 2005
+end
+classcanvas 129410 class_ref 3280514 // callable
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 782.8 386.4 2011
+end
+note 130178 "Proto default ?"
+  xyzwh 734 628 2000 246 43
+relationcanvas 128258 relation_ref 3866242 // <directional composition>
+  from ref 128130 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3866370 // <generalisation>
+  from ref 128386 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3865730 // <generalisation>
+  decenter_end 528
+  from ref 128770 z 2007 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 3865858 // <generalisation>
+  from ref 129154 z 2012 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 3866114 // <generalisation>
+  geometry VHV unfixed
+  from ref 129282 z 2012 to point 350.6 471.6
+  line 129794 z 2012 to point 854.8 471.6
+  line 129922 z 2012 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 3866626 // <dependency>
+  from ref 128386 z 2007 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 130306 -_-_
+  from ref 130178 z 2001 to ref 129154
+end

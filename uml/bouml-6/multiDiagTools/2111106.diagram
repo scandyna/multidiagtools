@@ -1,0 +1,27 @@
+format 211
+
+classcanvas 128002 class_ref 2450050 // QMediaRecorder
+  classdiagramsettings member_max_width 0 end
+  xyz 257 146 2000
+end
+classcanvas 128130 class_ref 138626 // QObject
+  classdiagramsettings member_max_width 0 end
+  xyz 207 42 2000
+end
+classcanvas 128258 class_ref 2449922 // QMediaBindableInterface
+  classdiagramsettings member_max_width 0 end
+  xyz 42 146 2000
+end
+relationcanvas 129026 relation_ref 2744834 // <generalisation>
+  from ref 128002 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2744962 // <generalisation>
+  decenter_begin 462
+  decenter_end 479
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

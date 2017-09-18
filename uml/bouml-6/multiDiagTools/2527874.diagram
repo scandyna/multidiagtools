@@ -1,0 +1,13 @@
+format 211
+
+classcanvas 128002 class_ref 2852354 // StorageEngine
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 215.5 2000
+end
+classcanvas 128130 class_ref 2852482 // TableStorageEngineMap
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 40.5 2000
+end
+note 128258 "Map should include different storage engine for different DBMS"
+  xyzwh 55 296 2000 481 53
+end

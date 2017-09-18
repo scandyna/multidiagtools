@@ -1,0 +1,22 @@
+format 210
+
+classcanvas 128258 class_ref 1987714 // mdtSqlIndexBase
+  classdiagramsettings member_max_width 0 end
+  xyz 468 60 2000
+end
+classcanvas 128386 class_ref 2248962 // SourceFieldExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 74 203 2000
+end
+classcanvas 128514 class_ref 2249090 // SourceFieldExpressionMatchItem
+  classdiagramsettings member_max_width 0 end
+  xyz 480 227 2000
+end
+note 128770 "Flag unique (peut-être  commun?)"
+  xyzwh 166 521 2000 307 61
+relationcanvas 128642 relation_ref 2526594 // <directional composition>
+  from ref 128386 z 2001 to ref 128514
+  no_role_a no_role_b
+  multiplicity_a_pos 464 295 3000 no_multiplicity_b
+end
+end

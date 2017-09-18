@@ -1,0 +1,124 @@
+format 208
+
+statecanvas 128002 state_ref 243330 // Processing
+  
+  xyzwh 441.321 352.963 2000 439 115
+end
+statecanvas 128386 state_ref 249986 // AbortingBulkOut
+  
+  xyzwh 68.4532 901.184 2000 509 199
+end
+pseudostatecanvas 128642 pseudostate_ref 207618 // initial
+   xyz 111.312 211.198 2000
+end
+statecanvas 129538 state_ref 256514 // ClearingBulkOutEndpointHalt
+  
+  xyzwh 303.933 526.204 2000 651 301
+end
+statecanvas 129666 state_ref 256642 // ClearingBulkInEndpointHalt
+  
+  xyzwh 791.61 838.551 2006 619 199
+end
+statecanvas 132354 state_ref 263170 // ClearingBulkIo
+  
+  xyzwh 806.86 2.26 2000 441 335
+end
+statecanvas 134402 state_ref 269698 // AbortingBulkIn
+  
+  xyzwh 1170.72 1077.74 2000 435 128
+end
+transitioncanvas 128770 transition_ref 292738 // <transition>
+  decenter_end 35
+  
+  from ref 128642 z 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 128898 transition_ref 299394 // <transition>
+  geometry VHr
+  decenter_end 267
+  
+  from ref 128002 z 2001 label "AbortBulkBulkOutRequested / beginAbortBulkOut" xyz 160 389 2001 to point 201 406
+  line 132866 z 2001 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129922 transition_ref 299778 // <transition>
+  
+  from ref 128386 z 2001 label "ClearBulkOutEndpointHaltRequested" xyz 345 863 2001 to ref 129538
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130434 transition_ref 300162 // <transition>
+  geometry HVr
+  decenter_begin 73
+  decenter_end 787
+  
+  from ref 129538 z 2001 label "ControlTransferSuccessful / notifyBulkIoAborted" xyz 209 474 2001 to point 348 440
+  line 132226 z 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130562 transition_ref 300290 // <transition>
+  geometry HVr
+  decenter_begin 656
+  decenter_end 921
+  
+  from ref 129666 z 2007 label "ControlTransferSuccessful / notifyBulkIoAborted" xyz 1008 811 2007 to point 1195 455
+  line 133250 z 2007 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130946 transition_ref 300418 // <transition>
+  geometry VH
+  decenter_begin 175
+  decenter_end 256
+  
+  from ref 128386 z 2001 label "SplitActionDone / notifyBulkIoAborted" xyz 86 360 2001 to point 155 379
+  line 134146 z 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132482 transition_ref 306946 // <transition>
+  geometry VH
+  decenter_begin 90
+  decenter_end 156
+  
+  from ref 128002 z 2001 label "ClearBulkIoRequested" xyz 465 41 2001 to point 478 52
+  line 132738 z 2001 to ref 132354
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133378 transition_ref 307202 // <transition>
+  geometry HVr
+  
+  from ref 132354 z 2001 label "ClearBulkOutEndpointHaltRequested" xyz 896 487.5 2001 to point 1022.56 675.44
+  line 134530 z 2001 to ref 129538
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133506 transition_ref 307330 // <transition>
+  geometry VHr
+  decenter_end 449
+  
+  from ref 132354 z 2001 label "SplitActionDone / notifyBulkIoAborted" xyz 561 143 2001 to point 636 164
+  line 133762 z 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133890 transition_ref 313858 // <transition>
+  decenter_end 346
+  
+  from ref 128002 z 2001 label "ClearBulkOutEndpointHaltRequested" xyz 478 504 2001 to ref 129538
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134658 transition_ref 320386 // <transition>
+  geometry HV
+  decenter_begin 666
+  decenter_end 657
+  
+  from ref 128002 z 2001 label "AbortBulkInRequested / beginAbortBulkIn" xyz 1094 405 3000 to point 1453 426
+  line 134786 z 2001 to ref 134402
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134914 transition_ref 320514 // <transition>
+  geometry HVr
+  decenter_begin 837
+  decenter_end 256
+  
+  from ref 134402 z 2001 label "SplitActionDone / notifyBulkIoAborted" xyz 1297 346.5 3000 to point 1532 379
+  line 135042 z 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+end

@@ -1,0 +1,87 @@
+format 210
+
+note 128002 "Export selected items in a QTableView"
+  xyzwh 347.7 1296.9 2000 255 65
+note 128130 "Export what we see in a QTableView"
+  xyzwh 40.9 1296.7 2000 227 67
+note 128258 "WW: natural sorting "
+  xyzwh 682.7 1296.7 2000 185 57
+classcanvas 128386 class_ref 720002 // mdtSortFilterProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 78 978.2 2000
+end
+classcanvas 128514 class_ref 2160258 // QAbstractItemView
+  classdiagramsettings member_max_width 0 end
+  xyz 641.4 337 2000
+end
+classcanvas 128642 class_ref 1133570 // QHeaderView
+  classdiagramsettings member_max_width 0 end
+  xyz 985.8 322.2 2006
+end
+classcanvas 128898 class_ref 638338 // QTableView
+  classdiagramsettings member_max_width 0 end
+  xyz 994 513.2 2012
+end
+classcanvas 129282 class_ref 1382914 // QItemSelectionModel
+  classdiagramsettings member_max_width 0 end
+  xyz 481.6 42.4 2006
+end
+classcanvas 129538 class_ref 146946 // QAbstractItemModel
+  classdiagramsettings member_max_width 0 end
+  xyz 40 146.2 2006
+end
+classcanvas 129794 class_ref 719618 // QAbstractProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 155 688 2012
+end
+classcanvas 130050 class_ref 719874 // QSortFilterProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 127 832.8 2018
+end
+relationcanvas 128770 relation_ref 2457858 // <generalisation>
+  decenter_begin 523
+  from ref 128642 z 2007 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 2457986 // <generalisation>
+  from ref 128898 z 2013 to point 943.4 575.4
+  line 130434 z 2013 to point 943.4 399.2
+  line 130562 z 2013 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2458114 // <unidirectional association>
+  decenter_end 483
+  from ref 128898 z 2013 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2458370 // <unidirectional association>
+  decenter_begin 482
+  from ref 128514 z 2007 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 2458242 // <unidirectional association>
+  decenter_end 505
+  from ref 128514 z 2007 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 901890 // <generalisation>
+  from ref 129794 z 2013 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 902146 // <generalisation>
+  from ref 130050 z 2019 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 902274 // <generalisation>
+  from ref 128386 z 2019 to ref 130050
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

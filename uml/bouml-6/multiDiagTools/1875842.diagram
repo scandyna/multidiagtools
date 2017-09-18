@@ -1,0 +1,140 @@
+format 211
+
+classcanvas 128002 class_ref 895234 // QGraphicsItem
+  classdiagramsettings member_max_width 0 end
+  xyz 353.7 40.05 2000
+end
+classcanvas 128130 class_ref 2247938 // AbstractLink
+  classdiagramsettings member_max_width 0 end
+  xyz 577.6 480.5 2000
+end
+classcanvas 128642 class_ref 2248706 // InternalLink
+  classdiagramsettings member_max_width 0 end
+  xyz 442.4 818.8 2000
+end
+classcanvas 129922 class_ref 895362 // QGraphicsItemGroup
+  classdiagramsettings member_max_width 0 end
+  xyz 613.6 310.2 2006
+end
+classcanvas 130434 class_ref 896386 // QAbstractGraphicsShapeItem
+  classdiagramsettings member_max_width 0 end
+  xyz 186.2 310.2 2006
+end
+classcanvas 130690 class_ref 2567170 // QGraphicsPathItem
+  classdiagramsettings member_max_width 0 end
+  xyz 218.2 942.2 2012
+end
+classcanvas 130946 class_ref 2567426 // QGraphicsRectItem
+  classdiagramsettings member_max_width 0 end
+  xyz 41.5 942.2 2012
+end
+classcanvas 131202 class_ref 2567298 // QGraphicsPolygonItem
+  classdiagramsettings member_max_width 0 end
+  xyz 395.05 942.2 2012
+end
+classcanvas 132738 class_ref 895106 // QGraphicsObject
+  classdiagramsettings member_max_width 0 end
+  xyz 795 310.2 2006
+end
+classcanvas 132994 class_ref 894978 // QGraphicsTextItem
+  classdiagramsettings member_max_width 0 end
+  xyz 789 395.9 2012
+end
+classcanvas 133506 class_ref 2248834 // ConnectedSocketPin
+  classdiagramsettings member_max_width 0 end
+  xyz 614.6 680.8 2000
+end
+classcanvas 134786 class_ref 2574082 // CableLink
+  classdiagramsettings member_max_width 0 end
+  xyz 325.8 818.8 2000
+end
+classcanvas 135298 class_ref 2574210 // Link
+  classdiagramsettings member_max_width 0 end
+  xyz 401.45 679.1 2000
+end
+relationcanvas 130050 relation_ref 1096322 // <generalisation>
+  geometry VHV unfixed
+  from ref 129922 z 2007 to point 684.8 271.6
+  line 136450 z 2007 to point 646.4 271.6
+  line 136578 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 1097858 // <generalisation>
+  geometry VHV unfixed
+  from ref 130434 z 2007 to point 284.8 271.8
+  line 132226 z 2007 to point 646.4 271.8
+  line 132354 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 2929794 // <generalisation>
+  from ref 130690 z 2013 to ref 130434
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131074 relation_ref 2930050 // <generalisation>
+  geometry VHV unfixed
+  from ref 130946 z 2013 to point 107.2 901
+  line 134274 z 2013 to point 284.8 901
+  line 134402 z 2013 to ref 130434
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131330 relation_ref 2929922 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 521
+  from ref 131202 z 2013 to point 476 901.4
+  line 132482 z 2013 to point 284 901.4
+  line 132610 z 2013 to ref 130434
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132866 relation_ref 1096194 // <generalisation>
+  geometry VHV unfixed
+  from ref 132738 z 2007 to point 854.8 271.2
+  line 134530 z 2007 to point 646.4 271.2
+  line 134658 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133122 relation_ref 1095938 // <generalisation>
+  from ref 132994 z 2013 to ref 132738
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133634 relation_ref 2937218 // <generalisation>
+  from ref 128130 z 2007 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133762 relation_ref 2937346 // <generalisation>
+  from ref 133506 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135426 relation_ref 2937730 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 480
+  from ref 135298 z 2001 to point 484 642
+  line 135938 z 2001 to point 684 642
+  line 136066 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135682 relation_ref 2937858 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 480
+  from ref 134786 z 2001 to point 361 778.6
+  line 136194 z 2001 to point 484 778.6
+  line 136322 z 2001 to ref 135298
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135810 relation_ref 2937986 // <generalisation>
+  decenter_end 480
+  from ref 128642 z 2001 to ref 135298
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

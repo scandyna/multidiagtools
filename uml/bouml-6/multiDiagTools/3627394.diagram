@@ -1,0 +1,25 @@
+format 213
+
+classcanvas 128130 class_ref 4161666 // ToolExecutableWrapper
+  classdiagramsettings member_max_width 0 end
+  xyz 38 42 2000
+end
+classcanvas 128258 class_ref 4159746 // ObjdumpWrapper
+  classdiagramsettings member_max_width 0 end
+  xyz 105 233 2006
+end
+classcanvas 129026 class_ref 4151810 // QStandardPaths
+  classdiagramsettings member_max_width 0 end
+  xyz 401 241 2000
+end
+relationcanvas 128898 relation_ref 4681090 // <generalisation>
+  from ref 128258 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 4708738 // <dependency>
+  from ref 128258 z 2007 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

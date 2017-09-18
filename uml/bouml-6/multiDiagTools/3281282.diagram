@@ -1,0 +1,30 @@
+format 211
+
+classcanvas 128002 class_ref 3768962 // Range
+  classdiagramsettings member_max_width 0 end
+  xyz 322 40 2000
+end
+classcanvas 128130 class_ref 3768834 // ColumnRange
+  classdiagramsettings member_max_width 0 end
+  xyz 303 418 2006
+end
+classcanvas 128386 class_ref 3755778 // RowRange
+  classdiagramsettings member_max_width 0 end
+  xyz 41 415 2012
+end
+relationcanvas 128258 relation_ref 4190338 // <generalisation>
+  decenter_end 517
+  from ref 128130 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 4190210 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 517
+  from ref 128386 z 2013 to point 150 376
+  line 128642 z 2013 to point 421 376
+  line 128770 z 2013 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

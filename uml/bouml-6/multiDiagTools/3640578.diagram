@@ -1,0 +1,41 @@
+format 214
+
+note 128258 "Make also a Debug.h (or similar) which provides overloads to stream various types.
+
+Do implement in .cpp file ! (recursive dependencies!)"
+  xyzwh 40.5 488.5 2000 565 77
+classcanvas 128514 class_ref 2132482 // QMessageLogger
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 40.5 645.5 2000
+end
+classcanvas 128642 class_ref 2132354 // QLoggingCategory
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 458.5 645.5 2000
+end
+classcanvas 128898 class_ref 2132098 // QDebugStateSaver
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 245.5 645.5 2000
+end
+classcanvas 129026 class_ref 4271874 // Console
+  classdiagramsettings member_max_width 0 end
+  xyz 138 42 2000
+end
+classcanvas 129154 class_ref 2132226 // QDebug
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 528 306 2005
+end
+classcanvas 129794 class_ref 4278530 // ConsoleStream
+  classdiagramsettings member_max_width 0 end
+  xyz 40 246 2000
+end
+relationcanvas 130306 relation_ref 4811650 // <directional composition>
+  from ref 129794 z 2006 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 4811778 // <unidirectional association>
+  from ref 129026 z 2001 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

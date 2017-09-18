@@ -1,0 +1,69 @@
+format 211
+
+classcanvas 128002 class_ref 4078338 // RecordTemplate
+  classdiagramsettings member_max_width 0 end
+  xyz 1055 38 2000
+end
+classcanvas 128130 class_ref 4084866 // RecordListTemplate
+  classdiagramsettings member_max_width 0 end
+  xyz 681 38 2000
+end
+note 128642 "Should we support variable column count ?
+If yes, should a max column count be tracked (usefull for ItemModels) ?
+Note: ths logic of adding columns must be handled in any case in the ItemModel.
+         Here, we possibly just provide columnCount(row)."
+  xyzwh 40 55 2000 601 195
+classcanvas 129026 class_ref 4104578 // Record
+  classdiagramsettings member_max_width 0 end
+  xyz 1013 346 2000
+end
+classcanvas 129154 class_ref 4104706 // StringRecord
+  classdiagramsettings member_max_width 0 end
+  xyz 1136 346 2000
+end
+classcanvas 129794 class_ref 4104834 // RecordList
+  classdiagramsettings member_max_width 0 end
+  xyz 665 346 2000
+end
+classcanvas 129922 class_ref 4104962 // StringRecordList
+  classdiagramsettings member_max_width 0 end
+  xyz 792 346 2006
+end
+relationcanvas 128258 relation_ref 4574594 // <directional composition>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 1039 162 3000 no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 4594434 // <realization>
+  geometry VHV unfixed
+  decenter_end 483
+  from ref 129026 z 2001 to point 1054 304
+  line 129538 z 2001 to point 1181 304
+  line 129666 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 4594562 // <realization>
+  decenter_end 483
+  from ref 129154 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 4594690 // <realization>
+  decenter_begin 462
+  from ref 129922 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 4594818 // <realization>
+  geometry VHV unfixed
+  decenter_begin 448
+  from ref 129794 z 2001 to point 701 304
+  line 130306 z 2001 to point 846 304
+  line 130434 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128770 -_-_
+  from ref 128130 z 2001 to ref 128642
+end

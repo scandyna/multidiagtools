@@ -1,0 +1,33 @@
+format 210
+
+classcanvas 128002 class_ref 895746 // QGraphicsView
+  classdiagramsettings member_max_width 0 end
+  xyz 43 101 2000
+end
+classcanvas 128130 class_ref 895618 // QGraphicsScene
+  classdiagramsettings member_max_width 0 end
+  xyz 319 94 2000
+end
+note 128386 "Note: objets non dépendants de la DB (plus facile à tester)"
+  xyzwh 89 209 2000 381 59
+note 128514 "Réutiliser class/structs créé (connexions, etc..)"
+  xyzwh 94 298 2000 387 43
+classcanvas 128642 class_ref 894850 // mdtClPathGraph
+  classdiagramsettings member_max_width 0 end
+  xyz 337 346 2006
+end
+classcanvas 128898 class_ref 2247810 // mdtClLinkPath
+  classdiagramsettings member_max_width 0 end
+  xyz 70 596 2000
+end
+relationcanvas 128258 relation_ref 2525058 // <unidirectional association>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 301 133 3000 multiplicity_b_pos 163 133 3000
+end
+relationcanvas 128770 relation_ref 1097346 // <directional composition>
+  from ref 128642 z 2007 to ref 128130
+  role_a_pos 479 164 3000 no_role_b
+  multiplicity_a_pos 452 164 3000 no_multiplicity_b
+end
+end

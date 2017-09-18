@@ -1,0 +1,30 @@
+format 211
+
+classinstance 128130 class_ref 2753410 // RowChangeEventMapper
+  name ""   xyz 233 54 2000 life_line_z 2000
+classinstance 128258 class_ref 3090434 // AbstractController
+  name ""   xyz 501 53 2000 life_line_z 2000
+classinstance 128770 class_ref 3021826 // ItemSelectionModel
+  name ""   xyz 39 56 2005 life_line_z 2000
+durationcanvas 128898 classinstance_ref 128770 // :ItemSelectionModel
+  xyzwh 100 126 2010 11 61
+end
+durationcanvas 129026 classinstance_ref 128130 // :RowChangeEventMapper
+  xyzwh 311 125 2010 11 55
+end
+durationcanvas 129282 classinstance_ref 128258 // :AbstractController
+  xyzwh 556 131 2010 11 48
+end
+msg 129154 synchronous
+  from durationcanvas_ref 128898
+  to durationcanvas_ref 129026
+  yz 128 2015 msg operation_ref 4100738 // "setCurrentRow(in current : QModelIndex, in previous : QModelIndex) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 162 111
+msg 129410 synchronous
+  from durationcanvas_ref 129026
+  to durationcanvas_ref 129282
+  yz 131 2015 msg operation_ref 4529026 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 397 114
+end

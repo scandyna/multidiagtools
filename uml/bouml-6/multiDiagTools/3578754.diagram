@@ -1,0 +1,38 @@
+format 213
+
+classcanvas 128002 class_ref 4131586 // SelectedColumnListModel
+  classdiagramsettings member_max_width 0 end
+  xyz 39 127 2000
+end
+classcanvas 128130 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 178 42 2000
+end
+note 128514 " - Each row of this model is a column of the model its handle"
+  xyzwh 37 441 2000 431 79
+classcanvas 130562 class_ref 3715074 // ColumnList
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 506 242 2000
+end
+relationcanvas 128258 relation_ref 4628866 // <generalisation>
+  decenter_begin 508
+  decenter_end 523
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128386 relation_ref 4628994 // <unidirectional association>
+  decenter_begin 639
+  decenter_end 899
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 4629634 // <directional composition>
+  from ref 128002 z 2001 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128642 -_-_ decenter_begin 508 decenter_end 508
+  from ref 128002 z 2001 to ref 128514
+end

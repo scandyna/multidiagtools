@@ -1,0 +1,73 @@
+format 211
+"sandbox" // Mdt::CableList::sandbox
+  revision 3
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1218306 "AbstractStorageBackend"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2291842 "overview"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2641282 "QtSqlStorage"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3042946 // <generalisation>
+	relation 3025666 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3042946 // <generalisation>
+	  b parent class_ref 2641154 // Storage
+      end
+    end
+  end
+end

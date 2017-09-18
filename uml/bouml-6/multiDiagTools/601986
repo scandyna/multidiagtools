@@ -1,0 +1,1339 @@
+format 211
+"Expression" // Mdt::Sql::Expression
+  revision 15
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1531522 "Terminals"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2868226 "TableField"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3294594 "TableField"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3028098 "TableName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3028226 "FieldName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 3247490 "TableFieldTerminal"
+      visibility package 
+      nformals 2
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Domain" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 3
+      actual class class_ref 3225730 // extends
+        rank 0 explicit_value ""
+      actual class class_ref 3225730 // extends
+        rank 1 explicit_value ""
+      actual class class_ref 3225730 // extends
+        rank 2 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3724162 // <generalisation>
+	relation 3704962 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3724162 // <generalisation>
+	  b parent class_ref 3225730 // extends
+      end
+
+      classrelation 3724290 // <dependency>
+	relation 3705090 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3724290 // <dependency>
+	  b parent class_ref 3294594 // TableField
+      end
+    end
+  end
+
+  classview 1564546 "Grammar"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2921474 "Grammar"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 3309314 "LeftTerminal"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3725058 // <generalisation>
+	relation 3705858 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3725058 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3309442 "RightTerminal"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3725186 // <generalisation>
+	relation 3705986 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3725186 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3308802 "CompareEquality"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3724546 // <generalisation>
+	relation 3705346 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3724546 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3308930 "CompareGreater"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3724674 // <generalisation>
+	relation 3705474 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3724674 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3309058 "CompareLess"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3724802 // <generalisation>
+	relation 3705602 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3724802 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3309186 "Comparison"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3724930 // <generalisation>
+	relation 3705730 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3724930 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+  end
+
+  classview 1564674 "SqlTransform"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2921730 "Terminal"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3280386 "GetTerminalSql"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3702402 // <generalisation>
+	relation 3683202 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3702402 // <generalisation>
+	  b parent class_ref 3280514 // callable
+      end
+
+      operation 4690690 "operator()"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "tf" type class_ref 3294594 // TableField
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4697474 "operator()"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "value" type class_ref 161154 // QVariant
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3301122 "LeftTerminalSqlTransform"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 2
+      actual class class_ref 3301378 // when
+        rank 0 explicit_value ""
+      actual class class_ref 3301378 // when
+        rank 1 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3716482 // <generalisation>
+	relation 3697282 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3716482 // <generalisation>
+	  b parent class_ref 3301378 // when
+      end
+    end
+
+    class 3301250 "RightTerminalSqlTransform"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3716610 // <generalisation>
+	relation 3697410 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3716610 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    classdiagram 2928386 "Comparison"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3280770 "GetCompareEqualToSql"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3702658 // <generalisation>
+	relation 3683458 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3702658 // <generalisation>
+	  b parent class_ref 3280514 // callable
+      end
+
+      operation 4690946 "operator()"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "left" type class_ref 161026 // QString
+	  param in name "right" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3919234 // <dependency>
+	relation 3893506 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3919234 // <dependency>
+	  b parent class_ref 3519746 // LikeExpressionSqlTransform
+      end
+
+      operation 4948226 "operator()"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "left" type class_ref 161026 // QString
+	  param in name "rigth" type class_ref 3526402 // LikeExpression
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3301506 "CompareEqualToSqlTransform"
+      visibility protected 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 2
+      actual class class_ref 3301378 // when
+        rank 0 explicit_value ""
+      actual class class_ref 3301378 // when
+        rank 1 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3716738 // <generalisation>
+	relation 3697538 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3716738 // <generalisation>
+	  b parent class_ref 3301378 // when
+      end
+    end
+
+    class 3301634 "CompareEqualitySqlTransform"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3716866 // <generalisation>
+	relation 3697666 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3716866 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3281026 "ComparisonSqlTransform"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3702914 // <generalisation>
+	relation 3683714 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3702914 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    classdiagram 2928770 "Logical"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3281282 "GetLogicalAndSql"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3709826 // <generalisation>
+	relation 3690626 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3709826 // <generalisation>
+	  b parent class_ref 3280514 // callable
+      end
+
+      operation 4697730 "operator()"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "left" type class_ref 161026 // QString
+	  param in name "right" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3281410 "GetLogicalOrSql"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3709954 // <generalisation>
+	relation 3690754 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3709954 // <generalisation>
+	  b parent class_ref 3280514 // callable
+      end
+
+      operation 4697602 "operator()"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "left" type class_ref 161026 // QString
+	  param in name "right" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 3082370 "LikeExpression"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3519746 "LikeExpressionSqlTransform"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+
+  classview 1544706 "ExpressionContainer"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2887810 "Container"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3267202 "ExpressionContainerInterface"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 4676354 "~ExpressionContainerInterface"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 4677250 "toSql"
+	abstract cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3267330 "ExpressionContainerImpl"
+      visibility package 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3688706 // <generalisation>
+	relation 3669506 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3688706 // <generalisation>
+	  b parent class_ref 3267202 // ExpressionContainerInterface
+      end
+
+      attribute 3034754 "expression"
+	public explicit_type "T"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+  end
+
+  classview 1564418 "Where"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2921090 "Container"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3308546 "WhereExpressionContainer"
+      visibility package 
+      nformals 1
+      formal name "Expr" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3723906 // <generalisation>
+	relation 3704706 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3723906 // <generalisation>
+	  b parent class_ref 3267202 // ExpressionContainerInterface
+      end
+
+      attribute 3047810 "Expression"
+	private explicit_type "Expr"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4704258 "toSql"
+	cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 2928898 "Grammar"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3316354 "WhereExpressionGrammar"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3732482 // <generalisation>
+	relation 3713282 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3732482 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    classdiagram 2928514 "SqlTransform"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3316226 "WhereExpressionSqlTransform"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3732098 // <generalisation>
+	relation 3712898 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3732098 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+
+      classrelation 3732226 // <dependency>
+	relation 3713026 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3732226 // <dependency>
+	  b parent class_ref 3309698 // logical_or
+      end
+
+      classrelation 3732354 // <dependency>
+	relation 3713154 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3732354 // <dependency>
+	  b parent class_ref 3309570 // logical_and
+      end
+    end
+  end
+
+  classview 1571202 "JoinConstraint"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2929026 "Container"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3316482 "JoinConstraintExpressionContainer"
+      visibility package 
+      nformals 1
+      formal name "Expr" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3732610 // <generalisation>
+	relation 3713410 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3732610 // <generalisation>
+	  b parent class_ref 3267202 // ExpressionContainerInterface
+      end
+
+      attribute 3054338 "Expression"
+	private explicit_type "Expr"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4711042 "toSql"
+	cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 2935554 "Grammar"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3323010 "JoinConstraintExpressionGrammar"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3739138 // <generalisation>
+	relation 3719938 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3739138 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    classdiagram 2942082 "SqlTransform"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3329538 "JoinConstraintExpressionSqlTransform"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3745666 // <generalisation>
+	relation 3726466 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3745666 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+  end
+
+  classview 1524866 "SearchCondition"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2861186 "overview"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    classdiagram 2861314 "Where"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    classdiagram 2861442 "Join"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3239938 "MainTableField"
+      visibility package stereotype "typedef" base_type class_ref 3225090 // terminal
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3240066 "TableToJoinField"
+      visibility package stereotype "typedef" explicit_base_type ""
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2861570 "Grammar"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3240194 "TableFieldTerminalData"
+      visibility package 
+      nformals 1
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3021442 "table"
+	public type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3021570 "field"
+	public type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 3240322 "MainTableFieldTag"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3240450 "TableToJoinFieldTag"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3240578 "ComparisonPredicate"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3681922 // <generalisation>
+	relation 3662722 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3681922 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3240706 "SearchCondition"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3682050 // <generalisation>
+	relation 3662850 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3682050 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3240834 "Literal"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3682178 // <generalisation>
+	relation 3662978 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3682178 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+  end
+end

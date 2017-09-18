@@ -1,0 +1,184 @@
+format 76
+
+activitynodecanvas 128002 activitynode_ref 192898 // initial_node
+  xyz 340 27 2000
+end
+activityactioncanvas 128130 activityaction_ref 199810 // activity action wait Idle
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 302 98 2000 101 61
+end
+activityactioncanvas 128642 activityaction_ref 199938 // activity action encodeFrame
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 284 240 2000 137 53
+end
+activitynodecanvas 128898 activitynode_ref 193154 // activity_final
+  xyz 190 227 2000
+end
+activityactioncanvas 129154 activityaction_ref 200066 // activity action writeData
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 302 347 2000 101 61
+end
+activitynodecanvas 129538 activitynode_ref 193410 // decision
+  xyz 339 455 2005
+end
+activityactioncanvas 129922 activityaction_ref 200194 // activity action timeout
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 82 708 2000 101 61
+end
+activityactioncanvas 130178 activityaction_ref 200322 // activity action wait on reply
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 375 708 2006 101 61
+end
+interruptibleactivityregioncanvas 130434 interruptibleactivityregion_ref 128002 // 
+  xyzwh 58 664 1995 474 149
+end
+activityactioncanvas 130562 activityaction_ref 200450 // activity action error occured
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 221 709 2005 101 55
+end
+activitynodecanvas 131458 activitynode_ref 193794 // activity_final
+  xyz 229 462 2000
+end
+activityactioncanvas 131714 activityaction_ref 200578 // activity action start timeout timer
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 291 559 2000 127 63
+end
+interruptibleactivityregioncanvas 132098 interruptibleactivityregion_ref 128130 // 
+  xyzwh 107 73 2000 320 117
+end
+activityactioncanvas 132226 activityaction_ref 200706 // activity action error occured
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 153 97 2005 101 61
+end
+activitynodecanvas 132610 activitynode_ref 193922 // activity_final
+  xyz 219 1092 2000
+end
+activityactioncanvas 132994 activityaction_ref 200834 // activity action stop timeout timer
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 207 892 2005 129 59
+end
+activityactioncanvas 133250 activityaction_ref 200962 // activity action clean ...
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 178 1003 2000 107 51
+end
+activityactioncanvas 133890 activityaction_ref 201090 // activity action decode frame
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 366 845 2000 121 61
+end
+activitynodecanvas 134146 activitynode_ref 194050 // decision
+  xyz 555 856 2000
+end
+activityactioncanvas 135426 activityaction_ref 201218 // activity action stop timeout timer
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 666 843 2000 161 61
+end
+activitynodecanvas 135938 activitynode_ref 194306 // activity_final
+  xyz 734 1088 2000
+end
+flowcanvas 128258 flow_ref 209282 // <flow>
+  
+  from ref 128002 z 2001 to ref 128130
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 129282 flow_ref 209794 // <flow>
+  
+  from ref 128642 z 2001 to ref 129154
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 129666 flow_ref 209922 // <flow>
+  
+  from ref 129154 z 2006 to ref 129538
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131586 flow_ref 210946 // [else]
+  
+  from ref 129538 z 2006 label "[else]" xyz 275 453 3000 to ref 131458
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131842 flow_ref 211074 // [write OK]
+  
+  from ref 129538 z 2006 label "[write OK]" xyz 317 516 3000 to ref 131714
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131970 flow_ref 211202 // <flow>
+  
+  from ref 131714 z 2001 to ref 130178
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132354 flow_ref 211330 // <flow>
+  
+  from ref 132226 z 2006 to ref 128898
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132482 flow_ref 211458 // <flow>
+  
+  from ref 128130 z 2001 to ref 128642
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 133122 flow_ref 211842 // <flow>
+  
+  from ref 130562 z 2006 to ref 132994
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 133378 flow_ref 211970 // <flow>
+  
+  from ref 132994 z 2006 to ref 133250
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 133506 flow_ref 212098 // <flow>
+  
+  from ref 129922 z 2001 to ref 133250
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 133634 flow_ref 212226 // <flow>
+  
+  from ref 133250 z 2001 to ref 132610
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 134018 flow_ref 212354 // <flow>
+  
+  from ref 130178 z 2007 to ref 133890
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 134274 flow_ref 212482 // <flow>
+  
+  from ref 133890 z 2001 to ref 134146
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 134402 flow_ref 212610 // [unexpected slave]
+  geometry HVr
+  
+  from ref 134146 z 2001 label "[unexpected slave]" xyz 516 831.5 3000 to point 564 736
+  line 134914 z 2001 to ref 130178
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 135554 flow_ref 212866 // [frame error]
+  geometry HVr
+  
+  from ref 134146 z 2006 label "[frame error]" xyz 524 898 3000 to point 565 919
+  line 135682 z 2006 to ref 132994
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 135810 flow_ref 212994 // [else]
+  
+  from ref 134146 z 2001 label "[else]" xyz 603 856 3000 to ref 135426
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 136066 flow_ref 213122 // <flow>
+  
+  from ref 135426 z 2001 to ref 135938
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+end

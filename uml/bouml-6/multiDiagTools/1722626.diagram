@@ -1,0 +1,104 @@
+format 211
+
+classcanvas 128002 class_ref 2043906 // mdtCsvFileParser
+  classdiagramsettings member_max_width 0 end
+  xyz 1534.75 811.5 2000
+end
+classcanvas 128130 class_ref 2043778 // mdtCsvStringParser
+  classdiagramsettings member_max_width 0 end
+  xyz 911.25 1112.5 2000
+end
+classcanvas 128258 class_ref 2071810 // mdtCsvParserModel
+  classdiagramsettings member_max_width 0 end
+  xyz 944.6 291.6 2000
+end
+classcanvas 128386 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 1087.65 209.15 2005
+end
+classcanvas 128642 class_ref 2071938 // mdtCsvFileParserModel
+  classdiagramsettings member_max_width 0 end
+  xyz 819 734.5 2000
+end
+classcanvas 128770 class_ref 2072066 // mdtCsvStringParserModel
+  classdiagramsettings member_max_width 0 end
+  xyz 692.5 1171.25 2000
+end
+classcanvas 129922 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 1126 40.75 2010
+end
+classcanvas 130050 class_ref 146946 // QAbstractItemModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 1087 125.75 2016
+end
+classcanvas 130690 class_ref 2085506 // RecordFormat
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 38.9 653.05 2022
+end
+note 131330 "Could support drop ?"
+  xyzwh 685.25 1319.5 2000 199 55
+note 131586 "Use decoration roles to overlay record that was parsed with errors.
+Could be implemented with a map that contains data row as key, and error as value."
+  xyzwh 482.75 548.25 2000 423 109
+classcanvas 131970 class_ref 2456706 // RecordFormatter
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 53.45 405.2 2028
+end
+relationcanvas 128514 relation_ref 2396930 // <generalisation>
+  decenter_end 476
+  from ref 128258 z 2006 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2397058 // <generalisation>
+  from ref 128642 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 2397186 // <generalisation>
+  geometry VHV unfixed
+  from ref 128770 z 2001 to point 778 696.2
+  line 129410 z 2001 to point 1156 696.2
+  line 129538 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 2397314 // <unidirectional association>
+  from ref 128642 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 2397442 // <unidirectional association>
+  decenter_begin 577
+  from ref 128770 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 902018 // <generalisation>
+  from ref 130050 z 2017 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 141186 // <generalisation>
+  decenter_begin 476
+  from ref 128386 z 2017 to ref 130050
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132098 relation_ref 2751746 // <unidirectional association>
+  from ref 131970 z 2029 to ref 130690
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 2759170 // <directional composition>
+  decenter_begin 589
+  from ref 128258 z 2029 to ref 131970
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 131458 -_-_ decenter_begin 482
+  from ref 131330 z 2001 to ref 128770
+line 131714 -_-_ decenter_begin 532 decenter_end 859
+  from ref 131586 z 2001 to ref 128258
+end

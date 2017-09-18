@@ -1,0 +1,43 @@
+format 76
+
+classcanvas 128002 class_ref 910210 // mdtSqlSchemaTable
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 202 32 2000
+end
+classcanvas 128130 class_ref 405122 // QSqlDatabase
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 9 34 2000
+end
+classcanvas 128258 class_ref 917122 // mdtSqlDatabaseManager
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 9 253 2000
+end
+classcanvas 128386 class_ref 917250 // mdtSqlDatabaseManagerDialog
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 583 138 2000
+end
+classcanvas 128514 class_ref 370434 // QDialog
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 674 25 2000
+end
+classcanvas 128770 class_ref 138626 // QObject
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 370 123 2000
+end
+relationcanvas 128642 relation_ref 1126018 // <generalisation>
+  from ref 128386 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 1126146 // <generalisation>
+  from ref 128258 z 2001 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 1126274 // <directional composition>
+  decenter_begin 319
+  from ref 128258 z 2001 to ref 128130
+  role_a_pos 96 61 3000 no_role_b
+  multiplicity_a_pos 96 91 3000 no_multiplicity_b
+end
+end

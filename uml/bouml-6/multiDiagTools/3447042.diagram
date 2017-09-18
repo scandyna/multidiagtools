@@ -1,0 +1,99 @@
+format 211
+
+classcanvas 128002 class_ref 3972226 // AbstractItemModelControllerInterface
+  classdiagramsettings member_max_width 0 end
+  xyz 163.4 346.4 2000
+end
+classcanvas 128130 class_ref 3965314 // AbstractSqlControllerInterface
+  classdiagramsettings member_max_width 0 end
+  xyz 161.2 42.2 2000
+end
+classcanvas 128258 class_ref 3965442 // SqlQueryControllerInterface
+  classdiagramsettings member_max_width 0 end
+  xyz 169.2 170.6 2006
+end
+classcanvas 128514 class_ref 3965570 // SqlTableControllerInterface
+  classdiagramsettings member_max_width 0 end
+  xyz 39.6 258 2006
+end
+classcanvas 129026 class_ref 3648002 // AbstractController
+  classdiagramsettings member_max_width 0 end
+  xyz 455 42.2 2000
+end
+classcanvas 129154 class_ref 3138178 // TableViewController
+  classdiagramsettings member_max_width 0 end
+  xyz 447.8 346.4 2000
+end
+classcanvas 129410 class_ref 2927362 // SqlTableViewController
+  classdiagramsettings member_max_width 0 end
+  xyz 321 258 2000
+end
+classcanvas 130818 class_ref 3972354 // AbstractItemViewController
+  classdiagramsettings member_max_width 0 end
+  xyz 423.8 130.6 2000
+end
+note 134786 "Warn: not want to store model to AbstractController and its subclasses ! (hard to mainain coherent!).
+
+Maybe: keep ModelWrapper only so that AbstractController can call known methods in a uniform way.
+For more specific cases, that AbstractController don't know, subclass should get pointer to QAbstractItemModel (ABstractController::sourceModel() ), and cast it. 
+
+Note: what about a unified setModel() moethod ?
+-> What about simple shadowing in subclass of controller ?
+     Finally less ugly, not ?
+
+---> Or: setModel() pure virtual in AbstractController.
+        Subclass must then:
+        - Create and set ModelWrapper to AbstractController
+        - AbstractController then calls setModelToView() etc..
+        AbstractController provides sourceModel() and modelForView()
+        Subclass can proviede a model() method.
+        AbstractController::sourceModel() allways returns the model  passed in setModelWrapper().
+         Subclass can cast sourceModel() if it needs to interact with its concrete model"
+  xyzwh 86 396 2012 697 425
+relationcanvas 128386 relation_ref 4430210 // <generalisation>
+  from ref 128258 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 4437378 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 475
+  from ref 128514 z 2007 to point 125 128
+  line 134530 z 2007 to point 262 128
+  line 134658 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 4438018 // <generalisation>
+  from ref 129154 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130946 relation_ref 4438402 // <generalisation>
+  decenter_begin 518
+  from ref 130818 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131074 relation_ref 4438530 // <generalisation>
+  decenter_begin 525
+  decenter_end 518
+  from ref 129154 z 2001 to ref 130818
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131202 relation_ref 4438658 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 518
+  from ref 129410 z 2001 to point 398 216
+  line 134274 z 2001 to point 517 216
+  line 134402 z 2001 to ref 130818
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131330 relation_ref 4438786 // <generalisation>
+  from ref 129410 z 2007 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -1,0 +1,36 @@
+format 210
+
+classcanvas 128002 class_ref 2146434 // mdtValue
+  classdiagramsettings member_max_width 0 end
+  xyz 269 539 2000
+end
+classcanvas 128130 class_ref 1900930 // mdtExpected
+  classdiagramsettings member_max_width 0 end
+  xyz 235 102 2005
+end
+note 128386 "IsNull only there if T does not privide it"
+  xyzwh 519 559 2000 237 65
+classcanvas 128642 class_ref 2153474 // mdtValueIntegral
+  classdiagramsettings member_max_width 0 end
+  xyz 43 550 2000
+end
+classcanvas 128770 class_ref 2153346 // mdtValueDouble
+  classdiagramsettings member_max_width 0 end
+  xyz 58 666 2000
+end
+classcanvas 128898 class_ref 2153602 // mdtMeasuredValue
+  classdiagramsettings member_max_width 0 end
+  xyz 46 741 2000
+end
+note 129026 "Hmm........."
+  xyzwh 510 429 2000 131 51
+relationcanvas 128258 relation_ref 2450946 // <generalisation>
+  from ref 128002 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128514 -_-_
+  from ref 128386 z 2001 to ref 128002
+line 129154 -_-_
+  from ref 129026 z 2007 to ref 128258
+end

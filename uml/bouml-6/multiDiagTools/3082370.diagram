@@ -1,0 +1,25 @@
+format 211
+
+classcanvas 128002 class_ref 3519746 // LikeExpressionSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 42 146 2000
+end
+classcanvas 128130 class_ref 3280514 // callable
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 398 42 2000
+end
+classcanvas 128642 class_ref 3280770 // GetCompareEqualToSql
+  classdiagramsettings member_max_width 0 end
+  xyz 279 127 2006
+end
+relationcanvas 128770 relation_ref 3683458 // <generalisation>
+  from ref 128642 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3893506 // <dependency>
+  from ref 128642 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

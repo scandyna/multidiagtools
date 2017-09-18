@@ -1,0 +1,363 @@
+format 211
+"proto" // boost::proto
+  revision 13
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  package_ref 595458 // context
+
+  classview 1517954 "proto"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2840450 "terminal"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3225090 "terminal"
+      visibility package 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225218 // transform
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3667714 // <generalisation>
+	relation 3648514 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3667714 // <generalisation>
+	  b parent class_ref 3225218 // transform
+      end
+    end
+
+    classdiagram 2840578 "transform"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3225218 "transform"
+      visibility package 
+      nformals 1
+      formal name "PrimitiveTransform" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2840834 "or_"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3225602 "or_"
+      visibility package 
+      nformals 1
+      formal name "...G" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225218 // transform
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3667842 // <generalisation>
+	relation 3648642 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3667842 // <generalisation>
+	  b parent class_ref 3225218 // transform
+      end
+    end
+
+    classdiagram 2914050 "when"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3301378 "when"
+      visibility package 
+      nformals 2
+      formal name "Grammar" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "PrimitiveTransform" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2840962 "extends"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3225730 "extends"
+      visibility package 
+      nformals 3
+      formal name "Expr" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Derived" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Domain" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2841218 "domain"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3226370 "domain"
+      visibility package 
+      nformals 3
+      formal name "Generator" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Grammar" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Super" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2900866 "callable"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3280514 "callable"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 3300994 "callable_context"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3788930 "callable_context"
+      visibility package 
+      nformals 2
+      formal name "Context" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "DefaultCtx" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2907522 "basic_expr"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3294466 "basic_expr"
+      visibility package 
+      nformals 3
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Args" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Arity" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2921858 "logical"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3309570 "logical_and"
+      visibility package 
+      nformals 2
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "U" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225218 // transform
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3725314 // <generalisation>
+	relation 3706114 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3725314 // <generalisation>
+	  b parent class_ref 3225218 // transform
+      end
+    end
+
+    class 3309698 "logical_or"
+      visibility package 
+      nformals 2
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "U" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225218 // transform
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3725442 // <generalisation>
+	relation 3706242 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3725442 // <generalisation>
+	  b parent class_ref 3225218 // transform
+      end
+    end
+  end
+end

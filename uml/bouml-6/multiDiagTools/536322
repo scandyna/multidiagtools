@@ -1,0 +1,410 @@
+format 211
+"TypeErasure" // principes::TypeErasure
+  revision 2
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1353730 "Overview"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2508162 "Overview"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 2064386 "C"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3193346 "C"
+	cpp_inline public explicit_return_type ""
+	nparams 1
+	  param in name "injectedInstance" explicit_type "Tinject"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3193474 "invoke"
+	cpp_inline public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      class 2064514 "CInternalBase"
+	abstract visibility private 
+	cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	operation 3193602 "doIt"
+	  abstract cpp_virtual public explicit_return_type "void"
+	  nparams 0
+	  cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	  
+	  
+	  
+	  
+	end
+
+	operation 3193730 "~CInternalBase"
+	  abstract cpp_virtual public explicit_return_type ""
+	  nparams 0
+	  cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	  
+	  
+	  
+	  
+	end
+      end
+
+      classrelation 2406402 // m_internalBasePtr (<directional composition>)
+	relation 2390018 *-->
+	  stereotype "shared_ptr"
+	  a role_name "m_internalBasePtr" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2406402 // m_internalBasePtr (<directional composition>)
+	  b parent class_ref 2064514 // CInternalBase
+      end
+
+      class 2064642 "Cinjected"
+	visibility private 
+	nformals 1
+	formal name "TInjected" type "class" explicit_default_value ""
+	  explicit_extends ""
+	cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	classrelation 2406530 // <generalisation>
+	  relation 2390146 ---|>
+	    a public
+	      cpp default "${type}"
+	      classrelation_ref 2406530 // <generalisation>
+	    b parent class_ref 2064514 // CInternalBase
+	end
+
+	attribute 2131714 "m_injected"
+	  private explicit_type "TInjected"
+	  cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	operation 3193858 "Cinjected"
+	  cpp_inline public explicit_return_type ""
+	  nparams 1
+	    param in name "i" explicit_type "TInjected"
+	  cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	  cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	  
+	  
+	  
+	  
+	end
+
+	operation 3193986 "doIt"
+	  cpp_inline public explicit_return_type "void"
+	  nparams 0
+	  cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	  cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	  
+	  
+	  
+	  
+	end
+      end
+    end
+
+    class 2064770 "CAnyProperty"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3194114 "get"
+	public explicit_return_type "T"
+	nparams 1
+	  param in name "key" explicit_type "string"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3194242 "set"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "key" explicit_type "string"
+	  param in name "value" explicit_type "T"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3194370 "addGetHandler"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "handler_ptr" explicit_type "shared_ptr<CAnyHandlerBase>"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3194498 "setSetHandler"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "handler_ptr" explicit_type "shared_ptr<CAnyHandlerBase>"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2406658 // m_SetHandlerMap (<directional composition>)
+	relation 2390274 *-->
+	  stereotype "map<TypeInfo, shared_ptr>"
+	  a role_name "m_SetHandlerMap" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2406658 // m_SetHandlerMap (<directional composition>)
+	  b parent class_ref 2064898 // CAnyHandlerBase
+      end
+
+      classrelation 2406786 // m_GetHandlerMap (<directional composition>)
+	relation 2390402 *-->
+	  stereotype "map<TypeInfo, vector<shared_ptr>>"
+	  a role_name "m_GetHandlerMap" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2406786 // m_GetHandlerMap (<directional composition>)
+	  b parent class_ref 2064898 // CAnyHandlerBase
+      end
+    end
+
+    class 2064898 "CAnyHandlerBase"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl "class ${name}${inherit}:
+${docstring}${members}
+"
+      idl_decl "${comment}${abstract}${custom}valuetype ${name}${inherit} {
+${members}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3194626 "CAnyHandlerBase"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3194754 "~CAnyHandlerBase"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 3194882 "get"
+	abstract cpp_virtual public explicit_return_type "boost::any"
+	nparams 1
+	  param in name "key" explicit_type "string"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3195010 "set"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "key" explicit_type "string"
+	  param in name "value" explicit_type "boost::any"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3195138 "name"
+	abstract cpp_virtual public explicit_return_type "string"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3195266 "getHandledTypes"
+	stereotype "vector"
+	abstract cpp_virtual public explicit_return_type "TypeInfo"
+	multiplicity "*"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+  end
+end

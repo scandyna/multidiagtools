@@ -1,0 +1,86 @@
+format 211
+"Ui" // mdtdatabase::Ui
+  revision 1
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1039106 "DatabaseCopyDialog"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2076034 "DatabaseCopyDialog"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2421250 "DatabaseCopyDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2719234 // <directional composition>
+	relation 2702466 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2719234 // <directional composition>
+	  b parent class_ref 1934466 // mdtSqlDatabaseBasicInfoWidget
+      end
+
+      attribute 2343426 "wDestinationDatabaseInfo"
+	private type class_ref 1934466 // mdtSqlDatabaseBasicInfoWidget
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+  end
+end

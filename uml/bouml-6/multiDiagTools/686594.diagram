@@ -1,0 +1,187 @@
+format 211
+
+statecanvas 128002 state_ref 149762 // EditingNewRow
+  
+  xyzwh 8.7 184.2 2000 132 45
+end
+statecanvas 128130 state_ref 149890 // Editing
+  
+  xyzwh 909.2 184.4 2000 89 45
+end
+statecanvas 128258 state_ref 150018 // Visualizing
+  
+  xyzwh 537.1 185.6 2000 110 45
+end
+pseudostatecanvas 128514 pseudostate_ref 154754 // initial
+   xyz 581 65.4 2000
+end
+pseudostatecanvas 128642 pseudostate_ref 154882 // final
+   xyz 750.8 218 2000
+end
+statecanvas 129794 state_ref 150274 // Submitting
+  
+  xyzwh 670.5 328 2000 99 45
+end
+statecanvas 129922 state_ref 150402 // Reverting
+  
+  xyzwh 666.8 54.9 2000 90 45
+end
+statecanvas 131202 state_ref 150530 // Removing
+  
+  xyzwh 547.4 574.9 2000 92 45
+end
+statecanvas 131970 state_ref 157058 // SubmittingNewRow
+  
+  xyzwh 240.9 329.9 2000 162 45
+end
+statecanvas 132738 state_ref 157186 // RevertingNewRow
+  
+  xyzwh 211.3 56.2 2000 154 45
+end
+statecanvas 134018 state_ref 163714 // Inserting
+  
+  xyzwh 287.2 185.3 2000 84 45
+end
+statecanvas 134530 state_ref 205314 // Selecting
+  
+  xyzwh 311.9 489.9 2000 79 45
+end
+transitioncanvas 128770 transition_ref 160130 // <transition>
+  
+  from ref 128514 z 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 128898 transition_ref 160258 // <transition>
+  decenter_begin 230
+  decenter_end 230
+  
+  from ref 128258 z 2001 label "dataEdited" xyz 741 175 2001 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130050 transition_ref 160642 // <transition>
+  geometry HVr
+  
+  from ref 128130 z 2001 label "submitTriggered" xyz 899 277.5 2001 to point 950 347
+  line 130562 z 2001 to ref 129794
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130178 transition_ref 160770 // <transition>
+  geometry HVr
+  
+  from ref 128130 z 2001 label "revertTriggered" xyz 903 119.5 2001 to point 950 71
+  line 130818 z 2001 to ref 129922
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130306 transition_ref 160898 // <transition>
+  
+  from ref 129794 z 2001 label "errorOccured" xyz 789 267 2001 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130690 transition_ref 161026 // <transition>
+  decenter_begin 90
+  
+  from ref 129794 z 2001 label "operationSucceed" xyz 593 277 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130946 transition_ref 161154 // <transition>
+  
+  from ref 129922 z 2001 label "errorOccured" xyz 789 128 2001 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131074 transition_ref 161282 // <transition>
+  
+  from ref 129922 z 2001 label "operationSucceed" xyz 611 128 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132098 transition_ref 167938 // <transition>
+  geometry VH
+  
+  from ref 128002 z 2001 label "submitTriggered" xyz 20 277.5 2001 to point 72 348
+  line 132482 z 2001 to ref 131970
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132226 transition_ref 168066 // <transition>
+  
+  from ref 131970 z 2001 label "operationSucceed" xyz 393 267 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132610 transition_ref 168194 // <transition>
+  
+  from ref 131970 z 2001 label "errorOccured" xyz 154 267 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132866 transition_ref 168322 // <transition>
+  geometry VH
+  
+  from ref 128002 z 2001 label "revertTriggered" xyz 23 120.5 2001 to point 72 75
+  line 133122 z 2001 to ref 132738
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133378 transition_ref 168450 // <transition>
+  
+  from ref 132738 z 2001 label "operationSucceed" xyz 381 130 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133506 transition_ref 168578 // <transition>
+  
+  from ref 132738 z 2001 label "errorOccured" xyz 135 130 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133634 transition_ref 168706 // <transition>
+  decenter_end 135
+  
+  from ref 128258 z 2001 label "removeTriggered" xyz 470 423 2001 to ref 131202
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133762 transition_ref 168834 // <transition>
+  decenter_begin 837
+  
+  from ref 131202 z 2001 label "operationSucceed" xyz 580 452 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133890 transition_ref 168962 // <transition>
+  
+  from ref 128258 z 2001 to ref 128642
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134146 transition_ref 175490 // <transition>
+  decenter_begin 256
+  decenter_end 230
+  
+  from ref 128258 z 2001 label "insertTriggered" xyz 402 174 2001 to ref 134018
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134274 transition_ref 175618 // <transition>
+  
+  from ref 134018 z 2001 label "operationSucceed" xyz 154 187 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134402 transition_ref 175746 // <transition>
+  decenter_begin 741
+  decenter_end 768
+  
+  from ref 134018 z 2001 label "errorOccured" xyz 407 213 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135170 transition_ref 217858 // <transition>
+  decenter_begin 261
+  decenter_end 189
+  
+  from ref 128258 z 2001 label "selectTriggered" xyz 274 441 2001 to ref 134530
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135298 transition_ref 217986 // <transition>
+  decenter_begin 886
+  decenter_end 378
+  
+  from ref 134530 z 2001 label "opperationSucceed" xyz 372 465 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135426 transition_ref 224514 // <transition>
+  decenter_begin 918
+  decenter_end 676
+  
+  from ref 128258 z 2001 label "submitTriggered" xyz 681 295 2001 to ref 129794
+  write_horizontally default show_definition default drawing_language default
+end
+end

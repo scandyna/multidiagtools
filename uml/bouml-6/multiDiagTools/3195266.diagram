@@ -1,0 +1,120 @@
+format 211
+
+classcanvas 128002 class_ref 3068674 // AbstractSqlTableFormWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 296.35 655.75 2000
+end
+classcanvas 128258 class_ref 3088770 // AbstractFormWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 636.4 657.65 2006
+end
+classcanvas 128642 class_ref 3661442 // UserDefinedFormWidget
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 709.75 798.55 2000
+end
+classcanvas 128770 class_ref 316162 // QWidget
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 757.4 168.75 2000
+end
+classcanvas 129026 class_ref 3648002 // AbstractController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 1006.8 41.45 2000
+end
+classcanvas 129410 class_ref 3138434 // WidgetMapperController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 985.45 684.65 2012
+end
+classcanvas 129666 class_ref 3614594 // AbstractSqlController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 72.2 168.75 2018
+end
+classcanvas 129922 class_ref 3138562 // SqlTableWidgetMapperController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 36.2 704.75 2024
+end
+classcanvas 130818 class_ref 3661570 // UserDefinedSqlFormWidget
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 354.7 838.75 2000
+end
+classcanvas 131842 class_ref 3068802 // AbstractEditorWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 608.75 256.2 2030
+end
+classcanvas 133378 class_ref 3979138 // AbstractSqlTableModelController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 36.2 255.85 2030
+end
+relationcanvas 129794 relation_ref 4025346 // <generalisation>
+  geometry VHV unfixed
+  from ref 129666 z 2019 to point 145 127
+  line 132994 z 2019 to point 1069 127
+  line 133122 z 2019 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 4040066 // <generalisation>
+  decenter_begin 479
+  from ref 128642 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130946 relation_ref 4040194 // <generalisation>
+  decenter_end 510
+  from ref 130818 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131330 relation_ref 4040322 // <directional composition>
+  decenter_begin 464
+  decenter_end 422
+  from ref 128258 z 2013 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131458 relation_ref 4040450 // <directional composition>
+  decenter_begin 475
+  from ref 128002 z 2025 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131970 relation_ref 3441794 // <generalisation>
+  decenter_begin 490
+  from ref 131842 z 2031 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132098 relation_ref 4230274 // <generalisation>
+  decenter_end 490
+  from ref 128258 z 2031 to ref 131842
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133250 relation_ref 4446082 // <generalisation>
+  decenter_begin 520
+  from ref 129410 z 2013 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133506 relation_ref 4486786 // <generalisation>
+  from ref 133378 z 2031 to ref 129666
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133634 relation_ref 4466946 // <generalisation>
+  from ref 129922 z 2031 to ref 133378
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133762 relation_ref 4493314 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 510
+  decenter_end 490
+  from ref 128002 z 2031 to point 446 616
+  line 133890 z 2031 to point 787 616
+  line 134018 z 2031 to ref 131842
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

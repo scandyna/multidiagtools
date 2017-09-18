@@ -1,0 +1,601 @@
+format 211
+"FilterExpression" // Mdt::FilterExpression
+  revision 16
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1518210 "CalculatorExample"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2841090 "Example"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 3225858 "placeholder"
+      visibility package 
+      nformals 1
+      formal name "I" type "int" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3225986 "CalculatorContext"
+      visibility package 
+      nactuals 2
+      actual class class_ref 3225346 // callable_context
+        rank 0 explicit_value ""
+      actual class class_ref 3225346 // callable_context
+        rank 1 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3667970 // <generalisation>
+	relation 3648770 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3667970 // <generalisation>
+	  b parent class_ref 3225346 // callable_context
+      end
+
+      attribute 3008258 "args"
+	public explicit_type "double"
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4662402 "operator()"
+	public explicit_return_type "double"
+	nparams 2
+	  param in name "" explicit_type "proto::tag::terminal"
+	  param in name "" type class_ref 3225858 // placeholder
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3226114 "CalculatorGrammar"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3668098 // <generalisation>
+	relation 3648898 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3668098 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3226242 "CalculatorDomain"
+      visibility package 
+      nactuals 3
+      actual class class_ref 3226370 // domain
+        rank 0 explicit_value ""
+      actual class class_ref 3226370 // domain
+        rank 1 explicit_value ""
+      actual class class_ref 3226370 // domain
+        rank 2 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3668226 // <generalisation>
+	relation 3649026 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3668226 // <generalisation>
+	  b parent class_ref 3226370 // domain
+      end
+    end
+
+    class 3226498 "Calculator"
+      visibility package 
+      nformals 1
+      formal name "Expr" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 3
+      actual class class_ref 3225730 // extends
+        rank 0 explicit_value ""
+      actual class class_ref 3225730 // extends
+        rank 1 explicit_value ""
+      actual class class_ref 3225730 // extends
+        rank 2 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3668354 // <generalisation>
+	relation 3649154 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3668354 // <generalisation>
+	  b parent class_ref 3225730 // extends
+      end
+
+      operation 4662530 "Calculator"
+	cpp_inline public explicit_return_type ""
+	nparams 1
+	  param in name "expr" explicit_type "Expr"
+	    defaultvalue "Expr()"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4662658 "operator()"
+	cpp_inline public explicit_return_type "result_type"
+	nparams 2
+	  param in name "d1" explicit_type "double"
+	    defaultvalue "0"
+	  param in name "d2" explicit_type "double"
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3668482 // <dependency>
+	relation 3649282 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3668482 // <dependency>
+	  b parent class_ref 3225986 // CalculatorContext
+      end
+    end
+  end
+
+  classview 1511426 "Sandbox"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2833922 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 3211394 "FilterKey"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3001602 "Columns"
+	private explicit_type "int"
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 3211522 "FilterRecord"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3001730 "ColumnData"
+	private explicit_type "int,QVariant"
+	multiplicity "*"
+	stereotype "map"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 3211650 "Expression"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3211778 "SqlFilterExpression"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3661186 // <dependency>
+	relation 3641986 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3661186 // <dependency>
+	  b parent class_ref 3211650 // Expression
+      end
+    end
+
+    class 3211906 "CppFilterExpression"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3661058 // <dependency>
+	relation 3641858 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3661058 // <dependency>
+	  b parent class_ref 3211650 // Expression
+      end
+    end
+
+    class 3218434 "Column"
+      visibility package 
+      nformals 1
+      formal name "I" type "int" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3218562 "Field"
+      visibility package 
+      nformals 1
+      formal name "I" type "int" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2847746 "sandboxColumnConstant"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+  end
+
+  classview 1617410 "Terminals"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3095426 "LiteralValue"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3308674 "LiteralValue"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3724418 // <generalisation>
+	relation 3705218 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3724418 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    classdiagram 3075842 "LikeExpression"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3513090 "LikeExpressionTerminal"
+      visibility package 
+      nformals 1
+      formal name "Domain" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 3
+      actual class class_ref 3225730 // extends
+        rank 0 explicit_value ""
+      actual class class_ref 3225730 // extends
+        rank 1 explicit_value ""
+      actual class class_ref 3225730 // extends
+        rank 2 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 4935042 "LikeExpressionTerminal"
+	cpp_inline public explicit_return_type ""
+	nparams 1
+	  param in name "expr" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3912450 // <generalisation>
+	relation 3886722 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3912450 // <generalisation>
+	  b parent class_ref 3225730 // extends
+      end
+
+      operation 4941570 "expression"
+	cpp_inline public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3519874 "LikeExpressionRegexTransform"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+
+  classview 1663362 "RuntimeExpression"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3135490 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+  end
+end

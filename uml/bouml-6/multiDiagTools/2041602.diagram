@@ -1,0 +1,53 @@
+format 211
+
+classcanvas 128002 class_ref 2092162 // QSerialPort
+  classdiagramsettings member_max_width 0 end
+  xyz 456.85 132 2000
+end
+classcanvas 128130 class_ref 2390018 // thread
+  classdiagramsettings member_max_width 0 end
+  xyz 39.1 80 2000
+end
+classcanvas 128514 class_ref 2390274 // FrameQueue
+  classdiagramsettings member_max_width 0 end
+  xyz 341.7 221.75 2000
+end
+classcanvas 128642 class_ref 2390402 // FrameXy
+  classdiagramsettings member_max_width 0 end
+  xyz 473.4 234.6 2000
+end
+classcanvas 128898 class_ref 2390530 // Thread
+  classdiagramsettings member_max_width 0 end
+  xyz 359.7 122 2000
+end
+classcanvas 129538 class_ref 2390914 // ThreadBase
+  classdiagramsettings member_max_width 0 end
+  xyz 343.7 40.8 2000
+end
+relationcanvas 128770 relation_ref 2669186 // <directional composition>
+  decenter_begin 553
+  from ref 128514 z 2001 to ref 128642
+  no_role_a no_role_b
+  multiplicity_a_pos 457 266 3000 no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 2669314 // <directional composition>
+  from ref 128898 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 2669442 // <directional composition>
+  from ref 128898 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2669570 // <directional composition>
+  from ref 128898 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 2669826 // <generalisation>
+  from ref 128898 z 2001 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

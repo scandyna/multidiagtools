@@ -1,0 +1,28 @@
+format 211
+
+classcanvas 128002 class_ref 2050562 // mdtCsvData
+  classdiagramsettings member_max_width 0 end
+  xyz 559 42 2000
+end
+classcanvas 128130 class_ref 2036994 // mdtCsvRecord
+  classdiagramsettings member_max_width 0 end
+  xyz 464 124 2006
+end
+classcanvas 128386 class_ref 2085506 // mdtCsvRecordFormat
+  classdiagramsettings member_max_width 0 end
+  xyz 41 91 2000
+end
+note 128642 "Think about real class with iterators for access ?"
+  xyzwh 40.5 352.5 2000 389 57
+relationcanvas 128258 relation_ref 2376578 // <directional composition>
+  decenter_begin 450
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 585 97 3000 no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2722818 // <dependency>
+  from ref 128386 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

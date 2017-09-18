@@ -1,0 +1,102 @@
+format 207
+
+pseudostatecanvas 128002 pseudostate_ref 181250 // initial
+   xyz 94 153 2000
+end
+statecanvas 128130 state_ref 211970 // DecodingHeader
+  
+  xyzwh 436 144 2000 127 43
+end
+statecanvas 128258 state_ref 212098 // Complete
+  
+  xyzwh 357 531 2000 81 43
+end
+statecanvas 128386 state_ref 212226 // StoringData
+  
+  xyzwh 346 278 2000 95 43
+end
+statecanvas 128642 state_ref 212482 // StoringCrc
+  
+  xyzwh 351 410 2000 89 43
+end
+statecanvas 129538 state_ref 212738 // BadFrame
+  
+  xyzwh 666 149 2000 85 43
+end
+statecanvas 130178 state_ref 212610 // Empty
+  
+  xyzwh 190 143 2000 61 43
+end
+transitioncanvas 129154 transition_ref 231298 // bytesWritten
+  
+  from ref 128130 z 2001 label "bytesWritten [headerIsComplete] / storeData" xyz 310 223 2001 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129282 transition_ref 231426 // dataSectionComplete
+  
+  from ref 128386 z 2001 to ref 128642
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129410 transition_ref 231554 // CrcOk
+  
+  from ref 128642 z 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130434 transition_ref 231810 // <transition>
+  
+  from ref 128002 z 2001 to ref 130178
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130562 transition_ref 231938 // bytesWritten
+  decenter_begin 209
+  decenter_end 209
+  
+  from ref 130178 z 2001 label "bytesWritten / decodeHeader" xyz 255 128 2001 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130946 transition_ref 232194 // clear
+  decenter_begin 790
+  decenter_end 790
+  
+  from ref 128130 z 2001 to ref 130178
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131074 transition_ref 232322 // clear
+  
+  from ref 128386 z 2001 to ref 130178
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131202 transition_ref 232450 // clear
+  decenter_begin 101
+  
+  from ref 128642 z 2001 to ref 130178
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131330 transition_ref 232578 // clear
+  decenter_begin 418
+  
+  from ref 128258 z 2001 to point 220 547
+  line 131586 z 2001 to ref 130178
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131714 transition_ref 232706 // decodeError
+  
+  from ref 128130 z 2001 to ref 129538
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131842 transition_ref 232834 // decodeError
+  
+  from ref 128642 z 2001 to point 624 428
+  line 131970 z 2001 to ref 129538
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132098 transition_ref 232962 // clear
+  decenter_begin 209
+  decenter_end 573
+  
+  from ref 129538 z 2001 to point 601 83
+  line 132226 z 2001 to point 223 84
+  line 132354 z 2001 to ref 130178
+  write_horizontally default show_definition default drawing_language default
+end
+end

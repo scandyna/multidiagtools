@@ -1,0 +1,33 @@
+format 211
+
+classcanvas 128002 class_ref 2411010 // FramePool
+  classdiagramsettings member_max_width 0 end
+  xyz 88 146 2000
+end
+classcanvas 128130 class_ref 2412546 // SerialPort
+  classdiagramsettings member_max_width 0 end
+  xyz 247 138 2000
+end
+classcanvas 128258 class_ref 2411394 // Thread
+  classdiagramsettings member_max_width 0 end
+  xyz 40 42 2006
+end
+relationcanvas 128514 relation_ref 2693250 // <association>
+  geometry HV unfixed
+  from ref 128258 z 2007 to point 398 70
+  line 130434 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 2889090 // <directional composition>
+  decenter_begin 520
+  from ref 128258 z 2007 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 110 119 3000 no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 2895618 // <unidirectional association>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

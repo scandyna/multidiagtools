@@ -1,0 +1,402 @@
+format 214
+"Comm_Bus_sandbox" // Mdt::Comm_Bus_sandbox
+  revision 6
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1901186 "Sandbox"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3692930 "Comm_Bus_Sandbox"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 4285442 "SomePortImpl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4844674 // <generalisation>
+	relation 4818434 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4844674 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 4845058 // <unidirectional association>
+	relation 4818818 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4845058 // <unidirectional association>
+	  b parent class_ref 4285570 // SomePortThread
+      end
+
+      operation 6034818 "connectSync"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6034946 "connectAsync"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6035074 "writeSync"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4852610 // <unidirectional association>
+	relation 4826370 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4852610 // <unidirectional association>
+	  b parent class_ref 4298754 // PortThreadPool
+      end
+    end
+
+    class 4285570 "SomePortThread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4844546 // <generalisation>
+	relation 4818306 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4844546 // <generalisation>
+	  b parent class_ref 222722 // QThread
+      end
+
+      classrelation 4845186 // <unidirectional association>
+	relation 4818946 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4845186 // <unidirectional association>
+	  b parent class_ref 322818 // QIODevice
+      end
+
+      classrelation 4852354 // <unidirectional association>
+	relation 4826114 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4852354 // <unidirectional association>
+	  b parent class_ref 4299010 // SomePortThreadImpl
+      end
+    end
+
+    class 4292098 "Fifo"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 4298754 "PortThreadPool"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4852482 // <directional composition>
+	relation 4826242 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 4852482 // <directional composition>
+	  b parent class_ref 222722 // QThread
+      end
+    end
+
+    class 4298882 "HighLevelPort"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 6041602 "connectSync"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "standardAdrStr" explicit_type "string"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4852226 // <unidirectional association>
+	relation 4825986 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4852226 // <unidirectional association>
+	  b parent class_ref 4285442 // SomePortImpl
+      end
+    end
+
+    class 4299010 "SomePortThreadImpl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 3706242 "Thread"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4305922 "Thread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4859522 // <generalisation>
+	relation 4833282 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4859522 // <generalisation>
+	  b parent class_ref 222722 // QThread
+      end
+
+      operation 6049410 "start"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 4306050 "AbstractCompletionHandler"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 3712770 "Comm_OtherIdeas"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4319106 "TcpSocketThread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4866050 // <directional composition>
+	relation 4839810 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4866050 // <directional composition>
+	  b parent class_ref 329474 // QTcpSocket
+      end
+
+      classrelation 4866178 // <generalisation>
+	relation 4839938 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4866178 // <generalisation>
+	  b parent class_ref 222722 // QThread
+      end
+
+      classrelation 4866434 // <directional composition>
+	relation 4840194 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4866434 // <directional composition>
+	  b parent class_ref 4319234 // CompletionHandlerList
+      end
+    end
+
+    class 4319234 "CompletionHandlerList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4866306 // <unidirectional association>
+	relation 4840066 --->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 4866306 // <unidirectional association>
+	  b parent class_ref 4306050 // AbstractCompletionHandler
+      end
+    end
+  end
+end

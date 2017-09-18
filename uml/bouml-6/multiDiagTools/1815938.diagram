@@ -1,0 +1,20 @@
+format 211
+
+classcanvas 128002 class_ref 2180738 // mdtCsvSourceInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 117.4 40.2 2000
+end
+classcanvas 128130 class_ref 2180610 // CsvImportTableMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 40.2 520.6 2000
+end
+classcanvas 128258 class_ref 2187266 // mdtCsvStringInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 40.4 378.2 2000
+end
+relationcanvas 128514 relation_ref 2478210 // <generalisation>
+  from ref 128258 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

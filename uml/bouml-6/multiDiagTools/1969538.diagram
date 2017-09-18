@@ -1,0 +1,35 @@
+format 211
+
+classcanvas 128002 class_ref 2283650 // ExpressionMatchItemModel
+  classdiagramsettings member_max_width 0 end
+  xyz 159 129 2000
+end
+classcanvas 128258 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 360 47 2006
+end
+classcanvas 128514 class_ref 2257026 // ExpressionMatchItem
+  classdiagramsettings member_max_width 0 end
+  xyz 776 433 2000
+end
+classcanvas 128770 class_ref 2174082 // TableMapping
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 781 232 2006
+end
+relationcanvas 128386 relation_ref 2547842 // <generalisation>
+  decenter_end 469
+  from ref 128002 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 2588418 // <directional composition>
+  from ref 128002 z 2001 to ref 128514
+  no_role_a no_role_b
+  multiplicity_a_pos 760 463 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2547970 // <unidirectional association>
+  from ref 128002 z 2007 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

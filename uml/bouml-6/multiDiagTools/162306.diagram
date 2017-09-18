@@ -1,0 +1,77 @@
+format 76
+
+classinstancecanvas 128002 classinstance_ref 128002 // model
+  xyz 92 114 2000
+end
+classinstancecanvas 128130 classinstance_ref 128130 // pvRootItem
+  xyz 132 173 2000
+end
+classinstancecanvas 128386 classinstance_ref 128258 // 
+  xyz 302 244 2000
+end
+classinstancecanvas 128514 classinstance_ref 128386 // 
+  xyz 306 309 2000
+end
+classinstancecanvas 128642 classinstance_ref 128514 // 
+  xyz 308 374 2000
+end
+classinstancecanvas 130178 classinstance_ref 128898 // 
+  xyz 437 463 2000
+end
+classinstancecanvas 130434 classinstance_ref 129026 // 
+  xyz 438 525 2000
+end
+note 131202 "Exemple de hiérachie"
+  xyzwh 196 32 2000 309 53
+classinstancecanvas 131330 classinstance_ref 129282 // 
+  xyz 558 308 2000
+end
+classinstancecanvas 131458 classinstance_ref 129282 // 
+  xyz 647.5 493.5 2000
+end
+objectlinkcanvas 128258 norel
+  decenter_end 326
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+objectlinkcanvas 128770 norel
+  decenter_end 54
+  from ref 128130 z 2001 to ref 128386
+  no_role_a no_role_b
+objectlinkcanvas 128898 norel
+  decenter_end 54
+  from ref 128130 z 2001 to ref 128514
+  no_role_a no_role_b
+objectlinkcanvas 129026 norel
+  decenter_end 54
+  from ref 128130 z 2001 to ref 128642
+  no_role_a no_role_b
+objectlinkcanvas 130306 norel
+  decenter_end 93
+  from ref 128642 z 2001 to ref 130178
+  no_role_a no_role_b
+objectlinkcanvas 130562 norel
+  decenter_end 93
+  from ref 128642 z 2001 to ref 130434
+  no_role_a no_role_b
+objectlinkcanvas 131586 norel
+  decenter_begin 944
+  decenter_end 81
+  from ref 128386 z 2001 to ref 131330
+  no_role_a no_role_b
+objectlinkcanvas 131714 norel
+  from ref 128514 z 2001 to ref 131330
+  no_role_a no_role_b
+objectlinkcanvas 131842 norel
+  decenter_begin 944
+  decenter_end 81
+  from ref 128642 z 2001 to ref 131330
+  no_role_a no_role_b
+objectlinkcanvas 132354 norel
+  decenter_begin 944
+  from ref 130178 z 2001 to ref 131458
+  no_role_a no_role_b
+objectlinkcanvas 132482 norel
+  decenter_begin 944
+  from ref 130434 z 2001 to ref 131458
+  no_role_a no_role_b
+end

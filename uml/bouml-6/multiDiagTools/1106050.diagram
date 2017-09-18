@@ -1,0 +1,25 @@
+format 206
+
+classcanvas 128002 class_ref 1186946 // mdtSqlTableSelection
+  classdiagramsettings member_max_width 0 end
+  xyz 20 40 2000
+end
+classcanvas 128130 class_ref 1187202 // mdtSqlTableSelectionRow
+  classdiagramsettings member_max_width 0 end
+  xyz 229 369 3005
+end
+classcanvas 128386 class_ref 1187330 // mdtSqlTableSelectionItem
+  classdiagramsettings member_max_width 0 end
+  xyz 296 583 3011
+end
+relationcanvas 128258 relation_ref 1473666 // <directional composition>
+  from ref 128002 z 3006 stereotype "<<list>>" xyz 355 284 3006 to ref 128130
+  role_a_pos 412 346 3000 no_role_b
+  multiplicity_a_pos 387 346 3000 no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 1473794 // <directional composition>
+  from ref 128130 z 3012 stereotype "<<list>>" xyz 451 546 3012 to ref 128386
+  role_a_pos 499 560 3000 no_role_b
+  multiplicity_a_pos 474 560 3000 no_multiplicity_b
+end
+end

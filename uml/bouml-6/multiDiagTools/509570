@@ -1,0 +1,340 @@
+format 211
+"WebSocket" // Mdt::WebSocket
+  revision 8
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1300354 "sandbox"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 2740098 "Protocol"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2434178 "ClientTableModel"
+      classdiagramsettings member_max_width 0 end
+      size B
+    end
+
+    class 2739970 "ClientTableModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3110146 // <generalisation>
+	relation 3091970 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3110146 // <generalisation>
+	  b parent class_ref 147202 // QAbstractTableModel
+      end
+
+      operation 4084738 "ClientTableModel"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4084866 "rowCount"
+	cpp_virtual public explicit_return_type "int"
+	nparams 1
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	    defaultvalue "QModelIndex()"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4084994 "columnCount"
+	public explicit_return_type "int"
+	nparams 1
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	    defaultvalue "QModelIndex()"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4085122 "headerData"
+	public return_type class_ref 161154 // QVariant
+	nparams 3
+	  param in name "section" explicit_type "int"
+	  param in name "orientation" explicit_type "int"
+	  param in name "role" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4085250 "data"
+	public return_type class_ref 161154 // QVariant
+	nparams 2
+	  param in name "index" type class_ref 147330 // QModelIndex
+	  param in name "role" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4085378 "setData"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "index" type class_ref 147330 // QModelIndex
+	  param in name "value" type class_ref 161154 // QVariant
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::EditRole"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4085506 "flags"
+	public explicit_return_type "int"
+	nparams 1
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4085634 "canFetchMore"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4085762 "fetchMore"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4085890 "sort"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "column" explicit_type "int"
+	  param in name "order" explicit_type "Qt::SortOrder"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4086018 "someDataRecieved"
+	stereotype "slot"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3110274 // <unidirectional association>
+	relation 3092098 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3110274 // <unidirectional association>
+	  b parent class_ref 2740098 // Protocol
+      end
+    end
+
+    classdiagram 2440706 "ServerTable"
+      classdiagramsettings member_max_width 0 end
+      size B
+    end
+
+    class 2746882 "ServerTable"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3117826 // <association>
+	relation 3099650 ----
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3117826 // <association>
+	  b role_name "" package
+	    classrelation_ref 3118082 // <association>
+      end
+
+      classrelation 3117954 // <unidirectional association>
+	relation 3099778 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3117954 // <unidirectional association>
+	  b parent class_ref 2740098 // Protocol
+      end
+
+      operation 4093954 "ServerTable"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3118210 // <dependency>
+	relation 3099906 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3118210 // <dependency>
+	  b parent class_ref 2739842 // QWebSocketServer
+      end
+    end
+  end
+end

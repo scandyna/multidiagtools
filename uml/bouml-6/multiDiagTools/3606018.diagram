@@ -1,0 +1,16 @@
+format 213
+
+classcanvas 128002 class_ref 4161794 // QCommandLineParser
+  classdiagramsettings member_max_width 0 end
+  xyz 42 42 2000
+end
+classcanvas 128130 class_ref 4161922 // QCommandLineOption
+  classdiagramsettings member_max_width 0 end
+  xyz 241 42 2000
+end
+relationcanvas 128258 relation_ref 4658946 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 225 74 3000 no_multiplicity_b
+end
+end

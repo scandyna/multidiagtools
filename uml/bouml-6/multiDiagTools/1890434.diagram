@@ -1,0 +1,11 @@
+format 210
+
+classcanvas 128002 class_ref 2263938 // mdtSqlCopierQueryBuilder
+  classdiagramsettings member_max_width 0 end
+  xyzwh 40.5 40.5 2000 787 133
+end
+classcanvas 128130 class_ref 2264066 // XYH
+  classdiagramsettings member_max_width 0 end
+  xyz 87 278 2000
+end
+end

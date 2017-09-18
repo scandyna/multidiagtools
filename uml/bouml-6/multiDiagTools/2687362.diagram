@@ -1,0 +1,22 @@
+format 211
+
+classcanvas 128002 class_ref 3062146 // NavigationMenuCreator
+  classdiagramsettings member_max_width 0 end
+  xyz 192 346 2000
+end
+classcanvas 128130 class_ref 2706818 // QMenu
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 218 202 2010
+end
+classcanvas 129026 class_ref 2706434 // NavigationActions
+  classdiagramsettings member_max_width 0 end
+  xyz 463 214 2000
+end
+relationcanvas 128258 relation_ref 3071234 // <unidirectional association>
+  from ref 128130 z 2011 to point 188 202
+  line 128386 z 2011 to point 188 232
+  line 128514 z 2011 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 202 234 3000 no_multiplicity_b
+end
+end

@@ -1,0 +1,91 @@
+format 211
+
+classcanvas 128002 class_ref 2676738 // CheckList
+  classdiagramsettings member_max_width 0 end
+  xyz 178 354 2000
+end
+classcanvas 128130 class_ref 2676866 // Operation
+  classdiagramsettings member_max_width 0 end
+  xyz 161 212 2000
+end
+classcanvas 128386 class_ref 2676994 // Document
+  classdiagramsettings member_max_width 0 end
+  xyz 42 242 2000
+end
+classcanvas 128642 class_ref 2677122 // OperationPk
+  classdiagramsettings member_max_width 0 end
+  xyz 239 594 2000
+end
+classcanvas 128770 class_ref 2677250 // CheckListPk
+  classdiagramsettings member_max_width 0 end
+  xyz 74 482 2000
+end
+classcanvas 128898 class_ref 2677378 // OperationKey
+  classdiagramsettings member_max_width 0 end
+  xyz 39 583 2000
+end
+classcanvas 129410 class_ref 2677634 // Location
+  classdiagramsettings member_max_width 0 end
+  xyz 186 130 2000
+end
+classcanvas 129794 class_ref 2677762 // Issue
+  classdiagramsettings member_max_width 0 end
+  xyz 193 42 2000
+end
+classcanvas 130306 class_ref 2677890 // ExecutionTool
+  classdiagramsettings member_max_width 0 end
+  xyz 408.5 480.5 2000
+end
+classcanvas 130434 class_ref 2678018 // EditionTool
+  classdiagramsettings member_max_width 0 end
+  xyz 496.5 40.5 2000
+end
+classcanvas 130562 class_ref 2678146 // VehicleType
+  classdiagramsettings member_max_width 0 end
+  xyz 288 130 2005
+end
+relationcanvas 128258 relation_ref 3046786 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 201 326 3000 no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3046914 // <unidirectional association>
+  from ref 128130 z 2001 to ref 128386
+  no_role_a no_role_b
+  multiplicity_a_pos 128 274 3000 multiplicity_b_pos 145 274 3000
+end
+relationcanvas 129026 relation_ref 3047042 // <directional composition>
+  from ref 128898 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3047170 // <directional composition>
+  from ref 128898 z 2001 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 3047426 // <association>
+  decenter_end 434
+  from ref 128130 z 2001 to ref 129410
+  no_role_a no_role_b
+  multiplicity_a_pos 200 184 3000 multiplicity_b_pos 202 185 3000
+end
+relationcanvas 129922 relation_ref 3047554 // <association>
+  from ref 128130 z 2001 to point 416 264
+  line 131202 z 2001 to point 416 64
+  line 131330 z 2001 to ref 129794
+  no_role_a no_role_b
+  multiplicity_a_pos 249 74 3000 multiplicity_b_pos 281 274 3000
+end
+relationcanvas 130050 relation_ref 3047682 // <association>
+  decenter_end 434
+  from ref 129794 z 2001 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 3047810 // <association>
+  from ref 130562 z 2006 to ref 129410
+  no_role_a no_role_b
+  multiplicity_a_pos 264 164 3000 no_multiplicity_b
+end
+end

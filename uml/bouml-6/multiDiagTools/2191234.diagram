@@ -1,0 +1,102 @@
+format 211
+
+classcanvas 128002 class_ref 2513026 // Presenter
+  classdiagramsettings member_max_width 0 end
+  xyzwh 89.3 196.3 2000 103 45
+end
+classcanvas 128130 class_ref 2513154 // Boundary
+  classdiagramsettings member_max_width 0 end
+  xyz 293.3 195 2000
+end
+classcanvas 128386 class_ref 2513282 // ViewModel
+  classdiagramsettings member_max_width 0 end
+  xyz 80.65 319.6 2000
+end
+classcanvas 128642 class_ref 2513410 // View
+  classdiagramsettings member_max_width 0 end
+  xyz 97.4 418.6 2000
+end
+classcanvas 128898 class_ref 2513538 // ResponseModel
+  classdiagramsettings member_max_width 0 end
+  xyz 447.4 408 2000
+end
+classcanvas 129282 class_ref 2513666 // Interactor
+  classdiagramsettings member_max_width 0 end
+  xyz 468.3 195.4 2000
+end
+classcanvas 129666 class_ref 2513794 // Entity1
+  classdiagramsettings member_max_width 0 end
+  xyz 683.3 155.7 2000
+end
+classcanvas 129922 class_ref 2513922 // EntityN
+  classdiagramsettings member_max_width 0 end
+  xyz 681.1 237.4 2000
+end
+fragment 130690 ""
+  xyzwh 47.8 140 2000 171 368
+end
+note 131842 "Transform response model to view model"
+  xyzwh 65 58 2000 159 65
+note 132098 "ViewModel:
+Data and flags for UI"
+  xyzwh 54 526 2000 169 69
+relationcanvas 128258 relation_ref 2841730 // <generalisation>
+  decenter_begin 479
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2841858 // <unidirectional association>
+  decenter_begin 359
+  decenter_end 543
+  from ref 128002 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 2841986 // <unidirectional association>
+  from ref 128642 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 2842114 // <unidirectional association>
+  geometry VH
+  decenter_begin 453
+  decenter_end 200
+  from ref 128130 z 2001 to point 324 415
+  line 131330 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2842242 // <unidirectional association>
+  geometry VH
+  decenter_begin 876
+  decenter_end 800
+  from ref 128002 z 2001 to point 177 442
+  line 131458 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2842370 // <unidirectional association>
+  from ref 129282 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 2842498 // <unidirectional association>
+  decenter_end 486
+  from ref 129282 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 2842626 // <unidirectional association>
+  from ref 129282 z 2001 to ref 129666
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 2842754 // <unidirectional association>
+  from ref 129282 z 2001 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 131970 -_-_
+  from ref 131842 z 2001 to ref 128002
+end

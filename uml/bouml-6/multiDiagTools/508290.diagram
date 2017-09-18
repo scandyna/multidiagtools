@@ -1,0 +1,61 @@
+format 209
+
+classcanvas 128002 class_ref 518274 // mdtDeviceModbus
+  classdiagramsettings member_max_width 0 end
+  xyz 3 227 2000
+end
+classcanvas 128130 class_ref 309250 // mdtDevice
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 198 41 2000
+end
+classcanvas 128386 class_ref 511746 // mdtModbusTcpPortManager
+  classdiagramsettings member_max_width 0 end
+  xyz 469 12 2000
+end
+classcanvas 128642 class_ref 269826 // mdtFrameCodecModbus
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 638 441 2000
+end
+classcanvas 128898 class_ref 525698 // mdtDeviceModbusWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 629 536 2000
+end
+classcanvas 129282 class_ref 532226 // mdtDeviceModbusWago
+  classdiagramsettings member_max_width 0 end
+  xyz 5 749 2000
+end
+classcanvas 129538 class_ref 1604994 // mdtMultiIoDevice
+  classdiagramsettings member_max_width 0 end
+  xyz 221 132 2005
+end
+relationcanvas 128514 relation_ref 604674 // <directional composition>
+  from ref 128002 z 2001 to ref 128386
+  role_a_pos 602 162 3000 no_role_b
+  multiplicity_a_pos 560 162 3000 no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 604802 // <directional composition>
+  from ref 128002 z 2001 to ref 128642
+  role_a_pos 816 448 3000 no_role_b
+  multiplicity_a_pos 816 478 3000 no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 612610 // <association>
+  from ref 128898 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 619138 // <generalisation>
+  from ref 129282 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 1965826 // <generalisation>
+  from ref 128002 z 2006 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 1965954 // <generalisation>
+  from ref 129538 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

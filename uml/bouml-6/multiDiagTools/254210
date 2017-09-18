@@ -1,0 +1,560 @@
+format 206
+"Obselete" // mdttools::mdttesttool::Obselete
+  revision 3
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 549634 "mdtClConnectionData"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 901122 "mdtClConnectionData"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 952578 "mdtClConnectionData"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 972162 "ConnectorId"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	get_oper operation_ref 1716994 // ConnectorId
+	set_oper operation_ref 1717122 // setConnectorId
+      end
+
+      attribute 972290 "ConnectionId"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	get_oper operation_ref 1718274 // ConnectionId
+	set_oper operation_ref 1718402 // setConnectionId
+      end
+
+      attribute 971650 "ConnectorName"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	get_oper operation_ref 1717250 // ConnectorName
+	set_oper operation_ref 1717378 // setConnectorName
+      end
+
+      attribute 971778 "ContactName"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	get_oper operation_ref 1717506 // ContactName
+	set_oper operation_ref 1717634 // setContactName
+      end
+
+      attribute 992770 "FunctionEN"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	get_oper operation_ref 1733250 // FunctionEN
+	set_oper operation_ref 1733378 // setFunctionEN
+      end
+
+      attribute 992898 "FunctionFR"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	get_oper operation_ref 1733506 // FunctionFR
+	set_oper operation_ref 1733634 // setFunctionFR
+      end
+
+      attribute 993026 "FunctionDE"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	get_oper operation_ref 1733762 // FunctionDE
+	set_oper operation_ref 1733890 // setFunctionDE
+      end
+
+      attribute 993154 "FunctionIT"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	get_oper operation_ref 1734018 // FunctionIT
+	set_oper operation_ref 1734146 // setFunctionIT
+      end
+
+      operation 1717122 "setConnectorId"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvConnectorId = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 972162 // ConnectorId
+      end
+
+      operation 1716994 "ConnectorId"
+	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvConnectorId;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 972162 // ConnectorId
+      end
+
+      operation 1718402 "setConnectionId"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvConnectionId = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 972290 // ConnectionId
+      end
+
+      operation 1718274 "ConnectionId"
+	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvConnectionId;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 972290 // ConnectionId
+      end
+
+      operation 1717378 "setConnectorName"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "string"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvConnectorName = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 971650 // ConnectorName
+      end
+
+      operation 1717250 "ConnectorName"
+	force_body_gen const cpp_inline public explicit_return_type "string"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvConnectorName;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 971650 // ConnectorName
+      end
+
+      operation 1717634 "setContactName"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "string"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvContactName = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 971778 // ContactName
+      end
+
+      operation 1717506 "ContactName"
+	force_body_gen const cpp_inline public explicit_return_type "string"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvContactName;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 971778 // ContactName
+      end
+
+      operation 1733250 "FunctionEN"
+	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvFunctionEN;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 992770 // FunctionEN
+      end
+
+      operation 1733378 "setFunctionEN"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvFunctionEN = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 992770 // FunctionEN
+      end
+
+      operation 1733506 "FunctionFR"
+	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvFunctionFR;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 992898 // FunctionFR
+      end
+
+      operation 1733634 "setFunctionFR"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvFunctionFR = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 992898 // FunctionFR
+      end
+
+      operation 1733762 "FunctionDE"
+	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvFunctionDE;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 993026 // FunctionDE
+      end
+
+      operation 1733890 "setFunctionDE"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvFunctionDE = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 993026 // FunctionDE
+      end
+
+      operation 1734018 "FunctionIT"
+	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvFunctionIT;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 993154 // FunctionIT
+      end
+
+      operation 1734146 "setFunctionIT"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvFunctionIT = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 993154 // FunctionIT
+      end
+    end
+  end
+
+  classview 549506 "mdtClEditor"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 900994 "mdtClEditor"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+  end
+end

@@ -1,0 +1,13 @@
+format 213
+
+classcanvas 128002 class_ref 4152066 // StandardPaths
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 437 55 2000
+end
+note 128130 "Use a standard Mdt directory to get usb.if file, so that it is shared accross applications. Also, if app was installed \"standalone\", this problem is solved in Mdt::Aplication, not everywhere."
+  xyzwh 97 133 2000 625 105
+note 128258 "Problem of permissions udev rules:
+We should create a package for the distribution, that only contain needed file(s).
+This way, we separate the problem of application distribution, and system files distributions (system files that Must be installed in a system path, with Administrator rights)"
+  xyzwh 94 256 2000 715 127
+end

@@ -1,0 +1,63 @@
+format 211
+
+classcanvas 128002 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 465.5 533.5 2000
+end
+classcanvas 128130 class_ref 2760322 // AbstractTableModel
+  classdiagramsettings member_max_width 0 end
+  xyz 192 118 2000
+end
+classcanvas 128258 class_ref 2760450 // SomeConcreteTableModel
+  classdiagramsettings member_max_width 0 end
+  xyz 319 255 2000
+end
+classcanvas 128386 class_ref 2766978 // SomeConcreteStorage
+  classdiagramsettings member_max_width 0 end
+  xyz 122 255 2000
+end
+note 128770 "Basic notion of primary key (No SQL type, etc.., but  define that is a unique row in model)"
+  xyzwh 40.5 478.5 2000 345 75
+note 128898 "For SQL based models, keep database concepts (more performant, etc..)"
+  xyzwh 40.5 376.5 2000 375 77
+classcanvas 129026 class_ref 2767106 // FetchParameter
+  classdiagramsettings member_max_width 0 end
+  xyz 40 135 2006
+end
+classcanvas 129282 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 329 39 2000
+end
+classcanvas 129538 class_ref 2767234 // Filter
+  classdiagramsettings member_max_width 0 end
+  xyz 439 367 2000
+end
+classcanvas 129794 class_ref 719874 // QSortFilterProxyModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 544 305 2000
+end
+classcanvas 129922 class_ref 2693250 // SqlRelation
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 202 572 2000
+end
+relationcanvas 128514 relation_ref 3120514 // <unidirectional association>
+  decenter_begin 581
+  decenter_end 581
+  from ref 128258 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 3120642 // <generalisation>
+  from ref 128258 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 129154 ---+
+  from ref 129026 z 2007 to ref 128130
+relationcanvas 129410 relation_ref 3120770 // <generalisation>
+  decenter_end 523
+  from ref 128130 z 2001 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

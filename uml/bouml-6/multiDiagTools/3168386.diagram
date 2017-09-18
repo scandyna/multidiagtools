@@ -1,0 +1,83 @@
+format 211
+
+classcanvas 128002 class_ref 3614594 // AbstractSqlController
+  classdiagramsettings member_max_width 0 end
+  xyz 466.333 213.333 2000
+end
+classcanvas 128514 class_ref 3648002 // AbstractController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 486.722 129.833 2006
+end
+classcanvas 128898 class_ref 2775554 // PrimaryKey
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 712.056 163.722 2000
+end
+classcanvas 129026 class_ref 2775682 // ForeignKey
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 713.056 251.833 2000
+end
+classcanvas 129410 class_ref 3715330 // PrimaryKey
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 255.778 129.833 2000
+end
+classcanvas 129538 class_ref 3715458 // ForeignKey
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 452.333 41.7222 2000
+end
+classcanvas 129922 class_ref 3979010 // AbstractSqlQueryModelController
+  classdiagramsettings member_max_width 0 end
+  xyz 394.333 351.444 2006
+end
+classcanvas 130562 class_ref 3979138 // AbstractSqlTableModelController
+  classdiagramsettings member_max_width 0 end
+  xyz 41.8889 352.444 2000
+end
+relationcanvas 128770 relation_ref 4025346 // <generalisation>
+  decenter_end 473
+  from ref 128002 z 2007 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 4115970 // <directional composition>
+  decenter_begin 163
+  decenter_end 733
+  from ref 128002 z 2001 to point 670 223
+  line 131586 z 2001 to point 670 196
+  line 131714 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 4116098 // <directional composition>
+  decenter_begin 836
+  decenter_end 288
+  from ref 128002 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 4116226 // <directional composition>
+  decenter_begin 422
+  decenter_end 422
+  from ref 128514 z 2007 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 4116354 // <directional composition>
+  decenter_begin 473
+  from ref 128514 z 2007 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 4446466 // <generalisation>
+  from ref 129922 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130946 relation_ref 4486786 // <generalisation>
+  geometry VHV unfixed
+  from ref 130562 z 2001 to point 193 311
+  line 131074 z 2001 to point 546 311
+  line 131202 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

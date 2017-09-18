@@ -1,0 +1,68 @@
+class zmsLog
+!!!151682.cpp!!!	zmsLog()
+  pvCurrentLine = 0;
+!!!151810.cpp!!!	createFile(in filePath : string) : bool
+  bool writeHeader = false;
+  // Si le fichier n'existe pas encore, on le cré avec les entêtes en première ligne
+  if(!openRd(filePath)){
+    writeHeader = true;
+  }
+  if(!openWr(filePath, true, true)){
+    return false;
+  }
+  if(writeHeader){
+    pvWrStream << pvHeader << endl;
+  }
+  close();
+  return true;
+!!!151938.cpp!!!	addData(in data : string, in addEndl : bool = true, in addTimeStamp : bool = true, in timestamp : string = string("")) : bool
+  // Ré-ouverture du fichier
+  if(!openWr("", true, true)){
+    cerr << "zmsLog::addData(): unable to re-open file for write" << endl;
+    return false;
+  }
+  // Timestamp (Date et heure)
+  if(addTimeStamp){
+    pvWrStream << timestamp << ";";
+  }
+  // Données
+  pvWrStream << data;
+  if(addEndl){
+    pvWrStream << endl;
+  }
+  // Fermeture du fichier
+  close();
+  return true;
+!!!152066.cpp!!!	openFile(in filePath : string) : bool
+  pvCurrentLine = 1;
+  if(!openRd(filePath)){
+    pvCurrentLine = 0;
+    return false;
+  }
+  // On lis les lignes du fichier
+  if(!readLines(';', '"')){
+    return false;
+  }
+  close();
+  return true;
+!!!152194.cpp!!!	readLine() : void
+  // Lecture du timestamp
+  pvLastReadenTimestamp = valueAt(pvCurrentLine, 0);
+  // Si le timestamp est vide, c'est que la fin du fichier a été atteinte
+  if(pvLastReadenTimestamp.size() < 1){
+    pvCurrentLine = 0;  // On signale la fin du fichier
+  }else{
+    pvCurrentLine++;
+  }
+!!!152322.cpp!!!	lastReadenTimestamp() : string
+  return pvLastReadenTimestamp;
+!!!152450.cpp!!!	endOfFile() : bool
+  return (pvCurrentLine == 0);
+!!!152578.cpp!!!	getTimestamp() : string
+  time_t timeStamp;
+  char strTimeStamp[20] = {'\0'};
+
+  timeStamp = time(0);
+  strftime(strTimeStamp, 20, "%Y-%m-%d %X", localtime(&timeStamp));
+
+  return strTimeStamp;

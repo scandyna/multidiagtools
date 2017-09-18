@@ -1,0 +1,11 @@
+format 210
+
+classcanvas 128002 class_ref 2035458 // QTextCodec
+  classdiagramsettings member_max_width 0 end
+  xyz 351 311 2000
+end
+classcanvas 128130 class_ref 2057474 // QTextDecoder
+  classdiagramsettings member_max_width 0 end
+  xyz 196 438 2000
+end
+end

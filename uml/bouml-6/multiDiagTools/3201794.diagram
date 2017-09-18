@@ -1,0 +1,132 @@
+format 211
+
+classcanvas 128002 class_ref 2706434 // NavigationActions
+  classdiagramsettings member_max_width 0 end
+  xyz 366 301.214 2000
+end
+classcanvas 128130 class_ref 2713474 // EditionActions
+  classdiagramsettings member_max_width 0 end
+  xyz 135.571 454.429 2000
+end
+classcanvas 128258 class_ref 3061890 // InsertAction
+  classdiagramsettings member_max_width 0 end
+  xyz 231.786 366.214 2000
+end
+classcanvas 128386 class_ref 3062018 // RemoveAction
+  classdiagramsettings member_max_width 0 end
+  xyz 41.3929 542.643 2000
+end
+classcanvas 128514 class_ref 138626 // QObject
+  classdiagramsettings member_max_width 0 end
+  xyz 579.071 41.2143 2006
+end
+classcanvas 129922 class_ref 693250 // QAction
+  classdiagramsettings member_max_width 0 end
+  xyz 579.071 352.286 3005
+end
+note 131330 "Class that have enable conditions:
+ - RowCoun > 0
+ - State == Visualizing
+ - ......
+  -->> This coula also help for user defined actions"
+  xyzwh 40.5 668.357 2000 639 131
+classcanvas 131586 class_ref 3668226 // ActionList
+  classdiagramsettings member_max_width 0 end
+  xyz 491.821 171.214 2000
+end
+classcanvas 131714 class_ref 3668354 // AbstractActionContainer
+  classdiagramsettings member_max_width 0 end
+  xyz 103.571 171.214 2000
+end
+classcanvas 135042 class_ref 3870722 // ControllerStatePermission
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 879.357 2006
+end
+relationcanvas 130050 relation_ref 853890 // <generalisation>
+  from ref 129922 z 3006 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 3427970 // <directional composition>
+  from ref 128386 z 3006 to point 685 565
+  line 133634 z 3006 to point 685 374
+  line 135298 z 3006 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 3070850 // <directional composition>
+  decenter_begin 711
+  decenter_end 200
+  from ref 128002 z 3006 to point 537 333
+  line 132354 z 3006 to point 537 360
+  line 135938 z 3006 to ref 129922
+  no_role_a no_role_b
+  multiplicity_a_pos 561 371 3000 no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 3427458 // <directional composition>
+  decenter_end 800
+  from ref 128258 z 3006 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 3078530 // <directional composition>
+  geometry HV unfixed
+  from ref 128130 z 3006 to point 609 474
+  line 136066 z 3006 to ref 129922
+  no_role_a no_role_b
+  multiplicity_a_pos 594 406 3000 no_multiplicity_b
+end
+relationcanvas 131842 relation_ref 4047362 // <generalisation>
+  geometry VHV unfixed
+  from ref 131714 z 2007 to point 186 128
+  line 132610 z 2007 to point 609 128
+  line 132738 z 2007 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131970 relation_ref 4054146 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 523
+  from ref 128386 z 2001 to point 93 258
+  line 133378 z 2001 to point 186 258
+  line 133506 z 2001 to ref 131714
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132866 relation_ref 4054402 // <generalisation>
+  from ref 128130 z 2001 to ref 131714
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132994 relation_ref 4054274 // <generalisation>
+  geometry VHV unfixed
+  from ref 128258 z 2001 to point 274 258
+  line 134530 z 2001 to point 186 258
+  line 134658 z 2001 to ref 131714
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133890 relation_ref 4054530 // <generalisation>
+  geometry VHV unfixed
+  from ref 128002 z 2001 to point 428 258
+  line 134274 z 2001 to point 186 258
+  line 134402 z 2001 to ref 131714
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135426 relation_ref 4360706 // <directional composition>
+  from ref 131714 z 2001 to ref 131586
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135554 relation_ref 4360578 // <directional composition>
+  geometry VHV unfixed
+  decenter_begin 831
+  decenter_end 138
+  from ref 131586 z 3006 to point 552 291
+  line 135682 z 3006 to point 585 291
+  line 135810 z 3006 to ref 129922
+  no_role_a no_role_b
+  multiplicity_a_pos 572 325 3000 no_multiplicity_b
+end
+end

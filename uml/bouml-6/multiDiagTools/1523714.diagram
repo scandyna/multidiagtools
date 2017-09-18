@@ -1,0 +1,13 @@
+format 211
+
+classcanvas 128002 class_ref 1814658 // mdtSqlFieldType
+  classdiagramsettings show_members_context uml member_max_width 0 end
+  xyz 161 39 2000
+end
+classcanvas 128386 class_ref 2523010 // Type
+  classdiagramsettings member_max_width 0 end
+  xyz 42 230 2010
+end
+line 128514 ---+
+  from ref 128386 z 2011 to ref 128002
+end

@@ -1,0 +1,25 @@
+format 211
+
+classcanvas 128002 class_ref 4131330 // ColumnSortOrderSetupModel
+  classdiagramsettings member_max_width 0 end
+  xyz 41 40 2000
+end
+classcanvas 128130 class_ref 3567618 // ColumnSortOrderList
+  classdiagramsettings member_max_width 0 end
+  xyz 952 84 2006
+end
+classcanvas 128386 class_ref 3567490 // ColumnSortOrder
+  classdiagramsettings member_max_width 0 end
+  xyz 1008 223 3005
+end
+relationcanvas 128258 relation_ref 4628098 // <directional composition>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3933954 // <directional composition>
+  from ref 128130 z 3006 to ref 128386
+  no_role_a no_role_b
+  multiplicity_a_pos 1082 196 3000 no_multiplicity_b
+end
+end

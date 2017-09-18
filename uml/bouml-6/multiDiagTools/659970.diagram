@@ -1,0 +1,90 @@
+format 76
+
+classinstance 128002 class_ref 355970 // main
+  name ""   xyz 37 18 2005 life_line_z 2000
+classinstance 128130 class_ref 665730 // mdtPortThreadHelperSocket
+  name ""   xyz 529 25 2000 life_line_z 2000
+classinstance 128258 class_ref 329602 // mdtTcpSocket
+  name ""   xyz 251 23 2000 life_line_z 2000
+durationcanvas 128386 classinstance_ref 128002 // :main
+  xyzwh 56 163 2010 11 25
+end
+durationcanvas 128514 classinstance_ref 128258 // :mdtTcpSocket
+  xyzwh 300 163 2010 11 27
+end
+durationcanvas 128770 classinstance_ref 128002 // :main
+  xyzwh 56 108 2010 11 34
+end
+durationcanvas 128898 classinstance_ref 128258 // :mdtTcpSocket
+  xyzwh 300 108 2010 11 25
+end
+durationcanvas 129154 classinstance_ref 128002 // :main
+  xyzwh 56 243 2010 11 37
+end
+durationcanvas 129282 classinstance_ref 128258 // :mdtTcpSocket
+  xyzwh 300 245 2010 11 26
+end
+durationcanvas 129538 classinstance_ref 128130 // :mdtPortThreadHelperSocket
+  color verylightorange
+  xyzwh 623 173 2010 11 201
+  overlappingdurationcanvas 130178
+    color verylightorange
+    xyzwh 629 311 2020 11 26
+  end
+end
+durationcanvas 129794 classinstance_ref 128258 // :mdtTcpSocket
+  color verylightorange
+  xyzwh 300 226 2010 11 66
+end
+durationcanvas 130434 classinstance_ref 128258 // :mdtTcpSocket
+  color verylightorange
+  xyzwh 300 351 2010 11 27
+end
+msg 128642 synchronous
+  from durationcanvas_ref 128386
+  to durationcanvas_ref 128514
+  yz 163 2015 msg operation_ref 1139586 // "addFrameToWrite(in frame : mdtFrame) : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 119 146
+msg 129026 synchronous
+  from durationcanvas_ref 128770
+  to durationcanvas_ref 128898
+  yz 108 2015 msg operation_ref 434690 // "lockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 144 91
+msg 129410 synchronous
+  from durationcanvas_ref 129154
+  to durationcanvas_ref 129282
+  yz 246 2015 msg operation_ref 434818 // "unlockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 136 229
+msg 129666 asynchronous
+  from durationcanvas_ref 128514
+  to durationcanvas_ref 129538
+  yz 173 2015 msg operation_ref 1242242 // "requestWrite() : void"
+  stereotype "<<signal: newFrameToWrite()>>" xyz 355 140 3000
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 419 156
+msg 129922 synchronous
+  from durationcanvas_ref 129538
+  to durationcanvas_ref 129794
+  yz 226 2015 msg operation_ref 434690 // "lockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 428 209
+msg 130050 return
+  from durationcanvas_ref 129794
+  to durationcanvas_ref 129538
+  yz 275 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+reflexivemsg 130306 synchronous
+  to durationcanvas_ref 130178
+  yz 311 2025 msg operation_ref 1241730 // "writeToSocket() : mdtAbstractPort::error_t"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 597 294
+msg 130562 synchronous
+  from durationcanvas_ref 129538
+  to durationcanvas_ref 130434
+  yz 351 2015 msg operation_ref 434818 // "unlockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 420 334
+end

@@ -1,0 +1,11 @@
+format 204
+
+classcanvas 128002 class_ref 952578 // mdtClConnectionData
+  classdiagramsettings member_max_width 0 end
+  xyz 220 135 2000
+end
+classcanvas 128258 class_ref 952834 // mdtClUnitConnectionData
+  classdiagramsettings member_max_width 0 end
+  xyz 426 697 2000
+end
+end

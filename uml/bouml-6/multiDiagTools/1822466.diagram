@@ -1,0 +1,17 @@
+format 210
+
+note 128002 "Thread racts on event, and  signals when a frame is available.
+In some time, it also must take care that all frames are consumed."
+  xyzwh 39 25 2000 531 107
+note 128130 "Currently, consuming all frames is done in port manager (in a bad way).
+"
+  xyzwh 37 182 2000 543 53
+note 128258 "Could we implement a queue that helps to handle  problem of consuming all incomin frames in a atomic/reliable way ?"
+  xyzwh 39 266 2000 553 67
+note 128386 "Note: for frame, disable copy (so we detect errors )"
+  xyzwh 46 379 2000 381 53
+note 128514 "Note: what is actually really the problem with frames not conumed ?
+Each time emit() is called from thread, the slot should be called in reciever, not ?
+Is there not just a logic error ??"
+  xyzwh 37 444 2000 613 91
+end

@@ -1,0 +1,32 @@
+format 211
+
+classcanvas 128002 class_ref 2852738 // PrimaryKeyContainer
+  classdiagramsettings member_max_width 0 end
+  xyz 160 146 2000
+end
+classcanvas 128258 class_ref 2824706 // AutoIncrementPrimaryKey
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 242 42 2005
+end
+classcanvas 128386 class_ref 2775554 // PrimaryKey
+  classdiagramsettings member_max_width 0 end
+  xyz 554 114 2010
+end
+classcanvas 129026 class_ref 2852866 // Type
+  classdiagramsettings member_max_width 0 end
+  xyz 42 206 2006
+end
+relationcanvas 128770 relation_ref 3809794 // <directional composition>
+  from ref 128002 z 2011 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3809922 // <directional composition>
+  decenter_end 519
+  from ref 128002 z 2006 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 129154 ---+
+  from ref 129026 z 2007 to ref 128002
+end

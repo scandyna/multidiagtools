@@ -1,0 +1,24 @@
+format 210
+
+classcanvas 128002 class_ref 2021634 // mdtProgressValue
+  classdiagramsettings member_max_width 0 end
+  xyz 62 329 2000
+end
+note 128258 "Option A: store range somewhere (in a model ?)"
+  xyzwh 198 24 2000 375 47
+note 128386 "Option B: range is defined 1 time, and mdtProgress fit value to this range
+rangeChanged() signal also obselete.."
+  xyzwh 198 90 2000 449 89
+classcanvas 128514 class_ref 2028290 // mdtAbstractItemModelProgressNotifier
+  classdiagramsettings member_max_width 0 end
+  xyz 433 354 2000
+end
+note 128642 "Warning: try avoid  that a event loop is needed"
+  xyzwh 200 198 2000 405 49
+note 128898 "Bof!.."
+  xyzwh 517 463 2000 179 55
+line 128770 -_-_
+  from ref 128642 z 2001 to ref 128514
+line 129026 -_-_
+  from ref 128898 z 2001 to ref 128514
+end

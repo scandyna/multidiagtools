@@ -1,0 +1,293 @@
+format 76
+
+classinstance 128258 class_ref 572546 // mdtDeviceScpi
+  name ""   xyz 12.4 53 2005 life_line_z 2000
+classinstance 128386 class_ref 283010 // mdtUsbtmcPortManager
+  name ""   xyz 158 53 2005 life_line_z 2000
+classinstance 129282 class_ref 471938 // mdtUsbPort
+  name ""   xyz 447 53 2005 life_line_z 2000
+classinstance 133890 class_ref 579202 // mdtUsbtmcPortThread
+  name ""   xyz 642 52 2000 life_line_z 2000
+classinstance 142594 class_ref 558978 // mdtDeviceStatusWidget
+  name ""   xyz 829 52 2000 life_line_z 2000
+durationcanvas 128514 classinstance_ref 128258 // :mdtDeviceScpi
+  xyzwh 63 122 2010 11 284
+end
+durationcanvas 128642 classinstance_ref 128386 // :mdtUsbtmcPortManager
+  xyzwh 239 122 2010 11 283
+  overlappingdurationcanvas 132482
+    xyzwh 245 272 2020 11 117
+  end
+  overlappingdurationcanvas 139138
+    xyzwh 245 153 2020 11 92
+  end
+end
+durationcanvas 132738 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 285 2010 11 25
+end
+durationcanvas 132994 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 310 2010 11 25
+end
+durationcanvas 133250 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 367 2010 11 28
+end
+durationcanvas 133506 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 340 2010 11 25
+end
+durationcanvas 134786 classinstance_ref 133890 // :mdtUsbtmcPortThread
+  xyzwh 718 408 2010 11 40
+end
+durationcanvas 134914 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 408 2010 11 25
+end
+durationcanvas 135298 classinstance_ref 133890 // :mdtUsbtmcPortThread
+  xyzwh 718 458 2010 11 134
+end
+durationcanvas 136578 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 460 2010 11 130
+  overlappingdurationcanvas 136834
+    xyzwh 494 498 2020 11 25
+  end
+  overlappingdurationcanvas 137090
+    xyzwh 494 546 2020 11 25
+  end
+end
+durationcanvas 137474 classinstance_ref 133890 // :mdtUsbtmcPortThread
+  xyzwh 718 641 2010 11 216
+  overlappingdurationcanvas 137730
+    xyzwh 724 666 2020 11 37
+  end
+end
+durationcanvas 137986 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 716 2010 11 25
+end
+durationcanvas 138242 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 765 2010 11 25
+end
+durationcanvas 138498 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 815 2010 11 25
+end
+durationcanvas 138754 classinstance_ref 133890 // :mdtUsbtmcPortThread
+  xyzwh 718 879 2010 11 40
+end
+durationcanvas 138882 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 879 2010 11 25
+end
+durationcanvas 139650 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 166 2010 11 25
+end
+durationcanvas 140162 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 198 2010 11 25
+end
+durationcanvas 140418 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 233 2010 11 25
+end
+durationcanvas 140674 classinstance_ref 133890 // :mdtUsbtmcPortThread
+  xyzwh 718 955 2010 11 40
+end
+durationcanvas 140802 classinstance_ref 129282 // :mdtUsbPort
+  xyzwh 488 955 2010 11 25
+end
+durationcanvas 141058 classinstance_ref 133890 // :mdtUsbtmcPortThread
+  xyzwh 718 1029 2010 11 218
+  overlappingdurationcanvas 141314
+    xyzwh 724 1064 2020 11 25
+  end
+  overlappingdurationcanvas 141570
+    xyzwh 724 1119 2020 11 30
+  end
+  overlappingdurationcanvas 141826
+    xyzwh 724 1171 2020 11 47
+  end
+end
+durationcanvas 142082 classinstance_ref 128386 // :mdtUsbtmcPortManager
+  xyzwh 239 1203 2010 11 186
+end
+durationcanvas 142338 classinstance_ref 128258 // :mdtDeviceScpi
+  xyzwh 63 1221 2010 11 168
+end
+durationcanvas 142722 classinstance_ref 142594 // :mdtDeviceStatusWidget
+  xyzwh 910 1301 2010 11 59
+end
+msg 128770 synchronous
+  from durationcanvas_ref 128514
+  to durationcanvas_ref 128642
+  yz 122 2015 msg operation_ref 1139202 // "sendCommand(in command : QByteArray, in timeout : int = 0) : int"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 104 105
+reflexivemsg 132610 synchronous
+  to durationcanvas_ref 132482
+  yz 272 2025 msg operation_ref 521602 // "writeData(in data : QByteArray, in waitAnswer : bool) : int"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 227 255
+msg 132866 synchronous
+  from durationcanvas_ref 132482
+  to durationcanvas_ref 132738
+  yz 288 2030 msg operation_ref 434690 // "lockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 361 271
+msg 133122 synchronous
+  from durationcanvas_ref 132482
+  to durationcanvas_ref 132994
+  yz 313 2025 msg operation_ref 434306 // "writeFramesPool() : QQueue <mdtFrame*>"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 339 296
+msg 133378 synchronous
+  from durationcanvas_ref 132482
+  to durationcanvas_ref 133250
+  yz 371 2025 msg operation_ref 434818 // "unlockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 353 354
+msg 133634 synchronous
+  from durationcanvas_ref 132482
+  to durationcanvas_ref 133506
+  yz 341 3005 msg operation_ref 1139586 // "addFrameToWrite(in frame : mdtFrame) : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 336 324
+msg 133762 return
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 128514
+  yz 394 2025 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+msg 135042 asynchronous
+  from durationcanvas_ref 134786
+  to durationcanvas_ref 134914
+  yz 408 2015 msg operation_ref 434690 // "lockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 553 391
+msg 136706 synchronous
+  from durationcanvas_ref 135298
+  to durationcanvas_ref 136578
+  yz 462 2020 msg operation_ref 1139714 // "handleUsbEvents() : error_t"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 530 445
+reflexivemsg 136962 synchronous
+  to durationcanvas_ref 136834
+  yz 498 2025 msg operation_ref 434818 // "unlockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 467 481
+reflexivemsg 137218 synchronous
+  to durationcanvas_ref 137090
+  yz 546 2025 msg operation_ref 434690 // "lockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 475 529
+msg 137346 return
+  from durationcanvas_ref 136578
+  to durationcanvas_ref 135298
+  yz 579 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+reflexivemsg 137602 synchronous
+  to durationcanvas_ref 137474
+  yz 641 2015 msg operation_ref 1139842 // "usbtmcWrite(inout writeFrame : mdtFrame, inout waitAnAnswer : bool, inout expectedBulkInbTags : QList<quint8>) : error_t"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 691 624
+reflexivemsg 137858 synchronous
+  to durationcanvas_ref 137730
+  yz 666 2025 msg operation_ref 1139970 // "writeDataToPort(in frame : mdtFrame, in maxSize : int = -1) : QInt64"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 685 649
+msg 138114 synchronous
+  from durationcanvas_ref 137474
+  to durationcanvas_ref 137986
+  yz 722 2025 msg operation_ref 434306 // "writeFramesPool() : QQueue <mdtFrame*>"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 531 705
+msg 138370 synchronous
+  from durationcanvas_ref 137474
+  to durationcanvas_ref 138242
+  yz 770 2015 msg operation_ref 434178 // "writeFrames() : QQueue <mdtFrame*>"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 545 753
+msg 138626 synchronous
+  from durationcanvas_ref 137474
+  to durationcanvas_ref 138498
+  yz 816 2015 msg operation_ref 1140098 // "initWriteTransfer(in data : char, in maxSize : qInt64) : error_t"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 531 799
+msg 139010 synchronous
+  from durationcanvas_ref 138754
+  to durationcanvas_ref 138882
+  yz 879 2015 msg operation_ref 434818 // "unlockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 545 862
+reflexivemsg 139266 synchronous
+  to durationcanvas_ref 139138
+  yz 153 2025 msg operation_ref 1139458 // "waitOnWriteReady(in timeout : int = 0, in granularity : int = 0) : bool"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 198 136
+msg 139778 synchronous
+  from durationcanvas_ref 139138
+  to durationcanvas_ref 139650
+  yz 166 2030 msg operation_ref 434690 // "lockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 361 149
+msg 140290 synchronous
+  from durationcanvas_ref 139138
+  to durationcanvas_ref 140162
+  yz 198 2025 msg operation_ref 434306 // "writeFramesPool() : QQueue <mdtFrame*>"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 339 181
+msg 140546 synchronous
+  from durationcanvas_ref 139138
+  to durationcanvas_ref 140418
+  yz 234 3005 msg operation_ref 434818 // "unlockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 353 217
+msg 140930 synchronous
+  from durationcanvas_ref 140674
+  to durationcanvas_ref 140802
+  yz 955 2015 msg operation_ref 434690 // "lockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 569 938
+reflexivemsg 141186 synchronous
+  to durationcanvas_ref 141058
+  yz 1029 2015 msg operation_ref 1139842 // "usbtmcWrite(inout writeFrame : mdtFrame, inout waitAnAnswer : bool, inout expectedBulkInbTags : QList<quint8>) : error_t"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 691 1012
+reflexivemsg 141442 synchronous
+  to durationcanvas_ref 141314
+  yz 1064 2025 msg operation_ref 1139970 // "writeDataToPort(in frame : mdtFrame, in maxSize : int = -1) : QInt64"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 685 1047
+reflexivemsg 141698 synchronous
+  to durationcanvas_ref 141570
+  yz 1119 2025 msg operation_ref 1140226 // "handleCommonErrors(in portError : error_t) : error_t"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 668 1102
+reflexivemsg 141954 synchronous
+  to durationcanvas_ref 141826
+  yz 1171 2025 msg operation_ref 1140354 // "notifyError(in error : int, in renotifySameError : bool = false) : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 704 1154
+msg 142210 asynchronous
+  from durationcanvas_ref 141826
+  to durationcanvas_ref 142082
+  yz 1203 2025 msg operation_ref 594946 // "onThreadErrorOccured(in error : int) : void"
+  stereotype "<<slot>>" xyz 464 1220 3000
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 421 1186
+msg 142466 synchronous
+  from durationcanvas_ref 142082
+  to durationcanvas_ref 142338
+  yz 1223 2015 msg operation_ref 1140482 // "setStateFromPortError(in error : int) : void"
+  stereotype "<<slot>>" xyz 121 1240 3000
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 77 1206
+msg 142850 synchronous
+  from durationcanvas_ref 142338
+  to durationcanvas_ref 142722
+  yz 1302 2015 msg operation_ref 1086978 // "setState(in state : state_t) : void"
+  stereotype "<<slot>>" xyz 457 1319 3000
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 459 1285
+msg 142978 return
+  from durationcanvas_ref 142722
+  to durationcanvas_ref 142338
+  yz 1341 3005 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+msg 143106 return
+  from durationcanvas_ref 142338
+  to durationcanvas_ref 142082
+  yz 1378 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+end

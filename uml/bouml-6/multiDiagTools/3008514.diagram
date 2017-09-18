@@ -1,0 +1,20 @@
+format 211
+
+classcanvas 128002 class_ref 2960642 // SelectFieldList
+  classdiagramsettings member_max_width 0 end
+  xyz 39 38 2000
+end
+classcanvas 128130 class_ref 2960770 // SelectFieldItem
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 577 67 2006
+end
+classcanvas 128386 class_ref 3410562 // SelectFieldListSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 280.5 2000
+end
+relationcanvas 128258 relation_ref 3324546 // <directional composition>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 561 130 3000 no_multiplicity_b
+end
+end
