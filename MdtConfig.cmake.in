@@ -1,0 +1,22 @@
+@PACKAGE_INIT@ 
+
+if(NOT @PROJECT_NAME@_FIND_COMPONENTS)
+  set(@PROJECT_NAME@_NOT_FOUND_MESSAGE "The @PROJECT_NAME@ package requires at least one component")
+  set(@PROJECT_NAME@_FOUND False)
+  return()
+else()
+  set(@PROJECT_NAME@_FOUND TRUE)
+endif()
+
+foreach(component ${@PROJECT_NAME@_FIND_COMPONENTS})
+  find_package(
+    @PROJECT_NAME@${component}
+    QUIET
+    CONFIG
+  )
+  if(NOT @PROJECT_NAME@${component}_FOUND AND ${@PROJECT_NAME@_FIND_REQUIRED_${component}})
+    set(@PROJECT_NAME@_NOT_FOUND_MESSAGE "Failed to find @PROJECT_NAME@::${component}")
+    set(@PROJECT_NAME@_FOUND False)
+    break()
+  endif()
+endforeach()
