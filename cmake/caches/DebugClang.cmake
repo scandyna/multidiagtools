@@ -1,8 +1,9 @@
 
-set(CMAKE_C_COMPILER gcc CACHE STRING "C compiler")
-set(CMAKE_CXX_COMPILER g++ CACHE STRING "C++ compiler")
-set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type") 
-set(MDT_CXX_FLAGS_TO_APPEND "-O3 -Wall -Wextra -Werror -flto" CACHE STRING "")
+set(CMAKE_C_COMPILER clang CACHE STRING "C compiler")
+set(CMAKE_CXX_COMPILER clang++ CACHE STRING "C++ compiler")
+set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type")
+
+set(MDT_CXX_FLAGS_TO_APPEND "-O3 -Wall -Wextra" CACHE STRING "")
 
 # On *NIX we use mult-arch install (using GNUInstallDirs)
 # This only works if CMAKE_INSTALL_PREFIX is set to /usr
