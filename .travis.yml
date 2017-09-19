@@ -3,6 +3,9 @@ branches:
  only:
   - master
 
+git:
+ submodules: false
+
 language: cpp
 dist: trusty
 
