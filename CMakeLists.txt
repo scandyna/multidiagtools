@@ -84,11 +84,11 @@ include(MdtAddLibrary)
 # Libraries
 #################################################################################################################################################
 
-# add_subdirectory(libs/QtSolutions)
+add_subdirectory(libs/QtSolutions)
 add_subdirectory(libs/Error_Core)
 # add_subdirectory(libs/Error_Widgets)
 add_subdirectory(libs/Application_Core)
-# add_subdirectory(libs/Application_Core_Single)
+add_subdirectory(libs/Application_Core_Single)
 # add_subdirectory(libs/Application_Widgets)
 # add_subdirectory(libs/Application_Widgets_Single)
 # add_subdirectory(libs/Algorithm)
