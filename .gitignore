@@ -67,18 +67,7 @@ Thumbs.db
 
 # API documentation generated from Doxygen #
 ############################################
-doc/doxygen
-
-
-# Documents with Copyright #
-############################
-doc/Agilent
-doc/Wago
-doc/Beckhoff
-doc/bus/canbus/CiA
-doc/Keithley
-doc/Tyco
-doc/Visa
+doc/apidoc-dev
 
 # Binary and Makefile files generated in QtDesigner plugin directory #
 #########################################################
