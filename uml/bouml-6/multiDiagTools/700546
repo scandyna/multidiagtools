@@ -1,6 +1,6 @@
 format 214
 "Comm_Bus_sandbox" // Mdt::Comm_Bus_sandbox
-  revision 6
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -398,5 +398,23 @@ ${inlines}
 	  b parent class_ref 4306050 // AbstractCompletionHandler
       end
     end
+  end
+
+  classview 1921154 "PortScan"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
   end
 end

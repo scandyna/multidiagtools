@@ -11,16 +11,17 @@ diagrams
     921 911 100 B-Landscape 0 0
   classdiagram_ref 3706242 // Thread
     120 98 100 A4 0 0
-  active  classdiagram_ref 3712770 // Comm_OtherIdeas
+  classdiagram_ref 3712770 // Comm_OtherIdeas
+    921 911 100 A4 0 0
+  active  classdiagram_ref 3719298 // sandbox
     921 911 100 A4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3712770 // Comm_OtherIdeas
+selected classdiagram_ref 3719298 // sandbox
 open
-  classview_ref 1901186 // Sandbox
-  classview_ref 1867778 // UicNumber_Core
+  classview_ref 1921282 // Network_Core
   
-package_ref 707074 // UnitTest
+  package_ref 707074 // UnitTest
   classview_ref 300162 // QtSolutions
 end
 end
