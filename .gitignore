@@ -67,7 +67,7 @@ Thumbs.db
 
 # API documentation generated from Doxygen #
 ############################################
-doc/doxygen
+doc/apidoc-dev
 
 
 # Documents with Copyright #

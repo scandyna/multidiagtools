@@ -1,0 +1,3 @@
+[submodule "doc/apidoc"]
+	path = doc/apidoc
+	url = git@github.com:scandyna/multidiagtools-apidoc.git
