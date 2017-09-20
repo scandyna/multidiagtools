@@ -56,7 +56,9 @@ namespace Mdt{ namespace PlainText{
 
     /*! \brief Constructs a end-of-stream iterator.
      */
-    FileInputIterator() = default;
+    FileInputIterator()
+    {
+    }
 
     /*! \brief Construct a iterator that acts on device
      *
