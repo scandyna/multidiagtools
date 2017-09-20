@@ -75,6 +75,11 @@ install:
  - sudo apt-get install -y libboost-dev
  - yes | sudo apt-get install -y qt58base qt58x11extras qt58imageformats qt58svg qt58tools
 
+before_script:
+ - "export DISPLAY=:99.0"
+ - sudo sh -e /etc/init.d/xvfb start
+ - sleep 3 # give xvfb some time to start
+
 script:
  - mkdir build
  - cd build
