@@ -97,7 +97,11 @@ void ObjdumpDependenciesParserTest::parserWindowsTest_data()
   QTest::addColumn<bool>("expectedOk");
 
   const bool Ok = true;
-  const bool Nok = false;
+  /*
+   * Once we have more experience (f.ex. bugs),
+   * we should add tests on non valid data.
+   */
+//   const bool Nok = false;
 
   QTest::newRow("0")
    << ""

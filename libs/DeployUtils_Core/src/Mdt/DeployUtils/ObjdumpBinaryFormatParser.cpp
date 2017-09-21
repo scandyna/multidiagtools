@@ -29,15 +29,15 @@ using namespace Mdt::PlainText;
 
 namespace Mdt{ namespace DeployUtils{
 
-static const std::array<const char * const, 2> LinuxFormatNames =
-{
+static const std::array<const char * const, 1> LinuxFormatNames =
+{{
   "elf64-x86-64"
-};
+}};
 
-static const std::array<const char * const, 2> WindowsFormatNames =
-{
+static const std::array<const char * const, 1> WindowsFormatNames =
+{{
   "pei-i386"
-};
+}};
 
 ObjdumpBinaryFormatParser::ObjdumpBinaryFormatParser()
  : mParser( std::make_unique< Impl::Objdump::FormatParserTemplate<StringConstIterator> >() )
