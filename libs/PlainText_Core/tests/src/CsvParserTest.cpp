@@ -252,7 +252,11 @@ void CsvParserTest::buildParserTestData()
   StringRecordList expectedData;
   CsvParserSettings csvSettings;
   const bool Ok = true;
-  const bool Nok = false;
+  /*
+   * Current version of the parser does not generate errors.
+   * Once done, we should add some tests with non conform data.
+   */
+//   const bool Nok = false;
 
   /*
    * Tests are generally based on CSV-1203 standard.
@@ -406,11 +410,10 @@ void CsvParserTest::buildParserTestData()
   sourceData = "\"AB\",\"\",\"C\",\"D\"\n";
   expectedData = {{"AB","","C","D"}};
   QTest::newRow("\"AB\",\"\",\"C\",\"D\"\\n") << sourceData << expectedData << Ok << csvSettings;
-  // RFC 4180 escape quote. We are not conform, but check that this does not crasch
-  /// \todo Determine if this should generate a error or not
+  // Escape a double quote
   sourceData = "\"A\"\"B\"\n";
   expectedData = {{"A\"B"}};
-  QTest::newRow("\"A\"\"B\"\\n") << sourceData << expectedData << Nok << csvSettings;
+  QTest::newRow("\"A\"\"B\"\\n") << sourceData << expectedData << Ok << csvSettings;
   /*
    * Quoted with spaces
    */
@@ -489,7 +492,7 @@ void CsvParserTest::buildParserTestData()
   /// \todo add casese from: http://stackoverflow.com/questions/7436481/how-to-make-my-split-work-only-on-one-real-line-and-be-capable-to-skip-quoted-pa/7462539#7462539
 
   /// \todo Add some from ~/programmation/c_cpp/libreoffiche/git/core/sc/qa/unit/data/contentCSV/
-  
+
   /// \todo Check if A B,C\n should be valid (space between A and B, unquoted)
 
 }
