@@ -44,11 +44,11 @@ namespace Mdt{ namespace DeployUtils{
  * https://en.wikipedia.org/wiki/Microsoft_Windows_library_files
  */
 static const std::array<const char * const, 28> LibrayExcludeListWindows =
-{
+{{
   "Hal", "NTDLL", "KERNEL32", "GDI32", "USER32", "COMCTL32", "WS2_32", "ADVAPI32", "NETAPI32", "SHSCRAP",
   "WINMM", "MSVCRT", "mpr", "ole32", "shell32", "version", "crypt32", "dnsapi", "iphlpapi","opengl32",
   "UxTheme", "dwmapi", "imm32", "oleaut32", "Secur32", "odbc32", "shfolder", "wsock32"
-};
+}};
 
 /*
  * Libraries I don't really know if they must be excluded:
