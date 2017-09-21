@@ -1,6 +1,6 @@
 format 214
-"Dsp" // Mdt::Dsp
-  revision 2
+"Visa" // Mdt::Visa
+  revision 1
   modified_by 2 "philippe"
   // class settings
   
@@ -26,7 +26,7 @@ format 214
   activitydiagramsettings
    end
   
-  classview 1921666 "Trig"
+  classview 1921282 "Visa_Core"
     
     classdiagramsettings member_max_width 0 end
     
@@ -42,5 +42,25 @@ format 214
     
     activitydiagramsettings
      end
+    classdiagram 3719426 "Visa_Core_Sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4332418 "Address"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
   end
 end

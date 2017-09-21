@@ -1,6 +1,6 @@
 format 214
 "Comm_Bus_sandbox" // Mdt::Comm_Bus_sandbox
-  revision 6
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -397,6 +397,11 @@ ${inlines}
 	    classrelation_ref 4866306 // <unidirectional association>
 	  b parent class_ref 4306050 // AbstractCompletionHandler
       end
+    end
+
+    classdiagram 3719298 "VXI-11"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
   end
 end
