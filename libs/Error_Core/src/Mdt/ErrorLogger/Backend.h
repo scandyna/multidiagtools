@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,7 +35,7 @@ namespace Mdt{
    *  that will be used by error Logger to output errors.
    *
    * Notice that Logger executes from a non main thread,
-   *  also take care that some functons must at least be reentrant.
+   *  also take care that some functions must at least be reentrant.
    */
   class Backend
   {
@@ -63,12 +63,6 @@ namespace Mdt{
     Backend(Backend &&) = delete;
     Backend & operator=(const Backend &) = delete;
     Backend & operator=(Backend &&) = delete;
-
-   protected:
-
-    /*! \brief Calls QObject::tr()
-     */
-    static QString tr(const char *text);
   };
 
 }}  // namespace Mdt{ namespace ErrorLogger {

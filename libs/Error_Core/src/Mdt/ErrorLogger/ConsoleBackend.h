@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 
 #include "Backend.h"
 #include <QString>
+#include <QCoreApplication>
 
 namespace Mdt{ namespace ErrorLogger {
 
@@ -30,6 +31,8 @@ namespace Mdt{ namespace ErrorLogger {
    */
   class ConsoleBackend : public Backend
   {
+   Q_DECLARE_TR_FUNCTIONS(ConsoleBackend)
+
    public:
 
     /*! \brief Destructor

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,6 +24,7 @@
 #include "Backend.h"
 #include "Mdt/Error.h"
 #include <QString>
+#include <QCoreApplication>
 
 class QFile;
 
@@ -33,6 +34,8 @@ namespace Mdt{ namespace ErrorLogger {
    */
   class FileBackend : public Backend
   {
+   Q_DECLARE_TR_FUNCTIONS(ConsoleBackend)
+
    public:
 
     /*! \brief Constructor

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,9 +19,3 @@
  **
  ****************************************************************************/
 #include "Backend.h"
-#include <QObject>
-
-QString Mdt::ErrorLogger::Backend::tr(const char* text)
-{
-  return QObject::tr(text);
-}
