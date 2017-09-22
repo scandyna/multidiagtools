@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -124,8 +124,8 @@ namespace Mdt{ namespace ErrorLogger {
    * \code
    * int main()
    * {
-   *   using mdt::error::Logger;
-   *   using mdt::error::LoggerGuard;
+   *   using Mdt::Error::Logger;
+   *   using Mdt::Error::LoggerGuard;
    *
    *   LoggerGuard loggerGuard;
    * 
@@ -134,6 +134,15 @@ namespace Mdt{ namespace ErrorLogger {
    *   // Here, Logger::cleanup() will be called by loggerGuard.
    * }
    * \endcode
+   *
+   * \note When using one of the Mdt Application,
+   *       the error logger is initialized,
+   *       and loggers cleanup is also called in its destructor.
+   *
+   * \sa Mdt::CoreApplication
+   * \sa Mdt::SingleCoreApplication
+   * \sa Mdt::Application
+   * \sa Mdt::SingleApplication
    */
   class LoggerGuard
   {
