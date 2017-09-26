@@ -95,8 +95,22 @@ class ErrorLoggerTest : public QObject
   void loggerConcurrentAccessTest_data();
 
   void consoleOutFromMainThreadTest();
+  void consoleOutFromMainThreadTest_data();
   void consoleOutFromOtherThreadTest();
+  void consoleOutFromOtherThreadTest_data();
   void consoleOutFromMultipleThreadsTest();
+  void consoleOutFromMultipleThreadsTest_data();
+  void consoleOutBenchmark();
+
+  void fileOutFromMultipleThreadsTest();
+  void fileOutFromMultipleThreadsTest_data();
+  void fileOutBenchmark();
+
+ private:
+
+  void createOutputTestData();
+  static Mdt::Error buildError(int number, Mdt::Error::Level level);
+  static ErrorVectorType buildErrorList(int n);
 };
 
 #endif // #ifndef MDT_ERROR_LOGGER_TEST_H

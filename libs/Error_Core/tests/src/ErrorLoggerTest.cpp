@@ -24,6 +24,10 @@
 #include "Mdt/ErrorLogger/Backend.h"
 #include "Mdt/ErrorLogger/ConsoleBackend.h"
 #include "Mdt/ErrorLogger/FileBackend.h"
+#include <QLatin1String>
+#include <QString>
+#include <QTemporaryFile>
+
 #include <vector>
 #include <memory>
 
@@ -198,17 +202,182 @@ void ErrorLoggerTest::loggerConcurrentAccessTest_data()
 
 void ErrorLoggerTest::consoleOutFromMainThreadTest()
 {
+  /*
+   * We only check that we have no crash here
+   */
+  QFETCH(ErrorVectorType, errorList);
+  QFETCH(int, interLogWaitTime);
 
+  // Setup logger
+  LoggerGuard loggerGard;
+  auto backend = std::make_shared<ConsoleBackend>();  /// \todo Why using shared pointer ?
+  Logger::addBackend(backend);
+  // Log errors
+  logErrors(errorList, interLogWaitTime);
+}
+
+void ErrorLoggerTest::consoleOutFromMainThreadTest_data()
+{
+  createOutputTestData();
 }
 
 void ErrorLoggerTest::consoleOutFromOtherThreadTest()
 {
+  /*
+   * We only check that we have no crash here
+   */
+  QFETCH(ErrorVectorType, errorList);
+  QFETCH(int, interLogWaitTime);
 
+  // Setup logger
+  LoggerGuard loggerGard;
+  auto backend = std::make_shared<ConsoleBackend>();  /// \todo Why using shared pointer ?
+  Logger::addBackend(backend);
+  // Log errors
+  ErrorProducerThread thread(errorList, interLogWaitTime);
+  thread.start();
+  thread.wait();
+}
+
+void ErrorLoggerTest::consoleOutFromOtherThreadTest_data()
+{
+  createOutputTestData();
 }
 
 void ErrorLoggerTest::consoleOutFromMultipleThreadsTest()
 {
+  /*
+   * We only check that we have no crash here
+   */
+  QFETCH(ErrorVectorType, errorList);
+  QFETCH(int, interLogWaitTime);
+  QFETCH(int, nonMainThreadCount);
 
+  // Setup logger
+  LoggerGuard loggerGard;
+  auto backend = std::make_shared<ConsoleBackend>();  /// \todo Why using shared pointer ?
+  Logger::addBackend(backend);
+  // Log errors from other threads
+  QVector<ErrorProducerThread*> threadList;
+  for(int i = 0; i < nonMainThreadCount; ++i){
+    auto *thd = new ErrorProducerThread(errorList, interLogWaitTime);
+    threadList.append(thd);
+    thd->start();
+  }
+  // Log errors from main thread
+  logErrors(errorList, interLogWaitTime);
+  // Join our produces threads
+  for(auto & thd : threadList){
+    thd->wait();
+    delete thd;
+  }
+  threadList.clear();
+}
+
+void ErrorLoggerTest::consoleOutFromMultipleThreadsTest_data()
+{
+  createOutputTestData();
+}
+
+void ErrorLoggerTest::consoleOutBenchmark()
+{
+  LoggerGuard loggerGard;
+  auto backend = std::make_shared<ConsoleBackend>();  /// \todo Why using shared pointer ?
+  Logger::addBackend(backend);
+  auto error = mdtErrorNewQ("error 1", Mdt::Error::Warning, this);
+  QBENCHMARK_ONCE{
+    Logger::logError(error);
+  }
+}
+
+void ErrorLoggerTest::fileOutFromMultipleThreadsTest()
+{
+  /*
+   * We only check that we have no crash here
+   */
+  QFETCH(ErrorVectorType, errorList);
+  QFETCH(int, interLogWaitTime);
+  QFETCH(int, nonMainThreadCount);
+
+  // Setup logger
+  QTemporaryFile logFile;
+  QVERIFY(logFile.open());
+  LoggerGuard loggerGard;
+  auto backend = std::make_shared<FileBackend>();  /// \todo Why using shared pointer ?
+  QVERIFY(backend->setLogFilePath(logFile.fileName()));
+  Logger::addBackend(backend);
+  // Log errors from other threads
+  QVector<ErrorProducerThread*> threadList;
+  for(int i = 0; i < nonMainThreadCount; ++i){
+    auto *thd = new ErrorProducerThread(errorList, interLogWaitTime);
+    threadList.append(thd);
+    thd->start();
+  }
+  // Log errors from main thread
+  logErrors(errorList, interLogWaitTime);
+  // Join our produces threads
+  for(auto & thd : threadList){
+    thd->wait();
+    delete thd;
+  }
+  threadList.clear();
+  Logger::cleanup();
+  QVERIFY(logFile.size() > 0);
+}
+
+void ErrorLoggerTest::fileOutFromMultipleThreadsTest_data()
+{
+  createOutputTestData();
+}
+
+void ErrorLoggerTest::fileOutBenchmark()
+{
+  QTemporaryFile logFile;
+  QVERIFY(logFile.open());
+  LoggerGuard loggerGard;
+  auto backend = std::make_shared<FileBackend>();  /// \todo Why using shared pointer ?
+  QVERIFY(backend->setLogFilePath(logFile.fileName()));
+  Logger::addBackend(backend);
+  auto error = mdtErrorNewQ("error 1", Mdt::Error::Warning, this);
+  QBENCHMARK_ONCE{
+    Logger::logError(error);
+  }
+}
+
+void ErrorLoggerTest::createOutputTestData()
+{
+  QTest::addColumn<ErrorVectorType>("errorList");
+  QTest::addColumn<int>("interLogWaitTime");
+  QTest::addColumn<int>("nonMainThreadCount");
+
+  QTest::newRow("1,0,0") << buildErrorList(1) << 0 << 0;
+  QTest::newRow("1,0,1") << buildErrorList(1) << 0 << 1;
+  QTest::newRow("1,0,2") << buildErrorList(1) << 0 << 2;
+  QTest::newRow("2,0,0") << buildErrorList(2) << 0 << 0;
+  QTest::newRow("2,1,0") << buildErrorList(2) << 1 << 0;
+  QTest::newRow("2,0,1") << buildErrorList(2) << 0 << 1;
+  QTest::newRow("2,1,1") << buildErrorList(2) << 1 << 1;
+  QTest::newRow("2,0,2") << buildErrorList(2) << 0 << 2;
+  QTest::newRow("2,1,2") << buildErrorList(2) << 1 << 2;
+  QTest::newRow("3,0,0") << buildErrorList(3) << 0 << 0;
+  QTest::newRow("3,2,0") << buildErrorList(3) << 2 << 0;
+  QTest::newRow("3,2,1") << buildErrorList(3) << 2 << 1;
+}
+
+Mdt::Error ErrorLoggerTest::buildError(int number, Mdt::Error::Level level)
+{
+  return mdtErrorNew(QLatin1String("Error ") + QString::number(number), level, "ErrorLoggerTest");
+}
+
+ErrorVectorType ErrorLoggerTest::buildErrorList(int n)
+{
+  ErrorVectorType errorList;
+
+  for(int i = 0; i < n; ++i){
+    errorList << buildError(i, Mdt::Error::Warning);
+  }
+
+  return errorList;
 }
 
 
