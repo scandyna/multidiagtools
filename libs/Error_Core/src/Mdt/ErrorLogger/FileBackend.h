@@ -24,7 +24,6 @@
 #include "Backend.h"
 #include "Mdt/Error.h"
 #include <QString>
-#include <QCoreApplication>
 
 class QFile;
 
@@ -34,13 +33,13 @@ namespace Mdt{ namespace ErrorLogger {
    */
   class FileBackend : public Backend
   {
-   Q_DECLARE_TR_FUNCTIONS(ConsoleBackend)
+   Q_OBJECT
 
    public:
 
     /*! \brief Constructor
      */
-    FileBackend();
+    FileBackend(QObject *parent = nullptr);
 
     /*! \brief Destructor
      */

@@ -41,6 +41,26 @@ namespace Mdt{ namespace ErrorLogger {
   {
    public:
 
+    /*! \brief Execution thread of a backend
+     *
+     * When adding a backend to the logger,
+     *  it is possible to choose in which thread
+     *  it must run.
+     */
+    enum ExecutionThread
+    {
+      ExecuteInMainThread,      /*!< The backend will run in the main thread.
+                                      The Qt's signal/slot is used with a auto connection,
+                                      so that errors logged using logError()
+                                      will allways call Backend::logError()
+                                      from the main thread event loop,
+                                      regardless of the caller thread. */
+      ExecuteInSeparateThread   /*!< The backend will run in logger's separate thread.
+                                      A call to logError() will allways just queue the error
+                                      and return. The logger's separated thread will then
+                                      call Backend::logError(). */
+    };
+
     // Disable copy and move
     Logger(const Logger &) = delete;
     Logger(Logger &&) = delete;
@@ -50,6 +70,28 @@ namespace Mdt{ namespace ErrorLogger {
     /*! \brief Add a logger backend
      */
     static void addBackend(const std::shared_ptr<Backend> & backend);
+
+    /*! \brief Add a logger backend
+     *
+     * \todo Document about ownership + do not touch returned pointer when logging a error
+     */
+    template<typename T>
+    static T *addBackend(ExecutionThread executionThread)
+    {
+      switch(executionThread){
+        case ExecuteInMainThread:
+          instance().mMainThreadBackends.emplace_back( std::make_unique<T>() );
+          /// \todo singal/slot connection once possible (in a separate method)
+          return instance().mMainThreadBackends.back().get();
+          break;
+        case ExecuteInSeparateThread:
+          instance().mSeparateThreadBackends.emplace_back( std::make_unique<T>() );
+          return instance().mSeparateThreadBackends.back().get();
+          break;
+      }
+      // Should not happen
+      return nullptr;
+    }
 
     /*! \brief Log given error
      *
@@ -115,6 +157,8 @@ namespace Mdt{ namespace ErrorLogger {
     bool pvAllErrorsLogged;
     std::queue<Error> pvErrorQueue;
     std::vector<std::shared_ptr<Backend>> pvBackends;
+    std::vector< std::unique_ptr<Backend> > mMainThreadBackends;
+    std::vector< std::unique_ptr<Backend> > mSeparateThreadBackends;
     std::thread pvThread;
   };
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,8 +29,9 @@
 
 namespace Mdt{ namespace ErrorLogger {
 
-FileBackend::FileBackend()
- : pvMaxFileSize(1024*1024)
+FileBackend::FileBackend(QObject *parent)
+ : Backend(parent),
+   pvMaxFileSize(1024*1024)
 {
 }
 

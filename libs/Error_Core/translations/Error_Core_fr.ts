@@ -2,64 +2,79 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
-    <name>ConsoleBackend</name>
+    <name>Mdt::ErrorLogger::ConsoleBackend</name>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="64"/>
+        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="69"/>
         <source>Error occured in </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="65"/>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="123"/>
+        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="70"/>
         <source>Text: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="68"/>
+        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="73"/>
         <source>Informative text: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="70"/>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="128"/>
+        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="75"/>
         <source>File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="71"/>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="129"/>
+        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="76"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>Mdt::ErrorLogger::FileBackend</name>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="50"/>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="105"/>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="51"/>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="106"/>
         <source>FileBackend::setLogFilePath() : could not open file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="51"/>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="106"/>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="52"/>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="107"/>
         <source> , error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="166"/>
-        <source>FileBackend::backupLogFile() , removing backup log file &apos;</source>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="124"/>
+        <source>Text: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="129"/>
+        <source>File: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="130"/>
+        <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="167"/>
+        <source>FileBackend::backupLogFile() , removing backup log file &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="168"/>
         <source> failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="172"/>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="173"/>
         <source>FileBackend::backupLogFile() , backup log file &apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="173"/>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="174"/>
         <source> failed</source>
         <translation type="unfinished"></translation>
     </message>

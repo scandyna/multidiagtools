@@ -19,3 +19,12 @@
  **
  ****************************************************************************/
 #include "Backend.h"
+
+namespace Mdt{ namespace ErrorLogger {
+
+Backend::Backend(QObject* parent)
+ : QObject(parent)
+{
+}
+
+}} // namespace Mdt{ namespace ErrorLogger {

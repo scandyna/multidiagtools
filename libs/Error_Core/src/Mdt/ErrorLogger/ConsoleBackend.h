@@ -23,7 +23,6 @@
 
 #include "Backend.h"
 #include <QString>
-#include <QCoreApplication>
 
 namespace Mdt{ namespace ErrorLogger {
 
@@ -31,9 +30,13 @@ namespace Mdt{ namespace ErrorLogger {
    */
   class ConsoleBackend : public Backend
   {
-   Q_DECLARE_TR_FUNCTIONS(ConsoleBackend)
+   Q_OBJECT
 
    public:
+
+    /*! \brief Constructor
+     */
+    ConsoleBackend(QObject *parent = nullptr);
 
     /*! \brief Destructor
      */

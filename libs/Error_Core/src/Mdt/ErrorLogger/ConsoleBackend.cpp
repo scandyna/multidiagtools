@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,6 +31,11 @@
  */
 
 namespace Mdt{ namespace ErrorLogger {
+
+ConsoleBackend::ConsoleBackend(QObject* parent)
+ : Backend(parent)
+{
+}
 
 ConsoleBackend::~ConsoleBackend()
 {
