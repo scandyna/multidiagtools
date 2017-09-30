@@ -51,11 +51,8 @@ namespace Mdt{
    *
    * Finaly, in main.cpp:
    * \code
-   * Mdt::Application app(argc, argv);
+   * QCoreApplication app(argc, argv);
    *
-   * if(!app.init()){
-   *   return 1;
-   * }
    * // This will call runMain() once the event loop started
    * MyMainFunction mainImpl;
    *
