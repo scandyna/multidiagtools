@@ -25,11 +25,6 @@
 #include <QLatin1String>
 #include <QStringBuilder>
 
-/** \todo Maybe, console backend should not be called from other thread
- * -> What's about a non main thread calling Mdt::Error::commit() ?
- * -> Implement a queue that "lives" in the main thread ?
- */
-
 namespace Mdt{ namespace ErrorLogger {
 
 ConsoleBackend::ConsoleBackend(QObject* parent)
