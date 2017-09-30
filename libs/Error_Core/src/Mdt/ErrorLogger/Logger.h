@@ -22,6 +22,7 @@
 #define MDT_ERROR_LOGGER_H
 
 #include "Mdt/Error.h"
+#include <QObject>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -37,8 +38,10 @@ namespace Mdt{ namespace ErrorLogger {
 
   /*! \brief Helper class to log Error objects
   */
-  class Logger
+  class Logger : public QObject
   {
+   Q_OBJECT
+
    public:
 
     /*! \brief Execution thread of a backend
@@ -68,26 +71,39 @@ namespace Mdt{ namespace ErrorLogger {
     Logger & operator=(Logger &&) = delete;
 
     /*! \brief Add a logger backend
-     */
-    static void addBackend(const std::shared_ptr<Backend> & backend);
-
-    /*! \brief Add a logger backend
      *
-     * \todo Document about ownership + do not touch returned pointer when logging a error
+     * \code
+     * using Mdt::ErrorLogger::Logger;
+     *
+     * auto backend = Logger::addBackend<FileBackend>(Logger::ExecuteInSeparateThread);
+     * backend->setLogFilePath("some/path/to/logfile");
+     * \endcode
+     *
+     * A backend of type T is instanciated and added to the
+     *  list of backends runing on specified \a executionThread .
+     *  A pointer to the created backend is returned,
+     *  so that some setup can be done on the backend.
+     *  The logger has the ownership of the backend
+     *  (it will delete it).
+     *
+     * \warn Accessing the backend referenced by the returned pointer is only possible:
+     *        - If it runs on separate thread, before any error is logged ( by calling logError() )
+     *        - For all cases, before calling cleanup()
      */
     template<typename T>
     static T *addBackend(ExecutionThread executionThread)
     {
       switch(executionThread){
         case ExecuteInMainThread:
+        {
           instance().mMainThreadBackends.emplace_back( std::make_unique<T>() );
-          /// \todo singal/slot connection once possible (in a separate method)
-          return instance().mMainThreadBackends.back().get();
-          break;
+          auto *backend = reinterpret_cast<T*>( instance().mMainThreadBackends.back().get() );
+          connect(&instance(), &Logger::errorSubmitted, backend, &T::logError, Qt::AutoConnection);
+          return backend;
+        }
         case ExecuteInSeparateThread:
           instance().mSeparateThreadBackends.emplace_back( std::make_unique<T>() );
-          return instance().mSeparateThreadBackends.back().get();
-          break;
+          return reinterpret_cast<T*>( instance().mSeparateThreadBackends.back().get() );
       }
       // Should not happen
       return nullptr;
@@ -96,37 +112,50 @@ namespace Mdt{ namespace ErrorLogger {
     /*! \brief Log given error
      *
      * This function is thread safe
-     * \pre error must not be null
+     *
+     * \pre \a error must not be null
      */
     static void logError(const Error & error);
 
     /*! \brief Cleanup
-    *
-    * \note This function must be called before
-    *       returning from main(). Not doing so
-    *       conducts to undefined behaviour.
-    *       Consider using a LoggerGuard.
-    */
+     *
+     * \note This function must be called before
+     *       returning from main(). Not doing so
+     *       conducts to undefined behaviour.
+     *       Consider using a LoggerGuard.
+     */
     static void cleanup();
 
-  private:
+    /*! \internal Stop worker thread
+     *
+     * Used for unit tests
+     */
+    static void stopForTest();
 
-    // mdtErrorLogger is a singleton
+   signals:
+
+    /*! \internal Emitted whenever logError() was called
+     */
+    void errorSubmitted(const Mdt::Error & error);
+
+   private:
+
+    // Logger is a singleton
     Logger();
 
     /*! \brief Get unique instance of error logger
-    */
+     */
     static Logger & instance();
 
     /*! \brief Enqueue error and start thread if needed
      */
-    void logErrorImpl(const Error & error);
+    void logErrorToSeparateThread(const Error & error);
 
     /*! \brief Start worker thread
      */
     void start();
 
-    /*! \brief Stop worker thread
+    /*! \internal Stop worker thread
      */
     void stop();
 
@@ -138,7 +167,7 @@ namespace Mdt{ namespace ErrorLogger {
 
     /*! \brief Output error to each backend
      */
-    void outputErrorToBackends(const Error & error);
+    void outputErrorToSeparateThreadBackends(const Error & error);
 
     /*! \brief Worker thread function
      */
@@ -151,15 +180,14 @@ namespace Mdt{ namespace ErrorLogger {
       End
     };
 
-    std::mutex pvMutex;
-    std::condition_variable pvCv;
-    Event pvEventForThread;
-    bool pvAllErrorsLogged;
-    std::queue<Error> pvErrorQueue;
-    std::vector<std::shared_ptr<Backend>> pvBackends;
+    std::mutex mMutex;
+    std::condition_variable mCv;
+    Event mEventForThread;
+    bool mAllErrorsLogged;
+    std::queue<Error> mErrorQueue;
     std::vector< std::unique_ptr<Backend> > mMainThreadBackends;
     std::vector< std::unique_ptr<Backend> > mSeparateThreadBackends;
-    std::thread pvThread;
+    std::thread mThread;
   };
 
   /*! \brief Scope guard for error Logger
@@ -181,7 +209,7 @@ namespace Mdt{ namespace ErrorLogger {
    *
    * \note When using one of the Mdt Application,
    *       the error logger is initialized,
-   *       and loggers cleanup is also called in its destructor.
+   *       and logger's cleanup is also called in its destructor.
    *
    * \sa Mdt::CoreApplication
    * \sa Mdt::SingleCoreApplication

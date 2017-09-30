@@ -48,6 +48,9 @@ CoreApplicationImpl::~CoreApplicationImpl()
 
 void CoreApplicationImpl::enableFileLogging(CoreApplicationImpl::LogFileNameFormat format)
 {
+  using Mdt::ErrorLogger::Logger;
+  using Mdt::ErrorLogger::FileBackend;
+
   if(isFileLoggingEnabled()){
     return;
   }
@@ -72,12 +75,12 @@ void CoreApplicationImpl::enableFileLogging(CoreApplicationImpl::LogFileNameForm
   }
   mLogFilePath = QDir::cleanPath( logDirectory.absolutePath() % QLatin1Char('/') % logFileName % QLatin1String(".log") );
   // Add file backend to the error logger
-  auto logFileBackend = std::make_shared<Mdt::ErrorLogger::FileBackend>();
+  auto *logFileBackend = Logger::addBackend<FileBackend>(Logger::ExecuteInSeparateThread);
+  Q_ASSERT(logFileBackend != nullptr);
   if(!logFileBackend->setLogFilePath(mLogFilePath)){
     qWarning() << tr("Mdt::CoreApplication: log file '%1' could not be open, no log will come to it.").arg(mLogFilePath);
     return;
   }
-  Mdt::ErrorLogger::Logger::addBackend(logFileBackend);
 }
 
 QString CoreApplicationImpl::qtVersion()
@@ -118,9 +121,11 @@ QStringList CoreApplicationImpl::commonEnvironmentEntries()
 
 void CoreApplicationImpl::initErrorSystem()
 {
+  using Mdt::ErrorLogger::Logger;
+  using Mdt::ErrorLogger::ConsoleBackend;
+
   qRegisterMetaType<Mdt::Error>();
-  auto consoleOut = std::make_shared<Mdt::ErrorLogger::ConsoleBackend>();
-  Mdt::ErrorLogger::Logger::addBackend(consoleOut);
+  Logger::addBackend<ConsoleBackend>(Logger::ExecuteInMainThread);
 }
 
 void CoreApplicationImpl::initCacheDirectory()

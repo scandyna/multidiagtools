@@ -20,29 +20,35 @@
  ****************************************************************************/
 #include "Logger.h"
 #include "Backend.h"
+#include <QCoreApplication>
 #include <QDebug>
 
 namespace Mdt{ namespace ErrorLogger {
 
-void Logger::addBackend(const std::shared_ptr<Backend> & backend)
-{
-  Q_ASSERT(backend);
-  instance().pvBackends.push_back(backend);
-}
-
 void Logger::logError(const Error & error)
 {
   Q_ASSERT(!error.isNull());
-  instance().logErrorImpl(error);
+
+  emit instance().errorSubmitted(error);
+  instance().logErrorToSeparateThread(error);
 }
 
 void Logger::cleanup()
 {
   instance().stop();
-  instance().pvBackends.clear();
-  if(!instance().pvErrorQueue.empty()){
-    qWarning() << "mdt::error::Logger::cleanup(): not all errors could be logged (this is a bug)";
+  instance().mSeparateThreadBackends.clear();
+  if(!instance().mSeparateThreadBackends.empty()){
+    qWarning() << "Mdt::Error::Logger::cleanup(): not all errors could be logged from backend running in separate thread (this is a bug)";
   }
+  instance().mMainThreadBackends.clear();
+  if(!instance().mMainThreadBackends.empty()){
+    qWarning() << "Mdt::Error::Logger::cleanup(): not all errors could be logged from backend running in main thread (this is a bug)";
+  }
+}
+
+void Logger::stopForTest()
+{
+  instance().stop();
 }
 
 Logger::Logger()
@@ -55,74 +61,76 @@ Logger& Logger::instance()
   return logger;
 }
 
-void Logger::logErrorImpl(const Error & error)
+void Logger::logErrorToSeparateThread(const Error & error)
 {
   Q_ASSERT(!error.isNull());
 
   // Queue error and wake up thread
   {
-    std::unique_lock<std::mutex> lock(pvMutex);
+    std::unique_lock<std::mutex> lock(mMutex);
     // Start thread if needed
-    if(!pvThread.joinable()){
+    if(!mThread.joinable()){
       start();
     }
-    pvErrorQueue.push(error);
-    pvEventForThread = ErrorsToLog;
-    pvAllErrorsLogged = false;
+    mErrorQueue.push(error);
+    mEventForThread = ErrorsToLog;
+    mAllErrorsLogged = false;
   }
-  pvCv.notify_one();
+  mCv.notify_one();
 }
 
 void Logger::start()
 {
-  Q_ASSERT(!pvThread.joinable());
+  Q_ASSERT(!mThread.joinable());
 
-  pvEventForThread = NoEvent;
-  pvAllErrorsLogged = false;
-  pvThread = std::thread(&Logger::run, std::ref(*this));
+  mEventForThread = NoEvent;
+  mAllErrorsLogged = false;
+  mThread = std::thread(&Logger::run, std::ref(*this));
 }
 
 void Logger::stop()
 {
   // If thread was never started, nothing to do
-  if(!pvThread.joinable()){
+  if(!mThread.joinable()){
     return;
   }
-  // Wait until all errors are logged
+  // Wait until all errors are logged to separate thread backends
   {
-    std::unique_lock<std::mutex> lock(pvMutex);
-    if(!pvAllErrorsLogged){
-      pvCv.wait(lock, [=]{return pvAllErrorsLogged;});
+    std::unique_lock<std::mutex> lock(mMutex);
+    if(!mAllErrorsLogged){
+      mCv.wait(lock, [=]{return mAllErrorsLogged;});
     }
     // Tell thread that it must stop
-    pvEventForThread = End;
-    pvCv.notify_one();
+    mEventForThread = End;
+    mCv.notify_one();
   }
   // Join thread
-  if(pvThread.joinable()){
-    pvThread.join();
+  if(mThread.joinable()){
+    mThread.join();
   }
+  // Wait until all errors are logged to main thread backends
+  QCoreApplication::processEvents(QEventLoop::AllEvents);
 }
 
 Error Logger::takeError()
 {
   Error error;
-  std::unique_lock<std::mutex> lock(pvMutex);
+  std::unique_lock<std::mutex> lock(mMutex);
 
-  if(pvErrorQueue.empty()){
+  if(mErrorQueue.empty()){
     return error;
   }
-  error = pvErrorQueue.front();
-  pvErrorQueue.pop();
+  error = mErrorQueue.front();
+  mErrorQueue.pop();
 
   return error;
 }
 
-void Logger::outputErrorToBackends(const Error & error)
+void Logger::outputErrorToSeparateThreadBackends(const Error & error)
 {
   Q_ASSERT(!error.isNull());
 
-  for(const auto & backend : pvBackends){
+  for(const auto & backend : mSeparateThreadBackends){
     Q_ASSERT(backend);
     backend->logError(error);
   }
@@ -144,28 +152,28 @@ void Logger::run()
      * not all the time.
      */
     {
-      std::unique_lock<std::mutex> lock(pvMutex);
-      pvCv.wait(lock, [=]{return pvEventForThread != NoEvent;});
+      std::unique_lock<std::mutex> lock(mMutex);
+      mCv.wait(lock, [=]{return mEventForThread != NoEvent;});
     }
     // Log all available errors
     do{
       error = takeError();
       if(!error.isNull()){
-        outputErrorToBackends(error);
+        outputErrorToSeparateThreadBackends(error);
       }
     }while(!error.isNull());
     // Notify that we logged all available errors
     {
-      std::unique_lock<std::mutex> lock(pvMutex);
+      std::unique_lock<std::mutex> lock(mMutex);
       // Check special case of stopping
-      if(pvEventForThread == End){
+      if(mEventForThread == End){
         running = false;
       }else{
-        pvEventForThread = NoEvent;
+        mEventForThread = NoEvent;
       }
-      pvAllErrorsLogged = true;
+      mAllErrorsLogged = true;
     }
-    pvCv.notify_one();
+    mCv.notify_one();
   }
 }
 

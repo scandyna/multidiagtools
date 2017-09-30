@@ -54,6 +54,8 @@ namespace Mdt{
     Backend & operator=(const Backend &) = delete;
     Backend & operator=(Backend &&) = delete;
 
+   public slots:
+
     /*! \brief Log given error
      *
      * This function must be reentrant, because it can be called from Logger thread

@@ -56,7 +56,9 @@ void logErrors(const ErrorVectorType & errorList, int interLogWaitTime)
 class ErrorLoggerTestBackend : public Mdt::ErrorLogger::Backend
 {
  public:
-  ErrorLoggerTestBackend(){}
+  ErrorLoggerTestBackend(QObject *parent = nullptr)
+   : Backend(parent)
+  {}
   ~ErrorLoggerTestBackend(){}
   void logError(const Mdt::Error & error)
   {
@@ -64,7 +66,6 @@ class ErrorLoggerTestBackend : public Mdt::ErrorLogger::Backend
   }
   std::vector<Mdt::Error> errorList;
 };
-
 
 /*
  * Init/cleanup
@@ -82,24 +83,23 @@ void ErrorLoggerTest::cleanupTestCase()
  * Tests
  */
 
-void ErrorLoggerTest::loggerTest()
+void ErrorLoggerTest::loggerMainThreadTest()
 {
   LoggerGuard loggerGard;
-  auto testBackend = std::make_shared<ErrorLoggerTestBackend>();  /// \todo Why using shared pointer ?
   QFETCH(ErrorVectorType, errorList); // ErrorVectorType == QVector<Mdt::Error>
   QFETCH(int, interLogWaitTime);
   QFETCH(int, endWaitTime);
 
   // Setup logger
-  Logger::addBackend(testBackend);
+  auto testBackend = Logger::addBackend<ErrorLoggerTestBackend>(Logger::ExecuteInMainThread);
+  QVERIFY(testBackend != nullptr);
   // Log errors
   logErrors(errorList, interLogWaitTime);
-  // Explicitly cleanup here (to join thread)
   if(endWaitTime > 0){
     QTest::qWait(endWaitTime);
   }
-  Logger::cleanup();
   // Check
+  Logger::stopForTest();
   QCOMPARE((int)testBackend->errorList.size(), errorList.size());
   for(int i = 0; i < errorList.size(); ++i){
     auto error = testBackend->errorList.at(i);
@@ -110,7 +110,44 @@ void ErrorLoggerTest::loggerTest()
   }
 }
 
-void ErrorLoggerTest::loggerTest_data()
+void ErrorLoggerTest::loggerMainThreadTest_data()
+{
+  createLoggerTestData();
+}
+
+void ErrorLoggerTest::loggerSeparateThreadTest()
+{
+  LoggerGuard loggerGard;
+  QFETCH(ErrorVectorType, errorList); // ErrorVectorType == QVector<Mdt::Error>
+  QFETCH(int, interLogWaitTime);
+  QFETCH(int, endWaitTime);
+
+  // Setup logger
+  auto testBackend = Logger::addBackend<ErrorLoggerTestBackend>(Logger::ExecuteInSeparateThread);
+  QVERIFY(testBackend != nullptr);
+  // Log errors
+  logErrors(errorList, interLogWaitTime);
+  if(endWaitTime > 0){
+    QTest::qWait(endWaitTime);
+  }
+  // Check
+  Logger::stopForTest();
+  QCOMPARE((int)testBackend->errorList.size(), errorList.size());
+  for(int i = 0; i < errorList.size(); ++i){
+    auto error = testBackend->errorList.at(i);
+    auto expectedError = errorList.at(i);
+    QVERIFY(error.level() == expectedError.level());
+    QCOMPARE(error.text(), expectedError.text());
+    QCOMPARE(error.informativeText(), expectedError.informativeText());
+  }
+}
+
+void ErrorLoggerTest::loggerSeparateThreadTest_data()
+{
+  createLoggerTestData();
+}
+
+void ErrorLoggerTest::createLoggerTestData()
 {
   QTest::addColumn<ErrorVectorType>("errorList");
   QTest::addColumn<int>("interLogWaitTime");
@@ -138,23 +175,22 @@ void ErrorLoggerTest::loggerTest_data()
   QTest::newRow("3,0,0") << errorList << 0 << 0;
   QTest::newRow("3,1,0") << errorList << 1 << 0;
   QTest::newRow("3,0,1") << errorList << 0 << 1;
-  QTest::newRow("3,0,1") << errorList << 1 << 1;
+  QTest::newRow("3,1,1") << errorList << 1 << 1;
 }
 
-void ErrorLoggerTest::loggerConcurrentAccessTest()
+void ErrorLoggerTest::mainThreadConcurrentAccessTest()
 {
   LoggerGuard loggerGard;
-  auto testBackend = std::make_shared<ErrorLoggerTestBackend>();  /// \todo Why using shared pointer ?
   QFETCH(int, threadsCount);
 
-  // Build list or errors
+  // Build list of errors
   ErrorVectorType errorList;
   for(int i = 0; i <= threadsCount; ++i){
     auto error = mdtErrorNewQ("error" + QString::number(i), Mdt::Error::Critical, this);
     errorList.append(error);
   }
   // Setup logger
-  Logger::addBackend(testBackend);
+  auto testBackend = Logger::addBackend<ErrorLoggerTestBackend>(Logger::ExecuteInMainThread);
   // Create threads
   QVector<ErrorProducerThread*> threadList;
   for(int i = 0; i < errorList.size(); ++i){
@@ -168,13 +204,53 @@ void ErrorLoggerTest::loggerConcurrentAccessTest()
     delete thd;
   }
   threadList.clear();
-  // Explicitly cleanup here (to join logger thread)
-  Logger::cleanup();
   // Check that all errors where logged
+  Logger::stopForTest();
   QCOMPARE((int)testBackend->errorList.size(), errorList.size());
 }
 
-void ErrorLoggerTest::loggerConcurrentAccessTest_data()
+void ErrorLoggerTest::mainThreadConcurrentAccessTest_data()
+{
+  createConcurrentAccessTestData();
+}
+
+void ErrorLoggerTest::separateThreadConcurrentAccessTest()
+{
+  LoggerGuard loggerGard;
+  QFETCH(int, threadsCount);
+
+  // Build list of errors
+  ErrorVectorType errorList;
+  for(int i = 0; i <= threadsCount; ++i){
+    auto error = mdtErrorNewQ("error" + QString::number(i), Mdt::Error::Critical, this);
+    errorList.append(error);
+  }
+  // Setup logger
+  auto testBackend = Logger::addBackend<ErrorLoggerTestBackend>(Logger::ExecuteInSeparateThread);
+  // Create threads
+  QVector<ErrorProducerThread*> threadList;
+  for(int i = 0; i < errorList.size(); ++i){
+    auto *thd = new ErrorProducerThread(errorList.at(i));
+    threadList.append(thd);
+    thd->start();
+  }
+  // Join our threads
+  for(auto & thd : threadList){
+    thd->wait();
+    delete thd;
+  }
+  threadList.clear();
+  // Check that all errors where logged
+  Logger::stopForTest();
+  QCOMPARE((int)testBackend->errorList.size(), errorList.size());
+}
+
+void ErrorLoggerTest::separateThreadConcurrentAccessTest_data()
+{
+  createConcurrentAccessTestData();
+}
+
+void ErrorLoggerTest::createConcurrentAccessTestData()
 {
   QTest::addColumn<int>("threadsCount");
 
@@ -210,8 +286,7 @@ void ErrorLoggerTest::consoleOutFromMainThreadTest()
 
   // Setup logger
   LoggerGuard loggerGard;
-  auto backend = std::make_shared<ConsoleBackend>();  /// \todo Why using shared pointer ?
-  Logger::addBackend(backend);
+  Logger::addBackend<ConsoleBackend>(Logger::ExecuteInMainThread);
   // Log errors
   logErrors(errorList, interLogWaitTime);
 }
@@ -231,8 +306,7 @@ void ErrorLoggerTest::consoleOutFromOtherThreadTest()
 
   // Setup logger
   LoggerGuard loggerGard;
-  auto backend = std::make_shared<ConsoleBackend>();  /// \todo Why using shared pointer ?
-  Logger::addBackend(backend);
+  Logger::addBackend<ConsoleBackend>(Logger::ExecuteInMainThread);
   // Log errors
   ErrorProducerThread thread(errorList, interLogWaitTime);
   thread.start();
@@ -255,8 +329,7 @@ void ErrorLoggerTest::consoleOutFromMultipleThreadsTest()
 
   // Setup logger
   LoggerGuard loggerGard;
-  auto backend = std::make_shared<ConsoleBackend>();  /// \todo Why using shared pointer ?
-  Logger::addBackend(backend);
+  Logger::addBackend<ConsoleBackend>(Logger::ExecuteInMainThread);
   // Log errors from other threads
   QVector<ErrorProducerThread*> threadList;
   for(int i = 0; i < nonMainThreadCount; ++i){
@@ -282,8 +355,7 @@ void ErrorLoggerTest::consoleOutFromMultipleThreadsTest_data()
 void ErrorLoggerTest::consoleOutBenchmark()
 {
   LoggerGuard loggerGard;
-  auto backend = std::make_shared<ConsoleBackend>();  /// \todo Why using shared pointer ?
-  Logger::addBackend(backend);
+  Logger::addBackend<ConsoleBackend>(Logger::ExecuteInMainThread);
   auto error = mdtErrorNewQ("error 1", Mdt::Error::Warning, this);
   QBENCHMARK_ONCE{
     Logger::logError(error);
@@ -303,9 +375,8 @@ void ErrorLoggerTest::fileOutFromMultipleThreadsTest()
   QTemporaryFile logFile;
   QVERIFY(logFile.open());
   LoggerGuard loggerGard;
-  auto backend = std::make_shared<FileBackend>();  /// \todo Why using shared pointer ?
+  auto *backend = Logger::addBackend<FileBackend>(Logger::ExecuteInSeparateThread);
   QVERIFY(backend->setLogFilePath(logFile.fileName()));
-  Logger::addBackend(backend);
   // Log errors from other threads
   QVector<ErrorProducerThread*> threadList;
   for(int i = 0; i < nonMainThreadCount; ++i){
@@ -335,9 +406,8 @@ void ErrorLoggerTest::fileOutBenchmark()
   QTemporaryFile logFile;
   QVERIFY(logFile.open());
   LoggerGuard loggerGard;
-  auto backend = std::make_shared<FileBackend>();  /// \todo Why using shared pointer ?
+  auto *backend = Logger::addBackend<FileBackend>(Logger::ExecuteInSeparateThread);
   QVERIFY(backend->setLogFilePath(logFile.fileName()));
-  Logger::addBackend(backend);
   auto error = mdtErrorNewQ("error 1", Mdt::Error::Warning, this);
   QBENCHMARK_ONCE{
     Logger::logError(error);
@@ -388,6 +458,7 @@ int main(int argc, char **argv)
 {
   QCoreApplication app(argc, argv);
   ErrorLoggerTest test;
+  qRegisterMetaType<Mdt::Error>();
 
   return QTest::qExec(&test, argc, argv);
 }

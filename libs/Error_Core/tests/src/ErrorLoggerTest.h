@@ -89,10 +89,27 @@ class ErrorLoggerTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void loggerTest();
-  void loggerTest_data();
-  void loggerConcurrentAccessTest();
-  void loggerConcurrentAccessTest_data();
+  void loggerMainThreadTest();
+  void loggerMainThreadTest_data();
+  void loggerSeparateThreadTest();
+  void loggerSeparateThreadTest_data();
+
+ private:
+
+  void createLoggerTestData();
+
+ private slots:
+
+  void mainThreadConcurrentAccessTest();
+  void mainThreadConcurrentAccessTest_data();
+  void separateThreadConcurrentAccessTest();
+  void separateThreadConcurrentAccessTest_data();
+
+ private:
+
+  void createConcurrentAccessTestData();
+
+ private slots:
 
   void consoleOutFromMainThreadTest();
   void consoleOutFromMainThreadTest_data();
