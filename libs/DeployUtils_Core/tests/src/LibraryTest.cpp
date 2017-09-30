@@ -244,7 +244,8 @@ void LibraryTest::osFromLibraryNameBenchmark()
   QFETCH(QString, fullName);
   QFETCH(OperatingSystem, expectedOs);
 
-  OperatingSystem os;
+  // Init os here, else gcc will warn
+  OperatingSystem os = OperatingSystem::Unknown;
   QBENCHMARK{
     os = LibraryName::operatingSystem(fullName);
   }
