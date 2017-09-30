@@ -1,6 +1,6 @@
 format 214
 "Qt" // Qt
-  revision 222
+  revision 223
   modified_by 2 "philippe"
   // class settings
   
@@ -6686,6 +6686,22 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 6084866 "fromTheme"
+	class_operation public return_type class_ref 2988162 // QIcon
+	nparams 2
+	  param in name "name" type class_ref 161026 // QString
+	  param in name "fallback" type class_ref 2988162 // QIcon
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 2721410 "QCloseEvent"

@@ -1,11 +1,12 @@
-format 211
+format 214
 
 note 128002 "Make not copiable bit only movable ?
 NOTE: is move fast ??? Could ba that not..
 Best: not copyable, not movable."
   xyzwh 40.5 40.5 2000 499 89
-note 128130 "Consider std::deque"
-  xyzwh 40.5 354.5 2000 173 45
+note 128130 "Consider std::deque
+Or, boost ring buffer ?"
+  xyzwh 40.5 355.5 2000 319 91
 classcanvas 128258 class_ref 2529922 // RingBuffer
   classdiagramsettings member_max_width 0 end
   xyz 40.5 209.5 2000
