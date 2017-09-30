@@ -37,10 +37,6 @@ class ErrorTest : public QObject
 
   void errorLoggerConsoleBackendTest();
   void errorLoggerFileBackendTest();
-  void errorLoggerTest();
-  void errorLoggerTest_data();
-  void errorLoggerConcurrentAccessTest();
-  void errorLoggerConcurrentAccessTest_data();
 };
 
 #endif // #ifndef MDT_ERROR_TEST_H
