@@ -1,5 +1,5 @@
 format 214
-"Network" // Mdt::Network
+"Visa" // Mdt::Visa
   revision 1
   modified_by 2 "philippe"
   // class settings
@@ -26,7 +26,7 @@ format 214
   activitydiagramsettings
    end
   
-  classview 1921282 "Network_Core"
+  classview 1921282 "Visa_Core"
     
     classdiagramsettings member_max_width 0 end
     
@@ -42,76 +42,12 @@ format 214
     
     activitydiagramsettings
      end
-    classdiagram 3719298 "sandbox"
+    classdiagram 3719426 "Visa_Core_Sandbox"
       classdiagramsettings member_max_width 0 end
       size A4
     end
 
-    class 4332418 "Scanner"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4880130 // <directional composition>
-	relation 4853890 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4880130 // <directional composition>
-	  b parent class_ref 329474 // QTcpSocket
-      end
-
-      classrelation 4880386 // <generalisation>
-	relation 4854146 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4880386 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-    end
-
-    class 4332546 "ScannerResultModel"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4880002 // <generalisation>
-	relation 4853762 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4880002 // <generalisation>
-	  b parent class_ref 147202 // QAbstractTableModel
-      end
-
-      classrelation 4880258 // <unidirectional association>
-	relation 4854018 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 4880258 // <unidirectional association>
-	  b parent class_ref 4332418 // Scanner
-      end
-    end
-
-    class 4332674 "HostRange"
+    class 4332418 "Address"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -126,39 +62,5 @@ ${inlines}
       mysql_decl ""
       
     end
-
-    class 4332802 "PortRange"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-  end
-
-  classview 1921410 "Network_Widgets"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
   end
 end

@@ -398,23 +398,10 @@ ${inlines}
 	  b parent class_ref 4306050 // AbstractCompletionHandler
       end
     end
-  end
 
-  classview 1921154 "PortScan"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
+    classdiagram 3719298 "VXI-11"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
   end
 end

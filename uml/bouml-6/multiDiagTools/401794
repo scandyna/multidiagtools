@@ -1,6 +1,6 @@
 format 214
 "Mdt" // Mdt
-  revision 49
+  revision 51
   modified_by 2 "philippe"
   // class settings
   
@@ -1284,7 +1284,9 @@ ${inlines}
     end
   end
 
-  classview 161666 "Error"
+  package_ref 417026 // Audio
+
+  classview 161666 "Error_Core"
     
     classdiagramsettings member_max_width 0 end
     
@@ -1549,7 +1551,7 @@ ${inlines}
 
   package_ref 401922 // ErrorLogger
 
-  classview 854018 "ErrorDialog"
+  classview 854018 "Error_Widgets"
     
     classdiagramsettings member_max_width 0 end
     
@@ -1812,7 +1814,11 @@ ${members}};
     end
   end
 
+  package_ref 430082 // Dsp
+
   package_ref 588802 // FilterExpression
+
+  package_ref 720386 // Icon
 
   package_ref 516098 // ItemModel
 
@@ -1825,8 +1831,6 @@ ${members}};
   package_ref 509570 // WebSocket
 
   package_ref 483202 // Numeric
-
-  package_ref 713730 // Network
 
   package_ref 654594 // File
 
@@ -1860,15 +1864,15 @@ ${members}};
 
   package_ref 416898 // TestTool
 
-  package_ref 417026 // Audio
-
-  package_ref 430082 // Dsp
-
   package_ref 496514 // CheckList
+
+  package_ref 713858 // Terminal
 
   package_ref 403202 // tools
 
   package_ref 680706 // DeployUtils
 
   package_ref 707074 // UnitTest
+
+  package_ref 713730 // Visa
 end

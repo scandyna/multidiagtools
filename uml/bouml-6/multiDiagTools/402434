@@ -1,6 +1,6 @@
-format 213
+format 214
 "Usb" // Mdt::Usb
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   // class settings
   
@@ -46,5 +46,23 @@ format 213
       classdiagramsettings member_max_width 0 end
       size A4
     end
+  end
+
+  classview 1921154 "Usb_Widgets"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
   end
 end
