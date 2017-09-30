@@ -1,0 +1,21 @@
+format 214
+
+classcanvas 128002 class_ref 4332546 // StandardCommand
+  classdiagramsettings member_max_width 0 end
+  xyz 249 175 2000
+end
+note 128130 "Like *RST, *CLS, ..."
+  xyzwh 39 173 2000 171 49
+note 128386 "Is SCPI a AST ?"
+  xyzwh 40.5 40.5 2000 151 53
+classcanvas 128514 class_ref 4332674 // Query
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 301.5 2000
+end
+classcanvas 128642 class_ref 4332802 // Command
+  classdiagramsettings member_max_width 0 end
+  xyz 271.5 40.5 2000
+end
+line 128258 -_-_
+  from ref 128130 z 2001 to ref 128002
+end
