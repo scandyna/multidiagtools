@@ -1,6 +1,6 @@
 format 214
 "multiDiagTools"
-  revision 34
+  revision 35
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -45,8 +45,6 @@ format 214
   package_ref 409858 // principes
 
   package_ref 401794 // Mdt
-
-  package_ref 282114 // mdterror
 
   package_ref 281986 // mdtcsv
 

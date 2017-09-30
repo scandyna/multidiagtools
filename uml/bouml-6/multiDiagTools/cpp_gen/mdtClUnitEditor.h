@@ -1,5 +1,0 @@
-#ifndef _MDTCLUNITEDITOR_H
-#define _MDTCLUNITEDITOR_H
-
-
-#endif
