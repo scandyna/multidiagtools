@@ -69,7 +69,13 @@ class SortProxyModelTest : public QObject
   void sortSetterEventTest();
   void dynamicSortTest();
 
-  // Should mybe be implemented in SQL ItemModel library ?
+  /*! \todo Implement this test
+   *
+   * This test requires a model with cache.
+   *  QSqlTableModel is one.
+   *  Is it ok to implement this test in the
+   *  ItemModel_Sql library ?
+   */
   void fetchTest();
 
  private:
