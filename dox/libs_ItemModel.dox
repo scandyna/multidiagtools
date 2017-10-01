@@ -19,13 +19,19 @@
  **
  ****************************************************************************/
 
-/*! \page libraries_page Libraries
+/*! \page libs_ItemModel Item model library
  *
- * \ref libs_Application
- *
- * \ref libs_Error
- *
- * \ref libs_DeployUtils
- *
- * \ref libs_ItemModel
+ * Some additions to Qt models (model/view framework)
  */
+
+
+namespace Mdt
+{
+
+  /*! \brief Item model library namespace
+   */
+  namespace ItemModel
+  {
+  }
+
+}
