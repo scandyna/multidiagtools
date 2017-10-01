@@ -4,27 +4,27 @@
 <context>
     <name>Mdt::ErrorLogger::ConsoleBackend</name>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="69"/>
+        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="64"/>
         <source>Error occured in </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="70"/>
+        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="65"/>
         <source>Text: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="73"/>
+        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="68"/>
         <source>Informative text: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="75"/>
+        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="70"/>
         <source>File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="76"/>
+        <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="71"/>
         <source>Line: </source>
         <translation type="unfinished"></translation>
     </message>
