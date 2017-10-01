@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -42,7 +42,8 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
     FilterEvalData(const QAbstractItemModel * const model, int row, Qt::CaseSensitivity cs)
      : mModel(model),
        mRow(row),
-       mCaseSensitivity(cs)
+       mCaseSensitivity(cs),
+       mParentData()
     {
       Q_ASSERT(mModel != nullptr);
       Q_ASSERT(mRow >= 0);

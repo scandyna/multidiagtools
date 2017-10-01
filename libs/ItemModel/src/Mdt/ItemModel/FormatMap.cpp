@@ -24,7 +24,7 @@
 namespace Mdt{ namespace ItemModel{
 
 FormatMap::FormatMap()
- : mPriority{FormatMapPriority::Index, FormatMapPriority::Row, FormatMapPriority::Column}
+ : mPriority{{FormatMapPriority::Index, FormatMapPriority::Row, FormatMapPriority::Column}}
 {
 }
 
