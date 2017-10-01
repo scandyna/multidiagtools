@@ -355,7 +355,7 @@ void FormatMapTest::mapPriorityQFlagsEnumTest()
   map.setFormatForRow(2, Qt::AlignLeft);
   map.setFormatForColumn(1, Qt::AlignCenter);
   // Check with priority: row, column, index
-  map.setPriority({FormatMapPriority::Row, FormatMapPriority::Column, FormatMapPriority::Index});
+  map.setPriority({{FormatMapPriority::Row, FormatMapPriority::Column, FormatMapPriority::Index}});
   QVERIFY(map.formatForIndex(0, 0).isNull());
   QCOMPARE(map.formatForIndex(0, 1), QVariant(Qt::AlignCenter));
   QCOMPARE(map.formatForIndex(1, 0), QVariant(Qt::AlignLeft));
@@ -363,7 +363,7 @@ void FormatMapTest::mapPriorityQFlagsEnumTest()
   QCOMPARE(map.formatForIndex(2, 0), QVariant(Qt::AlignLeft));
   QCOMPARE(map.formatForIndex(2, 1), QVariant(Qt::AlignLeft));
   // Check with priority: column, row, index
-  map.setPriority({FormatMapPriority::Column, FormatMapPriority::Row, FormatMapPriority::Index});
+  map.setPriority({{FormatMapPriority::Column, FormatMapPriority::Row, FormatMapPriority::Index}});
   QVERIFY(map.formatForIndex(0, 0).isNull());
   QCOMPARE(map.formatForIndex(0, 1), QVariant(Qt::AlignCenter));
   QCOMPARE(map.formatForIndex(1, 0), QVariant(Qt::AlignLeft));
@@ -371,7 +371,7 @@ void FormatMapTest::mapPriorityQFlagsEnumTest()
   QCOMPARE(map.formatForIndex(2, 0), QVariant(Qt::AlignLeft));
   QCOMPARE(map.formatForIndex(2, 1), QVariant(Qt::AlignCenter));
   // Check with priority: index, row, column
-  map.setPriority({FormatMapPriority::Index, FormatMapPriority::Row, FormatMapPriority::Column});
+  map.setPriority({{FormatMapPriority::Index, FormatMapPriority::Row, FormatMapPriority::Column}});
   QVERIFY(map.formatForIndex(0, 0).isNull());
   QCOMPARE(map.formatForIndex(0, 1), QVariant(Qt::AlignCenter));
   QCOMPARE(map.formatForIndex(1, 0), QVariant(Qt::AlignLeft));
@@ -379,7 +379,7 @@ void FormatMapTest::mapPriorityQFlagsEnumTest()
   QCOMPARE(map.formatForIndex(2, 0), QVariant(Qt::AlignLeft));
   QCOMPARE(map.formatForIndex(2, 1), QVariant(Qt::AlignRight));
   // Check with priority: index, column, row
-  map.setPriority({FormatMapPriority::Index, FormatMapPriority::Column, FormatMapPriority::Row});
+  map.setPriority({{FormatMapPriority::Index, FormatMapPriority::Column, FormatMapPriority::Row}});
   QVERIFY(map.formatForIndex(0, 0).isNull());
   QCOMPARE(map.formatForIndex(0, 1), QVariant(Qt::AlignCenter));
   QCOMPARE(map.formatForIndex(1, 0), QVariant(Qt::AlignLeft));

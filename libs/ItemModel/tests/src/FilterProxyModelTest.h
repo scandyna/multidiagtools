@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -43,8 +43,18 @@ class FilterProxyModelTest : public QObject
   void filterLikeBenchmark();
   void filterLikeBenchmark_data();
 
+  /*! \todo Implement those tests
+   *
+   * To know more precisely how the proxy model
+   *  should react on various events,
+   *  it seems better to implement ItemView_Widgets
+   *  library first, so we have some setup widgets.
+   *  Also, it could also be good to create a example
+   *  (in ItemView_Widgets) to experiment the result,
+   *  and then add tests based on real bad feeling
+   *  when using it.
+   */
   void filterRoleTest();
-
   void setterEventTest();
   void dynamicFilterTest();
 

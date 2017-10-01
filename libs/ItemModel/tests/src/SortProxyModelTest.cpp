@@ -1145,7 +1145,7 @@ void SortProxyModelTest::dynamicSortTest()
 
 void SortProxyModelTest::fetchTest()
 {
-  QFAIL("Not implemented. Maybe should be in SqlItemModel lib ?");
+  QSKIP("Need more experience to implement. Maybe should be implemented in ItemModel_Sql ?");
 }
 
 /*
