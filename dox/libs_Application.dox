@@ -1,0 +1,40 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+
+/*! \page libs_Application Application
+ *
+ *  In the main() function of a Mdt/Qt based application,
+ *   a application class should be instanciated.
+ *
+ *  To reduce dependencies, several application classes exists:
+ *  |           Class            |                    Description                                                               |   Main dependencies  |
+ *  | :------------------------- | :------------------------------------------------------------------------------------------- | :------------------- |
+ *  | QCoreApplication           | Can be used for non GUI applications that needs a event loop.                                | QtCore               |
+ *  | QGuiApplication            | Can be used for GUI application (like QtQuick).                                              | QtGui                |
+ *  | QApplication               | Can be used for Widgets based GUI applications.                                              | QtWidgets            |
+ *  | QtSingleCoreApplication    | Like QCoreApplication, also provides support for single instance of a application.           | QtCore, QtNetwork    |
+ *  | QtSingleApplication        | Like QApplication, also provides support for single instance of a application.               | QtWidgets, QtNetwork |
+ *  | Mdt::CoreApplication       | Like QCoreApplication, also provide some additions, like file logging initialization.        | QtCore               |
+ *  | Mdt::SingleCoreApplication | Like QtSingleCoreApplication, also provide some additions, like file logging initialization. | QtCore, QtNetwork    |
+ *  | Mdt::Application           | Like QApplication, also provide some additions, like file logging initialization.            | QtWidgets            |
+ *  | Mdt::SingleApplication     | Like QtSingleApplication, also provide some additions, like file logging initialization.     | QtWidgets, QtNetwork |
+ *
+ */
