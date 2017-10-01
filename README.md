@@ -17,7 +17,7 @@ To see currently available libraries, please take a look at the
 
 # Get Mdt
 
-Currently, only sources are available on github.
+Currently, only sources are available on [github](https://github.com/scandyna/multidiagtools/).
 
 ## Linux
 
