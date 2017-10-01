@@ -19,11 +19,25 @@
  **
  ****************************************************************************/
 
-/*! \page libraries_page Libraries
+/*! \page libs_DeployUtils DeployUtils
  *
- * \ref libs_application
+ * Deploying a application can require some repetitive work.
+ *  For example, make all shared libraries available to the
+ *  the end user can be done using existing tools
+ *  (like ldd on Linux, or Dependency Walker on Windows).
+ *  Using those tools helps to see which libraries to provide,
+ *  but they do not copy them automatically.
+ *  This is one use case this library can help.
  *
- * \ref mdtsql_page
+ * Classes are available in the Mdt::DeployUtils namespace.
  *
- * \ref libs_itemeditor
  */
+
+namespace Mdt{
+
+  /*! \brief Some utilities for application deployment
+   */
+  namespace DeployUtils{
+  }
+
+}

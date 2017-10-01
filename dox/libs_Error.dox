@@ -19,11 +19,27 @@
  **
  ****************************************************************************/
 
-/*! \page libraries_page Libraries
+/*! \page libs_Error Error passing and logging
  *
- * \ref libs_application
+ * %Mdt prvides (and uses) Mdt::Error to return informations
+ *  after a method failed.
  *
- * \ref mdtsql_page
+ * Logging errors is also supported.
  *
- * \ref libs_itemeditor
+ * When using a %Mdt application class provided by the \ref libs_Application library,
+ *  setup for the logger is handled and simple.
+ *
+ * For more advanced usage, see the Mdt::ErrorLogger namespace.
  */
+
+
+namespace Mdt
+{
+
+  /*! \brief %Error logging
+   */
+  namespace ErrorLogger
+  {
+  }
+
+}

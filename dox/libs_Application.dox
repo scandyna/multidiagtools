@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 
-/*! \page libs_application Application
+/*! \page libs_Application Application
  *
  *  In the main() function of a Mdt/Qt based application,
  *   a application class should be instanciated.
