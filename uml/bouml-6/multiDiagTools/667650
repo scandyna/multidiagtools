@@ -1,6 +1,6 @@
-format 211
+format 214
 "ItemView" // Mdt::ItemView
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -42,6 +42,10 @@ format 211
     
     activitydiagramsettings
      end
+    classdiagram 3732610 "SortProxyModelSetup"
+      classdiagramsettings member_max_width 0 end
+      size A-Landscape
+    end
   end
 
   classview 1841410 "ItemView_Qwt"
