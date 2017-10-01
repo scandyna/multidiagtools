@@ -1,0 +1,62 @@
+format 214
+
+classcanvas 128002 class_ref 3560706 // SortProxyModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 583 202.8 2000
+end
+classcanvas 128130 class_ref 3567618 // ColumnSortOrderList
+  classdiagramsettings member_max_width 0 end
+  xyz 488.2 284.2 2006
+end
+classcanvas 128386 class_ref 3567490 // ColumnSortOrder
+  classdiagramsettings member_max_width 0 end
+  xyz 824.4 295.2 3005
+end
+classcanvas 128642 class_ref 3567234 // ColumnSortStringAttributes
+  classdiagramsettings member_max_width 0 end
+  xyz 127.6 40.4 2000
+end
+classcanvas 128770 class_ref 3567362 // ColumnSortStringAttributesList
+  classdiagramsettings member_max_width 0 end
+  xyz 42.8 183.8 3005
+end
+classcanvas 129154 class_ref 4131330 // ColumnSortOrderSetupModel
+  classdiagramsettings member_max_width 0 end
+  xyz 137.8 480.4 2012
+end
+classcanvas 129410 class_ref 4365570 // ColumnSortStringAttributesSetupModel
+  classdiagramsettings member_max_width 0 end
+  xyz 192 340 3011
+end
+relationcanvas 128258 relation_ref 3934082 // <directional composition>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3933954 // <directional composition>
+  from ref 128130 z 3006 to ref 128386
+  no_role_a no_role_b
+  multiplicity_a_pos 808 346 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3933698 // <directional composition>
+  decenter_begin 508
+  from ref 128770 z 3006 to ref 128642
+  no_role_a no_role_b
+  multiplicity_a_pos 232 154 3000 no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3933826 // <directional composition>
+  from ref 128002 z 3006 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 4628098 // <directional composition>
+  from ref 129154 z 2013 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 4873986 // <directional composition>
+  from ref 129410 z 3012 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
