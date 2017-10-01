@@ -1,7 +1,7 @@
 #################################################################################################################################################
 # Mdt top level configuration file
 #################################################################################################################################################
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.2)
 
 project(Mdt0 VERSION 0.3.5)
 
@@ -96,11 +96,11 @@ add_subdirectory(libs/Expected)
 add_subdirectory(libs/FilterExpression)
 add_subdirectory(libs/Numeric)
 add_subdirectory(libs/PlainText_Core)
-# add_subdirectory(libs/SerialPort)
-add_subdirectory(libs/Sql)
 add_subdirectory(libs/ItemModel)
-add_subdirectory(libs/ItemEditor)
-add_subdirectory(libs/ItemEditor_Sql)
+# # add_subdirectory(libs/SerialPort)
+# add_subdirectory(libs/Sql)
+# add_subdirectory(libs/ItemEditor)
+# add_subdirectory(libs/ItemEditor_Sql)
 add_subdirectory(libs/DeployUtils_Core)
 
 #################################################################################################################################################
