@@ -1,6 +1,6 @@
 format 214
 "Mdt" // Mdt
-  revision 53
+  revision 54
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,28 @@ format 214
   activitydiagramsettings
    end
   
+  classview 1941250 "Global"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3746050 "Global"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+  end
+
   classview 1894658 "Object"
     
     classdiagramsettings member_max_width 0 end
