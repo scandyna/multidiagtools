@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,6 +24,7 @@
 #include "ColumnSortOrderList.h"
 #include "StringNumericMode.h"
 #include "ColumnSortStringAttributesList.h"
+#include "MdtItemModelExport.h"
 #include <QSortFilterProxyModel>
 #include <QCollator>
 
@@ -67,7 +68,7 @@ namespace Mdt{ namespace ItemModel{
    *        - dynamicSortFilter
    *        - what impact have filter* functions ?
    */
-  class SortProxyModel : public QSortFilterProxyModel
+  class MDT_ITEMMODEL_EXPORT SortProxyModel : public QSortFilterProxyModel
   {
    Q_OBJECT
 

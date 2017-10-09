@@ -1,5 +1,6 @@
 include(MdtCPackComponent)
 include(MdtDependenciesUtils)
+include(GenerateExportHeader)
 
 # Enable multi-arch installation
 # For example, install libraries to /usr/lib/x86_64-linux-gnu on a x86_64 Debian
@@ -86,7 +87,23 @@ function(mdt_add_library)
   target_link_libraries(${target_name} ${link_deps})
   target_include_directories(${target_name} PUBLIC
                             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${headers_dir}>
-                            $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
+                            $<INSTALL_INTERFACE:include/${PROJECT_NAME}/${target_name}>
+  )
+  # Generate Export header (mainly required on Windows for dll exports)
+  set(export_header_file_name "Mdt${target_name}Export.h")
+  generate_export_header(
+    ${target_name}
+    EXPORT_FILE_NAME ${export_header_file_name}
+    PREFIX_NAME "MDT_"
+  )
+  target_include_directories(${target_name} PUBLIC
+                            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                            $<INSTALL_INTERFACE:include/${PROJECT_NAME}/${target_name}>
+  )
+  install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/${export_header_file_name}"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${target_name}"
+    COMPONENT ${target_name}-dev
   )
   # Set library name
   set(library_name ${PROJECT_NAME}${target_name})
@@ -124,7 +141,7 @@ function(mdt_add_library)
           COMPONENT ${target_name}
   )
   install(DIRECTORY ${headers_dir}
-          DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+          DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${target_name}"
           COMPONENT ${target_name}-dev
           FILES_MATCHING
             REGEX "/[^.]+$|/.+\\.h|/.+\\.hpp" # Only install files without extension, or with .h or .hpp extension

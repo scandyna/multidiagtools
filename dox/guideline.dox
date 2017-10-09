@@ -106,4 +106,21 @@
  *
  *  Note that Qt Linguist trows error messages when a class uses tr() and it does not provide the Q_OBJECT macro,
  *   despite the fact that translation file are generated and works.
+ *
+ * \section library_exports Library exports
+ *
+ * For some platforms, classes and functions that are used outside a shared library must be exported explicitly in the header.
+ *
+ * Mdt uses CMake to generate the MDT_LIBNAME_EXPORT macro.
+ *  This macro is defined in MdtLibnameExport.h, which is not available in the source tree, but generated during compilation.
+ *  When using mdt_add_library() to create a Mdt library, the path to the directory where Export.h is located will be added.
+ *
+ * Example of a class that must be accessible outside the ItemModel shared library:
+ * \code
+ * #include "MdtItemModelExport.h"
+ *
+ * class MDT_ITEMMODEL_EXPORT MyClass
+ * {
+ * };
+ * \endcode
  */

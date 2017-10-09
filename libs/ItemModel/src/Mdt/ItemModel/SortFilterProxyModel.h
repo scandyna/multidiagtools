@@ -21,13 +21,14 @@
 #ifndef MDT_ITEM_MODEL_SORT_FILTER_PROXY_MODEL_H
 #define MDT_ITEM_MODEL_SORT_FILTER_PROXY_MODEL_H
 
+#include "MdtItemModelExport.h"
 #include <QSortFilterProxyModel>
 
 namespace Mdt{ namespace ItemModel{
 
   /*! \brief Common base class for proxy models that do sorting or filtering
    */
-  class SortFilterProxyModel : public QSortFilterProxyModel
+  class MDT_ITEMMODEL_EXPORT SortFilterProxyModel : public QSortFilterProxyModel
   {
    Q_OBJECT
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,6 +24,7 @@
 #include "FilterColumn.h"
 #include "LikeExpression.h"
 #include "FilterExpression.h"
+#include "MdtItemModelExport.h"
 #include <QSortFilterProxyModel>
 
 namespace Mdt{ namespace ItemModel{
@@ -56,7 +57,7 @@ namespace Mdt{ namespace ItemModel{
    * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == Like("A?B*\\?*")) );
    * \endcode
    */
-  class FilterProxyModel : public QSortFilterProxyModel
+  class MDT_ITEMMODEL_EXPORT FilterProxyModel : public QSortFilterProxyModel
   {
    Q_OBJECT
 
