@@ -10,11 +10,10 @@ find_package(Qt5 COMPONENTS Core)
 # See: http://stackoverflow.com/questions/26749461/how-to-determine-the-boost-library-names-for-cmake
 if(NOT Boost_FOUND)
   find_package(Boost REQUIRED)
-  if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-  endif(Boost_FOUND)
+#  if(Boost_FOUND)
+#    include_directories(${Boost_INCLUDE_DIRS})
+#  endif(Boost_FOUND)
 endif()
-
 
 mdt_add_library(
   NAME FilterExpression
@@ -22,6 +21,7 @@ mdt_add_library(
   HEADERS_DIRECTORY .
   LINK_DEPENDENCIES Algorithm Qt5::Core
 )
+target_include_directories(FilterExpression PUBLIC ${Boost_INCLUDE_DIRS})
 mdt_set_library_description(
   NAME FilterExpression
   DESCRIPTION "FilterExpression provides common stuff for filter EDSL."

@@ -164,8 +164,11 @@ void FileBackend::backupLogFile()
 {
   if(QFile::exists(pvBackupFilePath)){
     if(!QFile::remove(pvBackupFilePath)){
-      qWarning() << tr("FileBackend::backupLogFile() , removing backup log file '") \
-                << pvBackupFilePath << tr(" failed.");
+	  qWarning() << tr("FileBackend::backupLogFile() , removing backup log file '%1' failed.")
+	                .arg(pvBackupFilePath);
+/*      qWarning() << tr("FileBackend::backupLogFile() , removing backup log file '") \
+               << pvBackupFilePath << tr(" failed.");
+*/
       return;
     }
   }
