@@ -35,13 +35,29 @@ cd ~/opt/mdt/src
 git clone git://github.com/scandyna/multidiagtools.git
 ```
 
+## Windows
+
+At first, we have to install [git](https://git-scm.com/).
+Get a version that corresponds to your platform in the [Downloads section](https://git-scm.com/downloads).
+While running the installer, I personally accepted default settings, mainly:
+* "Windows explorer integration" options
+* "Use Git from the Windows Command Prompt" which adds git to the PATH.
+* "Use the OpenSSL library"
+* "Checkout Windows-style, commit Unix-style line endings"
+
+Then, create a directory to put Mdt and navigate to it,
+then right-click and choose "Git Bash Here".
+Finaly, clone the Mdt repository:
+```bash
+git clone git://github.com/scandyna/multidiagtools.git
+```
 
 # Compile Mdt
 
 Mdt uses [CMake](https://cmake.org) as build management system.
 It also depend on a C++14 compliant compiler
 (f.ex. allmost recent version [GCC](https://gcc.gnu.org) or [Clang](https://clang.llvm.org) ).
-Some libraries, like Qt5 are also needed.
+Some libraries, like [Qt5](https://www.qt.io/) are also needed.
 To make things a bit mor easy,
 we assume to use GCC as compiler, and [make](https://www.gnu.org/software/make/) as build system.
 (CMake is able to generate other toolchains, but this is not part of this documentation)
@@ -184,3 +200,96 @@ cpack --help
 ```
 Please note that some generators needs some informations that current distribution does not provide.
 
+## Windows
+
+This section was tested on Windows 10 x86-64.
+
+### Tools and other dependencies
+
+#### CMake
+
+Mdt uses [CMake](https://cmake.org/) as build tool.
+Choose a installer that matches your platform from the [Download](https://cmake.org/download/) section.
+Here are some options that I choosed (all other I keeped default):
+* "Add CMake to the system PATH for the current user"
+
+### Install Qt5 and Gcc
+
+It is recommanded to have a look at the [documentation](https://doc.qt.io/) in the "Getting Started Guides" section. Myabe you will have to create a [Qt Acount](https://login.qt.io).
+
+Qt5 can be downloaded from [here](https://www.qt.io/download/).
+Choose "Desktop & Mobile Applications", then the licencing option.
+Check that the proposed installer matches your platform and start the download.
+In my case, a online installer was selected.
+
+Note: while writing these lines, only 32 bit installers are available for MinGW.
+
+Run the installer.
+You probably will have to login with your acount created before.
+It will be asked about the installation path, which we have to remember for a later step.
+For the rest of this document, C:\Qt will be considered.
+It's also possible to select components to install.
+The default should be fine.
+
+Once installation is done, a Qt entry should be added in the Start/Windows menu.
+Bellow it, execute the shortcut called "Qt x.y.z for Desktop".
+A window with a command prompt should pop-up.
+From this prompt, all that is needed to compile Qt applications is in the PATH.
+
+Check gcc version:
+```bash
+gcc --version
+```
+It should return a version at least 5.0.0 , in which case C++14 support is good.
+
+Check Qt installation:
+```bash
+qmake -version
+```
+Check that the expected Qt library is used.
+
+### Install Boost
+
+It is recommanded to have a look at the [documentation](http://www.boost.org/) in the "Getting stated" section.
+
+We will install Boost libraries to the Windows Program Files.
+When doing so, CMake will be able to find it automatically.
+
+Create a directory named "boost" in C:\Program Files .
+
+Get a Boost archive from the [Download section](http://www.boost.org/users/download/) and put it somewhere.
+
+Extract the archive to C:\Program Files\boost .
+
+### Compile Mdt on Windows
+
+For this section, it will be considered that the Mdt source tree is:
+%HOMEPATH%\Documents\opt\Mdt\src\multidiagtools\
+
+In the root of Mdt source tree, create a directory called "build", and a subdirectory called "release".
+
+Open the Qt command prompt (Start/Windows menu -> Qt -> Qt x.y.z for Desktop.
+Go to the craeted build directory:
+```bash
+cd %HOMEPATH%\Documents\opt\Mdt\src\multidiagtools\build\release
+```
+
+To avoid specifying to many options, Mdt provides some cache files that set common flags.
+For example, for a release build with gcc and make, use:
+```bash
+cmake -C ..\..\cmake\caches\ReleaseGcc.cmake -G "MinGW Makefiles" ..\..\
+```
+It is also possible to specify the intallation prefix:
+```bash
+cmake -C ..\..\cmake\caches\ReleaseGcc.cmake -G "MinGW Makefiles" -D CMAKE_INSTALL_PREFIX=%HOMEPATH%\Documents\opt\Mdt\release ..\..\
+```
+
+Build (-j4 is for parallel build, allowing max. 4 processes):
+```bash
+mingw32-make -j4
+```
+
+To run all tests:
+```bash
+mingw32-make test
+```
