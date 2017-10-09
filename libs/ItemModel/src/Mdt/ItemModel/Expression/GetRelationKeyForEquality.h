@@ -24,6 +24,7 @@
 #include "../FilterColumn.h"
 #include "../ParentModelColumn.h"
 #include "../RelationKey.h"
+#include "MdtItemModelExport.h"
 #include "ColumnTerminal.h"
 #include <boost/proto/context.hpp>
 
@@ -31,7 +32,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief Callable context to get a RelationKey for equality
    */
-  struct GetRelationKeyForEqualityContext : boost::proto::callable_context<GetRelationKeyForEqualityContext, boost::proto::null_context>
+  struct MDT_ITEMMODEL_EXPORT GetRelationKeyForEqualityContext : boost::proto::callable_context<GetRelationKeyForEqualityContext, boost::proto::null_context>
   {
     typedef void result_type;
 

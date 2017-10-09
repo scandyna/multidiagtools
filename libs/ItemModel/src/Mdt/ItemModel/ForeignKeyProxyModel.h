@@ -25,6 +25,7 @@
 #include "ForeignKeyProxyModelMap.h"
 #include "ForeignKeyRecord.h"
 #include "PkFkProxyModelBase.h"
+#include "MdtItemModelExport.h"
 #include <QString>
 #include <initializer_list>
 
@@ -45,7 +46,7 @@ namespace Mdt{ namespace ItemModel{
    * view.setModel(proxyModel);
    * \endcode
    */
-  class ForeignKeyProxyModel : public PkFkProxyModelBase
+  class MDT_ITEMMODEL_EXPORT ForeignKeyProxyModel : public PkFkProxyModelBase
   {
    Q_OBJECT
 

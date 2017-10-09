@@ -24,6 +24,7 @@
 #include "IndexFormatMap.h"
 #include "RowFormatMap.h"
 #include "ColumnFormatMap.h"
+#include "MdtItemModelExport.h"
 #include <array>
 
 namespace Mdt{ namespace ItemModel{
@@ -39,7 +40,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief Stores formats for certain row, column and index in a item model
    */
-  class FormatMap
+  class MDT_ITEMMODEL_EXPORT FormatMap
   {
    public:
 

@@ -30,6 +30,7 @@
 #include "RelationKey.h"
 #include "PrimaryKey.h"
 #include "ForeignKey.h"
+#include "MdtItemModelExport.h"
 #include <QPointer>
 #include <QModelIndex>
 #include <QVector>
@@ -67,7 +68,7 @@ namespace Mdt{ namespace ItemModel{
    * proxyModel->setParentModelMatchRow(0);
    * \endcode
    */
-  class RelationFilterProxyModel : public SortFilterProxyModel
+  class MDT_ITEMMODEL_EXPORT RelationFilterProxyModel : public SortFilterProxyModel
   {
    Q_OBJECT
 

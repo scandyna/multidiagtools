@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_FOREIGN_KEY_LIST_H
 
 #include "ForeignKey.h"
+#include "MdtItemModelExport.h"
 #include <QHash>
 #include <QString>
 
@@ -29,7 +30,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief Container for ForeignKey
    */
-  class ForeignKeyList
+  class MDT_ITEMMODEL_EXPORT ForeignKeyList
   {
    public:
 

@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_ROW_LIST_H
 
 #include "RowColumnListBase.h"
+#include "MdtItemModelExport.h"
 #include <QMetaType>
 #include <QModelIndexList>
 #include <initializer_list>
@@ -30,7 +31,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief A list of row indexes in a item model
    */
-  class RowList : public RowColumnListBase
+  class MDT_ITEMMODEL_EXPORT RowList : public RowColumnListBase
   {
    public:
 

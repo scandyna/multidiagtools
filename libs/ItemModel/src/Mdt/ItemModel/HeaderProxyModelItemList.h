@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_HEADER_PROXY_MODEL_ITEM_LIST_H
 
 #include "HeaderProxyModelItem.h"
+#include "MdtItemModelExport.h"
 #include <QString>
 #include <QStringList>
 #include <vector>
@@ -30,7 +31,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief Container for HeaderProxyModel
    */
-  class HeaderProxyModelItemList
+  class MDT_ITEMMODEL_EXPORT HeaderProxyModelItemList
   {
    public:
 

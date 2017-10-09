@@ -22,13 +22,14 @@
 #define MDT_ITEM_MODEL_KEY_RECORD_H
 
 #include "KeyData.h"
+#include "MdtItemModelExport.h"
 #include <vector>
 
 namespace Mdt{ namespace ItemModel{
 
   /*! \brief List of data for a specific row and key in a item model
    */
-  class KeyRecord
+  class MDT_ITEMMODEL_EXPORT KeyRecord
   {
    public:
 

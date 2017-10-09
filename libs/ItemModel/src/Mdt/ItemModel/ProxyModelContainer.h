@@ -21,6 +21,7 @@
 #ifndef MDT_ITEM_MODEL_PROXY_MODEL_CONTAINER_H
 #define MDT_ITEM_MODEL_PROXY_MODEL_CONTAINER_H
 
+#include "MdtItemModelExport.h"
 #include <QAbstractProxyModel>
 #include <QAbstractItemModel>
 #include <QPointer>
@@ -118,7 +119,7 @@ namespace Mdt{ namespace ItemModel{
    *  It is recommanded to use the QObject mechanism to handle lifetime of models
    *  (passing a parent to each one).
    */
-  class ProxyModelContainer
+  class MDT_ITEMMODEL_EXPORT ProxyModelContainer
   {
    public:
 

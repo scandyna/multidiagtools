@@ -21,6 +21,7 @@
 #ifndef MDT_ITEM_MODEL_ROW_COLUMN_LIST_BASE_H
 #define MDT_ITEM_MODEL_ROW_COLUMN_LIST_BASE_H
 
+#include "MdtItemModelExport.h"
 #include <QtGlobal>
 #include <vector>
 #include <initializer_list>
@@ -29,7 +30,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief Common base for RowList and ColumnList
    */
-  class RowColumnListBase
+  class MDT_ITEMMODEL_EXPORT RowColumnListBase
   {
    public:
 

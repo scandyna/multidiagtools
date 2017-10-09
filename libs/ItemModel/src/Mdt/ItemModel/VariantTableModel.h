@@ -23,6 +23,7 @@
 
 #include "VariantTableModelRow.h"
 #include "VariantTableModelStorageRule.h"
+#include "MdtItemModelExport.h"
 #include <QAbstractTableModel>
 #include <vector>
 
@@ -45,7 +46,7 @@ namespace Mdt{ namespace ItemModel{
    *
    * This class is mostly used in unit tests in Mdt libraries.
    */
-  class VariantTableModel : public QAbstractTableModel
+  class MDT_ITEMMODEL_EXPORT VariantTableModel : public QAbstractTableModel
   {
    Q_OBJECT
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,13 +22,14 @@
 #define MDT_ITEM_MODEL_COLUMN_SORT_STRING_ATTRIBUTES_LIST_H
 
 #include "ColumnSortStringAttributes.h"
+#include "MdtItemModelExport.h"
 #include <vector>
 
 namespace Mdt{ namespace ItemModel{
 
   /*! \brief List of ColumnSortStringAttributes used by SortProxyModel
    */
-  class ColumnSortStringAttributesList
+  class MDT_ITEMMODEL_EXPORT ColumnSortStringAttributesList
   {
    public:
 

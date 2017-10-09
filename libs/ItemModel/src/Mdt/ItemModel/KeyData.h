@@ -21,6 +21,7 @@
 #ifndef MDT_ITEM_MODEL_KEY_DATA_H
 #define MDT_ITEM_MODEL_KEY_DATA_H
 
+#include "MdtItemModelExport.h"
 #include <QVariant>
 
 namespace Mdt{ namespace ItemModel{
@@ -29,7 +30,7 @@ namespace Mdt{ namespace ItemModel{
    *
    * \sa KeyRecord
    */
-  class KeyData
+  class MDT_ITEMMODEL_EXPORT KeyData
   {
    public:
 

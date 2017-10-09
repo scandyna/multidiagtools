@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_RELATION_KEY_H
 
 #include "RelationColumnPair.h"
+#include "MdtItemModelExport.h"
 #include <QtGlobal>
 #include <vector>
 
@@ -32,7 +33,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief Relation map between a key in parent model and a key in child model
    */
-  class RelationKey
+  class MDT_ITEMMODEL_EXPORT RelationKey
   {
    public:
 

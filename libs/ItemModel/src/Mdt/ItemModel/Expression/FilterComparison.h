@@ -26,6 +26,7 @@
 
 #include "../FilterColumn.h"
 #include "../LikeExpression.h"
+#include "MdtItemModelExport.h"
 #include "Mdt/FilterExpression/LiteralValue.h"
 #include <boost/proto/traits.hpp>
 #include <boost/proto/matches.hpp>

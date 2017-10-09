@@ -23,13 +23,14 @@
 
 #include "ColumnList.h"
 #include "KeyRecord.h"
+#include "MdtItemModelExport.h"
 #include <QIdentityProxyModel>
 
 namespace Mdt{ namespace ItemModel{
 
   /*! \brief Common base for PrimaryKeyProxyModel and ForeignKeyProxyModel
    */
-  class PkFkProxyModelBase : public QIdentityProxyModel
+  class MDT_ITEMMODEL_EXPORT PkFkProxyModelBase : public QIdentityProxyModel
   {
    Q_OBJECT
 

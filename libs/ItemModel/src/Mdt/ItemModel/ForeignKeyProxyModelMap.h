@@ -25,6 +25,7 @@
 #include "ForeignKey.h"
 #include "ForeignKeyList.h"
 #include "ColumnList.h"
+#include "MdtItemModelExport.h"
 #include <QString>
 #include <QHash>
 
@@ -32,7 +33,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief Used for implementation of ForeignKeyProxyModel
    */
-  class ForeignKeyProxyModelMap
+  class MDT_ITEMMODEL_EXPORT ForeignKeyProxyModelMap
   {
    public:
 

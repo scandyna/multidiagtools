@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,13 +22,14 @@
 #define MDT_ITEM_MODEL_VARIANT_TABLE_MODEL_ITEM_H
 
 #include "VariantTableModelStorageRule.h"
+#include "MdtItemModelExport.h"
 #include <QVariant>
 
 namespace Mdt{ namespace ItemModel{
 
   /*! \brief Item of a VariantTableModel
    */
-  class VariantTableModelItem
+  class MDT_ITEMMODEL_EXPORT VariantTableModelItem
   {
    public:
 

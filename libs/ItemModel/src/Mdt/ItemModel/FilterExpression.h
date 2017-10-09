@@ -23,6 +23,7 @@
 
 #include "Expression/FilterExpressionGrammar.h"
 #include "Expression/FilterExpressionContainer.h"
+#include "MdtItemModelExport.h"
 #include <Qt>
 #include <boost/proto/matches.hpp>
 #include <memory>
@@ -52,7 +53,7 @@ namespace Mdt{ namespace ItemModel{
    * filter.setExpression( clientId > 12 && clientName == Like("M?t") );
    * \endcode
    */
-  class FilterExpression
+  class MDT_ITEMMODEL_EXPORT FilterExpression
   {
    public:
 

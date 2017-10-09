@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_INDEX_FORMAT_ITEM_H
 
 #include "IndexFormatMapItem.h"
+#include "MdtItemModelExport.h"
 #include <QVariant>
 #include <QtGlobal>
 #include <vector>
@@ -30,7 +31,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief Stores format for a index in a item model
    */
-  class IndexFormatMap
+  class MDT_ITEMMODEL_EXPORT IndexFormatMap
   {
    public:
 

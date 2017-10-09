@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_HEADER_PROXY_MODEL_H
 
 #include "HeaderProxyModelItemList.h"
+#include "MdtItemModelExport.h"
 #include <QIdentityProxyModel>
 #include <QStringList>
 
@@ -59,7 +60,7 @@ namespace Mdt{ namespace ItemModel{
    * \note When you have to deal with several proxy models,
    *        ProxyModelContainer can be helpful.
    */
-  class HeaderProxyModel : public QIdentityProxyModel
+  class MDT_ITEMMODEL_EXPORT HeaderProxyModel : public QIdentityProxyModel
   {
    Q_OBJECT
 

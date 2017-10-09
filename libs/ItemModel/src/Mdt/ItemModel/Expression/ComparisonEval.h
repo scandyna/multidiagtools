@@ -29,6 +29,7 @@
 #include "LeftTerminal.h"
 #include "RightTerminal.h"
 
+#include "MdtItemModelExport.h"
 #include <QString>
 #include <QVariant>
 #include <boost/proto/traits.hpp>
@@ -40,11 +41,11 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief Get value of QVariant type
    */
-  QVariant getVariantValue(const FilterColumnData & col, const FilterEvalData & data);
+  QVariant MDT_ITEMMODEL_EXPORT getVariantValue(const FilterColumnData & col, const FilterEvalData & data);
 
   /*! \brief Get value of QVariant type
    */
-  QVariant getVariantValue(const ParentModelColumnData & col, const FilterEvalData & data);
+  QVariant MDT_ITEMMODEL_EXPORT getVariantValue(const ParentModelColumnData & col, const FilterEvalData & data);
 
   /*! \brief Get value of QString type
    */
@@ -56,7 +57,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief Like comparison callable
    */
-  struct CompareLikeTo : boost::proto::callable
+  struct MDT_ITEMMODEL_EXPORT CompareLikeTo : boost::proto::callable
   {
     typedef bool result_type;
 
@@ -78,7 +79,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief == comparison callable
    */
-  struct CompareEqualTo : boost::proto::callable
+  struct MDT_ITEMMODEL_EXPORT CompareEqualTo : boost::proto::callable
   {
     typedef bool result_type;
 
@@ -140,7 +141,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief < comparison callable
    */
-  struct CompareLessThan : boost::proto::callable
+  struct MDT_ITEMMODEL_EXPORT CompareLessThan : boost::proto::callable
   {
     typedef bool result_type;
 
@@ -159,7 +160,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief <= comparison callable
    */
-  struct CompareLessEqualTo : boost::proto::callable
+  struct MDT_ITEMMODEL_EXPORT CompareLessEqualTo : boost::proto::callable
   {
     typedef bool result_type;
 
@@ -201,7 +202,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief > comparison callable
    */
-  struct CompareGreaterThan : boost::proto::callable
+  struct MDT_ITEMMODEL_EXPORT CompareGreaterThan : boost::proto::callable
   {
     typedef bool result_type;
 
@@ -220,7 +221,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief >= comparison callable
    */
-  struct CompareGreaterEqualTo : boost::proto::callable
+  struct MDT_ITEMMODEL_EXPORT CompareGreaterEqualTo : boost::proto::callable
   {
     typedef bool result_type;
 

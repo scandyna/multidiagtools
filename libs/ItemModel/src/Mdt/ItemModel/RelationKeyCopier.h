@@ -25,6 +25,7 @@
 #include "RowRange.h"
 #include "ColumnRange.h"
 #include "RowList.h"
+#include "MdtItemModelExport.h"
 #include <QPointer>
 #include <QFlags>
 #include <QModelIndex>
@@ -48,7 +49,7 @@ namespace Mdt{ namespace ItemModel{
    *   and nothing happens for a pair of columns when at least one is in invalid range.
    *   This also alows to change models and relation key at any time.
    */
-  class RelationKeyCopier
+  class MDT_ITEMMODEL_EXPORT RelationKeyCopier
   {
    public:
 

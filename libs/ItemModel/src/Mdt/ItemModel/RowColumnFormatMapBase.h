@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_ROW_COLUMN_FORMAT_MAP_BASE_H
 
 #include "RowOrColumnFormatMapItem.h"
+#include "MdtItemModelExport.h"
 #include <QVariant>
 #include <QtGlobal>
 #include <vector>
@@ -30,7 +31,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief Base class for RowFormatMap and ColumnFormatMap
    */
-  class RowColumnFormatMapBase
+  class MDT_ITEMMODEL_EXPORT RowColumnFormatMapBase
   {
    public:
 

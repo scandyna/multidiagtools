@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_FOREIGN_KEY_PROXY_MODEL_MAP_ITEM_H
 
 #include "ForeignKey.h"
+#include "MdtItemModelExport.h"
 // #include <QtGlobal>
 
 namespace Mdt{ namespace ItemModel{
@@ -72,7 +73,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief Used for implementation of ForeignKeyProxyModel
    */
-  class ForeignKeyProxyModelMapItem
+  class MDT_ITEMMODEL_EXPORT ForeignKeyProxyModelMapItem
   {
   public:
 

@@ -26,6 +26,7 @@
 #include "ChildModelColumn.h"
 #include "RelationKey.h"
 #include "RelationColumnPair.h"
+#include "MdtItemModelExport.h"
 #include <Qt>
 #include <boost/proto/matches.hpp>
 #include <memory>
@@ -55,7 +56,7 @@ namespace Mdt{ namespace ItemModel{
    * RelationFilterExpression filter( addressClientId == clientId );
    * \endcode
    */
-  class RelationFilterExpression
+  class MDT_ITEMMODEL_EXPORT RelationFilterExpression
   {
    public:
 

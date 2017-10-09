@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_FORMAT_PROXY_MODEL_H
 
 #include "FormatMap.h"
+#include "MdtItemModelExport.h"
 #include <QIdentityProxyModel>
 #include <QVariant>
 #include <QFont>
@@ -33,7 +34,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief Proxy model to provide some formatting
    */
-  class FormatProxyModel : public QIdentityProxyModel
+  class MDT_ITEMMODEL_EXPORT FormatProxyModel : public QIdentityProxyModel
   {
    Q_OBJECT
 

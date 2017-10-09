@@ -24,13 +24,14 @@
 #include "../FilterColumn.h"
 #include "../ParentModelColumn.h"
 #include "ColumnTerminal.h"
+#include "MdtItemModelExport.h"
 #include <boost/proto/context.hpp>
 
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief Evaluation context to get greatest columns in a filter expression
    */
-  struct GetGreatestColumnContext : boost::proto::callable_context<GetGreatestColumnContext, boost::proto::null_context>
+  struct MDT_ITEMMODEL_EXPORT GetGreatestColumnContext : boost::proto::callable_context<GetGreatestColumnContext, boost::proto::null_context>
   {
     typedef void result_type;
 

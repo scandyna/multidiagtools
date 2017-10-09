@@ -24,6 +24,7 @@
 #include "PrimaryKey.h"
 #include "PrimaryKeyRecord.h"
 #include "PkFkProxyModelBase.h"
+#include "MdtItemModelExport.h"
 #include <initializer_list>
 
 namespace Mdt{ namespace ItemModel{
@@ -43,7 +44,7 @@ namespace Mdt{ namespace ItemModel{
    * view.setModel(proxyModel);
    * \endcode
    */
-  class PrimaryKeyProxyModel : public PkFkProxyModelBase
+  class MDT_ITEMMODEL_EXPORT PrimaryKeyProxyModel : public PkFkProxyModelBase
   {
    Q_OBJECT
 
