@@ -425,6 +425,9 @@ void LibraryTest::searchLibraryTest_data()
   QTest::newRow("hal.dll|hal||")
     << "" << "hal" << PathList{} << IncludeSystemPaths << Exists;
 
+  QTest::newRow("hal.dll|hal||")
+    << "" << "hal" << PathList{"/Program Files"} << ExcludeSystemPaths << NotExists;
+
 #endif // #ifdef Q_OS_WIN
 }
 

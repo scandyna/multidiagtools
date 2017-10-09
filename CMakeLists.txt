@@ -165,11 +165,11 @@ if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
 #     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
 #   )
 
-  mdt_copy_binary_dependencies_experimental(
-    TARGETS mdtitemeditor_sqlcontrollertest mdterror_widgetstest mdterrortest Application_Widgets
-    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-    SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
-  )
+#  mdt_copy_binary_dependencies_experimental(
+#    TARGETS mdtitemeditor_sqlcontrollertest mdterror_widgetstest mdterrortest Application_Widgets
+#    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+#    SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
+#  )
 
   # If we are doing cross-compilation,
   # recusrsive resolving do not work

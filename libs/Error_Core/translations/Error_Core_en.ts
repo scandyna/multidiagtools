@@ -60,21 +60,16 @@
     </message>
     <message>
         <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="167"/>
-        <source>FileBackend::backupLogFile() , removing backup log file &apos;</source>
+        <source>FileBackend::backupLogFile() , removing backup log file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="168"/>
-        <source> failed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="173"/>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="176"/>
         <source>FileBackend::backupLogFile() , backup log file &apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="174"/>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="177"/>
         <source> failed</source>
         <translation type="unfinished"></translation>
     </message>
