@@ -21,6 +21,7 @@
 #ifndef MDT_APPLICATION_H
 #define MDT_APPLICATION_H
 
+#include "MdtApplication_WidgetsExport.h"
 #include <QApplication>
 #include <QString>
 #include <memory>
@@ -33,7 +34,7 @@ namespace Mdt{
    *
    * \sa QApplication
    */
-  class Application : public QApplication
+  class MDT_APPLICATION_WIDGETS_EXPORT Application : public QApplication
   {
    Q_OBJECT
 

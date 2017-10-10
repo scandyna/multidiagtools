@@ -22,6 +22,7 @@
 #define MDT_CORE_APPLICATION_IMPL_H
 
 #include "StandardPaths.h"
+#include "MdtApplication_CoreExport.h"
 #include <QCoreApplication>
 #include <QString>
 #include <QStringList>
@@ -30,7 +31,7 @@ namespace Mdt{
 
   /*! \brief Implementation for CoreApplication and derived classes
    */
-  class CoreApplicationImpl
+  class MDT_APPLICATION_CORE_EXPORT CoreApplicationImpl
   {
     Q_DECLARE_TR_FUNCTIONS(CoreApplicationImpl)
 

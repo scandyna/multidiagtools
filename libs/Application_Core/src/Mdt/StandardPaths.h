@@ -21,6 +21,7 @@
 #ifndef MDT_STANDARD_PATHS_H
 #define MDT_STANDARD_PATHS_H
 
+#include "MdtApplication_CoreExport.h"
 #include <QString>
 
 namespace Mdt{
@@ -30,7 +31,7 @@ namespace Mdt{
    * This class uses QStandardPaths and adds some additionnal
    *  paths defined for the Mdt library.
    */
-  class StandardPaths
+  class MDT_APPLICATION_CORE_EXPORT StandardPaths
   {
    public:
 

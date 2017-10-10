@@ -21,6 +21,7 @@
 #ifndef MDT_ABSTRACT_CONSOLE_APPLICATION_MAIN_FUNCTION_H
 #define MDT_ABSTRACT_CONSOLE_APPLICATION_MAIN_FUNCTION_H
 
+#include "MdtApplication_CoreExport.h"
 #include <QObject>
 #include <QStringList>
 
@@ -59,7 +60,7 @@ namespace Mdt{
    * return app.exec();
    * \endcode
    */
-  class AbstractConsoleApplicationMainFunction : public QObject
+  class MDT_APPLICATION_CORE_EXPORT AbstractConsoleApplicationMainFunction : public QObject
   {
    Q_OBJECT
 

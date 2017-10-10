@@ -21,6 +21,7 @@
 #ifndef MDT_CORE_APPLICATION_H
 #define MDT_CORE_APPLICATION_H
 
+#include "MdtApplication_CoreExport.h"
 #include <QCoreApplication>
 #include <QString>
 #include <memory>
@@ -33,7 +34,7 @@ namespace Mdt{
    *
    * \sa QCoreApplication
    */
-  class CoreApplication : public QCoreApplication
+  class MDT_APPLICATION_CORE_EXPORT CoreApplication : public QCoreApplication
   {
    Q_OBJECT
 

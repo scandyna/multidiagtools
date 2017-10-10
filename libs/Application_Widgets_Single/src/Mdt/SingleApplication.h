@@ -21,6 +21,7 @@
 #ifndef MDT_SINGLE_APPLICATION_H
 #define MDT_SINGLE_APPLICATION_H
 
+#include "MdtApplication_Widgets_SingleExport.h"
 #include <QtSingleApplication>
 #include "Mdt/CoreApplicationImpl.h"
 #include <QString>
@@ -35,7 +36,7 @@ namespace Mdt{
    * \sa QtSingleCoreApplication
    * \sa QCoreApplication
    */
-  class SingleApplication : public QtSingleApplication
+  class MDT_APPLICATION_WIDGETS_SINGLE_EXPORT SingleApplication : public QtSingleApplication
   {
    Q_OBJECT
 
