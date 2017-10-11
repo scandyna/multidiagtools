@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,13 +22,14 @@
 #define MDT_ERROR_DIALOG_H
 
 #include "Mdt/Error.h"
+#include "MdtError_WidgetsExport.h"
 #include <QMessageBox>
 
 namespace Mdt{
 
   /*! \brief Dialog that displays Mdt::Error
    */
-  class ErrorDialog : public QMessageBox
+  class MDT_ERROR_WIDGETS_EXPORT ErrorDialog : public QMessageBox
   {
   public:
 
