@@ -21,6 +21,7 @@
 #ifndef MDT_ERROR_H
 #define MDT_ERROR_H
 
+#include "MdtError_CoreExport.h"
 #include <QExplicitlySharedDataPointer>
 #include <QString>
 #include <QLatin1String>
@@ -45,7 +46,7 @@ namespace Mdt{
 
   /*! \internal Private base for Error
    */
-  struct ErrorPrivateBase : public QSharedData
+  struct MDT_ERROR_CORE_EXPORT ErrorPrivateBase : public QSharedData
   {
     /*! \brief Constructor
     */
@@ -256,7 +257,7 @@ namespace Mdt{
    *  This is allready done in Mdt::Application::init().
    *  If you don't use Mdt::Application, don't forget to call qRegisterMetaType<Mdt::Error>() in, f.ex., your main() function.
    */
-  class Error
+  class MDT_ERROR_CORE_EXPORT Error
   {
   public:
 

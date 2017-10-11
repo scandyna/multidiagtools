@@ -22,13 +22,14 @@
 #define MDT_ERROR_LOGGER_CONSOLE_BACKEND_H
 
 #include "Backend.h"
+#include "MdtError_CoreExport.h"
 #include <QString>
 
 namespace Mdt{ namespace ErrorLogger {
 
   /*! \brief Console backend for error Logger
    */
-  class ConsoleBackend : public Backend
+  class MDT_ERROR_CORE_EXPORT ConsoleBackend : public Backend
   {
    Q_OBJECT
 

@@ -21,6 +21,7 @@
 #ifndef MDT_ERROR_QPROCESS_H
 #define MDT_ERROR_QPROCESS_H
 
+#include "MdtError_CoreExport.h"
 #include <QString>
 #include <QCoreApplication>
 
@@ -51,7 +52,7 @@ namespace Mdt{
    * \sa mdtErrorFromQProcess()
    * \sa mdtErrorFromQProcessQ()
    */
-  class ErrorQProcess
+  class MDT_ERROR_CORE_EXPORT ErrorQProcess
   {
    Q_DECLARE_TR_FUNCTIONS(ErrorQProcess)
 

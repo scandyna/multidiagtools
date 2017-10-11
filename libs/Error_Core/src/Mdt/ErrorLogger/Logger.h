@@ -22,6 +22,7 @@
 #define MDT_ERROR_LOGGER_H
 
 #include "Mdt/Error.h"
+#include "MdtError_CoreExport.h"
 #include <QObject>
 #include <thread>
 #include <mutex>
@@ -38,7 +39,7 @@ namespace Mdt{ namespace ErrorLogger {
 
   /*! \brief Helper class to log Error objects
   */
-  class Logger : public QObject
+  class MDT_ERROR_CORE_EXPORT Logger : public QObject
   {
    Q_OBJECT
 
@@ -216,7 +217,7 @@ namespace Mdt{ namespace ErrorLogger {
    * \sa Mdt::Application
    * \sa Mdt::SingleApplication
    */
-  class LoggerGuard
+  class MDT_ERROR_CORE_EXPORT LoggerGuard
   {
   public:
 

@@ -21,6 +21,7 @@
 #ifndef MDT_ERROR_LOGGER_BACKEND_H
 #define MDT_ERROR_LOGGER_BACKEND_H
 
+#include "MdtError_CoreExport.h"
 #include <QObject>
 #include <QString>
 
@@ -38,7 +39,7 @@ namespace Mdt{
    * Notice that Logger can be executed from a non main thread,
    *  also take care that some functions must at least be reentrant.
    */
-  class Backend : public QObject
+  class MDT_ERROR_CORE_EXPORT Backend : public QObject
   {
    Q_OBJECT
 

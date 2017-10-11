@@ -23,6 +23,7 @@
 
 #include "Backend.h"
 #include "Mdt/Error.h"
+#include "MdtError_CoreExport.h"
 #include <QString>
 
 class QFile;
@@ -31,7 +32,7 @@ namespace Mdt{ namespace ErrorLogger {
 
   /*! \brief File backend for error Logger
    */
-  class FileBackend : public Backend
+  class MDT_ERROR_CORE_EXPORT FileBackend : public Backend
   {
    Q_OBJECT
 
