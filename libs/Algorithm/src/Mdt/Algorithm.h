@@ -21,6 +21,7 @@
 #ifndef MDT_ALGORITHM_H
 #define MDT_ALGORITHM_H
 
+#include "MdtAlgorithmExport.h"
 #include <QString>
 #include <QLatin1String>
 #include <QChar>
@@ -41,7 +42,7 @@ namespace Algorithm{
 
   /*! \brief Get a string with first and last char removed in str if they match c
    */
-  QString removeFirstLastCharIf(const QString & str, QChar c);
+  QString MDT_ALGORITHM_EXPORT removeFirstLastCharIf(const QString & str, QChar c);
 
   /*! \brief Find the first token that is escaped in str
    *
@@ -67,7 +68,7 @@ namespace Algorithm{
    * // i == 7
    * \endcode
    */
-  int indexOfFirstEscapedToken(const QString & str, int from, const std::vector<QChar>  & tokens, const QChar & escape);
+  int MDT_ALGORITHM_EXPORT indexOfFirstEscapedToken(const QString & str, int from, const std::vector<QChar>  & tokens, const QChar & escape);
 
   /*! \brief Get a string in which each escaped token is unescaped
    *
@@ -84,7 +85,7 @@ namespace Algorithm{
    * // str == "A*B?C?D"
    * \endcode
    */
-  QString unescapeEscapedTokens(const QString & str, const std::vector<QChar> & tokens, const QChar & escape);
+  QString MDT_ALGORITHM_EXPORT unescapeEscapedTokens(const QString & str, const std::vector<QChar> & tokens, const QChar & escape);
 
   /*! \brief Find the first token that is not escaped in str
    *
@@ -110,7 +111,7 @@ namespace Algorithm{
    * // i == 6
    * \endcode
    */
-  int indexOfFirstNonEscapedToken(const QString & str, int from, const std::vector<QChar>  & tokens, const QChar & escape);
+  int MDT_ALGORITHM_EXPORT indexOfFirstNonEscapedToken(const QString & str, int from, const std::vector<QChar>  & tokens, const QChar & escape);
 
   /*! \brief Get a string in which each non escaped token is replaced
    *
@@ -128,7 +129,7 @@ namespace Algorithm{
    * // str == "A%B_C\\?D"
    * \endcode
    */
-  QString replaceNonEscapedTokens(const QString & str, const std::initializer_list< std::pair<QChar,QString> > & replaceList, const QChar & escape);
+  QString MDT_ALGORITHM_EXPORT replaceNonEscapedTokens(const QString & str, const std::initializer_list< std::pair<QChar,QString> > & replaceList, const QChar & escape);
 
 /** \todo Add moveIf() in Mdt::Algorithm:
  *
