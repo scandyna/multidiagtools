@@ -1,6 +1,6 @@
 format 214
 "Qt" // Qt
-  revision 223
+  revision 224
   modified_by 2 "philippe"
   // class settings
   
@@ -9061,6 +9061,27 @@ ${items}};
 	
 	
       end
+    end
+
+    classdiagram 3752706 "QTextStream"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4379138 "QTextStream"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

@@ -1,6 +1,6 @@
 format 214
 "ErrorLogger" // Mdt::ErrorLogger
-  revision 12
+  revision 14
   modified_by 2 "philippe"
   // class settings
   
@@ -299,6 +299,22 @@ ${items}};
       end
     end
 
+    class 4339330 "ThreadErrorQueue"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
     classdiagram 1775874 "backends"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -329,6 +345,32 @@ ${inlines}
 	
       end
 
+      operation 6105986 "setFormatEngine"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6112514 "cleanup"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
       operation 3265154 "logError"
 	stereotype "slot"
 	abstract cpp_virtual public explicit_return_type "void"
@@ -349,68 +391,31 @@ ${inlines}
 	    classrelation_ref 4886658 // <generalisation>
 	  b parent class_ref 138626 // QObject
       end
-    end
 
-    class 2139906 "ConsoleBackend"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
+      operation 6105474 "formatError"
+	cpp_virtual protected return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "error" type class_ref 182402 // Error
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2460674 // <generalisation>
-	relation 2444290 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2460674 // <generalisation>
-	  b parent class_ref 2139650 // Backend
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
-    end
 
-    class 2139778 "FileBackend"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
+      classrelation 4913794 // <directional composition>
+	relation 4887426 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2460802 // <generalisation>
-	relation 2444418 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2460802 // <generalisation>
-	  b parent class_ref 2139650 // Backend
+	    classrelation_ref 4913794 // <directional composition>
+	  b parent class_ref 4379010 // FormatEngine
       end
-    end
-
-    class 4339330 "ThreadErrorQueue"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
     end
 
     class 4339458 "BackendList"
@@ -470,6 +475,166 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2139906 "ConsoleBackend"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2460674 // <generalisation>
+	relation 2444290 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2460674 // <generalisation>
+	  b parent class_ref 2139650 // Backend
+      end
+    end
+
+    classdiagram 3752578 "FileBackend"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2139778 "FileBackend"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2460802 // <generalisation>
+	relation 2444418 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2460802 // <generalisation>
+	  b parent class_ref 2139650 // Backend
+      end
+    end
+
+    class 4378882 "ErrorFormat"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 4379010 "FormatEngine"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 6105602 "~FormatEngine"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 6105730 "formatError"
+	abstract cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "error" type class_ref 182402 // Error
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 4379266 "ErrorStream"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 4379394 "FileBackendFormatEngine"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4913666 // <generalisation>
+	relation 4887298 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4913666 // <generalisation>
+	  b parent class_ref 4379010 // FormatEngine
+      end
+
+      operation 6105858 "formatError"
+	cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "error" type class_ref 182402 // Error
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

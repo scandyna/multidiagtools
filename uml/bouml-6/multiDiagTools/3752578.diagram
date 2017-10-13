@@ -1,0 +1,48 @@
+format 214
+
+classcanvas 128002 class_ref 2139778 // FileBackend
+  classdiagramsettings member_max_width 0 end
+  xyz 407 290 2000
+end
+classcanvas 128130 class_ref 2139650 // Backend
+  classdiagramsettings member_max_width 0 end
+  xyz 322 121 2006
+end
+classcanvas 128386 class_ref 4378882 // ErrorFormat
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 601.5 2000
+end
+classcanvas 128514 class_ref 4379010 // FormatEngine
+  classdiagramsettings member_max_width 0 end
+  xyz 39 143 2000
+end
+classcanvas 128770 class_ref 4379266 // ErrorStream
+  classdiagramsettings member_max_width 0 end
+  xyz 414.5 416.5 2000
+end
+classcanvas 129026 class_ref 182402 // Error
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 289.5 416.5 2000
+end
+classcanvas 129154 class_ref 4379394 // FileBackendFormatEngine
+  classdiagramsettings member_max_width 0 end
+  xyz 38 269 2000
+end
+relationcanvas 128258 relation_ref 2444418 // <generalisation>
+  decenter_begin 450
+  decenter_end 482
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 4887298 // <generalisation>
+  from ref 129154 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 4887426 // <directional composition>
+  from ref 128130 z 2007 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
