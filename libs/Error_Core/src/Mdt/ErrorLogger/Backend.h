@@ -24,12 +24,15 @@
 #include "MdtError_CoreExport.h"
 #include <QObject>
 #include <QString>
+#include <memory>
 
 namespace Mdt{
 
  class Error;
 
  namespace ErrorLogger {
+
+  class FormatEngine;
 
   /*! \brief Error Logger backend
    *
@@ -49,21 +52,67 @@ namespace Mdt{
      */
     Backend(QObject *parent = nullptr);
 
+    /*! \brief Destructor
+     */
+    ~Backend();
+
     // Disable copy and move
     Backend(const Backend &) = delete;
     Backend(Backend &&) = delete;
     Backend & operator=(const Backend &) = delete;
     Backend & operator=(Backend &&) = delete;
 
+    /*! \brief Set the format engine
+     *
+     * A format engine is a subclass of FormatEngine
+     *  that outputs a Mdt::Error to its string representation.
+     *
+     * \note Concrete subclass of Backend should set its format engine
+     *
+     * \warning Setting the format engine is not thread safe.
+     *          It should be done before any error is committed
+     *          to a backend.
+     */
+    template<typename T>
+    void setFormatEngine()
+    {
+      mFormatEngine = std::make_unique<T>();
+    }
+
+    /*! \brief Called during end cleanup
+     *
+     * This method is called from Logger::cleanup().
+     *
+     * Backend can implement this method if requierd.
+     *
+     * This default implementation does nothing.
+     */
+    virtual void cleanup()
+    {
+    }
+
    public slots:
 
     /*! \brief Log given error
      *
-     * This function must be reentrant, because it can be called from Logger thread
-     *  (witch is not the main thread).
+     * This method must be reentrant, because it can be called from Logger thread
+     *  (which is not the main thread).
      */
     virtual void logError(const Error & error) = 0;
 
+   protected:
+
+    /*! \brief Format \a error to its string representation
+     *
+     * Will use the format engine set using setFormatEngine().
+     *
+     * \pre A format engine must have been set before calling this method.
+     */
+    QString formatError(const Mdt::Error & error) const;
+
+   private:
+
+    std::unique_ptr<FormatEngine> mFormatEngine;
   };
 
 }}  // namespace Mdt{ namespace ErrorLogger {

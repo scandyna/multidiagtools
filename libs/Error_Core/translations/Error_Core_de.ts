@@ -2,6 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>FileBackendFormatEngine</name>
+    <message>
+        <location filename="../src/Mdt/ErrorLogger/FileBackendFormatEngine.cpp" line="40"/>
+        <source>Text: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/ErrorLogger/FileBackendFormatEngine.cpp" line="45"/>
+        <source>File: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/ErrorLogger/FileBackendFormatEngine.cpp" line="46"/>
+        <source>Line: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::ErrorLogger::ConsoleBackend</name>
     <message>
         <location filename="../src/Mdt/ErrorLogger/ConsoleBackend.cpp" line="64"/>
@@ -32,45 +50,37 @@
 <context>
     <name>Mdt::ErrorLogger::FileBackend</name>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="51"/>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="106"/>
-        <source>FileBackend::setLogFilePath() : could not open file </source>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="47"/>
+        <source>Mdt::ErrorLogger::FileBackend::setLogFilePath() : could not open file %1.
+ Error: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="52"/>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="107"/>
-        <source> , error: </source>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="110"/>
+        <source>Mdt::ErrorLogger::FileBackend::cleanup() : could not open file %1.
+ Error: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="124"/>
-        <source>Text: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="129"/>
-        <source>File: </source>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="119"/>
+        <source>Mdt::ErrorLogger::FileBackend::cleanup() : could not remove file %1.
+ Error: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="130"/>
-        <source>Line: </source>
+        <source>Mdt::ErrorLogger::FileBackend::openFile() : could not open file %1.
+ Error: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="167"/>
-        <source>FileBackend::backupLogFile() , removing backup log file &apos;%1&apos; failed.</source>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="141"/>
+        <source>Mdt::ErrorLogger::FileBackend::backupLogFile() : could not remove old backup file %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="176"/>
-        <source>FileBackend::backupLogFile() , backup log file &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="177"/>
-        <source> failed</source>
+        <location filename="../src/Mdt/ErrorLogger/FileBackend.cpp" line="147"/>
+        <source>Mdt::ErrorLogger::FileBackend::backupLogFile() : could not rename file %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

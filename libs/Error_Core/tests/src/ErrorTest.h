@@ -36,7 +36,6 @@ class ErrorTest : public QObject
   void macrosTest();
 
   void errorLoggerConsoleBackendTest();
-  void errorLoggerFileBackendTest();
 };
 
 #endif // #ifndef MDT_ERROR_TEST_H

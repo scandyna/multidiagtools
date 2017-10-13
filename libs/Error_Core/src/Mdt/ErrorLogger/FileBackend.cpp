@@ -19,20 +19,20 @@
  **
  ****************************************************************************/
 #include "FileBackend.h"
+#include "FileBackendFormatEngine.h"
 #include <QFile>
-#include <QLatin1String>
 #include <QStringBuilder>
 #include <QDebug>
 #include <QDebugStateSaver>
-#include <QDateTime>
 #include <QTextStream>
 
 namespace Mdt{ namespace ErrorLogger {
 
 FileBackend::FileBackend(QObject *parent)
  : Backend(parent),
-   pvMaxFileSize(1024*1024)
+   mMaxFileSize(1024*1024)
 {
+  setFormatEngine<FileBackendFormatEngine>();
 }
 
 FileBackend::~FileBackend()
@@ -41,47 +41,49 @@ FileBackend::~FileBackend()
 
 bool FileBackend::setLogFilePath(const QString & path, qint64 maxFileSize)
 {
-  // Store infos
-  pvMaxFileSize = maxFileSize;
-  pvFilePath = path;
-  pvBackupFilePath = path + QLatin1String(".save");
   // Try to open the file to see if path is valid and writeable
-  QFile file(pvFilePath);
+  QFile file(path);
   if(!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)){
-    qDebug() << tr("FileBackend::setLogFilePath() : could not open file ") << pvFilePath \
-             << tr(" , error: ") << file.errorString();
+    qWarning() << tr("Mdt::ErrorLogger::FileBackend::setLogFilePath() : could not open file %1.\n Error: %2")
+                    .arg(path, file.errorString());
     return false;
   }
   file.close();
+  // Store infos
+  mMaxFileSize = maxFileSize;
+  mFilePath = path;
 
   return true;
 }
 
 QString FileBackend::logFilePath() const
 {
-  return pvFilePath;
+  return mFilePath;
 }
 
 QString FileBackend::backupLogFilePath() const
 {
-  return pvBackupFilePath;
+  if(mFilePath.isEmpty()){
+    return QString();
+  }
+  return mFilePath % QLatin1String(".save");
 }
 
 qint64 FileBackend::maxFileSize() const
 {
-  return pvMaxFileSize;
+  return mMaxFileSize;
 }
 
 void FileBackend::logError(const Error & error)
 {
-  QFile file(pvFilePath);
+  QFile file(mFilePath);
 
   // Open log file
   if(!openFile(file)){
     return;
   }
   // backup log file if needed
-  if(file.size() >= pvMaxFileSize){
+  if(file.size() >= mMaxFileSize){
     file.close();
     backupLogFile();
     if(!openFile(file)){
@@ -92,9 +94,31 @@ void FileBackend::logError(const Error & error)
   Q_ASSERT(file.isWritable());
   // Write error to file
   QTextStream stream(&file);
-  stream << getErrorStackString(error) << getErrorString(error) << QStringLiteral("\n");
+  stream << formatError(error) << "\n";
   stream.flush();
   file.close();
+}
+
+void FileBackend::cleanup()
+{
+  if(mFilePath.isEmpty()){
+    return;
+  }
+  // If we have a empty log file, we remove it
+  QFile file(mFilePath);
+  if(!file.open(QFile::ReadOnly | QFile::Text)){
+    qWarning() << tr("Mdt::ErrorLogger::FileBackend::cleanup() : could not open file %1.\n Error: %2")
+                    .arg(mFilePath, file.errorString());
+    return;
+  }
+  if(file.size() > 0){
+    file.close();
+    return;
+  }
+  if(!file.remove()){
+    qWarning() << tr("Mdt::ErrorLogger::FileBackend::cleanup() : could not remove file %1.\n Error: %2")
+                    .arg(mFilePath, file.errorString());
+  }
 }
 
 bool FileBackend::openFile(QFile & file)
@@ -103,78 +127,25 @@ bool FileBackend::openFile(QFile & file)
   Q_ASSERT(!file.fileName().isEmpty());
 
   if(!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)){
-    qWarning() << tr("FileBackend::setLogFilePath() : could not open file ") << pvFilePath \
-             << tr(" , error: ") << file.errorString();
+    qWarning() << tr("Mdt::ErrorLogger::FileBackend::openFile() : could not open file %1.\n Error: %2")
+                    .arg(mFilePath, file.errorString());
     return false;
   }
   return true;
 }
 
-QString FileBackend::getErrorString(const Error & error) const
-{
-  QString str;
-  QString informativeText;
-  QString lineBegin;
-
-  // Prepare line beginning
-  lineBegin = QDateTime::currentDateTime().toString(QLatin1String("yyyy.MM.dd hh:mm:ss")) + QStringLiteral(" ") \
-            % errorLevelText(error.level()) % QStringLiteral(": ");
-  // Build message
-  str = lineBegin % QStringLiteral("In ") % error.functionName() % QStringLiteral("\n") \
-      % lineBegin + QStringLiteral("-> ") % tr("Text: ") % error.text() % QStringLiteral("\n");
-  informativeText = error.informativeText();
-  if(!informativeText.isEmpty()){
-    str += lineBegin % QStringLiteral("-> ") % error.informativeText() % QStringLiteral("\n");
-  }
-  str += lineBegin % QStringLiteral("-> ") % tr("File: ") % error.fileName() % QStringLiteral("\n") \
-       % lineBegin % QStringLiteral("-> ") % tr("Line: ") % QString::number(error.fileLine()); /// % QStringLiteral("\n");
-
-  return str;
-}
-
-QString FileBackend::getErrorStackString(const Error & error) const
-{
-  QString str;
-  const auto errorStack = error.getErrorStack();
-
-  for(const auto & e : errorStack){
-    /// \todo check if allready commited
-    str += getErrorString(e) % QStringLiteral("\n");
-  }
-
-  return str;
-}
-
-QString FileBackend::errorLevelText(Error::Level level) const
-{
-  switch(level){
-    case Error::NoError:
-      return QStringLiteral("[NoError]");
-    case Error::Critical:
-      return QStringLiteral("[Critical]");
-    case Error::Warning:
-      return QStringLiteral("[Warning]");
-    case Error::Info:
-      return QStringLiteral("[Info]");
-  }
-  return QString();
-}
-
 void FileBackend::backupLogFile()
 {
-  if(QFile::exists(pvBackupFilePath)){
-    if(!QFile::remove(pvBackupFilePath)){
-	  qWarning() << tr("FileBackend::backupLogFile() , removing backup log file '%1' failed.")
-	                .arg(pvBackupFilePath);
-/*      qWarning() << tr("FileBackend::backupLogFile() , removing backup log file '") \
-               << pvBackupFilePath << tr(" failed.");
-*/
+  if(QFile::exists( backupLogFilePath() )){
+    if(!QFile::remove( backupLogFilePath() )){
+    qWarning() << tr("Mdt::ErrorLogger::FileBackend::backupLogFile() : could not remove old backup file %1.")
+	                .arg( backupLogFilePath() );
       return;
     }
   }
-  if(!QFile::rename(pvFilePath, pvBackupFilePath)){
-    qWarning() << tr("FileBackend::backupLogFile() , backup log file '") \
-               << pvFilePath << tr(" failed");
+  if(!QFile::rename( mFilePath, backupLogFilePath() )){
+    qWarning() << tr("Mdt::ErrorLogger::FileBackend::backupLogFile() : could not rename file %1.")
+                    .arg(mFilePath);
   }
 }
 

@@ -17,10 +17,5 @@ endfunction()
 
 # Tests
 addErrorCoreTest("ErrorTest")
+addErrorCoreTest("FileBackendTest")
 addErrorCoreTest("ErrorLoggerTest")
-
-# # Target MdtErrorTest
-# add_executable(mdterrortest src/ErrorTest.cpp)
-# target_link_libraries(mdterrortest Error_Core)
-# target_link_libraries(mdterrortest Qt5::Test)
-# add_test(NAME MdtErrorTest COMMAND mdterrortest)

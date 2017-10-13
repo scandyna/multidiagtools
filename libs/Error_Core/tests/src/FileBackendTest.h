@@ -18,25 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "Backend.h"
-#include "FormatEngine.h"
+#ifndef MDT_ERROR_FILE_BACKEND_TEST_H
+#define MDT_ERROR_FILE_BACKEND_TEST_H
 
-namespace Mdt{ namespace ErrorLogger {
+#include <QString>
+#include <QObject>
+#include <QtTest/QtTest>
 
-Backend::Backend(QObject* parent)
- : QObject(parent)
+class FileBackendTest : public QObject
 {
-}
+ Q_OBJECT
 
-Backend::~Backend()
-{
-}
+ private slots:
 
-QString Backend::formatError(const Error& error) const
-{
-  Q_ASSERT(mFormatEngine);
+  void initTestCase();
+  void cleanupTestCase();
 
-  return mFormatEngine->formatError(error);
-}
+  void basicPropertyTest();
+  void logErrorTest();
+  void logNoErrorTest();
+  void backupTest();
 
-}} // namespace Mdt{ namespace ErrorLogger {
+ private:
+
+  static QString readFile(const QString & filePath);
+};
+
+#endif // #ifndef MDT_ERROR_FILE_BACKEND_TEST_H

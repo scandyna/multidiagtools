@@ -75,7 +75,11 @@ namespace Mdt{ namespace ErrorLogger {
 
     /*! \brief Log given error
      */
-    void logError(const Error & error);
+    void logError(const Error & error) override;
+
+    /*! \brief Cleanup
+     */
+    void cleanup() override;
 
    private:
 
@@ -83,25 +87,12 @@ namespace Mdt{ namespace ErrorLogger {
      */
     bool openFile(QFile & file);
 
-    /*! \brief Get error informations
-     */
-    QString getErrorString(const Error & error) const;
-
-    /*! \brief Get error stack string
-     */
-    QString getErrorStackString(const Error & error) const;
-
-    /*! \brief Get error level text
-     */
-    QString errorLevelText(Error::Level level) const;
-
     /*! \brief Backup log file
      */
     void backupLogFile();
 
-    qint64 pvMaxFileSize;
-    QString pvFilePath;
-    QString pvBackupFilePath;
+    qint64 mMaxFileSize;
+    QString mFilePath;
   };
 
 }}  // namespace Mdt{ namespace ErrorLogger {

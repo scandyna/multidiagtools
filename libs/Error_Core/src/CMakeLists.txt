@@ -10,6 +10,8 @@ set(SOURCE_FILES
     Mdt/ErrorLogger/Backend.cpp
     Mdt/ErrorLogger/ConsoleBackend.cpp
     Mdt/ErrorLogger/FileBackend.cpp
+    Mdt/ErrorLogger/FormatEngine.cpp
+    Mdt/ErrorLogger/FileBackendFormatEngine.cpp
 )
 
 mdt_add_library(

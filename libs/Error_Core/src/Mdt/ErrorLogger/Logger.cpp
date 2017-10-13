@@ -36,9 +36,15 @@ void Logger::logError(const Error & error)
 void Logger::cleanup()
 {
   instance().stop();
+  for(auto & backend : instance().mSeparateThreadBackends){
+    backend->cleanup();
+  }
   instance().mSeparateThreadBackends.clear();
   if(!instance().mSeparateThreadBackends.empty()){
     qWarning() << "Mdt::Error::Logger::cleanup(): not all errors could be logged from backend running in separate thread (this is a bug)";
+  }
+  for(auto & backend : instance().mMainThreadBackends){
+    backend->cleanup();
   }
   instance().mMainThreadBackends.clear();
   if(!instance().mMainThreadBackends.empty()){

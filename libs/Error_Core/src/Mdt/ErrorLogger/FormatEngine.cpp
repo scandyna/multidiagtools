@@ -18,25 +18,4 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "Backend.h"
 #include "FormatEngine.h"
-
-namespace Mdt{ namespace ErrorLogger {
-
-Backend::Backend(QObject* parent)
- : QObject(parent)
-{
-}
-
-Backend::~Backend()
-{
-}
-
-QString Backend::formatError(const Error& error) const
-{
-  Q_ASSERT(mFormatEngine);
-
-  return mFormatEngine->formatError(error);
-}
-
-}} // namespace Mdt{ namespace ErrorLogger {
