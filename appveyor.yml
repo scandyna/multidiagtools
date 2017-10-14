@@ -1,7 +1,7 @@
 
-#branches:
- #only:
-  #- master
+branches:
+ only:
+  - master
 
 #git:
  #submodules: false

@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/scandyna/multidiagtools.svg?branch=master)](https://travis-ci.org/scandyna/multidiagtools)
+Linux: [![Build Status](https://travis-ci.org/scandyna/multidiagtools.svg?branch=master)](https://travis-ci.org/scandyna/multidiagtools)
+Windows: [![Build Status](https://ci.appveyor.com/api/projects/status/aov9mxmr5nnvuxkb?svg=true)](https://ci.appveyor.com/project/scandyna/multidiagtools)
 
 # About Mdt
 
