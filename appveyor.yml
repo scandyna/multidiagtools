@@ -3,8 +3,8 @@
  #only:
   #- master
 
-git:
- submodules: false
+#git:
+ #submodules: false
 
 buidl_script:
   - mkdir build
