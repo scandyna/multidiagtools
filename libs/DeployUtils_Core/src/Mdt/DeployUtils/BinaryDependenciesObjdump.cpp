@@ -63,6 +63,9 @@ BinaryDependenciesObjdump::BinaryDependenciesObjdump(QObject* parent)
 bool BinaryDependenciesObjdump::findDependencies(const QString& binaryFilePath)
 {
   Q_ASSERT(!binaryFilePath.isEmpty());
+
+  mBinariesFromCaller.clear();
+  mBinariesFromCaller.append(binaryFilePath);
   const auto node = init(binaryFilePath);
   if(!findAndAddDependenciesForNode(binaryFilePath, node)){
     return false;
@@ -76,6 +79,8 @@ bool BinaryDependenciesObjdump::findDependencies(const QStringList & binariesFil
 {
   Q_ASSERT(!binariesFilePaths.isEmpty());
 
+  mBinariesFromCaller.clear();
+  mBinariesFromCaller.append(binariesFilePaths);
   const auto node = init(binariesFilePaths.at(0));
   for(const auto & filePath : binariesFilePaths){
     Q_ASSERT(!filePath.isEmpty());
@@ -112,7 +117,9 @@ bool BinaryDependenciesObjdump::findAndAddDependenciesForNode(const QString& bin
    * Else, we search the dependencies.
    */
   if(mAlreadyProcessedLibraries.contains(binaryFilePath)){
-    mLibraryTree.addLibrary(binaryFilePath, node);
+    if(!isBinaryFromCaller(binaryFilePath)){
+      mLibraryTree.addLibrary(binaryFilePath, node);
+    }
     return true;
   }
   Console::info(3) << "  processing " << QFileInfo(binaryFilePath).fileName();
@@ -145,9 +152,11 @@ bool BinaryDependenciesObjdump::findAndAddDependenciesForNode(const QString& bin
       }
       mAlreadyProcessedLibraries.append(binaryFilePath);
       const auto libraryFilePath = library.libraryInfo().absoluteFilePath();
-      const auto libraryNode = mLibraryTree.addLibrary( libraryFilePath, node );
-      if(!findAndAddDependenciesForNode( libraryFilePath, libraryNode )){
-        return false;
+      if(!isBinaryFromCaller(libraryFilePath)){
+        const auto libraryNode = mLibraryTree.addLibrary( libraryFilePath, node );
+        if(!findAndAddDependenciesForNode( libraryFilePath, libraryNode )){
+          return false;
+        }
       }
     }
   }
@@ -165,6 +174,11 @@ bool BinaryDependenciesObjdump::isLibraryInExcludeList(const StringRecord & reco
   };
   const auto it = std::find_if( LibrayExcludeListWindows.cbegin(), LibrayExcludeListWindows.cend(), cmp );
   return (it != LibrayExcludeListWindows.cend());
+}
+
+bool BinaryDependenciesObjdump::isBinaryFromCaller(const QString & binaryFilePath) const
+{
+  return mBinariesFromCaller.contains(binaryFilePath, Qt::CaseInsensitive);
 }
 
 void BinaryDependenciesObjdump::setLibrarySearchPathList()

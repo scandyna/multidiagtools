@@ -43,4 +43,10 @@ addDeployUtilsTest("BinaryDependenciesLddTest")
 addDeployUtilsTest("BinaryDependenciesObjdumpTest")
 addDeployUtilsTest("FileCopierTest")
 addDeployUtilsTest("QtLibraryTest")
-target_compile_definitions(mdtdeployutils_qtlibrarytest PRIVATE PREFIX_PATH="${CMAKE_PREFIX_PATH}")
+# Tell the test where to serch Qt
+# On a Windows machine build, use PATH
+# which is set by Qt srcipt
+if( (NOT WIN32) OR (WIN32 AND CMAKE_CROSSCOMPILING) )
+  target_compile_definitions(mdtdeployutils_qtlibrarytest PRIVATE PREFIX_PATH="${CMAKE_PREFIX_PATH}")
+endif()
+
