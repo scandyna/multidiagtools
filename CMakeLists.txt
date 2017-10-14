@@ -114,10 +114,30 @@ add_subdirectory(tools)
 #################################################################################################################################################
 
 # On Windows, we have to copy external libraries to the test runtime directory
-include(MdtDependenciesUtils)
-if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+
+# On Windows we have the following situation
+#
+# We are on a Windows machine, using Qt provided build suite,
+# and the related script that setups PATH accordingly.
+# In this case, nothing special to do.
+#
+# We are cross-compiling for Windows from a Linux machine using MXE.
+# In this case, Qt libraries and mingw libraries are not in the PATH.
+# We have to find depepndencies of the unit tests and copy them into the bin directory.
+# Note: it is probably possible to create a temporary environnment,
+#       but doing the current way has the positive side effect
+#       to check if dependencies tools works.
+#       Those tools will be used later for binary distrubutions.
+if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY AND CMAKE_CROSSCOMPILING)
+  include(MdtDependenciesUtils)
   # Because I not found a proper way to get a list of all existing tests,
   # just put some of them that have the most dependencies.
+  mdt_copy_binary_dependencies_experimental(
+    TARGETS mdtitemmodel_filterproxymodeltest mdtdeployutils_librarytest mdtplaintext_csvparsertest mdterror_errortest
+    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
+  )
+
 #   mdt_copy_binary_dependencies(
 #     TARGET QtSingleApplication
 #     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
@@ -164,12 +184,6 @@ if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY)
 #     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
 #     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
 #   )
-
-#  mdt_copy_binary_dependencies_experimental(
-#    TARGETS mdtitemeditor_sqlcontrollertest mdterror_widgetstest mdterrortest Application_Widgets
-#    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-#    SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
-#  )
 
   # If we are doing cross-compilation,
   # recusrsive resolving do not work

@@ -202,18 +202,33 @@ Please note that some generators needs some informations that current distributi
 
 ## Windows
 
+This section will suggest how to compile Mdt on a Windows machine,
+as well as cross-compile it for Windows from a Linux machine.
+
+### Common tools
+
+#### Dependecies Walker
+
+To find some informations about dll's, such as missing dependencies,
+[Dependency Walker](http://www.dependencywalker.com/) can be helpful.
+
+Note: on Linux, using Wine, probably only the 32 bit version will work
+(choose x86, not x64).
+
+### Compile Mdt on a windows machine
+
 This section was tested on Windows 10 x86-64.
 
-### Tools and other dependencies
+#### Tools and other dependencies
 
-#### CMake
+##### CMake
 
 Mdt uses [CMake](https://cmake.org/) as build tool.
 Choose a installer that matches your platform from the [Download](https://cmake.org/download/) section.
 Here are some options that I choosed (all other I keeped default):
 * "Add CMake to the system PATH for the current user"
 
-### Install Qt5 and Gcc
+#### Install Qt5 and Gcc
 
 It is recommanded to have a look at the [documentation](https://doc.qt.io/) in the "Getting Started Guides" section. Myabe you will have to create a [Qt Acount](https://login.qt.io).
 
@@ -248,7 +263,7 @@ qmake -version
 ```
 Check that the expected Qt library is used.
 
-### Install Boost
+#### Install Boost
 
 It is recommanded to have a look at the [documentation](http://www.boost.org/) in the "Getting stated" section.
 
@@ -261,7 +276,7 @@ Get a Boost archive from the [Download section](http://www.boost.org/users/downl
 
 Extract the archive to C:\Program Files\boost .
 
-### Compile Mdt on Windows
+#### Compile Mdt on Windows
 
 For this section, it will be considered that the Mdt source tree is:
 %HOMEPATH%\Documents\opt\Mdt\src\multidiagtools\
@@ -293,3 +308,101 @@ To run all tests:
 ```bash
 mingw32-make test
 ```
+
+### Cross compile Mdt for Windows on a Linux machine
+
+My first attempt was to install Wine (then WineHQ)
+and all tools and libraries on it, but this did not work for me.
+
+Here we will use MXE to do cross-compilation.
+You probably will use WineHQ to do some tests, in which case,
+please remeber that WineHQ is possibly not able to run 64 bit executables.
+
+#### Install WineHQ
+
+WineHQ will be needed later to run the unit tests.
+Wine can also be usefull to use, for example, dependency Walker,
+or to check if your application works.
+
+Please also note, for the nexte sections, that WineHQ probably not support 64 bit executable.
+
+Using Ubuntu 16.04, I personally installed WineHQ successfully
+by following the instructions avaiable on [WineHQ](https://www.winehq.org)
+website, in the Download section.
+Note: while running winecfg, I had to enable the option that emulates a desktop,
+for some tools.
+This is described here: [https://doc.ubuntu-fr.org/wine](https://doc.ubuntu-fr.org/wine)
+
+#### Install other dependencies
+
+Later, we will see that some dependecies must be copied to be able to run the unit tests.
+For this, the objdump tool is needed.
+On Debian, objdump is part of the binutils package:
+```bash
+sudo apt-get install binutils
+```
+
+#### Install MXE
+
+MXE is a powerfull cross-compiler suite that will build all that we need.
+Take a look at [MXE](http://mxe.cc) site for details.
+As stated in the documentation, once MXE is built, it is not relocatable.
+To reuse it for your own project, install it somwhere else than in Mdt source tree.
+In my case, I choosed ~/opt/build/cross as base:
+```bash
+mkdir -p ~/opt/build/cross
+```
+
+MXE has a good step by step [Tutorial](http://mxe.cc/#tutorial),
+simply follow it to install dependencies for your platform.
+
+To make a 32 bit and 64 bit cross compiler that support boost, Qt5 and qwt:
+```bash
+cd ~/opt/build/cross
+git clone https://github.com/mxe/mxe.git
+cd mxe
+make MXE_TARGETS='i686-w64-mingw32.shared.posix x86_64-w64-mingw32.shared.posix' boost qt5 qwt -j4
+```
+
+As described in the documentation, MXE will get and build the dependencies of the libraries we just specified.
+The compilation will take some while.
+
+#### Cross compile Mdt for Windows
+
+Mdt uses CMake as build tool.
+Compilation will be done in 2 phases:
+ - Compile Mdt deploy utils for the native (Linux) platform
+ - Cross-compile Mdt for Windows using MXE
+For this, a helper script is avaliable in root of Mdt sources.
+
+Go to Mdt source tree and create a directory to build a Windows 32 bit version:
+```bash
+mkdir -p build/cross/win32/release
+cd build/cross/win32/release
+```
+
+Run the helper script by specify the MXE installation path,
+target architecture and Mdt installation target path:
+```bash
+../../../../build_cross_linux_to_windows.sh --mxe-path=~/opt/build/cross/mxe/usr/bin -t=win32 --install-prefix=~/opt/mdt/win32/release ../../../../
+```
+
+To run all unit tests:
+```bash
+make test
+```
+CMake generated what is needed to call wine to run each unit test.
+
+Note: for some reason, sometimes all tests fails, mostly at the first run.
+In this case, simply run them again.
+
+To run a single unit test, invoke wine, for example:
+```bash
+wine bin/mdtalgorithmtest.exe
+```
+
+To reompile some parts (or all):
+```bash
+make -j4
+```
+
