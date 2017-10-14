@@ -16,4 +16,4 @@ environment:
 build_script:
   - mkdir build
   - cd build
-  - cmake -C ..\cmake\caches\ReleaseGcc.cmake -G %CMAKE_GENERATOR% ..\
+  - cmake -C ..\cmake\caches\ReleaseGcc.cmake -G "%CMAKE_GENERATOR%" ..\
