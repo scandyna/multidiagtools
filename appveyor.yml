@@ -6,6 +6,14 @@
 #git:
  #submodules: false
 
+environment:
+
+  matrix:
+    # MinGW
+    - CMAKE_GENERATOR: "MinGW Makefiles"
+
+
 build_script:
   - mkdir build
   - cd build
+  - cmake -C ..\cmake\caches\ReleaseGcc.cmake -G %CMAKE_GENERATOR% ..\
