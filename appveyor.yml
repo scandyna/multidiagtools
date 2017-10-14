@@ -8,7 +8,6 @@
 
 environment:
 
-  #BOOST_PREFIX_PATH: 'C:\Libraries'
   BOOST_ROOT: 'C:\Libraries'
 
   matrix:
@@ -24,10 +23,12 @@ before_build:
   - set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
   - set PATH=%PATH:C:\Program Files (x86)\Git\bin;=%
   - set PATH=%QT_PREFIX_PATH%\bin;%MINGW_PREFIX_PATH%\bin;%PATH%
-  - echo %PATH%
 
 build_script:
   - mkdir build
   - cd build
   - cmake -C ..\cmake\caches\ReleaseGcc.cmake -G "%CMAKE_GENERATOR%" ..\
-  #- cmake -C ..\cmake\caches\ReleaseGcc.cmake -G "%CMAKE_GENERATOR%" -D CMAKE_PREFIX_PATH="BOOST_PREFIX_PATH" ..\
+  - cmake --build . -- -j4
+
+test_script:
+  - ctest .
