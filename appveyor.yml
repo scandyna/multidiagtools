@@ -20,7 +20,7 @@ before_build:
   - set PATH=%PATH:C:\Program Files\Git\bin;=%
   - set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
   - set PATH=%PATH:C:\Program Files (x86)\Git\bin;=%
-  - set PATH=%QT_PREFIX_PATH%;%MINGW_PREFIX_PATH%;%PATH%
+  - set PATH=%QT_PREFIX_PATH\bin%;%MINGW_PREFIX_PATH\bin%;%PATH%
   - echo %PATH%
 
 build_script:
