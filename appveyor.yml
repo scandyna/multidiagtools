@@ -6,6 +6,6 @@
 #git:
  #submodules: false
 
-buidl_script:
+build_script:
   - mkdir build
   - cd build
