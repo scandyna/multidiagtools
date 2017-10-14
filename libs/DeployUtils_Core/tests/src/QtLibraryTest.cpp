@@ -252,8 +252,6 @@ void QtLibraryTest::findLibrariesPluginsTest()
   LibraryInfo qtGui;
   LibraryInfoList qtLibraries;
 
-  qDebug() << "Prefixes: " << searchFirstPrefixPaths.toStringList();
-
   switch(Platform::nativeOperatingSystem()){
     case OperatingSystem::Linux:
       qtCore.setLibraryPlatformName("libQt5Core.so");

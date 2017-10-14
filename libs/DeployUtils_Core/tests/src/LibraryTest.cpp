@@ -426,13 +426,17 @@ void LibraryTest::searchLibraryTest_data()
    * For some reason, QDir::fileInfoEntryList()
    * (which is used by Library while searching)
    * does not list some dll, like hal.dll .
+   *
+   * Also take care to check with dll's that
+   * exists on a native Windows machine,
+   * as well as on Wine
    */
 
-  QTest::newRow("aadtb.dll|aadtb||")
-    << "" << "aadtb" << PathList{} << IncludeSystemPaths << Exists;
+  QTest::newRow("activeds.dll|activeds||")
+    << "" << "activeds" << PathList{} << IncludeSystemPaths << Exists;
 
-  QTest::newRow("aadtb.dll|aadtb||")
-    << "" << "aadtb" << PathList{"/Program Files"} << ExcludeSystemPaths << NotExists;
+  QTest::newRow("activeds.dll|activeds||")
+    << "" << "activeds" << PathList{"/Program Files"} << ExcludeSystemPaths << NotExists;
 
 #endif // #ifdef Q_OS_WIN
 }
@@ -474,11 +478,11 @@ void LibraryTest::searchLibraryBenchmark_data()
 
 #ifdef Q_OS_WIN
 
-  QTest::newRow("aadtb.dll|aadtb||")
-    << "aadtb" << PathList{} << IncludeSystemPaths << Exists;
+  QTest::newRow("activeds.dll|activeds||")
+    << "activeds" << PathList{} << IncludeSystemPaths << Exists;
 
-  QTest::newRow("AADTB.dll|AADTB||")
-    << "AADTB" << PathList{} << IncludeSystemPaths << Exists;
+  QTest::newRow("ACTIVEDS.dll|ACTIVEDS||")
+    << "ACTIVEDS" << PathList{} << IncludeSystemPaths << Exists;
 
   QTest::newRow("libc.so|c|/opt/lib44|")
     << "c" << PathList{"/opt/lib44"} << ExcludeSystemPaths << NotExists;
