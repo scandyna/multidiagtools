@@ -422,11 +422,17 @@ void LibraryTest::searchLibraryTest_data()
 
 #ifdef Q_OS_WIN
 
-  QTest::newRow("hal.dll|hal||")
-    << "" << "hal" << PathList{} << IncludeSystemPaths << Exists;
+  /*
+   * For some reason, QDir::fileInfoEntryList()
+   * (which is used by Library while searching)
+   * does not list some dll, like hal.dll .
+   */
 
-  QTest::newRow("hal.dll|hal||")
-    << "" << "hal" << PathList{"/Program Files"} << ExcludeSystemPaths << NotExists;
+  QTest::newRow("aadtb.dll|aadtb||")
+    << "" << "aadtb" << PathList{} << IncludeSystemPaths << Exists;
+
+  QTest::newRow("aadtb.dll|aadtb||")
+    << "" << "aadtb" << PathList{"/Program Files"} << ExcludeSystemPaths << NotExists;
 
 #endif // #ifdef Q_OS_WIN
 }
@@ -468,11 +474,11 @@ void LibraryTest::searchLibraryBenchmark_data()
 
 #ifdef Q_OS_WIN
 
-  QTest::newRow("hal.dll|hal||")
-    << "hal" << PathList{} << IncludeSystemPaths << Exists;
+  QTest::newRow("aadtb.dll|aadtb||")
+    << "aadtb" << PathList{} << IncludeSystemPaths << Exists;
 
-  QTest::newRow("HAL.dll|hal||")
-    << "HAL" << PathList{} << IncludeSystemPaths << Exists;
+  QTest::newRow("AADTB.dll|AADTB||")
+    << "AADTB" << PathList{} << IncludeSystemPaths << Exists;
 
   QTest::newRow("libc.so|c|/opt/lib44|")
     << "c" << PathList{"/opt/lib44"} << ExcludeSystemPaths << NotExists;

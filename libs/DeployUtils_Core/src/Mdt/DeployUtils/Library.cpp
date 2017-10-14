@@ -72,7 +72,7 @@ bool Library::findLibrary(const QString & name, const PathList pathList, Library
   if(it == searchPathList.cend()){
     const auto searchedPathString = searchPathList.toStringList().join(" , ");
     const auto msg = tr("Could not find library '%1' in one of the following paths: %2")
-                     .arg(libraryName.toFullNameLinux(), searchedPathString);
+                     .arg(libraryName.fullName(), searchedPathString);
     mLastError = mdtErrorNewQ(msg, Error::Critical, this);
     return false;
   }
