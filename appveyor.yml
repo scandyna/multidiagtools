@@ -8,6 +8,8 @@
 
 environment:
 
+  BOOST_PREFIX_PATH: 'C:\Libraries'
+
   matrix:
     # MinGW
     - CMAKE_GENERATOR: "MinGW Makefiles"
@@ -26,4 +28,4 @@ before_build:
 build_script:
   - mkdir build
   - cd build
-  - cmake -C ..\cmake\caches\ReleaseGcc.cmake -G "%CMAKE_GENERATOR%" ..\
+  - cmake -C ..\cmake\caches\ReleaseGcc.cmake -G "%CMAKE_GENERATOR%" -D CMAKE_PREFIX_PATH="BOOST_PREFIX_PATH" ..\
