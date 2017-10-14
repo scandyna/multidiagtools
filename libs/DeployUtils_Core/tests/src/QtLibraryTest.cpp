@@ -22,13 +22,10 @@
 #include "Mdt/DeployUtils/QtLibrary.h"
 #include "Mdt/DeployUtils/Platform.h"
 #include "Mdt/PlainText/TestUtils.h"
+#include <QLibraryInfo>
 
 using namespace Mdt::DeployUtils;
 using namespace Mdt::PlainText;
-
-#ifndef PREFIX_PATH
- #error "PREFIX_PATH missing"
-#endif
 
 void QtLibraryTest::initTestCase()
 {
@@ -246,13 +243,15 @@ void QtLibraryTest::pluginsDirectoriesTest_data()
 void QtLibraryTest::findLibrariesPluginsTest()
 {
   QtLibrary qtLibrary;
-  const auto prefix = QString::fromLocal8Bit(PREFIX_PATH);
+#ifdef PREFIX_PATH
+  const QString prefix = QString::fromLocal8Bit(PREFIX_PATH);
+#else
+  const QString prefix = QLibraryInfo::location(QLibraryInfo::PrefixPath);
+#endif
   PathList searchFirstPrefixPaths = PathList::fromStringList( prefix.split(';', QString::SkipEmptyParts) );
   LibraryInfo qtCore;
   LibraryInfo qtGui;
   LibraryInfoList qtLibraries;
-
-  qDebug() << "Prefixes: " << searchFirstPrefixPaths.toStringList();
 
   switch(Platform::nativeOperatingSystem()){
     case OperatingSystem::Linux:

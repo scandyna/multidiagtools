@@ -30,12 +30,12 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependenciesObjdump</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="128"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="135"/>
         <source>Parsing objdump output for file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="140"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="147"/>
         <source>Could not find library &apos;%1&apos;.
 Searched in %2</source>
         <translation type="unfinished"></translation>

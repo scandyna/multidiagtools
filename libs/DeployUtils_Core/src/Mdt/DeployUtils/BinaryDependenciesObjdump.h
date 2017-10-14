@@ -67,6 +67,7 @@ namespace Mdt{ namespace DeployUtils{
 
     bool findAndAddDependenciesForNode(const QString & binaryFilePath, LibraryTreeNode node);
     static bool isLibraryInExcludeList(const PlainText::StringRecord & record);
+    bool isBinaryFromCaller(const QString & binaryFilePath) const;
     void setLibrarySearchPathList();
     LibraryTreeNode init(const QString & binaryFilePath);
     void storeDependencies();
@@ -74,6 +75,7 @@ namespace Mdt{ namespace DeployUtils{
     LibraryTree mLibraryTree;
     PathList mLibrarySearchPathList;
     QStringList mAlreadyProcessedLibraries;
+    QStringList mBinariesFromCaller;
     PlainText::StringRecordList mNotFoundDependencies;
   };
 
