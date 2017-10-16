@@ -110,6 +110,31 @@ Optionnally, documentation can also be installed:
 sudo apt-get install qtbase5-doc qtbase5-doc-html qtbase5-examples
 ```
 
+##### Install Qt5 if not provided by the distribution
+
+It's also recommanded to have a look at the [documentation](http://doc.qt.io/)
+in the "Getting Started Guides" section.
+Maybe you will have to create a [Qt Acount](https://account.qt.io)
+
+At first, install [requirements](http://doc.qt.io/qt-5/linux.html) .
+
+Then, you can get Qt5 from the [Download section](https://www.qt.io/download/) .
+
+Choose "Desktop & Mobile Application", then the licencing option.
+The default proposed package should be fine.
+
+We must make the installer executable and run it.
+In my case, I have put the installer to ~/opt/qt/installers:
+```bash
+cd ~/opt/qt/installers
+chmod u+x qt-unified-linux-x64-3.0.0-online.run
+./qt-unified-linux-x64-3.0.0-online.run
+```
+Of course, the name of the installer can be different in your case.
+
+Follow the wizzard.
+In my case, I choosed to install Qt5 to ~/opt/qt/Qt5
+
 ### Compile Mdt on Linux
 
 At first, int the source tree, create a build directory and cd to it:
@@ -127,6 +152,18 @@ cmake -C ../../cmake/caches/ReleaseGcc.cmake ../../
 It is also possible to specify the intallation prefix:
 ```bash
 cmake -C ../../cmake/caches/ReleaseGcc.cmake -D CMAKE_INSTALL_PREFIX=~/opt/mdt/release ../../
+```
+
+
+To use a Qt5 library that is not installed in the default path,
+we have also to specify it:
+```bash
+cmake -C ../../cmake/caches/ReleaseGcc.cmake -D QT_PREFIX_PATH=~/opt/qt/Qt5/5.9.1/gcc_64/ ../../
+```
+
+This is my personnal case to build Mdt in debug mode, and install it locally:
+```bash
+cmake -C ../../cmake/caches/DebugGcc.cmake -D QT_PREFIX_PATH=~/opt/qt/Qt5/5.9.1/gcc_64/ -D CMAKE_INSTALL_PREFIX=~/opt/mdt/debug ../../
 ```
 
 Build (-j4 is for parallel build, allowing max. 4 processes):
