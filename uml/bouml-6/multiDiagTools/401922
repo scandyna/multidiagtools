@@ -1,6 +1,6 @@
 format 214
 "ErrorLogger" // Mdt::ErrorLogger
-  revision 14
+  revision 15
   modified_by 2 "philippe"
   // class settings
   

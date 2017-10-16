@@ -1,6 +1,6 @@
 format 214
 "ItemView" // Mdt::ItemView
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -43,8 +43,8 @@ format 214
     activitydiagramsettings
      end
     classdiagram 3732610 "SortProxyModelSetup"
-      classdiagramsettings member_max_width 0 end
-      size A-Landscape
+      classdiagramsettings member_max_width 0 show_context_mode uml end
+      size C-Landscape
     end
   end
 

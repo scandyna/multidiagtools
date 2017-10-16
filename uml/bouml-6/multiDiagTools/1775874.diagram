@@ -2,27 +2,29 @@ format 214
 
 classcanvas 128002 class_ref 2139650 // Backend
   classdiagramsettings member_max_width 0 end
-  xyz 94 39 2000
+  xyz 106 42 2000
 end
 classcanvas 128130 class_ref 2139906 // ConsoleBackend
   classdiagramsettings member_max_width 0 end
-  xyz 164 202 2000
+  xyz 36 274 2000
 end
 classcanvas 128258 class_ref 2139778 // FileBackend
   classdiagramsettings member_max_width 0 end
-  xyz 39 202 2000
+  xyz 191 274 2000
 end
 relationcanvas 128386 relation_ref 2444290 // <generalisation>
-  from ref 128130 z 2001 to ref 128002
+  geometry VHV unfixed
+  decenter_end 513
+  from ref 128130 z 2001 to point 94 232
+  line 128898 z 2001 to point 237 232
+  line 129026 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 2444418 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 450
-  from ref 128258 z 2001 to point 77 160
-  line 128642 z 2001 to point 222 160
-  line 128770 z 2001 to ref 128002
+  decenter_begin 538
+  decenter_end 513
+  from ref 128258 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
