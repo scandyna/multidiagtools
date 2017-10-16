@@ -35,6 +35,11 @@ endif()
 message("CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
 
+# On platform that supports RPATH,
+# add external dependencies (like Qt)
+if(CMAKE_PREFIX_PATH)
+  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH true)
+endif()
 
 # On Windows, RPATH do not exist
 # To be able to run tests, we have to put all binaries in the same directory
