@@ -12,8 +12,7 @@ include(GNUInstallDirs)
 # Note: using multi-arch installation with GNUInstallDirs,
 #       only /usr is considered a system wide installation.
 if( CMAKE_INSTALL_PREFIX AND NOT ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr") )
-  set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
-  message("-> Set RAPTH to ${CMAKE_INSTALL_RPATH}")
+  set(CMAKE_INSTALL_RPATH "\$ORIGIN")
 endif()
 
 
