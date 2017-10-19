@@ -61,13 +61,6 @@ function(mdt_cpack_deb_add_library_component)
   mdt_cpack_deb_set_library_component_package_name(
     COMPONENT ${component}
   )
-  # Install copyright
-  install(
-    FILES "${CMAKE_SOURCE_DIR}/copyright.debian"
-    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/doc/${CPACK_DEBIAN_${component_upper}_PACKAGE_NAME}"
-    COMPONENT ${component}
-    RENAME copyright
-  )
   # Set package section and priority
   if(${component} MATCHES "-dev$")
     set(package_section "libdevel")
