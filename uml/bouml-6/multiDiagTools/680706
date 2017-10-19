@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 46
+  revision 47
   modified_by 2 "philippe"
   // class settings
   
@@ -3418,5 +3418,14 @@ ${inlines}
       end
     end
 
+    classdiagram 3759234 "DeployMdt"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    classdiagram 3759362 "DeployMdtApp"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
   end
 end

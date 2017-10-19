@@ -1,6 +1,6 @@
 format 214
 "Mdt" // Mdt
-  revision 54
+  revision 55
   modified_by 2 "philippe"
   // class settings
   
@@ -1838,6 +1838,8 @@ ${members}};
 
   package_ref 430082 // Dsp
 
+  package_ref 680706 // DeployUtils
+
   package_ref 588802 // FilterExpression
 
   package_ref 720386 // Icon
@@ -1891,8 +1893,6 @@ ${members}};
   package_ref 713858 // Terminal
 
   package_ref 403202 // tools
-
-  package_ref 680706 // DeployUtils
 
   package_ref 707074 // UnitTest
 
