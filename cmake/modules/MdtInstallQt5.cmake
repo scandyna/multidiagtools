@@ -1,0 +1,9 @@
+# Install Qt5 library to ship it with Mdt
+
+if( QT_PREFIX_PATH AND CMAKE_INSTALL_PREFIX AND NOT ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr") )
+  install(
+    DIRECTORY "${QT_PREFIX_PATH}"
+    DESTINATION "${CMAKE_INSTALL_PREFIX}"
+    USE_SOURCE_PERMISSIONS
+  )
+endif()

@@ -186,6 +186,10 @@ the installation is:
 ```bash
 make install
 ```
+If a specific Qt5 library is used,
+i.e. -D QT_PREFIX_PATH was passed during cmake build initialization,
+the Qt library will also be copied.
+This will make the usage of Mdt and Qt5 more easy when creating a application.
 
 This method is not recommanded for a system wide installation.
 
@@ -444,3 +448,105 @@ To reompile some parts (or all):
 make -j4
 ```
 
+# Use Mdt in your project
+
+## A HelloWorld example
+
+Take a simple HelloWorld example.
+Source file HelloWorld.cpp could be this:
+```cpp
+#include <Mdt/ItemModel/VariantTableModel.h>
+#include <QTableView>
+#include <QApplication>
+
+using namespace Mdt::ItemModel;
+
+int main(int argc, char **argv)
+{
+  QApplication app(argc, argv);
+  VariantTableModel model;
+  QTableView view;
+
+  view.setModel(&model);
+  view.show();
+  model.populate(3, 2);
+
+  return app.exec();
+}
+```
+
+Write a CMakeLists.txt file:
+```cmake
+cmake_minimum_required(VERSION 3.3)
+
+project(HelloWorld VERSION 0.0.1)
+
+# Specify where to find Mdt
+# Using a custom MDT_PREFIX_PATH has some advantages:
+# - It can be reused, for example to specify CMAKE_MODULE_PATH
+# - It solves the problem that CMAKE_PREFIX_PATH is ignored when cross-compiling with MXE
+if(MDT_PREFIX_PATH)
+  list(APPEND CMAKE_PREFIX_PATH "${MDT_PREFIX_PATH}")
+  list(APPEND CMAKE_MODULE_PATH "${MDT_PREFIX_PATH}/share/cmake/modules")
+endif()
+
+# On Windows, RPATH do not exist
+# To be able to run the application from the build tree,
+# or run the unit tests, we have to put all binaries in the same directory
+if(WIN32)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+endif()
+
+find_package(Qt5 COMPONENTS Widgets)
+find_package(Mdt0 COMPONENTS ItemModel)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# Rules to compile the application
+# On Windows, we want a GUI executable, not a console
+if(WIN32)
+  add_executable(helloworld WIN32 HelloWorld.cpp)
+else()
+  add_executable(helloworld HelloWorld.cpp)
+endif()
+target_link_libraries(helloworld Mdt0::ItemModel Qt5::Widgets)
+```
+
+## Build your project on Linux
+
+Create a build directory and go to it:
+```bash
+mkdir -p build/release
+cd build/release
+```
+
+If Mdt was installed in system standard way (for example using Debian packages),
+following should be enouth:
+```bash
+cmake ../../
+```
+
+If Mdt was installed in a other place, cmake must know it:
+```bash
+cmake -D MDT_PREFIX_PATH=~/opt/mdt/release ../../
+```
+
+It is also possible to specify a installation prefix:
+```bash
+cmake -D CMAKE_INSTALL_PREFIX=~/opt/helloworld/release ../../
+```
+
+For my personnal case, I also created a CMake cache file
+to specify compiler flags.
+To compile the application in debug mode, I use:
+```bash
+cmake -C ../../cmake/caches/DebugGcc.cmake -D MDT_PREFIX_PATH=~/opt/mdt/debug ../../
+```
+
+Build (-j4 is for parallel build, allowing max. 4 processes):
+```bash
+make -j4
+```
