@@ -122,7 +122,7 @@ function(mdt_add_library)
     VERSION ${library_version}
   )
   # For unix, create a separate component with debug symbols
-  if(UNIX)
+  if( UNIX AND (NOT CMAKE_INSTALL_PREFIX) AND ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr") )
     set(lib_so_name ${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}${CMAKE_SHARED_LIBRARY_SUFFIX}.${library_version})
     set(lib_debug_name ${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}.debug)
     add_custom_command(TARGET ${target_name}
@@ -144,10 +144,9 @@ function(mdt_add_library)
   # Commands to install the library
   install(TARGETS ${target_name}
           EXPORT ${library_name}Targets
-          LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-          ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-          RUNTIME DESTINATION bin
-          COMPONENT ${target_name}
+          LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT ${target_name}
+          ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT ${target_name}
+          RUNTIME DESTINATION bin COMPONENT ${target_name}
   )
   install(DIRECTORY ${headers_dir}
           DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${target_name}"

@@ -26,6 +26,7 @@ include(GNUInstallDirs)
 
 if(NOT TARGET package_debian)
   find_program(CPACK_COMMAND cpack)
+  file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/MdtDebDep")
   add_custom_target(
     package_debian
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_BINARY_DIR}/CPackConfig.cmake"
@@ -161,7 +162,7 @@ function(mdt_cpack_deb_set_component_description)
 
 #   message("library_description_var: ${library_description_var}")
 #   message("library_description: ${library_description}")
-#   
+#
 #   message("CPACK_COMPONENT_ERROR_DESCRIPTION: ${CPACK_COMPONENT_ERROR_DESCRIPTION}")
 endfunction()
 
