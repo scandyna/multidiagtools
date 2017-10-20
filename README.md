@@ -137,7 +137,7 @@ In my case, I choosed to install Qt5 to ~/opt/qt/Qt5
 
 ### Compile Mdt on Linux
 
-At first, int the source tree, create a build directory and cd to it:
+At first, init the source tree, create a build directory and cd to it:
 ```bash
 cd ~/opt/mdt/src/multidiagtools
 mkdir -p build/release
