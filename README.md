@@ -338,7 +338,7 @@ cmake -C ..\..\cmake\caches\ReleaseGcc.cmake -G "MinGW Makefiles" ..\..\
 ```
 It is also possible to specify the intallation prefix:
 ```bash
-cmake -C ..\..\cmake\caches\ReleaseGcc.cmake -G "MinGW Makefiles" -D CMAKE_INSTALL_PREFIX=%HOMEPATH%\Documents\opt\Mdt\release ..\..\
+cmake -C ..\..\cmake\caches\ReleaseGcc.cmake -G "MinGW Makefiles" -D CMAKE_INSTALL_PREFIX="%HOMEPATH%\Documents\opt\Mdt\release" ..\..\
 ```
 
 Build (-j4 is for parallel build, allowing max. 4 processes):
@@ -350,6 +350,32 @@ To run all tests:
 ```bash
 mingw32-make test
 ```
+
+#### Install Mdt on Windows
+
+##### Install in a predefined location
+
+To install the library in a non system place,
+i.e. defined above with CMAKE_INSTALL_PREFIX, the installation is:
+
+To run all tests:
+```bash
+mingw32-make install
+```
+
+In the CMAKE_INSTALL_PREFIX\bin , a file named mdtenv.bat is generated,
+which setups a environment, like qtenv2.bat does.
+It will set the PATH to include:
+- Path to the executable directory of the compiler used to compile Mdt
+- Path to the executable directory of the Qt5 library used to compile Mdt
+- Path to the executable directory of Mdt
+
+To run a command prompt with this environment set,
+you can create a shortcut that runs cmd.exe and calls this mdtenv.bat.
+Example of options of that shortcut could be:
+- Target: C:\Windows\System32\cmd.exe /A /Q /K C:\path\to\mdtenv.bat
+- Run in: where you want to be after launching the shortcut
+
 
 ### Cross compile Mdt for Windows on a Linux machine
 
@@ -497,6 +523,9 @@ if(WIN32)
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 endif()
 
+# Thread support
+find_package(Threads REQUIRED)
+
 find_package(Qt5 COMPONENTS Widgets)
 find_package(Mdt0 COMPONENTS ItemModel)
 
@@ -537,7 +566,8 @@ cmake -D MDT_PREFIX_PATH=~/opt/mdt/release ../../
 It is also possible to specify a installation prefix:
 ```bash
 cmake -D CMAKE_INSTALL_PREFIX=~/opt/helloworld/release ../../
-```
+```For my personnal case, I also created a CMake cache file to specify compiler flags. To compile the application in debug mode, I use:
+
 
 For my personnal case, I also created a CMake cache file
 to specify compiler flags.
@@ -550,3 +580,49 @@ Build (-j4 is for parallel build, allowing max. 4 processes):
 ```bash
 make -j4
 ```
+
+## Build your project on Windows
+
+For this section, it will be considered that the HelloWorld source tree is: %HOMEPATH%\Documents\HelloWorld.
+
+In the root of the source tree, create a directory called "build", and a subdirectory called "release".
+
+Open a command prompt and call mdtenv.bat.
+Note: refer to the Mdt installation on Windows.
+Maybe you have a shortcut that runs it automatically.
+
+cd to the realease directory created above.
+
+Initialzise the build:
+```bash
+cmake -G "MinGW Makefiles" ..\..\
+```
+
+For my personnal case, I also created a CMake cache file
+to specify compiler flags.
+To compile the application in debug mode, I use:
+```bash
+cmake -C ..\..\cmake/caches/DebugGcc.cmake -G "MinGW Makefiles" ..\..\
+```
+
+Build:
+```bash
+mingw32-make -j4
+```
+
+You should be able to run the application
+from the current command line prompt:
+```bash
+bin\helloworld.exe
+```
+
+To execute it outside current command prompt,
+the application must be shipped with all its required dependencies
+(mainly dlls)
+
+Currently, Mdt does not provide any easy solution for that.
+(You can take a look at Mdt DeployUtils library, and MdtCpBinDeps tool,
+that are both available in the Mdt source tree,
+but this is currently far away from a distribution tool).
+
+A interesting start is [Qt for Windows - Deployment](http://doc.qt.io/qt-5/windows-deployment.html).
