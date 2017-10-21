@@ -13,34 +13,18 @@ endif()
 # Typically calling qtenv2.bat distributed by Qt
 if(WIN32)
   # Find the root of the compiler
-  get_filename_component(cxx_bin_dir "${CMAKE_CXX_COMPILER}" DIRECTORY)
-  message("Cxx bin dir: ${cxx_bin_dir}")
-  # Rule to install the compiler
-  message("Install compiler to ${CMAKE_INSTALL_PREFIX}/compiler")
-  install(
-    DIRECTORY "${cxx_bin_dir}/.."
-    DESTINATION "${CMAKE_INSTALL_PREFIX}/compiler"
-    USE_SOURCE_PERMISSIONS
-  )
+  get_filename_component(compiler_bin_dir "${CMAKE_CXX_COMPILER}" DIRECTORY)
   # Find the root of Qt5
   find_program(qmake_bin_dir qmake)
-  message("Qmake bin dir: ${qmake_bin_dir}")
-  # Rule to install Qt5
-  message("Install Qt5 to ${CMAKE_INSTALL_PREFIX}")
-  install(
-    DIRECTORY "${qmake_bin_dir}/.."
-    DESTINATION "${CMAKE_INSTALL_PREFIX}"
-    USE_SOURCE_PERMISSIONS
-  )
+  get_filename_component(qt_bin_dir "${qmake_bin_dir}" DIRECTORY)
   # Generate env script
-  message("mdtenv.bat : ${CMAKE_INSTALL_PREFIX}/bin/mdtenv.bat")
-  string(REPLACE "/" "\\" cxx_installed_bin_dir "${CMAKE_INSTALL_PREFIX}/compiler/bin")
-  string(REPLACE "/" "\\" qt_installed_bin_dir "${CMAKE_INSTALL_PREFIX}/bin")
-  set(env_script "\@echo off\r\nset PATH=${cxx_installed_bin_dir};${qt_installed_bin_dir};%PATH%")
-  message(" -> ${env_script}")
-  file(WRITE "mdtenv.bat" "${env_script}")
+  string(REPLACE "/" "\\" compiler_bin_dir_win "${compiler_bin_dir}")
+  string(REPLACE "/" "\\" qt_bin_dir_win "${qt_bin_dir}")
+  string(REPLACE "/" "\\" mdt_bin_dir_win "${CMAKE_INSTALL_PREFIX}/bin")
+  set(env_script "\@echo off\r\nset PATH=${compiler_bin_dir_win};${qt_bin_dir_win};${mdt_bin_dir_win};%PATH%")
+  file(WRITE "${CMAKE_BINARY_DIR}/mdtenv.bat" "${env_script}")
   install(
-    PROGRAMS "mdtenv.bat"
+    PROGRAMS "${CMAKE_BINARY_DIR}/mdtenv.bat"
     DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
   )
 endif()
