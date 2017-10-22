@@ -17,12 +17,12 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependenciesLdd</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="66"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="70"/>
         <source>Parsing ldd output for file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="75"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesLdd.cpp" line="79"/>
         <source>Some dependencies have not been found for file &apos;%1&apos;: %2</source>
         <translation type="unfinished"></translation>
     </message>

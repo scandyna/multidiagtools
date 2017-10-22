@@ -46,12 +46,14 @@ namespace Mdt{ namespace DeployUtils{ namespace Impl{ namespace Ldd{
       // Parsers
       using qi::lit;
       using qi::eol;
+      using qi::attr;
       using boost::spirit::standard_wide::char_;
 
-      mLibraryName = +(char_ - lit(L' '));
+      mLibraryName = (char_ - lit(L'/')) >> +(char_ - lit(L' '));
       mAddress = lit(L"(0x") >> +char_("0123456789abcdefABCDEF") >> lit(L')');
       mLibraryPath = +(char_ - lit(L" ("));
-      mRecordRule = +lit('\t') >> mLibraryName >> lit(L" => ") >> -mLibraryPath >> -(lit(L' ') >> mAddress);
+      mRecordRule = ( +lit('\t') >> mLibraryName >> lit(L" => ") >>  -mLibraryPath >> -(lit(L' ') >> mAddress) )
+                  | ( +lit('\t') >> attr(L"") >> mLibraryPath >> -(lit(L' ') >> mAddress));
 
       BOOST_SPIRIT_DEBUG_NODE(mLibraryName);
       BOOST_SPIRIT_DEBUG_NODE(mLibraryPath);

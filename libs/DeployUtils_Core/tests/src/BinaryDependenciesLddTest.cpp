@@ -76,6 +76,14 @@ void BinaryDependenciesLddTest::fillAndSetDependenciesTest_data()
   QTest::newRow("NotFound")
     << StringRecordList{{"libA.so","/usr/lib/libA.so"},{"libB.so","not found"}}
     << StringRecordList{{"libA.so","/usr/lib/libA.so"}};
+
+  QTest::newRow("No name")
+    << StringRecordList{{"","/usr/lib/libA.so"},{"libB.so","/usr/lib/libB.so"}}
+    << StringRecordList{{"libA.so","/usr/lib/libA.so"},{"libB.so","/usr/lib/libB.so"}};
+
+  QTest::newRow("ld-linux")
+    << StringRecordList{{"","/lib64/ld-linux-x86-64.so.2"},{"libB.so","/usr/lib/libB.so"}}
+    << StringRecordList{{"libB.so","/usr/lib/libB.so"}};
 }
 
 void BinaryDependenciesLddTest::fillAndSetDependenciesBenchmark()

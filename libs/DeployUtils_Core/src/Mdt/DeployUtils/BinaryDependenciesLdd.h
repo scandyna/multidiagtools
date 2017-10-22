@@ -55,6 +55,7 @@ namespace Mdt{ namespace DeployUtils{
 
    private:
 
+    static void setLibrariesNameIfMissing(PlainText::StringRecordList & recordList);
     static bool isLibraryNotFound(const PlainText::StringRecord & record);
     static bool isLibraryNotInExcludeList(const PlainText::StringRecord & record);
     static QStringList stringRecordListToStringNameList(const PlainText::StringRecordList & recordList);

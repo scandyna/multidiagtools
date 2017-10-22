@@ -81,6 +81,9 @@ void LddDependenciesParserTest::recordGrammarTest_data()
 
   QTest::newRow("libn.so => not found")
    << "\tlibn.so => not found" << StringRecord{"libn.so","not found"} << Ok;
+
+  QTest::newRow("/lib64/ld-linux-x86-64.so.2 (0x00007f7b74cbc000)")
+   << "\t/lib64/ld-linux-x86-64.so.2 (0x00007f7b74cbc000)" << StringRecord{"","/lib64/ld-linux-x86-64.so.2"} << Ok;
 }
 
 void LddDependenciesParserTest::parserTest()
@@ -116,6 +119,11 @@ void LddDependenciesParserTest::parserTest_data()
    << "\tlinux-vdso.so.1 =>  (0x0123456789ABCDEF)\n"
       "\tlibc.so.6 => /lib/libc.so.6 (0x0123456789ABCDEF)"
    << StringRecordList{{"linux-vdso.so.1"},{"libc.so.6","/lib/libc.so.6"}} << Ok;
+
+  QTest::newRow("2a")
+   << "\t/lib64/ld-linux-x86-64.so.2 (0x00007f7b74cbc000)\n"
+      "\tlibc.so.6 => /lib/libc.so.6 (0x0123456789ABCDEF)"
+   << StringRecordList{{"","/lib64/ld-linux-x86-64.so.2"},{"libc.so.6","/lib/libc.so.6"}} << Ok;
 }
 
 
