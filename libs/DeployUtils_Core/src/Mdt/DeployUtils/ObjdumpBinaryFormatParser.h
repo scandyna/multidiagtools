@@ -23,6 +23,7 @@
 
 #include "OperatingSystem.h"
 #include "Processor.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include "Mdt/PlainText/StringConstIterator.h"
 #include <QString>
 #include <memory>
@@ -38,7 +39,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Objdump binary format parser
    */
-  class ObjdumpBinaryFormatParser
+  class MDT_DEPLOYUTILS_CORE_EXPORT ObjdumpBinaryFormatParser
   {
    public:
 

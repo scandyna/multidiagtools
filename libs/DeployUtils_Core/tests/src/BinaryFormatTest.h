@@ -32,6 +32,11 @@ class BinaryFormatTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void isFileAnExecutableByExtTest();
+  void isFileAnExecutableByExtTest_data();
+  void isFileAnExecutableByExtBenchmark();
+  void isFileAnExecutableByExtBenchmark_data();
+
   void runTest();
 };
 

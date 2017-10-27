@@ -21,6 +21,9 @@
 #include "BinaryFormat.h"
 #include "ObjdumpWrapper.h"
 #include "ObjdumpBinaryFormatParser.h"
+#include "LibraryName.h"
+#include <QFileInfo>
+#include <QLatin1String>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -49,6 +52,33 @@ bool BinaryFormat::readFormat(const QString& binaryFilePath)
   mProcessor = parser.processor();
 
   return true;
+}
+
+bool BinaryFormat::isFileAnExecutableByExtension(const QFileInfo& fileInfo)
+{
+  if(fileInfo.fileName().isEmpty()){
+    return false;
+  }
+  const auto extension = fileInfo.suffix();
+  // Windows
+  if( compareExtension(extension, "exe") || compareExtension(extension, "dll") ){
+    return true;
+  }
+  // Linux
+  if(extension.isEmpty()){
+    return true;
+  }
+  LibraryName libName(fileInfo.fileName()); // LibraryName handles versionned so names
+  if( compareExtension(libName.extension(), "so") ){
+    return true;
+  }
+
+  return false;
+}
+
+bool BinaryFormat::compareExtension(const QString& extention, const char*const match)
+{
+  return ( QString::compare(extention, QLatin1String(match), Qt::CaseInsensitive) == 0 );
 }
 
 void BinaryFormat::setLastError(const Error & error)

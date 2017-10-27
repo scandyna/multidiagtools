@@ -25,13 +25,14 @@
 #include "LibraryInfoList.h"
 #include "Mdt/PlainText/StringRecord.h"
 #include "Mdt/PlainText/StringRecordList.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include <QStringList>
 
 namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Binary dependencies ldd implementation
    */
-  class BinaryDependenciesLdd : public BinaryDependenciesImplementationInterface
+  class MDT_DEPLOYUTILS_CORE_EXPORT BinaryDependenciesLdd : public BinaryDependenciesImplementationInterface
   {
    Q_OBJECT
 

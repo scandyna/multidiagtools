@@ -18,15 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef QT_LIBRARY_TEST_H
-#define QT_LIBRARY_TEST_H
+#ifndef RPATH_TEST_H
+#define RPATH_TEST_H
 
 #include "TestBase.h"
-#include "Mdt/DeployUtils/LibraryInfoList.h"
-#include "Mdt/PlainText/StringRecord.h"
-#include "Mdt/PlainText/StringRecordList.h"
 
-class QtLibraryTest : public TestBase
+class RPathTest : public TestBase
 {
  Q_OBJECT
 
@@ -35,32 +32,10 @@ class QtLibraryTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void getQtLibrariesTest();
-  void getQtLibrariesTest_data();
-
-  void qtModuleListTest();
-
-  void moduleTest();
-  void moduleTest_data();
-  void modulesTest();
-  void modulesTest_data();
-  void modulesBenchmark();
-  void modulesBenchmark_data();
-
-  void qtPluginInfoTest();
-  void qtPluginInfoCompareTest();
-  void qtPluginInfoCompareTest_data();
-  void qtPluginInfoListTest();
-
-  void pluginsDirectoriesTest();
-  void pluginsDirectoriesTest_data();
-
-  void findLibrariesPluginsTest();
-
- private:
-
-  static Mdt::DeployUtils::LibraryInfoList libraryInfoListFromRecordList(const Mdt::PlainText::StringRecordList & recordList);
-  static Mdt::PlainText::StringRecordList recordListFromLibraryInfoList(const Mdt::DeployUtils::LibraryInfoList & libraries);
+  void rpathInfoTest();
+  void rpathInfoToStringLinuxTest();
+  void rpathInfoListTest();
+  void rpathInfoListFromRawRPathTest();
 };
 
-#endif // #ifndef QT_LIBRARY_TEST_H
+#endif // #ifndef RPATH_TEST_H

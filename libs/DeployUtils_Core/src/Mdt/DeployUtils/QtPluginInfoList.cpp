@@ -18,35 +18,43 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_LDD_WRAPPER_H
-#define MDT_DEPLOY_UTILS_LDD_WRAPPER_H
-
-#include "ToolExecutableWrapper.h"
-#include "MdtDeployUtils_CoreExport.h"
-#include <QString>
+#include "QtPluginInfoList.h"
+#include <algorithm>
+#include <iterator>
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief Wrapps a ldd executable
-   */
-  class MDT_DEPLOYUTILS_CORE_EXPORT LddWrapper : public ToolExecutableWrapper
-  {
-   Q_OBJECT
+QtPluginInfoList::QtPluginInfoList(std::initializer_list<QtPluginInfo> list)
+{
+  std::unique_copy( list.begin(), list.end(), std::back_inserter(mList) );
+}
 
-   public:
+void QtPluginInfoList::addPlugin(const QtPluginInfo & plugin)
+{
+  if(mList.contains(plugin)){
+    return;
+  }
+  mList.append(plugin);
+}
 
-    /*! \brief Constructor
-     */
-    explicit LddWrapper(QObject* parent = nullptr);
+void QtPluginInfoList::addPlugins(const QtPluginInfoList & plugins)
+{
+  for(const auto & plugin : plugins){
+    addPlugin(plugin);
+  }
+}
 
-    /*! \brief Execute the command to find dependencies
-     *
-     * \param binaryFilePath Path to a executable or a library
-     */
-    bool execFindDependencies(const QString & binaryFilePath);
+LibraryInfoList QtPluginInfoList::toLibraryInfoList() const
+{
+  LibraryInfoList list;
 
+  list.reserve(mList.count());
+  const auto f = [&list](const QtPluginInfo & qpi){
+    list.addLibrary(qpi.libraryInfo());
   };
+  std::for_each(mList.cbegin(), mList.cend(), f);
+
+  return list;
+}
 
 }} // namespace Mdt{ namespace DeployUtils{
-
-#endif // #ifndef MDT_DEPLOY_UTILS_LDD_WRAPPER_H

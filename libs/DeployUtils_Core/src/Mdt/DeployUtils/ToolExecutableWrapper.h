@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_TOOL_EXECUTABLE_WRAPPER_H
 
 #include "Mdt/Error.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include <QObject>
 #include <QProcess>
 #include <QString>
@@ -31,7 +32,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Common base class for command line tools (ldd, objdump, ...)
    */
-  class ToolExecutableWrapper : public QObject
+  class MDT_DEPLOYUTILS_CORE_EXPORT ToolExecutableWrapper : public QObject
   {
    Q_OBJECT
 

@@ -23,7 +23,11 @@
 
 #include "TestBase.h"
 #include "Mdt/DeployUtils/LibraryInfoList.h"
+#include "Mdt/DeployUtils/QtPluginInfoList.h"
 #include <QStringList>
+#include <QString>
+#include <utility>
+#include <vector>
 
 class FileCopierTest : public TestBase
 {
@@ -36,10 +40,14 @@ class FileCopierTest : public TestBase
 
   void createDirectoryTest();
   void copyLibrariesTest();
+  void copyQtPluginsTest();
 
  private:
 
   static Mdt::DeployUtils::LibraryInfoList createLibraryInfoList(const QStringList & libNameList, const QString & pathPrefix);
+
+  using QtPluginNameAndDir = std::pair<const QString, const QString>;
+  static Mdt::DeployUtils::QtPluginInfoList createQtPluginInfoList(const std::vector<QtPluginNameAndDir> & qtPluginsDef, const QString & pathPrefix);
 };
 
 #endif // #ifndef FILE_COPIER_TEST_H

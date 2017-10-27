@@ -74,9 +74,40 @@ bool FileCopier::copyLibraries(const LibraryInfoList & libraries, const QString 
   return true;
 }
 
+bool FileCopier::copyPlugins(const QtPluginInfoList & plugins, const QString & destinationPluginRootPath)
+{
+  for(const auto & sourcePlugin : plugins){
+    if(!copyPlugin(sourcePlugin, destinationPluginRootPath)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
 bool FileCopier::copyLibrary(const Mdt::DeployUtils::LibraryInfo& sourceLibrary, const QString& destinationDirectoryPath)
 {
-  QFileInfo sourceFileInfo(sourceLibrary.absoluteFilePath());
+  Q_ASSERT(!sourceLibrary.absoluteFilePath().isEmpty());
+
+  return copyFile( sourceLibrary.absoluteFilePath(), destinationDirectoryPath );
+}
+
+bool FileCopier::copyPlugin(const QtPluginInfo & sourcePlugin, const QString & destinationPluginRootPath)
+{
+  Q_ASSERT(!sourcePlugin.absoluteFilePath().isEmpty());
+  Q_ASSERT(!sourcePlugin.directoryName().isEmpty());
+
+  const auto destinationDirectoryPath = QDir::cleanPath( destinationPluginRootPath + "/" + sourcePlugin.directoryName() );
+  if(!createDirectory(destinationDirectoryPath)){
+    return false;
+  }
+
+  return copyFile( sourcePlugin.absoluteFilePath(), destinationDirectoryPath );
+}
+
+bool FileCopier::copyFile(const QString & sourceFilePath, const QString & destinationDirectoryPath)
+{
+  QFileInfo sourceFileInfo(sourceFilePath);
   const auto fileName = sourceFileInfo.fileName();
   const auto destinationFilePath = QDir::cleanPath( destinationDirectoryPath + QLatin1String("/") + fileName );
   const QFileInfo destinationFileInfo(destinationFilePath);
@@ -97,7 +128,7 @@ bool FileCopier::copyLibrary(const Mdt::DeployUtils::LibraryInfo& sourceLibrary,
       return false;
     }
   }
-  // Copy the library
+  // Copy the file
   Console::info(2) << " copy " << sourceFileInfo.fileName();
   QFile sourceFile(sourceFileInfo.absoluteFilePath());
   if( !sourceFile.copy(destinationFilePath) ){

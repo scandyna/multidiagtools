@@ -29,44 +29,31 @@
 #include <algorithm>
 #include <iterator>
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace DeployUtils{
 
-LibraryInfoList QtLibrary::findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList)
+QtPluginInfoList QtLibrary::findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList)
 {
-  LibraryInfoList plugins;
-
-  PathList pathPrefixList = searchFirstPathPrefixList;
-  pathPrefixList.appendPathList( PathList::getSystemLibraryPathList() );
-  SearchPathList searchPathList;
-  searchPathList.setPathPrefixList(pathPrefixList);
-  searchPathList.setPathSuffixList({"qt5/plugins","plugins"});
-
+  QtPluginInfoList plugins;
+  const auto pluginsRoot = findPluginsRoot(searchFirstPathPrefixList);
   const auto pluginDirectories = getPluginsDirectories( module(qtLibrary) );
-  const auto pathList = searchPathList.pathList();
   const auto os = LibraryName::operatingSystem(qtLibrary.libraryName().fullName());
   Q_ASSERT(os != OperatingSystem::Unknown);
 
   Console::info(2) << " searching plugins for library " << qtLibrary.libraryName().name();
-  for(const auto & path : pathList){
-    Console::info(3) << "  searching in " << path << " ...";
-    plugins = findPluginsInDirectories(path, pluginDirectories, os);
-    if(!plugins.isEmpty()){
-      break;
-    }
-  }
+  plugins = findPluginsInDirectories(pluginsRoot, pluginDirectories, os);
 
   return plugins;
 }
 
-LibraryInfoList QtLibrary::findLibrariesPlugins(const LibraryInfoList& qtLibraries, const PathList& searchFirstPathPrefixList)
+QtPluginInfoList QtLibrary::findLibrariesPlugins(const LibraryInfoList& qtLibraries, const PathList& searchFirstPathPrefixList)
 {
-  LibraryInfoList plugins;
+  QtPluginInfoList plugins;
 
   for(const auto & library : qtLibraries){
     const auto itemPlugins = findLibraryPlugins(library, searchFirstPathPrefixList);
-    plugins.addLibraries(itemPlugins);
+    plugins.addPlugins(itemPlugins);
   }
 
   return plugins;
@@ -200,6 +187,31 @@ QStringList QtLibrary::getPluginsDirectories(const QtModuleList & modules)
   return directories;
 }
 
+QString QtLibrary::findPluginsRoot(const PathList & pathPrefixList)
+{
+  QString pluginsRoot;
+  SearchPathList searchPathList;
+  searchPathList.setIncludePathPrefixes(true);
+  if(pathPrefixList.isEmpty()){
+    searchPathList.setPathPrefixList( PathList::getSystemLibraryPathList() );
+  }else{
+    searchPathList.setPathPrefixList(pathPrefixList);
+  }
+  searchPathList.setPathSuffixList({"qt5"});
+  const auto pathList = searchPathList.pathList();
+
+  for(const auto & path : pathList){
+    qDebug() << "Searchin in " << path;
+    QDir dir( QDir::cleanPath(path + "/plugins") );
+    if(dir.exists()){
+      pluginsRoot = dir.absolutePath();
+      return pluginsRoot;
+    }
+  }
+
+  return pluginsRoot;
+}
+
 bool QtLibrary::isQtLibrary(const LibraryInfo& libraryInfo)
 {
   return libraryInfo.libraryName().name().startsWith(QLatin1String("Qt5"), Qt::CaseInsensitive);
@@ -252,22 +264,23 @@ bool QtLibrary::compareLibraries(const QString & a, const char*const b)
   return ( QString::compare(a, QLatin1String(b), Qt::CaseInsensitive) == 0 );
 }
 
-LibraryInfoList QtLibrary::findPluginsInDirectories(const QString & pathPrefix, const QStringList& directories, OperatingSystem os)
+QtPluginInfoList QtLibrary::findPluginsInDirectories(const QString & pluginsRoot, const QStringList& directories, OperatingSystem os)
 {
-  LibraryInfoList plugins;
+  QtPluginInfoList plugins;
 
   for(const auto & directory : directories){
-    QDir dir( QDir::cleanPath(pathPrefix + "/" + directory) );
+    QDir dir( QDir::cleanPath(pluginsRoot + "/" + directory) );
     if(dir.exists()){
       const auto fiList = dir.entryInfoList(QDir::Files);
       for(const auto & fi : fiList){
         // When do cross compilation, don't bring wrong libraries to the list
         if(LibraryName::operatingSystem(fi.fileName()) == os){
           Console::info(4) << "   found " << fi.fileName();
-          LibraryInfo li;
-          li.setLibraryPlatformName(fi.fileName());
-          li.setAbsoluteFilePath(fi.absoluteFilePath());
-          plugins.addLibrary(li);
+          QtPluginInfo qpi;
+          qpi.setLibraryPlatformName(fi.fileName());
+          qpi.setAbsoluteFilePath(fi.absoluteFilePath());
+          qpi.setDirectoryName(directory);
+          plugins.addPlugin(qpi);
         }
       }
     }

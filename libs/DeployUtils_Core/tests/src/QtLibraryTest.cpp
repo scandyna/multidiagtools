@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "QtLibraryTest.h"
 #include "Mdt/DeployUtils/QtLibrary.h"
+#include "Mdt/DeployUtils/QtPluginInfo.h"
+#include "Mdt/DeployUtils/QtPluginInfoList.h"
 #include "Mdt/DeployUtils/Platform.h"
 #include "Mdt/PlainText/TestUtils.h"
 #include <QLibraryInfo>
@@ -202,6 +204,114 @@ void QtLibraryTest::modulesBenchmark_data()
     << QtModuleList{QtModule::Core, QtModule::Widgets, QtModule::Gui, QtModule::Sql, QtModule::Multimedia, QtModule::Qml};
 }
 
+void QtLibraryTest::qtPluginInfoTest()
+{
+  QtPluginInfo qpi;
+  QVERIFY(qpi.isNull());
+  qpi.setLibraryPlatformName("libqxcb.so");
+  qpi.setAbsoluteFilePath("/tmp/libqxcb.so");
+  qpi.setDirectoryName("platforms");
+  QCOMPARE(qpi.libraryName().fullName(), QString("libqxcb.so"));
+  QCOMPARE(qpi.absoluteFilePath(), QString("/tmp/libqxcb.so"));
+  QCOMPARE(qpi.directoryName(), QString("platforms"));
+  QVERIFY(!qpi.isNull());
+}
+
+void QtLibraryTest::qtPluginInfoCompareTest()
+{
+  QFETCH(QtPluginInfo, qpiA);
+  QFETCH(QtPluginInfo, qpiB);
+  QFETCH(bool, expectedEqual);
+
+  if(expectedEqual){
+    QVERIFY( qpiA == qpiB );
+    QVERIFY( !(qpiA != qpiB) );
+  }else{
+    QVERIFY( qpiA != qpiB );
+    QVERIFY( !(qpiA == qpiB) );
+  }
+}
+
+void QtLibraryTest::qtPluginInfoCompareTest_data()
+{
+  QTest::addColumn<QtPluginInfo>("qpiA");
+  QTest::addColumn<QtPluginInfo>("qpiB");
+  QTest::addColumn<bool>("expectedEqual");
+
+  const bool Equal = true;
+  const bool NotEqual = false;
+  QtPluginInfo qpi1;
+  QtPluginInfo qpi2;
+
+  qpi1.setLibraryPlatformName("libA.so");
+  qpi1.setAbsoluteFilePath("/tmp/libA.so");
+  qpi1.setDirectoryName("dirA");
+  qpi2.setLibraryPlatformName("libA.so");
+  qpi2.setAbsoluteFilePath("/tmp/libA.so");
+  qpi2.setDirectoryName("dirA");
+  QTest::newRow("A/A") << qpi1 << qpi2 << Equal;
+
+  qpi1.setLibraryPlatformName("libA.so");
+  qpi1.setAbsoluteFilePath("/tmp/libA.so");
+  qpi1.setDirectoryName("dirA");
+  qpi2.setLibraryPlatformName("libB.so");
+  qpi2.setAbsoluteFilePath("/tmp/libB.so");
+  qpi2.setDirectoryName("dirB");
+  QTest::newRow("A/B") << qpi1 << qpi2 << NotEqual;
+
+  qpi1.setLibraryPlatformName("libA.so");
+  qpi1.setAbsoluteFilePath("/tmp/libA.so");
+  qpi1.setDirectoryName("dirA");
+  qpi2.setLibraryPlatformName("libA.so");
+  qpi2.setAbsoluteFilePath("/tmp/libA.so");
+  qpi2.setDirectoryName("dirA2");
+  QTest::newRow("A/A/diff dir name") << qpi1 << qpi2 << NotEqual;
+}
+
+void QtLibraryTest::qtPluginInfoListTest()
+{
+  /*
+   * Initial state
+   */
+  QtPluginInfoList list;
+  QCOMPARE(list.count(), 0);
+  QVERIFY(list.isEmpty());
+//   QVERIFY(!list.containsLibraryAbsoluteFilePath("/tmp/lib1"));
+  /*
+   * Add a element
+   */
+  QtPluginInfo qpi1;
+  qpi1.setLibraryName(LibraryName("A"));
+  qpi1.setAbsoluteFilePath("/tmp/libA");
+  qpi1.setDirectoryName("dirA");
+  list.addPlugin(qpi1);
+  QCOMPARE(list.count(), 1);
+  QVERIFY(!list.isEmpty());
+  QCOMPARE(list.at(0).libraryName().name(), QString("A"));
+  QCOMPARE(list.at(0).absoluteFilePath(), QString("/tmp/libA"));
+  QCOMPARE(list.at(0).directoryName(), QString("dirA"));
+//   QVERIFY(list.containsLibraryAbsoluteFilePath("/tmp/lib1"));
+  // Check that ading twice does not work
+  list.addPlugin(qpi1);
+  QCOMPARE(list.count(), 1);
+  /*
+   * Check that we can use initializer_list
+   */
+  QtPluginInfo qpi2;
+  qpi2.setAbsoluteFilePath("/tmp/lib2");
+  QtPluginInfoList list2{qpi1, qpi2};
+  QCOMPARE(list2.count(), 2);
+  /*
+   * A plugins
+   */
+  QtPluginInfoList list3;
+  list3.addPlugins(list2);
+  QCOMPARE(list3.count(), list2.count());
+  // Check that no duplicate is added
+  list3.addPlugins(list2);
+  QCOMPARE(list3.count(), list2.count());
+}
+
 void QtLibraryTest::pluginsDirectoriesTest()
 {
   QFETCH(QtModuleList, modules);
@@ -269,7 +379,31 @@ void QtLibraryTest::findLibrariesPluginsTest()
   qtLibraries.addLibrary(qtGui);
   const auto plugins = qtLibrary.findLibrariesPlugins(qtLibraries, searchFirstPrefixPaths);
   QVERIFY(!plugins.isEmpty());
+  QVERIFY(!plugins.at(0).libraryName().name().isEmpty());
+  QVERIFY(!plugins.at(0).absoluteFilePath().isEmpty());
+  QVERIFY(!plugins.at(0).directoryName().isEmpty());
 }
+
+/** \todo Finding Qt plugins does not work well yet
+ *
+ * We have missmatch when using a non system wide installed Qt,
+ *  but have a system wide installed one.
+ *
+ * Plugins dirs on Linux, system wide (5.5):
+ * /usr/lib/x86_64-linux-gnu/qt5/plugins
+ *   |- platforms
+ *         |- libqxcb.so
+ *
+ * Example: dependencies of libqxcb.so:
+ *
+ *
+ * Plugin dirs on Linux, non system wide (5.9):
+ * prefix/plugins
+ *   |- platforms
+ *         |- libqxcb.so
+ *
+ * Example: dependencies of libqxcb.so:
+ */
 
 /*
  * Helpers

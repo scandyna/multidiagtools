@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_OBJDUMP_WRAPPER_H
 
 #include "ToolExecutableWrapper.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include <QString>
 #include <QStringList>
 
@@ -29,7 +30,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Wrapps a objdump executable
    */
-  class ObjdumpWrapper : public ToolExecutableWrapper
+  class MDT_DEPLOYUTILS_CORE_EXPORT ObjdumpWrapper : public ToolExecutableWrapper
   {
    Q_OBJECT
 

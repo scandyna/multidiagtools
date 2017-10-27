@@ -18,10 +18,11 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_LIST_H
-#define MDT_DEPLOY_UTILS_LIBRARY_INFO_LIST_H
+#ifndef MDT_DEPLOY_UTILS_QT_PLUGIN_INFO_LIST_H
+#define MDT_DEPLOY_UTILS_QT_PLUGIN_INFO_LIST_H
 
-#include "LibraryInfo.h"
+#include "QtPluginInfo.h"
+#include "LibraryInfoList.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include <QString>
 #include <QVector>
@@ -30,64 +31,50 @@
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief Container that holds a list of LibraryInfo
+  /*! \brief Container that holds a list of QtPluginInfo
    */
-  class MDT_DEPLOYUTILS_CORE_EXPORT LibraryInfoList
+  class MDT_DEPLOYUTILS_CORE_EXPORT QtPluginInfoList
   {
    public:
 
     /*! \brief STL-style const iterator
      */
-    using const_iterator = QVector<LibraryInfo>::const_iterator;
+    using const_iterator = QVector<QtPluginInfo>::const_iterator;
 
     /*! \brief STL value type
      */
-    using value_type = QVector<LibraryInfo>::value_type;
+    using value_type = QVector<QtPluginInfo>::value_type;
 
-    /*! \brief Construct a empty library info list
+    /*! \brief Construct a empty Qt plugin info list
      */
-    LibraryInfoList() = default;
+    QtPluginInfoList() = default;
 
-    /*! \brief Construct a library info list from initializer lists
+    /*! \brief Construct a Qt plugin info list from initializer lists
      */
-    LibraryInfoList(std::initializer_list<LibraryInfo> list);
+    QtPluginInfoList(std::initializer_list<QtPluginInfo> list);
 
-    /*! \brief Copy construct a library info list from a other
+    /*! \brief Copy construct a Qt plugin info list from a other
      */
-    LibraryInfoList(const LibraryInfoList &) = default;
+    QtPluginInfoList(const QtPluginInfoList &) = default;
 
-    /*! \brief Copy assign a library info list this this one
+    /*! \brief Copy assign a Qt plugin info list this this one
      */
-    LibraryInfoList & operator=(const LibraryInfoList &) = default;
+    QtPluginInfoList & operator=(const QtPluginInfoList &) = default;
 
-    /*! \brief Move construct a library info list from a other
+    /*! \brief Move construct a Qt plugin info list from a other
      */
-    LibraryInfoList(LibraryInfoList &&) = default;
+    QtPluginInfoList(QtPluginInfoList &&) = default;
 
-    /*! \brief Move assign a library info list this this one
+    /*! \brief Move assign a Qt plugin info list this this one
      */
-    LibraryInfoList & operator=(LibraryInfoList &&) = default;
+    QtPluginInfoList & operator=(QtPluginInfoList &&) = default;
 
-    /*! \brief Add a library info to the end of this list
+    /*! \brief Add a plugin info to the end of this list
      *
-     * If \a library allready exists,
+     * If \a plugin allready exists,
      *  it will not be added.
      */
-    void addLibrary(const LibraryInfo & library);
-
-    /*! \brief Add a library info to the end of this list
-     *
-     * This method is used for STL compatibility
-     *  and is the same as addLibrary()
-     */
-    void push_back(const LibraryInfo & library);
-
-    /*! \brief Add a list of libraries to this list
-     *
-     * Will add each libraries from \a libraries
-     *  that not actually exists in this list.
-     */
-    void addLibraries(const LibraryInfoList & libraries);
+    void addPlugin(const QtPluginInfo & plugin);
 
     /*! \brief Get count of items in this list
      */
@@ -96,6 +83,13 @@ namespace Mdt{ namespace DeployUtils{
       return mList.count();
     }
 
+    /*! \brief Add a list of qt plugins to this list
+     *
+     * Will add each plugin from \a plugins
+     *  that not actually exists in this list.
+     */
+    void addPlugins(const QtPluginInfoList & plugins);
+
     /*! \brief Check if this list is empty
      */
     bool isEmpty() const
@@ -103,28 +97,22 @@ namespace Mdt{ namespace DeployUtils{
       return mList.isEmpty();
     }
 
-    /*! \brief Check if this list contains library
-     */
-    bool containsLibraryAbsoluteFilePath(const QString & filePath) const;
-
-    /*! \brief Get library info list at index
+    /*! \brief Get a list of library info that is contained in plugins of this list
      *
-     * \pre \a index must be in a valid range ( 0 <= index < count() )
+     * \note The returned list is generated at each call of this method
      */
-    const LibraryInfo & at(int index) const
+    LibraryInfoList toLibraryInfoList() const;
+
+    /*! \brief Get plugin at \a index
+     *
+     * \pre \a index must be in valid range ( 0 <= index < count() ).
+     */
+    const QtPluginInfo & at(int index) const
     {
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < count());
       return mList.at(index);
     }
-
-    /*! \brief Clear this list
-     */
-    void clear();
-
-    /*! \brief Attempts to allocate memory for at least size elements
-     */
-    void reserve(int size);
 
     /*! \brief Returns an STL-style const iterator pointing to the first item in this list
      */
@@ -156,10 +144,10 @@ namespace Mdt{ namespace DeployUtils{
 
    private:
 
-    QVector<LibraryInfo> mList;
+    QVector<QtPluginInfo> mList;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{
-Q_DECLARE_METATYPE(Mdt::DeployUtils::LibraryInfoList)
+Q_DECLARE_METATYPE(Mdt::DeployUtils::QtPluginInfoList)
 
-#endif // #ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_LIST_H
+#endif // #ifndef MDT_DEPLOY_UTILS_QT_PLUGIN_INFO_LIST_H

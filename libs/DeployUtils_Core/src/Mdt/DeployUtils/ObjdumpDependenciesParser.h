@@ -21,6 +21,7 @@
 #ifndef MDT_DEPLOY_UTILS_OBJDUMP_DEPENDENCIES_PARSER_H
 #define MDT_DEPLOY_UTILS_OBJDUMP_DEPENDENCIES_PARSER_H
 
+#include "MdtDeployUtils_CoreExport.h"
 #include "Mdt/PlainText/StringConstIterator.h"
 #include "Mdt/PlainText/StringRecordList.h"
 #include <QString>
@@ -37,7 +38,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Objdump dependencies parser
    */
-  class ObjdumpDependenciesParser
+  class MDT_DEPLOYUTILS_CORE_EXPORT ObjdumpDependenciesParser
   {
    public:
 

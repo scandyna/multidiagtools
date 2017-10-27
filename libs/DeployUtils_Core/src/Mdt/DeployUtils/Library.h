@@ -23,6 +23,7 @@
 
 #include "LibraryInfo.h"
 #include "PathList.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include "Mdt/Error.h"
 #include <QString>
 #include <QObject>
@@ -31,7 +32,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Provides some helper methods for libraries
    */
-  class Library : public QObject
+  class MDT_DEPLOYUTILS_CORE_EXPORT Library : public QObject
   {
    Q_OBJECT
 

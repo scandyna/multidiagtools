@@ -40,12 +40,12 @@ namespace Mdt{ namespace DeployUtils{
  *
  * This was grabbed from https://github.com/probonopd/linuxdeployqt
  */
-static const std::array<const char * const, 44> LibrayExcludeListLinux =
+static const std::array<const char * const, 43> LibrayExcludeListLinux =
 {{
   "asound", "com_err", "crypt", "c", "dl", "drm", "expat", "fontconfig", "gcc_s","gdk_pixbuf-2",
   "gdk-x11-2.0", "gio-2.0", "glib-2.0", "GL", "gobject-2.0", "gpg-error", "gssapi_krb5", "gtk-x11-2.0", "ICE", "idn",
   "k5crypto", "keyutils", "m", "nss3", "nssutil3", "p11-kit", "pangoft2-1", "pangocairo-1.0", "pango-1.0", "pthread",
-  "resolv", "rt", "selinux", "SM", "stdc++", "usb-1.0", "uuid", "X11", "xcb", "z",
+  "resolv", "rt", "selinux", "SM", "usb-1.0", "uuid", "X11", "xcb", "z",
   "linux-vdso", "ld-linux", "ld-linux-x86", "ld-linux-x86-64"
 }};
 

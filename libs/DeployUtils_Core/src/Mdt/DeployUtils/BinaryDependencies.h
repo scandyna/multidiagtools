@@ -24,6 +24,7 @@
 #include "LibraryInfoList.h"
 #include "PathList.h"
 #include "Mdt/Error.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include <QObject>
 #include <QString>
 #include <QStringList>
@@ -37,7 +38,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Find dependencies for a executable or a library
    */
-  class BinaryDependencies : public QObject
+  class MDT_DEPLOYUTILS_CORE_EXPORT BinaryDependencies : public QObject
   {
    Q_OBJECT
 

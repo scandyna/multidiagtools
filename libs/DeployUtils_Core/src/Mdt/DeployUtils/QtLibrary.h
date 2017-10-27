@@ -23,11 +23,14 @@
 
 #include "LibraryInfo.h"
 #include "LibraryInfoList.h"
+#include "QtPluginInfo.h"
+#include "QtPluginInfoList.h"
 #include "QtModule.h"
 #include "QtModuleList.h"
 #include "PathList.h"
 #include "OperatingSystem.h"
 #include "Mdt/Error.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include <QObject>
 #include <QString>
 #include <QStringList>
@@ -36,7 +39,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief QtLibrary offers some utilities specific to Qt libraries
    */
-  class QtLibrary : public QObject
+  class MDT_DEPLOYUTILS_CORE_EXPORT QtLibrary : public QObject
   {
    Q_OBJECT
 
@@ -54,13 +57,13 @@ namespace Mdt{ namespace DeployUtils{
      *  For each path in all mentionned path prefixes, plugins are searched in
      *  qt5/plugins, then plugins subdirectories.
      */
-    LibraryInfoList findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList);
+    QtPluginInfoList findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList);
 
     /*! \brief Find plugins for a list of Qt libraries
      *
      * \sa findLibraryPlugins()
      */
-    LibraryInfoList findLibrariesPlugins(const LibraryInfoList & qtLibraries, const PathList & searchFirstPathPrefixList);
+    QtPluginInfoList findLibrariesPlugins(const LibraryInfoList & qtLibraries, const PathList & searchFirstPathPrefixList);
 
     /*! \brief Get Qt libraries out of \a libraries
      */
@@ -88,11 +91,24 @@ namespace Mdt{ namespace DeployUtils{
      */
     static QStringList getPluginsDirectories(const QtModuleList & modules);
 
+    /*! \brief Find the root directory of plugins
+     *
+     * For a given path prefix, a subdirectory, named plugins,
+     *  will be located in known subdirectories,
+     *  like plugins or qt5/plugins .
+     *
+     * If \a pathPrefixList contains at least 1 non empty path,
+     *  plugins directory will only be located starting
+     *  from prefixes in it.
+     *  Else, system path prefixes will be used.
+     */
+    static QString findPluginsRoot(const PathList & pathPrefixList);
+
    private:
 
     static bool isQtLibrary(const LibraryInfo & libraryInfo);
     static bool compareLibraries(const QString & a, const char * const b);
-    LibraryInfoList findPluginsInDirectories(const QString & pathPrefix, const QStringList & directories, OperatingSystem os);
+    static QtPluginInfoList findPluginsInDirectories(const QString & pluginsRoot, const QStringList & directories, OperatingSystem os);
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

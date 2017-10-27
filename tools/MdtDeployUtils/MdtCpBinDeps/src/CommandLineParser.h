@@ -51,11 +51,18 @@ public:
     return mBinaryFilesPathList;
   }
 
-  /*! \brief Get destination directory path
+  /*! \brief Get path to the destination of shared libraries
    */
-  QString destinationDirectoryPath() const
+  QString libraryDestinationPath() const
   {
-    return mDestinationDirectoryPath;
+    return mLibraryDestinationPath;
+  }
+
+  /*! \brief Get path to the destination of plugins
+   */
+  QString pluginDestinationPath() const
+  {
+    return mPluginDestinationPath;
   }
 
   /*! \brief Get the list of paths prefixes where to search dependencies first
@@ -77,11 +84,14 @@ private:
   bool checkAndSetArguments();
 
   QStringList mBinaryFilesPathList;
-  QString mDestinationDirectoryPath;
+  QString mLibraryDestinationPath;
+  QString mPluginDestinationPath;
   Mdt::DeployUtils::PathList mSearchFirstPathPrefixList;
   int mVerboseLevel = 1;
   QCommandLineParser mParser;
   QCommandLineOption mSearchFirstPathPrefixListOption;
+  QCommandLineOption mLibraryDestinationOption;
+  QCommandLineOption mPluginDestinationOption;
   QCommandLineOption mVerboseLevelOption;
 };
 

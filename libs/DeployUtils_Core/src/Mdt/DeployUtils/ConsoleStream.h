@@ -21,6 +21,7 @@
 #ifndef MDT_DEPLOY_UTILS_CONSOLE_STREAM_H
 #define MDT_DEPLOY_UTILS_CONSOLE_STREAM_H
 
+#include "MdtDeployUtils_CoreExport.h"
 #include <QtGlobal>
 #include <QString>
 #include <memory>
@@ -43,7 +44,7 @@ namespace Mdt{ namespace DeployUtils{
    *  and, when finished, remove the QDebug include,
    *  which permits the compiler to throw a error if we forgot a qDebug() somewhere.
    */
-  class ConsoleStream
+  class MDT_DEPLOYUTILS_CORE_EXPORT ConsoleStream
   {
    public:
 

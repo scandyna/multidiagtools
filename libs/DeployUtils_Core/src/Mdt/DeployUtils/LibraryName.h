@@ -23,6 +23,7 @@
 
 #include "LibraryVersion.h"
 #include "OperatingSystem.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include <QString>
 #include <QStringRef>
 
@@ -32,7 +33,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Representation of a shared library name
    */
-  class LibraryName
+  class MDT_DEPLOYUTILS_CORE_EXPORT LibraryName
   {
   public:
 

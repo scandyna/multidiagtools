@@ -24,6 +24,7 @@
 #include "LibraryInfoList.h"
 #include "PathList.h"
 #include "Mdt/Error.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include <QString>
 #include <QStringList>
 #include <QObject>
@@ -32,7 +33,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief
    */
-  class BinaryDependenciesImplementationInterface : public QObject
+  class MDT_DEPLOYUTILS_CORE_EXPORT BinaryDependenciesImplementationInterface : public QObject
   {
    Q_OBJECT
 

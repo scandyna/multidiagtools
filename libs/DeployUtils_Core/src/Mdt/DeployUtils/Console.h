@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_CONSOLE_H
 
 #include "ConsoleStream.h"
+#include "MdtDeployUtils_CoreExport.h"
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -50,7 +51,7 @@ namespace Mdt{ namespace DeployUtils{
    * \endcode
    * This message will not be displayed with above configuration.
    */
-  class Console
+  class MDT_DEPLOYUTILS_CORE_EXPORT Console
   {
    public:
 

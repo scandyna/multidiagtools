@@ -44,7 +44,7 @@ Searched in %2</source>
 <context>
     <name>Mdt::DeployUtils::BinaryFormat</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryFormat.cpp" line="42"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryFormat.cpp" line="45"/>
         <source>Could not parse the binary format of file &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -62,12 +62,12 @@ Searched in %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="92"/>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="123"/>
         <source>Could not remove destination file &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="104"/>
+        <location filename="../src/Mdt/DeployUtils/FileCopier.cpp" line="135"/>
         <source>Could not copy file &apos;%1&apos; to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -102,6 +102,14 @@ Searched in %2</source>
     </message>
 </context>
 <context>
+    <name>Mdt::DeployUtils::RPath</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/RPath.cpp" line="92"/>
+        <source>Directory &apos;%1&apos; does not exist, or is a file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::DeployUtils::ToolExecutableWrapper</name>
     <message>
         <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="47"/>
@@ -111,6 +119,16 @@ Searched in %2</source>
     <message>
         <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="54"/>
         <source>Error occured from command &apos;%1 %2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="61"/>
+        <source>Process for command &apos;%1 %2&apos; probably crashed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/ToolExecutableWrapper.cpp" line="67"/>
+        <source>Process for command &apos;%1 %2&apos; exit with code %3 .</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

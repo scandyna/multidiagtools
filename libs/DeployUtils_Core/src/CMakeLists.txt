@@ -31,9 +31,15 @@ set(SOURCE_FILES
     Mdt/DeployUtils/BinaryDependenciesLdd.cpp
     Mdt/DeployUtils/BinaryDependenciesObjdump.cpp
     Mdt/DeployUtils/FileCopier.cpp
+    Mdt/DeployUtils/QtPluginInfo.cpp
+    Mdt/DeployUtils/QtPluginInfoList.cpp
     Mdt/DeployUtils/QtLibrary.cpp
     Mdt/DeployUtils/QtModule.cpp
     Mdt/DeployUtils/QtModuleList.cpp
+    Mdt/DeployUtils/RPathInfo.cpp
+    Mdt/DeployUtils/RPathInfoList.cpp
+    Mdt/DeployUtils/PatchelfWrapper.cpp
+    Mdt/DeployUtils/RPath.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

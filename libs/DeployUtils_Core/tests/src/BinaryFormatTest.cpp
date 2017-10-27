@@ -23,6 +23,7 @@
 #include "Mdt/DeployUtils/ObjdumpWrapper.h"
 #include "Mdt/DeployUtils/Platform.h"
 #include <QCoreApplication>
+#include <QFileInfo>
 
 using namespace Mdt::DeployUtils;
 
@@ -37,6 +38,62 @@ void BinaryFormatTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void BinaryFormatTest::isFileAnExecutableByExtTest()
+{
+  QFETCH(QString, file);
+  QFETCH(bool, expectedIsAnExecutable);
+
+  QCOMPARE( BinaryFormat::isFileAnExecutableByExtension(file), expectedIsAnExecutable );
+}
+
+void BinaryFormatTest::isFileAnExecutableByExtTest_data()
+{
+  QTest::addColumn<QString>("file");
+  QTest::addColumn<bool>("expectedIsAnExecutable");
+
+  const bool isAnExecutable = true;
+  const bool isNotAnExecutable = false;
+
+  QTest::newRow("") << "" << isNotAnExecutable;
+  QTest::newRow("a") << "a" << isAnExecutable;
+  QTest::newRow("a.exe") << "a.exe" << isAnExecutable;
+  QTest::newRow("a.txt") << "a.txt" << isNotAnExecutable;
+  QTest::newRow("a.so") << "a.so" << isAnExecutable;
+  QTest::newRow("a.so.1") << "a.so.1" << isAnExecutable;
+  QTest::newRow("a.so.1.2") << "a.so.1.2" << isAnExecutable;
+  QTest::newRow("a.so.1.2.3") << "a.so.1.2.3" << isAnExecutable;
+  QTest::newRow("a.dll") << "a.dll" << isAnExecutable;
+  QTest::newRow("a.h") << "a.h" << isNotAnExecutable;
+  QTest::newRow("a.cpp") << "a.cpp" << isNotAnExecutable;
+}
+
+void BinaryFormatTest::isFileAnExecutableByExtBenchmark()
+{
+  QFETCH(QString, file);
+  QFETCH(bool, expectedIsAnExecutable);
+  bool isAnExecutable;
+
+  QBENCHMARK{
+   isAnExecutable = BinaryFormat::isFileAnExecutableByExtension(file);
+  }
+  QCOMPARE(isAnExecutable, expectedIsAnExecutable);
+}
+
+void BinaryFormatTest::isFileAnExecutableByExtBenchmark_data()
+{
+  QTest::addColumn<QString>("file");
+  QTest::addColumn<bool>("expectedIsAnExecutable");
+
+  const bool isAnExecutable = true;
+  const bool isNotAnExecutable = false;
+
+  QTest::newRow("a") << "a" << isAnExecutable;
+  QTest::newRow("a.exe") << "a.exe" << isAnExecutable;
+  QTest::newRow("a.txt") << "a.txt" << isNotAnExecutable;
+  QTest::newRow("a.so.1.2.3") << "a.so.1.2.3" << isAnExecutable;
+  QTest::newRow("a.dll") << "a.dll" << isAnExecutable;
+}
 
 void BinaryFormatTest::runTest()
 {

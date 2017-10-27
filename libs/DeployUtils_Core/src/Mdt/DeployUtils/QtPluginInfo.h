@@ -18,20 +18,20 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_H
-#define MDT_DEPLOY_UTILS_LIBRARY_INFO_H
+#ifndef MDT_DEPLOY_UTILS_QT_PLUGIN_INFO_H
+#define MDT_DEPLOY_UTILS_QT_PLUGIN_INFO_H
 
+#include "LibraryInfo.h"
 #include "LibraryName.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include <QString>
 #include <QMetaType>
-// #include <initializer_list>
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief Data value class that stores informations about a library
+  /*! \brief Data value class that stores informations about a Qt plugin
    */
-  class MDT_DEPLOYUTILS_CORE_EXPORT LibraryInfo
+  class MDT_DEPLOYUTILS_CORE_EXPORT QtPluginInfo
   {
    public:
 
@@ -43,7 +43,7 @@ namespace Mdt{ namespace DeployUtils{
      */
     QString absoluteFilePath() const
     {
-      return mAbsoluteFilePath;
+      return mLibraryInfo.absoluteFilePath();
     }
 
     /*! \brief Set library name
@@ -65,45 +65,68 @@ namespace Mdt{ namespace DeployUtils{
      */
     LibraryName libraryName() const
     {
-      return mLibraryName;
+      return mLibraryInfo.libraryName();
     }
 
-    /*! \brief Check if this library info is null
+    /*! \brief Set directory name
+     *
+     * Qt plugins are generally stored in a subdirectory called plugins.
+     *  They are organized in directories,
+     *  like platforms, audio, etc...,
+     *  which is the meaning of directory name here.
+     *
+     */
+    void setDirectoryName(const QString & name);
+
+    /*! \brief Get directory name
+     *
+     * \sa setDirectoryName()
+     */
+    QString directoryName() const
+    {
+      return mDirectoryName;
+    }
+
+    /*! \brief Get the library info hold in this plugin info
+     */
+    LibraryInfo libraryInfo() const
+    {
+      return mLibraryInfo;
+    }
+
+    /*! \brief Check if this plugin info is null
      */
     bool isNull() const
     {
-      return ( mLibraryName.isNull() || mAbsoluteFilePath.isEmpty() );
+      return ( mLibraryInfo.isNull() || mDirectoryName.isEmpty() );
     }
 
-    /*! \brief Check if library info a and b are equal
+    /*! \brief Check if Qt plugin info a and b are equal
      */
     friend
-    bool operator==(const LibraryInfo & a, const LibraryInfo & b)
+    bool operator==(const QtPluginInfo & a, const QtPluginInfo & b)
     {
-      if( QString::compare( a.mAbsoluteFilePath, b.mAbsoluteFilePath, Qt::CaseSensitive ) != 0 ){
+      if( QString::compare( a.mDirectoryName, b.mDirectoryName, Qt::CaseSensitive ) != 0 ){
         return false;
       }
-      if( QString::compare( a.mLibraryName.name(), b.mLibraryName.name(), Qt::CaseSensitive ) != 0 ){
-        return false;
-      }
-      return true;
+      return (a.mLibraryInfo == b.mLibraryInfo);
     }
 
-    /*! \brief Check if library info a and b are different
+    /*! \brief Check if Qt plugin info a and b are different
      */
     friend
-    bool operator!=(const LibraryInfo & a, const LibraryInfo & b)
+    bool operator!=(const QtPluginInfo & a, const QtPluginInfo & b)
     {
       return !(a == b);
     }
 
    private:
 
-    LibraryName mLibraryName;
-    QString mAbsoluteFilePath;
+    LibraryInfo mLibraryInfo;
+    QString mDirectoryName;
   };
 
 }} // namespace Mdt{ namespace DeployUtils{
-Q_DECLARE_METATYPE(Mdt::DeployUtils::LibraryInfo)
+Q_DECLARE_METATYPE(Mdt::DeployUtils::QtPluginInfo)
 
-#endif // #ifndef MDT_DEPLOY_UTILS_LIBRARY_INFO_H
+#endif // #ifndef MDT_DEPLOY_UTILS_QT_PLUGIN_INFO_H

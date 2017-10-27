@@ -24,6 +24,7 @@
 #include "OperatingSystem.h"
 #include "Compiler.h"
 #include "Processor.h"
+#include "MdtDeployUtils_CoreExport.h"
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -31,7 +32,7 @@ namespace Mdt{ namespace DeployUtils{
    *
    * \todo Currently, we have a very poor support.
    */
-  class Platform
+  class MDT_DEPLOYUTILS_CORE_EXPORT Platform
   {
    public:
 

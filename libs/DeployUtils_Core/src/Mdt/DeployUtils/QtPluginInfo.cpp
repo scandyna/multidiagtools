@@ -18,35 +18,28 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_LDD_WRAPPER_H
-#define MDT_DEPLOY_UTILS_LDD_WRAPPER_H
-
-#include "ToolExecutableWrapper.h"
-#include "MdtDeployUtils_CoreExport.h"
-#include <QString>
+#include "QtPluginInfo.h"
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief Wrapps a ldd executable
-   */
-  class MDT_DEPLOYUTILS_CORE_EXPORT LddWrapper : public ToolExecutableWrapper
-  {
-   Q_OBJECT
+void QtPluginInfo::setAbsoluteFilePath(const QString& path)
+{
+  mLibraryInfo.setAbsoluteFilePath(path);
+}
 
-   public:
+void QtPluginInfo::setLibraryPlatformName(const QString& name)
+{
+  mLibraryInfo.setLibraryPlatformName(name);
+}
 
-    /*! \brief Constructor
-     */
-    explicit LddWrapper(QObject* parent = nullptr);
+void QtPluginInfo::setLibraryName(const LibraryName& libraryName)
+{
+  mLibraryInfo.setLibraryName(libraryName);
+}
 
-    /*! \brief Execute the command to find dependencies
-     *
-     * \param binaryFilePath Path to a executable or a library
-     */
-    bool execFindDependencies(const QString & binaryFilePath);
-
-  };
+void QtPluginInfo::setDirectoryName(const QString& name)
+{
+  mDirectoryName = name;
+}
 
 }} // namespace Mdt{ namespace DeployUtils{
-
-#endif // #ifndef MDT_DEPLOY_UTILS_LDD_WRAPPER_H

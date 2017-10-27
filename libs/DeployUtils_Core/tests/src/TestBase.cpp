@@ -25,6 +25,8 @@
 #include <QFileInfo>
 #include <QDir>
 
+using namespace Mdt::DeployUtils;
+
 QStringList TestBase::sortedStringListCs(const QStringList& inList)
 {
   auto list = inList;
@@ -76,5 +78,49 @@ bool TestBase::writeTemporaryTextFile(QTemporaryFile & file, const QString& data
   stream << data;
   file.close();
 
+  return true;
+}
+
+QString TestBase::pathWithFakeRoot(const QTemporaryDir& root, const QString& path)
+{
+  return QDir::cleanPath( root.path() + path );
+}
+
+void TestBase::prependFakeRootToPath(const QTemporaryDir& root, QString& path)
+{
+  path = pathWithFakeRoot(root, path);
+}
+
+void TestBase::prependFakeRootToPathList(const QTemporaryDir& root, QStringList& pathList)
+{
+  for(auto it = pathList.begin(); it != pathList.end(); ++it){
+    *it = pathWithFakeRoot(root, *it);
+  }
+}
+
+void TestBase::prependFakeRootToPathList(const QTemporaryDir & root, PathList & pathList)
+{
+  auto tmp = pathList.toStringList();
+  prependFakeRootToPathList(root, tmp);
+  pathList = PathList::fromStringList(tmp);
+}
+
+bool TestBase::createPathInFakeRoot(const QTemporaryDir& root, const QString& path)
+{
+  QDir dir;
+  if( !dir.mkpath( pathWithFakeRoot(root, path) ) ){
+    qWarning() << "Could not create path " << pathWithFakeRoot(root, path);
+    return false;
+  }
+  return true;
+}
+
+bool TestBase::createPathListInFakeRoot(const QTemporaryDir& root, const QStringList& pathList)
+{
+  for(const auto & path : pathList){
+    if(!createPathInFakeRoot(root, path)){
+      return false;
+    }
+  }
   return true;
 }

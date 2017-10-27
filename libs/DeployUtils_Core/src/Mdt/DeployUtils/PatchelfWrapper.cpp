@@ -18,35 +18,28 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_LDD_WRAPPER_H
-#define MDT_DEPLOY_UTILS_LDD_WRAPPER_H
-
-#include "ToolExecutableWrapper.h"
-#include "MdtDeployUtils_CoreExport.h"
-#include <QString>
+#include "PatchelfWrapper.h"
 
 namespace Mdt{ namespace DeployUtils{
 
-  /*! \brief Wrapps a ldd executable
-   */
-  class MDT_DEPLOYUTILS_CORE_EXPORT LddWrapper : public ToolExecutableWrapper
-  {
-   Q_OBJECT
+PatchelfWrapper::PatchelfWrapper(QObject* parent)
+ : ToolExecutableWrapper(parent)
+{
+}
 
-   public:
+bool PatchelfWrapper::execReadRPath(const QString & binaryFilePath)
+{
+  return execPatchelf(QStringList{"--print-rpath",binaryFilePath});
+}
 
-    /*! \brief Constructor
-     */
-    explicit LddWrapper(QObject* parent = nullptr);
+bool PatchelfWrapper::execWriteRPath(const QString & rpath, const QString& binaryFilePath)
+{
+  return execPatchelf(QStringList{"--set-rpath",rpath,binaryFilePath});
+}
 
-    /*! \brief Execute the command to find dependencies
-     *
-     * \param binaryFilePath Path to a executable or a library
-     */
-    bool execFindDependencies(const QString & binaryFilePath);
-
-  };
+bool PatchelfWrapper::execPatchelf(const QStringList & arguments)
+{
+  return exec("patchelf", arguments);
+}
 
 }} // namespace Mdt{ namespace DeployUtils{
-
-#endif // #ifndef MDT_DEPLOY_UTILS_LDD_WRAPPER_H

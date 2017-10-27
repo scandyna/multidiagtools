@@ -21,11 +21,13 @@
 #ifndef MDT_DEPLOY_UTILS_LIBRARY_TREE_NODE_H
 #define MDT_DEPLOY_UTILS_LIBRARY_TREE_NODE_H
 
+#include "MdtDeployUtils_CoreExport.h"
+
 namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Node identifier used in LibraryTree
    */
-  class LibraryTreeNode
+  class MDT_DEPLOYUTILS_CORE_EXPORT LibraryTreeNode
   {
    public:
 

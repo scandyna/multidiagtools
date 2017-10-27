@@ -21,6 +21,7 @@
 #include "FileCopierTest.h"
 #include "Mdt/DeployUtils/FileCopier.h"
 #include "Mdt/DeployUtils/LibraryInfo.h"
+#include "Mdt/DeployUtils/QtPluginInfo.h"
 #include <QTemporaryDir>
 #include <QDir>
 #include <QFile>
@@ -110,6 +111,39 @@ void FileCopierTest::copyLibrariesTest()
   QVERIFY(fc.copyLibraries(libraryInfoList, destinationDirectoryPath));
 }
 
+void FileCopierTest::copyQtPluginsTest()
+{
+  FileCopier fc;
+  QTemporaryDir sourceRoot;
+  QTemporaryDir destinationRoot;
+
+  QVERIFY(sourceRoot.isValid());
+  QVERIFY(destinationRoot.isValid());
+
+  /*
+   * Create Qt plugin info list
+   * and create realted source files
+   */
+  const auto qtPluginInfoList = createQtPluginInfoList({{"libqxcb.so","platforms"},{"libqtaudio.so","audio"}}, sourceRoot.path());
+  for(const auto & qpi : qtPluginInfoList){
+    QVERIFY( createFile(qpi.absoluteFilePath()) );
+    QFileInfo fi(qpi.absoluteFilePath());
+    QVERIFY(fi.exists());
+  }
+  /*
+   * Run copy and check
+   */
+  const QString destinationDirectoryPath = QDir::cleanPath( destinationRoot.path() + "usr/lib/" );
+  QVERIFY(fc.copyPlugins(qtPluginInfoList, destinationDirectoryPath));
+  for(const auto & qpi : qtPluginInfoList){
+    const QString filePath = QDir::cleanPath( destinationDirectoryPath + "/" + qpi.directoryName() + "/" + qpi.libraryName().fullName() );
+    QFileInfo fi(filePath);
+    QVERIFY(fi.exists());
+  }
+  // Run the copy a second time (copier must not fail if destination file exists)
+  QVERIFY(fc.copyPlugins(qtPluginInfoList, destinationDirectoryPath));
+}
+
 LibraryInfoList FileCopierTest::createLibraryInfoList(const QStringList& libNameList, const QString& pathPrefix)
 {
   LibraryInfoList list;
@@ -122,6 +156,21 @@ LibraryInfoList FileCopierTest::createLibraryInfoList(const QStringList& libName
   }
 
   return list;
+}
+
+QtPluginInfoList FileCopierTest::createQtPluginInfoList(const std::vector<FileCopierTest::QtPluginNameAndDir> & qtPluginsDef, const QString& pathPrefix)
+{
+  QtPluginInfoList plugins;
+
+  for(const auto & pluginDef : qtPluginsDef){
+    QtPluginInfo qpi;
+    qpi.setLibraryPlatformName(pluginDef.first);
+    qpi.setAbsoluteFilePath( QDir::cleanPath(pathPrefix + "/" + pluginDef.first) );
+    qpi.setDirectoryName(pluginDef.second);
+    plugins.addPlugin(qpi);
+  }
+
+  return plugins;
 }
 
 /*

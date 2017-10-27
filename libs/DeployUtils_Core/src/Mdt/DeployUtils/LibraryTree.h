@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_LIBRARY_TREE_H
 
 #include "LibraryTreeNode.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include <QString>
 #include <QStringList>
 #include <memory>
@@ -40,7 +41,7 @@ namespace Mdt{ namespace DeployUtils{
    *       The user of the tree chooses what name makes sense
    *       (name with or without extension, ...)
    */
-  class LibraryTree
+  class MDT_DEPLOYUTILS_CORE_EXPORT LibraryTree
   {
    public:
 

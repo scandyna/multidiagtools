@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_QT_MODULE_LIST_H
 
 #include "QtModule.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include <QVector>
 #include <QMetaType>
 #include <initializer_list>
@@ -30,7 +31,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief List of QtModule
    */
-  class QtModuleList
+  class MDT_DEPLOYUTILS_CORE_EXPORT QtModuleList
   {
    public:
 

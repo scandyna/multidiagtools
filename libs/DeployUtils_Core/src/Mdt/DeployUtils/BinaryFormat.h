@@ -23,15 +23,18 @@
 
 #include "OperatingSystem.h"
 #include "Processor.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include "Mdt/Error.h"
 #include <QObject>
 #include <QString>
+
+class QFileInfo;
 
 namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Read the format of a executable or a library
    */
-  class BinaryFormat : public QObject
+  class MDT_DEPLOYUTILS_CORE_EXPORT BinaryFormat : public QObject
   {
    Q_OBJECT
 
@@ -63,6 +66,10 @@ namespace Mdt{ namespace DeployUtils{
       return mProcessor;
     }
 
+    /*! \brief Check if a file is a executable
+     */
+    static bool isFileAnExecutableByExtension(const QFileInfo & fileInfo);
+
     /*! \brief Get last error
      */
     Mdt::Error lastError() const
@@ -72,6 +79,7 @@ namespace Mdt{ namespace DeployUtils{
 
    private:
 
+    static bool compareExtension(const QString & extention, const char * const match);
     void setLastError(const Mdt::Error & error);
 
     OperatingSystem mOperatingSystem;

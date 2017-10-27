@@ -21,6 +21,7 @@
 #ifndef MDT_DEPLOY_UTILS_PATH_LIST_H
 #define MDT_DEPLOY_UTILS_PATH_LIST_H
 
+#include "MdtDeployUtils_CoreExport.h"
 #include <QString>
 #include <QStringList>
 #include <QMetaType>
@@ -30,7 +31,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief PathList contains a list of paths
    */
-  class PathList
+  class MDT_DEPLOYUTILS_CORE_EXPORT PathList
   {
    public:
 
@@ -181,7 +182,7 @@ namespace Mdt{ namespace DeployUtils{
     /*! \brief Get a list of system library paths for Windows
      *
      * Returns a hard-coded list of system library paths
-     *  that are known to exist Windows
+     *  that are known to exist on Windows
      */
     static PathList getSystemLibraryKnownPathListWindows();
 

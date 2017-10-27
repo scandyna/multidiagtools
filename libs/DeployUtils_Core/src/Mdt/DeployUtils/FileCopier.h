@@ -23,6 +23,9 @@
 
 #include "LibraryInfo.h"
 #include "LibraryInfoList.h"
+#include "QtPluginInfo.h"
+#include "QtPluginInfoList.h"
+#include "MdtDeployUtils_CoreExport.h"
 #include "Mdt/Error.h"
 #include <QObject>
 #include <QString>
@@ -31,7 +34,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Provides utilities for files and directories manipulation
    */
-  class FileCopier : public QObject
+  class MDT_DEPLOYUTILS_CORE_EXPORT FileCopier : public QObject
   {
    Q_OBJECT
 
@@ -54,8 +57,19 @@ namespace Mdt{ namespace DeployUtils{
      *
      * If directory designed by \a destinationDirectoryPath does not exist,
      *  it will first be created using createDirectory().
+     *
+     * \pre Each library in \a libraries must have its absolute file path set.
      */
     bool copyLibraries(const LibraryInfoList & libraries, const QString & destinationDirectoryPath);
+
+    /*! \brief Copy a list of Qt plugins to a directory
+     *
+     * If directory designed by \a destinationPluginRootPath does not exist,
+     *  it will first be created using createDirectory().
+     *
+     * \pre Each Qt plugin in \a plugins must have its absolute file path and directory name set.
+     */
+    bool copyPlugins(const QtPluginInfoList & plugins, const QString & destinationPluginRootPath);
 
     /*! \brief Get last error
      */
@@ -67,6 +81,8 @@ namespace Mdt{ namespace DeployUtils{
    private:
 
     bool copyLibrary(const LibraryInfo & sourceLibrary, const QString & destinationDirectoryPath);
+    bool copyPlugin(const QtPluginInfo & sourcePlugin, const QString & destinationPluginRootPath);
+    bool copyFile(const QString & sourceFilePath, const QString & destinationDirectoryPath);
 
     /*! \brief Set last error
      */

@@ -18,51 +18,49 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_LDD_DEPENDENCIES_PARSER_H
-#define MDT_DEPLOY_UTILS_LDD_DEPENDENCIES_PARSER_H
+#ifndef MDT_DEPLOY_UTILS_PATCHELF_WRAPPER_H
+#define MDT_DEPLOY_UTILS_PATCHELF_WRAPPER_H
 
+#include "ToolExecutableWrapper.h"
 #include "MdtDeployUtils_CoreExport.h"
-#include "Mdt/PlainText/StringConstIterator.h"
-#include "Mdt/PlainText/StringRecordList.h"
 #include <QString>
-#include <memory>
+#include <QStringList>
 
 namespace Mdt{ namespace DeployUtils{
 
-  namespace Impl{ namespace Ldd{
-
-  template<typename SourceIterator>
-  class DependenciesParserTemplate;
-
-  }} // namespace Impl{ namespace Ldd{
-
-  /*! \brief Ldd dependencies parser
+  /*! \brief Wraps a patchelf executable
+   *
+   * This is a low level wrapper around patchelf tool.
+   *  Applications should use RPath .
    */
-  class MDT_DEPLOYUTILS_CORE_EXPORT LddDependenciesParser
+  class MDT_DEPLOYUTILS_CORE_EXPORT PatchelfWrapper : public ToolExecutableWrapper
   {
+   Q_OBJECT
+
    public:
 
     /*! \brief Constructor
      */
-    LddDependenciesParser();
+    explicit PatchelfWrapper(QObject* parent = nullptr);
 
-    /*! \brief Destructor
+    /*! \brief Execute the command to read RPATH
+     *
+     * \param binaryFilePath Path to a executable or a library
      */
-    ~LddDependenciesParser();
+    bool execReadRPath(const QString & binaryFilePath);
 
-    /*! \brief Prase the ldd output data
+    /*! \brief Execute the command to write RPATH
+     *
+     * \param rpath RPATH string to pass to patchelf
+     * \param binaryFilePath Path to a executable or a library
      */
-    bool parse(const QString & data);
-
-    /*! \brief Get parsed dependencies
-     */
-    Mdt::PlainText::StringRecordList rawDependencies() const;
+    bool execWriteRPath(const QString & rpath, const QString & binaryFilePath);
 
    private:
 
-    std::unique_ptr< Impl::Ldd::DependenciesParserTemplate<Mdt::PlainText::StringConstIterator> >mParser;
+    bool execPatchelf(const QStringList & arguments);
   };
 
 }} // namespace Mdt{ namespace DeployUtils{
 
-#endif // #ifndef MDT_DEPLOY_UTILS_LDD_DEPENDENCIES_PARSER_H
+#endif // #ifndef MDT_DEPLOY_UTILS_PATCHELF_WRAPPER_H

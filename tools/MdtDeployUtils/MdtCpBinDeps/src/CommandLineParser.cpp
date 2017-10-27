@@ -31,6 +31,8 @@ using namespace Mdt::DeployUtils;
 
 CommandLineParser::CommandLineParser()
   : mSearchFirstPathPrefixListOption(QStringList{"p","prefix-path"}),
+    mLibraryDestinationOption("library-destination"),
+    mPluginDestinationOption("plugin-destination"),
     mVerboseLevelOption("verbose")
 {
   mParser.setApplicationDescription(tr("Find binary dependencies of executable(s) or library(ies) and copy them."));
@@ -44,6 +46,16 @@ CommandLineParser::CommandLineParser()
   );
   mSearchFirstPathPrefixListOption.setValueName("path-list");
   mParser.addOption(mSearchFirstPathPrefixListOption);
+  mLibraryDestinationOption.setDescription(
+    tr("Destination of the dependend shared libraries.")
+  );
+  mLibraryDestinationOption.setValueName("path");
+  mParser.addOption(mLibraryDestinationOption);
+  mPluginDestinationOption.setDescription(
+    tr("Destination of the dependent plugins.")
+  );
+  mPluginDestinationOption.setValueName("path");
+  mParser.addOption(mPluginDestinationOption);
   mVerboseLevelOption.setDescription(
     tr("Level of details to display (0-4).")
   );
@@ -51,13 +63,8 @@ CommandLineParser::CommandLineParser()
   mParser.addOption(mVerboseLevelOption);
   mParser.addPositionalArgument(
     "binary-files",
-    tr("list of executables or libraries for which dependencies must be copied."
+    tr("list of executables or libraries for which dependencies must be copied. "
        "Note: the list must be a string with ; separated values (This makes passing lists from CMake easy, and avoids platform specific issues).")
-  );
-  mParser.addPositionalArgument(
-    "destination",
-    tr("Dependencies will be copied to destination. "
-       "If destination directory does not exist, it will be created first. ")
   );
 }
 
@@ -70,15 +77,25 @@ bool CommandLineParser::process()
 
 bool CommandLineParser::checkAndSetArguments()
 {
-  if(mParser.positionalArguments().size() != 2){
-    Console::error() << "expected 2 arguments (binary-files and destination)";
+  if(mParser.positionalArguments().size() != 1){
+    Console::error() << "expected 1 arguments (binary-files)";
     return false;
   }
-  Q_ASSERT(mParser.positionalArguments().size() == 2);
+  Q_ASSERT(mParser.positionalArguments().size() == 1);
   // List of binaries
   mBinaryFilesPathList = mParser.positionalArguments().at(0).split(';', QString::SkipEmptyParts);
-  // Destination
-  mDestinationDirectoryPath = mParser.positionalArguments().at(1);
+  // Library destination
+  if(!mParser.isSet(mLibraryDestinationOption)){
+    Console::error() << "expected a library-destination";
+    return false;
+  }
+  mLibraryDestinationPath = mParser.value(mLibraryDestinationOption);
+  // Plugins destinations
+  if(!mParser.isSet(mPluginDestinationOption)){
+    Console::error() << "expected a plugin-destination";
+    return false;
+  }
+  mPluginDestinationPath = mParser.value(mPluginDestinationOption);
   // Library search first prefix paths
   mSearchFirstPathPrefixList = PathList::fromStringList( mParser.value(mSearchFirstPathPrefixListOption).split(';', QString::SkipEmptyParts) );
   // Verbose level
