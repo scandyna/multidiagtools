@@ -1,42 +1,42 @@
-format 213
+format 214
 
 classcanvas 128002 class_ref 4159234 // Library
   classdiagramsettings member_max_width 0 end
-  xyz 394.5 124.25 2000
+  xyz 40.25 121 2000
 end
 classcanvas 128130 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 560.5 40.75 2006
+  xyz 209.5 40.75 2006
 end
 note 129410 "Utilities:
  - Get complete name of a library for given platform
  - Find a library
  - Copy a library
 "
-  xyzwh 40.5 510.5 2000 493 141
+  xyzwh 40.5 543 2000 493 141
 classcanvas 129666 class_ref 4161538 // Platform
   classdiagramsettings member_max_width 0 end
-  xyz 41 749 2000
+  xyz 41 781.5 2000
 end
 classcanvas 129794 class_ref 4169474 // LibraryName
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 46 300.75 2000
+  xyz 761 333.25 2000
 end
 classcanvas 130434 class_ref 4169602 // OperatingSystem
   classdiagramsettings member_max_width 0 end
-  xyz 263 726 2006
+  xyz 263 758.5 2006
 end
 classcanvas 130690 class_ref 4169730 // LibraryMode
   classdiagramsettings member_max_width 0 end
-  xyz 184.25 273 2005
+  xyz 554.75 299 2005
 end
 classcanvas 131074 class_ref 4169858 // LibraryVersion
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 39 385.25 2005
+  xyz 754 417.75 2005
 end
 classcanvas 131330 class_ref 4158978 // LibraryInfo
   classdiagramsettings member_max_width 0 end
-  xyz 169.25 113.25 2000
+  xyz 475.75 77 2000
 end
 relationcanvas 128258 relation_ref 4666114 // <generalisation>
   from ref 128002 z 2007 to ref 128130
@@ -49,7 +49,7 @@ relationcanvas 130562 relation_ref 4666754 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 4666882 // <directional composition>
-  decenter_begin 577
+  decenter_begin 422
   from ref 129794 z 2006 to ref 130690
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -60,14 +60,11 @@ relationcanvas 131202 relation_ref 4667010 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131458 relation_ref 4673538 // <directional composition>
-  decenter_begin 481
-  decenter_end 478
   from ref 131330 z 2006 to ref 130690
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131842 relation_ref 4673794 // <directional composition>
-  decenter_end 471
   from ref 128002 z 2001 to ref 131330
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

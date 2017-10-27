@@ -1,19 +1,23 @@
-format 213
+format 214
 
 classcanvas 128002 class_ref 4159362 // LddWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 41 274 2000
+  xyz 39 351.25 2000
 end
 classcanvas 128130 class_ref 4159746 // ObjdumpWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 450 272 2005
+  xyz 439 353.25 2005
 end
 classcanvas 128258 class_ref 4161666 // ToolExecutableWrapper
   classdiagramsettings member_max_width 0 end
-  xyz 382 42 2011
+  xyz 405 125.25 2011
 end
 note 129794 "Maybe we should use PlainText + Boost.Spirit to parse outputs of ldd, but more especially objdump"
-  xyzwh 40.5 456.5 2000 363 109
+  xyzwh 40.5 621 2000 363 109
+classcanvas 131074 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 567 40.75 2018
+end
 relationcanvas 130562 relation_ref 4681090 // <generalisation>
   from ref 128130 z 2012 to ref 128258
   no_role_a no_role_b
@@ -21,9 +25,14 @@ relationcanvas 130562 relation_ref 4681090 // <generalisation>
 end
 relationcanvas 130690 relation_ref 4681218 // <generalisation>
   geometry VHV unfixed
-  from ref 128002 z 2012 to point 222 232
-  line 130818 z 2012 to point 574 232
+  from ref 128002 z 2012 to point 220 313
+  line 130818 z 2012 to point 597 313
   line 130946 z 2012 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131202 relation_ref 4658562 // <generalisation>
+  from ref 128258 z 2019 to ref 131074
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
