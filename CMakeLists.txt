@@ -139,7 +139,7 @@ if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY AND CMAKE_CROSSCOMPILING)
   include(MdtDependenciesUtils)
   # Because I not found a proper way to get a list of all existing tests,
   # just put some of them that have the most dependencies.
-  mdt_copy_binary_dependencies_experimental(
+  mdt_copy_binary_dependencies(
     TARGETS mdtitemmodel_filterproxymodeltest mdtdeployutils_librarytest mdtplaintext_csvparsertest mdterror_errortest
     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}

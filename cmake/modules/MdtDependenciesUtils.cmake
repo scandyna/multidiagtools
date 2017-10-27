@@ -67,26 +67,104 @@ endfunction()
 # Input arguments:
 #  TARGET:
 #   Name of the target for which to install dependencies
+#  SEARCH_FIRST_PATH_PREFIX_LIST (optional):
+#   A list of full paths to directories where to find libraries and plugins first.
+#   For libraries, this option is only used for binaries that do not support RPATH (for example .exe or .dll).
+#   Internally, searching is done in known subdirectories of each specified directory (for example bin, qt5/bin).
 #
 function(mdt_install_binary_dependencies)
   # Parse arguments
   set(oneValueArgs TARGET)
-  cmake_parse_arguments(VAR "" "${oneValueArgs}" "" ${ARGN})
+  set(multiValueArgs TARGETS SEARCH_FIRST_PATH_PREFIX_LIST)
+  cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   # Set our local variables and check the mandatory ones
   set(target "${VAR_TARGET}")
   if(NOT target)
     message(FATAL_ERROR "mdt_install_binary_dependencies(): TARGET argument is missing.")
   endif()
+  set(search_first_path_prefix_list ${VAR_SEARCH_FIRST_PATH_PREFIX_LIST})
   # Create a custom target that depends on target and that will put dependencies in a directory
+  message("SEARCH_FIRST_PATH_PREFIX_LIST: ${search_first_path_prefix_list}")
   mdt_copy_binary_dependencies(
-    TARGET ${target}
-    DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/MdtBinaryDependencies"
+    TARGETS ${target}
+    DESTINATION_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies"
+    SEARCH_FIRST_PATH_PREFIX_LIST "${search_first_path_prefix_list}"
   )
   # Create a install rule for this new target
+  file(GLOB binary_dependencies "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies/*")
   install(
-    DIRECTORY "${CMAKE_BINARY_DIR}/MdtBinaryDependencies"
+#     DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies"
+    FILES ${binary_dependencies}
     DESTINATION bin
   )
+endfunction()
+
+# Copy dependencies of a list of binary targets to a directory
+#
+# This can be used to copy needed dependencies to run unit test
+# on systems that not support RPATH (f.ex. Windows),
+# or to create selft-contained packages.
+#
+# Note that the copy is not done when this function is called.
+# Behind the scene, a target that depend on TARGET is created,
+# so the dependnecies are only evaluated after TARGET was built.
+#
+# Note: to prevent failures during the copy, only call this function once per destination directory.
+#
+# Input arguments:
+#  TARGETS:
+#   List containing names of the targets for which to copy dependencies
+#  LIBRARY_DESTINATION:
+#   Full path to the destination of libraries.
+#  PLUGIN_DESTINATION:
+#   Full path to the destination of plugins.
+
+#  DESTINATION_DIRECTORY:
+#   Full path to the destination directory
+
+#  SEARCH_FIRST_PATH_PREFIX_LIST (optional):
+#   A list of full paths to directories where to find libraries and plugins first.
+#   For libraries, this option is only used for binaries that do not support RPATH (for example .exe or .dll).
+#   Internally, searching is done in known subdirectories of each specified directory (for example bin, qt5/bin).
+#
+function(mdt_copy_binary_dependencies)
+  # Parse arguments
+  set(oneValueArgs DESTINATION_DIRECTORY)
+  set(multiValueArgs TARGETS SEARCH_FIRST_PATH_PREFIX_LIST)
+  cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  # Set our local variables and check the mandatory ones
+  set(targets "${VAR_TARGETS}")
+  if(NOT targets)
+    message(FATAL_ERROR "mdt_copy_binary_dependencies(): TARGETS argument is missing.")
+  endif()
+  set(destination_directory "${VAR_DESTINATION_DIRECTORY}")
+  if(NOT destination_directory)
+    message(FATAL_ERROR "mdt_copy_binary_dependencies(): DESTINATION_DIRECTORY argument is missing.")
+  endif()
+  set(search_first_path_prefix_list ${VAR_SEARCH_FIRST_PATH_PREFIX_LIST})
+
+  # Create the list of targets files
+  set(target_file_list)
+  foreach(target ${targets})
+    list(APPEND target_file_list "$<TARGET_FILE:${target}>")
+  endforeach()
+
+  # Create a new target that depends on destination
+  get_filename_component(destination_name "${destination_directory}" NAME)
+  set(bin_deps_target "${destination_name}_bin_deps")
+  add_custom_target(
+    "${bin_deps_target}"
+    ALL
+    COMMAND mdtcpbindeps
+            -p "${search_first_path_prefix_list}"
+            --verbose 1
+            "${target_file_list}"
+            "${destination_directory}"
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+    VERBATIM
+  )
+  add_dependencies("${bin_deps_target}" ${targets})
+
 endfunction()
 
 # Copy dependencies of a binary target to a directory
@@ -107,7 +185,7 @@ endfunction()
 #   If this option is passed, no warnings will be emitted.
 #   (Most of the warnings are actually about cross-compiling)
 #
-function(mdt_copy_binary_dependencies)
+function(mdt_copy_binary_dependencies_OLD)
   # Parse arguments
   set(oneValueArgs TARGET DESTINATION_DIRECTORY)
   set(options NO_WARNINGS)
@@ -199,68 +277,6 @@ if(CMAKE_CROSSCOMPILING)
   include(${IMPORT_DEPLOY_UTILS})
 endif()
 
-# Copy dependencies of a list of binary targets to a directory
-#
-# This can be used to copy needed dependencies to run unit test
-# on systems that not support RPATH (f.ex. Windows),
-# or to create selft-contained packages.
-#
-# Note that the copy is not done when this function is called.
-# Behind the scene, a target that depend on TARGET is created,
-# so the dependnecies are only evaluated after TARGET was built.
-#
-# Note: to prevent failures during the copy, only call this function once per destination directory.
-#
-# Input arguments:
-#  TARGETS:
-#   List containing names of the targets for which to copy dependencies
-#  DESTINATION_DIRECTORY:
-#   Full path to the destination directory
-#  SEARCH_FIRST_PATH_PREFIX_LIST (optional):
-#   A list of full paths to directories where to find libraries and plugins first.
-#   For libraries, this option is only used for binaries that do not support RPATH (for example .exe or .dll).
-#   Internally, searching is done in known subdirectories of each specified directory (for example bin, qt5/bin).
-#
-function(mdt_copy_binary_dependencies_experimental)
-  # Parse arguments
-  set(oneValueArgs DESTINATION_DIRECTORY)
-  set(multiValueArgs TARGETS SEARCH_FIRST_PATH_PREFIX_LIST)
-  cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-  # Set our local variables and check the mandatory ones
-  set(targets "${VAR_TARGETS}")
-  if(NOT targets)
-    message(FATAL_ERROR "mdt_copy_binary_dependencies(): TARGETS argument is missing.")
-  endif()
-  set(destination_directory "${VAR_DESTINATION_DIRECTORY}")
-  if(NOT destination_directory)
-    message(FATAL_ERROR "mdt_copy_binary_dependencies(): DESTINATION_DIRECTORY argument is missing.")
-  endif()
-  set(search_first_path_prefix_list ${VAR_SEARCH_FIRST_PATH_PREFIX_LIST})
-  set(path_suffixes ${VAR_PATH_SUFFIXES})
-
-  # Create the list of targets files
-  set(target_file_list)
-  foreach(target ${targets})
-    list(APPEND target_file_list "$<TARGET_FILE:${target}>")
-  endforeach()
-
-  # Create a new target that depends on destination
-  get_filename_component(destination_name "${destination_directory}" NAME)
-  set(bin_deps_target "${destination_name}_bin_deps")
-  add_custom_target(
-    "${bin_deps_target}"
-    ALL
-    COMMAND mdtcpbindeps
-            -p "${search_first_path_prefix_list}"
-            --verbose 1
-            "${target_file_list}"
-            "${destination_directory}"
-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-    VERBATIM
-  )
-  add_dependencies("${bin_deps_target}" ${targets})
-
-endfunction()
 
 # Find and copy a library
 #
@@ -281,52 +297,52 @@ endfunction()
 #    DESTINATION_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 #  )
 #
-function(mdt_find_and_copy_libraries)
-  # Parse arguments
-  set(oneValueArgs DESTINATION_DIRECTORY)
-  set(multiValueArgs LIBRARIES)
-  cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-  # Set our local variables and check the mandatory ones
-  set(libraries ${VAR_LIBRARIES})
-  if(NOT libraries)
-    message(FATAL_ERROR "mdt_find_and_copy_libraries(): LIBRARIES argument is missing.")
-  endif()
-  set(destination_directory ${VAR_DESTINATION_DIRECTORY})
-  if(NOT destination_directory)
-    message(FATAL_ERROR "mdt_find_and_copy_libraries(): DESTINATION_DIRECTORY argument is missing.")
-  endif()
-  # On Windows, we need to find dll libraries, not .a or .dll.a
-  # Setting CMAKE_FIND_LIBRARY_SUFFIXES does not fix the problem.
-  # So, we tell CMake to only search in bin directories, not lib
-  set(search_directories "")
-  if(WIN32)
-#     set(CMAKE_FIND_LIBRARY_PREFIXES "")
-    set(CMAKE_FIND_LIBRARY_SUFFIXES .dll)
-    foreach(directory ${CMAKE_FIND_ROOT_PATH})
-      list(APPEND search_directories "${directory}/bin")
-      list(APPEND search_directories "${directory}/qt5/bin")
-    endforeach()
-    foreach(directory ${CMAKE_PREFIX_PATH})
-      list(APPEND search_directories "${directory}/bin")
-      list(APPEND search_directories "${directory}/qt5/bin")
-    endforeach()
-  else()
-    list(APPEND search_directories ${CMAKE_FIND_ROOT_PATH})
-    list(APPEND search_directories ${CMAKE_PREFIX_PATH})
-  endif()
-  list(REMOVE_DUPLICATES search_directories)
-  # Find libraries
-  set(libraries_files "")
-  foreach(library ${libraries})
-    message(STATUS "Searching ${library}")
-    find_library(${library}_file NAMES ${library} PATHS ${search_directories} NO_DEFAULT_PATH)
-    if(NOT ${library}_file)
-      message(WARNING "Could not find library ${library}")
-    else()
-      list(APPEND libraries_files "${${library}_file}")
-    endif()
-  endforeach()
-  if(libraries_files)
-    file(COPY ${libraries_files} DESTINATION "${destination_directory}")
-  endif()
-endfunction()
+# function(mdt_find_and_copy_libraries)
+#   # Parse arguments
+#   set(oneValueArgs DESTINATION_DIRECTORY)
+#   set(multiValueArgs LIBRARIES)
+#   cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+#   # Set our local variables and check the mandatory ones
+#   set(libraries ${VAR_LIBRARIES})
+#   if(NOT libraries)
+#     message(FATAL_ERROR "mdt_find_and_copy_libraries(): LIBRARIES argument is missing.")
+#   endif()
+#   set(destination_directory ${VAR_DESTINATION_DIRECTORY})
+#   if(NOT destination_directory)
+#     message(FATAL_ERROR "mdt_find_and_copy_libraries(): DESTINATION_DIRECTORY argument is missing.")
+#   endif()
+#   # On Windows, we need to find dll libraries, not .a or .dll.a
+#   # Setting CMAKE_FIND_LIBRARY_SUFFIXES does not fix the problem.
+#   # So, we tell CMake to only search in bin directories, not lib
+#   set(search_directories "")
+#   if(WIN32)
+# #     set(CMAKE_FIND_LIBRARY_PREFIXES "")
+#     set(CMAKE_FIND_LIBRARY_SUFFIXES .dll)
+#     foreach(directory ${CMAKE_FIND_ROOT_PATH})
+#       list(APPEND search_directories "${directory}/bin")
+#       list(APPEND search_directories "${directory}/qt5/bin")
+#     endforeach()
+#     foreach(directory ${CMAKE_PREFIX_PATH})
+#       list(APPEND search_directories "${directory}/bin")
+#       list(APPEND search_directories "${directory}/qt5/bin")
+#     endforeach()
+#   else()
+#     list(APPEND search_directories ${CMAKE_FIND_ROOT_PATH})
+#     list(APPEND search_directories ${CMAKE_PREFIX_PATH})
+#   endif()
+#   list(REMOVE_DUPLICATES search_directories)
+#   # Find libraries
+#   set(libraries_files "")
+#   foreach(library ${libraries})
+#     message(STATUS "Searching ${library}")
+#     find_library(${library}_file NAMES ${library} PATHS ${search_directories} NO_DEFAULT_PATH)
+#     if(NOT ${library}_file)
+#       message(WARNING "Could not find library ${library}")
+#     else()
+#       list(APPEND libraries_files "${${library}_file}")
+#     endif()
+#   endforeach()
+#   if(libraries_files)
+#     file(COPY ${libraries_files} DESTINATION "${destination_directory}")
+#   endif()
+# endfunction()
