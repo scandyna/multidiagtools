@@ -74,6 +74,12 @@ Install tools:
 sudo apt-get install cmake make g++
 ```
 
+Some tools from DeployUtils have some runtime dependencies,
+like objdump and patchelf:
+```bash
+sudo apt-get binutils patchelf
+```
+
 To install Mdt, one option is to generate basic Debian packages (covered later in this documentation).
 For this, following dependencies are also needed:
 ```bash
