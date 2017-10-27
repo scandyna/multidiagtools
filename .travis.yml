@@ -73,6 +73,7 @@ before_install:
 install:
  - sudo apt-get install -y cmake
  - sudo apt-get install -y libboost-dev
+ - sudo apt-get install -y patchelf
  - yes | sudo apt-get install -y qt58base qt58x11extras qt58imageformats qt58svg qt58tools
 
 before_script:
