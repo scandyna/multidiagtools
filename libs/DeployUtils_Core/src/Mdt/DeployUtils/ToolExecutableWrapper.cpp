@@ -57,7 +57,18 @@ bool ToolExecutableWrapper::exec(const QString& exeName, const QStringList& argu
     setLastError(error);
     return false;
   }
-  /// \todo Should we use QProcess::exitCode() ? Se the doc
+  if(mProcess.exitStatus() != QProcess::NormalExit){
+    const QString msg = tr("Process for command '%1 %2' probably crashed.").arg(exeName, arguments.join(' '));
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    setLastError(error);
+    return false;
+  }
+  if(mProcess.exitCode() != 0){
+    const QString msg = tr("Process for command '%1 %2' exit with code %3 .").arg(exeName, arguments.join(' ').arg(mProcess.exitCode()));
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    setLastError(error);
+    return false;
+  }
 
   return true;
 }
