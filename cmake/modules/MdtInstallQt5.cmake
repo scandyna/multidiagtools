@@ -21,7 +21,8 @@ if(WIN32)
   string(REPLACE "/" "\\" compiler_bin_dir_win "${compiler_bin_dir}")
   string(REPLACE "/" "\\" qt_bin_dir_win "${qt_bin_dir}")
   string(REPLACE "/" "\\" mdt_bin_dir_win "${CMAKE_INSTALL_PREFIX}/bin")
-  set(env_script "\@echo off\r\nset PATH=${compiler_bin_dir_win};${qt_bin_dir_win};${mdt_bin_dir_win};%PATH%")
+  string(REPLACE "/" "\\" mdt_cmake_module_path "${CMAKE_INSTALL_PREFIX}/share/cmake/modules")
+  set(env_script "\@echo off\r\nset PATH=${compiler_bin_dir_win};${qt_bin_dir_win};${mdt_bin_dir_win};%PATH%\r\nset MDT_CMAKE_MODULE_PATH=${mdt_cmake_module_path}")
   file(WRITE "${CMAKE_BINARY_DIR}/mdtenv.bat" "${env_script}")
   install(
     PROGRAMS "${CMAKE_BINARY_DIR}/mdtenv.bat"

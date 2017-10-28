@@ -197,7 +197,7 @@ QString QtLibrary::findPluginsRoot(const PathList & pathPrefixList)
   }else{
     searchPathList.setPathPrefixList(pathPrefixList);
   }
-  searchPathList.setPathSuffixList({"qt5"});
+  searchPathList.setPathSuffixList({"qt5",".."});
   const auto pathList = searchPathList.pathList();
 
   for(const auto & path : pathList){
@@ -205,6 +205,7 @@ QString QtLibrary::findPluginsRoot(const PathList & pathPrefixList)
     QDir dir( QDir::cleanPath(path + "/plugins") );
     if(dir.exists()){
       pluginsRoot = dir.absolutePath();
+      qDebug() << " - found: " << pluginsRoot;
       return pluginsRoot;
     }
   }

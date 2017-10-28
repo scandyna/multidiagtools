@@ -71,6 +71,9 @@ void QtLibraryTestWindows::findPluginsRootTest_data()
                            << QStringList{"/opt/qtroot/plugins"}
                            << "/opt/qtroot/plugins";
 
+  QTest::newRow("QtRoot") << PathList{"/opt/qtroot/bin"}
+                           << QStringList{"/opt/qtroot/plugins"}
+                           << "/opt/qtroot/plugins";
 }
 
 /*
