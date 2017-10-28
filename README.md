@@ -548,6 +548,15 @@ else()
   add_executable(helloworld HelloWorld.cpp)
 endif()
 target_link_libraries(helloworld Mdt0::ItemModel Qt5::Widgets)
+
+# Rules to install the application
+include(MdtDependenciesUtils)
+find_package(mdtcpbindeps)
+set_target_properties(helloworld PROPERTIES INSTALL_RPATH "\$ORIGIN/../lib")
+mdt_install_binary_dependencies(
+  TARGET helloworld
+  SEARCH_FIRST_PATH_PREFIX_LIST "${CMAKE_PREFIX_PATH}"
+)
 ```
 
 ## Build your project on Linux
