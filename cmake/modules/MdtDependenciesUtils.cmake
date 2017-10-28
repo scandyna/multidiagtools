@@ -83,19 +83,26 @@ function(mdt_install_binary_dependencies)
     message(FATAL_ERROR "mdt_install_binary_dependencies(): TARGET argument is missing.")
   endif()
   set(search_first_path_prefix_list ${VAR_SEARCH_FIRST_PATH_PREFIX_LIST})
+  if(WIN32)
+    set(lib_dir "bin")
+  else()
+    set(lib_dir "lib")
+  endif()
   # Create a custom target that depends on target and that will put dependencies in a directory
-  message("SEARCH_FIRST_PATH_PREFIX_LIST: ${search_first_path_prefix_list}")
   mdt_copy_binary_dependencies(
     TARGETS ${target}
-    DESTINATION_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies"
+    LIBRARY_DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies/${lib_dir}"
+    PLUGIN_DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies/plugins"
     SEARCH_FIRST_PATH_PREFIX_LIST "${search_first_path_prefix_list}"
   )
   # Create a install rule for this new target
-  file(GLOB binary_dependencies "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies/*")
   install(
-#     DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies"
-    FILES ${binary_dependencies}
-    DESTINATION bin
+    DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies/${lib_dir}"
+    DESTINATION "."
+  )
+  install(
+    DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies/plugins"
+    DESTINATION "."
   )
 endfunction()
 
@@ -118,10 +125,6 @@ endfunction()
 #   Full path to the destination of libraries.
 #  PLUGIN_DESTINATION:
 #   Full path to the destination of plugins.
-
-#  DESTINATION_DIRECTORY:
-#   Full path to the destination directory
-
 #  SEARCH_FIRST_PATH_PREFIX_LIST (optional):
 #   A list of full paths to directories where to find libraries and plugins first.
 #   For libraries, this option is only used for binaries that do not support RPATH (for example .exe or .dll).
@@ -129,7 +132,7 @@ endfunction()
 #
 function(mdt_copy_binary_dependencies)
   # Parse arguments
-  set(oneValueArgs DESTINATION_DIRECTORY)
+  set(oneValueArgs LIBRARY_DESTINATION PLUGIN_DESTINATION)
   set(multiValueArgs TARGETS SEARCH_FIRST_PATH_PREFIX_LIST)
   cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   # Set our local variables and check the mandatory ones
@@ -137,9 +140,13 @@ function(mdt_copy_binary_dependencies)
   if(NOT targets)
     message(FATAL_ERROR "mdt_copy_binary_dependencies(): TARGETS argument is missing.")
   endif()
-  set(destination_directory "${VAR_DESTINATION_DIRECTORY}")
-  if(NOT destination_directory)
-    message(FATAL_ERROR "mdt_copy_binary_dependencies(): DESTINATION_DIRECTORY argument is missing.")
+  set(library_destination "${VAR_LIBRARY_DESTINATION}")
+  if(NOT library_destination)
+    message(FATAL_ERROR "mdt_copy_binary_dependencies(): LIBRARY_DESTINATION argument is missing.")
+  endif()
+  set(plugin_destination "${VAR_PLUGIN_DESTINATION}")
+  if(NOT plugin_destination)
+    message(FATAL_ERROR "mdt_copy_binary_dependencies(): PLUGIN_DESTINATION argument is missing.")
   endif()
   set(search_first_path_prefix_list ${VAR_SEARCH_FIRST_PATH_PREFIX_LIST})
 
@@ -150,16 +157,17 @@ function(mdt_copy_binary_dependencies)
   endforeach()
 
   # Create a new target that depends on destination
-  get_filename_component(destination_name "${destination_directory}" NAME)
+  get_filename_component(destination_name "${library_destination}" NAME)
   set(bin_deps_target "${destination_name}_bin_deps")
   add_custom_target(
     "${bin_deps_target}"
     ALL
     COMMAND mdtcpbindeps
             -p "${search_first_path_prefix_list}"
+            --library-destination "${library_destination}"
+            --plugin-destination "${plugin_destination}"
             --verbose 1
             "${target_file_list}"
-            "${destination_directory}"
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
     VERBATIM
   )
