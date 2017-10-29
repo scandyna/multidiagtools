@@ -332,7 +332,7 @@ For this section, it will be considered that the Mdt source tree is:
 In the root of Mdt source tree, create a directory called "build", and a subdirectory called "release".
 
 Open the Qt command prompt (Start/Windows menu -> Qt -> Qt x.y.z for Desktop.
-Go to the craeted build directory:
+Go to the created build directory:
 ```bash
 cd %HOMEPATH%\Documents\opt\Mdt\src\multidiagtools\build\release
 ```
@@ -344,7 +344,7 @@ cmake -C ..\..\cmake\caches\ReleaseGcc.cmake -G "MinGW Makefiles" ..\..\
 ```
 It is also possible to specify the intallation prefix:
 ```bash
-cmake -C ..\..\cmake\caches\ReleaseGcc.cmake -G "MinGW Makefiles" -D CMAKE_INSTALL_PREFIX="%HOMEPATH%\Documents\opt\Mdt\release" ..\..\
+cmake -C ..\..\cmake\caches\ReleaseGcc.cmake -G "MinGW Makefiles" -D CMAKE_INSTALL_PREFIX="C:/Users/You/Documents/opt/Mdt/release" ..\..\
 ```
 
 Build (-j4 is for parallel build, allowing max. 4 processes):
@@ -357,24 +357,12 @@ To run all tests:
 mingw32-make test
 ```
 
-#### Install Mdt on Windows
-
-##### Install in a predefined location
-
-To install the library in a non system place,
-i.e. defined above with CMAKE_INSTALL_PREFIX, the installation is:
-
-To run all tests:
-```bash
-mingw32-make install
-```
-
-In the CMAKE_INSTALL_PREFIX\bin , a file named mdtenv.bat is generated,
+During build directory initialization,
+a script called mdtenv.bat was generated,
 which setups a environment, like qtenv2.bat does.
 It will set the PATH to include:
-- Path to the executable directory of the compiler used to compile Mdt
+- Path to the executable directory of the compiler
 - Path to the executable directory of the Qt5 library used to compile Mdt
-- Path to the executable directory of Mdt
 
 To run a command prompt with this environment set,
 you can create a shortcut that runs cmd.exe and calls this mdtenv.bat.
@@ -382,6 +370,16 @@ Example of options of that shortcut could be:
 - Target: C:\Windows\System32\cmd.exe /A /Q /K C:\path\to\mdtenv.bat
 - Run in: where you want to be after launching the shortcut
 
+
+#### Install Mdt on Windows
+
+##### Install in a predefined location
+
+To install the library in a non system place,
+i.e. defined above with CMAKE_INSTALL_PREFIX, the installation is:
+```bash
+mingw32-make install
+```
 
 ### Cross compile Mdt for Windows on a Linux machine
 

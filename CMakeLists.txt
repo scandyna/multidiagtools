@@ -51,6 +51,13 @@ if(WIN32)
   endif()
 endif()
 
+# Generate mdenv.bat script, that can be used when developping on Windows
+include(MdtGenerateEnvScript)
+mdt_generate_env_script(
+  DESTINATION "${CMAKE_BINARY_DIR}"
+  PREFIX_PATH "${CMAKE_PREFIX_PATH}"
+)
+
 # Enable testing
 # Must be placed before any add_subdirectory() command, else tests that are defined in sub-directories will be ignored
 enable_testing()
@@ -108,7 +115,7 @@ add_subdirectory(libs/ItemModel)
 # add_subdirectory(libs/ItemEditor_Sql)
 add_subdirectory(libs/DeployUtils_Core)
 
-include(MdtInstallQt5)
+# include(MdtInstallQt5)
 
 #################################################################################################################################################
 # Tools
