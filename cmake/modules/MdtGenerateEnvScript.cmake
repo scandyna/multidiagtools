@@ -1,12 +1,8 @@
 
 # Generate a mdtenv.bat script
-# TODO
-#  - Make usable to build/work on Mdt itself (MDT_PREFIX_PATH becomes optional)
 function(mdt_generate_env_script)
   # Parse arguments
   set(oneValueArgs DESTINATION)
- # set(multiValueArgs PREFIX_PATH)
- # cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   cmake_parse_arguments(VAR "" "${oneValueArgs}" "" ${ARGN})
   # Check mandatory arguments and set our local variables
   if(VAR_DESTINATION)
@@ -14,13 +10,6 @@ function(mdt_generate_env_script)
   else()
     set(destination "${CMAKE_BINARY_DIR}")
   endif()
-#  if(NOT VAR_PREFIX_PATH)
-#    message(FATAL_ERROR "mdt_generate_env_script(): PREFIX_PATH argument is missing.")
-#  endif()
-#   set(prefix_path ${VAR_PREFIX_PATH})
-#   if(NOT MDT_PREFIX_PATH)
-#     message(FATAL_ERROR "mdt_generate_env_script(): MDT_PREFIX_PATH variable is missing.")
-#   endif()
 
 if(WIN32)
   set(env_script_path "${destination}/mdtenv.bat")
