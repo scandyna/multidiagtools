@@ -522,6 +522,17 @@ if(MDT_PREFIX_PATH)
   list(APPEND CMAKE_MODULE_PATH "${MDT_PREFIX_PATH}/share/cmake/modules")
 endif()
 
+# Specify where to find Qt5
+if(QT_PREFIX_PATH)
+  list(APPEND CMAKE_PREFIX_PATH "${QT_PREFIX_PATH}")
+endif()
+
+# On Windows, generate en env script
+# The generated script will setup the PATH,
+# like qtenv2.bat does.
+include(MdtGenerateEnvScript)
+mdt_generate_env_script(DESTINATION "${CMAKE_BINARY_DIR}" PREFIX_PATH "${CMAKE_PREFIX_PATH}")
+
 # On Windows, RPATH do not exist
 # To be able to run the application from the build tree,
 # or run the unit tests, we have to put all binaries in the same directory
@@ -531,7 +542,6 @@ endif()
 
 # Thread support
 find_package(Threads REQUIRED)
-
 find_package(Qt5 COMPONENTS Widgets)
 find_package(Mdt0 COMPONENTS ItemModel)
 
@@ -598,27 +608,43 @@ make -j4
 
 ## Build your project on Windows
 
-For this section, it will be considered that the HelloWorld source tree is: %HOMEPATH%\Documents\HelloWorld.
+For this section, it will be considered that the HelloWorld source tree is: C:\Users\You\Documents\HelloWorld.
 
 In the root of the source tree, create a directory called "build", and a subdirectory called "release".
 
-Open a command prompt and call mdtenv.bat.
-Note: refer to the Mdt installation on Windows.
-Maybe you have a shortcut that runs it automatically.
-
-cd to the realease directory created above.
+Open a command prompt and cd to the created directory.
+To initialize the build directory, the compiler tool set must be in the PATH.
 
 Initialzise the build:
 ```bash
-cmake -G "MinGW Makefiles" ..\..\
+set PATH=C:\Path\To\MinGW\bin;%PATH%
+cmake -G "MinGW Makefiles" -D MDT_PREFIX_PATH="C:/path/to/mdt" -D QT_PREFIX_PATH="C:/path/to/qt5 ..\..\
 ```
 
 For my personnal case, I also created a CMake cache file
 to specify compiler flags.
 To compile the application in debug mode, I use:
 ```bash
-cmake -C ..\..\cmake/caches/DebugGcc.cmake -G "MinGW Makefiles" ..\..\
+cmake -C ..\..\cmake\caches\DebugGcc.cmake -G "MinGW Makefiles" -D MDT_PREFIX_PATH="C:/Users/Me/Documents/opt/Mdt/debug" -D QT_PREFIX_PATH="C:\Qt\5.9.1\mingw53_32 ..\..\
 ```
+
+A script named mdtenv.bat should be generated in the built directory,
+which setups a environment, like qtenv2.bat does.
+It will set the PATH to include:
+- Path to the executable directory of the compiler
+- Path to the executable directory of the Qt5 library
+- Path to the executable directory of Mdt
+
+Execute mdtenv.bat:
+```bash
+mdtenv.bat
+```
+
+To run a command prompt with this environment set,
+you can create a shortcut that runs cmd.exe and calls this mdtenv.bat.
+Example of options of that shortcut could be:
+- Target: C:\Windows\System32\cmd.exe /A /Q /K C:\path\to\mdtenv.bat
+- Run in: where you want to be after launching the shortcut
 
 Build:
 ```bash
