@@ -55,7 +55,7 @@ endif()
 include(MdtGenerateEnvScript)
 mdt_generate_env_script(
   DESTINATION "${CMAKE_BINARY_DIR}"
-  PREFIX_PATH "${CMAKE_PREFIX_PATH}"
+#  PREFIX_PATH "${CMAKE_PREFIX_PATH}"
 )
 
 # Enable testing
