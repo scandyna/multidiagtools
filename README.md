@@ -560,6 +560,13 @@ endif()
 target_link_libraries(helloworld Mdt0::ItemModel Qt5::Widgets)
 
 # Rules to install the application
+install(
+  TARGETS helloworld
+  RUNTIME DESTINATION bin
+)
+
+# Rules to install application's dependencies
+# Note that this is currently experimental
 include(MdtDependenciesUtils)
 find_package(mdtcpbindeps)
 set_target_properties(helloworld PROPERTIES INSTALL_RPATH "\$ORIGIN/../lib")
@@ -568,6 +575,8 @@ mdt_install_binary_dependencies(
   SEARCH_FIRST_PATH_PREFIX_LIST "${CMAKE_PREFIX_PATH}"
 )
 ```
+
+include(CPack)
 
 ## Build your project on Linux
 
@@ -625,7 +634,8 @@ For my personnal case, I also created a CMake cache file
 to specify compiler flags.
 To compile the application in debug mode, I use:
 ```bash
-cmake -C ..\..\cmake\caches\DebugGcc.cmake -G "MinGW Makefiles" -D MDT_PREFIX_PATH="C:/Users/Me/Documents/opt/Mdt/debug" -D QT_PREFIX_PATH="C:\Qt\5.9.1\mingw53_32 ..\..\
+set PATH=C:\Qt\Tools\mingw530_32\bin;%PATH%
+cmake -C ..\..\cmake\caches\DebugGcc.cmake -G "MinGW Makefiles" -D MDT_PREFIX_PATH="C:/Users/Me/Documents/opt/Mdt/debug" -D QT_PREFIX_PATH="C:/Qt/5.9.1/mingw53_32" ..\..\
 ```
 
 A script named mdtenv.bat should be generated in the built directory,
@@ -661,9 +671,14 @@ To execute it outside current command prompt,
 the application must be shipped with all its required dependencies
 (mainly dlls)
 
-Currently, Mdt does not provide any easy solution for that.
-(You can take a look at Mdt DeployUtils library, and MdtCpBinDeps tool,
-that are both available in the Mdt source tree,
-but this is currently far away from a distribution tool).
+Mdt has some experimental stuff to copy dependecies
+and install them. You can try to generate a ZIP archive,
+extract it, an run the application.
 
-A interesting start is [Qt for Windows - Deployment](http://doc.qt.io/qt-5/windows-deployment.html).
+To generate a ZIP archive:
+```bash
+cpack -G ZIP .
+```
+
+For more informations about how to deploy application,
+a interesting start is [Qt for Windows - Deployment](http://doc.qt.io/qt-5/windows-deployment.html).
