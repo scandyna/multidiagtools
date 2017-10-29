@@ -192,10 +192,6 @@ the installation is:
 ```bash
 make install
 ```
-If a specific Qt5 library is used,
-i.e. -D QT_PREFIX_PATH was passed during cmake build initialization,
-the Qt library will also be copied.
-This will make the usage of Mdt and Qt5 more easy when creating a application.
 
 This method is not recommanded for a system wide installation.
 
@@ -424,7 +420,7 @@ In my case, I choosed ~/opt/build/cross as base:
 ```bash
 mkdir -p ~/opt/build/cross
 ```
-
+cd build/release
 MXE has a good step by step [Tutorial](http://mxe.cc/#tutorial),
 simply follow it to install dependencies for your platform.
 
@@ -585,21 +581,20 @@ cd build/release
 ```
 
 If Mdt was installed in system standard way (for example using Debian packages),
-following should be enouth:
+and it uses system wide installed Qt5, following should be enouth:
 ```bash
 cmake ../../
 ```
 
-If Mdt was installed in a other place, cmake must know it:
+To use a non system wide installed Qt5 and Mdt, cmake must know it:
 ```bash
-cmake -D MDT_PREFIX_PATH=~/opt/mdt/release ../../
+cmake -D MDT_PREFIX_PATH=~/opt/mdt/release -D QT_PREFIX_PATH=~/opt/qt/Qt5/5.9.1/gcc_64 ../../
 ```
 
 It is also possible to specify a installation prefix:
 ```bash
 cmake -D CMAKE_INSTALL_PREFIX=~/opt/helloworld/release ../../
-```For my personnal case, I also created a CMake cache file to specify compiler flags. To compile the application in debug mode, I use:
-
+```
 
 For my personnal case, I also created a CMake cache file
 to specify compiler flags.
@@ -612,6 +607,20 @@ Build (-j4 is for parallel build, allowing max. 4 processes):
 ```bash
 make -j4
 ```
+
+You can also try to generate a archive:
+```bash
+cpack -G TBZ2 .
+```
+
+The generated archive should contain the application,
+as well as its dependencies.
+Note that Mdt provides some tools to fetch dependencies,
+but this is currently experimental.
+
+For more informations about how to deploy application,
+a interesting start is [Qt for Linux - Deployment](http://doc.qt.io/qt-5/linux-deployment.html).
+
 
 ## Build your project on Windows
 
