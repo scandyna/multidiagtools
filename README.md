@@ -529,7 +529,7 @@ endif()
 # The generated script will setup the PATH,
 # like qtenv2.bat does.
 include(MdtGenerateEnvScript)
-mdt_generate_env_script(DESTINATION "${CMAKE_BINARY_DIR}" PREFIX_PATH "${CMAKE_PREFIX_PATH}")
+mdt_generate_env_script(DESTINATION "${CMAKE_BINARY_DIR}")
 
 # On Windows, RPATH do not exist
 # To be able to run the application from the build tree,
@@ -572,9 +572,9 @@ mdt_install_binary_dependencies(
   TARGET helloworld
   SEARCH_FIRST_PATH_PREFIX_LIST "${CMAKE_PREFIX_PATH}"
 )
-```
 
 include(CPack)
+```
 
 ## Build your project on Linux
 
