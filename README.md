@@ -536,6 +536,7 @@ endif()
 
 # Thread support
 find_package(Threads REQUIRED)
+
 find_package(Qt5 COMPONENTS Widgets)
 find_package(Mdt0 COMPONENTS ItemModel)
 
