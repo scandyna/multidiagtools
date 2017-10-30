@@ -95,6 +95,9 @@ function(mdt_install_binary_dependencies)
     PLUGIN_DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies/plugins"
     SEARCH_FIRST_PATH_PREFIX_LIST "${search_first_path_prefix_list}"
   )
+  # Write a qt.conf file
+  set(qt_conf_file_path "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
+  file(WRITE "${qt_conf_file_path}" "[Paths]\nPrefix=..\n")
   # Create a install rule for this new target
   install(
     DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies/${lib_dir}"
@@ -103,6 +106,10 @@ function(mdt_install_binary_dependencies)
   install(
     DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/MdtBinaryDependencies/plugins"
     DESTINATION "."
+  )
+  install(
+    FILES "${qt_conf_file_path}"
+    DESTINATION "bin"
   )
 endfunction()
 
