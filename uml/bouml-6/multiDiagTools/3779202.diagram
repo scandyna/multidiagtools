@@ -1,0 +1,9 @@
+format 214
+
+note 128002 "Before trying to put all things in new threads, try:
+ - Use Qt API as is
+ - Try to measure
+ - If needed:
+  -> Try to reproduce the same API"
+  xyzwh 52 14 2000 571 141
+end
