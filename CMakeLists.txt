@@ -147,7 +147,8 @@ if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY AND CMAKE_CROSSCOMPILING)
   # just put some of them that have the most dependencies.
   mdt_copy_binary_dependencies(
     TARGETS mdtitemmodel_filterproxymodeltest mdtdeployutils_librarytest mdtplaintext_csvparsertest mdterror_errortest
-    DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    LIBRARY_DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    PLUGIN_DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
   )
 
