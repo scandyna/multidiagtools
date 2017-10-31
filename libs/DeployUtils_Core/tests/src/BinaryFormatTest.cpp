@@ -105,7 +105,7 @@ void BinaryFormatTest::runTest()
   BinaryFormat format;
 
   QVERIFY( format.readFormat( QCoreApplication::applicationFilePath() ) );
-  QCOMPARE(format.operatindSystem(), Platform::nativeOperatingSystem());
+  QCOMPARE(format.operatingSystem(), Platform::nativeOperatingSystem());
   QCOMPARE(format.processor(), Platform::nativeProcessor());
 }
 

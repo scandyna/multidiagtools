@@ -52,7 +52,7 @@ namespace Mdt{ namespace DeployUtils{
      *
      * Return only a valid value after readFormat() succeded
      */
-    OperatingSystem operatindSystem() const
+    OperatingSystem operatingSystem() const
     {
       return mOperatingSystem;
     }
