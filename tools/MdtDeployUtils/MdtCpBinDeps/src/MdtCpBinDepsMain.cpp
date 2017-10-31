@@ -25,6 +25,8 @@
 #include "Mdt/DeployUtils/QtLibrary.h"
 #include "Mdt/DeployUtils/FileCopier.h"
 #include "Mdt/DeployUtils/Console.h"
+#include "Mdt/DeployUtils/BinaryFormat.h"
+#include "Mdt/DeployUtils/OperatingSystem.h"
 #include "Mdt/DeployUtils/RPath.h"
 #include <QCoreApplication>
 #include <QString>
@@ -98,14 +100,25 @@ int MdtCpBinDepsMain::runMain()
     Console::error() << "Copy failed: " << cp.lastError();
     return 1;
   }
-#ifndef Q_OS_WIN
-  RPath rpath;
-  Console::info(1) << "Updating RPATH of libraries";
-  if(!rpath.prependPathForBinaries(".", parser.libraryDestinationPath())){
-    Console::error() << "Updating RPATH failed: " << rpath.lastError();
+  /*
+   * On platform that support it, patch RPATH
+   * We do runtime detetction to support cross-compilation
+   */
+  Q_ASSERT(!parser.binaryFilePathList().isEmpty());
+  BinaryFormat bfmt;
+  if(!bfmt.readFormat( parser.binaryFilePathList().at(0) )){
+    Console::error() << "Deducing file format filed: " << bfmt.lastError();
     return 1;
   }
-#endif
+  if(bfmt.operatingSystem() == OperatingSystem::Linux){
+    RPath rpath;
+    Console::info(1) << "Updating RPATH of libraries";
+    if(!rpath.prependPathForBinaries(".", parser.libraryDestinationPath())){
+      Console::error() << "Updating RPATH failed: " << rpath.lastError();
+      return 1;
+    }
+  }
+
   Console::info(1) << "Copy of dependencies successfully done";
 
   return 0;

@@ -22,6 +22,7 @@
 #define MDT_DEPLOY_UTILS_RPATH_H
 
 #include "RPathInfoList.h"
+#include "OperatingSystem.h"
 #include "Mdt/Error.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include <QObject>
@@ -90,6 +91,7 @@ namespace Mdt{ namespace DeployUtils{
     void setLastError(const Mdt::Error & error);
 
     RPathInfoList mRPath;
+    OperatingSystem mOs = OperatingSystem::Unknown;
     Mdt::Error mLastError;
   };
 

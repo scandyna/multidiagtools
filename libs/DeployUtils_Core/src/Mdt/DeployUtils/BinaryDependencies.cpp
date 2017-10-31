@@ -120,7 +120,7 @@ std::unique_ptr<BinaryDependenciesImplementationInterface> BinaryDependencies::i
     setLastError(bfmt.lastError());
     return impl;
   }
-  switch(bfmt.operatindSystem()){
+  switch(bfmt.operatingSystem()){
     case OperatingSystem::Unknown:
       break;
     case OperatingSystem::Linux:
