@@ -37,6 +37,8 @@ class QtLibraryTestWindows : public TestBase
   void findPluginsRootTest();
   void findPluginsRootTest_data();
 
+  void findPluginsRootFromSysTest();
+
   void findPluginsDependenciesTest();
 
  private:

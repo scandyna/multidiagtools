@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "QtLibraryTestWindows.h"
+#include "Mdt/Application.h"
 #include "Mdt/DeployUtils/QtLibrary.h"
 #include "Mdt/DeployUtils/PathList.h"
 #include "Mdt/DeployUtils/BinaryDependencies.h"
@@ -83,6 +84,12 @@ void QtLibraryTestWindows::findPluginsRootTest_data()
   QTest::newRow("QtRoot") << PathList{"/opt/qtroot/bin"}
                            << QStringList{"/opt/qtroot/plugins"}
                            << "/opt/qtroot/plugins";
+}
+
+void QtLibraryTestWindows::findPluginsRootFromSysTest()
+{
+  const auto pluginsRoot = QtLibrary::findPluginsRoot(PathList{});
+  QVERIFY( !pluginsRoot.contains("CMake/plugins", Qt::CaseInsensitive) );
 }
 
 void QtLibraryTestWindows::findPluginsDependenciesTest()
@@ -161,7 +168,8 @@ bool QtLibraryTestWindows::containsLibrary(const Mdt::DeployUtils::LibraryInfoLi
 
 int main(int argc, char **argv)
 {
-  Mdt::CoreApplication app(argc, argv);
+  // For above test we must depend on Qt5Gui
+  Mdt::Application app(argc, argv);
   QtLibraryTestWindows test;
 
 //   app.debugEnvironnement();

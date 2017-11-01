@@ -36,12 +36,13 @@ namespace Mdt{ namespace DeployUtils{
 QtPluginInfoList QtLibrary::findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList)
 {
   QtPluginInfoList plugins;
-  const auto pluginsRoot = findPluginsRoot(searchFirstPathPrefixList);
   const auto pluginDirectories = getPluginsDirectories( module(qtLibrary) );
   const auto os = LibraryName::operatingSystem(qtLibrary.libraryName().fullName());
   Q_ASSERT(os != OperatingSystem::Unknown);
 
+  qDebug() << " searching plugins for library " << qtLibrary.libraryName().name();
   Console::info(2) << " searching plugins for library " << qtLibrary.libraryName().name();
+  const auto pluginsRoot = findPluginsRoot(searchFirstPathPrefixList);
   plugins = findPluginsInDirectories(pluginsRoot, pluginDirectories, os);
 
   return plugins;
@@ -197,8 +198,12 @@ QString QtLibrary::findPluginsRoot(const PathList & pathPrefixList)
   }else{
     searchPathList.setPathPrefixList(pathPrefixList);
   }
+  qDebug() << "S path list (1): " << searchPathList.toStringList();
   searchPathList.setPathSuffixList({"qt5",".."});
+  qDebug() << "S path list (2): " << searchPathList.toStringList();
   const auto pathList = searchPathList.pathList();
+
+//  qDebug() << "Path list: " << pathList.toStringList();
 
   for(const auto & path : pathList){
     qDebug() << "Searchin in " << path;
