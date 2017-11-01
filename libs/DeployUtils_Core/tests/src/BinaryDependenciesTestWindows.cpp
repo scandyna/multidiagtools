@@ -30,7 +30,7 @@
 #include <QFileInfo>
 #include <QDir>
 
-#include <QDebug>
+// #include <QDebug>
 
 #ifndef PREFIX_PATH
  #error "PREFIX_PATH missing"
@@ -73,11 +73,11 @@ void BinaryDependenciesTestWindows::runTest()
   dependencies = deps.dependencies();
   QVERIFY(!dependencies.isEmpty());
 #ifdef QT_NO_DEBUG
-  QVERIFY(containsLibrary(dependencies, "Qt5Cored.dll"));
-  QVERIFY(!containsLibrary(dependencies, "Qt5Core.dll"));
-#else
-  QVERIFY(containsLibrary(dependencies, "Qt5Core.dll"));
   QVERIFY(!containsLibrary(dependencies, "Qt5Cored.dll"));
+  QVERIFY(containsLibrary(dependencies, "Qt5Core.dll"));
+#else
+  QVERIFY(!containsLibrary(dependencies, "Qt5Core.dll"));
+  QVERIFY(containsLibrary(dependencies, "Qt5Cored.dll"));
 #endif
 }
 
@@ -88,7 +88,6 @@ void BinaryDependenciesTestWindows::runTest()
 bool BinaryDependenciesTestWindows::containsLibrary(const LibraryInfoList & libraries, const QString & libraryFullName)
 {
   for(const auto & library : libraries){
-    qDebug() << "Lib: " << library.libraryName().fullName();
     if( QString::compare( library.libraryName().fullName(), libraryFullName, Qt::CaseInsensitive ) == 0 ){
       return true;
     }
