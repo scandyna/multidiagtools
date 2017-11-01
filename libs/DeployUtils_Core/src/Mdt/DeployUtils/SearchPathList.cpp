@@ -77,7 +77,10 @@ void SearchPathList::updatePathList()
       mPathList.appendPath(path);
     }
     for(const auto & suffix : suffixList){
-      mPathList.appendPath( QDir::cleanPath(path % QLatin1String("/") % suffix) );
+      const auto pathWithSuffix = QDir::cleanPath(path % QLatin1String("/") % suffix);
+      if(!mPathList.containsPath(pathWithSuffix)){
+        mPathList.appendPath(pathWithSuffix);
+      }
     }
   }
   mPathList.appendPathList(mPathListToAppend);

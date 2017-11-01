@@ -129,6 +129,10 @@ namespace Mdt{ namespace DeployUtils{
       return mList.isEmpty();
     }
 
+    /*! \brief Check if this list contains \a path
+     */
+    bool containsPath(const QString & path) const;
+
     /*! \brief Returns a const STL-style iterator pointing to the first item in the list
      */
     const_iterator begin() const
