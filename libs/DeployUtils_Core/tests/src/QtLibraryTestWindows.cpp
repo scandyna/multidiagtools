@@ -21,12 +21,21 @@
 #include "QtLibraryTestWindows.h"
 #include "Mdt/DeployUtils/QtLibrary.h"
 #include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/DeployUtils/BinaryDependencies.h"
+#include "Mdt/DeployUtils/ObjdumpWrapper.h"
+#include "Mdt/DeployUtils/LibraryInfo.h"
+#include "Mdt/DeployUtils/LibraryName.h"
+#include "Mdt/DeployUtils/QtLibrary.h"
 #include <QString>
 #include <QStringList>
 #include <QTemporaryDir>
 #include <QDir>
 
-// #include <QDebug>
+#include <QDebug>
+
+#ifndef PREFIX_PATH
+ #error "PREFIX_PATH missing"
+#endif
 
 using namespace Mdt::DeployUtils;
 
@@ -74,6 +83,76 @@ void QtLibraryTestWindows::findPluginsRootTest_data()
   QTest::newRow("QtRoot") << PathList{"/opt/qtroot/bin"}
                            << QStringList{"/opt/qtroot/plugins"}
                            << "/opt/qtroot/plugins";
+}
+
+void QtLibraryTestWindows::findPluginsDependenciesTest()
+{
+  ObjdumpWrapper objdump;
+  if(objdump.findObjdump().isEmpty()){
+    QFAIL("Could not find objdump executable");
+  }
+
+  const auto prefix = QString::fromLocal8Bit(PREFIX_PATH);
+  PathList prefixPath = PathList::fromStringList( prefix.split(';', QString::SkipEmptyParts) );
+  BinaryDependencies deps;
+  /*
+   * Prepare the test:
+   * We need Qt5Gui in a library list.
+   */
+  QVERIFY(deps.findDependencies( QCoreApplication::applicationFilePath(), prefixPath));
+  const auto exeDependencies = deps.dependencies();
+#ifdef QT_NO_DEBUG
+  QVERIFY(containsLibrary(exeDependencies, "Qt5Gui.dll"));
+  QVERIFY(!containsLibrary(exeDependencies, "Qt5Guid.dll"));
+#else
+  QVERIFY(containsLibrary(exeDependencies, "Qt5Guid.dll"));
+  QVERIFY(!containsLibrary(exeDependencies, "Qt5Gui.dll"));
+#endif
+  /*
+   * Find Qt plugins and their dependencies for the executable of this unit test
+   * We know that we depend at least on qwindows.dll, whitch also depends at least on Qt5Core
+   * 1) Find Qt plugins for this executable and check:
+   *  - In Debug build, qwindowsd.dll is listed, but not qwindows.dll
+   *  - In Release build, qwindows.dll is listed, but not qwindowsd.dll
+   * 2) Find dependencies of found Qt plugins and check:
+   *  - In Debug build, Qt5Cored.dll is listed, but not Qt5Core.dll
+   *  - In Release build, Qt5Core.dll is listed, but not Qt5Cored.dll
+   * (This was a bug discovered 20171101)
+   */
+  QtLibrary qtLibrary;
+  const auto qtLibraries = qtLibrary.getQtLibraries(exeDependencies);
+  const auto qtPlugins = qtLibrary.findLibrariesPlugins(qtLibraries, prefixPath);
+  const auto qtPluginsLibraries = qtPlugins.toLibraryInfoList();
+#ifdef QT_NO_DEBUG
+  QVERIFY(containsLibrary(qtPluginsLibraries, "qwindows.dll"));
+  QVERIFY(!containsLibrary(qtPluginsLibraries, "qwindowsd.dll"));
+#else
+  QVERIFY(containsLibrary(qtPluginsLibraries, "qwindowsd.dll"));
+  QVERIFY(!containsLibrary(qtPluginsLibraries, "qwindows.dll"));
+#endif
+  QVERIFY(deps.findDependencies(qtPluginsLibraries, prefixPath));
+  const auto qtPluginsDependentLibraries = deps.dependencies();
+#ifdef QT_NO_DEBUG
+  QVERIFY(containsLibrary(qtPluginsDependentLibraries, "Qt5Core.dll"));
+  QVERIFY(!containsLibrary(qtPluginsDependentLibraries, "Qt5Cored.dll"));
+#else
+  QVERIFY(containsLibrary(qtPluginsDependentLibraries, "Qt5Cored.dll"));
+  QVERIFY(!containsLibrary(qtPluginsDependentLibraries, "Qt5Core.dll"));
+#endif
+}
+
+/*
+ * Helpers
+ */
+
+bool QtLibraryTestWindows::containsLibrary(const Mdt::DeployUtils::LibraryInfoList& libraries, const QString& libraryFullName)
+{
+  for(const auto & library : libraries){
+    if( QString::compare( library.libraryName().fullName(), libraryFullName, Qt::CaseInsensitive ) == 0 ){
+      return true;
+    }
+  }
+  return false;
 }
 
 /*

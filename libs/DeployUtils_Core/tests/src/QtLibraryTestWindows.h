@@ -22,6 +22,8 @@
 #define QT_LIBRARY_TEST_WINDOWS_H
 
 #include "TestBase.h"
+#include "Mdt/DeployUtils/LibraryInfoList.h"
+#include <QString>
 
 class QtLibraryTestWindows : public TestBase
 {
@@ -34,6 +36,12 @@ class QtLibraryTestWindows : public TestBase
 
   void findPluginsRootTest();
   void findPluginsRootTest_data();
+
+  void findPluginsDependenciesTest();
+
+ private:
+
+  static bool containsLibrary(const Mdt::DeployUtils::LibraryInfoList & libraries, const QString & libraryFullName);
 };
 
 #endif // #ifndef QT_LIBRARY_TEST_WINDOWS_H
