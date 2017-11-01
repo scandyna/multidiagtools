@@ -43,6 +43,9 @@ void PathTest::pathListStringListTest()
    */
   PathList pl1{"a","b"};
   QCOMPARE(pl1.toStringList(), QStringList({"a","b"}));
+  QVERIFY(pl1.containsPath("a"));
+  QVERIFY(pl1.containsPath("b"));
+  QVERIFY(!pl1.containsPath("c"));
   /*
    * Construct from an QStringList
    */
@@ -308,6 +311,25 @@ void PathTest::searchPathListTest()
    */
   spl.setPathSuffixList({"bin","lib"});
   QCOMPARE(spl.toStringList(), QStringList({"/opt/liba/bin","/opt/liba/lib","/opt/libb/bin","/opt/libb/lib"}));
+  /*
+   * Setup list of path prefixes and suffixes
+   * (This is how QtLibrary uses it to find plugins)
+   */
+  spl.clear();
+  spl.setIncludePathPrefixes(true);
+  spl.setPathPrefixList( PathList{"/opt/tools/bin","/opt/qt/bin"} );
+  spl.setPathSuffixList({"qt5",".."});
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/tools/bin","/opt/tools/bin/qt5","/opt/tools","/opt/qt/bin","/opt/qt/bin/qt5","/opt/qt"}));
+  /*
+   * When using .. suffix, check that order is preserved
+   * (Bug discovered 20171101)
+   */
+  spl.clear();
+  spl.setIncludePathPrefixes(true);
+  spl.setPathPrefixList( PathList{"/opt/liba/bin","/opt/libb","/opt/liba/lib"} );
+  spl.setPathSuffixList({".."});
+  qDebug() << spl.toStringList();
+  QCOMPARE(spl.toStringList(), QStringList({"/opt/liba/bin","/opt/liba","/opt/libb","/opt","/opt/liba/lib"}));
 }
 
 /*

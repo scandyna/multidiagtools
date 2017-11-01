@@ -82,6 +82,15 @@ void QtLibraryTestLinux::findPluginsRootTest_data()
   QTest::newRow("OtherQt,!sys") << PathList{"/opt/qtroot"}
                            << QStringList{"/opt/qtroot/plugins","/usr/lib/x86_64-linux-gnu/qt5/plugins"}
                            << "/opt/qtroot/plugins";
+
+  QTest::newRow("OtherQt,..,!sys") << PathList{"/opt/qtroot/bin"}
+                                   << QStringList{"/opt/qtroot/plugins","/usr/lib/x86_64-linux-gnu/qt5/plugins"}
+                                   << "/opt/qtroot/plugins";
+
+  QTest::newRow("OtherQt,..,!sys,2") << PathList{"/opt/qttoolroot/bin","/opt/qtroot/bin"}
+                                     << QStringList{"/opt/qtroot/plugins","/usr/lib/x86_64-linux-gnu/qt5/plugins"}
+                                     << "/opt/qtroot/plugins";
+
 }
 
 /*

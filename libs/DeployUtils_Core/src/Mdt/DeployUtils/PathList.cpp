@@ -72,6 +72,11 @@ void PathList::clear()
   mList.clear();
 }
 
+bool PathList::containsPath(const QString & path) const
+{
+  return mList.contains(path);
+}
+
 PathList PathList::getSystemExecutablePathList()
 {
   PathList pathList;
