@@ -100,8 +100,9 @@ PathList PathList::getSystemLibraryPathList()
   PathList pathList = getSystemLibraryKnownPathListLinux();
 #endif // #ifdef Q_OS_UNIX
 #ifdef Q_OS_WIN
-  PathList pathList = getSystemLibraryKnownPathListWindows();
-  pathList.appendPathList( getSystemExecutablePathList() );
+//  PathList pathList = getSystemLibraryKnownPathListWindows();
+//  pathList.appendPathList( getSystemExecutablePathList() );
+  PathList pathList = getSystemExecutablePathList();
 #endif // #ifdef Q_OS_WIN
   pathList.appendPath( QLibraryInfo::location(QLibraryInfo::LibrariesPath) );
 
