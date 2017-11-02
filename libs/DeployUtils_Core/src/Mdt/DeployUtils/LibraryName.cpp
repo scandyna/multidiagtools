@@ -23,6 +23,7 @@
 #include <QRegularExpression>
 #include <QStringBuilder>
 #include <QLatin1String>
+#include <QChar>
 
 // #include <QDebug>
 
@@ -51,6 +52,16 @@ LibraryName::LibraryName(const QString & fullName)
     const int extensionSize = fullName.size() - extension.position();
     mName = mFullName.mid( start, fullName.size() - start - extensionSize - 1 );
   }
+}
+
+bool LibraryName::hasNameDebugSuffix() const
+{
+  if(mName.isEmpty()){
+    return false;
+  }
+  const auto nameSuffix = mName.at(mName.size() - 1);
+
+  return ( (nameSuffix == 'd') || (nameSuffix == 'D') );
 }
 
 QString LibraryName::toFullNameLinux() const

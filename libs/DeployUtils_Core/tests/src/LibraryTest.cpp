@@ -173,6 +173,30 @@ void LibraryTest::libraryNameFromStrTest_data()
   QTest::newRow("libpng12.so.0") << "libpng12.so.0" << "lib" << "png12" << "so" << "0" << NotNull;
 }
 
+void LibraryTest::libraryNameDebugSuffixTest()
+{
+  QFETCH(QString, inputName);
+  QFETCH(bool, expectedIsDebug);
+
+  LibraryName libName(inputName);
+  QCOMPARE(libName.hasNameDebugSuffix(), expectedIsDebug);
+}
+
+void LibraryTest::libraryNameDebugSuffixTest_data()
+{
+  QTest::addColumn<QString>("inputName");
+  QTest::addColumn<bool>("expectedIsDebug");
+
+  const bool isDebug = true;
+  const bool NotDebug = false;
+
+  QTest::newRow("") << "" << NotDebug;
+  QTest::newRow("Qt5Core.dll") << "Qt5Core.dll" << NotDebug;
+  QTest::newRow("Qt5Cored.dll") << "Qt5Cored.dll" << isDebug;
+  QTest::newRow("liba.dll") << "liba.dll" << NotDebug;
+  QTest::newRow("libaD.dll") << "libaD.dll" << isDebug;
+}
+
 void LibraryTest::libraryNameFromStrBenchmark()
 {
   QFETCH(QString, inputName);

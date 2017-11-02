@@ -40,6 +40,8 @@ class LibraryTest : public TestBase
 
   void libraryNameFromStrTest();
   void libraryNameFromStrTest_data();
+  void libraryNameDebugSuffixTest();
+  void libraryNameDebugSuffixTest_data();
   void libraryNameFromStrBenchmark();
   void libraryNameFromStrBenchmark_data();
   void libraryNameToFullNameLinuxTest();
