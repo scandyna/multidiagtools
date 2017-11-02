@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 51
+  revision 53
   modified_by 2 "philippe"
   // class settings
   
@@ -1121,6 +1121,21 @@ ${inlines}
 	
       end
 
+      operation 6136066 "hasNameDebugSuffix"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 5849730 "toFullNameLinux"
 	public return_type class_ref 161026 // QString
 	nparams 0
@@ -1536,11 +1551,6 @@ ${inlines}
       end
     end
 
-    classdiagram 3613058 "Library"
-      classdiagramsettings member_max_width 0 end
-      size C
-    end
-
     class 4169730 "LibraryMode"
       visibility package stereotype "enum"
       cpp_decl "${comment}enum ${name} {
@@ -1584,6 +1594,11 @@ ${items}};
 	mysql_decl ""
 	MysqlColumn
       end
+    end
+
+    classdiagram 3613058 "Library"
+      classdiagramsettings member_max_width 0 end
+      size C
     end
 
     class 4159234 "Library"

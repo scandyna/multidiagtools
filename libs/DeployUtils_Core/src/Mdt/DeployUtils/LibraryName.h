@@ -95,6 +95,18 @@ namespace Mdt{ namespace DeployUtils{
       return mName;
     }
 
+    /*! \brief Check a debug suffix is present in the name
+     *
+     * This has only sense for dll (Windows),
+     *  when the convention of suffixing 'd' or 'D'
+     *  to the name is used.
+     *
+     * For example:
+     *  - Qt5Core.dll : not debug, this method returns false
+     *  - Qt5Cored.dll: debug, this method returns true
+     */
+    bool hasNameDebugSuffix() const;
+
     /*! \brief Get library name extension
      *
      * Returns the extension if it was set.

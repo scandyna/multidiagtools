@@ -32,7 +32,7 @@
 #include <QTemporaryDir>
 #include <QDir>
 
-#include <QDebug>
+// #include <QDebug>
 
 #ifndef PREFIX_PATH
  #error "PREFIX_PATH missing"
