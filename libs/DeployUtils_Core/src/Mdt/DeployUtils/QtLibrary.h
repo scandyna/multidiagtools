@@ -108,7 +108,9 @@ namespace Mdt{ namespace DeployUtils{
 
     static bool isQtLibrary(const LibraryInfo & libraryInfo);
     static bool compareLibraries(const QString & a, const char * const b);
-    static QtPluginInfoList findPluginsInDirectories(const QString & pluginsRoot, const QStringList & directories, OperatingSystem os);
+    static bool compareStringsCi(const QString & a, const char * const b);
+    static bool compareStringsCi(const QString & a, const QString & b);
+    static QtPluginInfoList findPluginsInDirectories(const QString & pluginsRoot, const QStringList & directories, const LibraryInfo & qtLibrary);
   };
 
 }} // namespace Mdt{ namespace DeployUtils{

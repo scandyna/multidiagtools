@@ -38,11 +38,11 @@ QtPluginInfoList QtLibrary::findLibraryPlugins(const LibraryInfo & qtLibrary, co
   QtPluginInfoList plugins;
   const auto pluginsRoot = findPluginsRoot(searchFirstPathPrefixList);
   const auto pluginDirectories = getPluginsDirectories( module(qtLibrary) );
-  const auto os = LibraryName::operatingSystem(qtLibrary.libraryName().fullName());
-  Q_ASSERT(os != OperatingSystem::Unknown);
+//   const auto os = LibraryName::operatingSystem(qtLibrary.libraryName().fullName());
+//   Q_ASSERT(os != OperatingSystem::Unknown);
 
   Console::info(2) << " searching plugins for library " << qtLibrary.libraryName().name();
-  plugins = findPluginsInDirectories(pluginsRoot, pluginDirectories, os);
+  plugins = findPluginsInDirectories(pluginsRoot, pluginDirectories, qtLibrary);
 
   return plugins;
 }
@@ -262,20 +262,32 @@ bool QtLibrary::isQtLibrary(const LibraryInfo& libraryInfo)
 
 bool QtLibrary::compareLibraries(const QString & a, const char*const b)
 {
+  return compareStringsCi(a, b);
+}
+
+bool QtLibrary::compareStringsCi(const QString& a, const char*const b)
+{
   return ( QString::compare(a, QLatin1String(b), Qt::CaseInsensitive) == 0 );
 }
 
-QtPluginInfoList QtLibrary::findPluginsInDirectories(const QString & pluginsRoot, const QStringList& directories, OperatingSystem os)
+bool QtLibrary::compareStringsCi(const QString& a, const QString& b)
+{
+  return ( QString::compare(a, b, Qt::CaseInsensitive) == 0 );
+}
+
+QtPluginInfoList QtLibrary::findPluginsInDirectories(const QString & pluginsRoot, const QStringList& directories, const LibraryInfo & qtLibrary)
 {
   QtPluginInfoList plugins;
+  const auto qtLibraryName = qtLibrary.libraryName();
 
   for(const auto & directory : directories){
     QDir dir( QDir::cleanPath(pluginsRoot + "/" + directory) );
     if(dir.exists()){
       const auto fiList = dir.entryInfoList(QDir::Files);
       for(const auto & fi : fiList){
-        // When do cross compilation, don't bring wrong libraries to the list
-        if(LibraryName::operatingSystem(fi.fileName()) == os){
+        // Create LibraryName and compare extension with given qtLibrary
+        LibraryName plugin(fi.fileName());
+        if( compareStringsCi(plugin.extension(), qtLibraryName.extension()) && (plugin.hasNameDebugSuffix() == qtLibraryName.hasNameDebugSuffix()) ){
           Console::info(4) << "   found " << fi.fileName();
           QtPluginInfo qpi;
           qpi.setLibraryPlatformName(fi.fileName());
