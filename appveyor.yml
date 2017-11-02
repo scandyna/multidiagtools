@@ -28,4 +28,4 @@ build_script:
   - cmake --build . -- -j4
 
 test_script:
-  - ctest .
+  - ctest --output-on-failure .
