@@ -690,3 +690,55 @@ cpack -G ZIP .
 
 For more informations about how to deploy application,
 a interesting start is [Qt for Windows - Deployment](http://doc.qt.io/qt-5/windows-deployment.html).
+
+## Using icons
+
+Internally, Mdt uses [QIcon::fromTheme()](http://doc.qt.io/qt-5/qicon.html#fromTheme)
+for elements that displays icons.
+This method works out of the box on Linux-X11.
+
+To make it also work on other platforms,
+we have to provide a set of icons that are compatible with the
+[freedesktop.org icon theme specifications](https://specifications.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html) .
+
+Mdt provides a copy for some compatible icon themes, like:
+ - [Oxygen icons](https://github.com/KDE/oxygen-icons)
+
+
+### Use icons for which Mdt provides a copy
+
+At first, tell Qt where to find the icons.
+For example, in main():
+```cpp
+#include <QApplication>
+#include <QIcon>
+#include <QStringList>
+
+int main(int argc, char **argv)
+{
+  QApplication app(argc, argv);
+
+  auto themeSearchPaths = QIcon::themeSearchPaths();
+  themeSearchPaths.append("share/icons");
+  themeSearchPaths.removeDuplicates();
+  QIcon::setThemeSearchPaths(themeSearchPaths);
+
+  return app.exec();
+}
+```
+
+Then, add a install() rule in the CMakeLists.txt:
+```cmake
+# Rules to install icons
+if(MDT_PREFIX_PATH)
+  install(
+    DIRECTORY "${MDT_PREFIX_PATH}/share/icons/oxygen"
+    DESTINATION "share/icons"
+  )
+endif()
+```
+
+Note that the icons are only available once the application is installed.
+
+
+
