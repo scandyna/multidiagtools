@@ -570,6 +570,7 @@ mdt_install_binary_dependencies(
   SEARCH_FIRST_PATH_PREFIX_LIST "${CMAKE_PREFIX_PATH}"
 )
 
+# This must be added after all install() rules
 include(CPack)
 ```
 
@@ -719,9 +720,10 @@ int main(int argc, char **argv)
   QApplication app(argc, argv);
 
   auto themeSearchPaths = QIcon::themeSearchPaths();
-  themeSearchPaths.append("share/icons");
+  themeSearchPaths.append("../share/icons");
   themeSearchPaths.removeDuplicates();
   QIcon::setThemeSearchPaths(themeSearchPaths);
+  QIcon::setThemeName("Oxygen");
 
   return app.exec();
 }
