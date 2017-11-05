@@ -509,17 +509,18 @@ project(HelloWorld VERSION 0.0.1)
 
 # Specify where to find Mdt
 # Using a custom MDT_PREFIX_PATH has some advantages:
-# - It can be reused, for example to specify CMAKE_MODULE_PATH
 # - It solves the problem that CMAKE_PREFIX_PATH is ignored when cross-compiling with MXE
 if(MDT_PREFIX_PATH)
   list(APPEND CMAKE_PREFIX_PATH "${MDT_PREFIX_PATH}")
-  list(APPEND CMAKE_MODULE_PATH "${MDT_PREFIX_PATH}/share/cmake/modules")
 endif()
 
 # Specify where to find Qt5
 if(QT_PREFIX_PATH)
   list(APPEND CMAKE_PREFIX_PATH "${QT_PREFIX_PATH}")
 endif()
+
+# Find Mdt CMake modules
+find_package(MdtCMakeModules REQUIRED)
 
 # On Windows, generate en env script
 # The generated script will setup the PATH,
@@ -741,6 +742,45 @@ endif()
 ```
 
 Note that the icons are only available once the application is installed.
+
+## Translations
+
+Mdt uses [Qt Linguist](http://doc.qt.io/qt-5/qtlinguist-index.html)
+for translations.
+
+### Translate your own application
+
+In your project, create a subdirectory named translations .
+
+In the main CMakeLists.txt,
+specify the supported languages, add this subdirectory:
+```cmake
+# List of targeted translations
+# This is used by MdtAddTranslations.cmake module
+set(TRANSLATION_LANGUAGES en fr de)
+include(MdtAddTranslations)
+
+add_subdirectory(translations)
+```
+
+In the translations subdirectory, create a CMakeLists.txt file:
+```cmake
+# Avoid removing TS files by make clean
+set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1)
+
+mdt_add_translations(
+  TARGET helloworld
+  SOURCES_DIRECTORY ../src
+  TS_FILES_DIRECTORY .
+  INSTALL_DESTINATION translations
+)
+```
+
+## TODO Document main()
+
+### TODO install Mdt qm files
+
+### TODO install Qt5 qm files
 
 
 
