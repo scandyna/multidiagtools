@@ -87,7 +87,7 @@ find_package(Threads REQUIRED)
 # List of targeted translations
 # This is used by MdtAddTranslations.cmake module
 set(TRANSLATION_LANGUAGES en fr de)
-include(MdtAddTranslations)
+include(MdtAddLibraryTranslations)
 
 include(MdtAddLibrary)
 

@@ -1,8 +1,8 @@
 
 set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1)
 
-mdt_add_translations(
-  NAME Error_Widgets
+mdt_add_library_translations(
+  TARGET Error_Widgets
   SOURCES_DIRECTORY ../src
   TS_FILES_DIRECTORY .
 )

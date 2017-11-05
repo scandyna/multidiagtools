@@ -1,11 +1,12 @@
 include(MdtCPackComponent)
 
 # Add rules to generate translation files
+#
 # Translation files will be generated (or updated) in the directory speicified by TS_FILES_DIRECTORY argument,
 # scanning the sources files in the directory specified by SOURCES_DIRECTORY argument.
 # Input arguments:
-#  NAME:
-#   Name of the library, without any prefix (like project name) or suffix (like version).
+#  TARGET:
+#   Name of the target for which translations must be generated.
 #   This is the same name that has been passed to mdt_add_library()
 #  SOURCES_DIRECTORY:
 #   Relative path to the directory containing source files
@@ -28,20 +29,20 @@ include(MdtCPackComponent)
 # The CMakeLists.txt for translations should look like:
 # set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1)
 # mdt_add_translations(
-#   NAME MyComponent
+#   TARGET MyComponent
 #   SOURCES_DIRECTORY ../src
 #   TS_FILES_DIRECTORY .
 # )
 #
 # The call of set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1) avoid that TS files to be cleared with make clean
-function(mdt_add_translations)
+function(mdt_add_library_translations)
   # Parse arguments
-  set(oneValueArgs NAME SOURCES_DIRECTORY TS_FILES_DIRECTORY)
+  set(oneValueArgs TARGET SOURCES_DIRECTORY TS_FILES_DIRECTORY)
   cmake_parse_arguments(VAR "" "${oneValueArgs}" "" ${ARGN})
   # Set our local variables and check the mandatory ones
-  set(name ${VAR_NAME})
-  if(NOT name)
-    message(FATAL_ERROR "NAME argument is missing.")
+  set(target ${VAR_TARGET})
+  if(NOT target)
+    message(FATAL_ERROR "TARGET argument is missing.")
   endif()
   set(sources_directory ${VAR_SOURCES_DIRECTORY})
   if(NOT sources_directory)
@@ -69,20 +70,20 @@ function(mdt_add_translations)
   # Add the rules to generate translations
   mdt_create_translation(
     qm_files
-    NAME ${name}
+    TARGET ${target}
     SOURCES_DIRECTORY ${sources_directory}
     TS_FILES ${ts_files}
   )
-  add_custom_target(${name}Translations ALL DEPENDS ${qm_files})
+  add_custom_target(${target}Translations ALL DEPENDS ${qm_files})
   # Add the rule to install translations
   install(
     FILES ${qm_files}
     DESTINATION share/${PROJECT_NAME}/translations/
-    COMPONENT ${name}-l10n
+    COMPONENT ${target}-l10n
   )
   mdt_cpack_add_library_component(
-    COMPONENT ${name}-l10n
-    EXPLICIT_DEPEND_COMPONENTS ${name}
+    COMPONENT ${target}-l10n
+    EXPLICIT_DEPEND_COMPONENTS ${target}
   )
 endfunction()
 
@@ -101,22 +102,23 @@ endfunction()
 #  and that is what this function does.
 #
 # Input arguments:
-#  NAME:
-#   Name of the library, without any prefix (like project name) or suffix (like version).
-#   This is th same name that has been passed to mdt_add_library()
+# Input arguments:
+#  TARGET:
+#   Name of the target for which translations must be generated.
+#   This is the same name that has been passed to mdt_add_library()
 #  SOURCES_DIRECTORY:
 #   Relative path to the directory containing source files
 #  TS_FILES:
 #   A list of ts files to generate or update.
 function(mdt_create_translation QM_FILES)
   # Parse arguments
-  set(oneValueArgs NAME SOURCES_DIRECTORY)
+  set(oneValueArgs TARGET SOURCES_DIRECTORY)
   set(multiValueArgs TS_FILES)
   cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   # Set our local variables and check the mandatory ones
-  set(name ${VAR_NAME})
-  if(NOT name)
-    message(FATAL_ERROR "NAME argument is missing.")
+  set(target ${VAR_TARGET})
+  if(NOT target)
+    message(FATAL_ERROR "TARGET argument is missing.")
   endif()
   set(sources_directory ${VAR_SOURCES_DIRECTORY})
   if(NOT sources_directory)
@@ -146,7 +148,7 @@ function(mdt_create_translation QM_FILES)
       OUTPUT ${ts_file}
       COMMAND ${Qt5_LUPDATE_EXECUTABLE}
       ARGS "@${ts_lst_file}" -ts ${ts_file}
-      DEPENDS ${abs_sources_directory} ${ts_lst_file} ${name}
+      DEPENDS ${abs_sources_directory} ${ts_lst_file} ${target}
       VERBATIM
     )
   endforeach()
