@@ -1,0 +1,46 @@
+format 214
+
+classcanvas 128002 class_ref 4161282 // Translation
+  classdiagramsettings member_max_width 0 end
+  xyz 234 127 2000
+end
+classcanvas 128514 class_ref 4392706 // QtLibraryTranslations
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 41 146 2000
+end
+classcanvas 128642 class_ref 4392834 // MdtLibraryTranslation
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 528 42 2000
+end
+classcanvas 128770 class_ref 4392962 // TranslationInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 207 443 2000
+end
+classcanvas 128898 class_ref 4393090 // TranslationInfoList
+  classdiagramsettings member_max_width 0 end
+  xyz 39 451 2005
+end
+note 129154 "How should the App developer generate its own qm files with CMake ?"
+  xyzwh 40.5 288.5 2000 589 73
+note 129666 "For Mdt translations: could we use CMake ?"
+  xyzwh 721 47 2000 295 43
+relationcanvas 129026 relation_ref 4901122 // <directional composition>
+  from ref 128898 z 2006 to ref 128770
+  no_role_a no_role_b
+  multiplicity_a_pos 191 483 3000 no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 4901250 // <directional composition>
+  decenter_begin 493
+  decenter_end 470
+  from ref 128002 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 4901378 // <directional composition>
+  from ref 128002 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 129794 -_-_ decenter_end 395
+  from ref 128642 z 2001 to ref 129666
+end

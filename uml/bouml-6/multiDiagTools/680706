@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 53
+  revision 54
   modified_by 2 "philippe"
   // class settings
   
@@ -205,22 +205,6 @@ ${inlines}
     end
 
     class 4161026 "QmlYxZ"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 4161282 "Translations"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -2766,6 +2750,42 @@ ${inlines}
       end
     end
 
+    classdiagram 3785858 "MdtLibrary"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4393218 "MdtLibrary"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 6142978 "getMdtLibraries"
+	class_operation public return_type class_ref 4159490 // LibraryInfoList
+	nparams 1
+	  param in name "libraries" type class_ref 4159490 // LibraryInfoList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     classdiagram 3673346 "Plugin"
       classdiagramsettings member_max_width 0 end
       size C-Landscape
@@ -2793,6 +2813,49 @@ ${items}};
       explicit_switch_type ""
       mysql_decl ""
       
+      attribute 3725954 "Unknown"
+	public type class_ref 4265218 // QtModule
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3726082 "Core"
+	public type class_ref 4265218 // QtModule
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3726210 "Gui"
+	public type class_ref 4265218 // QtModule
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3726338 "Multimedia"
+	public type class_ref 4265218 // QtModule
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     class 4244994 "QtPluginTable"
@@ -4041,6 +4104,241 @@ ${inlines}
 "
 	    classrelation_ref 4824450 // <directional composition>
 	  b parent class_ref 4265218 // QtModule
+      end
+    end
+
+    classdiagram 3785730 "Translations"
+      classdiagramsettings member_max_width 0 end
+      size A-Landscape
+    end
+
+    class 4392962 "TranslationInfo"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3726594 "QmFilePath"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 4393090 "TranslationInfoList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4927490 // <directional composition>
+	relation 4901122 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 4927490 // <directional composition>
+	  b parent class_ref 4392962 // TranslationInfo
+      end
+    end
+
+    class 4161282 "Translation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4927618 // <directional composition>
+	relation 4901250 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4927618 // <directional composition>
+	  b parent class_ref 4392834 // MdtLibraryTranslation
+      end
+
+      classrelation 4927746 // <directional composition>
+	relation 4901378 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4927746 // <directional composition>
+	  b parent class_ref 4392706 // QtLibraryTranslations
+      end
+
+      operation 6143106 "findTranslations"
+	public return_type class_ref 4393090 // TranslationInfoList
+	nparams 3
+	  param in name "library" type class_ref 4158978 // LibraryInfo
+	  param in name "language" explicit_type "QLocale::Language"
+	  param in name "prefixList" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6143234 "findTranslations"
+	public return_type class_ref 4393090 // TranslationInfoList
+	nparams 3
+	  param in name "libraries" type class_ref 4159490 // LibraryInfoList
+	  param in name "language" explicit_type "QLocale::Language"
+	  param in name "prefixList" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 3785986 "MdtTranslation"
+      classdiagramsettings member_max_width 0 end
+      size Legal-Landscape
+    end
+
+    class 4392834 "MdtLibraryTranslation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 6142850 "findTranslations"
+	public return_type class_ref 4393090 // TranslationInfoList
+	nparams 3
+	  param in name "mdtLibrary" type class_ref 4158978 // LibraryInfo
+	  param in name "language" explicit_type "QLocale::Language"
+	  param in name "prefixList" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4927874 // <dependency>
+	relation 4901506 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4927874 // <dependency>
+	  b parent class_ref 4393218 // MdtLibrary
+      end
+    end
+
+    classdiagram 3786114 "QtTranslations"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 4392706 "QtLibraryTranslations"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 6142594 "findTranslations"
+	public return_type class_ref 4393090 // TranslationInfoList
+	nparams 3
+	  param in name "qtLibrary" type class_ref 4158978 // LibraryInfo
+	  param in name "language" explicit_type "QLocale::Language"
+	  param in name "prefixList" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6142722 "findTranslations"
+	public return_type class_ref 4393090 // TranslationInfoList
+	nparams 3
+	  param in name "qtLibraries" type class_ref 4159490 // LibraryInfoList
+	  param in name "language" explicit_type "QLocale::Language"
+	  param in name "prefixList" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4928002 // <dependency>
+	relation 4901634 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4928002 // <dependency>
+	  b parent class_ref 4251522 // QtLibrary
       end
     end
 
