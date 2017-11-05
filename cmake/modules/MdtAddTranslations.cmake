@@ -6,7 +6,7 @@ include(MdtCPackComponent)
 # Input arguments:
 #  NAME:
 #   Name of the library, without any prefix (like project name) or suffix (like version).
-#   This is th same name that has been passed to mdt_add_library()
+#   This is the same name that has been passed to mdt_add_library()
 #  SOURCES_DIRECTORY:
 #   Relative path to the directory containing source files
 #  TS_FILES_DIRECTORY:
