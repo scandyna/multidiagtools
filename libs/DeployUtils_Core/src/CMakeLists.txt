@@ -40,6 +40,7 @@ set(SOURCE_FILES
     Mdt/DeployUtils/RPathInfoList.cpp
     Mdt/DeployUtils/PatchelfWrapper.cpp
     Mdt/DeployUtils/RPath.cpp
+    Mdt/DeployUtils/QmFileName.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
