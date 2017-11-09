@@ -1,0 +1,12 @@
+format 214
+
+note 128002 "With several instruments, used for the same task in a script:
+ - Send requests async
+ - Wait until all respnded
+  -> Notion of groups of query/response
+ 
+Some usage:
+ - Scan
+ - Setup instruments"
+  xyzwh 148 185 2000 651 233
+end

@@ -1,6 +1,6 @@
 format 214
 "Qt" // Qt
-  revision 224
+  revision 225
   modified_by 2 "philippe"
   // class settings
   
@@ -44,11 +44,6 @@ format 214
     
     activitydiagramsettings
      end
-    classdiagram 422274 "QLocale"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
     classdiagram 134786 "QObject"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -1789,21 +1784,6 @@ ${inlines}
 	
 	
       end
-    end
-
-    class 418818 "QLocale"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
     end
 
     classdiagram 435714 "QFileInfo"
@@ -7672,6 +7652,59 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 422274 "QLocale"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 418818 "QLocale"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      class 4399746 "Language"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	attribute 3733122 "French"
+	  public type class_ref 4399746 // Language
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+      end
+    end
+
     classdiagram 1701634 "QTextCodec"
       classdiagramsettings member_max_width 0 end
       size A4

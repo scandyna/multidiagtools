@@ -1,6 +1,6 @@
-format 211
-"Wait" // mdt::Wait
-  revision 2
+format 214
+"Wait" // Mdt::Wait
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -26,4 +26,25 @@ format 211
   activitydiagramsettings
    end
   
+  classview 1954434 "Sandbox"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3792642 "Sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+  end
 end
