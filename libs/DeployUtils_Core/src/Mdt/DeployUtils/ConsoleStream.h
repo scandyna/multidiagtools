@@ -52,6 +52,10 @@ namespace Mdt{ namespace DeployUtils{
      */
     ConsoleStream(QtMsgType msgType, int minLevel, int level);
 
+    /*! \brief Writes \a v to the stream and returns a reference to the stream
+     */
+    ConsoleStream & operator<<(int v);
+
     /*! \brief Writes \a str to the stream and returns a reference to the stream
      */
     ConsoleStream & operator<<(const char * str);

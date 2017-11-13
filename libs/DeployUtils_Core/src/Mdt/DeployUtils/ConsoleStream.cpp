@@ -33,6 +33,14 @@ ConsoleStream::ConsoleStream(QtMsgType msgType, int minLevel, int level)
   }
 }
 
+ConsoleStream& ConsoleStream::operator<<(int v)
+{
+  if(mDbg){
+    *mDbg << v;
+  }
+  return *this;
+}
+
 ConsoleStream& ConsoleStream::operator<<(const char* str)
 {
   if(mDbg){
