@@ -20,6 +20,7 @@ install(
     "modules/MdtGenerateEnvScript.cmake"
     "modules/MdtDependenciesUtils.cmake"
     "modules/MdtAddTranslations.cmake"
+    "modules/MdtDeployUtils.cmake"
   DESTINATION "${MDT_CMAKE_MODULES_INSTALL_DIR}/modules"
   COMPONENT "${PROJECT_NAME}-cmake"
 )

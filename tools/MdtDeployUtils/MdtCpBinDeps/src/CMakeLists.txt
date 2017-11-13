@@ -86,3 +86,17 @@ if(NOT CMAKE_CROSSCOMPILING)
     FILE "${CMAKE_BINARY_DIR}/ImportDeployUtils.cmake"
   )
 endif()
+
+
+# ### Sandbox ###
+
+include(MdtDeployUtils)
+
+add_executable(mdtcpbindeps_2 ${SOURCE_FILES})
+target_link_libraries(mdtcpbindeps_2 Application_Core DeployUtils_Core Qt5::Core)
+
+mdt_install_app(
+  TARGET mdtcpbindeps_2
+  TRANSLATIONS ${TRANSLATION_LANGUAGES}
+  PREFIX_PATH ${CMAKE_PREFIX_PATH}
+)

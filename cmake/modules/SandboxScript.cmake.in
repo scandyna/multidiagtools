@@ -1,0 +1,16 @@
+
+message(" --> File: @tmp_file_path@")
+file(READ "@tmp_file_path@" target_file_path)
+message(" --> Target file path: ${target_file_path}")
+
+execute_process(
+  COMMAND "@mdtcpbindeps_exe@"
+          "-p" "@prefix_path@"
+          "--library-destination" "@app_dependencies_path@/@lib_dir@"
+          "--plugin-destination" "@app_dependencies_path@/plugins"
+          "--verbose" "1"
+          "${target_file_path}"
+  WORKING_DIRECTORY "@CMAKE_BINARY_DIR@"
+  RESULT_VARIABLE cpresult
+)
+message(" --> cpresult: ${cpresult}")

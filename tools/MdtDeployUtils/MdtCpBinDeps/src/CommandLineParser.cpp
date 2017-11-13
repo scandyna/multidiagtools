@@ -78,7 +78,7 @@ bool CommandLineParser::process()
 bool CommandLineParser::checkAndSetArguments()
 {
   if(mParser.positionalArguments().size() != 1){
-    Console::error() << "expected 1 arguments (binary-files)";
+    Console::error() << "expected 1 arguments (binary-files), provided: " << mParser.positionalArguments().size();
     return false;
   }
   Q_ASSERT(mParser.positionalArguments().size() == 1);
