@@ -14,7 +14,7 @@ classcanvas 128642 class_ref 4392834 // MdtLibraryTranslation
 end
 classcanvas 128770 class_ref 4392962 // TranslationInfo
   classdiagramsettings member_max_width 0 end
-  xyz 207 473 2000
+  xyz 415 481 2000
 end
 classcanvas 128898 class_ref 4393090 // TranslationInfoList
   classdiagramsettings member_max_width 0 end
@@ -32,7 +32,7 @@ don't think we can have all informations here.."
   xyzwh 686 7 2000 417 145
 note 129922 "Note: generate map from CMake ?
 "
-  xyzwh 440.5 472.5 2000 371 45
+  xyzwh 645.5 474.5 2000 371 45
 note 130050 "Note: better not generalise to much.
 This conduct to filter QtLibraries many times, f.ex."
   xyzwh 253 388 2000 433 57
@@ -42,7 +42,7 @@ classcanvas 130434 class_ref 418818 // QLocale
 end
 classcanvas 130562 class_ref 4399874 // QmFileName
   classdiagramsettings member_max_width 0 end
-  xyz 118 615 2000
+  xyz 114 663 2000
 end
 note 130818 "Maybe: do not convert to QLocale::Language and coutry.
 Goal: compare languages and coutries easily (extractibg suffix is ok).
@@ -51,7 +51,7 @@ Goal: compare languages and coutries easily (extractibg suffix is ok).
 relationcanvas 129026 relation_ref 4901122 // <directional composition>
   from ref 128898 z 2006 to ref 128770
   no_role_a no_role_b
-  multiplicity_a_pos 191 527 3000 no_multiplicity_b
+  multiplicity_a_pos 399 556 3000 no_multiplicity_b
 end
 relationcanvas 129410 relation_ref 4901250 // <directional composition>
   decenter_begin 504

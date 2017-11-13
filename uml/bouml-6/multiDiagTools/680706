@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 58
+  revision 59
   modified_by 2 "philippe"
   // class settings
   
@@ -4138,7 +4138,22 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 6149762 "fullName"
+      operation 6157954 "absoluteFilePath"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6149762 "baseName"
 	public return_type class_ref 161026 // QString
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -4154,6 +4169,21 @@ ${inlines}
       end
 
       operation 6149890 "languageSuffix"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6157826 "countrySuffix"
 	public return_type class_ref 161026 // QString
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -4214,6 +4244,22 @@ ${inlines}
 "
 	    classrelation_ref 4927490 // <directional composition>
 	  b parent class_ref 4392962 // TranslationInfo
+      end
+
+      operation 6158082 "addTranslation"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "tr" type class_ref 4392962 // TranslationInfo
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
