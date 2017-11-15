@@ -1,0 +1,26 @@
+
+# This file is a input script used by mdt_install_copy_targets_dependencies()
+# See the MdtDeployUtils.cmake script.
+
+set(targets_path_list)
+foreach(target_path_file "@target_path_files@")
+  file(READ "${target_path_file}" target_path)
+  list(APPEND targets_path_list "${target_path}")
+endforeach()
+
+message("mdtcpbindeps EXE: @mdtcpbindeps_exe@")
+message("targets_path_list: ${targets_path_list}")
+
+execute_process(
+  COMMAND "@mdtcpbindeps_exe@"
+          "-p" "@prefix_path@"
+          "--library-destination" "@library_destination@"
+          "--plugin-destination" "@plugin_destination@"
+          "--verbose" "1"
+          "${targets_path_list}"
+  WORKING_DIRECTORY "@CMAKE_BINARY_DIR@"
+  RESULT_VARIABLE copy_result
+)
+if(NOT (${copy_result} EQUAL 0) )
+  message(FATAL_ERROR "mdt_install_copy_targets_dependencies(): copy of dependencies failed.")
+endif()

@@ -63,133 +63,23 @@ function(mdt_install_app)
   # Setup a clean temporary directory for dependencies
   set(app_dependencies_path "${CMAKE_CURRENT_BINARY_DIR}/MdtAppDependnecies")
   file(REMOVE_RECURSE "${app_dependencies_path}")
-  
-#   list(APPEND target_file_list "$<TARGET_FILE:${target}>")
-  
-  
+
   message("translations: ${translations}")
   message("prefix_path: ${prefix_path}")
   message("lib_dir: ${lib_dir}")
 
-  message("mdtcpbindeps path: $<TARGET_FILE:mdtcpbindeps>")
-  
-#   install(CODE
-#     "execute_process(
-#       COMMAND \"$<TARGET_FILE:mdtcpbindeps>\"
-#               -p \"${prefix_path}\"
-#               --library-destination \"${app_dependencies_path}/${lib_dir}\"
-#               --plugin-destination \"${app_dependencies_path}/plugins\"
-#               --verbose 1
-#               \"$<TARGET_FILE:${target}>\"
-#       WORKING_DIRECTORY \"${CMAKE_BINARY_DIR}\"
-#       RESULT_VARIABLE rv
-#      )
-#      message(\"RV: ${rv}\")
-#     "
-#   )
-#   install(CODE "message(\"Sample install message.\")")
-
-
-#   set(mdtcpbindeps_exe "")
-
-#   get_property(target_file_name TARGET ${target} PROPERTY LOCATION)
-#   get_target_property(target_file_name ${target} OUTPUT_NAME)
-#   message("-> For ${target},  target_file_name: ${target_file_name}")
-
-#   string(GENEX_STRIP $<TARGET_FILE:${target}> target_file_path)
-#   message("-> For ${target},  target_file_path: ${target_file_path}")
-
-  # Hmmmmmm
-  # Maybe we have to create some helper function to extract file path of a target:
-  # - Uses add_custom_command() to generate a file
-  # - Read this file and extract..
-  
-#   set(tmp_file_path "${CMAKE_CURRENT_BINARY_DIR}/${target}_file_path")
-#   file(GENERATE OUTPUT "${tmp_file_path}" CONTENT "$<TARGET_FILE:${target}>")
-#   file(READ "${tmp_file_path}" target_file_path)
-
-  
-
-#   message("-> For ${target},  target_file_path: ${target_file_path}")
-  
-  # Using add_custom_target() supports generator expressions.
-  # So, passing $<TARGET_FILE:${target}> is resolved correctly.
-  # But, when using execute_process() this is not the case.
-  # It seems that no easy and clean solution exists to get target's file path here.
-#   set(target_file_path "${CMAKE_CURRENT_BINARY_DIR}/")
-#   message(" -> target_file_path: ${target_file_path}")
-  
-#   add_custom_command(
-#     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${target}_file_path"
-#     COMMAND cmake -E echo "TGT file: $<TARGET_FILE:${target}"
-#     COMMAND cmake -E remove "${CMAKE_CURRENT_BINARY_DIR}/${target}_file_path"
-#   )
-  
-  set(tmp_file_path "${CMAKE_CURRENT_BINARY_DIR}/${target}_file_path")
-  file(GENERATE OUTPUT "${tmp_file_path}" CONTENT "$<TARGET_FILE:${target}>")
-  configure_file("${CMAKE_SOURCE_DIR}/cmake/modules/SandboxScript.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/SandboxScript.cmake" @ONLY)
-  install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/SandboxScript.cmake")
-
-#   set(install_script_in "${CMAKE_CURRENT_BINARY_DIR}/install_22_23.camke.in")
-#   set(install_script "${CMAKE_CURRENT_BINARY_DIR}/install_22_23.camke")
-#   file(WRITE "${install_script_in}" "message(\"Target file: @$<TARGET_FILE:${target}@\")")
-#   configure_file("${install_script_in}" "${install_script}")
-#   install(SCRIPT "${install_script}")
-  
-  install(CODE
-    "message(\" I tmp file: ${tmp_file_path}\")
-     file(READ \"${tmp_file_path}\" target_file_path)
-     message(\"-> For ${target},  target_file_path: ${target_file_path}\")
-     execute_process(
-      COMMAND \"${mdtcpbindeps_exe}\"
-              \"-p\" \"${prefix_path}\"
-              \"--library-destination\" \"${app_dependencies_path}/${lib_dir}\"
-              \"--plugin-destination\" \"${app_dependencies_path}/plugins\"
-              \"--verbose\" \"1\"
-              \"${target_file_path}>\"
-      WORKING_DIRECTORY \"${CMAKE_BINARY_DIR}\"
-      RESULT_VARIABLE cpresult
-    )"
-#     "COMMAND message(\"cpresult: ${cpresult}\")"
+  mdt_install_copy_targets_dependencies(
+    TARGETS ${target}
+    TRANSLATIONS ${translations}
+    PREFIX_PATH ${prefix_path}
+    LIBRARY_DESTINATION "${app_dependencies_path}/lib"
+    PLUGIN_DESTINATION "${app_dependencies_path}/plugins"
+    TRANSLATION_DESTINATION "${app_dependencies_path}/translations"
   )
-  install(CODE "message(\"Sample install message.\")")
 
-  message("Cur dir: ${CMAKE_CURRENT_BINARY_DIR}")
-  
 #   find_program(mdtcpbindeps_exe NAME mdtcpbindeps PATHS "${CMAKE_CURRENT_BINARY_DIR}" NO_DEFAULT_PATH NO_CMAKE_PATH)
 #   message("mdtcpbindeps_exe: ${mdtcpbindeps_exe}")
-  
-#   execute_process(
-#     COMMAND "${mdtcpbindeps_exe}"
-#             "-p" "${prefix_path} "
-#             "--library-destination" "${app_dependencies_path}/${lib_dir}"
-#             "--plugin-destination" "${app_dependencies_path}/plugins"
-#             "--verbose" "1"
-#             "$<TARGET_FILE:${target}>"
-#     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-#     RESULT_VARIABLE cpresult
-#   )
-#   message("cpresult: ${cpresult}")
 
-#   execute_process(
-#     COMMAND "/bin/ls" "-l"
-#     RESULT_VARIABLE lsresult
-#   )
-#   message("lsresult: ${lsresult}")
-  
-#   execute_process(
-#     COMMAND "/bin/ls" "-l"
-#     RESULT_VARIABLE lsresult
-#   )
-#   message("lsresult: ${lsresult}")
-  
-  install(CODE
-    "execute_process(
-      COMMAND \"ls -l\"
-     )
-    "
-  )
-  
   # Create a new target that depends install
 #   get_filename_component(destination_name "${library_destination}" NAME)
 #   set(bin_deps_target "${destination_name}_bin_deps")
@@ -210,5 +100,124 @@ function(mdt_install_app)
 #   add_dependencies(install "${target_dependencies}")
 
 endfunction()
+
+# Copy dependencies of a list of targets to a directory at install time
+#
+# Note that the copy is not done when this function is called.
+# Behind the scene, a install script is called at install time.
+#
+# Note: to prevent failures during the copy, only call this function once per destination directory.
+#
+# Input arguments:
+#  TARGETS:
+#   List containing names of the targets for which to copy dependencies
+#  TRANSLATIONS (optionnal):
+#   A list of translations suffixes.
+#   For example, for French translations, pass fr.
+#   It is also possible to specifiy a country, in the form fr_ca .
+#   For each translation suffix and each target, a file, called <TARGET>_<translation_suffix>.qm,
+#   will be installed in <TRANSLATION_DESTINATION>.
+#   This file will contain translations for used Qt libraries, for used Mdt libraries and the the target itself.
+#  PREFIX_PATH (optional):
+#   A list of full paths to directories where to find dependencies,
+#   like Qt plugins, Qt and Mdt translations (qm files).
+#   On DLL platforms, this is also used to find libraries.
+#   For known libraries, like Qt5 and Mdt, passing the root of the installed library is fine.
+#   Internally, searching is done in known subdirectories of each specified directory (for example bin, qt5/bin).
+#   A good choise is to pass CMAKE_PREFIX_PATH .
+#  LIBRARY_DESTINATION:
+#   Full path to the destination of libraries.
+#  PLUGIN_DESTINATION:
+#   Full path to the destination of plugins.
+#  TRANSLATION_DESTINATION:
+#   Full path to the destination of translations.
+#
+function(mdt_install_copy_targets_dependencies)
+  # Parse arguments
+  set(options)
+  set(oneValueArgs LIBRARY_DESTINATION PLUGIN_DESTINATION TRANSLATION_DESTINATION)
+  set(multiValueArgs TARGETS TRANSLATIONS PREFIX_PATH)
+  cmake_parse_arguments(VAR "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  if(VAR_UNPARSED_ARGUMENTS)
+      message(FATAL_ERROR "mdt_install_copy_targets_dependencies(): unexpected arguments: ${VAR_UNPARSED_ARGUMENTS}")
+  endif()
+  # Set our local variables and check the mandatory ones
+  set(targets "${VAR_TARGETS}")
+  if(NOT target)
+    message(FATAL_ERROR "mdt_install_copy_targets_dependencies(): expected at least 1 target.")
+  endif()
+  set(translations ${VAR_TRANSLATIONS})
+  set(prefix_path ${VAR_PREFIX_PATH})
+  set(library_destination ${VAR_LIBRARY_DESTINATION})
+  if(NOT library_destination)
+    message(FATAL_ERROR "mdt_install_copy_targets_dependencies(): LIBRARY_DESTINATION argument is missing.")
+  endif()
+  set(plugin_destination ${VAR_PLUGIN_DESTINATION})
+  if(NOT plugin_destination)
+    message(FATAL_ERROR "mdt_install_copy_targets_dependencies(): PLUGIN_DESTINATION argument is missing.")
+  endif()
+  set(translation_destination ${VAR_TRANSLATION_DESTINATION})
+  if(NOT translation_destination)
+    message(FATAL_ERROR "mdt_install_copy_targets_dependencies(): TRANSLATION_DESTINATION argument is missing.")
+  endif()
+
+  # Find mdtcpbindeps tool
+  # Maybe we are compiling Mdt, in which case it is a target,
+  # else we have to find it as a imported executable
+  if(TARGET mdtcpbindeps)
+    set(mdtcpbindeps_exe ${mdtcpbindeps})
+  else()
+    find_program(mdtcpbindeps_exe mdtcpbindeps)
+    if(!${mdtcpbindeps_exe_FOUND})
+      message(FATAL_ERROR "mdt_install_copy_targets_dependencies(): could not find mdtcpbindeps executable.")
+    endif()
+  endif()
+
+  # Using add_custom_target() supports generator expressions.
+  # So, passing $<TARGET_FILE:${target}> is resolved correctly.
+  # But, there is no way I found to trigger it at install time,
+  # making dependencies resolutions at each build.
+  # One solution is install(CODE execute_process()),
+  # but execute_process() do not resolve generator expressions.
+  # A solution is to use file(GENERATE), which supports generator expressions,
+  # to create a file that contains the full path to the target,
+  # then generate a script that reads its content.
+  set(target_path_files)
+  foreach(target ${targets})
+    set(target_path_file "${CMAKE_CURRENT_BINARY_DIR}/${target}_path_file")
+    file(GENERATE OUTPUT "${target_path_file}" CONTENT "$<TARGET_FILE:${target}>")
+    list(APPEND target_path_files "${target_path_file}")
+  endforeach()
+  configure_file("${CMAKE_SOURCE_DIR}/cmake/modules/MdtInstallCopyTargetsDependenciesScript.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/MdtInstallCopyTargetsDependenciesScript.cmake" @ONLY)
+  install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/MdtInstallCopyTargetsDependenciesScript.cmake")
+
+endfunction()
+
+# TODO : we probably cannot predict when the install script will be called
+#        maybe we better copy depenencies directly to the final path
+# Create a rule to install dependencies of targets
+#
+# Input arguments:
+#  TARGETS:
+#   List containing names of the targets for which to install dependencies
+#  TRANSLATIONS (optionnal):
+#   A list of translations suffixes.
+#   For example, for French translations, pass fr.
+#   It is also possible to specifiy a country, in the form fr_ca .
+#   For each translation suffix, a file, called <TARGET>_<translation_suffix>.qm,
+#   will be installed in translations subdirectory of the application.
+#   This file will contains translations for used Qt libraries, for used Mdt libraries and the the application itself.
+#  PREFIX_PATH (optional):
+#   A list of full paths to directories where to find dependencies,
+#   like Qt plugins, Qt and Mdt translations (qm files).
+#   On DLL platforms, this is also used to find libraries.
+#   For known libraries, like Qt5 and Mdt, passing the root of the installed library is fine.
+#   Internally, searching is done in known subdirectories of each specified directory (for example bin, qt5/bin).
+#   A good choise is to pass CMAKE_PREFIX_PATH .
+#
+#  COMPONENT:
+function(mdt_install_targets_dependencies)
+endfunction()
+
 
 # TODO try to make depend on install, and check with CPack
