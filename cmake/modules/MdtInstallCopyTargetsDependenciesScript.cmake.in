@@ -17,6 +17,8 @@ execute_process(
           "-p" "@prefix_path@"
           "--library-destination" "@library_tmp_path@"
           "--plugin-destination" "@plugin_tmp_path@"
+          "--translations" "@translations@"
+          "--translation-destination" "@translation_tmp_path@"
           "--verbose" "1"
           "${targets_path_list}"
   WORKING_DIRECTORY "@CMAKE_BINARY_DIR@"

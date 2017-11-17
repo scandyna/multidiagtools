@@ -70,6 +70,16 @@ function(mdt_install_app)
   set(plugin_tmp_path "${app_dependencies_path}/plugins")
   set(translation_tmp_path "${app_dependencies_path}/translations")
 
+  # Get projects translations (see MdtAddTranslations module)
+  set(project_qm_list_file "${CMAKE_BINARY_DIR}/projectTranslationQmList")
+  if(EXISTS "${project_qm_list_file}")
+    file(READ "${project_qm_list_file}" project_qm_files)
+  endif()
+
+  foreach(f ${project_qm_files})
+    message("QM: ${f}")
+  endforeach()
+
   mdt_install_copy_targets_dependencies(
     TARGETS ${target}
     TRANSLATIONS ${translations}

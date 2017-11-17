@@ -11,7 +11,7 @@
 #   Relative path to the directory containing source files
 #  TS_FILES_DIRECTORY:
 #   Relative path to the directory into which translations files are generated/updated (TS files)
-#  INSTALL_DESTINATION:
+#  INSTALL_DESTINATION (Optional):
 #   Relative path to the installed directory.
 # Global variables that are also used:
 #  TRANSLATION_LANGUAGES:
@@ -31,7 +31,6 @@
 #   TARGET MyApp
 #   SOURCES_DIRECTORY ../src
 #   TS_FILES_DIRECTORY .
-#   INSTALL_DESTINATION translations
 # )
 #
 # The call of set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1) avoid that TS files to be cleared with make clean
@@ -53,9 +52,9 @@ function(mdt_add_translations)
     message(FATAL_ERROR "TS_FILES_DIRECTORY argument is missing.")
   endif()
   set(install_destination ${VAR_INSTALL_DESTINATION})
-  if(NOT install_destination)
-    message(FATAL_ERROR "INSTALL_DESTINATION argument is missing.")
-  endif()
+#   if(NOT install_destination)
+#     message(FATAL_ERROR "INSTALL_DESTINATION argument is missing.")
+#   endif()
   # Find transaltion helpers provided by Qt5
   # Note: without requiering Qt5Core, _qt5_Core_check_file_exists could not be found
   find_package(Qt5
@@ -81,16 +80,51 @@ function(mdt_add_translations)
     TS_FILES ${ts_files}
   )
   add_custom_target(${target}Translations ALL DEPENDS ${qm_files})
+  mdt_add_translation_qm_files_to_project_qm_list_file(
+    QM_FILES ${qm_files}
+  )
+
   # Rules to install translations
-  foreach(file ${qm_files})
-    # Set language suffix which will be used for component name
-    mdt_extract_language_suffix_from_qm_file(language_suffix QM_FILE "${file}")
-    install(
-      FILES "${file}"
-      DESTINATION "${install_destination}"
-      COMPONENT ${target}-l10n-${language_suffix}
-    )
-  endforeach()
+  if(install_destination)
+    foreach(file ${qm_files})
+      # Set language suffix which will be used for component name
+      mdt_extract_language_suffix_from_qm_file(language_suffix QM_FILE "${file}")
+      install(
+        FILES "${file}"
+        DESTINATION "${install_destination}"
+        COMPONENT ${target}-l10n-${language_suffix}
+      )
+    endforeach()
+  endif()
+
+endfunction()
+
+# Add a list of translations QM files to the project QM files list
+#
+# This is used by MdtDeployUtils module
+#
+function(mdt_add_translation_qm_files_to_project_qm_list_file)
+  # Parse arguments
+  set(oneValueArgs)
+  set(multiValueArgs QM_FILES)
+  cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  # Set our local variables and check the mandatory ones
+  set(qm_files ${VAR_QM_FILES})
+  if(NOT qm_files)
+    message(FATAL_ERROR "QM_FILES argument is missing.")
+  endif()
+
+  set(project_qm_list_file "${CMAKE_BINARY_DIR}/projectTranslationQmList")
+
+  # Get existing QM files
+  if(EXISTS "${project_qm_list_file}")
+    file(READ "${project_qm_list_file}" all_qm_files)
+  endif()
+  # Add our QM files
+  list(APPEND all_qm_files ${qm_files})
+  list(REMOVE_DUPLICATES all_qm_files)
+  # Save the result
+  file(WRITE "${project_qm_list_file}" "${all_qm_files}")
 
 endfunction()
 
