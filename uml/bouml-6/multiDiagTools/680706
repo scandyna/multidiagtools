@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 59
+  revision 60
   modified_by 2 "philippe"
   // class settings
   
@@ -4277,24 +4277,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 4927618 // <directional composition>
-	relation 4901250 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4927618 // <directional composition>
-	  b parent class_ref 4392834 // MdtLibraryTranslation
-      end
-
-      classrelation 4927746 // <directional composition>
-	relation 4901378 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4927746 // <directional composition>
-	  b parent class_ref 4392706 // QtLibraryTranslations
-      end
-
       operation 6143106 "findTranslations"
 	public return_type class_ref 4393090 // TranslationInfoList
 	nparams 3
@@ -4322,6 +4304,110 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6164738 "findQtTranslations"
+	class_operation public return_type class_ref 4393090 // TranslationInfoList
+	nparams 3
+	  param in name "qtLibrary" type class_ref 4158978 // LibraryInfo
+	  param in name "languages" type class_ref 160770 // QStringList
+	  param in name "prefix" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6164866 "findQtTranslations"
+	class_operation public return_type class_ref 4393090 // TranslationInfoList
+	nparams 3
+	  param in name "qtLibraries" type class_ref 4159490 // LibraryInfoList
+	  param in name "languages" type class_ref 160770 // QStringList
+	  param in name "prefix" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6164994 "findMdtTranslations"
+	class_operation public return_type class_ref 4393090 // TranslationInfoList
+	nparams 3
+	  param in name "mdtLibrary" type class_ref 4158978 // LibraryInfo
+	  param in name "languages" type class_ref 160770 // QStringList
+	  param in name "prefix" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6165122 "findMdtTranslations"
+	class_operation public return_type class_ref 4393090 // TranslationInfoList
+	nparams 3
+	  param in name "mdtLibraries" type class_ref 4159490 // LibraryInfoList
+	  param in name "languages" type class_ref 160770 // QStringList
+	  param in name "prefix" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6165250 "findQtTranslationsRoot"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "prefix" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6165378 "findMdtTranslationsRoot"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "prefix" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -4376,6 +4462,14 @@ ${inlines}
 	    classrelation_ref 4927874 // <dependency>
 	  b parent class_ref 4393218 // MdtLibrary
       end
+
+      classrelation 4941186 // <dependency>
+	relation 4914818 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4941186 // <dependency>
+	  b parent class_ref 4161282 // Translation
+      end
     end
 
     classdiagram 3786114 "QtTranslations"
@@ -4383,7 +4477,7 @@ ${inlines}
       size B-Landscape
     end
 
-    class 4392706 "QtLibraryTranslations"
+    class 4392706 "QtLibraryTranslation"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -4401,7 +4495,7 @@ ${inlines}
 	public return_type class_ref 4393090 // TranslationInfoList
 	nparams 3
 	  param in name "qtLibrary" type class_ref 4158978 // LibraryInfo
-	  param in name "language" explicit_type "QLocale::Language"
+	  param in name "languages" type class_ref 160770 // QStringList
 	  param in name "prefixList" type class_ref 4168962 // PathList
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4419,7 +4513,7 @@ ${inlines}
 	public return_type class_ref 4393090 // TranslationInfoList
 	nparams 3
 	  param in name "qtLibraries" type class_ref 4159490 // LibraryInfoList
-	  param in name "language" explicit_type "QLocale::Language"
+	  param in name "languages" type class_ref 160770 // QStringList
 	  param in name "prefixList" type class_ref 4168962 // PathList
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4439,6 +4533,38 @@ ${inlines}
 	    cpp default "#include in source"
 	    classrelation_ref 4928002 // <dependency>
 	  b parent class_ref 4251522 // QtLibrary
+      end
+
+      classrelation 4941058 // <generalisation>
+	relation 4914690 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4941058 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 6164610 "findTranslationsRoot"
+	public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "prefixList" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4941314 // <dependency>
+	relation 4914946 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4941314 // <dependency>
+	  b parent class_ref 4161282 // Translation
       end
     end
 
