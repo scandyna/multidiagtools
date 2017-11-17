@@ -21,6 +21,7 @@ install(
     "modules/MdtDependenciesUtils.cmake"
     "modules/MdtAddTranslations.cmake"
     "modules/MdtDeployUtils.cmake"
+    "modules/MdtInstallCopyTargetsDependenciesScript.cmake.in"
   DESTINATION "${MDT_CMAKE_MODULES_INSTALL_DIR}/modules"
   COMPONENT "${PROJECT_NAME}-cmake"
 )

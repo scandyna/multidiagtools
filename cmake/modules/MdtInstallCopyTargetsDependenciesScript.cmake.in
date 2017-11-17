@@ -8,14 +8,15 @@ foreach(target_path_file "@target_path_files@")
   list(APPEND targets_path_list "${target_path}")
 endforeach()
 
-message("mdtcpbindeps EXE: @mdtcpbindeps_exe@")
-message("targets_path_list: ${targets_path_list}")
+message("SCRIPT: mdtcpbindeps: @mdtcpbindeps@")
+message("SCRIPT: mdtcpbindeps EXE: @mdtcpbindeps_exe@")
+message("SCRIPT: targets_path_list: ${targets_path_list}")
 
 execute_process(
   COMMAND "@mdtcpbindeps_exe@"
           "-p" "@prefix_path@"
-          "--library-destination" "@library_destination@"
-          "--plugin-destination" "@plugin_destination@"
+          "--library-destination" "@library_tmp_path@"
+          "--plugin-destination" "@plugin_tmp_path@"
           "--verbose" "1"
           "${targets_path_list}"
   WORKING_DIRECTORY "@CMAKE_BINARY_DIR@"

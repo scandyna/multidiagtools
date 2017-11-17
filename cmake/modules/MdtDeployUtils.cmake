@@ -60,45 +60,55 @@ function(mdt_install_app)
   else()
     set(lib_dir "lib")
   endif()
-  # Setup a clean temporary directory for dependencies
+
+  # To make all work with CPack,
+  # copy dependencies to a temporary directory,
+  # then create rules to install dependencies.
   set(app_dependencies_path "${CMAKE_CURRENT_BINARY_DIR}/MdtAppDependnecies")
   file(REMOVE_RECURSE "${app_dependencies_path}")
-
-  message("translations: ${translations}")
-  message("prefix_path: ${prefix_path}")
-  message("lib_dir: ${lib_dir}")
+  set(library_tmp_path "${app_dependencies_path}/${lib_dir}")
+  set(plugin_tmp_path "${app_dependencies_path}/plugins")
+  set(translation_tmp_path "${app_dependencies_path}/translations")
 
   mdt_install_copy_targets_dependencies(
     TARGETS ${target}
     TRANSLATIONS ${translations}
     PREFIX_PATH ${prefix_path}
-    LIBRARY_DESTINATION "${app_dependencies_path}/lib"
-    PLUGIN_DESTINATION "${app_dependencies_path}/plugins"
-    TRANSLATION_DESTINATION "${app_dependencies_path}/translations"
+    LIBRARY_DESTINATION "${library_tmp_path}"
+    PLUGIN_DESTINATION "${plugin_tmp_path}"
+    TRANSLATION_DESTINATION "${translation_tmp_path}"
   )
 
-#   find_program(mdtcpbindeps_exe NAME mdtcpbindeps PATHS "${CMAKE_CURRENT_BINARY_DIR}" NO_DEFAULT_PATH NO_CMAKE_PATH)
-#   message("mdtcpbindeps_exe: ${mdtcpbindeps_exe}")
+  # Write a qt.conf file
+  set(qt_conf_file_path "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
+  file(WRITE "${qt_conf_file_path}" "[Paths]\nPrefix=..\n")
 
-  # Create a new target that depends install
-#   get_filename_component(destination_name "${library_destination}" NAME)
-#   set(bin_deps_target "${destination_name}_bin_deps")
-  
-#   set(target_dependencies ${target}_dependencies)
-#   message("target_dependencies: ${target_dependencies}")
-#   add_custom_target(
-#     "${target_dependencies}"
-#     COMMAND mdtcpbindeps
-#             -p "${prefix_path}"
-#             --library-destination "${app_dependencies_path}/${lib_dir}"
-#             --plugin-destination "${app_dependencies_path}/plugins"
-#             --verbose 1
-#             "$<TARGET_FILE:${target}>"
-#     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-#     VERBATIM
-#   )
-#   add_dependencies(install "${target_dependencies}")
-
+  # Create a install rule for this new target
+  # Note: if(EXISTS) is evaluated at generation time, not at install time,
+  #       so we better check passed arguments to check if installation of some parts is required.
+  set_target_properties(${target} PROPERTIES INSTALL_RPATH "\$ORIGIN/../${lib_dir}")
+  install(
+    TARGETS ${target}
+    DESTINATION "bin"
+  )
+  install(
+    DIRECTORY "${library_tmp_path}"
+    DESTINATION "."
+  )
+  install(
+    DIRECTORY "${plugin_tmp_path}"
+    DESTINATION "."
+  )
+  if(translations)
+    install(
+      DIRECTORY "${translation_tmp_path}"
+      DESTINATION "."
+    )
+  endif()
+  install(
+    FILES "${qt_conf_file_path}"
+    DESTINATION "bin"
+  )
 endfunction()
 
 # Copy dependencies of a list of targets to a directory at install time
@@ -167,10 +177,14 @@ function(mdt_install_copy_targets_dependencies)
   if(TARGET mdtcpbindeps)
     set(mdtcpbindeps_exe ${mdtcpbindeps})
   else()
-    find_program(mdtcpbindeps_exe mdtcpbindeps)
-    if(!${mdtcpbindeps_exe_FOUND})
-      message(FATAL_ERROR "mdt_install_copy_targets_dependencies(): could not find mdtcpbindeps executable.")
-    endif()
+    find_package(mdtcpbindeps REQUIRED)
+    get_target_property(mdtcpbindeps_exe mdtcpbindeps LOCATION)
+  endif()
+
+  if(EXISTS "${CMAKE_SOURCE_DIR}/cmake/modules/MdtInstallCopyTargetsDependenciesScript.cmake.in")
+    set(install_script_in "${CMAKE_SOURCE_DIR}/cmake/modules/MdtInstallCopyTargetsDependenciesScript.cmake.in")
+  else()
+    find_file(install_script_in "MdtInstallCopyTargetsDependenciesScript.cmake.in" PATHS "${MDT_CMAKE_MODULE_PATH}")
   endif()
 
   # Using add_custom_target() supports generator expressions.
@@ -188,36 +202,7 @@ function(mdt_install_copy_targets_dependencies)
     file(GENERATE OUTPUT "${target_path_file}" CONTENT "$<TARGET_FILE:${target}>")
     list(APPEND target_path_files "${target_path_file}")
   endforeach()
-  configure_file("${CMAKE_SOURCE_DIR}/cmake/modules/MdtInstallCopyTargetsDependenciesScript.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/MdtInstallCopyTargetsDependenciesScript.cmake" @ONLY)
+  configure_file("${install_script_in}" "${CMAKE_CURRENT_BINARY_DIR}/MdtInstallCopyTargetsDependenciesScript.cmake" @ONLY)
   install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/MdtInstallCopyTargetsDependenciesScript.cmake")
 
 endfunction()
-
-# TODO : we probably cannot predict when the install script will be called
-#        maybe we better copy depenencies directly to the final path
-# Create a rule to install dependencies of targets
-#
-# Input arguments:
-#  TARGETS:
-#   List containing names of the targets for which to install dependencies
-#  TRANSLATIONS (optionnal):
-#   A list of translations suffixes.
-#   For example, for French translations, pass fr.
-#   It is also possible to specifiy a country, in the form fr_ca .
-#   For each translation suffix, a file, called <TARGET>_<translation_suffix>.qm,
-#   will be installed in translations subdirectory of the application.
-#   This file will contains translations for used Qt libraries, for used Mdt libraries and the the application itself.
-#  PREFIX_PATH (optional):
-#   A list of full paths to directories where to find dependencies,
-#   like Qt plugins, Qt and Mdt translations (qm files).
-#   On DLL platforms, this is also used to find libraries.
-#   For known libraries, like Qt5 and Mdt, passing the root of the installed library is fine.
-#   Internally, searching is done in known subdirectories of each specified directory (for example bin, qt5/bin).
-#   A good choise is to pass CMAKE_PREFIX_PATH .
-#
-#  COMPONENT:
-function(mdt_install_targets_dependencies)
-endfunction()
-
-
-# TODO try to make depend on install, and check with CPack
