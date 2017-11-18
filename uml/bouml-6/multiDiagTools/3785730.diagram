@@ -1,8 +1,8 @@
 format 214
 
-classcanvas 128002 class_ref 4161282 // Translation
+classcanvas 128002 class_ref 4161282 // FindTranslation
   classdiagramsettings member_max_width 0 end
-  xyz 200 159 2000
+  xyz 178 173 2000
 end
 classcanvas 128514 class_ref 4392706 // QtLibraryTranslation
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -44,18 +44,18 @@ end
 note 130818 "Maybe: do not convert to QLocale::Language and coutry.
 Goal: compare languages and coutries easily (extractibg suffix is ok).
 "
-  xyzwh 447 682 2000 433 67
+  xyzwh 450 715 2000 433 67
 note 131458 "ASSERT file exists
 -> OR not"
   xyzwh 153 562 2000 205 77
-classcanvas 131842 class_ref 4406530 // TranslationJoin
+classcanvas 131842 class_ref 4406530 // JoinTranslation
   classdiagramsettings member_max_width 0 end
-  xyz 198 94 2000
+  xyz 16 79 2000
 end
 relationcanvas 129026 relation_ref 4901122 // <directional composition>
   from ref 128898 z 2006 to ref 128770
   no_role_a no_role_b
-  multiplicity_a_pos 399 547 3000 no_multiplicity_b
+  multiplicity_a_pos 399 564 3000 no_multiplicity_b
 end
 relationcanvas 130690 relation_ref 4908162 // <directional composition>
   from ref 128770 z 2001 to ref 130562

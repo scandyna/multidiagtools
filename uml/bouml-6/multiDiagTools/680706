@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 61
+  revision 62
   modified_by 2 "philippe"
   // class settings
   
@@ -4153,6 +4153,36 @@ ${inlines}
 	
       end
 
+      operation 6179074 "fullFileName"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6179202 "qmFileName"
+	public return_type class_ref 4399874 // QmFileName
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 6149762 "baseName"
 	public return_type class_ref 161026 // QString
 	nparams 0
@@ -4278,6 +4308,22 @@ ${inlines}
 	
       end
 
+      operation 6178946 "at"
+	public return_type class_ref 4392962 // TranslationInfo
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 6172034 "fromFileList"
 	class_operation public return_type class_ref 4393090 // TranslationInfoList
 	nparams 1
@@ -4295,7 +4341,7 @@ ${inlines}
       end
     end
 
-    class 4161282 "Translation"
+    class 4161282 "FindTranslation"
       visibility package stereotype "globalFunctions"
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -4417,23 +4463,6 @@ ${inlines}
 	
       end
 
-      operation 6171906 "joinTranslations"
-	class_operation public explicit_return_type "bool"
-	nparams 2
-	  param in name "translations" type class_ref 4393090 // TranslationInfoList
-	  param in name "destination" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 6165250 "findQtTranslationsRoot"
 	class_operation public return_type class_ref 161026 // QString
 	nparams 1
@@ -4467,8 +4496,8 @@ ${inlines}
       end
     end
 
-    class 4406530 "TranslationJoin"
-      visibility package 
+    class 4406530 "JoinTranslation"
+      visibility package stereotype "globalFunctions"
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -4481,6 +4510,22 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 6171906 "joinTranslations"
+	class_operation public explicit_return_type "bool"
+	nparams 2
+	  param in name "translations" type class_ref 4393090 // TranslationInfoList
+	  param in name "destination" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 3785986 "MdtTranslation"
@@ -4533,7 +4578,7 @@ ${inlines}
 	  a public
 	    cpp default "#include in source"
 	    classrelation_ref 4941186 // <dependency>
-	  b parent class_ref 4161282 // Translation
+	  b parent class_ref 4161282 // FindTranslation
       end
     end
 
@@ -4629,7 +4674,7 @@ ${inlines}
 	  a public
 	    cpp default "#include in source"
 	    classrelation_ref 4941314 // <dependency>
-	  b parent class_ref 4161282 // Translation
+	  b parent class_ref 4161282 // FindTranslation
       end
     end
 
@@ -4808,6 +4853,5 @@ ${inlines}
 	
       end
     end
-
   end
 end
