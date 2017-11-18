@@ -273,7 +273,7 @@ namespace Mdt{
 
     /*! \brief Construct a null error
     */
-    Error();
+    explicit Error();
 
     /*! \brief Construct a error with error and source set
     *
@@ -281,7 +281,7 @@ namespace Mdt{
     *  Consider using mdtErrorNew() or mdtErrorNewT() macro.
     */
     template <typename T>
-    Error(const T & error, const QString & text, Level level,
+    explicit Error(const T & error, const QString & text, Level level,
               const QString & fileName, int fileLine, const QString & className, const QString & functionName)
     {
       static_assert(std::is_default_constructible<T>::value, "T must be default constructible");
@@ -297,7 +297,7 @@ namespace Mdt{
     *  Consider using mdtErrorNewQ() or mdtErrorNewTQ() macro.
     */
     template <typename T>
-    Error(const T & error, const QString & text, Level level,
+    explicit Error(const T & error, const QString & text, Level level,
               const QString & fileName, int fileLine, const QObject * const obj, const QString & functionName)
     {
       static_assert(std::is_default_constructible<T>::value, "T must be default constructible");
