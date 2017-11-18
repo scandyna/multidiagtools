@@ -18,50 +18,65 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_EXPECTED_TEST_H
-#define MDT_EXPECTED_TEST_H
-
+#include "ExpectedBenchmark.h"
+#include "Mdt/CoreApplication.h"
 #include "Mdt/Expected.h"
-#include "Mdt/Error.h"
-#include "MdtExpectedExport.h"
-#include <QObject>
-#include <QString>
-#include <QVariant>
-#include <QtTest/QtTest>
 
-class MDT_EXPECTED_EXPORT ExpectedTest : public QObject
+// #include <QDebug>
+
+void ExpectedBenchmark::initTestCase()
 {
-  Q_OBJECT
+}
 
- private slots:
+void ExpectedBenchmark::cleanupTestCase()
+{
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+/*
+ * Benchmarks
+ */
 
-  void expectedTest();
-
-  void implicitIntUseTest();
-  void implicitQStringUseTest();
-  void implicitQVariantUseTest();
-
- private:
-
-  int incrementInt(int value);
-  QString catAtoString(const QString & str);
-  QVariant returnVariantAsIs(const QVariant & var);
-
-  template<typename T>
-  static Mdt::Expected<T> getValue(const T & value)
-  {
-    return value;
+void ExpectedBenchmark::getIntBenchmark()
+{
+  int y;
+  QBENCHMARK{
+    const auto x = getValue(50);
+    y = x;
   }
+  QCOMPARE(y, 50);
+}
 
-  template<typename T>
-  static Mdt::Expected<T> getError()
-  {
-    return mdtErrorNew("A error", Mdt::Error::Critical, "ExpectedTest");
+void ExpectedBenchmark::getExpectedIntBenchmark()
+{
+  int y;
+  QBENCHMARK{
+    const auto x = getExpectedValue(50);
+    y = *x;
   }
+  QCOMPARE(y, 50);
+}
 
-};
+void ExpectedBenchmark::getAndCheckExpectedIntBenchmark()
+{
+  int y;
+  QBENCHMARK{
+    const auto x = getExpectedValue(50);
+    QVERIFY(x);
+    y = *x;
+  }
+  QCOMPARE(y, 50);
+}
 
-#endif // #ifndef MDT_EXPECTED_TEST_H
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::CoreApplication app(argc, argv);
+  ExpectedBenchmark test;
+
+//   app.debugEnvironnement();
+
+  return QTest::qExec(&test, argc, argv);
+}

@@ -291,11 +291,59 @@ void ExpectedTest::expectedTest()
   b1 = std::move(Expected<bool>(std::move(true)));
 }
 
-void ExpectedTest::expectedBenchmark()
+void ExpectedTest::implicitIntUseTest()
 {
-  QSKIP("Not implemented yet");
+  auto x = getValue(2);
+  QVERIFY(x);
+  int y = incrementInt(*x);
+  QCOMPARE(y, 3);
+  // Check also with const expected
+  const auto cx = getValue(5);
+  y = incrementInt(*cx);
+  QCOMPARE(y, 6);
 }
 
+void ExpectedTest::implicitQStringUseTest()
+{
+  auto d = getValue<QString>("D");
+  QVERIFY(d);
+  QString s = catAtoString(*d);
+  QCOMPARE(s, QString("DA"));
+  // Check also with const expected
+  const auto c = getValue<QString>("C");
+  s = catAtoString(*c);
+  QCOMPARE(s, QString("CA"));
+}
+
+void ExpectedTest::implicitQVariantUseTest()
+{
+  auto v1 = getValue<QVariant>(3000);
+  QVariant v2 = returnVariantAsIs(*v1);
+  QCOMPARE(v2, QVariant(3000));
+  // Check also with const expected
+  const auto cv = getValue<QVariant>(500);
+  v2 = returnVariantAsIs(*cv);
+  QCOMPARE(v2, QVariant(500));
+}
+
+/*
+ * Helper functions
+ */
+
+int ExpectedTest::incrementInt(int value)
+{
+  return value + 1;
+}
+
+QString ExpectedTest::catAtoString(const QString& str)
+{
+  return str + "A";
+}
+
+QVariant ExpectedTest::returnVariantAsIs(const QVariant& var)
+{
+  return var;
+}
 
 /*
  * Main

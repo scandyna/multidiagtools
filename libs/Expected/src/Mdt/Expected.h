@@ -38,6 +38,26 @@ namespace Mdt{
    *  you should take a look at the official proposal:
    *  https://github.com/viboes/std-make/tree/master/doc/proposal/expected
    *
+   * A function, that reads a value from a storage, could look like:
+   * \code
+   * Mdt::Expected<int> readValue(const QString & filePath);
+   * \endcode
+   *
+   * Later, a computation has to be done on the readen value:
+   * \code
+   * int compute(int value);
+   * \endcode
+   *
+   * Using all together could be:
+   * \code
+   * const auto x = readValue("/path/to/x.csv");
+   * if(!x){
+   *   // Error handling
+   *   return -1;
+   * }
+   * const auto y = compute(*x);
+   * \endcode
+   *
    * \tparam T Type of value
    */
   template <typename T>
@@ -246,13 +266,6 @@ namespace Mdt{
       return mHasValue;
     }
 
-    /*! \brief Return true if a value was set
-     */
-    operator bool() const
-    {
-      return mHasValue;
-    }
-
     /*! \brief Access value
      *
      * \pre this must contain a value
@@ -268,6 +281,33 @@ namespace Mdt{
      * \pre this must contain a value
      */
     const T & value() const
+    {
+      Q_ASSERT(mHasValue);
+      return mValue;
+    }
+
+    /*! \brief Return true if a value was set
+     */
+    constexpr operator bool() const noexcept
+    {
+      return mHasValue;
+    }
+
+    /*! \brief Access value
+     *
+     * \pre this must contain a value
+     */
+    T & operator *() &
+    {
+      Q_ASSERT(mHasValue);
+      return mValue;
+    }
+
+    /*! \brief Access value (read only)
+     *
+     * \pre this must contain a value
+     */
+    const T & operator *() const &
     {
       Q_ASSERT(mHasValue);
       return mValue;
