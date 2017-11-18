@@ -83,6 +83,7 @@ function(mdt_install_app)
   mdt_install_copy_targets_dependencies(
     TARGETS ${target}
     TRANSLATIONS ${translations}
+    PROJECT_QM_FILES ${project_qm_files}
     PREFIX_PATH ${prefix_path}
     LIBRARY_DESTINATION "${library_tmp_path}"
     PLUGIN_DESTINATION "${plugin_tmp_path}"
@@ -138,6 +139,9 @@ endfunction()
 #   For each translation suffix and each target, a file, called <TARGET>_<translation_suffix>.qm,
 #   will be installed in <TRANSLATION_DESTINATION>.
 #   This file will contain translations for used Qt libraries, for used Mdt libraries and the the target itself.
+#  PROJECT_QM_FILES (optional):
+#   A list of full path to QM files for the project.
+#   Those files will also be included to the final QM file, regarding specified translations.
 #  PREFIX_PATH (optional):
 #   A list of full paths to directories where to find dependencies,
 #   like Qt plugins, Qt and Mdt translations (qm files).
@@ -156,7 +160,7 @@ function(mdt_install_copy_targets_dependencies)
   # Parse arguments
   set(options)
   set(oneValueArgs LIBRARY_DESTINATION PLUGIN_DESTINATION TRANSLATION_DESTINATION)
-  set(multiValueArgs TARGETS TRANSLATIONS PREFIX_PATH)
+  set(multiValueArgs TARGETS TRANSLATIONS PROJECT_QM_FILES PREFIX_PATH)
   cmake_parse_arguments(VAR "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   if(VAR_UNPARSED_ARGUMENTS)
       message(FATAL_ERROR "mdt_install_copy_targets_dependencies(): unexpected arguments: ${VAR_UNPARSED_ARGUMENTS}")
@@ -167,6 +171,7 @@ function(mdt_install_copy_targets_dependencies)
     message(FATAL_ERROR "mdt_install_copy_targets_dependencies(): expected at least 1 target.")
   endif()
   set(translations ${VAR_TRANSLATIONS})
+  set(project_qm_files ${VAR_PROJECT_QM_FILES})
   set(prefix_path ${VAR_PREFIX_PATH})
   set(library_destination ${VAR_LIBRARY_DESTINATION})
   if(NOT library_destination)

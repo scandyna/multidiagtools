@@ -25,7 +25,7 @@
 #include <QDir>
 #include <QCoreApplication>
 
-// #include <QDebug>
+#include <QDebug>
 
 using namespace Mdt::DeployUtils;
 
@@ -33,6 +33,9 @@ CommandLineParser::CommandLineParser()
   : mSearchFirstPathPrefixListOption(QStringList{"p","prefix-path"}),
     mLibraryDestinationOption("library-destination"),
     mPluginDestinationOption("plugin-destination"),
+    mTranslationsOption("translations"),
+    mProjectQmFilesOption("project-qm-files"),
+    mTranslationDestinationOption("translation-destination"),
     mVerboseLevelOption("verbose")
 {
   mParser.setApplicationDescription(tr("Find binary dependencies of executable(s) or library(ies) and copy them."));
@@ -59,6 +62,27 @@ CommandLineParser::CommandLineParser()
   mVerboseLevelOption.setDescription(
     tr("Level of details to display (0-4).")
   );
+  mTranslationsOption.setDescription(
+    tr("List of translation suffixes. "
+       "For example, for French translations, pass fr. "
+       "It is also possible to specifiy a country, in the form fr_ca . "
+       "For each translation suffix and each binary file, a file, called <binary-file>_<translation_suffix>.qm, "
+       "will be copied to the path psecified by --translation-destination option. "
+       "This file will contain translations for used Qt libraries, for used Mdt libraries and the the binary file itself.")
+  );
+  mTranslationsOption.setValueName("suffix-list");
+  mParser.addOption(mTranslationsOption);
+  mProjectQmFilesOption.setDescription(
+    tr("A list of full path to QM files for the project. "
+       "Those files will also be included to the final QM file, regarding specified translations.")
+  );
+  mProjectQmFilesOption.setValueName("path-list");
+  mParser.addOption(mProjectQmFilesOption);
+  mTranslationDestinationOption.setDescription(
+    tr("Destination of the translations. ")
+  );
+  mTranslationDestinationOption.setValueName("path");
+  mParser.addOption(mTranslationDestinationOption);
   mVerboseLevelOption.setValueName("level");
   mParser.addOption(mVerboseLevelOption);
   mParser.addPositionalArgument(
@@ -98,6 +122,21 @@ bool CommandLineParser::checkAndSetArguments()
   mPluginDestinationPath = mParser.value(mPluginDestinationOption);
   // Library search first prefix paths
   mSearchFirstPathPrefixList = PathList::fromStringList( mParser.value(mSearchFirstPathPrefixListOption).split(';', QString::SkipEmptyParts) );
+  // Translations
+  mTranslations = mParser.value(mTranslationsOption).split(';', QString::SkipEmptyParts);
+  qDebug() << "TR: " << mTranslations;
+  mProjectQmFiles = TranslationInfoList::fromQmFilePathList( mParser.value(mProjectQmFilesOption).split(';', QString::SkipEmptyParts) );
+  
+  mTranslationDestinationPath = mParser.value(mTranslationDestinationOption);
+  qDebug() << "TR path: " << mTranslationDestinationPath;
+  if(mTranslationDestinationPath.isEmpty() && !mTranslations.isEmpty()){
+    Console::error() << "Argument error: given translations, but no path to install them.";
+    return false;
+  }
+  if(mTranslations.isEmpty() && !mProjectQmFiles.isEmpty()){
+    Console::error() << "Argument error: given project QM files, but no translations.";
+    return false;
+  }
   // Verbose level
   if(mParser.isSet(mVerboseLevelOption)){
     bool ok;

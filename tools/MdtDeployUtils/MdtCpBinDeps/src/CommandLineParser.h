@@ -22,6 +22,7 @@
 #define COMMAND_LINE_PARSER_H
 
 #include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/DeployUtils/TranslationInfoList.h"
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QString>
@@ -72,6 +73,27 @@ public:
     return mSearchFirstPathPrefixList;
   }
 
+  /*! \brief Get the list of translations suffixes
+   */
+  QStringList translations() const
+  {
+    return mTranslations;
+  }
+
+  /*! \brief Get the list of project QM files
+   */
+  Mdt::DeployUtils::TranslationInfoList projectQmFiles() const
+  {
+    return mProjectQmFiles;
+  }
+
+  /*! \brief Get path to the destination of translations
+   */
+  QString translationDestinationPath() const
+  {
+    return mTranslationDestinationPath;
+  }
+
   /*! \brief Get verbose level
    */
   int verboseLevel() const
@@ -87,11 +109,17 @@ private:
   QString mLibraryDestinationPath;
   QString mPluginDestinationPath;
   Mdt::DeployUtils::PathList mSearchFirstPathPrefixList;
+  QStringList mTranslations;
+  Mdt::DeployUtils::TranslationInfoList mProjectQmFiles;
+  QString mTranslationDestinationPath;
   int mVerboseLevel = 1;
   QCommandLineParser mParser;
   QCommandLineOption mSearchFirstPathPrefixListOption;
   QCommandLineOption mLibraryDestinationOption;
   QCommandLineOption mPluginDestinationOption;
+  QCommandLineOption mTranslationsOption;
+  QCommandLineOption mProjectQmFilesOption;
+  QCommandLineOption mTranslationDestinationOption;
   QCommandLineOption mVerboseLevelOption;
 };
 

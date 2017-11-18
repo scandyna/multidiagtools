@@ -28,6 +28,9 @@
 #include "Mdt/DeployUtils/BinaryFormat.h"
 #include "Mdt/DeployUtils/OperatingSystem.h"
 #include "Mdt/DeployUtils/RPath.h"
+#include "Mdt/DeployUtils/QtLibraryTranslation.h"
+#include "Mdt/DeployUtils/TranslationInfo.h"
+#include "Mdt/DeployUtils/TranslationInfoList.h"
 #include <QCoreApplication>
 #include <QString>
 #include <QtGlobal>
@@ -82,6 +85,20 @@ int MdtCpBinDepsMain::runMain()
   }
   const auto qtPluginsDependentLibraries = binDeps.dependencies();
   /*
+   * Find used translations
+   */
+  Console::info(1) << "Searching translations for used Qt libraries";
+  QtLibraryTranslation qtTranslation;
+//   const auto qtTranslations = qtTranslation.findTranslations(qtLibraries, pathPrefixList);
+  
+  Console::info(1) << "Searching translations for used Mdt libraries";
+  
+  /*
+   * Create single translation files for each language
+   */
+  Console::info(1) << "Creating translation files";
+  
+  /*
    * Copy dependencies
    */
   FileCopier cp;
@@ -100,6 +117,8 @@ int MdtCpBinDepsMain::runMain()
     Console::error() << "Copy failed: " << cp.lastError();
     return 1;
   }
+  Console::info(1) << "Copy translations to " << parser.translationDestinationPath();
+  
   /*
    * On platform that support it, patch RPATH
    * We do runtime detetction to support cross-compilation

@@ -18,6 +18,7 @@ execute_process(
           "--library-destination" "@library_tmp_path@"
           "--plugin-destination" "@plugin_tmp_path@"
           "--translations" "@translations@"
+          "--project-qm-files" "@project_qm_files@"
           "--translation-destination" "@translation_tmp_path@"
           "--verbose" "1"
           "${targets_path_list}"
