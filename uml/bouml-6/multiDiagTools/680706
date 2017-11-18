@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 60
+  revision 61
   modified_by 2 "philippe"
   // class settings
   
@@ -4221,6 +4221,22 @@ ${inlines}
 	    classrelation_ref 4934530 // <directional composition>
 	  b parent class_ref 4399874 // QmFileName
       end
+
+      operation 6172162 "fromFile"
+	class_operation public return_type class_ref 4392962 // TranslationInfo
+	nparams 1
+	  param in name "filePath" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 4393090 "TranslationInfoList"
@@ -4261,10 +4277,26 @@ ${inlines}
 	
 	
       end
+
+      operation 6172034 "fromFileList"
+	class_operation public return_type class_ref 4393090 // TranslationInfoList
+	nparams 1
+	  param in name "filePathList" type class_ref 160770 // QStringList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 4161282 "Translation"
-      visibility package 
+      visibility package stereotype "globalFunctions"
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -4385,6 +4417,23 @@ ${inlines}
 	
       end
 
+      operation 6171906 "joinTranslations"
+	class_operation public explicit_return_type "bool"
+	nparams 2
+	  param in name "translations" type class_ref 4393090 // TranslationInfoList
+	  param in name "destination" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 6165250 "findQtTranslationsRoot"
 	class_operation public return_type class_ref 161026 // QString
 	nparams 1
@@ -4416,6 +4465,22 @@ ${inlines}
 	
 	
       end
+    end
+
+    class 4406530 "TranslationJoin"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
 
     classdiagram 3785986 "MdtTranslation"
@@ -4743,5 +4808,6 @@ ${inlines}
 	
       end
     end
+
   end
 end
