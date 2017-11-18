@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef TRANSLATION_INFO_TEST_H
-#define TRANSLATION_INFO_TEST_H
+#ifndef FIND_TRANSLATION_TEST_H
+#define FIND_TRANSLATION_TEST_H
 
 #include "TestBase.h"
 
-class TranslationInfoTest : public TestBase
+class FindTranslationTest : public TestBase
 {
  Q_OBJECT
 
@@ -32,12 +32,11 @@ class TranslationInfoTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void infoFromQmFilePathTest();
-  void compareInfoTest();
-  void compareInfoTest_data();
+  void findQtTranslationsRootTest();
+  void findQtTranslationsRootTest_data();
 
-  void addTranslationTest();
-  void infoListFromQmFilePathListTest();
+  void findMdtTranslationsRootTest();
+  void findMdtTranslationsRootTest_data();
 };
 
-#endif // #ifndef TRANSLATION_INFO_TEST_H
+#endif // #ifndef FIND_TRANSLATION_TEST_H

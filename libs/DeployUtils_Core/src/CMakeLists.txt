@@ -41,6 +41,11 @@ set(SOURCE_FILES
     Mdt/DeployUtils/PatchelfWrapper.cpp
     Mdt/DeployUtils/RPath.cpp
     Mdt/DeployUtils/QmFileName.cpp
+    Mdt/DeployUtils/TranslationInfo.cpp
+    Mdt/DeployUtils/TranslationInfoList.cpp
+    Mdt/DeployUtils/FindTranslation.cpp
+    
+    Mdt/DeployUtils/QtLibraryTranslation.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

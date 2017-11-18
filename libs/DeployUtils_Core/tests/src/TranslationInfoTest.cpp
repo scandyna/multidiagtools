@@ -19,6 +19,11 @@
  **
  ****************************************************************************/
 #include "TranslationInfoTest.h"
+#include "Mdt/DeployUtils/TranslationInfo.h"
+#include "Mdt/DeployUtils/TranslationInfoList.h"
+#include <QStringList>
+
+using namespace Mdt::DeployUtils;
 
 void TranslationInfoTest::initTestCase()
 {
@@ -31,6 +36,82 @@ void TranslationInfoTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void TranslationInfoTest::infoFromQmFilePathTest()
+{
+  const auto ti = TranslationInfo::fromQmFilePath("/tmp/a_fr.qm");
+  QCOMPARE(ti.absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(ti.fullFileName(), QString("a_fr.qm"));
+
+  QFAIL("Not complete");
+}
+
+void TranslationInfoTest::compareInfoTest()
+{
+  QFETCH(QString, qmFilePathA);
+  QFETCH(QString, qmFilePathB);
+  QFETCH(bool, expectedEqual);
+
+  const auto a = TranslationInfo::fromQmFilePath(qmFilePathA);
+  const auto b = TranslationInfo::fromQmFilePath(qmFilePathB);
+  if(expectedEqual){
+    QVERIFY(a == b);
+  }else{
+    QVERIFY(!(a == b));
+  }
+}
+
+void TranslationInfoTest::compareInfoTest_data()
+{
+  QTest::addColumn<QString>("qmFilePathA");
+  QTest::addColumn<QString>("qmFilePathB");
+  QTest::addColumn<bool>("expectedEqual");
+
+  const bool equal = true;
+  const bool notEqual = false;
+
+  QTest::newRow("1") << "/tmp/a.qm" << "/tmp/a.qm" << equal;
+  QTest::newRow("2") << "/tmp/a.qm" << "/opt/a.qm" << notEqual;
+  QTest::newRow("3") << "/tmp/a.qm" << "/tmp/A.qm" << equal;
+}
+
+void TranslationInfoTest::addTranslationTest()
+{
+  TranslationInfoList til;
+  QCOMPARE(til.count(), 0);
+  QVERIFY(til.isEmpty());
+  // Add a translation
+  til.addTranslation( TranslationInfo::fromQmFilePath("/tmp/a_fr.qm") );
+  QCOMPARE(til.count(), 1);
+  QVERIFY(!til.isEmpty());
+  QCOMPARE(til.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
+  // Add a other translation
+  til.addTranslation( TranslationInfo::fromQmFilePath("/tmp/b_fr.qm") );
+  QCOMPARE(til.count(), 2);
+  QCOMPARE(til.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
+  QCOMPARE(til.at(1).absoluteFilePath(), QString("/tmp/b_fr.qm"));
+  QCOMPARE(til.at(1).fullFileName(), QString("b_fr.qm"));
+  // Try to add the first translation again
+  til.addTranslation( TranslationInfo::fromQmFilePath("/tmp/a_fr.qm") );
+  QCOMPARE(til.count(), 2);
+  QCOMPARE(til.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
+  QCOMPARE(til.at(1).absoluteFilePath(), QString("/tmp/b_fr.qm"));
+  QCOMPARE(til.at(1).fullFileName(), QString("b_fr.qm"));
+}
+
+void TranslationInfoTest::infoListFromQmFilePathListTest()
+{
+  const auto til = TranslationInfoList::fromQmFilePathList({"/tmp/a_fr.qm"});
+  QCOMPARE(til.count(), 1);
+  QVERIFY(!til.isEmpty());
+  QCOMPARE(til.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
+
+  QFAIL("Not complete");
+}
 
 /*
  * Main
