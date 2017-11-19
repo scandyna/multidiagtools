@@ -21,8 +21,12 @@
 #include "FindTranslationTest.h"
 #include "Mdt/DeployUtils/FindTranslation.h"
 #include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/DeployUtils/QtModule.h"
+#include "Mdt/DeployUtils/QtModuleList.h"
 #include <QString>
 #include <QStringList>
+
+#include <QDebug>
 
 using namespace Mdt::DeployUtils;
 
@@ -89,6 +93,64 @@ void FindTranslationTest::findQtTranslationsRootTest_data()
 
 }
 
+void FindTranslationTest::getQmFileBaseNamesForQtModuleTest()
+{
+  QFETCH(QtModule, qtModule);
+  QFETCH(QStringList, expectedQmFileBaseNames);
+
+  QCOMPARE( getQmFileBaseNameListForQtModule(qtModule), expectedQmFileBaseNames );
+}
+
+void FindTranslationTest::getQmFileBaseNamesForQtModuleTest_data()
+{
+  QTest::addColumn<QtModule>("qtModule");
+  QTest::addColumn<QStringList>("expectedQmFileBaseNames");
+
+  QTest::newRow("Qt5Core") << QtModule::Core
+                           << QStringList{"qt","qtbase"};
+}
+
+void FindTranslationTest::findQtTranslationsTest()
+{
+  QFETCH(QtModuleList, qtModules);
+  QFETCH(QStringList, languageSuffixes);
+  QFETCH(QStringList, expectedQmFiles);
+  /*
+   * Create a directory with Qt translatiosn files
+   */
+  QTemporaryDir translationsDirectory;
+  QVERIFY(translationsDirectory.isValid());
+  QVERIFY(createQmFiles(translationsDirectory, {"qt","qtbase","qtconfig"},{"en","fr","de","it"}));
+  /*
+   * Check
+   */
+  PathList pathPrefixList{"/"};
+  prependFakeRootToPathList(translationsDirectory, pathPrefixList);
+  const auto translations = findQtTranslations(qtModules, languageSuffixes, pathPrefixList);
+  QVERIFY(translations);
+  QCOMPARE((*translations).count(), expectedQmFiles.count());
+  for(const auto & translation : *translations){
+    QVERIFY(!translation.absoluteFilePath().isEmpty());
+    QVERIFY(!translation.fullFileName().isEmpty());
+    QVERIFY(expectedQmFiles.contains(translation.fullFileName()));
+  }
+}
+
+void FindTranslationTest::findQtTranslationsTest_data()
+{
+  QTest::addColumn<QtModuleList>("qtModules");
+  QTest::addColumn<QStringList>("languageSuffixes");
+  QTest::addColumn<QStringList>("expectedQmFiles");
+
+  QTest::newRow("1") << QtModuleList{QtModule::Core}
+                     << QStringList{"en"}
+                     << QStringList{"qt_en.qm","qtbase_en.qm"};
+
+  QTest::newRow("2") << QtModuleList{QtModule::Core}
+                     << QStringList{"en","fr"}
+                     << QStringList{"qt_en.qm","qt_fr.qm","qtbase_en.qm","qtbase_fr.qm"};
+}
+
 void FindTranslationTest::findMdtTranslationsRootTest()
 {
   QFETCH(PathList, pathPrefixList);
@@ -119,6 +181,56 @@ void FindTranslationTest::findMdtTranslationsRootTest_data()
                         << "/opt/mdtroot/translations";
 
 }
+
+// void FindTranslationTest::qmFileBaseNamesForMdtLibraryTest()
+// {
+//
+// }
+//
+// void FindTranslationTest::qmFileBaseNamesForMdtLibraryTest_data()
+// {
+//   QTest::addColumn<QString>("mdtLibraryName");
+//   QTest::addColumn<QStringList>("expectedQmFileBaseNames");
+//
+//   QTest::newRow("Qt5Core") << QtModule::Core
+//                            << QStringList{"qt","qtbase"};
+// }
+
+void FindTranslationTest::findMdtTranslationsTest()
+{
+
+  QFAIL("Not complete");
+}
+
+void FindTranslationTest::findMdtTranslationsTest_data()
+{
+  QTest::addColumn<QStringList>("mdtLibrariesBaseNames");
+  QTest::addColumn<QStringList>("languageSuffixes");
+  QTest::addColumn<QStringList>("expectedQmFiles");
+
+  QTest::newRow("1") << QtModuleList{QtModule::Core}
+                     << QStringList{"en"}
+                     << QStringList{"qt_en.qm","qtbase_en.qm"};
+}
+
+/*
+ * Helpers
+ */
+
+bool FindTranslationTest::createQmFiles(const QTemporaryDir& directory, const QStringList& baseNames, const QStringList& languageSuffixes)
+{
+  for(const auto & baseName : baseNames){
+    for(const auto & languageSuffixe : languageSuffixes){
+      const auto fileName = baseName + "_" + languageSuffixe + ".qm";
+      const auto filePath = QDir::cleanPath( directory.path() + "/translations/" + fileName );
+      if(!createFile(filePath)){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 
 /*
  * Main

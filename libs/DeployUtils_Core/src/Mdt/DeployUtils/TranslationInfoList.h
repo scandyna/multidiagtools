@@ -70,6 +70,13 @@ namespace Mdt{ namespace DeployUtils{
      */
     void addTranslation(const TranslationInfo & translation);
 
+    /*! \brief Add a list of qt translations to this list
+     *
+     * Will add each translation from \a translations
+     *  that not actually exists in this list.
+     */
+    void addTranslations(const TranslationInfoList & translations);
+
     /*! \brief Get count of items in this list
      */
     int count() const
@@ -93,6 +100,34 @@ namespace Mdt{ namespace DeployUtils{
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < count());
       return mList.at(index);
+    }
+
+    /*! \brief Returns an STL-style const iterator pointing to the first item in this list
+     */
+    const_iterator cbegin() const
+    {
+      return mList.cbegin();
+    }
+
+    /*! \brief Returns an STL-style iterator pointing to the imaginary item after the last item in this list
+     */
+    const_iterator cend() const
+    {
+      return mList.cend();
+    }
+
+    /*! \brief Returns an STL-style const iterator pointing to the first item in this list
+     */
+    const_iterator begin() const
+    {
+      return mList.cbegin();
+    }
+
+    /*! \brief Returns an STL-style iterator pointing to the imaginary item after the last item in this list
+     */
+    const_iterator end() const
+    {
+      return mList.cend();
     }
 
     /*! \brief Create a translation info list from a list of files

@@ -34,9 +34,21 @@ class FindTranslationTest : public TestBase
 
   void findQtTranslationsRootTest();
   void findQtTranslationsRootTest_data();
+  void getQmFileBaseNamesForQtModuleTest();
+  void getQmFileBaseNamesForQtModuleTest_data();
+  void findQtTranslationsTest();
+  void findQtTranslationsTest_data();
 
   void findMdtTranslationsRootTest();
   void findMdtTranslationsRootTest_data();
+//   void qmFileBaseNamesForMdtLibraryTest();
+//   void qmFileBaseNamesForMdtLibraryTest_data();
+  void findMdtTranslationsTest();
+  void findMdtTranslationsTest_data();
+
+ private:
+
+  static bool createQmFiles(const QTemporaryDir & directory, const QStringList & baseNames, const QStringList & languageSuffixes);
 };
 
 #endif // #ifndef FIND_TRANSLATION_TEST_H

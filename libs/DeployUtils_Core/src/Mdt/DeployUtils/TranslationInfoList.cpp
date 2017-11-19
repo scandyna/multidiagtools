@@ -30,6 +30,13 @@ void TranslationInfoList::addTranslation(const TranslationInfo & translation)
   mList.append(translation);
 }
 
+void TranslationInfoList::addTranslations(const TranslationInfoList& translations)
+{
+  for(const auto & translation : translations){
+    addTranslation(translation);
+  }
+}
+
 TranslationInfoList TranslationInfoList::fromQmFilePathList(const QStringList & qmFilePathList)
 {
   TranslationInfoList list;
