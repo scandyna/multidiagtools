@@ -143,7 +143,7 @@ Searched in %2</source>
 <context>
     <name>findTranslationsInDirectory()</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="168"/>
+        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="178"/>
         <source>Directory &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>

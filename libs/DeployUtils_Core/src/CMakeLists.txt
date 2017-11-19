@@ -44,8 +44,6 @@ set(SOURCE_FILES
     Mdt/DeployUtils/TranslationInfo.cpp
     Mdt/DeployUtils/TranslationInfoList.cpp
     Mdt/DeployUtils/FindTranslation.cpp
-    
-    Mdt/DeployUtils/QtLibraryTranslation.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
