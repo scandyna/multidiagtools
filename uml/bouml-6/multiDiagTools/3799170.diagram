@@ -1,0 +1,26 @@
+format 214
+
+classcanvas 128002 class_ref 4399874 // QmFileName
+  classdiagramsettings member_max_width 0 end
+  xyz 490 303 2000
+end
+classcanvas 128130 class_ref 4392962 // TranslationInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 464 37 2006
+end
+classcanvas 128386 class_ref 4393090 // TranslationInfoList
+  classdiagramsettings member_max_width 0 end
+  xyz 42 100 2012
+end
+relationcanvas 128258 relation_ref 4908162 // <directional composition>
+  decenter_begin 484
+  from ref 128130 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 4901122 // <directional composition>
+  from ref 128386 z 2013 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 448 162 3000 no_multiplicity_b
+end
+end
