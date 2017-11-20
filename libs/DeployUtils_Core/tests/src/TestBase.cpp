@@ -24,6 +24,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
+#include <QDebug>
 
 using namespace Mdt::DeployUtils;
 
@@ -34,6 +35,43 @@ QStringList TestBase::sortedStringListCs(const QStringList& inList)
   list.sort(Qt::CaseSensitive);
 
   return list;
+}
+
+LibraryInfo TestBase::buildLibraryInfo(const QString& directoryPath, const QString& libraryFileName)
+{
+  LibraryInfo li;
+
+  const auto libraryPath = QDir::cleanPath( directoryPath + "/" + libraryFileName );
+  li.setAbsoluteFilePath(libraryPath);
+  li.setLibraryPlatformName(libraryFileName);
+
+  return li;
+}
+
+LibraryInfoList TestBase::buildLibraryInfoList(const QString& directoryPath, const QStringList& librariesFileNames)
+{
+  LibraryInfoList lil;
+
+  for(const auto & libraryFileName : librariesFileNames){
+    lil.addLibrary( buildLibraryInfo(directoryPath, libraryFileName) );
+  }
+
+  return lil;
+}
+
+bool TestBase::compareLibraryInfoList(const LibraryInfoList& lil, const LibraryInfoList& expectedLil)
+{
+  if(lil.count() != expectedLil.count()){
+    qDebug() << "Count of libraries is not the same.\n Actual: " << lil.count() << "\n Expected: " << expectedLil.count();
+    return false;
+  }
+  for(int i = 0; i < lil.count(); ++i){
+    if(lil.at(i) != expectedLil.at(i)){
+      qDebug() << "Libraries differs at index " << i << ".\n Actual name: " << lil.at(i).libraryName().fullName() << "\n Expected name: " << expectedLil.at(i).libraryName().fullName();
+      return false;
+    }
+  }
+  return true;
 }
 
 bool TestBase::createFile(const QString & filePath)

@@ -24,6 +24,8 @@
 #include "Mdt/CoreApplication.h"
 #include "Mdt/PlainText/TestUtils.h"
 #include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/DeployUtils/LibraryInfo.h"
+#include "Mdt/DeployUtils/LibraryInfoList.h"
 #include <QObject>
 #include <QByteArray>
 #include <QString>
@@ -47,6 +49,10 @@ class TestBase : public QObject
   {
     return sortedStringListCs(QStringList{inlist});
   }
+
+  static Mdt::DeployUtils::LibraryInfo buildLibraryInfo(const QString & directoryPath, const QString & libraryFileName);
+  static Mdt::DeployUtils::LibraryInfoList buildLibraryInfoList(const QString & directoryPath, const QStringList & librariesFileNames);
+  static bool compareLibraryInfoList(const Mdt::DeployUtils::LibraryInfoList & lil, const Mdt::DeployUtils::LibraryInfoList & expectedLil);
 
   // Create a file - Missing parent directories are created if needed
   static bool createFile(const QString & filePath);
