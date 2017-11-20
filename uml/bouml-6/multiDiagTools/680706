@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 63
+  revision 64
   modified_by 2 "philippe"
   // class settings
   
@@ -2784,6 +2784,22 @@ ${inlines}
 	
 	
       end
+
+      operation 6192770 "libraryBaseName"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "mdtLibrary" type class_ref 4158978 // LibraryInfo
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 3673346 "Plugin"
@@ -4507,11 +4523,6 @@ ${inlines}
       end
     end
 
-    classdiagram 3799298 "TranslationQt"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
     classdiagram 3785730 "Translations"
       classdiagramsettings member_max_width 0 end
       size B-Landscape
@@ -4750,16 +4761,6 @@ ${inlines}
 	
 	
       end
-    end
-
-    classdiagram 3785986 "MdtTranslation"
-      classdiagramsettings member_max_width 0 end
-      size Legal-Landscape
-    end
-
-    classdiagram 3786114 "QtTranslations"
-      classdiagramsettings member_max_width 0 end
-      size B-Landscape
     end
 
     classdiagram 3759234 "DeployMdt"

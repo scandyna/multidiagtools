@@ -1,6 +1,6 @@
-format 211
+format 214
 "Numeric" // Mdt::Numeric
-  revision 6
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -26,7 +26,7 @@ format 211
   activitydiagramsettings
    end
   
-  classview 1252738 "Double"
+  classview 1960962 "Numeric_Core"
     
     classdiagramsettings member_max_width 0 end
     
@@ -88,24 +88,7 @@ ${inlines}
 	
       end
     end
-  end
 
-  classview 1252866 "MeasureValue"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
     classdiagram 2366210 "MeasureValue"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -158,24 +141,7 @@ ${inlines}
 	MysqlColumn
       end
     end
-  end
 
-  classview 1260162 "PhysicsType"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
     classdiagram 2379906 "PhysicsType"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -329,24 +295,7 @@ ${inlines}
 	  b parent class_ref 2649602 // Double
       end
     end
-  end
 
-  classview 1252994 "Resistance"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
     classdiagram 2366338 "Resistance"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -506,24 +455,7 @@ ${inlines}
 	
       end
     end
-  end
 
-  classview 1253122 "Length"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
     classdiagram 2366466 "Length"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -602,24 +534,7 @@ ${inlines}
 	
       end
     end
-  end
 
-  classview 1253634 "Symbol"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
     classdiagram 2373378 "Symbol"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -824,6 +739,89 @@ ${inlines}
 	
 	
       end
+    end
+
+    classdiagram 3805954 "Debug"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4413186 "Debug"
+      visibility package stereotype "freeFunctions"
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 6192642 "operator<<"
+	public return_type class_ref 2132226 // QDebug
+	nparams 2
+	  param in name "dbg" type class_ref 2132226 // QDebug
+	  param in name "l" type class_ref 2649986 // Length
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4941058 // <dependency>
+	relation 4914818 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4941058 // <dependency>
+	  b parent class_ref 2649986 // Length
+      end
+    end
+  end
+
+  classview 1961090 "Numeric_Gui"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3805826 "LengthValidator"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4413058 "LengthValidator"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 end

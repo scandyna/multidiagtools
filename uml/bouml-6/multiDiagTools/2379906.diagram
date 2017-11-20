@@ -1,23 +1,23 @@
-format 211
+format 214
 
 classcanvas 128002 class_ref 2663426 // PhysicsType
   classdiagramsettings member_max_width 0 end
-  xyz 219.55 40.4 2000
+  xyz 221 40 2000
 end
 classcanvas 128130 class_ref 2649602 // Double
   classdiagramsettings member_max_width 0 end
-  xyz 41.25 127.4 2000
+  xyz 41.25 116 2000
 end
 note 128642 "For strict unit typed (using Boost Units):
 Maybe add some other part/library, that offers some facility (includes correct header files, defines using correct namespaces and types, natural convertion from some PhysicsType to boost units strong type, etc.."
-  xyzwh 40.5 496.7 2000 503 113
+  xyzwh 40.5 473.9 2000 503 113
 classcanvas 128770 class_ref 2649858 // Resistance
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 349.55 371.4 2006
+  xyz 341 348.6 2006
 end
 classcanvas 129026 class_ref 2649986 // Length
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 251.4 371.4 2006
+  xyz 245.7 348.6 2006
 end
 relationcanvas 128514 relation_ref 3040130 // <directional composition>
   from ref 128002 z 2001 to ref 128130
@@ -31,8 +31,8 @@ relationcanvas 128898 relation_ref 3040002 // <generalisation>
 end
 relationcanvas 129154 relation_ref 3040258 // <generalisation>
   geometry VHV unfixed
-  from ref 129026 z 2007 to point 277 331
-  line 129282 z 2007 to point 388 331
+  from ref 129026 z 2007 to point 271 308
+  line 129282 z 2007 to point 380 308
   line 129410 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
