@@ -41,14 +41,13 @@ class FindTranslationTest : public TestBase
 
   void findMdtTranslationsRootTest();
   void findMdtTranslationsRootTest_data();
-//   void qmFileBaseNamesForMdtLibraryTest();
-//   void qmFileBaseNamesForMdtLibraryTest_data();
   void findMdtTranslationsTest();
   void findMdtTranslationsTest_data();
 
  private:
 
-  static bool createQmFiles(const QTemporaryDir & directory, const QStringList & baseNames, const QStringList & languageSuffixes);
+  static bool createQmFiles(const QString & directoryPath, const QString & subDirectory, const QStringList & baseNames, const QStringList & languageSuffixes);
+  static bool createQmFiles(const QTemporaryDir & directory, const QString & subDirectory, const QStringList & baseNames, const QStringList & languageSuffixes);
 };
 
 #endif // #ifndef FIND_TRANSLATION_TEST_H

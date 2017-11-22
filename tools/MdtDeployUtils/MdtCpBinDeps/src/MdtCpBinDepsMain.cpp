@@ -23,19 +23,20 @@
 #include "Mdt/DeployUtils/SearchPathList.h"
 #include "Mdt/DeployUtils/BinaryDependencies.h"
 #include "Mdt/DeployUtils/QtLibrary.h"
+#include "Mdt/DeployUtils/MdtLibrary.h"
 #include "Mdt/DeployUtils/FileCopier.h"
 #include "Mdt/DeployUtils/Console.h"
 #include "Mdt/DeployUtils/BinaryFormat.h"
 #include "Mdt/DeployUtils/OperatingSystem.h"
 #include "Mdt/DeployUtils/RPath.h"
-#include "Mdt/DeployUtils/QtLibraryTranslation.h"
 #include "Mdt/DeployUtils/TranslationInfo.h"
 #include "Mdt/DeployUtils/TranslationInfoList.h"
+#include "Mdt/DeployUtils/FindTranslation.h"
 #include <QCoreApplication>
 #include <QString>
 #include <QtGlobal>
 
-// #include <QDebug>
+#include <QDebug>
 
 using namespace Mdt::DeployUtils;
 
@@ -81,23 +82,42 @@ int MdtCpBinDepsMain::runMain()
   if(!binDeps.findDependencies(qtPluginsLibraries, pathPrefixList)){
     Console::error() << "Searching dependencies for Qt plugins failed: " << binDeps.lastError();
     return 1;
-
   }
   const auto qtPluginsDependentLibraries = binDeps.dependencies();
   /*
    * Find used translations
    */
   Console::info(1) << "Searching translations for used Qt libraries";
-  QtLibraryTranslation qtTranslation;
+  /// \todo qtModules should also be used to find plugins
+  const auto qtModules = qtLibrary.getModules(qtLibraries);
+  const auto qtTranslations = findQtTranslations(qtModules, parser.translations(), pathPrefixList);
+  if(!qtTranslations){
+    Console::error() << "Searching translations for Qt libraries: " << qtTranslations.error();
+    return 1;
+  }
 //   const auto qtTranslations = qtTranslation.findTranslations(qtLibraries, pathPrefixList);
-  
   Console::info(1) << "Searching translations for used Mdt libraries";
-  
+  const auto mdtLibraries = MdtLibrary::getMdtLibraries(dependentLibraries);
+  for(const auto & library : mdtLibraries){
+    qDebug() << "Mdt lib: " << library.libraryName().fullName();
+  }
+  const auto mdtTranslations = findMdtTranslations(mdtLibraries, parser.translations(), pathPrefixList);
+  if(!mdtTranslations){
+    Console::error() << "Searching translations for Mdt libraries: " << mdtTranslations.error();
+    return 1;
+  }
   /*
    * Create single translation files for each language
    */
   Console::info(1) << "Creating translation files";
-  
+  TranslationInfoList allTranslations;
+  allTranslations.addTranslations(parser.projectQmFiles());
+  allTranslations.addTranslations(*qtTranslations);
+  allTranslations.addTranslations(*mdtTranslations);
+  for(const auto translation : allTranslations){
+    qDebug() << "QM: " << translation.fullFileName();
+  }
+
   /*
    * Copy dependencies
    */

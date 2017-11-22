@@ -46,7 +46,7 @@ void FindTranslationTest::findQtTranslationsRootTest()
 {
   QFETCH(PathList, pathPrefixList);
   QFETCH(QStringList, existingPaths);
-  QFETCH(QString, expectedTranslationRoot);
+  QFETCH(QString, expectedTranslationPath);
   /*
    * Setup a fake root
    */
@@ -54,18 +54,21 @@ void FindTranslationTest::findQtTranslationsRootTest()
   QVERIFY(root.isValid());
   QVERIFY( createPathListInFakeRoot(root, existingPaths) );
   prependFakeRootToPathList(root, pathPrefixList);
-  prependFakeRootToPath(root, expectedTranslationRoot);
+  prependFakeRootToPath(root, expectedTranslationPath);
+  QVERIFY( createQmFiles(expectedTranslationPath, "", {"qtbase"}, {"xx"}) );
+  qDebug() << "Test: TR path: " << expectedTranslationPath;
+  qDebug() << " - files: " << QDir(expectedTranslationPath).entryList();
   /*
    * Check
    */
-  QCOMPARE( findQtTranslationsRoot(pathPrefixList), expectedTranslationRoot );
+  QCOMPARE( findQtTranslationsRoot(pathPrefixList), expectedTranslationPath );
 }
 
 void FindTranslationTest::findQtTranslationsRootTest_data()
 {
   QTest::addColumn<PathList>("pathPrefixList");
   QTest::addColumn<QStringList>("existingPaths");
-  QTest::addColumn<QString>("expectedTranslationRoot");
+  QTest::addColumn<QString>("expectedTranslationPath");
 
   QTest::newRow("OtherQt") << PathList{"/opt/qtroot"}
                            << QStringList{"/opt/qtroot/translations"}
@@ -87,9 +90,9 @@ void FindTranslationTest::findQtTranslationsRootTest_data()
                                      << QStringList{"/opt/qtroot/translations","/usr/share/qt5/translations"}
                                      << "/opt/qtroot/translations";
 
-//   QTest::newRow("NonQt") << PathList{"/opt/nonqtroot","/opt/qtroot"}
-//                          << QStringList{"/opt/nonqtroot/translations","/opt/qtroot/translations"}
-//                          << "/opt/qtroot/translations";
+  QTest::newRow("NonQt") << PathList{"/opt/nonqtroot","/opt/qtroot"}
+                         << QStringList{"/opt/nonqtroot/translations","/opt/qtroot/translations"}
+                         << "/opt/qtroot/translations";
 
 }
 
@@ -118,14 +121,14 @@ void FindTranslationTest::findQtTranslationsTest()
   /*
    * Create a directory with Qt translatiosn files
    */
-  QTemporaryDir translationsDirectory;
-  QVERIFY(translationsDirectory.isValid());
-  QVERIFY(createQmFiles(translationsDirectory, {"qt","qtbase","qtconfig"},{"en","fr","de","it"}));
+  QTemporaryDir qtRoot;
+  QVERIFY(qtRoot.isValid());
+  QVERIFY(createQmFiles(qtRoot, "translations", {"qt","qtbase","qtconfig"},{"en","fr","de","it"}));
   /*
    * Check
    */
   PathList pathPrefixList{"/"};
-  prependFakeRootToPathList(translationsDirectory, pathPrefixList);
+  prependFakeRootToPathList(qtRoot, pathPrefixList);
   const auto translations = findQtTranslations(qtModules, languageSuffixes, pathPrefixList);
   QVERIFY(translations);
   QCOMPARE((*translations).count(), expectedQmFiles.count());
@@ -155,7 +158,7 @@ void FindTranslationTest::findMdtTranslationsRootTest()
 {
   QFETCH(PathList, pathPrefixList);
   QFETCH(QStringList, existingPaths);
-  QFETCH(QString, expectedTranslationRoot);
+  QFETCH(QString, expectedTranslationPath);
   /*
    * Setup a fake root
    */
@@ -163,72 +166,91 @@ void FindTranslationTest::findMdtTranslationsRootTest()
   QVERIFY(root.isValid());
   QVERIFY( createPathListInFakeRoot(root, existingPaths) );
   prependFakeRootToPathList(root, pathPrefixList);
-  prependFakeRootToPath(root, expectedTranslationRoot);
+  prependFakeRootToPath(root, expectedTranslationPath);
+  QVERIFY( createQmFiles(expectedTranslationPath, "", {"Error_Core"}, {"xx"}) );
   /*
    * Check
    */
-  QCOMPARE( findMdtTranslationsRoot(pathPrefixList), expectedTranslationRoot );
+  QCOMPARE( findMdtTranslationsRoot(pathPrefixList), expectedTranslationPath );
 }
 
 void FindTranslationTest::findMdtTranslationsRootTest_data()
 {
   QTest::addColumn<PathList>("pathPrefixList");
   QTest::addColumn<QStringList>("existingPaths");
-  QTest::addColumn<QString>("expectedTranslationRoot");
+  QTest::addColumn<QString>("expectedTranslationPath");
 
   QTest::newRow("!sys") << PathList{"/opt/mdtroot"}
                         << QStringList{"/opt/mdtroot/translations"}
                         << "/opt/mdtroot/translations";
 
+  QTest::newRow("NonMdt") << PathList{"/opt/nonmdtroot","/opt/mdtroot"}
+                          << QStringList{"/opt/nonmdtroot/translations","/opt/mdtroot/translations"}
+                          << "/opt/mdtroot/translations";
 }
-
-// void FindTranslationTest::qmFileBaseNamesForMdtLibraryTest()
-// {
-//
-// }
-//
-// void FindTranslationTest::qmFileBaseNamesForMdtLibraryTest_data()
-// {
-//   QTest::addColumn<QString>("mdtLibraryName");
-//   QTest::addColumn<QStringList>("expectedQmFileBaseNames");
-//
-//   QTest::newRow("Qt5Core") << QtModule::Core
-//                            << QStringList{"qt","qtbase"};
-// }
 
 void FindTranslationTest::findMdtTranslationsTest()
 {
-
-  QFAIL("Not complete");
+  QFETCH(QStringList, mdtLibrariesNames);
+  QFETCH(QStringList, languageSuffixes);
+  QFETCH(QStringList, expectedQmFiles);
+  /*
+   * Create a directory with Mdt translatiosn files
+   */
+  QTemporaryDir mdtRoot;
+  QVERIFY(mdtRoot.isValid());
+  QVERIFY(createQmFiles(mdtRoot, "translations", {"Application_Core","Application_Core_Single","Application_Widgets","DeployUtils_Core","Error_Core"},{"en","fr","de","it"}));
+  /*
+   * Create a list of library infos based on names
+   */
+  const auto mdtLibraries = buildLibraryInfoList("/tmp", mdtLibrariesNames);
+  /*
+   * Check
+   */
+  PathList pathPrefixList{"/"};
+  prependFakeRootToPathList(mdtRoot, pathPrefixList);
+  const auto translations = findMdtTranslations(mdtLibraries, languageSuffixes, pathPrefixList);
+  QVERIFY(translations);
+  QCOMPARE((*translations).count(), expectedQmFiles.count());
+  for(const auto & translation : *translations){
+    QVERIFY(!translation.absoluteFilePath().isEmpty());
+    QVERIFY(!translation.fullFileName().isEmpty());
+    QVERIFY(expectedQmFiles.contains(translation.fullFileName()));
+  }
 }
 
 void FindTranslationTest::findMdtTranslationsTest_data()
 {
-  QTest::addColumn<QStringList>("mdtLibrariesBaseNames");
+  QTest::addColumn<QStringList>("mdtLibrariesNames");
   QTest::addColumn<QStringList>("languageSuffixes");
   QTest::addColumn<QStringList>("expectedQmFiles");
 
-  QTest::newRow("1") << QtModuleList{QtModule::Core}
+  QTest::newRow("1") << QStringList{"libMdt0Application_Core.so"}
                      << QStringList{"en"}
-                     << QStringList{"qt_en.qm","qtbase_en.qm"};
+                     << QStringList{"Application_Core_en.qm"};
 }
 
 /*
  * Helpers
  */
 
-bool FindTranslationTest::createQmFiles(const QTemporaryDir& directory, const QStringList& baseNames, const QStringList& languageSuffixes)
+bool FindTranslationTest::createQmFiles(const QString& directoryPath, const QString & subDirectory, const QStringList& baseNames, const QStringList& languageSuffixes)
 {
   for(const auto & baseName : baseNames){
     for(const auto & languageSuffixe : languageSuffixes){
       const auto fileName = baseName + "_" + languageSuffixe + ".qm";
-      const auto filePath = QDir::cleanPath( directory.path() + "/translations/" + fileName );
+      const auto filePath = QDir::cleanPath( directoryPath + "/" + subDirectory + "/" + fileName );
       if(!createFile(filePath)){
         return false;
       }
     }
   }
   return true;
+}
+
+bool FindTranslationTest::createQmFiles(const QTemporaryDir& directory, const QString & subDirectory, const QStringList& baseNames, const QStringList& languageSuffixes)
+{
+  return createQmFiles(directory.path(), subDirectory, baseNames, languageSuffixes);
 }
 
 

@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "FindTranslation.h"
 #include "SearchPathList.h"
+#include "MdtLibrary.h"
+#include "QmFileName.h"
 #include "Console.h"
 #include "Mdt/Error.h"
 #include <QLatin1String>
@@ -35,9 +37,24 @@
 
 namespace Mdt{ namespace DeployUtils{
 
-Mdt::Expected<TranslationInfoList> findQtTranslations(QtModule qtModule, const QStringList & languageSuffixes, const PathList & pathPrefixList)
+// Mdt::Expected<TranslationInfoList> findQtTranslations(QtModule qtModule, const QStringList & languageSuffixes, const PathList & pathPrefixList)
+// {
+//   const auto qmFileBaseNames = getQmFileBaseNameListForQtModule(qtModule);
+//   const auto qmFileNames = getQmFileNameList(qmFileBaseNames, languageSuffixes);
+//   const auto translationsRoot = findQtTranslationsRoot(pathPrefixList);
+//   if(translationsRoot.isEmpty()){
+//     const auto msg = QCoreApplication::translate("findQtTranslations()","Could not find translations directory for Qt libraries. Searched in: '%1'")
+//                                                  .arg(pathPrefixList.toStringList().join('\n'));
+//     auto error = mdtErrorNew(msg, Mdt::Error::Critical, "");
+//     return error;
+//   }
+//
+//   return findTranslationsInDirectory(qmFileNames, translationsRoot);
+// }
+
+Mdt::Expected<TranslationInfoList> findQtTranslations(QtModuleList qtModules, const QStringList& languageSuffixes, const PathList& pathPrefixList)
 {
-  const auto qmFileBaseNames = getQmFileBaseNameListForQtModule(qtModule);
+  const auto qmFileBaseNames = getQmFileBaseNameListForQtModules(qtModules);
   const auto qmFileNames = getQmFileNameList(qmFileBaseNames, languageSuffixes);
   const auto translationsRoot = findQtTranslationsRoot(pathPrefixList);
   if(translationsRoot.isEmpty()){
@@ -48,21 +65,6 @@ Mdt::Expected<TranslationInfoList> findQtTranslations(QtModule qtModule, const Q
   }
 
   return findTranslationsInDirectory(qmFileNames, translationsRoot);
-}
-
-Mdt::Expected<TranslationInfoList> findQtTranslations(QtModuleList qtModules, const QStringList& languageSuffixes, const PathList& pathPrefixList)
-{
-  TranslationInfoList list;
-
-  for(const auto qtModule : qtModules){
-    const auto translations = findQtTranslations(qtModule, languageSuffixes, pathPrefixList);
-    if(!translations){
-      return translations;
-    }
-    list.addTranslations(*translations);
-  }
-
-  return list;
 }
 
 QStringList getQmFileBaseNameListForQtModule(QtModule qtModule)
@@ -110,27 +112,59 @@ QStringList getQmFileBaseNameListForQtModule(QtModule qtModule)
   return fileBaseNames;
 }
 
+QStringList getQmFileBaseNameListForQtModules(const QtModuleList & qtModules)
+{
+  QStringList list;
+
+  for(const auto qtModule : qtModules){
+    list.append( getQmFileBaseNameListForQtModule(qtModule) );
+  }
+  list.removeDuplicates();
+
+  return list;
+}
+
 QString findQtTranslationsRoot(const PathList& pathPrefixList)
 {
-  return findDirectoryRoot("translations", {"qt5",".."}, pathPrefixList);
+  return findDirectoryRoot("translations", {"qt5",".."}, "qtbase", pathPrefixList);
 }
 
-Expected<TranslationInfoList> findMdtTranslations(const LibraryInfo& mdtLibrary, const QStringList& languageSuffixes, const PathList& pathPrefixList)
-{
-
-}
+// Expected<TranslationInfoList> findMdtTranslations(const LibraryInfo& mdtLibrary, const QStringList& languageSuffixes, const PathList& pathPrefixList)
+// {
+//   const auto qmFileBaseName = MdtLibrary::baseName(mdtLibrary);
+//   const auto qmFileNames = getQmFileNameList(qmFileBaseName, languageSuffixes);
+//   const auto translationsRoot = findMdtTranslationsRoot(pathPrefixList);
+//   if(translationsRoot.isEmpty()){
+//     const auto msg = QCoreApplication::translate("findMdtTranslations()","Could not find translations directory for Mdt libraries. Searched in: '%1'")
+//                                                  .arg(pathPrefixList.toStringList().join('\n'));
+//     auto error = mdtErrorNew(msg, Mdt::Error::Critical, "");
+//     return error;
+//   }
+//
+//   return findTranslationsInDirectory(qmFileNames, translationsRoot);
+// }
 
 Expected<TranslationInfoList> findMdtTranslations(const LibraryInfoList& mdtLibraries, const QStringList& languageSuffixes, const PathList& pathPrefixList)
 {
+  const auto qmFileBaseNames = MdtLibrary::getBaseNames(mdtLibraries);
+  const auto qmFileNames = getQmFileNameList(qmFileBaseNames, languageSuffixes);
+  const auto translationsRoot = findMdtTranslationsRoot(pathPrefixList);
+  if(translationsRoot.isEmpty()){
+    const auto msg = QCoreApplication::translate("findMdtTranslations()","Could not find translations directory for Mdt libraries. Searched in: '%1'")
+                                                 .arg(pathPrefixList.toStringList().join('\n'));
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "");
+    return error;
+  }
 
+  return findTranslationsInDirectory(qmFileNames, translationsRoot);
 }
 
 QString findMdtTranslationsRoot(const PathList& pathPrefixList)
 {
-  return findDirectoryRoot("translations", {".."}, pathPrefixList);
+  return findDirectoryRoot("translations", {".."}, "Error_Core", pathPrefixList);
 }
 
-QString findDirectoryRoot(const QString& directory, const QStringList& possibleSubdirectories, const PathList& pathPrefixList)
+QString findDirectoryRoot(const QString& directory, const QStringList& possibleSubdirectories, const QString & expectedQmFileBaseName, const PathList& pathPrefixList)
 {
   QString directoryRoot;
   SearchPathList searchPathList;
@@ -144,16 +178,33 @@ QString findDirectoryRoot(const QString& directory, const QStringList& possibleS
   const auto pathList = searchPathList.pathList();
 
   for(const auto & path : pathList){
-    qDebug() << "Searchin in " << path;
+    qDebug() << " Searchin in " << path;
     QDir dir( QDir::cleanPath(path + QLatin1String("/") + directory) );
     if(dir.exists()){
-      directoryRoot = dir.absolutePath();
-      qDebug() << " - found: " << directoryRoot;
-      return directoryRoot;
+      const auto fiList = dir.entryInfoList(QDir::Files);
+      for(const auto & fi : fiList){
+        QmFileName qmFile(fi.fileName());
+        if(qmFile.baseName() == expectedQmFileBaseName){
+          directoryRoot = dir.absolutePath();
+          qDebug() << " - found: " << directoryRoot;
+          return directoryRoot;
+        }
+      }
     }
   }
 
   return directoryRoot;
+}
+
+QStringList getQmFileNameList(const QString & qmFileBaseName, const QStringList & languageSuffixes)
+{
+  QStringList qmFileNames;
+
+  for(const auto & languageSuffixe : languageSuffixes){
+    qmFileNames.append( qmFileBaseName % QLatin1String("_") % languageSuffixe % QLatin1String(".qm") );
+  }
+
+  return qmFileNames;
 }
 
 QStringList getQmFileNameList(const QStringList& qmFileBaseNames, const QStringList& languageSuffixes)
@@ -161,9 +212,7 @@ QStringList getQmFileNameList(const QStringList& qmFileBaseNames, const QStringL
   QStringList qmFileNames;
 
   for(const auto & fileBaseName : qmFileBaseNames){
-    for(const auto & languageSuffixe : languageSuffixes){
-      qmFileNames.append( fileBaseName % QLatin1String("_") % languageSuffixe % QLatin1String(".qm") );
-    }
+    qmFileNames.append( getQmFileNameList(fileBaseName, languageSuffixes) );
   }
 
   return qmFileNames;

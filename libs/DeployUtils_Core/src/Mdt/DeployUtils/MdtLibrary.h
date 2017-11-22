@@ -26,6 +26,7 @@
 #include "MdtDeployUtils_CoreExport.h"
 #include <QObject>
 #include <QString>
+#include <QStringList>
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -46,6 +47,12 @@ namespace Mdt{ namespace DeployUtils{
      * Example: for Mdt0Application_Core, Application_Core is returned.
      */
     static QString baseName(const LibraryInfo & library);
+
+    /*! \brief Get the Mdt library base name for \a libraries
+     *
+     * \sa baseName()
+     */
+    static QStringList getBaseNames(const LibraryInfoList & libraries);
 
    private:
 

@@ -44,6 +44,17 @@ QString MdtLibrary::baseName(const LibraryInfo & library)
   return name;
 }
 
+QStringList MdtLibrary::getBaseNames(const LibraryInfoList& libraries)
+{
+  QStringList baseNames;
+
+  for(const auto & library : libraries){
+    baseNames.append( baseName(library) );
+  }
+
+  return baseNames;
+}
+
 bool MdtLibrary::isMdtLibrary(const LibraryInfo& libraryInfo)
 {
   return libraryInfo.libraryName().name().startsWith(QLatin1String("Mdt0"), Qt::CaseInsensitive);
