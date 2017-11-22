@@ -1,6 +1,6 @@
 format 214
 "DeployUtils" // Mdt::DeployUtils
-  revision 64
+  revision 65
   modified_by 2 "philippe"
   // class settings
   
@@ -2773,6 +2773,22 @@ ${inlines}
 	class_operation public return_type class_ref 4159490 // LibraryInfoList
 	nparams 1
 	  param in name "libraries" type class_ref 4159490 // LibraryInfoList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6199298 "isMdtLibrary"
+	class_operation public explicit_return_type "bool"
+	nparams 1
+	  param in name "library" type class_ref 4158978 // LibraryInfo
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}

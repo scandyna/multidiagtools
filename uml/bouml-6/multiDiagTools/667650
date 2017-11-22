@@ -1,6 +1,6 @@
-format 214
+format 215
 "ItemView" // Mdt::ItemView
-  revision 3
+  revision 4
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,25 @@ format 214
   activitydiagramsettings
    end
   
+  classview 1967618 "ItemView_Core"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    comment " "
+  end
+
   classview 1841538 "ItemView_Widgets"
     
     classdiagramsettings member_max_width 0 end
