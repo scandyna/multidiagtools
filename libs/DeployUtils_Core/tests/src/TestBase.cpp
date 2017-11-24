@@ -93,6 +93,11 @@ bool TestBase::createFile(const QString & filePath)
   return true;
 }
 
+bool TestBase::createFileInDirectory(const QString& directoryPath, const QString& fileName)
+{
+  return createFile( QDir::cleanPath(directoryPath + "/" + fileName) );
+}
+
 bool TestBase::createFileInTemporaryDirectory(const QTemporaryDir & testRootDirectory, const QString & absoluteFilePath)
 {
   const QFileInfo fi(testRootDirectory.path() + absoluteFilePath);

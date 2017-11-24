@@ -56,6 +56,7 @@ class TestBase : public QObject
 
   // Create a file - Missing parent directories are created if needed
   static bool createFile(const QString & filePath);
+  static bool createFileInDirectory(const QString & directoryPath, const QString & fileName);
   // Create a file in a new root temporary directory
   static bool createFileInTemporaryDirectory(const QTemporaryDir & testRootDirectory, const QString & absoluteFilePath);
 
