@@ -1,4 +1,4 @@
-format 214
+format 215
 
 classcanvas 128002 class_ref 4159362 // LddWrapper
   classdiagramsettings member_max_width 0 end
@@ -12,8 +12,6 @@ classcanvas 128258 class_ref 4161666 // ToolExecutableWrapper
   classdiagramsettings member_max_width 0 end
   xyz 405 125.25 2011
 end
-note 129794 "Maybe we should use PlainText + Boost.Spirit to parse outputs of ldd, but more especially objdump"
-  xyzwh 40.5 621 2000 363 109
 classcanvas 131074 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 567 40.75 2018
