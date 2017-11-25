@@ -73,6 +73,14 @@ Searched in %2</source>
     </message>
 </context>
 <context>
+    <name>Mdt::DeployUtils::LconvertWrapper</name>
+    <message>
+        <location filename="../src/Mdt/DeployUtils/LconvertWrapper.cpp" line="73"/>
+        <source>Execution of lconvert %1 reported error: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::DeployUtils::LddWrapper</name>
     <message>
         <location filename="../src/Mdt/DeployUtils/LddWrapper.cpp" line="39"/>

@@ -46,6 +46,7 @@ set(SOURCE_FILES
     Mdt/DeployUtils/FindTranslation.cpp
     Mdt/DeployUtils/MdtLibrary.cpp
     Mdt/DeployUtils/QtToolExecutableWrapper.cpp
+    Mdt/DeployUtils/LconvertWrapper.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
