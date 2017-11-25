@@ -64,7 +64,9 @@ bool ToolExecutableWrapper::exec(const QString& exeName, const QStringList& argu
     return false;
   }
   if(mProcess.exitCode() != 0){
-    const QString msg = tr("Process for command '%1 %2' exit with code %3 .").arg(exeName, arguments.join(' ').arg(mProcess.exitCode()));
+    const QString msg = tr("Process for command '%1 %2' exit with code %3 .")
+                        .arg(exeName, arguments.join(' '))
+                        .arg(mProcess.exitCode());
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     setLastError(error);
     return false;
