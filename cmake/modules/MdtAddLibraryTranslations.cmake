@@ -1,4 +1,5 @@
 include(MdtAddTranslations)
+include(MdtInstallDirs)
 include(MdtCPackComponent)
 
 # Add rules to generate translation files
@@ -58,7 +59,7 @@ function(mdt_add_library_translations)
     TARGET ${target}
     SOURCES_DIRECTORY "${sources_directory}"
     TS_FILES_DIRECTORY "${ts_files_directory}"
-    INSTALL_DESTINATION "share/${PROJECT_NAME}/translations/"
+    INSTALL_DESTINATION "${MDT_INSTALL_TRANSLATIONDIR}"
   )
   # Add translations to CPack
   foreach(language ${TRANSLATION_LANGUAGES})
