@@ -32,6 +32,7 @@
 #include "Mdt/DeployUtils/TranslationInfo.h"
 #include "Mdt/DeployUtils/TranslationInfoList.h"
 #include "Mdt/DeployUtils/FindTranslation.h"
+#include "Mdt/DeployUtils/Translation.h"
 #include <QCoreApplication>
 #include <QString>
 #include <QtGlobal>
@@ -117,7 +118,11 @@ int MdtCpBinDepsMain::runMain()
   for(const auto translation : allTranslations){
     qDebug() << "QM: " << translation.fullFileName();
   }
-
+  Translation translation;
+  if(!translation.joinTranslations(allTranslations, parser.binaryFilePathList(), parser.translationDestinationPath(), pathPrefixList)){
+    Console::error() << "Creating translation files failed: " << translation.lastError();
+    return 1;
+  }
   /*
    * Copy dependencies
    */
@@ -137,8 +142,6 @@ int MdtCpBinDepsMain::runMain()
     Console::error() << "Copy failed: " << cp.lastError();
     return 1;
   }
-  Console::info(1) << "Copy translations to " << parser.translationDestinationPath();
-  
   /*
    * On platform that support it, patch RPATH
    * We do runtime detetction to support cross-compilation

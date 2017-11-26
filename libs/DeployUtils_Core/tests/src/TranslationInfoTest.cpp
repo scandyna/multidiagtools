@@ -42,8 +42,7 @@ void TranslationInfoTest::infoFromQmFilePathTest()
   const auto ti = TranslationInfo::fromQmFilePath("/tmp/a_fr.qm");
   QCOMPARE(ti.absoluteFilePath(), QString("/tmp/a_fr.qm"));
   QCOMPARE(ti.fullFileName(), QString("a_fr.qm"));
-
-  QFAIL("Not complete");
+  QCOMPARE(ti.fileSuffix(), QString("fr"));
 }
 
 void TranslationInfoTest::compareInfoTest()
@@ -123,8 +122,114 @@ void TranslationInfoTest::infoListFromQmFilePathListTest()
   QVERIFY(!til.isEmpty());
   QCOMPARE(til.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
   QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
+  QCOMPARE(til.toQmFilePathList(), QStringList{"/tmp/a_fr.qm"});
+}
 
-  QFAIL("Not complete");
+void TranslationInfoTest::usedFileSuffixesInListTest()
+{
+  QFETCH(QStringList, qmFileList);
+  QFETCH(QStringList, expectedFileSuffixes);
+
+  const auto til = TranslationInfoList::fromQmFilePathList(qmFileList);
+  QCOMPARE(til.getUsedFileSuffixes(), expectedFileSuffixes);
+}
+
+void TranslationInfoTest::usedFileSuffixesInListTest_data()
+{
+  QTest::addColumn<QStringList>("qmFileList");
+  QTest::addColumn<QStringList>("expectedFileSuffixes");
+
+  QTest::newRow("0") << QStringList{}
+                     << QStringList{};
+
+  QTest::newRow("1") << QStringList{"a_fr.qm"}
+                     << QStringList{"fr"};
+
+  QTest::newRow("2") << QStringList{"a_fr.qm","a_de.qm"}
+                     << QStringList{"fr","de"};
+
+  QTest::newRow("3") << QStringList{"a_fr.qm","b_fr.qm"}
+                     << QStringList{"fr"};
+
+  QTest::newRow("4") << QStringList{"a_fr_ca.qm"}
+                     << QStringList{"fr_ca"};
+
+}
+
+void TranslationInfoTest::getTranslationsForFileSuffixTest()
+{
+  QFETCH(QStringList, qmFileList);
+  QFETCH(QString, suffix);
+  QFETCH(QStringList, expectedQmFileList);
+
+  const auto inTil = TranslationInfoList::fromQmFilePathList(qmFileList);
+  const auto expectedTilForSuffix = TranslationInfoList::fromQmFilePathList(expectedQmFileList);
+  const auto tilForSuffix = inTil.getTranslationsForFileSuffix(suffix);
+  QCOMPARE(tilForSuffix.count(), expectedTilForSuffix.count());
+  for(int i = 0; i < tilForSuffix.count(); ++i){
+    QVERIFY(tilForSuffix.at(i) == expectedTilForSuffix.at(i));
+  }
+}
+
+void TranslationInfoTest::getTranslationsForFileSuffixTest_data()
+{
+  QTest::addColumn<QStringList>("qmFileList");
+  QTest::addColumn<QString>("suffix");
+  QTest::addColumn<QStringList>("expectedQmFileList");
+
+  QTest::newRow("0") << QStringList{}
+                     << "fr"
+                     << QStringList{};
+
+  QTest::newRow("1") << QStringList{"a_fr.qm"}
+                     << "fr"
+                     << QStringList{"a_fr.qm"};
+
+  QTest::newRow("2") << QStringList{"a_fr.qm"}
+                     << "de"
+                     << QStringList{};
+
+  QTest::newRow("3") << QStringList{"a_fr.qm","a_de.qm"}
+                     << "fr"
+                     << QStringList{"a_fr.qm"};
+}
+
+void TranslationInfoTest::getTranslationsForFileSuffixesTest()
+{
+  QFETCH(QStringList, qmFileList);
+  QFETCH(QStringList, suffixes);
+  QFETCH(QStringList, expectedQmFileList);
+
+  const auto inTil = TranslationInfoList::fromQmFilePathList(qmFileList);
+  const auto expectedTilForSuffixes = TranslationInfoList::fromQmFilePathList(expectedQmFileList);
+  const auto tilForSuffixes = inTil.getTranslationsForFileSuffixes(suffixes);
+  QCOMPARE(tilForSuffixes.count(), expectedTilForSuffixes.count());
+  for(int i = 0; i < tilForSuffixes.count(); ++i){
+    QVERIFY(tilForSuffixes.at(i) == expectedTilForSuffixes.at(i));
+  }
+}
+
+void TranslationInfoTest::getTranslationsForFileSuffixesTest_data()
+{
+  QTest::addColumn<QStringList>("qmFileList");
+  QTest::addColumn<QStringList>("suffixes");
+  QTest::addColumn<QStringList>("expectedQmFileList");
+
+  QTest::newRow("0") << QStringList{}
+                     << QStringList{"fr"}
+                     << QStringList{};
+
+  QTest::newRow("1") << QStringList{"a_fr.qm"}
+                     << QStringList{"fr"}
+                     << QStringList{"a_fr.qm"};
+
+  QTest::newRow("2") << QStringList{"a_fr.qm"}
+                     << QStringList{"de"}
+                     << QStringList{};
+
+  QTest::newRow("3") << QStringList{"a_fr.qm","a_de.qm"}
+                     << QStringList{"fr"}
+                     << QStringList{"a_fr.qm"};
 }
 
 /*

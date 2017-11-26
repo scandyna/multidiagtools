@@ -102,6 +102,29 @@ namespace Mdt{ namespace DeployUtils{
       return mList.at(index);
     }
 
+    /*! \brief Get used file suffixes in this list
+     *
+     * \sa TranslationInfo::fileSuffix()
+     */
+    QStringList getUsedFileSuffixes() const;
+
+    /*! \brief Get translations for a of file suffixe
+     *
+     * \a fileSuffix refers to TranslationInfo::fileSuffix()
+     *
+     * \pre \a fileSuffix must not be empty.
+     */
+    TranslationInfoList getTranslationsForFileSuffix(const QString & fileSuffix) const;
+
+    /*! \brief Get translations for a list of file suffixes
+     *
+     * \a fileSuffixes refers to TranslationInfo::fileSuffix()
+     *
+     * \pre \a fileSuffixes must not be empty.
+     * \pre no suffix must be empty in \a fileSuffixes .
+     */
+    TranslationInfoList getTranslationsForFileSuffixes(const QStringList & fileSuffixes) const;
+
     /*! \brief Returns an STL-style const iterator pointing to the first item in this list
      */
     const_iterator cbegin() const
@@ -129,6 +152,10 @@ namespace Mdt{ namespace DeployUtils{
     {
       return mList.cend();
     }
+
+    /*! \brief Get a list of file path for this list
+     */
+    QStringList toQmFilePathList() const;
 
     /*! \brief Create a translation info list from a list of files
      *

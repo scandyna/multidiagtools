@@ -86,8 +86,8 @@ namespace Mdt{ namespace DeployUtils{
     /*! \brief Get suffix
      *
      * The suffix is composed of
-     *  language code (like fr or de or..)
-     *  and maybe a country code (like ca or CN or ..).
+     *  language code (like fr or de)
+     *  and maybe a country code (like ca or CN).
      *
      * For example, for foo_fr.qm, fr is returned.
      *  For foo_fr_ca.qm, fr_ca is returned.

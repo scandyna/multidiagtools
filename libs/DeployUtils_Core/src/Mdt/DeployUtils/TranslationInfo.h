@@ -47,6 +47,15 @@ namespace Mdt{ namespace DeployUtils{
       return mQmFileName.fullName();
     }
 
+    /*! \brief Get file suffix
+     *
+     * \sa QmFileName::suffix()
+     */
+    QString fileSuffix() const
+    {
+      return mQmFileName.suffix();
+    }
+
     /*! \brief Check if translation plugin info a and b are equal
      */
     friend

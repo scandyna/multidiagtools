@@ -38,6 +38,14 @@ class TranslationInfoTest : public TestBase
 
   void addTranslationTest();
   void infoListFromQmFilePathListTest();
+
+  void usedFileSuffixesInListTest();
+  void usedFileSuffixesInListTest_data();
+  void getTranslationsForFileSuffixTest();
+  void getTranslationsForFileSuffixTest_data();
+  void getTranslationsForFileSuffixesTest();
+  void getTranslationsForFileSuffixesTest_data();
+
 };
 
 #endif // #ifndef TRANSLATION_INFO_TEST_H

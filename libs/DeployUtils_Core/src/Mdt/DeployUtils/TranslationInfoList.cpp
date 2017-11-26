@@ -37,6 +37,59 @@ void TranslationInfoList::addTranslations(const TranslationInfoList& translation
   }
 }
 
+QStringList TranslationInfoList::getUsedFileSuffixes() const
+{
+  QStringList suffixes;
+
+  const auto & til = mList;
+  for(const auto & ti : til){
+    if(!suffixes.contains(ti.fileSuffix(), Qt::CaseSensitive)){
+      suffixes.append(ti.fileSuffix());
+    }
+  }
+
+  return suffixes;
+}
+
+TranslationInfoList TranslationInfoList::getTranslationsForFileSuffix(const QString& fileSuffix) const
+{
+  TranslationInfoList tilForSuffix;
+
+  const auto & til = mList;
+  for(const auto & ti : til){
+    if(ti.fileSuffix() == fileSuffix){
+      tilForSuffix.addTranslation(ti);
+    }
+  }
+
+  return tilForSuffix;
+}
+
+TranslationInfoList TranslationInfoList::getTranslationsForFileSuffixes(const QStringList& fileSuffixes) const
+{
+  TranslationInfoList tilForSuffixes;
+
+  const auto & til = mList;
+  for(const auto & ti : til){
+    if(fileSuffixes.contains(ti.fileSuffix(), Qt::CaseSensitive)){
+      tilForSuffixes.addTranslation(ti);
+    }
+  }
+
+  return tilForSuffixes;
+}
+
+QStringList TranslationInfoList::toQmFilePathList() const
+{
+  QStringList qmFiles;
+
+  for(const auto & ti : mList){
+    qmFiles.append(ti.absoluteFilePath());
+  }
+
+  return qmFiles;
+}
+
 TranslationInfoList TranslationInfoList::fromQmFilePathList(const QStringList & qmFilePathList)
 {
   TranslationInfoList list;
