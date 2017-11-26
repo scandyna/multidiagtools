@@ -1,4 +1,4 @@
-format 214
+format 215
 
 classcanvas 128002 class_ref 322818 // QIODevice
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -30,19 +30,27 @@ classcanvas 130178 class_ref 4285570 // SomePortThread
 end
 note 133378 "How does behave a const QByteArray memebr ?
 ex: vector<const QByteArray>"
-  xyzwh 40.5 710.1 2000 331 81
+  xyzwh 299.5 565.1 2000 331 81
 note 133506 "Should be able to select a thread,
 because 1 thread per port could be to expensive.
-Example: all ports on 2-3 threads, but never the GUI thread..
 
-Maybe better:
+Example:
+all ports on 2-3 threads, but never the GUI thread..
+Or:
 1 thread for NetWorking
 1 thread for SerialPort
 1 thread for USB
 etc..
+Or: as it was,  thread per resource (which implies many threads):
+1  thraed for  serial port 1
+1  thraed for  serial port 2
+1 thread for a socket
+1 thread for USB port 1
+1 thread for USB port 2
+etc..
 (Accessing the same I/O is maybe sequetial)
 Or..."
-  xyzwh 41.25 41.3 2000 367 253
+  xyzwh 13.25 13.3 2025 443 431
 classcanvas 133762 class_ref 4292098 // Fifo
   classdiagramsettings member_max_width 0 end
   xyz 451.5 710.1 2000
@@ -63,6 +71,11 @@ classcanvas 135426 class_ref 4306050 // AbstractCompletionHandler
   classdiagramsettings member_max_width 0 end
   xyz 657 714 2000
 end
+note 135554 "Note:
+ - 1 stack per thread
+ - Heap is shared
+--> Think about this (for frames, buffers, ...)"
+  xyzwh 517 44 2006 331 155
 relationcanvas 128386 relation_ref 399618 // <generalisation>
   geometry VHV unfixed
   from ref 128258 z 2011 to point 178 455
@@ -124,10 +137,10 @@ relationcanvas 134914 relation_ref 4826370 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 line 133634 -_-_ geometry VHV unfixed decenter_begin 964 decenter_end 100
-  from ref 133506 z 2001 to point 392 335
-  line 135170 z 2001 to point 432 335
-  line 135298 z 2001 to ref 130178
+  from ref 133506 z 2025 to point 453 335
+  line 135170 z 2025 to point 432 335
+  line 135298 z 2025 to ref 130178
 line 134018 -_-_ geometry VH unfixed
-  from ref 133890 z 2001 to point 741 165
-  line 135042 z 2001 to ref 133506
+  from ref 133890 z 2025 to point 740 226
+  line 135042 z 2025 to ref 133506
 end

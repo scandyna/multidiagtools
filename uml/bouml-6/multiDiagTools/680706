@@ -1,6 +1,6 @@
 format 215
 "DeployUtils" // Mdt::DeployUtils
-  revision 69
+  revision 72
   modified_by 2 "philippe"
   // class settings
   
@@ -4184,11 +4184,29 @@ ${inlines}
       end
 
       operation 6206210 "execJoinQmFiles"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "files" type class_ref 160770 // QStringList
+	  param in name "destination" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6212738 "execLconvert"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "arguments" type class_ref 160770 // QStringList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -4202,22 +4220,6 @@ ${inlines}
 	private explicit_return_type "bool"
 	nparams 1
 	  param in name "prefix" type class_ref 4168962 // PathList
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 6212738 "execLconvert"
-	private explicit_return_type "bool"
-	nparams 1
-	  param in name "arguments" type class_ref 160770 // QStringList
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -4507,6 +4509,21 @@ ${inlines}
 	
       end
 
+      operation 6219778 "fileSuffix"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 6179202 "qmFileName"
 	public return_type class_ref 4399874 // QmFileName
 	nparams 0
@@ -4663,7 +4680,53 @@ ${inlines}
 	
       end
 
-      operation 6172034 "fromFileList"
+      operation 6219650 "getUsedFileSuffixes"
+	public return_type class_ref 160770 // QStringList
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6219522 "getTranslationsForFileSuffixes"
+	public return_type class_ref 4393090 // TranslationInfoList
+	nparams 1
+	  param in name "suffixes" type class_ref 160770 // QStringList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6226306 "toQmFilePathList"
+	public return_type class_ref 160770 // QStringList
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6172034 "fromQmFilePathList"
 	class_operation public return_type class_ref 4393090 // TranslationInfoList
 	nparams 1
 	  param in name "filePathList" type class_ref 160770 // QStringList
@@ -4888,8 +4951,8 @@ ${inlines}
       end
     end
 
-    class 4406530 "JoinTranslation"
-      visibility package stereotype "globalFunctions"
+    class 4406530 "Translation"
+      visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -4903,13 +4966,37 @@ ${inlines}
       mysql_decl ""
       
       operation 6171906 "joinTranslations"
-	class_operation public explicit_return_type "bool"
-	nparams 2
+	public explicit_return_type "bool"
+	nparams 3
 	  param in name "translations" type class_ref 4393090 // TranslationInfoList
 	  param in name "destination" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+	  param in name "prefix" type class_ref 4168962 // PathList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4954498 // <generalisation>
+	relation 4928258 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4954498 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 6219266 "lastError"
+	public return_type class_ref 182402 // Error
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

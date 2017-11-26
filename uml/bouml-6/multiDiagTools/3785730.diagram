@@ -1,28 +1,20 @@
-format 214
+format 215
 
 classcanvas 128002 class_ref 4161282 // FindTranslation
   classdiagramsettings member_max_width 0 end
   xyz 40.5 40.5 2000
 end
-note 129666 "For Mdt translations: could we use CMake ?
-For example:
-mdt_install_translations(
-  TARGET myexecutable
-  DESTINATION translations
-)
-
-Hmm.. Mdt is now a imported target,
-don't think we can have all informations here.."
-  xyzwh 43.5 355.5 2000 417 145
-note 129922 "Note: generate map from CMake ?
-"
-  xyzwh 253.5 686.5 2000 371 45
-note 130818 "Maybe: do not convert to QLocale::Language and coutry.
-Goal: compare languages and coutries easily (extractibg suffix is ok).
-"
-  xyzwh 36.5 612.5 2000 433 67
-classcanvas 131842 class_ref 4406530 // JoinTranslation
+classcanvas 131842 class_ref 4406530 // Translation
   classdiagramsettings member_max_width 0 end
-  xyz 34.5 519.5 2000
+  xyz 42 510.75 2000
+end
+classcanvas 131970 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 320 425.75 2000
+end
+relationcanvas 132226 relation_ref 4928258 // <generalisation>
+  from ref 131842 z 2001 to ref 131970
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

@@ -1,6 +1,6 @@
-format 214
+format 215
 "Qt" // Qt
-  revision 225
+  revision 226
   modified_by 2 "philippe"
   // class settings
   
@@ -136,6 +136,7 @@ ${inlines}
 	
 	
       end
+
     end
 
     classdiagram 141954 "QTime"
