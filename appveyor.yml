@@ -10,7 +10,7 @@ environment:
   matrix:
     # MinGW
     - CMAKE_GENERATOR: "MinGW Makefiles"
-      QT_PREFIX_PATH: 'C:\Qt\5.9.1\mingw53_32'
+      QT_PREFIX_PATH: 'C:\Qt\5.9\mingw53_32'
       MINGW_PREFIX_PATH: 'C:\Qt\Tools\mingw530_32'
 
 before_build:
