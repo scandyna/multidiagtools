@@ -96,14 +96,14 @@ void TranslationInfoTest::addTranslationTest()
   QCOMPARE(til.count(), 2);
   QCOMPARE(til.at(0).absoluteFilePath(), QFileInfo("/tmp/a_fr.qm").absoluteFilePath());
   QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
-  QCOMPARE(til.at(1).absoluteFilePath(), QString("/tmp/b_fr.qm"));
+  QCOMPARE(til.at(1).absoluteFilePath(), QFileInfo("/tmp/b_fr.qm").absoluteFilePath());
   QCOMPARE(til.at(1).fullFileName(), QString("b_fr.qm"));
   // Try to add the first translation again
   til.addTranslation( TranslationInfo::fromQmFilePath("/tmp/a_fr.qm") );
   QCOMPARE(til.count(), 2);
   QCOMPARE(til.at(0).absoluteFilePath(), QFileInfo("/tmp/a_fr.qm").absoluteFilePath());
   QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
-  QCOMPARE(til.at(1).absoluteFilePath(), QString("/tmp/b_fr.qm"));
+  QCOMPARE(til.at(1).absoluteFilePath(), QFileInfo("/tmp/b_fr.qm").absoluteFilePath());
   QCOMPARE(til.at(1).fullFileName(), QString("b_fr.qm"));
   // Create a second list
   TranslationInfoList til2;
@@ -128,7 +128,7 @@ void TranslationInfoTest::infoListFromQmFilePathListTest()
   QVERIFY(!til.isEmpty());
   QCOMPARE(til.at(0).absoluteFilePath(), QFileInfo("/tmp/a_fr.qm").absoluteFilePath());
   QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
-  QCOMPARE(til.toQmFilePathList(), QStringList{"/tmp/a_fr.qm"});
+  QCOMPARE(til.toQmFilePathList(), QStringList{QFileInfo("/tmp/a_fr.qm").absoluteFilePath()});
 }
 
 void TranslationInfoTest::usedFileSuffixesInListTest()
