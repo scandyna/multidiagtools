@@ -23,13 +23,12 @@
 
 #include "Mdt/Expected.h"
 #include "Mdt/Error.h"
-#include "MdtExpectedExport.h"
 #include <QObject>
 #include <QString>
 #include <QVariant>
 #include <QtTest/QtTest>
 
-class MDT_EXPECTED_EXPORT ExpectedTest : public QObject
+class ExpectedTest : public QObject
 {
   Q_OBJECT
 

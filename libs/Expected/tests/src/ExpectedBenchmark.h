@@ -22,13 +22,12 @@
 #define MDT_EXPECTED_BENCHMARK_H
 
 #include "Mdt/Expected.h"
-#include "MdtExpectedExport.h"
 #include <QObject>
 #include <QString>
 #include <QVariant>
 #include <QtTest/QtTest>
 
-class MDT_EXPECTED_EXPORT ExpectedBenchmark : public QObject
+class ExpectedBenchmark : public QObject
 {
   Q_OBJECT
 
