@@ -22,6 +22,7 @@
 #include "Mdt/DeployUtils/TranslationInfo.h"
 #include "Mdt/DeployUtils/TranslationInfoList.h"
 #include <QStringList>
+#include <QFileInfo>
 
 using namespace Mdt::DeployUtils;
 
@@ -40,7 +41,8 @@ void TranslationInfoTest::cleanupTestCase()
 void TranslationInfoTest::infoFromQmFilePathTest()
 {
   const auto ti = TranslationInfo::fromQmFilePath("/tmp/a_fr.qm");
-  QCOMPARE(ti.absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  // Check. On Windows, absoluteFilePath contains a drive letter. Use QFileInfo to check
+  QCOMPARE(ti.absoluteFilePath(), QFileInfo("/tmp/a_fr.qm").absoluteFilePath());
   QCOMPARE(ti.fullFileName(), QString("a_fr.qm"));
   QCOMPARE(ti.fileSuffix(), QString("fr"));
 }
@@ -76,6 +78,10 @@ void TranslationInfoTest::compareInfoTest_data()
 
 void TranslationInfoTest::addTranslationTest()
 {
+  /*
+   * On Windows, absoluteFilePath contains a drive letter.
+   * Use QFileInfo to check them.
+   */
   TranslationInfoList til;
   QCOMPARE(til.count(), 0);
   QVERIFY(til.isEmpty());
@@ -83,19 +89,19 @@ void TranslationInfoTest::addTranslationTest()
   til.addTranslation( TranslationInfo::fromQmFilePath("/tmp/a_fr.qm") );
   QCOMPARE(til.count(), 1);
   QVERIFY(!til.isEmpty());
-  QCOMPARE(til.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(til.at(0).absoluteFilePath(), QFileInfo("/tmp/a_fr.qm").absoluteFilePath());
   QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
   // Add a other translation
   til.addTranslation( TranslationInfo::fromQmFilePath("/tmp/b_fr.qm") );
   QCOMPARE(til.count(), 2);
-  QCOMPARE(til.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(til.at(0).absoluteFilePath(), QFileInfo("/tmp/a_fr.qm").absoluteFilePath());
   QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
   QCOMPARE(til.at(1).absoluteFilePath(), QString("/tmp/b_fr.qm"));
   QCOMPARE(til.at(1).fullFileName(), QString("b_fr.qm"));
   // Try to add the first translation again
   til.addTranslation( TranslationInfo::fromQmFilePath("/tmp/a_fr.qm") );
   QCOMPARE(til.count(), 2);
-  QCOMPARE(til.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(til.at(0).absoluteFilePath(), QFileInfo("/tmp/a_fr.qm").absoluteFilePath());
   QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
   QCOMPARE(til.at(1).absoluteFilePath(), QString("/tmp/b_fr.qm"));
   QCOMPARE(til.at(1).fullFileName(), QString("b_fr.qm"));
@@ -104,14 +110,14 @@ void TranslationInfoTest::addTranslationTest()
   til2.addTranslation( TranslationInfo::fromQmFilePath("/tmp/a_fr.qm") );
   QCOMPARE(til2.count(), 1);
   QVERIFY(!til2.isEmpty());
-  QCOMPARE(til2.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(til2.at(0).absoluteFilePath(), QFileInfo("/tmp/a_fr.qm").absoluteFilePath());
   QCOMPARE(til2.at(0).fullFileName(), QString("a_fr.qm"));
   // Add the first list to the second
   til2.addTranslations(til);
   QCOMPARE(til2.count(), 2);
-  QCOMPARE(til2.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(til2.at(0).absoluteFilePath(), QFileInfo("/tmp/a_fr.qm").absoluteFilePath());
   QCOMPARE(til2.at(0).fullFileName(), QString("a_fr.qm"));
-  QCOMPARE(til2.at(1).absoluteFilePath(), QString("/tmp/b_fr.qm"));
+  QCOMPARE(til2.at(1).absoluteFilePath(), QFileInfo("/tmp/b_fr.qm").absoluteFilePath());
   QCOMPARE(til2.at(1).fullFileName(), QString("b_fr.qm"));
 }
 
@@ -120,7 +126,7 @@ void TranslationInfoTest::infoListFromQmFilePathListTest()
   const auto til = TranslationInfoList::fromQmFilePathList({"/tmp/a_fr.qm"});
   QCOMPARE(til.count(), 1);
   QVERIFY(!til.isEmpty());
-  QCOMPARE(til.at(0).absoluteFilePath(), QString("/tmp/a_fr.qm"));
+  QCOMPARE(til.at(0).absoluteFilePath(), QFileInfo("/tmp/a_fr.qm").absoluteFilePath());
   QCOMPARE(til.at(0).fullFileName(), QString("a_fr.qm"));
   QCOMPARE(til.toQmFilePathList(), QStringList{"/tmp/a_fr.qm"});
 }
