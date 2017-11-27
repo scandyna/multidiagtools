@@ -1,6 +1,6 @@
-format 214
+format 215
 "Mdt" // Mdt
-  revision 58
+  revision 59
   modified_by 2 "philippe"
   // class settings
   
@@ -1866,6 +1866,8 @@ ${members}};
     end
   end
 
+  package_ref 402946 // Device
+
   package_ref 430082 // Dsp
 
   package_ref 680706 // DeployUtils
@@ -1884,7 +1886,7 @@ ${members}};
 
   package_ref 509570 // WebSocket
 
-  package_ref 483202 // Numeric_Core
+  package_ref 483202 // Numeric
 
   package_ref 733442 // NumericRange
 
@@ -1911,8 +1913,6 @@ ${members}};
   package_ref 674178 // UicNumber
 
   package_ref 402562 // Modbus
-
-  package_ref 402946 // Device
 
   package_ref 403330 // Wait
 

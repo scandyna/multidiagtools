@@ -1,6 +1,6 @@
-format 211
-"Device" // mdt::Device
-  revision 3
+format 215
+"Device" // Mdt::Device
+  revision 4
   modified_by 2 "philippe"
   // class settings
   
@@ -42,6 +42,11 @@ format 211
     
     activitydiagramsettings
      end
+    classdiagram 3819010 "ApiSandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
     classdiagram 2191362 "container"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -258,6 +263,55 @@ ${inlines}
 	
 	
       end
+    end
+
+    class 4426370 "DeviceApiSnadbox"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 6232834 "sendRequest"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "request" explicit_type ""
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6232962 "waitForResponse"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "timeout" explicit_type ""
+	    defaultvalue "infinite"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
     end
   end
 
