@@ -38,7 +38,7 @@ message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
 # On platform that supports RPATH,
 # add external dependencies (like Qt)
 if(CMAKE_PREFIX_PATH)
-  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH true)
+  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH false)
 endif()
 
 # On Windows, RPATH do not exist
@@ -275,8 +275,6 @@ set(CPACK_SOURCE_IGNORE_FILES
   "cmake_install.cmake"
 )
 
-# On Windows, we add external libraries to the distribution
-
 
 if(UNIX)
   set(CPACK_GENERATOR TBZ2)
@@ -287,7 +285,7 @@ if(WIN32)
   set(CPACK_SOURCE_GENERATOR ZIP)
 endif()
 
-# Make proprties defined for CPack availabe as variables in current scope
+# Make properties defined for CPack availabe as variables in current scope
 get_cmake_property(components COMPONENTS)
 foreach(component ${components})
   get_property(
@@ -305,4 +303,57 @@ foreach(component ${components})
   endif()
 endforeach()
 
+# Generate the post-install script
+if( NOT ("${CMAKE_INSTALL_PREFIX}" MATCHES "^/usr|/usr/$") )
+  configure_file(
+    "${CMAKE_SOURCE_DIR}/MdtPostInstall.cmake.in"
+    "${CMAKE_BINARY_DIR}/MdtPostInstall.cmake"
+    @ONLY
+  )
+  install(
+    FILES "${CMAKE_BINARY_DIR}/MdtPostInstall.cmake"
+    DESTINATION "${CMAKE_INSTALL_PREFIX}"
+  )
+endif()
+
+# Get Qt5 version
+find_package(Qt5 COMPONENTS Core)
+
+message("Qt5 version: ${Qt5_VERSION}")
+message("Qt5 version maj: ${Qt5_VERSION_MAJOR}")
+message("Qt5 version min: ${Qt5_VERSION_MINOR}")
+message("CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
+message("CMAKE_SYSTEM_NAME: ${CMAKE_SYSTEM_NAME}")
+message("CMAKE_CXX_COMPILER_ABI: ${CMAKE_CXX_COMPILER_ABI}")
+message("CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}")
+message("CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
+
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
+  message("DEBUG build")
+  set(debug_file_name_postfix "-Debug")
+else()
+  set(debug_file_name_postfix "")
+endif()
+set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}-Qt-${Qt5_VERSION}-${CMAKE_SYSTEM_NAME}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_SYSTEM_PROCESSOR}${debug_file_name_postfix}")
+
+# set(CPACK_MONOLITHIC_INSTALL true)
+# get_filename_component(qt_tool_path "${QT_PREFIX_PATH}/../../Tools/QtInstallerFramework/2.0/bin" ABSOLUTE)
+# message("qt_tool_path: ${qt_tool_path}")
+# find_program(CPACK_IFW_BINARYCREATOR_EXECUTABLE NAME binarycreator PATHS "${qt_tool_path}")
+# message("CPACK_IFW_BINARYCREATOR_EXECUTABLE: ${CPACK_IFW_BINARYCREATOR_EXECUTABLE}")
+# message("CPACK_IFW_REPOGEN_EXECUTABLE: ${CPACK_IFW_REPOGEN_EXECUTABLE}")
+
+# message("PATH: $ENV{PATH}")
+#
+# set(ENV{LD_LIBRARY_PATH} "${QT_PREFIX_PATH}/lib" "$ENV{LD_LIBRARY_PATH}")
+# message("LD_LIBRARY_PATH: $ENV{LD_LIBRARY_PATH}")
+
 include(CPack)
+
+message("CPACK_PACKAGE_NAME: ${CPACK_PACKAGE_NAME}")
+message("CPACK_PACKAGE_VERSION: ${CPACK_PACKAGE_VERSION}")
+message("CPACK_SYSTEM_NAME: ${CPACK_SYSTEM_NAME}")
+message("CPACK_SOURCE_PACKAGE_FILE_NAME: ${CPACK_SOURCE_PACKAGE_FILE_NAME}")
+message("CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
+
+# include(CPack)
