@@ -91,3 +91,6 @@ script:
 
 after_failure:
  - cat Testing/Temporary/LastTest.log
+
+before_deploy:
+ - cpack -G TBZ2 .

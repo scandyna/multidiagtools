@@ -29,3 +29,6 @@ build_script:
 
 test_script:
   - ctest --output-on-failure .
+
+before_deploy:
+  - cpack -G ZIP .
