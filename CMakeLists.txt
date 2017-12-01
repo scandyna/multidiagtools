@@ -98,7 +98,8 @@ endif()
 
 # Generate the post-install script
 # This will change the RPATH on the user's target platform
-if( NOT ("${CMAKE_INSTALL_PREFIX}" MATCHES "^/usr|/usr/$") )
+get_filename_component(install_prefix "${CMAKE_INSTALL_PREFIX}" ABSOLUTE)
+if( NOT ("${install_prefix}" STREQUAL "/usr") )
   configure_file(
     "${CMAKE_SOURCE_DIR}/MdtPostInstall.cmake.in"
     "${CMAKE_BINARY_DIR}/MdtPostInstall.cmake"

@@ -31,7 +31,8 @@
 #   where DATADIR is defined by the GnuInstallDirs module
 #   for all other cases, it will be set to ``translations``
 
-if( UNIX AND ("${CMAKE_INSTALL_PREFIX}" MATCHES "^/usr|/usr/$") )
+get_filename_component(MDT_INSTALL_DIRS_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" ABSOLUTE)
+if( UNIX AND ("${MDT_INSTALL_DIRS_INSTALL_PREFIX}" STREQUAL "/usr") )
   include(GNUInstallDirs)
   message("PREFIX is /usr")
   set(MDT_INSTALL_BINDIR "${CMAKE_INSTALL_BINDIR}")
