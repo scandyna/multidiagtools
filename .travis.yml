@@ -94,3 +94,12 @@ after_failure:
 
 before_deploy:
  - cpack -G TBZ2 .
+
+deploy:
+  provider: releases
+  api_key:
+    secure: rvTBXONdYa73fpinC+YI7yLTQC7QD3nCojW+EczUGDBQyi06oHM1m5ln/d8qjkBQ/YuDFv3le4DHGZ+n3eSxGgSvtnpu5s2D26o0O1IdcJFsYBm11rVL2taMfwBQTDFHxhj+7h8ryAAD9v+3gfdQu0eUMbU4gHIh8QQU/JcSnVPLzOqh9hS6MsVZC8aHpkMdSDnWW4yDJSsHaW7U1GswPW0rbMjV95budMxe/UcgmynKMbhbWbXxrm1Jt81W60OjD9p7FGJHOqt0LIaTQ2DRuMPhcXDOM1zye9bYmieDHGgFSMRZWti+Sh3ShFJ+ISo4I80sgcqfSSnL2+Aq/S3WCFNxbzRx/ht9oLg5PVLBR/39waH7kqk5bJPcCfdEK7NNiVqfPKw3Q3aCP7Loys8uib5tK5javh2bwGkhTYFPAuZkvisAjo/o4nVco/8ocFCfkj7zVYE+obgnjM9oIJoD3VFk9blP1FnGWbpwymmZUU026xPeln3BMrKBFD6moVRHLTtZjEWx3dUz4ffK5dLxXsHXluAApWIU9cDekHfjtaTdTqKVj98g0IUswH8+BjXJ8V4qC990vGJez1nZ+YM6vi/B2viV59JA8CVtNkgItmMp06Uu+6nq1Kt3mXKALV5lUtOygCFs8wgD2yml1z3amgwo0sMMvxHaAvggA+acVDI=
+  file_glob: true
+  file: Mdt0-*.tar.tbz2
+  on:
+    repo: scandyna/multidiagtools
