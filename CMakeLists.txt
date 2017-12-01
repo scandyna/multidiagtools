@@ -35,12 +35,6 @@ endif()
 message("CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
 
-# On platform that supports RPATH,
-# add external dependencies (like Qt)
-if(CMAKE_PREFIX_PATH)
-  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH false)
-endif()
-
 # On Windows, RPATH do not exist
 # To be able to run tests, we have to put all binaries in the same directory
 # We also tell CMake to use Wine to execute tests if we cross-compiled
@@ -52,10 +46,10 @@ if(WIN32)
 endif()
 
 # Generate mdenv.bat script, that can be used when developping on Windows
-include(MdtGenerateEnvScript)
-mdt_generate_env_script(
-  DESTINATION "${CMAKE_BINARY_DIR}"
-)
+# include(MdtGenerateEnvScript)
+# mdt_generate_env_script(
+#   DESTINATION "${CMAKE_BINARY_DIR}"
+# )
 
 # Enable testing
 # Must be placed before any add_subdirectory() command, else tests that are defined in sub-directories will be ignored
@@ -90,6 +84,31 @@ set(TRANSLATION_LANGUAGES en fr de)
 include(MdtAddLibraryTranslations)
 
 include(MdtAddLibrary)
+
+#################################################################################################################################################
+# Install options          ( Note: some options needs to be set before add_subdirectory() )
+#################################################################################################################################################
+
+# On platform that supports RPATH,
+# add external dependencies (like Qt)
+# When using make install, RPATH are ok
+if(CMAKE_PREFIX_PATH)
+  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH true)
+endif()
+
+# Generate the post-install script
+# This will change the RPATH on the user's target platform
+if( NOT ("${CMAKE_INSTALL_PREFIX}" MATCHES "^/usr|/usr/$") )
+  configure_file(
+    "${CMAKE_SOURCE_DIR}/MdtPostInstall.cmake.in"
+    "${CMAKE_BINARY_DIR}/MdtPostInstall.cmake"
+    @ONLY
+  )
+  install(
+    FILES "${CMAKE_BINARY_DIR}/MdtPostInstall.cmake"
+    DESTINATION "." COMPONENT dev
+  )
+endif()
 
 #################################################################################################################################################
 # Libraries
@@ -275,7 +294,6 @@ set(CPACK_SOURCE_IGNORE_FILES
   "cmake_install.cmake"
 )
 
-
 if(UNIX)
   set(CPACK_GENERATOR TBZ2)
   set(CPACK_SOURCE_GENERATOR TBZ2)
@@ -303,57 +321,16 @@ foreach(component ${components})
   endif()
 endforeach()
 
-# Generate the post-install script
-if( NOT ("${CMAKE_INSTALL_PREFIX}" MATCHES "^/usr|/usr/$") )
-  configure_file(
-    "${CMAKE_SOURCE_DIR}/MdtPostInstall.cmake.in"
-    "${CMAKE_BINARY_DIR}/MdtPostInstall.cmake"
-    @ONLY
-  )
-  install(
-    FILES "${CMAKE_BINARY_DIR}/MdtPostInstall.cmake"
-    DESTINATION "${CMAKE_INSTALL_PREFIX}"
-  )
-endif()
-
 # Get Qt5 version
+# After success, find_package() wil define Qt5_VERSION, Qt5_VERSION_MAJOR, etc..
 find_package(Qt5 COMPONENTS Core)
-
-message("Qt5 version: ${Qt5_VERSION}")
-message("Qt5 version maj: ${Qt5_VERSION_MAJOR}")
-message("Qt5 version min: ${Qt5_VERSION_MINOR}")
-message("CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
-message("CMAKE_SYSTEM_NAME: ${CMAKE_SYSTEM_NAME}")
-message("CMAKE_CXX_COMPILER_ABI: ${CMAKE_CXX_COMPILER_ABI}")
-message("CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}")
-message("CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
 
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
   message("DEBUG build")
-  set(debug_file_name_postfix "-Debug")
+  set(debug_file_name_postfix "-debug")
 else()
   set(debug_file_name_postfix "")
 endif()
-set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}-Qt-${Qt5_VERSION}-${CMAKE_SYSTEM_NAME}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_SYSTEM_PROCESSOR}${debug_file_name_postfix}")
-
-# set(CPACK_MONOLITHIC_INSTALL true)
-# get_filename_component(qt_tool_path "${QT_PREFIX_PATH}/../../Tools/QtInstallerFramework/2.0/bin" ABSOLUTE)
-# message("qt_tool_path: ${qt_tool_path}")
-# find_program(CPACK_IFW_BINARYCREATOR_EXECUTABLE NAME binarycreator PATHS "${qt_tool_path}")
-# message("CPACK_IFW_BINARYCREATOR_EXECUTABLE: ${CPACK_IFW_BINARYCREATOR_EXECUTABLE}")
-# message("CPACK_IFW_REPOGEN_EXECUTABLE: ${CPACK_IFW_REPOGEN_EXECUTABLE}")
-
-# message("PATH: $ENV{PATH}")
-#
-# set(ENV{LD_LIBRARY_PATH} "${QT_PREFIX_PATH}/lib" "$ENV{LD_LIBRARY_PATH}")
-# message("LD_LIBRARY_PATH: $ENV{LD_LIBRARY_PATH}")
+set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}-Qt-${Qt5_VERSION_MAJOR}.${Qt5_VERSION_MINOR}-${CMAKE_SYSTEM_NAME}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_SYSTEM_PROCESSOR}${debug_file_name_postfix}")
 
 include(CPack)
-
-message("CPACK_PACKAGE_NAME: ${CPACK_PACKAGE_NAME}")
-message("CPACK_PACKAGE_VERSION: ${CPACK_PACKAGE_VERSION}")
-message("CPACK_SYSTEM_NAME: ${CPACK_SYSTEM_NAME}")
-message("CPACK_SOURCE_PACKAGE_FILE_NAME: ${CPACK_SOURCE_PACKAGE_FILE_NAME}")
-message("CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
-
-# include(CPack)

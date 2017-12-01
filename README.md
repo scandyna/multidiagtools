@@ -195,6 +195,32 @@ make install
 
 This method is not recommanded for a system wide installation.
 
+#### Generate a package
+
+To generate a tbz2 archive, from the build directory:
+```bash
+cpack -G TBZ2 .
+```
+
+The genarted archive will contain the Mdt libraries,
+translations, etc..
+
+To use the archive, extract it somwhere.
+Some part of the user's platform environment is not known while generating the package
+(Typically the path to a recent enough Qt library).
+For this reason, a post-install script must be executed.
+From the root of the installed Mdt, run:
+```bash
+cmake -D QT_PREFIX_PATH=/path/to/Qt -P MdtPostInstall.cmake
+```
+
+CPack can generate other packages.
+To have a list of packages generators that cpack has on your platform, use:
+```bash
+cpack --help
+```
+Please note that some generators needs some informations that current distribution does not provide.
+
 #### Install system wide on Debian
 
 Please note:
@@ -236,13 +262,6 @@ Please note that generated packages are not fully compliant to Debian policy.
 The dependencies are currently not complete.
 For example, Sql-dev depends on qt5base5-dev, but the this is missing in the generated package.
 For details on creating good Debian packages, see the [Debian packaging documentation](https://wiki.debian.org/Packaging)
-
-CPack can generate other packages.
-To have a list of packages generators that cpack has on your platform, use:
-```bash
-cpack --help
-```
-Please note that some generators needs some informations that current distribution does not provide.
 
 ## Windows
 
@@ -503,9 +522,9 @@ int main(int argc, char **argv)
 
 Write a CMakeLists.txt file:
 ```cmake
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.2)
 
-project(HelloWorld VERSION 0.0.1)
+project(HelloWorld VERSION 0.1.0)
 
 # Specify where to find Mdt
 # Using a custom MDT_PREFIX_PATH has some advantages:
