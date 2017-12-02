@@ -103,4 +103,4 @@ deploy:
   file_glob: true
   file: Mdt0-*.tar.bz2
   on:
-    repo: scandyna/multidiagtools
+    tags: true
