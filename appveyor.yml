@@ -44,4 +44,4 @@ deploy:
   description: "Mdt release for Windows"
   artifact: MdtZipDistribution
   on:
-    branch: master
+    appveyor_repo_tag: true
