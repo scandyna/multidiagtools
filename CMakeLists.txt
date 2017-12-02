@@ -3,7 +3,7 @@
 #################################################################################################################################################
 cmake_minimum_required(VERSION 3.2)
 
-project(Mdt0 VERSION 0.3.5)
+project(Mdt0 VERSION 0.3.6)
 
 # Additionnal Cmake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
@@ -222,11 +222,6 @@ if(WIN32 AND CMAKE_RUNTIME_OUTPUT_DIRECTORY AND CMAKE_CROSSCOMPILING)
 #   )
 #   mdt_copy_binary_dependencies_experimental(
 #     TARGET mdterrortest
-#     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-#     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
-#   )
-#   mdt_copy_binary_dependencies_experimental(
-#     TARGET mdterror_widgetstest
 #     DESTINATION_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
 #     SEARCH_FIRST_PATH_PREFIX_LIST ${CMAKE_PREFIX_PATH}
 #   )
