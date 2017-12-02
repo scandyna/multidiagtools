@@ -34,7 +34,7 @@ after_build:
   - cpack -G ZIP .
 
 artifacts:
-  - path: '**\Mdt*.zip'
+  - path: build\Mdt*.zip
     name: MdtZipDistribution
 
 deploy:
