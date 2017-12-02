@@ -30,7 +30,7 @@ build_script:
 test_script:
   - ctest --output-on-failure .
 
-build_success:
+after_build:
   - cpack -G ZIP .
 
 artifacts:
