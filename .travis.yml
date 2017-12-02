@@ -2,7 +2,7 @@
 branches:
  only:
   - master
-  - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+  - /^v\d+\.\d+(\.\d+)?(-\S*)?$/  # Also build tags
 
 git:
  submodules: false

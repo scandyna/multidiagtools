@@ -2,6 +2,7 @@
 branches:
  only:
   - master
+  - /^v\d+\.\d+(\.\d+)?(-\S*)?$/  # Also build tags
 
 environment:
 
