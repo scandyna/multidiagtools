@@ -122,7 +122,8 @@ function(mdt_add_library)
     VERSION ${library_version}
   )
   # For unix, create a separate component with debug symbols
-  if( UNIX AND (NOT CMAKE_INSTALL_PREFIX) AND ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr") )
+  # (This has sense only for system wide installation with DEB, RPM, ..)
+  if( UNIX AND (NOT CMAKE_INSTALL_PREFIX) OR ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr") )
     set(lib_so_name ${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}${CMAKE_SHARED_LIBRARY_SUFFIX}.${library_version})
     set(lib_debug_name ${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}.debug)
     add_custom_command(TARGET ${target_name}
