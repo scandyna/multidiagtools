@@ -89,16 +89,10 @@ include(MdtAddLibrary)
 # Install options          ( Note: some options needs to be set before add_subdirectory() )
 #################################################################################################################################################
 
-# On platform that supports RPATH,
-# add external dependencies (like Qt)
-# When using make install, RPATH are ok
-if(CMAKE_PREFIX_PATH)
-  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH true)
-endif()
+get_filename_component(install_prefix "${CMAKE_INSTALL_PREFIX}" ABSOLUTE)
 
 # Generate the post-install script
 # This will change the RPATH on the user's target platform
-get_filename_component(install_prefix "${CMAKE_INSTALL_PREFIX}" ABSOLUTE)
 if( NOT ("${install_prefix}" STREQUAL "/usr") )
   configure_file(
     "${CMAKE_SOURCE_DIR}/MdtPostInstall.cmake.in"
@@ -316,6 +310,7 @@ if(WIN32)
 #   set(CPACK_GENERATOR NSIS)
   set(CPACK_SOURCE_GENERATOR ZIP)
 endif()
+
 
 # Make properties defined for CPack availabe as variables in current scope
 get_cmake_property(components COMPONENTS)

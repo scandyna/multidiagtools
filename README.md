@@ -193,6 +193,9 @@ the installation is:
 make install
 ```
 
+The last step is to
+[Run the post install script](#run-the-post-install-script) .
+
 This method is not recommanded for a system wide installation.
 
 #### Generate a package
@@ -205,14 +208,8 @@ cpack -G TBZ2 .
 The genarted archive will contain the Mdt libraries,
 translations, etc..
 
-To use the archive, extract it somwhere.
-Some part of the user's platform environment is not known while generating the package
-(Typically the path to a recent enough Qt library).
-For this reason, a post-install script must be executed.
-From the root of the installed Mdt, run:
-```bash
-cmake -D QT_PREFIX_PATH=/path/to/Qt -P MdtPostInstall.cmake
-```
+To use the archive, extract it somwhere
+and [Run the post install script](#run-the-post-install-script) .
 
 CPack can generate other packages.
 To have a list of packages generators that cpack has on your platform, use:
@@ -220,6 +217,28 @@ To have a list of packages generators that cpack has on your platform, use:
 cpack --help
 ```
 Please note that some generators needs some informations that current distribution does not provide.
+
+#### Run the post install script
+
+Mdt is based (and also depends) on Qt5 library.
+
+Some part of the user's platform environment is not known while generating the package
+(Typically the path to a recent enough Qt library).
+For this reason, a post-install script must be executed.
+
+From the root of the installed Mdt, run:
+```bash
+cmake -D QT_PREFIX_PATH=/path/to/Qt -P MdtPostInstall.cmake
+```
+
+At the root of the Mdt installation,
+a file called QtPrefixPath.txt was generated.
+It tells where the used Qt library is installed.
+
+On Linux, the RPATH of Mdt libraries and tools
+is also set.
+
+On Windows, a mdtenv.bat script is also genrated.
 
 #### Install system wide on Debian
 

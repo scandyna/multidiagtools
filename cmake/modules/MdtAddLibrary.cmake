@@ -6,16 +6,6 @@ include(GenerateExportHeader)
 # For example, install libraries to /usr/lib/x86_64-linux-gnu on a x86_64 Debian
 include(GNUInstallDirs)
 
-# On platform that supports RPATH,
-# if we not install Mdt to a system prefix path (like /usr/lib),
-# Mdt libraries should have RPATH, so they can find each other
-# Note: using multi-arch installation with GNUInstallDirs,
-#       only /usr is considered a system wide installation.
-if( CMAKE_INSTALL_PREFIX AND NOT ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr") )
-  set(CMAKE_INSTALL_RPATH "\$ORIGIN")
-endif()
-
-
 # Add a library to Mdt project
 #
 # Input arguments:
