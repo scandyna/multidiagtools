@@ -34,6 +34,10 @@ endif()
 
 message("CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+message("CMAKE_HOST_SYSTEM_NAME: ${CMAKE_HOST_SYSTEM_NAME}")
+message("CMAKE_SYSTEM_NAME: ${CMAKE_SYSTEM_NAME}")
+message("CMAKE_HOST_SYSTEM_PROCESSOR: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+message("CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
 
 # On Windows, RPATH do not exist
 # To be able to run tests, we have to put all binaries in the same directory
@@ -330,6 +334,13 @@ foreach(component ${components})
   endif()
 endforeach()
 
+# Detect compile architecture
+# See: https://stackoverflow.com/questions/11944060/how-to-detect-target-architecture-using-cmake
+# Thanks to: https://github.com/axr/solar-cmake
+include(TargetArch)
+target_architecture(COMPILE_ARCHITECTURE)
+message("COMPILE_ARCHITECTURE: ${COMPILE_ARCHITECTURE}")
+
 # Get Qt5 version
 # After success, find_package() wil define Qt5_VERSION, Qt5_VERSION_MAJOR, etc..
 find_package(Qt5 COMPONENTS Core)
@@ -340,6 +351,6 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug")
 else()
   set(debug_file_name_postfix "")
 endif()
-set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}-Qt-${Qt5_VERSION_MAJOR}.${Qt5_VERSION_MINOR}-${CMAKE_SYSTEM_NAME}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_SYSTEM_PROCESSOR}${debug_file_name_postfix}")
+set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}-Qt-${Qt5_VERSION_MAJOR}.${Qt5_VERSION_MINOR}-${CMAKE_SYSTEM_NAME}-${CMAKE_CXX_COMPILER_ID}-${COMPILE_ARCHITECTURE}${debug_file_name_postfix}")
 
 include(CPack)
