@@ -18,9 +18,17 @@ To see currently available libraries, please take a look at the
 
 # Get Mdt
 
-Currently, only sources are available on [github](https://github.com/scandyna/multidiagtools/).
+## Release
 
-## Linux
+For some platforms, binary distributions are available [here](https://github.com/scandyna/multidiagtools/releases) .
+
+See the [INSTALL](INSTALL.md) file to know how to setup Mdt.
+
+## Latest source code
+
+The source code is also available on [github](https://github.com/scandyna/multidiagtools).
+
+### Linux
 
 At first, we have to install git.
 On a Debian system:
@@ -36,7 +44,7 @@ cd ~/opt/mdt/src
 git clone git://github.com/scandyna/multidiagtools.git
 ```
 
-## Windows
+### Windows
 
 At first, we have to install [git](https://git-scm.com/).
 Get a version that corresponds to your platform in the [Downloads section](https://git-scm.com/downloads).
@@ -99,7 +107,7 @@ Optionnally, documentation can also be installed:
 sudo apt-get install libboost-doc
 ```
 
-#### Install Qt5
+#### Install Qt5 on Linux
 
 Mdt needs a recent version of Qt5.
 
@@ -186,6 +194,8 @@ make test
 
 #### Install in a predefined location
 
+Note that this method is not recommanded for a system wide installation.
+
 To install the library in a non system place,
 i.e. defined above with CMAKE_INSTALL_PREFIX,
 the installation is:
@@ -193,10 +203,9 @@ the installation is:
 make install
 ```
 
-The last step is to
-[Run the post install script](#run-the-post-install-script) .
-
-This method is not recommanded for a system wide installation.
+If you don't have a recent enough version of Qt
+installed on your system (in /usr/lib),
+run the [post install script](INSTALL.md/#post-install-script-on-linux) .
 
 #### Generate a package
 
@@ -208,15 +217,16 @@ cpack -G TBZ2 .
 The genarted archive will contain the Mdt libraries,
 translations, etc..
 
-To use the archive, extract it somwhere
-and [Run the post install script](#run-the-post-install-script) .
+To install Mdt from a binary archive,
+see the [INSTALL](INSTALL.md) file.
 
 CPack can generate other packages.
 To have a list of packages generators that cpack has on your platform, use:
 ```bash
 cpack --help
 ```
-Please note that some generators needs some informations that current distribution does not provide.
+
+Please note that some generators needs some informations that Mdt does currently not provide.
 
 #### Run the post install script
 
