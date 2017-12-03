@@ -11,7 +11,7 @@ if(UNIX)
 elseif(WIN32)
   set(MDT_CMAKE_MODULES_INSTALL_DIR "cmake")
 else()
-  message(FATAL "Could not determine install dir for MdtCMakeModules")
+  message(FATAL_ERROR "Could not determine install dir for MdtCMakeModules")
 endif()
 
 # Rules to install the modules
@@ -23,6 +23,7 @@ install(
     "modules/MdtDeployUtils.cmake"
     "modules/MdtInstallCopyTargetsDependenciesScript.cmake.in"
     "modules/MdtInstallDirs.cmake"
+    "modules/MdtQtPath.cmake"
   DESTINATION "${MDT_CMAKE_MODULES_INSTALL_DIR}/modules"
   COMPONENT "${PROJECT_NAME}-cmake"
 )
