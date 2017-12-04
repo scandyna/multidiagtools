@@ -22,7 +22,7 @@ sudo apt-get install cmake make g++
 Some tools from DeployUtils have some runtime dependencies,
 like objdump and patchelf:
 ```bash
-sudo apt-get binutils patchelf
+sudo apt-get install binutils patchelf
 ```
 
 ### Install Qt5 on Linux
