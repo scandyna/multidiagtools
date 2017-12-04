@@ -388,7 +388,7 @@ To run a single unit test, invoke wine, for example:
 wine bin/mdtalgorithmtest.exe
 ```
 
-To reompile some parts (or all):
+To recompile some parts (or all):
 ```bash
 make -j4
 ```
