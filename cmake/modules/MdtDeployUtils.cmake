@@ -24,7 +24,7 @@
 #   Internally, searching is done in known subdirectories of each specified directory (for example bin, qt5/bin).
 #   A good choise is to pass CMAKE_PREFIX_PATH .
 #
-# Example create a rule to install deppendencies for app,
+# Example create a rule to install a app,
 # including icons and translations:
 #  mdt_install_app(
 #    TARGET app
@@ -66,6 +66,7 @@ function(mdt_install_app)
   # then create rules to install dependencies.
   set(app_dependencies_path "${CMAKE_CURRENT_BINARY_DIR}/MdtAppDependnecies")
   file(REMOVE_RECURSE "${app_dependencies_path}")
+  set(bin_tmp_path "${app_dependencies_path}/bin")
   set(library_tmp_path "${app_dependencies_path}/${lib_dir}")
   set(plugin_tmp_path "${app_dependencies_path}/plugins")
   set(translation_tmp_path "${app_dependencies_path}/translations")
@@ -77,8 +78,9 @@ function(mdt_install_app)
   endif()
 
   foreach(f ${project_qm_files})
-    message("QM: ${f}")
+    message("mdt_install_app(): QM: ${f}")
   endforeach()
+  message("mdt_install_app(): LD_LIBRARY_PATH: $ENV{LD_LIBRARY_PATH}")
 
   mdt_install_copy_targets_dependencies(
     TARGETS ${target}
@@ -91,7 +93,7 @@ function(mdt_install_app)
   )
 
   # Write a qt.conf file
-  set(qt_conf_file_path "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
+  set(qt_conf_file_path "${bin_tmp_path}/qt.conf")
   file(WRITE "${qt_conf_file_path}" "[Paths]\nPrefix=..\n")
 
   # Create a install rule for this new target
@@ -217,6 +219,7 @@ function(mdt_install_copy_targets_dependencies)
     file(GENERATE OUTPUT "${target_path_file}" CONTENT "$<TARGET_FILE:${target}>")
     list(APPEND target_path_files "${target_path_file}")
   endforeach()
+
   configure_file("${install_script_in}" "${CMAKE_CURRENT_BINARY_DIR}/MdtInstallCopyTargetsDependenciesScript.cmake" @ONLY)
   install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/MdtInstallCopyTargetsDependenciesScript.cmake")
 
