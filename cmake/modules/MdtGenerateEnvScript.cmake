@@ -1,4 +1,6 @@
 
+# TODO  should be obselete
+
 # Generate a mdtenv.bat script
 function(mdt_generate_env_script)
   # Parse arguments
