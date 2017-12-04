@@ -17,13 +17,13 @@ endif()
 # Rules to install the modules
 install(
   FILES
-    "modules/MdtGenerateEnvScript.cmake"
     "modules/MdtDependenciesUtils.cmake"
     "modules/MdtAddTranslations.cmake"
     "modules/MdtDeployUtils.cmake"
     "modules/MdtInstallCopyTargetsDependenciesScript.cmake.in"
     "modules/MdtInstallDirs.cmake"
     "modules/MdtQtPath.cmake"
+    "modules/TargetArch.cmake"
   DESTINATION "${MDT_CMAKE_MODULES_INSTALL_DIR}/modules"
   COMPONENT "${PROJECT_NAME}-cmake"
 )
