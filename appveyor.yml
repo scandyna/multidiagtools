@@ -42,7 +42,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: YnLpfRJ3an3UULcagmbxw9gqAquwEqJZ2Vj/glhhG0bC4VOzSTMsSyxnP9dR7Z2I
-  description: "Mdt release for Windows"
+  description: "Mdt release"
   artifact: MdtZipDistribution
   on:
     appveyor_repo_tag: true
