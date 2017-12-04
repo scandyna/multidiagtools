@@ -1,6 +1,6 @@
 format 215
 "Qt" // Qt
-  revision 226
+  revision 227
   modified_by 2 "philippe"
   // class settings
   
@@ -136,7 +136,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     classdiagram 141954 "QTime"
@@ -10625,6 +10624,44 @@ ${items}};
     end
 
     class 3055234 "QTestEventList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+
+  classview 1974274 "Network"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3825666 "QHostInfo"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4433026 "QHostInfo"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

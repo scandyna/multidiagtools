@@ -1,6 +1,6 @@
 format 215
 "Mdt" // Mdt
-  revision 59
+  revision 60
   modified_by 2 "philippe"
   // class settings
   
@@ -1931,4 +1931,6 @@ ${members}};
   package_ref 707074 // UnitTest
 
   package_ref 713730 // Visa
+
+  package_ref 739970 // Network
 end
