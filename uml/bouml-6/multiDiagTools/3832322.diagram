@@ -1,0 +1,23 @@
+format 215
+
+classcanvas 128002 class_ref 693250 // QAction
+  classdiagramsettings member_max_width 0 end
+  xyz 186 36 2000
+end
+classcanvas 128130 class_ref 4439682 // QTranslator
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 393.5 2000
+end
+note 128258 "See:
+https://wiki.qt.io/How_to_create_a_multi_language_application"
+  xyzwh 40.5 232.5 2000 449 81
+classcanvas 128386 class_ref 2706562 // QActionGroup
+  classdiagramsettings member_max_width 0 end
+  xyz 40 74 2006
+end
+relationcanvas 128514 relation_ref 3070722 // <unidirectional association>
+  from ref 128386 z 2007 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 170 106 3000 no_multiplicity_b
+end
+end

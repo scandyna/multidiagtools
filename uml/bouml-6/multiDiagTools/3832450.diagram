@@ -1,0 +1,16 @@
+format 215
+
+classcanvas 128002 class_ref 4439554 // QToolButton
+  classdiagramsettings member_max_width 0 end
+  xyz 154 146 2000
+end
+classcanvas 128130 class_ref 679810 // QAbstractButton
+  classdiagramsettings member_max_width 0 end
+  xyz 36 42 2000
+end
+relationcanvas 128258 relation_ref 4941314 // <generalisation>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -1,0 +1,45 @@
+format 215
+
+classcanvas 128002 class_ref 2706818 // QMenu
+  classdiagramsettings member_max_width 0 end
+  xyz 184 42 3005
+end
+classcanvas 128514 class_ref 2706946 // QMenuBar
+  classdiagramsettings member_max_width 0 end
+  xyz 65 42 3011
+end
+classcanvas 128770 class_ref 693250 // QAction
+  classdiagramsettings member_max_width 0 end
+  xyz 42 128 3017
+end
+classcanvas 129026 class_ref 2706690 // QToolBar
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 489.5 2000
+end
+classcanvas 129154 class_ref 4439554 // QToolButton
+  classdiagramsettings member_max_width 0 end
+  xyz 193.5 489.5 2000
+end
+note 129282 "See:
+https://wiki.qt.io/How_to_create_a_multi_language_application"
+  xyzwh 40.5 328.5 2000 449 81
+relationcanvas 128130 relation_ref 3071234 // <unidirectional association>
+  from ref 128002 z 3006 to point 154 42
+  line 128258 z 3006 to point 154 72
+  line 128386 z 3006 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 168 78 3000 no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 3071618 // <unidirectional association>
+  from ref 128514 z 3012 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 168 74 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3071362 // <unidirectional association>
+  decenter_begin 421
+  decenter_end 486
+  from ref 128002 z 3018 to ref 128770
+  no_role_a no_role_b
+  multiplicity_a_pos 192 101 3000 no_multiplicity_b
+end
+end

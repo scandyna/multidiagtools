@@ -1,6 +1,6 @@
 format 215
 "Qt" // Qt
-  revision 227
+  revision 228
   modified_by 2 "philippe"
   // class settings
   
@@ -7634,6 +7634,34 @@ ${inlines}
 	  b parent class_ref 3911170 // QLayout
       end
     end
+
+    classdiagram 3832450 "QToolButton"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4439554 "QToolButton"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4967554 // <generalisation>
+	relation 4941314 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4967554 // <generalisation>
+	  b parent class_ref 679810 // QAbstractButton
+      end
+    end
   end
 
   classview 846978 "QtCore"
@@ -9115,6 +9143,34 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 3832578 "QTranslator"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4439682 "QTranslator"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4967682 // <generalisation>
+	relation 4941442 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4967682 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
     end
   end
 

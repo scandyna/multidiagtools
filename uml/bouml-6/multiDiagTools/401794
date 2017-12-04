@@ -1,6 +1,6 @@
 format 215
 "Mdt" // Mdt
-  revision 60
+  revision 61
   modified_by 2 "philippe"
   // class settings
   
@@ -1886,6 +1886,8 @@ ${members}};
 
   package_ref 509570 // WebSocket
 
+  package_ref 739970 // Network
+
   package_ref 483202 // Numeric
 
   package_ref 733442 // NumericRange
@@ -1918,6 +1920,8 @@ ${members}};
 
   package_ref 726914 // TestLib
 
+  package_ref 746498 // Translation
+
   package_ref 416770 // CableList
 
   package_ref 416898 // TestTool
@@ -1931,6 +1935,4 @@ ${members}};
   package_ref 707074 // UnitTest
 
   package_ref 713730 // Visa
-
-  package_ref 739970 // Network
 end
