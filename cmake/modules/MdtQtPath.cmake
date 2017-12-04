@@ -37,4 +37,10 @@ if(NOT QT_PREFIX_PATH)
   message(FATAL_ERROR "QT_PREFIX_PATH was not set, please check that CMAKE_PREFIX_PATH contains a path to a Mdt installation.")
 endif()
 
+# Add QT_PREFIX_PATH to CMAKE_PREFIX_PATH
+list(FIND CMAKE_PREFIX_PATH "${QT_PREFIX_PATH}" _qt_prefix_path_index)
+if(${_qt_prefix_path_index} LESS 0)
+  list(APPEND CMAKE_PREFIX_PATH "${QT_PREFIX_PATH}")
+endif()
+
 message("QT_PREFIX_PATH: ${QT_PREFIX_PATH}")
