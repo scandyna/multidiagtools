@@ -63,30 +63,14 @@ git clone git://github.com/scandyna/multidiagtools.git
 
 # Compile Mdt
 
-Mdt uses [CMake](https://cmake.org) as build management system.
-It also depend on a C++14 compliant compiler
-(f.ex. allmost recent version [GCC](https://gcc.gnu.org) or [Clang](https://clang.llvm.org) ).
-Some libraries, like [Qt5](https://www.qt.io/) are also needed.
-To make things a bit mor easy,
-we assume to use GCC as compiler, and [make](https://www.gnu.org/software/make/) as build system.
-(CMake is able to generate other toolchains, but this is not part of this documentation)
+At first, take a look at the [INSTALL](INSTALL.md) file
+and [install Mdt dependencies](INSTALL.md/#install-mdt-dependencies) .
 
 ## Linux
 
 This section was tested on a Ubuntu 16.04 system.
 
 ### Tools and other dependencies
-
-Install tools:
-```bash
-sudo apt-get install cmake make g++
-```
-
-Some tools from DeployUtils have some runtime dependencies,
-like objdump and patchelf:
-```bash
-sudo apt-get binutils patchelf
-```
 
 To install Mdt, one option is to generate basic Debian packages (covered later in this documentation).
 For this, following dependencies are also needed:
@@ -106,48 +90,6 @@ Optionnally, documentation can also be installed:
 ```bash
 sudo apt-get install libboost-doc
 ```
-
-#### Install Qt5 on Linux
-
-Mdt needs a recent version of Qt5.
-
-##### Install Qt5 provided by the distribution
-
-If your distribution provides the required version, you can use that.
-For example, on Ubuntu:
-```bash
-sudo apt-get install qtbase5-dev qtbase5-dev-tools libqt5gui5 libqt5network5 libqt5sql5 libqt5sql5-mysql libqt5sql5-psql libqt5sql5-sqlite libqt5test5 libqt5widgets5
-```
-
-Optionnally, documentation can also be installed:
-```bash
-sudo apt-get install qtbase5-doc qtbase5-doc-html qtbase5-examples
-```
-
-##### Install Qt5 if not provided by the distribution
-
-It's also recommanded to have a look at the [documentation](http://doc.qt.io/)
-in the "Getting Started Guides" section.
-Maybe you will have to create a [Qt Acount](https://account.qt.io)
-
-At first, install [requirements](http://doc.qt.io/qt-5/linux.html) .
-
-Then, you can get Qt5 from the [Download section](https://www.qt.io/download/) .
-
-Choose "Desktop & Mobile Application", then the licencing option.
-The default proposed package should be fine.
-
-We must make the installer executable and run it.
-In my case, I have put the installer to ~/opt/qt/installers:
-```bash
-cd ~/opt/qt/installers
-chmod u+x qt-unified-linux-x64-3.0.0-online.run
-./qt-unified-linux-x64-3.0.0-online.run
-```
-Of course, the name of the installer can be different in your case.
-
-Follow the wizzard.
-In my case, I choosed to install Qt5 to ~/opt/qt/Qt5
 
 ### Compile Mdt on Linux
 
@@ -228,28 +170,6 @@ cpack --help
 
 Please note that some generators needs some informations that Mdt does currently not provide.
 
-#### Run the post install script
-
-Mdt is based (and also depends) on Qt5 library.
-
-Some part of the user's platform environment is not known while generating the package
-(Typically the path to a recent enough Qt library).
-For this reason, a post-install script must be executed.
-
-From the root of the installed Mdt, run:
-```bash
-cmake -D QT_PREFIX_PATH=/path/to/Qt -P MdtPostInstall.cmake
-```
-
-At the root of the Mdt installation,
-a file called QtPrefixPath.txt was generated.
-It tells where the used Qt library is installed.
-
-On Linux, the RPATH of Mdt libraries and tools
-is also set.
-
-On Windows, a mdtenv.bat script is also genrated.
-
 #### Install system wide on Debian
 
 Please note:
@@ -297,63 +217,9 @@ For details on creating good Debian packages, see the [Debian packaging document
 This section will suggest how to compile Mdt on a Windows machine,
 as well as cross-compile it for Windows from a Linux machine.
 
-### Common tools
-
-#### Dependecies Walker
-
-To find some informations about dll's, such as missing dependencies,
-[Dependency Walker](http://www.dependencywalker.com/) can be helpful.
-
-Note: on Linux, using Wine, probably only the 32 bit version will work
-(choose x86, not x64).
-
 ### Compile Mdt on a windows machine
 
 This section was tested on Windows 10 x86-64.
-
-#### Tools and other dependencies
-
-##### CMake
-
-Mdt uses [CMake](https://cmake.org/) as build tool.
-Choose a installer that matches your platform from the [Download](https://cmake.org/download/) section.
-Here are some options that I choosed (all other I keeped default):
-* "Add CMake to the system PATH for the current user"
-
-#### Install Qt5 and Gcc
-
-It is recommanded to have a look at the [documentation](https://doc.qt.io/) in the "Getting Started Guides" section. Myabe you will have to create a [Qt Acount](https://login.qt.io).
-
-Qt5 can be downloaded from [here](https://www.qt.io/download/).
-Choose "Desktop & Mobile Applications", then the licencing option.
-Check that the proposed installer matches your platform and start the download.
-In my case, a online installer was selected.
-
-Note: while writing these lines, only 32 bit installers are available for MinGW.
-
-Run the installer.
-You probably will have to login with your acount created before.
-It will be asked about the installation path, which we have to remember for a later step.
-For the rest of this document, C:\Qt will be considered.
-It's also possible to select components to install.
-The default should be fine.
-
-Once installation is done, a Qt entry should be added in the Start/Windows menu.
-Bellow it, execute the shortcut called "Qt x.y.z for Desktop".
-A window with a command prompt should pop-up.
-From this prompt, all that is needed to compile Qt applications is in the PATH.
-
-Check gcc version:
-```bash
-gcc --version
-```
-It should return a version at least 5.0.0 , in which case C++14 support is good.
-
-Check Qt installation:
-```bash
-qmake -version
-```
-Check that the expected Qt library is used.
 
 #### Install Boost
 
