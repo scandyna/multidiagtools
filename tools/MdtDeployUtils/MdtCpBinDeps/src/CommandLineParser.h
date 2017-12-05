@@ -22,7 +22,7 @@
 #define COMMAND_LINE_PARSER_H
 
 #include "Mdt/DeployUtils/PathList.h"
-#include "Mdt/DeployUtils/TranslationInfoList.h"
+#include "Mdt/Translation/TranslationInfoList.h"
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QString>
@@ -82,7 +82,7 @@ public:
 
   /*! \brief Get the list of project QM files
    */
-  Mdt::DeployUtils::TranslationInfoList projectQmFiles() const
+  Mdt::Translation::TranslationInfoList projectQmFiles() const
   {
     return mProjectQmFiles;
   }
@@ -110,7 +110,7 @@ private:
   QString mPluginDestinationPath;
   Mdt::DeployUtils::PathList mSearchFirstPathPrefixList;
   QStringList mTranslations;
-  Mdt::DeployUtils::TranslationInfoList mProjectQmFiles;
+  Mdt::Translation::TranslationInfoList mProjectQmFiles;
   QString mTranslationDestinationPath;
   int mVerboseLevel = 1;
   QCommandLineParser mParser;

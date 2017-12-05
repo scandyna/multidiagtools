@@ -18,18 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_QM_FILE_NAME_H
-#define MDT_DEPLOY_UTILS_QM_FILE_NAME_H
+#ifndef MDT_TRANSLATION_QM_FILE_NAME_H
+#define MDT_TRANSLATION_QM_FILE_NAME_H
 
-#include "MdtDeployUtils_CoreExport.h"
+#include "MdtTranslation_CoreExport.h"
 #include <QString>
 #include <QStringList>
 
-namespace Mdt{ namespace DeployUtils{
+namespace Mdt{ namespace Translation{
 
   /*! \brief Representation of a .qm translation file name
    */
-  class MDT_DEPLOYUTILS_CORE_EXPORT QmFileName
+  class MDT_TRANSLATION_CORE_EXPORT QmFileName
   {
    public:
 
@@ -132,6 +132,6 @@ namespace Mdt{ namespace DeployUtils{
     QString mCountrySuffix;
   };
 
-}} // namespace Mdt{ namespace DeployUtils{
+}} // namespace Mdt{ namespace Translation{
 
-#endif // #ifndef MDT_DEPLOY_UTILS_QM_FILE_NAME_H
+#endif // #ifndef MDT_TRANSLATION_QM_FILE_NAME_H

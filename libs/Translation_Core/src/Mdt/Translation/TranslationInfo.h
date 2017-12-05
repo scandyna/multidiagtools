@@ -18,18 +18,18 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_TRANSLATION_INFO_H
-#define MDT_DEPLOY_UTILS_TRANSLATION_INFO_H
+#ifndef MDT_TRANSLATION_TRANSLATION_INFO_H
+#define MDT_TRANSLATION_TRANSLATION_INFO_H
 
 #include "QmFileName.h"
-#include "MdtDeployUtils_CoreExport.h"
+#include "MdtTranslation_CoreExport.h"
 #include <QString>
 
-namespace Mdt{ namespace DeployUtils{
+namespace Mdt{ namespace Translation{
 
   /*! \brief Value class that stores informations about a translation
    */
-  class MDT_DEPLOYUTILS_CORE_EXPORT TranslationInfo
+  class MDT_TRANSLATION_CORE_EXPORT TranslationInfo
   {
    public:
 
@@ -77,6 +77,6 @@ namespace Mdt{ namespace DeployUtils{
     QString mQmFilePath;
   };
 
-}} // namespace Mdt{ namespace DeployUtils{
+}} // namespace Mdt{ namespace Translation{
 
-#endif // #ifndef MDT_DEPLOY_UTILS_TRANSLATION_INFO_H
+#endif // #ifndef MDT_TRANSLATION_TRANSLATION_INFO_H

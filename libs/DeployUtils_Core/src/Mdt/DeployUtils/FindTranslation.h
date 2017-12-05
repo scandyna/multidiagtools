@@ -21,8 +21,6 @@
 #ifndef MDT_DEPLOY_UTILS_FIND_TRANSLATION_H
 #define MDT_DEPLOY_UTILS_FIND_TRANSLATION_H
 
-#include "TranslationInfo.h"
-#include "TranslationInfoList.h"
 #include "QtModule.h"
 #include "QtModuleList.h"
 #include "LibraryInfo.h"
@@ -30,6 +28,8 @@
 #include "PathList.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include "Mdt/Expected.h"
+#include "Mdt/Translation/TranslationInfo.h"
+#include "Mdt/Translation/TranslationInfoList.h"
 #include <QString>
 #include <QStringList>
 
@@ -47,7 +47,7 @@ namespace Mdt{ namespace DeployUtils{
    * Translations are searched in directories defined
    *  using findQtTranslationsRoot().
    */
-  Mdt::Expected<TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findQtTranslations(QtModuleList qtModules, const QStringList & languageSuffixes, const PathList & pathPrefixList);
+  Mdt::Expected<Mdt::Translation::TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findQtTranslations(QtModuleList qtModules, const QStringList & languageSuffixes, const PathList & pathPrefixList);
 
   /*! \brief Get a list of QM file base names for a Qt module
    */
@@ -82,7 +82,7 @@ namespace Mdt{ namespace DeployUtils{
    * Translations are searched in directories defined
    *  using findMdtTranslationsRoot().
    */
-  Mdt::Expected<TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findMdtTranslations(const LibraryInfoList & mdtLibraries, const QStringList & languageSuffixes, const PathList & pathPrefixList);
+  Mdt::Expected<Mdt::Translation::TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findMdtTranslations(const LibraryInfoList & mdtLibraries, const QStringList & languageSuffixes, const PathList & pathPrefixList);
 
   /*! \brief Find the root directory of Mdt translations
    *
@@ -122,7 +122,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Find translations in a directory
    */
-  Mdt::Expected<TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findTranslationsInDirectory(const QStringList & qmFileNames, const QString & directoryPath);
+  Mdt::Expected<Mdt::Translation::TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findTranslationsInDirectory(const QStringList & qmFileNames, const QString & directoryPath);
 
 }} // namespace Mdt{ namespace DeployUtils{
 

@@ -19,20 +19,21 @@
  **
  ****************************************************************************/
 #include "TranslationInfo.h"
+#include <QLatin1String>
 #include <QFileInfo>
 
-namespace Mdt{ namespace DeployUtils{
+namespace Mdt{ namespace Translation{
 
 TranslationInfo TranslationInfo::fromQmFilePath(const QString & qmFilePath)
 {
   TranslationInfo ti;
   QFileInfo fi(qmFilePath);
 
-  Q_ASSERT(fi.suffix() == "qm");
+  Q_ASSERT(fi.suffix() == QLatin1String("qm"));
   ti.mQmFileName = QmFileName(fi.fileName());
   ti.mQmFilePath = fi.absoluteFilePath();
 
   return ti;
 }
 
-}} // namespace Mdt{ namespace DeployUtils{
+}} // namespace Mdt{ namespace Translation{

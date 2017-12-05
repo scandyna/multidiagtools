@@ -138,6 +138,8 @@ add_subdirectory(libs/ItemModel)
 # add_subdirectory(libs/ItemEditor)
 # add_subdirectory(libs/ItemEditor_Sql)
 add_subdirectory(libs/DeployUtils_Core)
+add_subdirectory(libs/Translation_Core)
+add_subdirectory(libs/Translation_Widgets)
 
 # include(MdtInstallQt5)
 

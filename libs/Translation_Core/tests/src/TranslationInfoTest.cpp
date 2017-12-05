@@ -19,12 +19,12 @@
  **
  ****************************************************************************/
 #include "TranslationInfoTest.h"
-#include "Mdt/DeployUtils/TranslationInfo.h"
-#include "Mdt/DeployUtils/TranslationInfoList.h"
+#include "Mdt/Translation/TranslationInfo.h"
+#include "Mdt/Translation/TranslationInfoList.h"
 #include <QStringList>
 #include <QFileInfo>
 
-using namespace Mdt::DeployUtils;
+using namespace Mdt::Translation;
 
 void TranslationInfoTest::initTestCase()
 {

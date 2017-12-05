@@ -19,9 +19,9 @@
  **
  ****************************************************************************/
 #include "QmFileNameBenchmark.h"
-#include "Mdt/DeployUtils/QmFileName.h"
+#include "Mdt/Translation/QmFileName.h"
 
-using namespace Mdt::DeployUtils;
+using namespace Mdt::Translation;
 
 void QmFileNameBenchmark::initTestCase()
 {

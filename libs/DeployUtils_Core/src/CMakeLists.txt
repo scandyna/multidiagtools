@@ -40,9 +40,6 @@ set(SOURCE_FILES
     Mdt/DeployUtils/RPathInfoList.cpp
     Mdt/DeployUtils/PatchelfWrapper.cpp
     Mdt/DeployUtils/RPath.cpp
-    Mdt/DeployUtils/QmFileName.cpp
-    Mdt/DeployUtils/TranslationInfo.cpp
-    Mdt/DeployUtils/TranslationInfoList.cpp
     Mdt/DeployUtils/FindTranslation.cpp
     Mdt/DeployUtils/MdtLibrary.cpp
     Mdt/DeployUtils/QtToolExecutableWrapper.cpp
@@ -66,7 +63,7 @@ mdt_add_library(
   NAME DeployUtils_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Error_Core PlainText_Core Algorithm Qt5::Core
+  LINK_DEPENDENCIES Error_Core PlainText_Core Algorithm Translation_Core Qt5::Core
 )
 mdt_set_library_description(
   NAME DeployUtils_Core

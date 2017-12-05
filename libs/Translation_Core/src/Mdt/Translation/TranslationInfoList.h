@@ -18,20 +18,20 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_TRANSLATION_INFO_LIST_H
-#define MDT_DEPLOY_UTILS_TRANSLATION_INFO_LIST_H
+#ifndef MDT_TRANSLATION_TRANSLATION_INFO_LIST_H
+#define MDT_TRANSLATION_TRANSLATION_INFO_LIST_H
 
 #include "TranslationInfo.h"
-#include "MdtDeployUtils_CoreExport.h"
+#include "MdtTranslation_CoreExport.h"
 #include <QString>
 #include <QStringList>
 #include <QVector>
 
-namespace Mdt{ namespace DeployUtils{
+namespace Mdt{ namespace Translation{
 
   /*! \brief Container that contains a list of TranslationInfo
    */
-  class MDT_DEPLOYUTILS_CORE_EXPORT TranslationInfoList
+  class MDT_TRANSLATION_CORE_EXPORT TranslationInfoList
   {
    public:
 
@@ -170,6 +170,6 @@ namespace Mdt{ namespace DeployUtils{
     QVector<TranslationInfo> mList;
   };
 
-}} // namespace Mdt{ namespace DeployUtils{
+}} // namespace Mdt{ namespace Translation{
 
-#endif // #ifndef MDT_DEPLOY_UTILS_TRANSLATION_INFO_LIST_H
+#endif // #ifndef MDT_TRANSLATION_TRANSLATION_INFO_LIST_H

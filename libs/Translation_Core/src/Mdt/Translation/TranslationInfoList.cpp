@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "TranslationInfoList.h"
 
-namespace Mdt{ namespace DeployUtils{
+namespace Mdt{ namespace Translation{
 
 void TranslationInfoList::addTranslation(const TranslationInfo & translation)
 {
@@ -101,4 +101,4 @@ TranslationInfoList TranslationInfoList::fromQmFilePathList(const QStringList & 
   return list;
 }
 
-}} // namespace Mdt{ namespace DeployUtils{
+}} // namespace Mdt{ namespace Translation{

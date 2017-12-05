@@ -21,18 +21,19 @@
 #include "QmFileName.h"
 #include <QStringBuilder>
 #include <QLatin1String>
+#include <QLatin1Char>
 #include <QList>
 #include <QFileInfo>
 
 // #include <QDebug>
 
-namespace Mdt{ namespace DeployUtils{
+namespace Mdt{ namespace Translation{
 
 QmFileName::QmFileName(const QString & fullName)
 {
   mFullName = fullName;
   const auto fullBaseName = QFileInfo(fullName).baseName();
-  const auto items = fullBaseName.split('_', QString::SkipEmptyParts);
+  const auto items = fullBaseName.split(QLatin1Char('_'), QString::SkipEmptyParts);
 
   if(items.isEmpty()){
     return;
@@ -105,4 +106,4 @@ void QmFileName::setBaseName(const QStringList & items, int indexOfLastItem)
   mBaseName += items.at(indexOfLastItem);
 }
 
-}} // namespace Mdt{ namespace DeployUtils{
+}} // namespace Mdt{ namespace Translation{
