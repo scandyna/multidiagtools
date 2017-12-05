@@ -1,0 +1,39 @@
+format 215
+
+classcanvas 128002 class_ref 4399874 // QmFileName
+  classdiagramsettings member_max_width 0 end
+  xyz 578 39 2000
+end
+classcanvas 128130 class_ref 4392962 // TranslationInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 552 338 2006
+end
+classcanvas 128386 class_ref 4393090 // TranslationInfoList
+  classdiagramsettings member_max_width 0 end
+  xyz 28 472 3005
+end
+classcanvas 128642 class_ref 4446722 // LanguageCode
+  classdiagramsettings member_max_width 0 end
+  xyz 152 225 2000
+end
+classcanvas 128770 class_ref 4446978 // LanguageCodeList
+  classdiagramsettings member_max_width 0 end
+  xyz 58 69 2000
+end
+relationcanvas 128258 relation_ref 4908162 // <directional composition>
+  decenter_begin 484
+  from ref 128130 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 4901122 // <directional composition>
+  from ref 128386 z 3006 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 536 505 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 4948738 // <directional composition>
+  from ref 128770 z 2001 to ref 128642
+  no_role_a no_role_b
+  multiplicity_a_pos 236 198 3000 no_multiplicity_b
+end
+end

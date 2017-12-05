@@ -1,6 +1,6 @@
-format 211
+format 215
 "ItemEditor" // Mdt::ItemEditor
-  revision 240
+  revision 241
   modified_by 2 "philippe"
   // class settings
   
@@ -29,6 +29,78 @@ format 211
   package_ref 562562 // MVDoverview
 
   package_ref 569090 // tests
+
+  classview 1987458 "ItemEditor_Core"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+  end
+
+  classview 1987586 "ItemEditor_Core_Sql"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+  end
+
+  classview 1987714 "ItemEditor_Widgets"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+  end
+
+  classview 1987842 "ItemEditor_Widgets_Sql"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+  end
 
   classview 1279874 "overviews"
     
