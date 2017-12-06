@@ -1,6 +1,6 @@
 format 215
 "Translation" // Mdt::Translation
-  revision 2
+  revision 4
   modified_by 2 "philippe"
   // class settings
   
@@ -49,7 +49,7 @@ format 215
 
     classdiagram 3839106 "TranslationData"
       classdiagramsettings member_max_width 0 end
-      size A
+      size Legal-Landscape
     end
 
     class 4446722 "LanguageCode"
@@ -142,6 +142,22 @@ ${inlines}
       end
 
       operation 6240258 "fromString"
+	class_operation public return_type class_ref 4446722 // LanguageCode
+	nparams 1
+	  param in name "str" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6254210 "fromLanguageCountry"
 	class_operation public return_type class_ref 4446722 // LanguageCode
 	nparams 1
 	  param in name "str" type class_ref 161026 // QString
@@ -406,6 +422,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4981506 // <directional composition>
+	relation 4955266 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4981506 // <directional composition>
+	  b parent class_ref 4446722 // LanguageCode
       end
     end
 
@@ -766,13 +791,97 @@ ${inlines}
 	
       end
     end
+  end
+
+  classview 1980930 "Translation_Widgets"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3832194 "Translation_Widgets_Sandbox"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size B
+    end
+
+    class 4305538 "LanguageSelectionMenu"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4974210 // <generalisation>
+	relation 4947970 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4974210 // <generalisation>
+	  b parent class_ref 2706818 // QMenu
+      end
+
+      operation 6239874 "setAvailableLanguages"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "languages" type class_ref 4446466 // LanguageSelectionActionList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 4446338 "LanguageSelectionToolBar"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4974594 // <generalisation>
+	relation 4948354 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4974594 // <generalisation>
+	  b parent class_ref 2706690 // QToolBar
+      end
+    end
 
     classdiagram 3839362 "LanguageActions"
       classdiagramsettings member_max_width 0 end
       size A-Landscape
     end
 
-    class 4446466 "LanguageActionList"
+    class 4446466 "LanguageSelectionActionList"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -811,59 +920,15 @@ ${inlines}
 	
 	
       end
-    end
-  end
 
-  classview 1980930 "Translation_Widgets"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 3832194 "Translation_Widgets_Sandbox"
-      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-      size A4
-    end
-
-    class 4305538 "LanguageSelectionMenu"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
+      operation 6247682 "actions"
+	stereotype "QList"
+	public return_type class_ref 693250 // QAction
+	multiplicity "*"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4974210 // <generalisation>
-	relation 4947970 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4974210 // <generalisation>
-	  b parent class_ref 2706818 // QMenu
-      end
-
-      operation 6239874 "setAvailableLanguages"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "languages" explicit_type ""
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -871,29 +936,6 @@ ${inlines}
 	
 	
 	
-      end
-    end
-
-    class 4446338 "LanguageSelectionToolBar"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4974594 // <generalisation>
-	relation 4948354 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4974594 // <generalisation>
-	  b parent class_ref 2706690 // QToolBar
       end
     end
   end

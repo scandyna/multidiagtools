@@ -19,7 +19,7 @@ classcanvas 128898 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 164 40.75 2012
 end
-classcanvas 129922 class_ref 4446466 // LanguageActionList
+classcanvas 129922 class_ref 4446466 // LanguageSelectionActionList
   classdiagramsettings member_max_width 0 end
   xyz 236 283 2000
 end
@@ -55,6 +55,6 @@ end
 relationcanvas 130178 relation_ref 4948610 // <unidirectional association>
   from ref 129922 z 2001 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 114 208 3000 no_multiplicity_b
+  multiplicity_a_pos 114 210 3000 no_multiplicity_b
 end
 end

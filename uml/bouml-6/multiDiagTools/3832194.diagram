@@ -2,72 +2,73 @@ format 215
 
 classcanvas 128002 class_ref 2706818 // QMenu
   classdiagramsettings member_max_width 0 end
-  xyz 97.5 525.3 3005
+  xyz 420.571 301.214 3005
 end
 classcanvas 128770 class_ref 693250 // QAction
   classdiagramsettings member_max_width 0 end
-  xyz 586.55 166.2 3017
+  xyz 695.143 533.357 3017
 end
 classcanvas 129026 class_ref 2706690 // QToolBar
   classdiagramsettings member_max_width 0 end
-  xyz 286.15 337.2 2000
+  xyz 96.8571 533.357 2000
 end
 classcanvas 129154 class_ref 4439554 // QToolButton
   classdiagramsettings member_max_width 0 end
-  xyz 569.5 736.1 2000
+  xyz 569.5 789.071 2000
 end
 note 129282 "See:
 https://wiki.qt.io/How_to_create_a_multi_language_application"
-  xyzwh 40.5 736.1 2000 449 81
+  xyzwh 40.5 789.071 2000 449 81
 classcanvas 129410 class_ref 4305538 // LanguageSelectionMenu
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
-  xyz 41.5 610.8 2000
+  xyz 215.893 388.393 2000
 end
 classcanvas 129666 class_ref 316162 // QWidget
   classdiagramsettings member_max_width 0 end
-  xyz 292 166.2 3022
+  xyz 415.571 171.214 3022
 end
 classcanvas 131202 class_ref 2706562 // QActionGroup
   classdiagramsettings member_max_width 0 end
-  xyz 421.2 166.2 3023
+  xyz 800.5 533.357 3023
 end
 classcanvas 131458 class_ref 138626 // QObject
   classdiagramsettings member_max_width 0 end
-  xyz 438.35 40.8 3029
+  xyz 695.143 41.2143 3029
 end
 classcanvas 134146 class_ref 4446338 // LanguageSelectionToolBar
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
-  xyz 234 422.7 2005
+  xyz 39.5357 621.571 2005
 end
-classcanvas 134658 class_ref 4446466 // LanguageActionList
+classcanvas 134658 class_ref 4446466 // LanguageSelectionActionList
   classdiagramsettings member_max_width 0 end
-  xyz 347 652 3023
+  xyz 626.143 663.357 3023
 end
 relationcanvas 128130 relation_ref 3071234 // <unidirectional association>
-  from ref 128002 z 3006 to point 67.5 525.3
-  line 128258 z 3006 to point 67.5 555.3
+  from ref 128002 z 3006 to point 389.5 300
+  line 128258 z 3006 to point 389.5 330
   line 128386 z 3006 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 81.5 561.3 3000 no_multiplicity_b
+  multiplicity_a_pos 404.5 334 3000 no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 3071362 // <unidirectional association>
-  from ref 128002 z 3018 to point 690 547
-  line 132994 z 3018 to point 690 188
-  line 133122 z 3018 to ref 128770
+  decenter_end 138
+  from ref 128002 z 3018 to point 175 323
+  line 132994 z 3018 to point 175 490
+  line 133122 z 3018 to point 699 490
+  line 135426 z 3018 to ref 128770
   no_role_a no_role_b
-  multiplicity_a_pos 660 198 3000 no_multiplicity_b
+  multiplicity_a_pos 688 506 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 3070978 // <generalisation>
-  decenter_begin 534
-  from ref 129026 z 3023 to ref 129666
+  geometry VHV unfixed
+  from ref 129026 z 3023 to point 130 258
+  line 135170 z 3023 to point 446 258
+  line 135298 z 3023 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 3071106 // <generalisation>
-  geometry VHV unfixed
-  from ref 128002 z 3023 to point 123 297
-  line 130434 z 3023 to point 323 297
-  line 130562 z 3023 to ref 129666
+  from ref 128002 z 3023 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -79,44 +80,36 @@ end
 relationcanvas 131330 relation_ref 3070722 // <unidirectional association>
   from ref 131202 z 3024 to ref 128770
   no_role_a no_role_b
-  multiplicity_a_pos 570 198 3000 no_multiplicity_b
+  multiplicity_a_pos 769 565 3000 no_multiplicity_b
 end
 relationcanvas 131586 relation_ref 853890 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 538
-  decenter_end 538
-  from ref 128770 z 3030 to point 618 126
-  line 133762 z 3030 to point 470 126
-  line 133890 z 3030 to ref 131458
+  from ref 128770 z 3030 to ref 131458
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131714 relation_ref 3070594 // <generalisation>
-  decenter_end 538
-  from ref 131202 z 3030 to ref 131458
+  geometry VHV unfixed
+  from ref 131202 z 3030 to point 850 128
+  line 135554 z 3030 to point 725 128
+  line 135682 z 3030 to ref 131458
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131842 relation_ref 2457474 // <generalisation>
   geometry VHV unfixed
-  decenter_end 538
-  from ref 129666 z 3030 to point 323 126
-  line 131970 z 3030 to point 470 126
+  from ref 129666 z 3030 to point 446 128
+  line 131970 z 3030 to point 725 128
   line 132098 z 3030 to ref 131458
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132866 relation_ref 4948226 // <unidirectional association>
-  decenter_end 538
-  from ref 129026 z 3018 to point 194 359
-  line 134018 z 3018 to point 194 507
-  line 134402 z 3018 to point 621 507
-  line 134530 z 3018 to ref 128770
+  from ref 129026 z 3018 to ref 128770
   no_role_a no_role_b
-  multiplicity_a_pos 605 220 3000 no_multiplicity_b
+  multiplicity_a_pos 679 565 3000 no_multiplicity_b
 end
 relationcanvas 134274 relation_ref 4948354 // <generalisation>
-  decenter_end 534
+  decenter_begin 513
   from ref 134146 z 2006 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -124,6 +117,6 @@ end
 relationcanvas 134786 relation_ref 4948610 // <unidirectional association>
   from ref 134658 z 3024 to ref 128770
   no_role_a no_role_b
-  multiplicity_a_pos 587 220 3000 no_multiplicity_b
+  multiplicity_a_pos 711 587 3000 no_multiplicity_b
 end
 end
