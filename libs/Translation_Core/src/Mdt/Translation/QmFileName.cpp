@@ -45,7 +45,7 @@ QmFileName::QmFileName(const QString & fullName)
     // We have maybe base name and language
     if( isLanguageCode(items.at(1)) ){
       mBaseName = items.at(0);
-      mLanguageSuffix = items.at(1);
+      mLanguageCode = LanguageCode::fromString( items.at(1) );
     }else{
       mBaseName = fullBaseName;
     }
@@ -61,10 +61,10 @@ QmFileName::QmFileName(const QString & fullName)
     const auto lastIndex = items.size() - 1;
     if( isCountryCode(items.at(lastIndex)) && isLanguageCode(items.at(lastIndex-1)) ){
       setBaseName(items, lastIndex-2);
-      mLanguageSuffix = items.at(lastIndex-1);
+      mLanguageCode = LanguageCode::fromString( items.at(lastIndex-1) );
       mCountrySuffix = items.at(lastIndex);
     }else if( isLanguageCode(items.at(lastIndex)) ){
-      mLanguageSuffix = items.at(lastIndex);
+      mLanguageCode = LanguageCode::fromString( items.at(lastIndex) );
       setBaseName(items, lastIndex-1);
     }else{
       mBaseName = fullBaseName;
@@ -74,11 +74,11 @@ QmFileName::QmFileName(const QString & fullName)
 
 QString QmFileName::suffix() const
 {
-  if( !mLanguageSuffix.isEmpty() && !mCountrySuffix.isEmpty() ){
-    return mLanguageSuffix % QLatin1String("_") % mCountrySuffix;
+  if( !mLanguageCode.isNull() && !mCountrySuffix.isEmpty() ){
+    return mLanguageCode.toString() % QLatin1String("_") % mCountrySuffix;
   }else if( mCountrySuffix.isEmpty() ){
-    return mLanguageSuffix;
-  }else if( mLanguageSuffix.isEmpty() ){
+    return mLanguageCode.toString();
+  }else if( mLanguageCode.isNull() ){
     return mCountrySuffix;
   }else{
     return QString();

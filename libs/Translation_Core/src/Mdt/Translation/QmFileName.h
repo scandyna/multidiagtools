@@ -21,6 +21,7 @@
 #ifndef MDT_TRANSLATION_QM_FILE_NAME_H
 #define MDT_TRANSLATION_QM_FILE_NAME_H
 
+#include "LanguageCode.h"
 #include "MdtTranslation_CoreExport.h"
 #include <QString>
 #include <QStringList>
@@ -94,14 +95,23 @@ namespace Mdt{ namespace Translation{
      */
     QString suffix() const;
 
-    /*! \brief Get language suffix
+    /*! \brief Get language code
      *
      * For example, for foo_fr.qm, fr is returned.
      *  For foo_fr_ca.qm, fr is returned.
      */
+    LanguageCode languageCode() const
+    {
+      return mLanguageCode;
+    }
+
+    /*! \brief Get language suffix
+     *
+     * \sa languageCode()
+     */
     QString languageSuffix() const
     {
-      return mLanguageSuffix;
+      return mLanguageCode.toString();
     }
 
     /*! \brief Get country suffix
@@ -128,7 +138,7 @@ namespace Mdt{ namespace Translation{
 
     QString mFullName;
     QString mBaseName;
-    QString mLanguageSuffix;
+    LanguageCode mLanguageCode;
     QString mCountrySuffix;
   };
 

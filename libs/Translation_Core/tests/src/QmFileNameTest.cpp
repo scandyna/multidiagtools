@@ -41,6 +41,7 @@ void QmFileNameTest::constructNullFileNameTest()
   QVERIFY(nullQfn.fullName().isEmpty());
   QVERIFY(nullQfn.baseName().isEmpty());
   QVERIFY(nullQfn.suffix().isEmpty());
+  QVERIFY(nullQfn.languageCode().isNull());
   QVERIFY(nullQfn.languageSuffix().isEmpty());
   QVERIFY(nullQfn.countrySuffix().isEmpty());
   QVERIFY(nullQfn.isNull());
@@ -59,6 +60,7 @@ void QmFileNameTest::contructFromFullNameTest()
   QCOMPARE(qfn.fullName(), inputName);
   QCOMPARE(qfn.baseName(), expectedBaseName);
   QCOMPARE(qfn.suffix(), expectedSuffix);
+  QCOMPARE(qfn.languageCode().toString(), expectedLanguageSuffix);
   QCOMPARE(qfn.languageSuffix(), expectedLanguageSuffix);
   QCOMPARE(qfn.countrySuffix(), expectedCountrySuffix);
   QCOMPARE(qfn.isNull(), expectedIsNull);
