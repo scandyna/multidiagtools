@@ -97,6 +97,34 @@ namespace Mdt{ namespace Translation{
      */
     bool containsLanguageCode(const LanguageCode & languageCode) const noexcept;
 
+    /*! \brief Get a STL const iterator to the beginning of this list
+     */
+    const_iterator cbegin() const
+    {
+      return mList.cbegin();
+    }
+
+    /*! \brief Get a STL iterator past the end of this list
+     */
+    const_iterator cend() const
+    {
+      return mList.cend();
+    }
+
+    /*! \brief Get a STL const iterator to the beginning of this list
+     */
+    const_iterator begin() const
+    {
+      return mList.cbegin();
+    }
+
+    /*! \brief Get a STL iterator past the end of this list
+     */
+    const_iterator end() const
+    {
+      return mList.cend();
+    }
+
    private:
 
     std::vector<LanguageCode> mList;
