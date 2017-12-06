@@ -92,6 +92,17 @@ namespace Mdt{ namespace Translation{
      */
     static LanguageCode fromString(const QString & code);
 
+    /*! \brief Construct a language code from language_COUNTRY string
+     *
+     * \code
+     * const auto code = LanguageCode::fromLanguageCountry("fr_CH");
+     * // code will contain "fr"
+     * \endcode
+     *
+     * \pre \a languageCountry must contain at least 2 letters
+     */
+    static LanguageCode fromLanguageCountry(const QString & languageCountry);
+
    private:
 
     std::array<char, 2> mCode;

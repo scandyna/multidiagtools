@@ -26,12 +26,12 @@
 namespace Mdt{ namespace Translation{
 
 LanguageCode::LanguageCode() noexcept
- : mCode{'\0', '\0'}
+ : mCode{{'\0', '\0'}}
 {
 }
 
 LanguageCode::LanguageCode(const char * const code)
- : mCode{code[0], code[1]}
+ : mCode{{code[0], code[1]}}
 {
   Q_ASSERT(std::strlen(code) == 2);
   Q_ASSERT(QChar::fromLatin1(code[0]).isLetter());
@@ -54,6 +54,18 @@ LanguageCode LanguageCode::fromString(const QString& code)
   Q_ASSERT(code.length() == 2);
 
   LanguageCode lc;
+  lc.mCode[0] = code.at(0).toLatin1();
+  lc.mCode[1] = code.at(1).toLatin1();
+
+  return lc;
+}
+
+LanguageCode LanguageCode::fromLanguageCountry(const QString& languageCountry)
+{
+  Q_ASSERT(languageCountry.length() >= 2);
+
+  LanguageCode lc;
+  const auto code = languageCountry.toLower();
   lc.mCode[0] = code.at(0).toLatin1();
   lc.mCode[1] = code.at(1).toLatin1();
 
