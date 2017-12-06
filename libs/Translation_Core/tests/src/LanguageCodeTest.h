@@ -34,6 +34,8 @@ class LanguageCodeTest : public TestBase
 
   void constructTest();
   void fromStringTest();
+  void fromLanguageCountryTest();
+  void fromLanguageCountryTest_data();
   void compareTest();
 
   void listAddTest();

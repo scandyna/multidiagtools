@@ -56,6 +56,23 @@ void LanguageCodeTest::fromStringTest()
   QCOMPARE(lcFr.toString(), QString("fr"));
 }
 
+void LanguageCodeTest::fromLanguageCountryTest()
+{
+  QFETCH(QString, languageCountry);
+  QFETCH(QString, expectedLanguageCode);
+
+  QCOMPARE(LanguageCode::fromLanguageCountry(languageCountry).toString(), expectedLanguageCode);
+}
+
+void LanguageCodeTest::fromLanguageCountryTest_data()
+{
+  QTest::addColumn<QString>("languageCountry");
+  QTest::addColumn<QString>("expectedLanguageCode");
+
+  QTest::newRow("fr") << "fr" << "fr";
+  QTest::newRow("fr_CH") << "fr_CH" << "fr";
+}
+
 void LanguageCodeTest::compareTest()
 {
   LanguageCode lcFr1("fr");
