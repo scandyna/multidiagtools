@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "LanguageCodeList.h"
+#include <QStringList>
 #include <algorithm>
 
 namespace Mdt{ namespace Translation{
@@ -34,6 +35,17 @@ void LanguageCodeList::addLanguageCode(const LanguageCode& languageCode)
 bool LanguageCodeList::containsLanguageCode(const LanguageCode& languageCode) const noexcept
 {
   return (std::find(mList.cbegin(), mList.cend(), languageCode) != mList.cend());
+}
+
+QStringList LanguageCodeList::toStringList() const
+{
+  QStringList stringList;
+
+  for(const auto & lc : mList){
+    stringList.append(lc.toString());
+  }
+
+  return stringList;
 }
 
 }} // namespace Mdt{ namespace Translation{

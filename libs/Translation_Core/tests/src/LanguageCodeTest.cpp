@@ -21,6 +21,7 @@
 #include "LanguageCodeTest.h"
 #include "Mdt/Translation/LanguageCode.h"
 #include "Mdt/Translation/LanguageCodeList.h"
+#include <QStringList>
 
 #include <QDebug>
 
@@ -103,6 +104,14 @@ void LanguageCodeTest::listAddTest()
   QCOMPARE(list.count(), 2);
   QCOMPARE(list.at(0).toString(), QString("fr"));
   QCOMPARE(list.at(1).toString(), QString("en"));
+}
+
+void LanguageCodeTest::listToStringListTest()
+{
+  LanguageCodeList list;
+  list.addLanguageCode(LanguageCode("en"));
+  list.addLanguageCode(LanguageCode("fr"));
+  QCOMPARE( list.toStringList(), QStringList({"en","fr"}) );
 }
 
 /*

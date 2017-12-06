@@ -25,6 +25,8 @@
 #include <QtGlobal>
 #include <vector>
 
+class QStringList;
+
 namespace Mdt{ namespace Translation{
 
   /*! \brief LanguageCodeList holds a list of LanguageCode
@@ -96,6 +98,10 @@ namespace Mdt{ namespace Translation{
     /*! \brief Check if this list contains \a languageCode
      */
     bool containsLanguageCode(const LanguageCode & languageCode) const noexcept;
+
+    /*! \brief Get a string list representation of this list
+     */
+    QStringList toStringList() const;
 
     /*! \brief Get a STL const iterator to the beginning of this list
      */

@@ -39,6 +39,7 @@ class LanguageCodeTest : public TestBase
   void compareTest();
 
   void listAddTest();
+  void listToStringListTest();
 };
 
 #endif // #ifndef LANGUAGE_CODE_TEST_H
