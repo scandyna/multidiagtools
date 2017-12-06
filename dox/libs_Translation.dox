@@ -19,15 +19,27 @@
  **
  ****************************************************************************/
 
-/*! \page libraries_page Libraries
+/*! \page libs_Translation Translation
  *
- * \ref libs_Application
+ * Qt offers several tool for translation.
+ *  See http://doc.qt.io/qt-5/internationalization.html
  *
- * \ref libs_Error
+ * A example, on how to list available translations,
+ *  and make a application able to dynamicly change change language,
+ *  is available here: https://wiki.qt.io/How_to_create_a_multi_language_application
  *
- * \ref libs_DeployUtils
+ * Mdt Translation library provides some classes to reduce
+ *  the boiler plate code needed in the application.
  *
- * \ref libs_Translation
+ * Classes are available in the Mdt::Translation namespace.
  *
- * \ref libs_ItemModel
  */
+
+namespace Mdt{
+
+  /*! \brief Some utilities for application translations
+   */
+  namespace Translation{
+  }
+
+}
