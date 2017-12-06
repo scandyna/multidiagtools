@@ -21,7 +21,9 @@
 #ifndef MDT_TRANSLATION_FIND_TRANSLATION_H
 #define MDT_TRANSLATION_FIND_TRANSLATION_H
 
+#include "TranslationInfoList.h"
 #include "Mdt/FileSystem/PathList.h"
+#include "Mdt/Expected.h"
 #include "MdtTranslation_CoreExport.h"
 #include <QString>
 #include <QStringList>
@@ -29,6 +31,13 @@
 class QDir;
 
 namespace Mdt{ namespace Translation{
+
+  /*! \brief Find translations in a set of directories
+   *
+   * Translations are searched in directories defined
+   *  using findTranslationsRoot().
+   */
+  Mdt::Expected<Mdt::Translation::TranslationInfoList> MDT_TRANSLATION_CORE_EXPORT findTranslations(const Mdt::FileSystem::PathList & pathPrefixList);
 
   /*! \brief Find the root directory of translations
    *

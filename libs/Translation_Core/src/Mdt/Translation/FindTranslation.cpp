@@ -19,12 +19,17 @@
  **
  ****************************************************************************/
 #include "FindTranslation.h"
+#include "TranslationInfo.h"
 #include "QmFileName.h"
+#include "Mdt/Error.h"
 #include "Mdt/FileSystem/SearchPathList.h"
 #include <QDir>
 #include <QFileInfo>
+#include <QChar>
+#include <QStringList>
 #include <QLatin1String>
 #include <QStringBuilder>
+#include <QCoreApplication>
 
 #include <QDebug>
 
@@ -32,6 +37,29 @@ using namespace Mdt::FileSystem;
 
 namespace Mdt{ namespace Translation{
 
+Mdt::Expected< Mdt::Translation::TranslationInfoList > findTranslations(const Mdt::FileSystem::PathList& pathPrefixList)
+{
+  TranslationInfoList translations;
+
+  const auto translationsDirectory = findTranslationsRoot(pathPrefixList);
+  if(translationsDirectory.isEmpty()){
+    const auto msg = QCoreApplication::translate("findTranslations()","Could not find translations directory. Searched in: '%1'")
+                                                 .arg(pathPrefixList.toStringList().join(QChar::fromLatin1('\n')));
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, QString());
+    return error;
+  }
+  QDir dir(translationsDirectory);
+  Q_ASSERT(dir.exists());
+  const auto fiList = dir.entryInfoList(QDir::Files);
+  for(const auto & fi : fiList){
+    if( QString::compare(fi.suffix(), QLatin1String("qm"), Qt::CaseInsensitive) == 0 ){
+      translations.addTranslation( TranslationInfo::fromQmFilePath(fi.absoluteFilePath()) );
+    }
+  }
+
+  return translations;
+
+}
 
 QString findTranslationsRoot(const PathList & pathPrefixList)
 {

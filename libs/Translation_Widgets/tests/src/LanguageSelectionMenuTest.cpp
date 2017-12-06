@@ -29,6 +29,12 @@
 #include <QAction>
 #include <QList>
 
+#include <QToolBar>
+#include "Mdt/Translation/FindTranslation.h"
+#include "Mdt/Translation/TranslationInfoList.h"
+#include "Mdt/FileSystem/PathList.h"
+using namespace Mdt::FileSystem;
+
 using namespace Mdt::Translation;
 
 void LanguageSelectionMenuTest::initTestCase()
@@ -46,16 +52,18 @@ void LanguageSelectionMenuTest::cleanupTestCase()
 void LanguageSelectionMenuTest::sandbox()
 {
   QMainWindow window;
-  LanguageCodeList languages;
-
-  languages.addLanguageCode(LanguageCode("en"));
-  languages.addLanguageCode(LanguageCode("fr"));
-  languages.addLanguageCode(LanguageCode("de"));
+  const auto translations = findTranslations(PathList{"/home/philippe/opt/qt/Qt5/5.9.1/gcc_64/"});
+  QVERIFY(translations);
+  const auto languages = (*translations).toLanguageCodeList();
   LanguageSelectionActionList actions;
   actions.createActions(languages, &window);
   auto *lsm = new LanguageSelectionMenu(&window);
   lsm->setAvailableLanguages(actions);
   window.menuBar()->addMenu(lsm);
+
+  auto *ltb = new QToolBar(&window);
+  ltb->addActions(actions.actions());
+  window.addToolBar(ltb);
 
   showWidgetAndWait(window);
 }

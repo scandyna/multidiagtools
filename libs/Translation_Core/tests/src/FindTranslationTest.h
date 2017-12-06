@@ -38,7 +38,6 @@ class FindTranslationTest : public TestBase
   void findTranslationsRootTest_data();
 
   void findTranslationsTest();
-  void findTranslationsTest_data();
 
  private:
 

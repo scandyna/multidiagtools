@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "FindTranslationTest.h"
 #include "Mdt/Translation/FindTranslation.h"
+#include "Mdt/Translation/TranslationInfo.h"
+#include "Mdt/Translation/TranslationInfoList.h"
 #include "Mdt/FileSystem/PathList.h"
 #include "Mdt/TestLib/FakeRoot.h"
 #include <QString>
@@ -120,12 +122,28 @@ void FindTranslationTest::findTranslationsRootTest_data()
 
 void FindTranslationTest::findTranslationsTest()
 {
-
-}
-
-void FindTranslationTest::findTranslationsTest_data()
-{
-
+  /*
+   * Create a fake filesystem
+   */
+  QTemporaryDir root;
+  QVERIFY(root.isValid());
+  const auto translationDirectory = pathWithFakeRoot(root, "translations");
+  QVERIFY(createFileInDirectory(translationDirectory, "app_en.qm"));
+  QVERIFY(createFileInDirectory(translationDirectory, "app_fr.qm"));
+  /*
+   * Check
+   */
+  PathList pathPrefixList{"."};
+  prependFakeRootToPathList(root, pathPrefixList);
+  const auto translations = findTranslations(pathPrefixList);
+  QVERIFY(translations);
+  QCOMPARE((*translations).count(), 2);
+  QVERIFY(!(*translations).at(0).absoluteFilePath().isEmpty());
+  QVERIFY(!(*translations).at(0).fullFileName().isEmpty());
+  QCOMPARE((*translations).at(0).fullFileName(), QString("app_en.qm"));
+  QVERIFY(!(*translations).at(1).absoluteFilePath().isEmpty());
+  QVERIFY(!(*translations).at(1).fullFileName().isEmpty());
+  QCOMPARE((*translations).at(1).fullFileName(), QString("app_fr.qm"));
 }
 
 /*
