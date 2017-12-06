@@ -1,6 +1,6 @@
 format 215
 "Translation" // Mdt::Translation
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   // class settings
   
@@ -776,12 +776,11 @@ ${inlines}
 
       operation 6239618 "findTranslations"
 	public return_type class_ref 4393090 // TranslationInfoList
-	nparams 2
-	  param in name "languageSuffix" explicit_type ""
-	  param in name "pathList" explicit_type ""
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+	nparams 1
+	  param in name "pathList" type class_ref 160770 // QStringList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
