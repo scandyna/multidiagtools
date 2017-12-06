@@ -19,17 +19,23 @@
  **
  ****************************************************************************/
 
-/*! \page libraries_page Libraries
+/*! \page libs_FileSystem FileSystem
  *
- * \ref libs_Application
+ * Qt offers several tools to deal with file system,
+ *  like QDir, QFileInfo, etc..
  *
- * \ref libs_Error
+ * Mdt FileSystem offers some additional classes,
+ *  like Mdt::FileSystem::PathList .
  *
- * \ref libs_DeployUtils
+ * Classes are available in the Mdt::FileSystem namespace.
  *
- * \ref libs_Translation
- *
- * \ref libs_FileSystem
- *
- * \ref libs_ItemModel
  */
+
+namespace Mdt{
+
+  /*! \brief Some additions to deal with the file system
+   */
+  namespace FileSystem{
+  }
+
+}
