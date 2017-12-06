@@ -21,9 +21,77 @@
 #ifndef MDT_TRANSLATION_FIND_TRANSLATION_H
 #define MDT_TRANSLATION_FIND_TRANSLATION_H
 
+#include "Mdt/FileSystem/PathList.h"
 #include "MdtTranslation_CoreExport.h"
+#include <QString>
+#include <QStringList>
+
+class QDir;
 
 namespace Mdt{ namespace Translation{
+
+  /*! \brief Find the root directory of translations
+   *
+   * For a given path prefix, a subdirectory, named translations,
+   *  will be located.
+   *  It is considered as a translation directory
+   *  if it contains at least 1 *.qm file.
+   *
+   * \pre \a pathPrefixList must contain at least one path.
+   */
+  QString MDT_TRANSLATION_CORE_EXPORT findTranslationsRoot(const Mdt::FileSystem::PathList & pathPrefixList);
+
+  /*! \brief Find the root directory of translations
+   *
+   * For a given path prefix, a subdirectory, named \a directory,
+   *  will be located in \a possibleSubdirectories .
+   *
+   * A path is considered as the expected translation only if a QM file,
+   *  for which the base name is \a expectedQmFileBaseName , exists.
+   *
+   * If \a pathPrefixList contains at least 1 non empty path,
+   *  \a directory will only be located starting
+   *  from prefixes in it.
+   *  Else, system path prefixes will be used.
+   *
+   * \sa findDirectoryRoot(const QString &, const QStringList &, const Mdt::FileSystem::PathList &)
+   */
+  QString MDT_TRANSLATION_CORE_EXPORT findDirectoryRoot(const QString & directory, const QStringList & possibleSubdirectories, const QString & expectedQmFileBaseName, const Mdt::FileSystem::PathList & pathPrefixList);
+
+  /*! \brief Find the root directory of translations
+   *
+   * For a given path prefix, a subdirectory, named \a directory,
+   *  will be located in \a possibleSubdirectories .
+   *
+   * A path is considered as the expected translation only if it contains at least one  a QM file.
+   *
+   * If \a pathPrefixList contains at least 1 non empty path,
+   *  \a directory will only be located starting
+   *  from prefixes in it.
+   *  Else, system path prefixes will be used.
+   *
+   * \sa findDirectoryRoot(const QString &, const QStringList &, const QString &, const Mdt::FileSystem::PathList &)
+   */
+  QString MDT_TRANSLATION_CORE_EXPORT findDirectoryRoot(const QString & directory, const QStringList & possibleSubdirectories, const Mdt::FileSystem::PathList & pathPrefixList);
+
+  /*! \brief Check if a directory is a translation directory
+   *
+   * Will check if the directory \a directoryPath
+   *  contains at least 1 QM file.
+   *
+   * If \a expectedQmFileBaseName is set,
+   *  the directory is considered a translation directory
+   *  only if it contains at least 1 QM file
+   *  named \<\a expectedQmFileBaseName\>_<xy>.qm .
+   *
+   * \code
+   * bool matches = isTranslationDirectory("/opt/Qt5/translations", "qtbase");
+   * // matches will be true only if /opt/Qt5/translations/ contains qtbase_en.qm or qtbase_fr.qm, etc..
+   * \endcode
+   */
+  bool MDT_TRANSLATION_CORE_EXPORT isTranslationDirectory(const QString & directoryPath, const QString & expectedQmFileBaseName = QString());
+
+  bool MDT_TRANSLATION_CORE_EXPORT isTranslationDirectory(const QDir & dir, const QString & expectedQmFileBaseName = QString());
 }} // namespace Mdt{ namespace Translation{
 
 #endif // #ifndef MDT_TRANSLATION_FIND_TRANSLATION_H

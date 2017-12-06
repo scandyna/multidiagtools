@@ -21,7 +21,6 @@
 #ifndef MDT_TEST_LIB_FAKE_ROOT_H
 #define MDT_TEST_LIB_FAKE_ROOT_H
 
-///#include "Mdt/FileSystem/PathList.h"
 #include "MdtTestLib_CoreExport.h"
 #include <QTemporaryDir>
 #include <QString>

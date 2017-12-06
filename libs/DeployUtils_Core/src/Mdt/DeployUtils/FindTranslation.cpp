@@ -24,6 +24,7 @@
 #include "Mdt/Error.h"
 #include "Mdt/FileSystem/SearchPathList.h"
 #include "Mdt/Translation/QmFileName.h"
+#include "Mdt/Translation/FindTranslation.h"
 #include <QLatin1String>
 #include <QStringBuilder>
 #include <QDir>
@@ -165,38 +166,6 @@ Expected<TranslationInfoList> findMdtTranslations(const LibraryInfoList& mdtLibr
 QString findMdtTranslationsRoot(const PathList& pathPrefixList)
 {
   return findDirectoryRoot("translations", {".."}, "Error_Core", pathPrefixList);
-}
-
-QString findDirectoryRoot(const QString& directory, const QStringList& possibleSubdirectories, const QString & expectedQmFileBaseName, const PathList& pathPrefixList)
-{
-  QString directoryRoot;
-  SearchPathList searchPathList;
-  searchPathList.setIncludePathPrefixes(true);
-  if(pathPrefixList.isEmpty()){
-    searchPathList.setPathPrefixList( PathList::getSystemLibraryPathList() );
-  }else{
-    searchPathList.setPathPrefixList(pathPrefixList);
-  }
-  searchPathList.setPathSuffixList(possibleSubdirectories);
-  const auto pathList = searchPathList.pathList();
-
-  for(const auto & path : pathList){
-    qDebug() << " Searchin in " << path;
-    QDir dir( QDir::cleanPath(path + QLatin1String("/") + directory) );
-    if(dir.exists()){
-      const auto fiList = dir.entryInfoList(QDir::Files);
-      for(const auto & fi : fiList){
-        QmFileName qmFile(fi.fileName());
-        if(qmFile.baseName() == expectedQmFileBaseName){
-          directoryRoot = dir.absolutePath();
-          qDebug() << " - found: " << directoryRoot;
-          return directoryRoot;
-        }
-      }
-    }
-  }
-
-  return directoryRoot;
 }
 
 QStringList getQmFileNameList(const QString & qmFileBaseName, const QStringList & languageSuffixes)

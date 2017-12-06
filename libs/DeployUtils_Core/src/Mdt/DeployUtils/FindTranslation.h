@@ -97,21 +97,6 @@ namespace Mdt{ namespace DeployUtils{
    */
   QString MDT_DEPLOYUTILS_CORE_EXPORT findMdtTranslationsRoot(const Mdt::FileSystem::PathList & pathPrefixList);
 
-  /*! \brief Find the root directory of translations
-   *
-   * For a given path prefix, a subdirectory, named \a directory,
-   *  will be located in \a possibleSubdirectories .
-   *
-   * A path is considered as the expected translation only if a QM file,
-   *  for which the base name is \a expectedQmFileBaseName , exists.
-   *
-   * If \a pathPrefixList contains at least 1 non empty path,
-   *  \a directory will only be located starting
-   *  from prefixes in it.
-   *  Else, system path prefixes will be used.
-   */
-  QString MDT_DEPLOYUTILS_CORE_EXPORT findDirectoryRoot(const QString & directory, const QStringList & possibleSubdirectories, const QString & expectedQmFileBaseName, const Mdt::FileSystem::PathList & pathPrefixList);
-
   /*! \brief Generate a list of QM file names
    */
   QStringList MDT_DEPLOYUTILS_CORE_EXPORT  getQmFileNameList(const QString & qmFileBaseName, const QStringList & languageSuffixes);

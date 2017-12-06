@@ -143,7 +143,7 @@ Searched in %2</source>
 <context>
     <name>findMdtTranslations()</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="156"/>
+        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="157"/>
         <source>Could not find translations directory for Mdt libraries. Searched in: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -151,7 +151,7 @@ Searched in %2</source>
 <context>
     <name>findQtTranslations()</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="64"/>
+        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="65"/>
         <source>Could not find translations directory for Qt libraries. Searched in: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -159,7 +159,7 @@ Searched in %2</source>
 <context>
     <name>findTranslationsInDirectory()</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="230"/>
+        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="199"/>
         <source>Directory &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>

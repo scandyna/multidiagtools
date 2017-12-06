@@ -25,7 +25,7 @@ mdt_add_library(
   NAME Translation_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Qt5::Core
+  LINK_DEPENDENCIES FileSystem_Core Qt5::Core
 )
 target_compile_definitions(Translation_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 
