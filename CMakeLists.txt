@@ -3,7 +3,7 @@
 #################################################################################################################################################
 cmake_minimum_required(VERSION 3.2)
 
-project(Mdt0 VERSION 0.3.6)
+project(Mdt0 VERSION 0.3.7)
 
 # Additionnal Cmake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
