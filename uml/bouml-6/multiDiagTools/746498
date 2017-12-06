@@ -1,6 +1,6 @@
 format 215
 "Translation" // Mdt::Translation
-  revision 5
+  revision 6
   modified_by 2 "philippe"
   // class settings
   
@@ -761,7 +761,7 @@ ${inlines}
       operation 6239490 "findTranslationsRoot"
 	public return_type class_ref 161026 // QString
 	nparams 1
-	  param in name "pathList" type class_ref 160770 // QStringList
+	  param in name "pathList" type class_ref 4168962 // PathList
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -777,7 +777,7 @@ ${inlines}
       operation 6239618 "findTranslations"
 	public return_type class_ref 4393090 // TranslationInfoList
 	nparams 1
-	  param in name "pathList" type class_ref 160770 // QStringList
+	  param in name "pathList" type class_ref 4168962 // PathList
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
