@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "TestBase.h"
+#include "Mdt/TestLib/FakeRoot.h"
 #include <QTextStream>
 #include <QTextCodec>
 #include <QFile>
@@ -127,19 +128,17 @@ bool TestBase::writeTemporaryTextFile(QTemporaryFile & file, const QString& data
 
 QString TestBase::pathWithFakeRoot(const QTemporaryDir& root, const QString& path)
 {
-  return QDir::cleanPath( root.path() + path );
+  return Mdt::TestLib::pathWithFakeRoot(root, path);
 }
 
 void TestBase::prependFakeRootToPath(const QTemporaryDir& root, QString& path)
 {
-  path = pathWithFakeRoot(root, path);
+  Mdt::TestLib::prependFakeRootToPath(root, path);
 }
 
 void TestBase::prependFakeRootToPathList(const QTemporaryDir& root, QStringList& pathList)
 {
-  for(auto it = pathList.begin(); it != pathList.end(); ++it){
-    *it = pathWithFakeRoot(root, *it);
-  }
+  Mdt::TestLib::prependFakeRootToPathList(root, pathList);
 }
 
 void TestBase::prependFakeRootToPathList(const QTemporaryDir & root, PathList & pathList)
@@ -151,20 +150,10 @@ void TestBase::prependFakeRootToPathList(const QTemporaryDir & root, PathList & 
 
 bool TestBase::createPathInFakeRoot(const QTemporaryDir& root, const QString& path)
 {
-  QDir dir;
-  if( !dir.mkpath( pathWithFakeRoot(root, path) ) ){
-    qWarning() << "Could not create path " << pathWithFakeRoot(root, path);
-    return false;
-  }
-  return true;
+  return Mdt::TestLib::createPathInFakeRoot(root, path);
 }
 
 bool TestBase::createPathListInFakeRoot(const QTemporaryDir& root, const QStringList& pathList)
 {
-  for(const auto & path : pathList){
-    if(!createPathInFakeRoot(root, path)){
-      return false;
-    }
-  }
-  return true;
+  return Mdt::TestLib::createPathListInFakeRoot(root, pathList);
 }

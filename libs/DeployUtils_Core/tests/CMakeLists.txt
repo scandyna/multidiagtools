@@ -10,7 +10,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtdeployutilstest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtdeployutilstest PlainTextTestUtils DeployUtils_Core Application_Core Qt5::Test)
+target_link_libraries(mdtdeployutilstest PlainTextTestUtils DeployUtils_Core TestLib_Core Application_Core Qt5::Test)
 
 #=============== Helper functions ===========
 
