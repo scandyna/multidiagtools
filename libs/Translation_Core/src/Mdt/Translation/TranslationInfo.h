@@ -47,6 +47,15 @@ namespace Mdt{ namespace Translation{
       return mQmFileName.fullName();
     }
 
+    /*! \brief Get language code
+     *
+     * \sa QmFileName::languageCode()
+     */
+    LanguageCode languageCode() const
+    {
+      return mQmFileName.languageCode();
+    }
+
     /*! \brief Get file suffix
      *
      * \sa QmFileName::suffix()
