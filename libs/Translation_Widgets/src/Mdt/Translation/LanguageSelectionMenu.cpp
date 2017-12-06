@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "LanguageSelectionMenu.h"
+#include "Mdt/Translation/LanguageCode.h"
 
 #include <QAction>
 #include <QActionGroup>
@@ -33,20 +34,25 @@ LanguageSelectionMenu::LanguageSelectionMenu(QWidget* parent)
 LanguageSelectionMenu::LanguageSelectionMenu(const QString& title, QWidget* parent)
  : QMenu(title, parent)
 {
-  auto *frAct = new QAction(tr("Frensh"), this);
-  auto *deAct = new QAction(tr("German"), this);
-  auto *enAct = new QAction(tr("English"), this);
-  auto *actionGroup = new QActionGroup(this);
-  actionGroup->setExclusive(true);
-  frAct->setCheckable(true);
-  deAct->setCheckable(true);
-  enAct->setCheckable(true);
-  actionGroup->addAction(frAct);
-  actionGroup->addAction(deAct);
-  actionGroup->addAction(enAct);
-  addAction(frAct);
-  addAction(deAct);
-  addAction(enAct);
+//   auto *frAct = new QAction(tr("Frensh"), this);
+//   auto *deAct = new QAction(tr("German"), this);
+//   auto *enAct = new QAction(tr("English"), this);
+//   auto *actionGroup = new QActionGroup(this);
+//   actionGroup->setExclusive(true);
+//   frAct->setCheckable(true);
+//   deAct->setCheckable(true);
+//   enAct->setCheckable(true);
+//   actionGroup->addAction(frAct);
+//   actionGroup->addAction(deAct);
+//   actionGroup->addAction(enAct);
+//   addAction(frAct);
+//   addAction(deAct);
+//   addAction(enAct);
+}
+
+void LanguageSelectionMenu::setAvailableLanguages(const LanguageSelectionActionList & actionList)
+{
+  addActions(actionList.actions());
 }
 
 }} // namespace Mdt{ namespace Translation{

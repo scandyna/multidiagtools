@@ -2,6 +2,7 @@
 # List of source files
 set(SOURCE_FILES
   Mdt/Translation/LanguageSelectionMenu.cpp
+  Mdt/Translation/LanguageSelectionActionList.cpp
 )
 
 find_package(Qt5 COMPONENTS Widgets)
@@ -20,7 +21,7 @@ mdt_add_library(
   NAME Translation_Widgets
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Qt5::Widgets
+  LINK_DEPENDENCIES Translation_Core Qt5::Widgets
 )
 target_compile_definitions(Translation_Widgets PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

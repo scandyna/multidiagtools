@@ -26,4 +26,5 @@ endfunction()
 
 #================= Tests ====================
 
+addTranslation_WidgetsTest("LanguageSelectionActionTest")
 addTranslation_WidgetsTest("LanguageSelectionMenuTest")

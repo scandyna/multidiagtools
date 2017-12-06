@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef LANGUAGE_SELECTION_MENU_TEST_H
-#define LANGUAGE_SELECTION_MENU_TEST_H
+#ifndef LANGUAGE_SELECTIONACTION_TEST_H
+#define LANGUAGE_SELECTIONACTION_TEST_H
 
 #include "TestBase.h"
 
-class LanguageSelectionMenuTest : public TestBase
+class LanguageSelectionActionTest : public TestBase
 {
  Q_OBJECT
 
@@ -32,9 +32,8 @@ class LanguageSelectionMenuTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
+  void createActionsTest();
 
-  void setAvailableLaguagesTest();
 };
 
-#endif // #ifndef LANGUAGE_SELECTION_MENU_TEST_H
+#endif // #ifndef LANGUAGE_SELECTIONACTION_TEST_H

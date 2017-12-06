@@ -18,23 +18,40 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef LANGUAGE_SELECTION_MENU_TEST_H
-#define LANGUAGE_SELECTION_MENU_TEST_H
+#ifndef MDT_TRANSLATION_LANGUAGE_SELECTION_ACTION_LIST_H
+#define MDT_TRANSLATION_LANGUAGE_SELECTION_ACTION_LIST_H
 
-#include "TestBase.h"
+#include "Mdt/Translation/LanguageCodeList.h"
+#include "MdtTranslation_WidgetsExport.h"
+#include <QList>
 
-class LanguageSelectionMenuTest : public TestBase
-{
- Q_OBJECT
+class QAction;
+class QObject;
 
- private slots:
+namespace Mdt{ namespace Translation{
 
-  void initTestCase();
-  void cleanupTestCase();
+  /*! \brief Helper class to create actions for language selection
+   */
+  class MDT_TRANSLATION_WIDGETS_EXPORT LanguageSelectionActionList
+  {
+   public:
 
-  void sandbox();
+    /*! \brief Create actions for \a languages
+     */
+    void createActions(const LanguageCodeList & languages, QObject *parent);
 
-  void setAvailableLaguagesTest();
-};
+    /*! \brief Get actions
+     */
+    QList<QAction*> actions() const
+    {
+      return mActions;
+    }
 
-#endif // #ifndef LANGUAGE_SELECTION_MENU_TEST_H
+   private:
+
+    QList<QAction*> mActions;
+  };
+
+}} // namespace Mdt{ namespace Translation{
+
+#endif // #ifndef MDT_TRANSLATION_LANGUAGE_SELECTION_ACTION_LIST_H

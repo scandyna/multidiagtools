@@ -18,24 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "LanguageSelectionMenuTest.h"
-#include "Mdt/Translation/LanguageSelectionMenu.h"
-#include "Mdt/Translation/LanguageCodeList.h"
+#include "LanguageSelectionActionTest.h"
 #include "Mdt/Translation/LanguageSelectionActionList.h"
-#include <QMainWindow>
-#include <QMenuBar>
+#include "Mdt/Translation/LanguageCodeList.h"
 #include <QWidget>
-#include <QString>
 #include <QAction>
-#include <QList>
+#include <QString>
 
 using namespace Mdt::Translation;
 
-void LanguageSelectionMenuTest::initTestCase()
+void LanguageSelectionActionTest::initTestCase()
 {
 }
 
-void LanguageSelectionMenuTest::cleanupTestCase()
+void LanguageSelectionActionTest::cleanupTestCase()
 {
 }
 
@@ -43,38 +39,19 @@ void LanguageSelectionMenuTest::cleanupTestCase()
  * Tests
  */
 
-void LanguageSelectionMenuTest::sandbox()
+void LanguageSelectionActionTest::createActionsTest()
 {
-  QMainWindow window;
-  LanguageCodeList languages;
+  LanguageSelectionActionList list;
+  QCOMPARE(list.actions().count(), 0);
 
+  QWidget parent;
+  LanguageCodeList languages;
   languages.addLanguageCode(LanguageCode("en"));
   languages.addLanguageCode(LanguageCode("fr"));
-  languages.addLanguageCode(LanguageCode("de"));
-  LanguageSelectionActionList actions;
-  actions.createActions(languages, &window);
-  auto *lsm = new LanguageSelectionMenu(&window);
-  lsm->setAvailableLanguages(actions);
-  window.menuBar()->addMenu(lsm);
-
-  showWidgetAndWait(window);
-}
-
-void LanguageSelectionMenuTest::setAvailableLaguagesTest()
-{
-  LanguageCodeList languages;
-  LanguageSelectionMenu menu;
-
-  languages.addLanguageCode(LanguageCode("en"));
-  languages.addLanguageCode(LanguageCode("fr"));
-  languages.addLanguageCode(LanguageCode("de"));
-  ///menu.setAvailableLanguages(languages);
-  QCOMPARE(menu.actions().count(), 3);
-  QCOMPARE(menu.actions().at(0)->text(), QString("English"));
-  QCOMPARE(menu.actions().at(0)->text(), QString("French"));
-  QCOMPARE(menu.actions().at(0)->text(), QString("German"));
-
-  QFAIL("Not complete");
+  list.createActions(languages, &parent);
+  QCOMPARE(list.actions().count(), 2);
+  QCOMPARE(list.actions().at(0)->text(), QString("English"));
+  QCOMPARE(list.actions().at(1)->text(), QString("French"));
 }
 
 /*
@@ -84,7 +61,7 @@ void LanguageSelectionMenuTest::setAvailableLaguagesTest()
 int main(int argc, char **argv)
 {
   Mdt::Application app(argc, argv);
-  LanguageSelectionMenuTest test;
+  LanguageSelectionActionTest test;
 
 //   app.debugEnvironnement();
 

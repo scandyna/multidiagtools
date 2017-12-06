@@ -21,9 +21,10 @@
 #ifndef MDT_TRANSLATION_WIDGETS_LANGUAGE_SELECTION_MENU_H
 #define MDT_TRANSLATION_WIDGETS_LANGUAGE_SELECTION_MENU_H
 
+#include "LanguageSelectionActionList.h"
+#include "MdtTranslation_WidgetsExport.h"
 #include <QMenu>
 #include <QString>
-#include "MdtTranslation_WidgetsExport.h"
 
 namespace Mdt{ namespace Translation{
 
@@ -34,6 +35,7 @@ namespace Mdt{ namespace Translation{
    *
    * QMainWindow window;
    * auto *languageSelectionMenu = new LanguageSelectionMenu(&window);
+   * languageSelectionMenu->
    * window.menuBar()->addMenu(languageSelectionMenu);
    * window.show();
    * \endcode
@@ -52,6 +54,9 @@ namespace Mdt{ namespace Translation{
      */
     explicit LanguageSelectionMenu(const QString & title, QWidget *parent = nullptr);
 
+    /*! \brief Set the available langugages
+     */
+    void setAvailableLanguages(const LanguageSelectionActionList & actionList);
   };
 
 }} // namespace Mdt{ namespace Translation{
