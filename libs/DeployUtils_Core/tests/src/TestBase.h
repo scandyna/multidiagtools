@@ -23,7 +23,7 @@
 
 #include "Mdt/CoreApplication.h"
 #include "Mdt/PlainText/TestUtils.h"
-#include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "Mdt/DeployUtils/LibraryInfo.h"
 #include "Mdt/DeployUtils/LibraryInfoList.h"
 #include <QObject>
@@ -85,7 +85,7 @@ class TestBase : public QObject
   static QString pathWithFakeRoot(const QTemporaryDir & root, const QString & path);
   static void prependFakeRootToPath(const QTemporaryDir & root, QString & path);
   static void prependFakeRootToPathList(const QTemporaryDir & root, QStringList & pathList);
-  static void prependFakeRootToPathList(const QTemporaryDir & root, Mdt::DeployUtils::PathList & pathList);
+  static void prependFakeRootToPathList(const QTemporaryDir & root, Mdt::FileSystem::PathList & pathList);
   static bool createPathInFakeRoot(const QTemporaryDir & root, const QString & path);
   static bool createPathListInFakeRoot(const QTemporaryDir & root, const QStringList & pathList);
 

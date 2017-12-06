@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "MdtCpBinDepsMain.h"
 #include "CommandLineParser.h"
-#include "Mdt/DeployUtils/SearchPathList.h"
+#include "Mdt/FileSystem/SearchPathList.h"
 #include "Mdt/DeployUtils/BinaryDependencies.h"
 #include "Mdt/DeployUtils/QtLibrary.h"
 #include "Mdt/DeployUtils/MdtLibrary.h"
@@ -40,6 +40,7 @@
 #include <QDebug>
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 using namespace Mdt::Translation;
 
 MdtCpBinDepsMain::MdtCpBinDepsMain(QObject* parent)

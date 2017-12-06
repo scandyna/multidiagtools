@@ -27,6 +27,7 @@
 #include <QLibraryInfo>
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 using namespace Mdt::PlainText;
 
 void QtLibraryTest::initTestCase()

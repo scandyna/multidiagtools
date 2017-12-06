@@ -19,12 +19,13 @@
  **
  ****************************************************************************/
 #include "QtToolWrapperTest.h"
-#include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "Mdt/DeployUtils/QtToolExecutableWrapper.h"
 #include <QString>
 #include <QStringList>
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 
 void QtToolWrapperTest::initTestCase()
 {

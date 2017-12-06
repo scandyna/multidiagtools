@@ -19,11 +19,13 @@
  **
  ****************************************************************************/
 #include "QtToolExecutableWrapper.h"
-#include "SearchPathList.h"
+#include "Mdt/FileSystem/SearchPathList.h"
 #include <QDir>
 #include <QFileInfo>
 
 #include <QDebug>
+
+using namespace Mdt::FileSystem;
 
 namespace Mdt{ namespace DeployUtils{
 

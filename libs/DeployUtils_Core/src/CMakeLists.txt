@@ -13,8 +13,6 @@ set(SOURCE_FILES
     Mdt/DeployUtils/Impl/LibraryTree/LabeledGraph.cpp
     Mdt/DeployUtils/LibraryTreeNode.cpp
     Mdt/DeployUtils/LibraryTree.cpp
-    Mdt/DeployUtils/PathList.cpp
-    Mdt/DeployUtils/SearchPathList.cpp
     Mdt/DeployUtils/ToolExecutableWrapper.cpp
     Mdt/DeployUtils/LddWrapper.cpp
     Mdt/DeployUtils/ObjdumpWrapper.cpp
@@ -63,7 +61,7 @@ mdt_add_library(
   NAME DeployUtils_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Error_Core PlainText_Core Algorithm Translation_Core Qt5::Core
+  LINK_DEPENDENCIES Error_Core PlainText_Core Algorithm FileSystem_Core Translation_Core Qt5::Core
 )
 mdt_set_library_description(
   NAME DeployUtils_Core

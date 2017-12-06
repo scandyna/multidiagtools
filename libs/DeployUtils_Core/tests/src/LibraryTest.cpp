@@ -31,6 +31,7 @@
 #include <QFileInfo>
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 
 void LibraryTest::initTestCase()
 {

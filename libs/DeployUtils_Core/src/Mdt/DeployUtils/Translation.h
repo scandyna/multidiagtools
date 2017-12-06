@@ -21,9 +21,9 @@
 #ifndef MDT_DEPLOY_UTILS_TRANSLATION_H
 #define MDT_DEPLOY_UTILS_TRANSLATION_H
 
-#include "PathList.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include "Mdt/Error.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "Mdt/Translation/TranslationInfo.h"
 #include "Mdt/Translation/TranslationInfoList.h"
 #include <QString>
@@ -60,7 +60,7 @@ namespace Mdt{ namespace DeployUtils{
      * The \a pathPrefixList is used to locate the lconvert tool.
      *  It should be set if a non system wide installed Qt version is used.
      */
-    bool joinTranslations(const Mdt::Translation::TranslationInfoList & inTranslations, const QStringList & binaryFiles, const QString & destinationDirectoryPath, const PathList & pathPrefixList);
+    bool joinTranslations(const Mdt::Translation::TranslationInfoList & inTranslations, const QStringList & binaryFiles, const QString & destinationDirectoryPath, const Mdt::FileSystem::PathList & pathPrefixList);
 
     /*! \brief Get last error
      */

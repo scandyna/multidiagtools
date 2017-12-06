@@ -21,7 +21,7 @@
 #include "BinaryDependenciesTest.h"
 #include "Mdt/DeployUtils/BinaryDependenciesImplementationInterface.h"
 #include "Mdt/DeployUtils/BinaryDependencies.h"
-#include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "Mdt/DeployUtils/Platform.h"
 #include <QCoreApplication>
 #include <QStringList>
@@ -40,6 +40,7 @@
 #endif
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 
 void BinaryDependenciesTest::initTestCase()
 {

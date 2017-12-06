@@ -22,7 +22,7 @@
 #define MDT_DEPLOY_UTILS_QT_TOOL_EXECUTABLE_WRAPPER_H
 
 #include "ToolExecutableWrapper.h"
-#include "PathList.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include <QString>
 
@@ -53,7 +53,7 @@ namespace Mdt{ namespace DeployUtils{
      *
      * \sa qtBinPath()
      */
-    bool findQtBinPath(const PathList & pathPrefixList);
+    bool findQtBinPath(const Mdt::FileSystem::PathList & pathPrefixList);
 
     /*! \brief Get Qt bin path
      *

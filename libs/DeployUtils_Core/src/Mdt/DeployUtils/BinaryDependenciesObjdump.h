@@ -23,10 +23,10 @@
 
 #include "BinaryDependenciesImplementationInterface.h"
 #include "LibraryInfoList.h"
-#include "PathList.h"
 #include "LibraryTree.h"
 #include "LibraryTreeNode.h"
 #include "MdtDeployUtils_CoreExport.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "Mdt/PlainText/StringRecord.h"
 #include "Mdt/PlainText/StringRecordList.h"
 #include <QStringList>
@@ -59,7 +59,7 @@ namespace Mdt{ namespace DeployUtils{
 
     /*! \brief Get a list of paths where libraries are searched
      */
-    PathList librarySearchPathList() const
+    Mdt::FileSystem::PathList librarySearchPathList() const
     {
       return mLibrarySearchPathList;
     }
@@ -74,7 +74,7 @@ namespace Mdt{ namespace DeployUtils{
     void storeDependencies();
 
     LibraryTree mLibraryTree;
-    PathList mLibrarySearchPathList;
+    Mdt::FileSystem::PathList mLibrarySearchPathList;
     QStringList mAlreadyProcessedLibraries;
     QStringList mBinariesFromCaller;
     PlainText::StringRecordList mNotFoundDependencies;

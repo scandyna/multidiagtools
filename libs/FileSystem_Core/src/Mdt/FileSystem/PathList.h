@@ -18,20 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEPLOY_UTILS_PATH_LIST_H
-#define MDT_DEPLOY_UTILS_PATH_LIST_H
+#ifndef MDT_FILE_SYSTEM_PATH_LIST_H
+#define MDT_FILE_SYSTEM_PATH_LIST_H
 
-#include "MdtDeployUtils_CoreExport.h"
+#include "MdtFileSystem_CoreExport.h"
 #include <QString>
 #include <QStringList>
 #include <QMetaType>
 #include <initializer_list>
 
-namespace Mdt{ namespace DeployUtils{
+namespace Mdt{ namespace FileSystem{
 
   /*! \brief PathList contains a list of paths
    */
-  class MDT_DEPLOYUTILS_CORE_EXPORT PathList
+  class MDT_FILESYSTEM_CORE_EXPORT PathList
   {
    public:
 
@@ -202,7 +202,7 @@ namespace Mdt{ namespace DeployUtils{
     QStringList mList;
   };
 
-}} // namespace Mdt{ namespace DeployUtils{
-Q_DECLARE_METATYPE(Mdt::DeployUtils::PathList)
+}} // namespace Mdt{ namespace FileSystem{
+Q_DECLARE_METATYPE(Mdt::FileSystem::PathList)
 
-#endif // #ifndef MDT_DEPLOY_UTILS_PATH_LIST_H
+#endif // #ifndef MDT_FILE_SYSTEM_PATH_LIST_H

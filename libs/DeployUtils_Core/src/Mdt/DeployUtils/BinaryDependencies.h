@@ -22,7 +22,7 @@
 #define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_H
 
 #include "LibraryInfoList.h"
-#include "PathList.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "Mdt/Error.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include <QObject>
@@ -62,14 +62,14 @@ namespace Mdt{ namespace DeployUtils{
      *  Finally, depending of the implementation, dependencies can also be serached in
      *  in system paths.
      */
-    bool findDependencies(const QString & binaryFilePath, const PathList & searchFirstPathPrefixList);
+    bool findDependencies(const QString & binaryFilePath, const Mdt::FileSystem::PathList & searchFirstPathPrefixList);
 
     /*! \brief Find dependencies for a list of executables and/or libraries
      *
      * \sa findDependencies(const QString &, const PathList &)
      * \note It is assumed that each binary file has the same binary format (PA, or elf, or ...)
      */
-    bool findDependencies(const QStringList & binariesFilePaths, const PathList & searchFirstPathPrefixList);
+    bool findDependencies(const QStringList & binariesFilePaths, const Mdt::FileSystem::PathList & searchFirstPathPrefixList);
 
     /*! \brief Find dependencies for a lits of libraries
      *
@@ -77,7 +77,7 @@ namespace Mdt{ namespace DeployUtils{
      * \note It is assumed that each library has the same binary format (PA, or elf, or ...)
      * \pre Each library list libraries must have its full path set
      */
-    bool findDependencies(const LibraryInfoList & libraries, const PathList & searchFirstPathPrefixList);
+    bool findDependencies(const LibraryInfoList & libraries, const Mdt::FileSystem::PathList & searchFirstPathPrefixList);
 
     /*! \brief Get dependencies
      */
@@ -95,7 +95,7 @@ namespace Mdt{ namespace DeployUtils{
 
    private:
 
-    std::unique_ptr<BinaryDependenciesImplementationInterface> initImpl(const QFileInfo & binaryFileInfo, const PathList & searchFirstPathPrefixList);
+    std::unique_ptr<BinaryDependenciesImplementationInterface> initImpl(const QFileInfo & binaryFileInfo, const Mdt::FileSystem::PathList & searchFirstPathPrefixList);
     void setLastError(const Mdt::Error & error);
 
     LibraryInfoList mDependencies;

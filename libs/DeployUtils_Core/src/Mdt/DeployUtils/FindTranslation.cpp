@@ -19,10 +19,10 @@
  **
  ****************************************************************************/
 #include "FindTranslation.h"
-#include "SearchPathList.h"
 #include "MdtLibrary.h"
 #include "Console.h"
 #include "Mdt/Error.h"
+#include "Mdt/FileSystem/SearchPathList.h"
 #include "Mdt/Translation/QmFileName.h"
 #include <QLatin1String>
 #include <QStringBuilder>
@@ -36,6 +36,7 @@
 #include <QDebug>
 
 using namespace Mdt::Translation;
+using namespace Mdt::FileSystem;
 
 namespace Mdt{ namespace DeployUtils{
 

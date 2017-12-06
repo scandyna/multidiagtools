@@ -19,10 +19,10 @@
  **
  ****************************************************************************/
 #include "PathTest.h"
-#include "Mdt/DeployUtils/PathList.h"
-#include "Mdt/DeployUtils/SearchPathList.h"
+#include "Mdt/FileSystem/PathList.h"
+#include "Mdt/FileSystem/SearchPathList.h"
 
-using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 
 void PathTest::initTestCase()
 {

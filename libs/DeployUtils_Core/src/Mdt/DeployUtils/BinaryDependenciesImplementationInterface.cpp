@@ -24,6 +24,8 @@
 #include <iterator>
 #include <algorithm>
 
+using namespace Mdt::FileSystem;
+
 namespace Mdt{ namespace DeployUtils{
 
 BinaryDependenciesImplementationInterface::BinaryDependenciesImplementationInterface(QObject* parent)

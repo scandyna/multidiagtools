@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "BinaryDependenciesTestWindows.h"
 #include "Mdt/DeployUtils/BinaryDependencies.h"
-#include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "Mdt/DeployUtils/ObjdumpWrapper.h"
 #include "Mdt/DeployUtils/LibraryInfo.h"
 #include "Mdt/DeployUtils/LibraryName.h"
@@ -37,6 +37,7 @@
 #endif
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 
 void BinaryDependenciesTestWindows::initTestCase()
 {

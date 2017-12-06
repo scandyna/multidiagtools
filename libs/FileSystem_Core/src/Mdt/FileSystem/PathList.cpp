@@ -28,7 +28,7 @@
 
 // #include <QDebug>
 
-namespace Mdt{ namespace DeployUtils{
+namespace Mdt{ namespace FileSystem{
 
 void PathList::appendPath(const QString& path)
 {
@@ -83,9 +83,9 @@ PathList PathList::getSystemExecutablePathList()
 
   const auto pathEnv = QString::fromLocal8Bit( qgetenv("PATH") );
 #ifdef Q_OS_WIN
-  const QChar separator(';');
+  const auto separator = QChar::fromLatin1(';');
 #else
-  const QChar separator(':');
+  const auto separator = QChar::fromLatin1(':');
 #endif
   const auto rawPathList = pathEnv.split(separator);
   for(const auto & path : rawPathList){
@@ -116,12 +116,25 @@ PathList PathList::getSystemLibraryPathList()
 
 PathList PathList::getSystemLibraryKnownPathListLinux()
 {
-  return PathList{"/usr/lib","/usr/lib/x86_64-linux-gnu","/usr/lib32","/usr/libx32","/lib","/lib32","/lib64","/libx32"};
+  return PathList{
+    QString::fromLatin1("/usr/lib"),
+    QString::fromLatin1("/usr/lib/x86_64-linux-gnu"),
+    QString::fromLatin1("/usr/lib32"),
+    QString::fromLatin1("/usr/libx32"),
+    QString::fromLatin1("/lib"),
+    QString::fromLatin1("/lib32"),
+    QString::fromLatin1("/lib64"),
+    QString::fromLatin1("/libx32")
+  };
 }
 
 PathList PathList::getSystemLibraryKnownPathListWindows()
 {
-  return PathList{"/windows/syswow64","/windows/system32","/windows/system"};
+  return PathList{
+    QString::fromLatin1("/windows/syswow64"),
+    QString::fromLatin1("/windows/system32"),
+    QString::fromLatin1("/windows/system")
+  };
 }
 
-}} // namespace Mdt{ namespace DeployUtils{
+}} // namespace Mdt{ namespace FileSystem{

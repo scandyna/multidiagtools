@@ -27,6 +27,7 @@
 #endif
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 
 void LconvertWrapperTest::initTestCase()
 {

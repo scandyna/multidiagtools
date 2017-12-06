@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "QtLibraryTestLinux.h"
 #include "Mdt/DeployUtils/QtLibrary.h"
-#include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/FileSystem/PathList.h"
 #include <QString>
 #include <QStringList>
 #include <QTemporaryDir>
@@ -29,6 +29,7 @@
 // #include <QDebug>
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 
 void QtLibraryTestLinux::initTestCase()
 {

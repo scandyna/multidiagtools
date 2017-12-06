@@ -22,6 +22,7 @@
 #define MDT_TRANSLATION_LANGUAGE_LIST_CODE_H
 
 #include "LanguageCode.h"
+#include "MdtTranslation_CoreExport.h"
 #include <QtGlobal>
 #include <vector>
 
@@ -31,7 +32,7 @@ namespace Mdt{ namespace Translation{
 
   /*! \brief LanguageCodeList holds a list of LanguageCode
    */
-  class LanguageCodeList
+  class MDT_TRANSLATION_CORE_EXPORT LanguageCodeList
   {
    public:
 

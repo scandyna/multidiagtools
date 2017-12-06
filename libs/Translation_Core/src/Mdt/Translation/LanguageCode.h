@@ -21,6 +21,7 @@
 #ifndef MDT_TRANSLATION_LANGUAGE_CODE_H
 #define MDT_TRANSLATION_LANGUAGE_CODE_H
 
+#include "MdtTranslation_CoreExport.h"
 #include <array>
 
 class QString;
@@ -29,7 +30,7 @@ namespace Mdt{ namespace Translation{
 
   /*! \brief LanguageCode is a 2 letter ISO 639-1 laguage representation
    */
-  class LanguageCode
+  class MDT_TRANSLATION_CORE_EXPORT LanguageCode
   {
    public:
 

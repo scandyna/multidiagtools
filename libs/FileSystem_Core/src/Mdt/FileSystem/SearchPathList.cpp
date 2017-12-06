@@ -24,7 +24,7 @@
 #include <QStringBuilder>
 #include <QLatin1String>
 
-namespace Mdt{ namespace DeployUtils{
+namespace Mdt{ namespace FileSystem{
 
 void SearchPathList::setIncludePathPrefixes(bool include)
 {
@@ -86,4 +86,4 @@ void SearchPathList::updatePathList()
   mPathList.appendPathList(mPathListToAppend);
 }
 
-}} // namespace Mdt{ namespace DeployUtils{
+}} // namespace Mdt{ namespace FileSystem{

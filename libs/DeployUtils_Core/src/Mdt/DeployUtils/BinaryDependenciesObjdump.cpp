@@ -35,6 +35,7 @@
 // #include <QDebug>
 
 using namespace Mdt::PlainText;
+using namespace Mdt::FileSystem;
 
 namespace Mdt{ namespace DeployUtils{
 

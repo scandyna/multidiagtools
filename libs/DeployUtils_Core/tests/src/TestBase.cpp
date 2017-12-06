@@ -27,6 +27,7 @@
 #include <QDebug>
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 
 QStringList TestBase::sortedStringListCs(const QStringList& inList)
 {

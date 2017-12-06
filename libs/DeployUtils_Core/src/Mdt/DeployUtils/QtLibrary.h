@@ -27,9 +27,9 @@
 #include "QtPluginInfoList.h"
 #include "QtModule.h"
 #include "QtModuleList.h"
-#include "PathList.h"
 #include "OperatingSystem.h"
 #include "Mdt/Error.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include <QObject>
 #include <QString>
@@ -57,13 +57,13 @@ namespace Mdt{ namespace DeployUtils{
      *  For each path in all mentionned path prefixes, plugins are searched in
      *  qt5/plugins, then plugins subdirectories.
      */
-    QtPluginInfoList findLibraryPlugins(const LibraryInfo & qtLibrary, const PathList & searchFirstPathPrefixList);
+    QtPluginInfoList findLibraryPlugins(const LibraryInfo & qtLibrary, const Mdt::FileSystem::PathList & searchFirstPathPrefixList);
 
     /*! \brief Find plugins for a list of Qt libraries
      *
      * \sa findLibraryPlugins()
      */
-    QtPluginInfoList findLibrariesPlugins(const LibraryInfoList & qtLibraries, const PathList & searchFirstPathPrefixList);
+    QtPluginInfoList findLibrariesPlugins(const LibraryInfoList & qtLibraries, const Mdt::FileSystem::PathList & searchFirstPathPrefixList);
 
     /*! \brief Get Qt libraries out of \a libraries
      */
@@ -102,7 +102,7 @@ namespace Mdt{ namespace DeployUtils{
      *  from prefixes in it.
      *  Else, system path prefixes will be used.
      */
-    static QString findPluginsRoot(const PathList & pathPrefixList);
+    static QString findPluginsRoot(const Mdt::FileSystem::PathList & pathPrefixList);
 
    private:
 
