@@ -131,7 +131,7 @@ class QFileDevice;
  *
  * \note If you create a error for a QObject subclass, you should use mdtErrorNewQ()
  */
-#define mdtErrorNew(text, level, className) Mdt::Error(static_cast<Mdt::GenericError>(Mdt::GenericError()), text, level, __FILE__, __LINE__, className, __FUNCTION__)
+#define mdtErrorNew(text, level, className) Mdt::Error(static_cast<Mdt::GenericError>(Mdt::GenericError()), text, level, QString::fromLocal8Bit(__FILE__), __LINE__, className, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Helper macro to build a user defined Error with source file informations
  *
@@ -142,7 +142,7 @@ class QFileDevice;
  *
  * \note If you create a error for a QObject subclass, you should use mdtErrorNewTQ()
  */
-#define mdtErrorNewT(T, error, text, level, className) Mdt::Error(static_cast<T>(error), text, level, __FILE__, __LINE__, className, __FUNCTION__)
+#define mdtErrorNewT(T, error, text, level, className) Mdt::Error(static_cast<T>(error), text, level, QString::fromLocal8Bit(__FILE__), __LINE__, className, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Helper macro to build a Error with source file informations
  *
@@ -155,7 +155,7 @@ class QFileDevice;
  * auto error = mdtErrorNewQ("Some error occured", Mdt::Error::Critical, this);
  * \endcode
  */
-#define mdtErrorNewQ(text, level, obj) Mdt::Error(static_cast<Mdt::GenericError>(Mdt::GenericError()), text, level, __FILE__, __LINE__, obj, __FUNCTION__)
+#define mdtErrorNewQ(text, level, obj) Mdt::Error(static_cast<Mdt::GenericError>(Mdt::GenericError()), text, level, QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Helper macro to build a user defined Error with source file informations
  *
@@ -168,20 +168,20 @@ class QFileDevice;
  * auto error = mdtErrorNewTQ(int, -1, "Some error occured", Mdt::Error::Critical, this);
  * \endcode
  */
-#define mdtErrorNewTQ(T, error, text, level, obj) Mdt::Error(static_cast<T>(error), text, level, __FILE__, __LINE__, obj, __FUNCTION__)
+#define mdtErrorNewTQ(T, error, text, level, obj) Mdt::Error(static_cast<T>(error), text, level, QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Helper macro to set source file informations to a existing error
  *
  * \note If you create a error for a QObject subclass, you should use MDT_ERROR_SET_SRC_Q()
  */
-#define MDT_ERROR_SET_SRC(e, className) e.setSource(__FILE__, __LINE__, className, __FUNCTION__)
+#define MDT_ERROR_SET_SRC(e, className) e.setSource(QString::fromLocal8Bit(__FILE__), __LINE__, className, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Helper macro to set source file informations to a existing error
  *
  * This version accepts a QObject instance, which avoids typing class name explicitly.
  *  If you create a error for a object that is not a subclass of QObject, use MDT_ERROR_SET_SRC() .
  */
-#define MDT_ERROR_SET_SRC_Q(e, obj) e.setSource(__FILE__, __LINE__, obj, __FUNCTION__)
+#define MDT_ERROR_SET_SRC_Q(e, obj) e.setSource(QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Get a Mdt::Error from last error of given file device
  *
@@ -195,7 +195,7 @@ class QFileDevice;
  *
  * \sa mdtErrorFromQFileDeviceQ()
  */
-#define mdtErrorFromQFileDevice(fileDevice, className) Mdt::Error::fromQFileDevice(fileDevice, __FILE__, __LINE__, className, __FUNCTION__)
+#define mdtErrorFromQFileDevice(fileDevice, className) Mdt::Error::fromQFileDevice(fileDevice, QString::fromLocal8Bit(__FILE__), __LINE__, className, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Get a Mdt::Error from last error of given file device
  *
@@ -204,13 +204,13 @@ class QFileDevice;
  *
  * \sa mdtErrorFromQFileDevice()
  */
-#define mdtErrorFromQFileDeviceQ(fileDevice, obj) Mdt::Error::fromQFileDevice(fileDevice, __FILE__, __LINE__, obj, __FUNCTION__)
+#define mdtErrorFromQFileDeviceQ(fileDevice, obj) Mdt::Error::fromQFileDevice(fileDevice, QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Get a Mdt::Error from last error of given file
  *
  * \sa mdtErrorFromQFileQ()
  */
-#define mdtErrorFromQFile(file, className) Mdt::Error::fromQFileDevice(file, __FILE__, __LINE__, className, __FUNCTION__)
+#define mdtErrorFromQFile(file, className) Mdt::Error::fromQFileDevice(file, QString::fromLocal8Bit(__FILE__), __LINE__, className, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Get a Mdt::Error from last error of given file
  *
@@ -219,7 +219,7 @@ class QFileDevice;
  *
  * \sa mdtErrorFromQFile()
  */
-#define mdtErrorFromQFileQ(file, obj) Mdt::Error::fromQFileDevice(file, __FILE__, __LINE__, obj, __FUNCTION__)
+#define mdtErrorFromQFileQ(file, obj) Mdt::Error::fromQFileDevice(file, QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
 
 namespace Mdt{
 
