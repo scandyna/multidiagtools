@@ -6,6 +6,7 @@ set(SOURCE_FILES
   Mdt/Translation/QmFileName.cpp
   Mdt/Translation/TranslationInfo.cpp
   Mdt/Translation/TranslationInfoList.cpp
+  Mdt/Translation/FindTranslation.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

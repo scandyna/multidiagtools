@@ -102,7 +102,7 @@ namespace Mdt{ namespace DeployUtils{
    * For a given path prefix, a subdirectory, named \a directory,
    *  will be located in \a possibleSubdirectories .
    *
-   * A path is considered as the expectet translation only if a QM file,
+   * A path is considered as the expected translation only if a QM file,
    *  for which the base name is \a expectedQmFileBaseName , exists.
    *
    * If \a pathPrefixList contains at least 1 non empty path,

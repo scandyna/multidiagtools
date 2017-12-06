@@ -26,7 +26,6 @@ endfunction()
 
 #================= Tests ====================
 
-# addDeployUtilsTest("PathTest")
 addDeployUtilsTest("LibraryTest")
 addDeployUtilsTest("LibraryTreeTest")
 addDeployUtilsTest("LddParserTest")
