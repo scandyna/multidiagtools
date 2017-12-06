@@ -18,20 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#ifndef MDT_TEST_LIB_TEST_BASE_H
+#define MDT_TEST_LIB_TEST_BASE_H
 
-/*! \page libraries_page Libraries
- *
- * \ref libs_Application
- *
- * \ref libs_Error
- *
- * \ref libs_DeployUtils
- *
- * \ref libs_Translation
- *
- * \ref libs_FileSystem
- *
- * \ref libs_ItemModel
- *
- * \ref libs_TestLib
- */
+#include "Mdt/CoreApplication.h"
+#include <QObject>
+#include <QByteArray>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
+#include <QTemporaryFile>
+#include <QTemporaryDir>
+#include <QtTest/QtTest>
+#include <Qt>
+#include <initializer_list>
+
+class TestBase : public QObject
+{
+ Q_OBJECT
+};
+
+#endif // #ifndef MDT_TEST_LIB_TEST_BASE_H

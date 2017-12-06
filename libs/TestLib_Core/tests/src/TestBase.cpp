@@ -18,20 +18,11 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#include "TestBase.h"
+#include <QTextStream>
+#include <QTextCodec>
+#include <QFile>
+#include <QFileInfo>
+#include <QDir>
+#include <QDebug>
 
-/*! \page libraries_page Libraries
- *
- * \ref libs_Application
- *
- * \ref libs_Error
- *
- * \ref libs_DeployUtils
- *
- * \ref libs_Translation
- *
- * \ref libs_FileSystem
- *
- * \ref libs_ItemModel
- *
- * \ref libs_TestLib
- */

@@ -19,19 +19,21 @@
  **
  ****************************************************************************/
 
-/*! \page libraries_page Libraries
+/*! \page libs_TestLib TestLib
  *
- * \ref libs_Application
+ * Qt offers QTestLib for unit testing.
  *
- * \ref libs_Error
+ * Mdt TestLib offers some additional classes.
  *
- * \ref libs_DeployUtils
+ * Classes are available in the Mdt::TestLib namespace.
  *
- * \ref libs_Translation
- *
- * \ref libs_FileSystem
- *
- * \ref libs_ItemModel
- *
- * \ref libs_TestLib
  */
+
+namespace Mdt{
+
+  /*! \brief Some additions to QTestLib
+   */
+  namespace TestLib{
+  }
+
+}
