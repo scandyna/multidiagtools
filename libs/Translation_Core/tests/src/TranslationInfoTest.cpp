@@ -131,6 +131,36 @@ void TranslationInfoTest::infoListFromQmFilePathListTest()
   QCOMPARE(til.toQmFilePathList(), QStringList{QFileInfo("/tmp/a_fr.qm").absoluteFilePath()});
 }
 
+void TranslationInfoTest::listToLanguageCodeTest()
+{
+  QFETCH(QStringList, qmFileList);
+  QFETCH(QStringList, expectedLanguageCodes);
+
+  const auto til = TranslationInfoList::fromQmFilePathList(qmFileList);
+  QCOMPARE(til.toLanguageCodeList().toStringList(), expectedLanguageCodes);
+}
+
+void TranslationInfoTest::listToLanguageCodeTest_data()
+{
+  QTest::addColumn<QStringList>("qmFileList");
+  QTest::addColumn<QStringList>("expectedLanguageCodes");
+
+  QTest::newRow("0") << QStringList{}
+                     << QStringList{};
+
+  QTest::newRow("1") << QStringList{"a_fr.qm"}
+                     << QStringList{"fr"};
+
+  QTest::newRow("2") << QStringList{"a_fr.qm","a_de.qm"}
+                     << QStringList{"fr","de"};
+
+  QTest::newRow("3") << QStringList{"a_fr.qm","b_fr.qm"}
+                     << QStringList{"fr"};
+
+  QTest::newRow("4") << QStringList{"a_fr_ca.qm"}
+                     << QStringList{"fr"};
+}
+
 void TranslationInfoTest::usedFileSuffixesInListTest()
 {
   QFETCH(QStringList, qmFileList);

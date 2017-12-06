@@ -90,6 +90,17 @@ QStringList TranslationInfoList::toQmFilePathList() const
   return qmFiles;
 }
 
+LanguageCodeList TranslationInfoList::toLanguageCodeList() const
+{
+  LanguageCodeList codes;
+
+  for(const auto & ti : mList){
+    codes.addLanguageCode(ti.languageCode());
+  }
+
+  return codes;
+}
+
 TranslationInfoList TranslationInfoList::fromQmFilePathList(const QStringList & qmFilePathList)
 {
   TranslationInfoList list;

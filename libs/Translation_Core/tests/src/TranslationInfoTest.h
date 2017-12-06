@@ -39,6 +39,8 @@ class TranslationInfoTest : public TestBase
   void addTranslationTest();
   void infoListFromQmFilePathListTest();
 
+  void listToLanguageCodeTest();
+  void listToLanguageCodeTest_data();
   void usedFileSuffixesInListTest();
   void usedFileSuffixesInListTest_data();
   void getTranslationsForFileSuffixTest();

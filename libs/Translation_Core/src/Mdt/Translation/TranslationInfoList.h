@@ -22,6 +22,7 @@
 #define MDT_TRANSLATION_TRANSLATION_INFO_LIST_H
 
 #include "TranslationInfo.h"
+#include "LanguageCodeList.h"
 #include "MdtTranslation_CoreExport.h"
 #include <QString>
 #include <QStringList>
@@ -156,6 +157,10 @@ namespace Mdt{ namespace Translation{
     /*! \brief Get a list of file path for this list
      */
     QStringList toQmFilePathList() const;
+
+    /*! \brief Get a list of language codes existing in this list
+     */
+    LanguageCodeList toLanguageCodeList() const;
 
     /*! \brief Create a translation info list from a list of files
      *
