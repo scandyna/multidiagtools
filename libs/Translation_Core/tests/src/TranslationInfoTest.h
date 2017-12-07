@@ -43,8 +43,8 @@ class TranslationInfoTest : public TestBase
   void listToLanguageCodeTest_data();
   void usedFileSuffixesInListTest();
   void usedFileSuffixesInListTest_data();
-  void getTranslationsForFileSuffixTest();
-  void getTranslationsForFileSuffixTest_data();
+  void getTranslationsForLanguageCodeTest();
+  void getTranslationsForLanguageCodeTest_data();
   void getTranslationsForFileSuffixesTest();
   void getTranslationsForFileSuffixesTest_data();
 

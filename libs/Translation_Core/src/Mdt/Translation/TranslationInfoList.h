@@ -126,6 +126,10 @@ namespace Mdt{ namespace Translation{
      */
     TranslationInfoList getTranslationsForFileSuffixes(const QStringList & fileSuffixes) const;
 
+    /*! \brief Get translations for \a languageCode
+     */
+    TranslationInfoList getTranslationsForFileLanguageCode(LanguageCode languageCode) const;
+
     /*! \brief Returns an STL-style const iterator pointing to the first item in this list
      */
     const_iterator cbegin() const

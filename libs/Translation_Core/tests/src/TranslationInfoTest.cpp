@@ -192,7 +192,7 @@ void TranslationInfoTest::usedFileSuffixesInListTest_data()
 
 }
 
-void TranslationInfoTest::getTranslationsForFileSuffixTest()
+void TranslationInfoTest::getTranslationsForLanguageCodeTest()
 {
   QFETCH(QStringList, qmFileList);
   QFETCH(QString, suffix);
@@ -200,6 +200,11 @@ void TranslationInfoTest::getTranslationsForFileSuffixTest()
 
   const auto inTil = TranslationInfoList::fromQmFilePathList(qmFileList);
   const auto expectedTilForSuffix = TranslationInfoList::fromQmFilePathList(expectedQmFileList);
+  const auto tilForLanguageCode = inTil.getTranslationsForFileLanguageCode( LanguageCode::fromString(suffix) );
+  QCOMPARE(tilForLanguageCode.count(), expectedTilForSuffix.count());
+  for(int i = 0; i < tilForLanguageCode.count(); ++i){
+    QVERIFY(tilForLanguageCode.at(i) == expectedTilForSuffix.at(i));
+  }
   const auto tilForSuffix = inTil.getTranslationsForFileSuffix(suffix);
   QCOMPARE(tilForSuffix.count(), expectedTilForSuffix.count());
   for(int i = 0; i < tilForSuffix.count(); ++i){
@@ -207,7 +212,7 @@ void TranslationInfoTest::getTranslationsForFileSuffixTest()
   }
 }
 
-void TranslationInfoTest::getTranslationsForFileSuffixTest_data()
+void TranslationInfoTest::getTranslationsForLanguageCodeTest_data()
 {
   QTest::addColumn<QStringList>("qmFileList");
   QTest::addColumn<QString>("suffix");

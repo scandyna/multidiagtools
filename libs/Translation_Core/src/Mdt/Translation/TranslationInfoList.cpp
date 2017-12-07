@@ -53,6 +53,8 @@ QStringList TranslationInfoList::getUsedFileSuffixes() const
 
 TranslationInfoList TranslationInfoList::getTranslationsForFileSuffix(const QString& fileSuffix) const
 {
+  Q_ASSERT(!fileSuffix.isEmpty());
+
   TranslationInfoList tilForSuffix;
 
   const auto & til = mList;
@@ -67,6 +69,8 @@ TranslationInfoList TranslationInfoList::getTranslationsForFileSuffix(const QStr
 
 TranslationInfoList TranslationInfoList::getTranslationsForFileSuffixes(const QStringList& fileSuffixes) const
 {
+  Q_ASSERT(!fileSuffixes.isEmpty());
+
   TranslationInfoList tilForSuffixes;
 
   const auto & til = mList;
@@ -77,6 +81,20 @@ TranslationInfoList TranslationInfoList::getTranslationsForFileSuffixes(const QS
   }
 
   return tilForSuffixes;
+}
+
+TranslationInfoList TranslationInfoList::getTranslationsForFileLanguageCode(LanguageCode languageCode) const
+{
+  TranslationInfoList tilForLanguageCode;
+
+  const auto & til = mList;
+  for(const auto & ti : til){
+    if(ti.languageCode() == languageCode){
+      tilForLanguageCode.addTranslation(ti);
+    }
+  }
+
+  return tilForLanguageCode;
 }
 
 QStringList TranslationInfoList::toQmFilePathList() const
