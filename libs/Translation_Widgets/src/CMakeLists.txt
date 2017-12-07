@@ -1,6 +1,7 @@
 
 # List of source files
 set(SOURCE_FILES
+  Mdt/Translation/LanguageSelection.cpp
   Mdt/Translation/LanguageSelectionMenu.cpp
   Mdt/Translation/LanguageSelectionActionList.cpp
 )
