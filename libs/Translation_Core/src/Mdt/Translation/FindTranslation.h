@@ -36,6 +36,8 @@ namespace Mdt{ namespace Translation{
    *
    * Translations are searched in directories defined
    *  using findTranslationsRoot().
+   *
+   * \pre \a pathPrefixList must contain at least one path.
    */
   Mdt::Expected<Mdt::Translation::TranslationInfoList> MDT_TRANSLATION_CORE_EXPORT findTranslations(const Mdt::FileSystem::PathList & pathPrefixList);
 

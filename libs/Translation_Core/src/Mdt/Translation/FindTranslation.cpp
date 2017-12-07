@@ -39,6 +39,8 @@ namespace Mdt{ namespace Translation{
 
 Mdt::Expected< Mdt::Translation::TranslationInfoList > findTranslations(const Mdt::FileSystem::PathList& pathPrefixList)
 {
+  Q_ASSERT(!pathPrefixList.isEmpty());
+
   TranslationInfoList translations;
 
   const auto translationsDirectory = findTranslationsRoot(pathPrefixList);
@@ -63,6 +65,8 @@ Mdt::Expected< Mdt::Translation::TranslationInfoList > findTranslations(const Md
 
 QString findTranslationsRoot(const PathList & pathPrefixList)
 {
+  Q_ASSERT(!pathPrefixList.isEmpty());
+
   return findDirectoryRoot(QString::fromLatin1("translations"), {QString::fromLatin1(".")}, pathPrefixList);
 }
 
