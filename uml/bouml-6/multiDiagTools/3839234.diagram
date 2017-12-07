@@ -4,8 +4,4 @@ classcanvas 128002 class_ref 4446594 // FindTranslation
   classdiagramsettings member_max_width 0 end
   xyz 40.5 40.5 2000
 end
-classcanvas 128258 class_ref 4161282 // FindTranslation
-  classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 46 304 2000
-end
 end
