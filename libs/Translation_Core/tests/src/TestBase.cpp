@@ -25,27 +25,3 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDebug>
-
-bool TestBase::createFile(const QString & filePath)
-{
-  const QFileInfo fi(filePath);
-  auto dir = fi.absoluteDir();
-
-  if(!dir.mkpath(dir.absolutePath())){
-    qDebug() << "Unable to create directory " << dir.absolutePath();
-    return false;
-  }
-  QFile file(fi.absoluteFilePath());
-  if(!file.open(QFile::WriteOnly)){
-    qDebug() << "Unable to create file " << file.fileName() << ": " << file.errorString();
-    return false;
-  }
-  file.close();
-
-  return true;
-}
-
-bool TestBase::createFileInDirectory(const QString & directoryPath, const QString & fileName)
-{
-  return createFile( QDir::cleanPath(directoryPath + "/" + fileName) );
-}

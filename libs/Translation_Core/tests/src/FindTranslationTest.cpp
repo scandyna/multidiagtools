@@ -24,6 +24,7 @@
 #include "Mdt/Translation/TranslationInfoList.h"
 #include "Mdt/FileSystem/PathList.h"
 #include "Mdt/TestLib/FakeRoot.h"
+#include "Mdt/TestLib/CreateFile.h"
 #include <QString>
 #include <QStringList>
 #include <QTemporaryDir>

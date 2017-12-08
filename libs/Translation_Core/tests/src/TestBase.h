@@ -37,11 +37,6 @@ class TestBase : public QObject
 {
  Q_OBJECT
 
- protected:
-
-  // Create a file - Missing parent directories are created if needed
-  static bool createFile(const QString & filePath);
-  static bool createFileInDirectory(const QString & directoryPath, const QString & fileName);
 };
 
 #endif // #ifndef MDT_TRANSLATION_WIDGETS_TEST_BASE_H
