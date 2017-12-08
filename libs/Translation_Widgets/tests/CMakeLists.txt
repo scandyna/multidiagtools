@@ -12,7 +12,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtTranslation_WidgetsTest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtTranslation_WidgetsTest Translation_Widgets Application_Widgets Qt5::Test)
+target_link_libraries(mdtTranslation_WidgetsTest Translation_Widgets Application_Widgets TestLib_Core Qt5::Test)
 
 #=============== Helper functions ===========
 

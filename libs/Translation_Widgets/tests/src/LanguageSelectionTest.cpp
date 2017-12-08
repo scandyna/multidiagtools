@@ -21,11 +21,17 @@
 #include "LanguageSelectionTest.h"
 #include "Mdt/Translation/LanguageSelection.h"
 #include "Mdt/Translation/LanguageCodeList.h"
+#include "Mdt/FileSystem/PathList.h"
+#include "Mdt/TestLib/CreateFile.h"
+#include "Mdt/TestLib/FakeRoot.h"
+#include <QTemporaryDir>
 #include <QWidget>
 #include <QAction>
 #include <QString>
 
 using namespace Mdt::Translation;
+using namespace Mdt::FileSystem;
+using namespace Mdt::TestLib;
 
 void LanguageSelectionTest::initTestCase()
 {
@@ -36,24 +42,58 @@ void LanguageSelectionTest::cleanupTestCase()
 }
 
 /*
+ * Global helpers
+ */
+
+void prependFakeRootToPathList(const QTemporaryDir & root, Mdt::FileSystem::PathList & pathList)
+{
+  auto tmp = pathList.toStringList();
+  prependFakeRootToPathList(root, tmp);
+  pathList = PathList::fromStringList(tmp);
+}
+
+/*
  * Tests
  */
 
 void LanguageSelectionTest::findTranslationsTest()
 {
   /*
-   * We have a directory 'translations' in our build tree
+   * Create a fake filesystem
    */
+  QTemporaryDir root;
+  QVERIFY(root.isValid());
+  const auto translationDirectory = pathWithFakeRoot(root, "translations");
+  QVERIFY(createFileInDirectory(translationDirectory, "app_en.qm"));
+  QVERIFY(createFileInDirectory(translationDirectory, "app_fr.qm"));
+  /*
+   * Check
+   */
+  PathList pathPrefixList{"."};
+  prependFakeRootToPathList(root, pathPrefixList);
   LanguageSelection ls;
-  QVERIFY(ls.findTranslations());
+  QVERIFY(ls.findTranslations(pathPrefixList));
 }
 
 void LanguageSelectionTest::createLanguageSelectionActionsTest()
 {
+  /*
+   * Create a fake filesystem
+   */
+  QTemporaryDir root;
+  QVERIFY(root.isValid());
+  const auto translationDirectory = pathWithFakeRoot(root, "translations");
+  QVERIFY(createFileInDirectory(translationDirectory, "app_en.qm"));
+  QVERIFY(createFileInDirectory(translationDirectory, "app_fr.qm"));
+  /*
+   * Check
+   */
+  PathList pathPrefixList{"."};
+  prependFakeRootToPathList(root, pathPrefixList);
   QWidget parent;
   LanguageSelection ls;
   QVERIFY(ls.languageSelectionActions().isEmpty());
-  QVERIFY(ls.findTranslations());
+  QVERIFY(ls.findTranslations(pathPrefixList));
   ls.createLanguageSelectionActions(&parent);
   const auto actions = ls.languageSelectionActions();
   QVERIFY(!actions.isEmpty());
@@ -63,6 +103,29 @@ void LanguageSelectionTest::createLanguageSelectionActionsTest()
     QVERIFY(action->parent() == &parent);
   }
   QVERIFY(!ls.findTranslations());
+}
+
+/*
+ * Member helpers
+ */
+
+bool LanguageSelectionTest::createQmFiles(const QString& directoryPath, const QString& subDirectory, const QStringList& baseNames, const QStringList& languageSuffixes)
+{
+  for(const auto & baseName : baseNames){
+    for(const auto & languageSuffixe : languageSuffixes){
+      const auto fileName = baseName + "_" + languageSuffixe + ".qm";
+      const auto filePath = QDir::cleanPath( directoryPath + "/" + subDirectory + "/" + fileName );
+      if(!createFile(filePath)){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+bool LanguageSelectionTest::createQmFiles(const QTemporaryDir& directory, const QString& subDirectory, const QStringList& baseNames, const QStringList& languageSuffixes)
+{
+  return createQmFiles(directory.path(), subDirectory, baseNames, languageSuffixes);
 }
 
 /*

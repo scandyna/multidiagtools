@@ -34,6 +34,12 @@ class LanguageSelectionTest : public TestBase
 
   void findTranslationsTest();
   void createLanguageSelectionActionsTest();
+
+ private:
+
+  static bool createQmFiles(const QString & directoryPath, const QString & subDirectory, const QStringList & baseNames, const QStringList & languageSuffixes);
+  static bool createQmFiles(const QTemporaryDir & directory, const QString & subDirectory, const QStringList & baseNames, const QStringList & languageSuffixes);
+
 };
 
 #endif // #ifndef LANGUAGE_SELECTION_TEST_H
