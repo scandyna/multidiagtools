@@ -89,12 +89,23 @@ endif()
 message(STATUS "Writing QtPrefixPath.txt")
 file(WRITE "${MDT_PATH}/QtPrefixPath.txt" "${QT_PATH}")
 
+# On Windows, find the compiler provided by Qt
+if(WIN32)
+  message("Compiler: ${CMAKE_CXX_COMPILER}")
+  get_filename_component(COMPILER_NAME "${CMAKE_CXX_COMPILER}" NAME)
+  message("COMPILER_NAME: ${COMPILER_NAME}")
+  find_program(
+    COMPILER_BIN_DIR
+    NAMES "${COMPILER_NAME}"
+    PATHS "${QT_PREFIX_PATH}/../../Tools"
+    PATH_SUFFIXES "mingw530_32/bin" "mingw531_32/bin"
+  )
+endif(WIN32)
+
 # On Windows, write mdtenv.bat
 if(WIN32)
-  # Find the root of the compiler
-  get_filename_component(compiler_bin_dir "${CMAKE_CXX_COMPILER}" DIRECTORY)
   # Generate env script
-  string(REPLACE "/" "\\" compiler_bin_dir_win "${compiler_bin_dir}")
+  string(REPLACE "/" "\\" compiler_bin_dir_win "${COMPILER_BIN_DIR}")
   string(REPLACE "/" "\\" qt_bin_dir_win "${QT_BIN_PATH}")
   string(REPLACE "/" "\\" mdt_bin_dir_win "${MDT_BIN_PATH}")
   set(env_script_content "\@echo off\r\nset PATH=${compiler_bin_dir_win};${qt_bin_dir_win};${mdt_bin_dir_win}")
