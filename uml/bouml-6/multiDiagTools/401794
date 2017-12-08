@@ -1,6 +1,6 @@
 format 215
 "Mdt" // Mdt
-  revision 62
+  revision 63
   modified_by 2 "philippe"
   // class settings
   
@@ -1108,7 +1108,6 @@ ${inlines}
 	  b parent class_ref 4152322 // CoreApplicationImpl
       end
     end
-
   end
 
   classview 1907842 "Application_Widgets_Single"
@@ -1837,9 +1836,13 @@ ${members}};
 
   package_ref 667650 // ItemView
 
+  package_ref 641538 // ItemCopier
+
   package_ref 516226 // SqlItemModel
 
   package_ref 503042 // ItemEditor
+
+  package_ref 753026 // Entity
 
   package_ref 509570 // WebSocket
 
@@ -1849,13 +1852,11 @@ ${members}};
 
   package_ref 733442 // NumericRange
 
-  package_ref 654594 // File
+  package_ref 654594 // FileSystem
 
   package_ref 641410 // PlainText
 
   package_ref 621826 // TextStorage
-
-  package_ref 641538 // ItemCopier
 
   package_ref 700546 // Comm_Bus_sandbox
 

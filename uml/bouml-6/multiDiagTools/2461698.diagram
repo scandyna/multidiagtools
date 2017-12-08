@@ -1,4 +1,4 @@
-format 211
+format 215
 
 classcanvas 128002 class_ref 2775810 // Table
   classdiagramsettings member_max_width 0 end
@@ -59,7 +59,7 @@ relationcanvas 129794 relation_ref 3273986 // <dependency>
   geometry VH unfixed
   decenter_begin 541
   decenter_end 107
-  from ref 128770 z 2001 to point 93 157
+  from ref 128770 z 2001 to point 93 162
   line 134402 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

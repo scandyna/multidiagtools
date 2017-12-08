@@ -1,6 +1,6 @@
-format 211
+format 215
 "Schema" // Mdt::Sql::Schema
-  revision 117
+  revision 118
   modified_by 2 "philippe"
   // class settings
   
@@ -5018,6 +5018,39 @@ ${inlines}
 "
 	    classrelation_ref 3849986 // <directional composition>
 	  b parent class_ref 3463810 // TablePrivate
+      end
+
+      operation 6281730 "fromEntity"
+	class_operation public return_type class_ref 2775810 // Table
+	nparams 1
+	  param in name "entity" type class_ref 4466690 // Entity
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6282114 "fromQObject"
+	class_operation public return_type class_ref 2775810 // Table
+	nparams 2
+	  param in name "entity" type class_ref 138626 // QObject
+	  param in name "typeMap" explicit_type ""
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 

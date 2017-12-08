@@ -1,6 +1,6 @@
 format 215
 "Qt" // Qt
-  revision 230
+  revision 231
   modified_by 2 "philippe"
   // class settings
   
@@ -9209,6 +9209,27 @@ ${inlines}
     end
 
     class 4453634 "QTemporaryDir"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 3859330 "QMetaClassInfo"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4466818 "QMetaClassInfo"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
