@@ -91,9 +91,7 @@ file(WRITE "${MDT_PATH}/QtPrefixPath.txt" "${QT_PATH}")
 
 # On Windows, find the compiler provided by Qt
 if(WIN32)
-  message("Compiler: ${CMAKE_CXX_COMPILER}")
   get_filename_component(COMPILER_NAME "${CMAKE_CXX_COMPILER}" NAME)
-  message("COMPILER_NAME: ${COMPILER_NAME}")
   find_program(
     COMPILER_BIN_DIR
     NAMES "${COMPILER_NAME}"
