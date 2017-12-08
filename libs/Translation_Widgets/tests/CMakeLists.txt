@@ -3,6 +3,8 @@ enable_testing()
 
 find_package(Qt5 COMPONENTS Test)
 
+add_subdirectory(translations)
+
 #================= Translation_Widgets test library ====================
 
 set(SOURCE_FILES
@@ -26,5 +28,5 @@ endfunction()
 
 #================= Tests ====================
 
-addTranslation_WidgetsTest("LanguageSelectionActionTest")
-addTranslation_WidgetsTest("LanguageSelectionMenuTest")
+addTranslation_WidgetsTest("LanguageSelectionTest")
+# addTranslation_WidgetsTest("")

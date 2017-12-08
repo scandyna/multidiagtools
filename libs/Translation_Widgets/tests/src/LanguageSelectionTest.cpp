@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "LanguageSelectionActionTest.h"
-#include "Mdt/Translation/LanguageSelectionActionList.h"
+#include "LanguageSelectionTest.h"
+#include "Mdt/Translation/LanguageSelection.h"
 #include "Mdt/Translation/LanguageCodeList.h"
 #include <QWidget>
 #include <QAction>
@@ -27,11 +27,11 @@
 
 using namespace Mdt::Translation;
 
-void LanguageSelectionActionTest::initTestCase()
+void LanguageSelectionTest::initTestCase()
 {
 }
 
-void LanguageSelectionActionTest::cleanupTestCase()
+void LanguageSelectionTest::cleanupTestCase()
 {
 }
 
@@ -39,19 +39,30 @@ void LanguageSelectionActionTest::cleanupTestCase()
  * Tests
  */
 
-void LanguageSelectionActionTest::createActionsTest()
+void LanguageSelectionTest::findTranslationsTest()
 {
-  LanguageSelectionActionList list;
-  QCOMPARE(list.actions().count(), 0);
+  /*
+   * We have a directory 'translations' in our build tree
+   */
+  LanguageSelection ls;
+  QVERIFY(ls.findTranslations());
+}
 
+void LanguageSelectionTest::createLanguageSelectionActionsTest()
+{
   QWidget parent;
-  LanguageCodeList languages;
-  languages.addLanguageCode(LanguageCode("en"));
-  languages.addLanguageCode(LanguageCode("fr"));
-  list.createActions(languages, &parent);
-  QCOMPARE(list.actions().count(), 2);
-  QCOMPARE(list.actions().at(0)->text(), QString("English"));
-  QCOMPARE(list.actions().at(1)->text(), QString("French"));
+  LanguageSelection ls;
+  QVERIFY(ls.languageSelectionActions().isEmpty());
+  QVERIFY(ls.findTranslations());
+  ls.createLanguageSelectionActions(&parent);
+  const auto actions = ls.languageSelectionActions();
+  QVERIFY(!actions.isEmpty());
+  for(const auto *action : actions){
+    QVERIFY(action != nullptr);
+    QVERIFY(!action->text().isEmpty());
+    QVERIFY(action->parent() == &parent);
+  }
+  QVERIFY(!ls.findTranslations());
 }
 
 /*
@@ -61,7 +72,7 @@ void LanguageSelectionActionTest::createActionsTest()
 int main(int argc, char **argv)
 {
   Mdt::Application app(argc, argv);
-  LanguageSelectionActionTest test;
+  LanguageSelectionTest test;
 
 //   app.debugEnvironnement();
 
