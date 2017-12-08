@@ -34,7 +34,6 @@
 #include <QLocale>
 #include <QTranslator>
 #include <QEvent>
-
 #include <QDebug>
 
 using namespace Mdt::FileSystem;
@@ -48,7 +47,6 @@ LanguageSelection::LanguageSelection(QObject* parent)
 
 LanguageSelection::~LanguageSelection()
 {
- /// unloadTranslations();
 }
 
 bool LanguageSelection::findTranslations()
@@ -58,15 +56,25 @@ bool LanguageSelection::findTranslations()
 
 bool LanguageSelection::findTranslations(const PathList & pathPrefixList)
 {
+  /*
+   * If actions have allready be created, we fail.
+   * To support updating available translations,
+   * we have to take care about actions allready attached to a menu,
+   * a tool bar, etc..
+   */
+  if(!mLanguageSelectionActions.isEmpty()){
+    const auto msg = tr("Finding translations cannot be done, because language selection actions have allready been created.");
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Warning, this);
+    setLastError(error);
+    return false;
+  }
+
   const auto translations = Mdt::Translation::findTranslations(pathPrefixList);
   if(!translations){
     setLastError(translations.error());
     return false;
   }
   mTranslations = *translations;
-  /// \todo If we want support of change: remove actions from menu
-  ///       Or: simply delete them ? Qt can maybe handle to remove widgets when they are deleted, but actions ?
-  ///mLanguageSelectionActions.clear();
 
   return true;
 }
@@ -122,7 +130,6 @@ void LanguageSelection::handleChangeEvent(QEvent* event)
   }
   if(event->type() == QEvent::LocaleChange){
     const auto languageCode = LanguageCode::fromLanguageCountry( QLocale::system().name() );
-    qDebug() << "System language changed: " << languageCode.toString();
     loadLanguage(languageCode);
   }
 }
@@ -132,7 +139,6 @@ void LanguageSelection::onLanguageSelected(QAction* action)
   Q_ASSERT(action != nullptr);
 
   const auto languageCode = LanguageCode::fromString( action->data().toString() );
-  qDebug() << "Language selected: " << languageCode.toString();
   loadLanguage(languageCode);
 }
 
@@ -159,14 +165,13 @@ bool LanguageSelection::loadTranslations(const TranslationInfoList& translations
   for(int i=0; i < translations.count(); ++i){
     if( mTranslators[i]->load(translations.at(i).absoluteFilePath()) ){
       QCoreApplication::installTranslator(mTranslators[i].get());
-      qDebug() << " Loaded " << translations.at(i).fullFileName();
     }else{
       const auto msg = tr("Could not load translation file '%1'.")
                        .arg(translations.at(i).fullFileName());
       auto error = mdtErrorNewQ(msg, Mdt::Error::Warning, this);
       setLastError(error);
-      qWarning() << msg;
-      ///error.commit();
+      qWarning() << QLatin1String("Mdt::Translation::LanguageSelection::loadTranslations(): ") << msg;
+      //error.commit(); Error logger will crash (because logging is not enabled, have to fix it in Mdt::Error)
     }
   }
 
@@ -175,11 +180,9 @@ bool LanguageSelection::loadTranslations(const TranslationInfoList& translations
 
 void LanguageSelection::unloadTranslations()
 {
-  qDebug() << " unloading translations ...";
   for(const auto & translator : mTranslators){
     QCoreApplication::removeTranslator(translator.get());
   }
-  qDebug() << " unloading translations DONE";
 }
 
 void LanguageSelection::resizeTranslatorsList(int size)
@@ -187,12 +190,10 @@ void LanguageSelection::resizeTranslatorsList(int size)
   if( (int)mTranslators.size() == size ){
     return;
   }
-  qDebug() << " resizing translators ...";
   mTranslators.clear();
   for(int i = 0; i < size; ++i){
     mTranslators.emplace_back( std::make_unique<QTranslator>() );
   }
-  qDebug() << " resizing translators DONE";
 }
 
 void LanguageSelection::setLastError(const Mdt::Error& error)
