@@ -27,6 +27,8 @@
 
 // #include <QDebug>
 
+using namespace Mdt::FileSystem;
+
 namespace Mdt{ namespace DeployUtils{
 
 Library::Library(QObject* parent)

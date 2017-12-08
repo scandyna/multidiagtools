@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "MdtCpBinDepsMain.h"
 #include "CommandLineParser.h"
-#include "Mdt/DeployUtils/SearchPathList.h"
+#include "Mdt/FileSystem/SearchPathList.h"
 #include "Mdt/DeployUtils/BinaryDependencies.h"
 #include "Mdt/DeployUtils/QtLibrary.h"
 #include "Mdt/DeployUtils/MdtLibrary.h"
@@ -29,8 +29,8 @@
 #include "Mdt/DeployUtils/BinaryFormat.h"
 #include "Mdt/DeployUtils/OperatingSystem.h"
 #include "Mdt/DeployUtils/RPath.h"
-#include "Mdt/DeployUtils/TranslationInfo.h"
-#include "Mdt/DeployUtils/TranslationInfoList.h"
+#include "Mdt/Translation/TranslationInfo.h"
+#include "Mdt/Translation/TranslationInfoList.h"
 #include "Mdt/DeployUtils/FindTranslation.h"
 #include "Mdt/DeployUtils/Translation.h"
 #include <QCoreApplication>
@@ -40,6 +40,8 @@
 #include <QDebug>
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
+using namespace Mdt::Translation;
 
 MdtCpBinDepsMain::MdtCpBinDepsMain(QObject* parent)
  : AbstractConsoleApplicationMainFunction(parent)

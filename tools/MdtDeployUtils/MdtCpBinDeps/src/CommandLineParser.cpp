@@ -28,6 +28,8 @@
 #include <QDebug>
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
+using namespace Mdt::Translation;
 
 CommandLineParser::CommandLineParser()
   : mSearchFirstPathPrefixListOption(QStringList{"p","prefix-path"}),

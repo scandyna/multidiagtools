@@ -21,11 +21,11 @@
 #ifndef MDT_DEPLOY_UTILS_TRANSLATION_H
 #define MDT_DEPLOY_UTILS_TRANSLATION_H
 
-#include "TranslationInfo.h"
-#include "TranslationInfoList.h"
-#include "PathList.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include "Mdt/Error.h"
+#include "Mdt/FileSystem/PathList.h"
+#include "Mdt/Translation/TranslationInfo.h"
+#include "Mdt/Translation/TranslationInfoList.h"
 #include <QString>
 #include <QStringList>
 #include <QObject>
@@ -60,7 +60,7 @@ namespace Mdt{ namespace DeployUtils{
      * The \a pathPrefixList is used to locate the lconvert tool.
      *  It should be set if a non system wide installed Qt version is used.
      */
-    bool joinTranslations(const TranslationInfoList & inTranslations, const QStringList & binaryFiles, const QString & destinationDirectoryPath, const PathList & pathPrefixList);
+    bool joinTranslations(const Mdt::Translation::TranslationInfoList & inTranslations, const QStringList & binaryFiles, const QString & destinationDirectoryPath, const Mdt::FileSystem::PathList & pathPrefixList);
 
     /*! \brief Get last error
      */
@@ -72,8 +72,8 @@ namespace Mdt{ namespace DeployUtils{
    private:
 
     bool createDestinationDirectory(const QString & path);
-    bool joinTranslationsForSuffixes(const TranslationInfoList & translations, const QString & baseName, const QStringList & suffixes, const QString& destinationDirectoryPath);
-    bool joinQmFiles(const TranslationInfoList & translations, const QString & outFilePath);
+    bool joinTranslationsForSuffixes(const Mdt::Translation::TranslationInfoList & translations, const QString & baseName, const QStringList & suffixes, const QString& destinationDirectoryPath);
+    bool joinQmFiles(const Mdt::Translation::TranslationInfoList & translations, const QString & outFilePath);
     void setLastError(const Mdt::Error & error);
 
     LconvertWrapper *mLconvert;

@@ -22,8 +22,8 @@
 #define MDT_DEPLOY_UTILS_LIBRARY_H
 
 #include "LibraryInfo.h"
-#include "PathList.h"
 #include "MdtDeployUtils_CoreExport.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "Mdt/Error.h"
 #include <QString>
 #include <QObject>
@@ -70,7 +70,7 @@ namespace Mdt{ namespace DeployUtils{
      * \pre name must be a non empty string.
      * \pre If \a searchInSystemPaths is ExcludeSystemPaths, pathList must contain at least 1 path
      */
-    bool findLibrary(const QString & name, const PathList pathList = PathList(), SearchInSystemPaths searchInSystemPaths = IncludeSystemPaths);
+    bool findLibrary(const QString & name, const Mdt::FileSystem::PathList pathList = Mdt::FileSystem::PathList(), SearchInSystemPaths searchInSystemPaths = IncludeSystemPaths);
 
     /*! \brief Get library info
      *
@@ -92,7 +92,7 @@ namespace Mdt{ namespace DeployUtils{
 
    private:
 
-    void addSystemPaths(PathList & pathList);
+    void addSystemPaths(Mdt::FileSystem::PathList & pathList);
 
     LibraryInfo mLibraryInfo;
     Mdt::Error mLastError;

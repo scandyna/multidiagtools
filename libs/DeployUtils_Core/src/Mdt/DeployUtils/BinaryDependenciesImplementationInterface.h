@@ -22,8 +22,8 @@
 #define MDT_DEPLOY_UTILS_BINARY_DEPENDENCIES_IMPLEMENTATION_INTERFACE_H
 
 #include "LibraryInfoList.h"
-#include "PathList.h"
 #include "Mdt/Error.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include <QString>
 #include <QStringList>
@@ -45,11 +45,11 @@ namespace Mdt{ namespace DeployUtils{
 
     /*! \brief Set a list of paths where to search dependencies first
      */
-    void setLibrarySearchFirstPathList(const PathList & pathList);
+    void setLibrarySearchFirstPathList(const Mdt::FileSystem::PathList & pathList);
 
     /*! \brief Get the list of paths where to search dependencies first
      */
-    PathList librarySearchFirstPathList() const
+    Mdt::FileSystem::PathList librarySearchFirstPathList() const
     {
       return mLibrarySearchFirstPathList;
     }
@@ -114,7 +114,7 @@ namespace Mdt{ namespace DeployUtils{
     static bool listContainsLibrary(const LibraryInfoList & list, const LibraryInfo & li);
 
     LibraryInfoList mDependencies;
-    PathList mLibrarySearchFirstPathList;
+    Mdt::FileSystem::PathList mLibrarySearchFirstPathList;
     Mdt::Error mLastError;
   };
 

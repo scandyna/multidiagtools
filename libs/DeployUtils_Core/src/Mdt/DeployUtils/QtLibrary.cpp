@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "QtLibrary.h"
-#include "SearchPathList.h"
+#include "Mdt/FileSystem/SearchPathList.h"
 #include "LibraryName.h"
 #include "Console.h"
 #include <QLatin1String>
@@ -30,6 +30,8 @@
 #include <iterator>
 
 #include <QDebug>
+
+using namespace Mdt::FileSystem;
 
 namespace Mdt{ namespace DeployUtils{
 

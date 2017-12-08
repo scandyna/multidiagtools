@@ -1,4 +1,4 @@
-format 211
+format 215
 
 classcanvas 128002 class_ref 2775042 // Field
   classdiagramsettings member_max_width 0 end
@@ -44,11 +44,6 @@ classcanvas 132354 class_ref 2824706 // AutoIncrementPrimaryKey
   classdiagramsettings member_max_width 0 end
   xyz 749.5 648.5 2000
 end
-relationcanvas 129154 relation_ref 3128322 // <directional composition>
-  from ref 128898 z 2007 to ref 128002
-  no_role_a no_role_b
-  multiplicity_a_pos 299 336 3000 no_multiplicity_b
-end
 relationcanvas 130818 relation_ref 3127682 // <directional composition>
   from ref 130562 z 2007 to ref 130690
   no_role_a no_role_b
@@ -74,6 +69,11 @@ end
 relationcanvas 133250 relation_ref 3273986 // <dependency>
   decenter_begin 517
   from ref 128386 z 2007 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133378 relation_ref 3810050 // <dependency>
+  from ref 128258 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

@@ -1,0 +1,18 @@
+format 215
+
+note 128002 "Why QObject:
+ - Offers introspecion now
+ - Reusable (f.ex. in QML)
+
+Cons:
+ - Not a copyable object
+
+Possible ?
+ - Abstract, f.ex. behind a std::shared_ptr  / unique_ptr ?"
+  xyzwh 19.5 168.5 2015 843 201
+note 128386 "What we want:
+ - Reuse QObject for its, now!, available introspection (className, Q_PROPERTY)
+ - Be able to define storage specific things (like, is this member part of a primary key)
+ - Using above, store to / extract from, Sql, Xml, JSON, ..."
+  xyzwh 19.5 33.5 2010 661 107
+end

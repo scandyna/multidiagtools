@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "FindTranslationTest.h"
 #include "Mdt/DeployUtils/FindTranslation.h"
-#include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/FileSystem/PathList.h"
 #include "Mdt/DeployUtils/QtModule.h"
 #include "Mdt/DeployUtils/QtModuleList.h"
 #include <QString>
@@ -29,6 +29,7 @@
 #include <QDebug>
 
 using namespace Mdt::DeployUtils;
+using namespace Mdt::FileSystem;
 
 void FindTranslationTest::initTestCase()
 {

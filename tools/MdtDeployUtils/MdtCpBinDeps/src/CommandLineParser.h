@@ -21,8 +21,8 @@
 #ifndef COMMAND_LINE_PARSER_H
 #define COMMAND_LINE_PARSER_H
 
-#include "Mdt/DeployUtils/PathList.h"
-#include "Mdt/DeployUtils/TranslationInfoList.h"
+#include "Mdt/FileSystem/PathList.h"
+#include "Mdt/Translation/TranslationInfoList.h"
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QString>
@@ -68,7 +68,7 @@ public:
 
   /*! \brief Get the list of paths prefixes where to search dependencies first
    */
-  Mdt::DeployUtils::PathList searchFirstPathPrefixList() const
+  Mdt::FileSystem::PathList searchFirstPathPrefixList() const
   {
     return mSearchFirstPathPrefixList;
   }
@@ -82,7 +82,7 @@ public:
 
   /*! \brief Get the list of project QM files
    */
-  Mdt::DeployUtils::TranslationInfoList projectQmFiles() const
+  Mdt::Translation::TranslationInfoList projectQmFiles() const
   {
     return mProjectQmFiles;
   }
@@ -108,9 +108,9 @@ private:
   QStringList mBinaryFilesPathList;
   QString mLibraryDestinationPath;
   QString mPluginDestinationPath;
-  Mdt::DeployUtils::PathList mSearchFirstPathPrefixList;
+  Mdt::FileSystem::PathList mSearchFirstPathPrefixList;
   QStringList mTranslations;
-  Mdt::DeployUtils::TranslationInfoList mProjectQmFiles;
+  Mdt::Translation::TranslationInfoList mProjectQmFiles;
   QString mTranslationDestinationPath;
   int mVerboseLevel = 1;
   QCommandLineParser mParser;

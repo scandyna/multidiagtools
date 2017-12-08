@@ -3,7 +3,7 @@
 #################################################################################################################################################
 cmake_minimum_required(VERSION 3.2)
 
-project(Mdt0 VERSION 0.3.6)
+project(Mdt0 VERSION 0.3.7)
 
 # Additionnal Cmake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
@@ -137,7 +137,11 @@ add_subdirectory(libs/ItemModel)
 # add_subdirectory(libs/Sql)
 # add_subdirectory(libs/ItemEditor)
 # add_subdirectory(libs/ItemEditor_Sql)
+add_subdirectory(libs/TestLib_Core)
+add_subdirectory(libs/FileSystem_Core)
 add_subdirectory(libs/DeployUtils_Core)
+add_subdirectory(libs/Translation_Core)
+add_subdirectory(libs/Translation_Widgets)
 
 # include(MdtInstallQt5)
 

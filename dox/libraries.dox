@@ -27,5 +27,11 @@
  *
  * \ref libs_DeployUtils
  *
+ * \ref libs_Translation
+ *
+ * \ref libs_FileSystem
+ *
  * \ref libs_ItemModel
+ *
+ * \ref libs_TestLib
  */

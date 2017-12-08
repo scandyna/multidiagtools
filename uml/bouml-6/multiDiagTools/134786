@@ -1,6 +1,6 @@
 format 215
 "Qt" // Qt
-  revision 228
+  revision 231
   modified_by 2 "philippe"
   // class settings
   
@@ -7320,6 +7320,15 @@ ${inlines}
 	    classrelation_ref 3089154 // <generalisation>
 	  b parent class_ref 316162 // QWidget
       end
+
+      classrelation 4974466 // <unidirectional association>
+	relation 4948226 --->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 4974466 // <unidirectional association>
+	  b parent class_ref 693250 // QAction
+      end
     end
 
     classdiagram 2414082 "Menu"
@@ -9171,6 +9180,69 @@ ${inlines}
 	    classrelation_ref 4967682 // <generalisation>
 	  b parent class_ref 138626 // QObject
       end
+    end
+
+    classdiagram 3839490 "QLatin1String"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4446850 "QLatin1String"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 3846146 "QTemporaryDir"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4453634 "QTemporaryDir"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 3859330 "QMetaClassInfo"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 4466818 "QMetaClassInfo"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

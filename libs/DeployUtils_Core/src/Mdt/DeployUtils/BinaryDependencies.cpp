@@ -23,12 +23,14 @@
 #include "BinaryDependenciesLdd.h"
 #include "BinaryDependenciesObjdump.h"
 #include "BinaryFormat.h"
-#include "SearchPathList.h"
+#include "Mdt/FileSystem/SearchPathList.h"
 #include "Console.h"
 #include <QFileInfo>
 #include <QDir>
 
 // #include <QDebug>
+
+using namespace Mdt::FileSystem;
 
 namespace Mdt{ namespace DeployUtils{
 
@@ -41,7 +43,7 @@ BinaryDependencies::~BinaryDependencies()
 {
 }
 
-bool BinaryDependencies::findDependencies(const QString & binaryFilePath, const Mdt::DeployUtils::PathList & searchFirstPathPrefixList)
+bool BinaryDependencies::findDependencies(const QString & binaryFilePath, const PathList & searchFirstPathPrefixList)
 {
   QFileInfo binaryFileInfo(binaryFilePath);
   auto impl = initImpl(binaryFileInfo, searchFirstPathPrefixList);

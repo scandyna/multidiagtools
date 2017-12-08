@@ -22,7 +22,7 @@
 #define LCONVERT_WRAPPER_TEST_H
 
 #include "TestBase.h"
-#include "Mdt/DeployUtils/PathList.h"
+#include "Mdt/FileSystem/PathList.h"
 
 class LconvertWrapperTest : public TestBase
 {
@@ -37,7 +37,7 @@ class LconvertWrapperTest : public TestBase
 
  private:
 
-  static Mdt::DeployUtils::PathList getPathPrefixList();
+  static Mdt::FileSystem::PathList getPathPrefixList();
 };
 
 #endif // #ifndef LCONVERT_WRAPPER_TEST_H

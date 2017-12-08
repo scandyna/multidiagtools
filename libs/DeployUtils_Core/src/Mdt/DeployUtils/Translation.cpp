@@ -29,6 +29,9 @@
 
 #include <QDebug>
 
+using namespace Mdt::Translation;
+using namespace Mdt::FileSystem;
+
 namespace Mdt{ namespace DeployUtils{
 
 Translation::Translation(QObject* parent)

@@ -1,6 +1,6 @@
 format 215
 "Mdt" // Mdt
-  revision 61
+  revision 63
   modified_by 2 "philippe"
   // class settings
   
@@ -1086,50 +1086,6 @@ ${items}};
       end
     end
 
-    classdiagram 3706114 "LanguageSelectionMenu"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 4305538 "LanguageSelectionMenu"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 4305666 "LanguageAction"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4859266 // <generalisation>
-	relation 4833026 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4859266 // <generalisation>
-	  b parent class_ref 693250 // QAction
-      end
-    end
-
     class 4325890 "ApplicationImpl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -1880,9 +1836,13 @@ ${members}};
 
   package_ref 667650 // ItemView
 
+  package_ref 641538 // ItemCopier
+
   package_ref 516226 // SqlItemModel
 
   package_ref 503042 // ItemEditor
+
+  package_ref 753026 // Entity
 
   package_ref 509570 // WebSocket
 
@@ -1892,13 +1852,11 @@ ${members}};
 
   package_ref 733442 // NumericRange
 
-  package_ref 654594 // File
+  package_ref 654594 // FileSystem
 
   package_ref 641410 // PlainText
 
   package_ref 621826 // TextStorage
-
-  package_ref 641538 // ItemCopier
 
   package_ref 700546 // Comm_Bus_sandbox
 

@@ -10,7 +10,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtdeployutilstest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtdeployutilstest PlainTextTestUtils DeployUtils_Core Application_Core Qt5::Test)
+target_link_libraries(mdtdeployutilstest PlainTextTestUtils DeployUtils_Core TestLib_Core Application_Core Qt5::Test)
 
 #=============== Helper functions ===========
 
@@ -26,7 +26,6 @@ endfunction()
 
 #================= Tests ====================
 
-addDeployUtilsTest("PathTest")
 addDeployUtilsTest("LibraryTest")
 addDeployUtilsTest("LibraryTreeTest")
 addDeployUtilsTest("LddParserTest")
@@ -65,9 +64,6 @@ addDeployUtilsTest("RPathTest")
 if(UNIX AND NOT APPLE)
   addDeployUtilsTest("RPathTestLinux")
 endif()
-addDeployUtilsTest("QmFileNameTest")
-addDeployUtilsTest("QmFileNameBenchmark")
-addDeployUtilsTest("TranslationInfoTest")
 addDeployUtilsTest("FindTranslationTest")
 addDeployUtilsTest("MdtLibraryTest")
 addDeployUtilsTest("QtToolWrapperTest")

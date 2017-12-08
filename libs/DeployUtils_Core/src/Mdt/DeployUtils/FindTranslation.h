@@ -21,15 +21,15 @@
 #ifndef MDT_DEPLOY_UTILS_FIND_TRANSLATION_H
 #define MDT_DEPLOY_UTILS_FIND_TRANSLATION_H
 
-#include "TranslationInfo.h"
-#include "TranslationInfoList.h"
 #include "QtModule.h"
 #include "QtModuleList.h"
 #include "LibraryInfo.h"
 #include "LibraryInfoList.h"
-#include "PathList.h"
 #include "MdtDeployUtils_CoreExport.h"
 #include "Mdt/Expected.h"
+#include "Mdt/FileSystem/PathList.h"
+#include "Mdt/Translation/TranslationInfo.h"
+#include "Mdt/Translation/TranslationInfoList.h"
 #include <QString>
 #include <QStringList>
 
@@ -47,7 +47,7 @@ namespace Mdt{ namespace DeployUtils{
    * Translations are searched in directories defined
    *  using findQtTranslationsRoot().
    */
-  Mdt::Expected<TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findQtTranslations(QtModuleList qtModules, const QStringList & languageSuffixes, const PathList & pathPrefixList);
+  Mdt::Expected<Mdt::Translation::TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findQtTranslations(QtModuleList qtModules, const QStringList & languageSuffixes, const Mdt::FileSystem::PathList & pathPrefixList);
 
   /*! \brief Get a list of QM file base names for a Qt module
    */
@@ -68,7 +68,7 @@ namespace Mdt{ namespace DeployUtils{
    *  from prefixes in it.
    *  Else, system path prefixes will be used.
    */
-  QString MDT_DEPLOYUTILS_CORE_EXPORT findQtTranslationsRoot(const PathList & pathPrefixList);
+  QString MDT_DEPLOYUTILS_CORE_EXPORT findQtTranslationsRoot(const Mdt::FileSystem::PathList & pathPrefixList);
 
 //   /*! \brief Find translations for a Mdt library
 //    *
@@ -82,7 +82,7 @@ namespace Mdt{ namespace DeployUtils{
    * Translations are searched in directories defined
    *  using findMdtTranslationsRoot().
    */
-  Mdt::Expected<TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findMdtTranslations(const LibraryInfoList & mdtLibraries, const QStringList & languageSuffixes, const PathList & pathPrefixList);
+  Mdt::Expected<Mdt::Translation::TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findMdtTranslations(const LibraryInfoList & mdtLibraries, const QStringList & languageSuffixes, const Mdt::FileSystem::PathList & pathPrefixList);
 
   /*! \brief Find the root directory of Mdt translations
    *
@@ -95,22 +95,7 @@ namespace Mdt{ namespace DeployUtils{
    *  from prefixes in it.
    *  Else, system path prefixes will be used.
    */
-  QString MDT_DEPLOYUTILS_CORE_EXPORT findMdtTranslationsRoot(const PathList & pathPrefixList);
-
-  /*! \brief Find the root directory of translations
-   *
-   * For a given path prefix, a subdirectory, named \a directory,
-   *  will be located in \a possibleSubdirectories .
-   *
-   * A path is considered as the expectet translation only if a QM file,
-   *  for which the base name is \a expectedQmFileBaseName , exists.
-   *
-   * If \a pathPrefixList contains at least 1 non empty path,
-   *  \a directory will only be located starting
-   *  from prefixes in it.
-   *  Else, system path prefixes will be used.
-   */
-  QString MDT_DEPLOYUTILS_CORE_EXPORT findDirectoryRoot(const QString & directory, const QStringList & possibleSubdirectories, const QString & expectedQmFileBaseName, const PathList & pathPrefixList);
+  QString MDT_DEPLOYUTILS_CORE_EXPORT findMdtTranslationsRoot(const Mdt::FileSystem::PathList & pathPrefixList);
 
   /*! \brief Generate a list of QM file names
    */
@@ -122,7 +107,7 @@ namespace Mdt{ namespace DeployUtils{
 
   /*! \brief Find translations in a directory
    */
-  Mdt::Expected<TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findTranslationsInDirectory(const QStringList & qmFileNames, const QString & directoryPath);
+  Mdt::Expected<Mdt::Translation::TranslationInfoList> MDT_DEPLOYUTILS_CORE_EXPORT findTranslationsInDirectory(const QStringList & qmFileNames, const QString & directoryPath);
 
 }} // namespace Mdt{ namespace DeployUtils{
 

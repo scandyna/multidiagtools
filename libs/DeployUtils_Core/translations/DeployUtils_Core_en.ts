@@ -4,12 +4,12 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependencies</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="112"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="114"/>
         <source>File &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="138"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependencies.cpp" line="140"/>
         <source>Could not find a tool to get dependencies for file &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -30,12 +30,12 @@
 <context>
     <name>Mdt::DeployUtils::BinaryDependenciesObjdump</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="135"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="136"/>
         <source>Parsing objdump output for file &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="147"/>
+        <location filename="../src/Mdt/DeployUtils/BinaryDependenciesObjdump.cpp" line="148"/>
         <source>Could not find library &apos;%1&apos;.
 Searched in %2</source>
         <translation type="unfinished"></translation>
@@ -91,7 +91,7 @@ Searched in %2</source>
 <context>
     <name>Mdt::DeployUtils::Library</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/Library.cpp" line="74"/>
+        <location filename="../src/Mdt/DeployUtils/Library.cpp" line="76"/>
         <source>Could not find library &apos;%1&apos; in one of the following paths: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -143,7 +143,7 @@ Searched in %2</source>
 <context>
     <name>findMdtTranslations()</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="153"/>
+        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="157"/>
         <source>Could not find translations directory for Mdt libraries. Searched in: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -151,7 +151,7 @@ Searched in %2</source>
 <context>
     <name>findQtTranslations()</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="61"/>
+        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="65"/>
         <source>Could not find translations directory for Qt libraries. Searched in: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -159,7 +159,7 @@ Searched in %2</source>
 <context>
     <name>findTranslationsInDirectory()</name>
     <message>
-        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="227"/>
+        <location filename="../src/Mdt/DeployUtils/FindTranslation.cpp" line="199"/>
         <source>Directory &apos;%1&apos; does not exist.</source>
         <translation type="unfinished"></translation>
     </message>
