@@ -1,6 +1,6 @@
 format 215
 "Device" // Mdt::Device
-  revision 5
+  revision 6
   modified_by 2 "philippe"
   // class settings
   
@@ -265,7 +265,7 @@ ${inlines}
       end
     end
 
-    class 4426370 "DeviceApiSnadbox"
+    class 4426370 "DeviceApiSandbox"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

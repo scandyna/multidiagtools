@@ -8,9 +8,6 @@ classcanvas 128130 class_ref 4439682 // QTranslator
   classdiagramsettings member_max_width 0 end
   xyz 286.25 164.25 2000
 end
-note 128258 "See:
-https://wiki.qt.io/How_to_create_a_multi_language_application"
-  xyzwh 40.5 374 2000 449 81
 classcanvas 128386 class_ref 2706562 // QActionGroup
   classdiagramsettings member_max_width 0 end
   xyz 144 164.25 2006

@@ -1,0 +1,24 @@
+format 215
+
+classcanvas 128002 class_ref 4474498 // SomeEntityData
+  classdiagramsettings member_max_width 0 end
+  xyz 466 136 2000
+end
+classcanvas 128130 class_ref 4474626 // SomeEntity
+  classdiagramsettings member_max_width 0 end
+  xyz 89 140 2000
+end
+note 128386 "Can be used by Boost.Fusion (xx_ADAPT_STRUCT)"
+  xyzwh 354 42 2000 357 53
+note 128642 "Can contains logic, assertions, etc.."
+  xyzwh 35 55 2000 283 51
+relationcanvas 128258 relation_ref 4975106 // <directional composition>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128514 -_-_ decenter_begin 509 decenter_end 526
+  from ref 128386 z 2001 to ref 128002
+line 128770 -_-_
+  from ref 128130 z 2001 to ref 128642
+end

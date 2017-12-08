@@ -46,7 +46,7 @@ classcanvas 129666 class_ref 4467458 // EntityTypeMap
 end
 classcanvas 129794 class_ref 4467586 // FieldPropertyList
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 851.5 2000
+  xyz 721.5 615.5 2000
 end
 classcanvas 130178 class_ref 4467714 // ClientDefinition
   classdiagramsettings member_max_width 0 end
