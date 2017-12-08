@@ -27,3 +27,4 @@ endfunction()
 #================= Tests ====================
 
 addTestLib_CoreTest("FakeRootTest")
+addTestLib_CoreTest("CreateFileTest")

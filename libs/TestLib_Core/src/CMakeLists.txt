@@ -2,6 +2,7 @@
 # List of source files
 set(SOURCE_FILES
   Mdt/TestLib/FakeRoot.cpp
+  Mdt/TestLib/CreateFile.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
