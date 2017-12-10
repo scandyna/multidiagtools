@@ -1,15 +1,28 @@
 format 215
 
-classcanvas 128002 class_ref 4474498 // SomeEntityData
+classcanvas 128130 class_ref 4474754 // EntityAttribute
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 40.5 2000
-end
-classcanvas 128130 class_ref 4474754 // EntityAttributes
-  classdiagramsettings member_max_width 0 end
-  xyzwh 40.5 249.5 2000 457 171
+  xyzwh 48.5 370.5 2000 457 193
 end
 classcanvas 128258 class_ref 4474882 // EntityToQObject
   classdiagramsettings member_max_width 0 end
-  xyz 545 248 2000
+  xyz 568 386 2000
+end
+note 128386 "Ideal:
+ - Get a QObject representation of a value class.
+ Each member becomes a Q_PROPERTY
+
+Later, mapping of properties could be done:
+ - Is part of unique identifier
+ - Max length
+ - ..."
+  xyzwh 236 23 2000 461 195
+note 128514 "OR:
+ - A MACRO that generates both
+  (the bases)"
+  xyzwh 239 233 2000 257 91
+classcanvas 128642 class_ref 4488066 // MemberAttribute
+  classdiagramsettings member_max_width 0 end
+  xyz 579 483 2005
 end
 end
