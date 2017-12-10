@@ -1,0 +1,131 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+
+/*! \page libs_Entity Entity
+ *
+ *
+ * To create a entity.....
+ * \code
+ * MDT_ENTITY_CREATE(
+ *  Client,
+ *  MDT_ENTITY_WRITABLE_PROPERTY(long int, Id),
+ *  MDT_ENTITY_WRITABLE_PROPERTY(QString, FirstName),
+ *  MDT_ENTITY_WRITABLE_PROPERTY(QString, LasttName)
+ * )
+ * \endcode
+ *
+ * Will result to:
+ * \code
+ * struct ClientData
+ * {
+ *   long int Id;
+ *   QString FirstName;
+ *   QString LastName;
+ * };
+ * \endcode
+ *
+ * And also:
+ * \code
+ * class ClientObject : public QObject
+ * {
+ *  Q_OBJECT
+ *
+ *  public:
+ *
+ *   Q_PROPERTY(long int id READ id WRITE setId, ...);
+ *
+ *   void setId(long int id)
+ *   {
+ *    mClient.setId(id);
+ *   }
+ *
+ *   long int id() const
+ *   {
+ *    return mClient.id();
+ *   }
+ *   ...
+ *
+ *  private:
+ *
+ *   Client mClient;
+ * };
+ * \endcode
+ *
+ * You have to provide:
+ * \code
+ * class Client
+ * {
+ *  public:
+ *
+ *   void setId(long int id);
+ *   long int id() const;
+ *
+ * private:
+ *
+ *  ClientData mData;
+ * };
+ * \endcode
+ *
+ * Then, qttributes ....
+ *
+ *
+ *
+ *
+ *
+ * To create a entity, first create data class .................
+ * \code
+ * class ClientData
+ * {
+ *  public:
+ *
+ *   void setId(long int id);
+ *   long int id() const;
+ *
+ * private:
+ *
+ *  long int mId;
+ *  QString mFirstName;
+ *  QString mLastName;
+ * };
+ * \endcode
+ *
+ * Attributes..............
+ * \code
+ * class ClientAttribute : public QObject
+ * {
+ *  Q_OBJECT
+ *
+ * public:
+ *
+ *  Q_PROPERTY(id, ...);
+ * };
+ * \endcode
+ *
+ */
+
+namespace Mdt{
+
+  /*! \brief Some helpers to create a entity
+   */
+  namespace Entity{
+  }
+
+}

@@ -142,6 +142,7 @@ add_subdirectory(libs/FileSystem_Core)
 add_subdirectory(libs/DeployUtils_Core)
 add_subdirectory(libs/Translation_Core)
 add_subdirectory(libs/Translation_Widgets)
+add_subdirectory(libs/Entity_Core)
 
 # include(MdtInstallQt5)
 
