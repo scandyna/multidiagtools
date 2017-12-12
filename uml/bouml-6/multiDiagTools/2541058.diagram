@@ -1,4 +1,4 @@
-format 211
+format 215
 
 classcanvas 128002 class_ref 2866306 // FieldTypeName
   classdiagramsettings member_max_width 0 end
@@ -24,6 +24,10 @@ note 129282 "Note: the row in model is the FieldType (see FieldTypeName)"
   xyzwh 45.5 534.5 2000 419 41
 note 129666 "FieldTypeName: create a static array of const char* , for wcich the index is the FieldType (enum  value)."
   xyzwh 40.5 456.5 2000 727 51
+classcanvas 129922 class_ref 2256642 // FieldMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 480 543 2000
+end
 relationcanvas 128258 relation_ref 3232898 // <dependency>
   from ref 128130 z 2007 to ref 128002
   no_role_a no_role_b

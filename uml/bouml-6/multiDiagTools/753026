@@ -1,6 +1,6 @@
 format 215
 "Entity" // Mdt::Entity
-  revision 5
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -361,142 +361,6 @@ ${inlines}
       size A4
     end
 
-    class 4474754 "EntityAttribute"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      operation 6289282 "memberName"
-	class_operation public return_type class_ref 161026 // QString
-	nparams 2
-	  param in name "struct" explicit_type "StructType"
-	  param in name "member" explicit_type ""
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 6296322 "memberType"
-	class_operation public return_type class_ref 161026 // QString
-	nparams 2
-	  param in name "struct" explicit_type "StructType"
-	  param in name "member" explicit_type ""
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 6289538 "memberValue"
-	class_operation public return_type class_ref 161154 // QVariant
-	nparams 2
-	  param in name "struct" explicit_type "StructType"
-	  param in name "member" explicit_type ""
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 6289794 "setMemberMaxLength"
-	class_operation public explicit_return_type ""
-	nparams 3
-	  param in name "struct" explicit_type "StructType"
-	  param in name "member" explicit_type ""
-	  param in name "len" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 6289026 "memberMaxLength"
-	class_operation public explicit_return_type "int"
-	nparams 2
-	  param in name "struct" explicit_type "StructType"
-	  param in name "member" explicit_type ""
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 6289666 "setPartOfUniqueIdentifier"
-	class_operation public explicit_return_type ""
-	nparams 3
-	  param in name "struct" explicit_type "StructType"
-	  param in name "member" explicit_type ""
-	  param in name "ui" explicit_type "bool"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 6289154 "isPartOfUniqueIdentifier"
-	class_operation public explicit_return_type "bool"
-	nparams 2
-	  param in name "struct" explicit_type "StructType"
-	  param in name "member" explicit_type ""
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
     class 4474882 "EntityToQObject"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -660,7 +524,7 @@ ${inlines}
       end
     end
 
-    class 4488066 "MemberAttribute"
+    class 4488066 "PropertyAttributes"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -674,32 +538,8 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 3773186 "IsPartOfUniqueIdentifier"
-	private explicit_type ""
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 3773314 "CanBeNull"
-	private explicit_type ""
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       attribute 3773442 "MaxLength"
-	private explicit_type ""
+	private explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -708,6 +548,45 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      attribute 3786626 "DefaultValue"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 5021698 // <directional composition>
+	relation 4995458 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 5021698 // <directional composition>
+	  b parent class_ref 4501506 // PropertyFlags
+      end
+
+      operation 6310402 "PropertyAttributes"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "flags" type class_ref 4501506 // PropertyFlags
+	  param in name "maxLength" explicit_type "int"
+	  param in name "defaultValue" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -739,6 +618,261 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 5015042 // <generalisation>
 	  b parent class_ref 4467842 // Client
+      end
+    end
+
+    classdiagram 3879298 "PropertyAttributes"
+      classdiagramsettings member_max_width 0 end
+      size B
+    end
+
+    class 4474754 "EntityAttribute"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 6289282 "memberName"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "struct" explicit_type "StructType"
+	  param in name "member" explicit_type ""
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6296322 "memberType"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "struct" explicit_type "StructType"
+	  param in name "member" explicit_type ""
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6289538 "memberValue"
+	class_operation public return_type class_ref 161154 // QVariant
+	nparams 2
+	  param in name "struct" explicit_type "StructType"
+	  param in name "member" explicit_type ""
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6289794 "setMemberMaxLength"
+	class_operation public explicit_return_type ""
+	nparams 3
+	  param in name "struct" explicit_type "StructType"
+	  param in name "member" explicit_type ""
+	  param in name "len" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6289026 "memberMaxLength"
+	class_operation public explicit_return_type "int"
+	nparams 2
+	  param in name "struct" explicit_type "StructType"
+	  param in name "member" explicit_type ""
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6289666 "setPartOfUniqueIdentifier"
+	class_operation public explicit_return_type ""
+	nparams 3
+	  param in name "struct" explicit_type "StructType"
+	  param in name "member" explicit_type ""
+	  param in name "ui" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 6289154 "isPartOfUniqueIdentifier"
+	class_operation public explicit_return_type "bool"
+	nparams 2
+	  param in name "struct" explicit_type "StructType"
+	  param in name "member" explicit_type ""
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 4501378 "PropertyFlag"
+      visibility package stereotype "enum"
+      cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+      php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+      python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+      idl_decl "${comment}enum ${name} {
+${items}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3786754 "IsPartOfUniqueIdentifier"
+	public type class_ref 4501378 // PropertyFlag
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3786882 "IsRequired"
+	public type class_ref 4501378 // PropertyFlag
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3787010 "IsUnique"
+	public type class_ref 4501378 // PropertyFlag
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 4501506 "PropertyFlags"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 5021826 // <realization>
+	relation 4995586 -_-|>
+	  a private
+	    cpp default "${type}"
+	    classrelation_ref 5021826 // <realization>
+	  b parent class_ref 4501378 // PropertyFlag
+      end
+    end
+
+    class 4501634 "EntityBase"
+      visibility package 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 6310146 "setPropertyAttributes"
+	cpp_inline public explicit_return_type "void"
+	nparams 2
+	  param in name "property" explicit_type "string"
+	  param in name "attributes" type class_ref 4488066 // PropertyAttributes
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end

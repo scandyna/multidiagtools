@@ -21,7 +21,7 @@ note 128514 "OR:
  - A MACRO that generates both
   (the bases)"
   xyzwh 239 233 2000 257 91
-classcanvas 128642 class_ref 4488066 // MemberAttribute
+classcanvas 128642 class_ref 4488066 // PropertyAttributes
   classdiagramsettings member_max_width 0 end
   xyz 579 483 2005
 end
