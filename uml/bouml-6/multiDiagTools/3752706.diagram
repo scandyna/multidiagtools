@@ -1,7 +1,0 @@
-format 214
-
-classcanvas 128002 class_ref 4379138 // QTextStream
-  classdiagramsettings member_max_width 0 end
-  xyz 112 219 2000
-end
-end

@@ -1,5 +1,0 @@
-format 211
-
-note 128002 "Some logic, that uses storage, but that at first handle logic of the appication"
-  xyzwh 169 132 2000 617 45
-end

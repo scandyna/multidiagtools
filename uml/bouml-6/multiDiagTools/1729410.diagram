@@ -1,7 +1,0 @@
-format 210
-
-classcanvas 128002 class_ref 2078850 // mdtCsvGeneratorSettings
-  classdiagramsettings member_max_width 0 end
-  xyz 240 314 2000
-end
-end

@@ -1,6 +1,0 @@
-format 214
-
-note 128002 "Create a package that contains Mdt libraries as well as its dependencies, like Qt5, and also Qt5's dependencies, like ICU.
-See how Qt5 is ditributed."
-  xyzwh 31 84 2000 665 105
-end

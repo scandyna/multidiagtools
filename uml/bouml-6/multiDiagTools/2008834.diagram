@@ -1,6 +1,0 @@
-format 211
-
-note 128002 "Wrap lib_usb structures ?
-Helper function to  get infos.."
-  xyzwh 222 83 2000 385 107
-end

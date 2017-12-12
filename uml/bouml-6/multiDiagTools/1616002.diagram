@@ -1,7 +1,0 @@
-format 209
-
-classcanvas 128002 class_ref 1934594 // mdtSqlDatabaseCopierDialog
-  classdiagramsettings member_max_width 0 end
-  xyz 94 207 2000
-end
-end

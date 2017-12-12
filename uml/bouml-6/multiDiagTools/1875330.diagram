@@ -1,7 +1,0 @@
-format 210
-
-classcanvas 128002 class_ref 2247298 // QEvent
-  classdiagramsettings member_max_width 0 end
-  xyz 140 254 2000
-end
-end
