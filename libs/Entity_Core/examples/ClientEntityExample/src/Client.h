@@ -23,6 +23,10 @@
 
 #include <QObject>
 #include <QString>
+#include <QFlags>
+#include <QByteArray>
+#include <QHash>
+
 
 #include <QDebug>
 
@@ -56,6 +60,46 @@ class Client
   QString mFirstName;
 };
 
+enum class PropertyFlag
+{
+  IsPartOfUniqueIdentifier = 0x01,
+  IsRequired = 0x02
+};
+Q_DECLARE_FLAGS(PropertyFlags, PropertyFlag)
+Q_DECLARE_OPERATORS_FOR_FLAGS(PropertyFlags)
+
+class PropertyAttributes
+{
+ public:
+
+  PropertyAttributes() = default;
+
+  PropertyAttributes(PropertyFlags flags, int maxLength = -1)
+   : mFlags(flags),
+     mMaxLength(maxLength)
+  {
+  }
+
+  PropertyFlags flags() const
+  {
+    return mFlags;
+  }
+
+  int maxLength() const
+  {
+    return mMaxLength;
+  }
+
+//   bool isNull() const
+//   {
+//   }
+
+ private:
+
+  PropertyFlags mFlags;
+  int mMaxLength = -1;
+};
+
 template<typename T>
 class EntityObject : public QObject, public T
 {
@@ -71,7 +115,39 @@ class EntityObject : public QObject, public T
     return static_cast<const T &>(*this);
   }
 
+  void setPropertyAttributes(const QByteArray & propertyName, const PropertyAttributes & attributes)
+  {
+    Q_ASSERT_X( metaObject()->indexOfProperty(propertyName.constData()) >= 0, "Entity::setPropertyAttributes(): cannot set attributes to non existing property. Passed property name", propertyName.constData());
+    mPropertyAttributesMap[propertyName] = attributes;
+  }
+
+  void setPropertyAttributes(const QByteArray & propertyName, PropertyFlags flags, int maxLength = -1)
+  {
+    setPropertyAttributes(propertyName, PropertyAttributes(flags, maxLength));
+  }
+
+  void setPropertyAttributes(const QByteArray & propertyName, int maxLength)
+  {
+    setPropertyAttributes(propertyName, PropertyFlags(), maxLength);
+  }
+
+  PropertyAttributes propertyAttributes(const QByteArray & propertyName) const
+  {
+    return mPropertyAttributesMap.value(propertyName);
+  }
+
+ private:
+
+  QHash<QByteArray, PropertyAttributes> mPropertyAttributesMap;
 };
+
+/// Macros: see https://github.com/liu-xiao-guo/qqmlobjectlistmodel/blob/master/qqmlhelpers.h
+
+/*
+#define MDT_ENTITY_PROPERTY(type, name, attributes, ...) \
+  setPropertyAttributes(name, attributes), \
+  Q_PROPERTY(type name __VA_ARGS__)
+*/
 
 class ClientObject : public EntityObject<Client>
 {
@@ -83,7 +159,16 @@ class ClientObject : public EntityObject<Client>
   Q_PROPERTY(qlonglong id READ id WRITE setId)
   Q_PROPERTY(QString firstName READ firstName WRITE setFirstName)
 
+//   MDT_ENTITY_PROPERTY(qlonglong, id, PropertyAttributes(PropertyFlag::IsPartOfUniqueIdentifier), READ id, WRITE setId)
+  /// MDT_ENTITY_PROPERTY()
+
   // Maybe notifier signals and additionnal stuff that requires QObject
+
+  explicit ClientObject(QObject *parent = nullptr)
+  {
+    setPropertyAttributes("id", PropertyFlag::IsPartOfUniqueIdentifier | PropertyFlag::IsRequired);
+    setPropertyAttributes("firstName", 250);
+  }
 };
 
 #endif // #ifndef CLIENT_H
