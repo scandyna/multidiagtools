@@ -1,7 +1,0 @@
-format 210
-
-classcanvas 128002 class_ref 2035970 // safe_bool
-  classdiagramsettings member_max_width 0 end
-  xyz 131 350 2000
-end
-end

@@ -1,7 +1,0 @@
-format 214
-
-classcanvas 128130 class_ref 2859394 // Expected
-  classdiagramsettings member_max_width 0 end
-  xyz 40.5 40.5 2005
-end
-end

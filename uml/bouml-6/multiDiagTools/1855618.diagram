@@ -1,7 +1,0 @@
-format 210
-
-classcanvas 128002 class_ref 2227202 // QFileDialog
-  classdiagramsettings member_max_width 0 end
-  xyz 103 187 2000
-end
-end

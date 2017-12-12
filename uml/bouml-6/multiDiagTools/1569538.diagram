@@ -1,9 +1,0 @@
-format 209
-
-classcanvas 130178 class_ref 316162 // QWidget
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 414 52 2022
-end
-note 130434 "Possibilité de récupérer liste des champs ?"
-  xyzwh 154 455 2000 279 51
-end

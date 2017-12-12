@@ -1,7 +1,0 @@
-format 210
-
-classcanvas 128258 class_ref 895618 // QGraphicsScene
-  classdiagramsettings member_max_width 0 end
-  xyz 192 273 2000
-end
-end

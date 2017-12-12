@@ -1,7 +1,0 @@
-format 211
-
-classcanvas 128002 class_ref 3958018 // QwtPlotSeriesItem
-  classdiagramsettings member_max_width 0 end
-  xyz 111 161 2000
-end
-end

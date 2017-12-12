@@ -1,7 +1,0 @@
-format 211
-
-classcanvas 128002 class_ref 2447746 // QAudioBuffer
-  classdiagramsettings member_max_width 0 end
-  xyz 110 266 2000
-end
-end
