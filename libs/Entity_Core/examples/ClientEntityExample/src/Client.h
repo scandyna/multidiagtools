@@ -30,9 +30,15 @@
 
 #include <QDebug>
 
+struct ClientDataStruct
+{
+  qlonglong id = 0;
+  QString firstName;
+};
+
 /*! \brief Client value class
  */
-class Client
+class ClientData
 {
  public:
 
@@ -44,20 +50,19 @@ class Client
    */
   long int id() const
   {
-    return mId;
+    return mData.id;
   }
 
   void setFirstName(const QString & name);
 
   QString firstName() const
   {
-    return mFirstName;
+    return mData.firstName;
   }
 
  private:
 
-  long int mId = 0;
-  QString mFirstName;
+   ClientDataStruct mData;
 };
 
 enum class PropertyFlag
@@ -100,8 +105,68 @@ class PropertyAttributes
   int mMaxLength = -1;
 };
 
+/*! \brief Base class to create a entity
+ *
+ * In the context of Mdt::Entity,
+ *  a entity is divided in several parts:
+ *  - the entity data struct, that can be used for some compile time introspection,
+ *    for example to help generating a Mdt::Sql::TableTemplate
+ *  - the entity data, which is a lightweight value class
+ *  - TODO ADAPT maybe the entity description, which is based on EntityBase (which inherits QObject),
+ *    and uses the QObject introspection to store properties.
+ *    PropertyAttributes can also be assigned to properties
+ *
+ * TODO ADAPT The entity description can be reused by the Mdt::Sql library,
+ *  for example to create a table (see Mdt::Sql::Table).
+ *
+ * At first, create the entity struct:
+ * \code
+ * struct ClientDataStruct
+ * {
+ *  qlonglong id = 0;
+ *  QString firstName;
+ * };
+ * \endcode
+ *
+ * Notice that the types of each member of the struct should be known by QMetaType .
+ *
+ * Then, create the entity data class:
+ * \code
+ * class ClientData
+ * {
+ *  public:
+ *
+ *    void setId(qlonglong id);
+ *    qlonglong id() const;
+ *
+ *  private:
+ *
+ *    ClientDataStruct mData;
+ * };
+ * \endcode
+ *
+ *
+ * Then, create the entity description:
+ * \code
+ * class Client : public EntityBase<ClientData>
+ * {
+ *  Q_OBJECT
+ *
+ *  public:
+ *
+ *    Q_PROPERTY(qlonglong id READ id WRITE setId)
+ *    Q_PROPERTY(QString firstName READ firstName WRITE setFirstName)
+ *
+ *    explicit Client(QObject *parent = nullptr)
+ *    {
+ *      setPropertyAttributes("id", PropertyFlag::IsPartOfUniqueIdentifier | PropertyFlag::IsRequired);
+ *      setPropertyAttributes("firstName", 250);
+ *    }
+ * };
+ * \endcode
+ */
 template<typename T>
-class EntityObject : public QObject, public T
+class EntityBase : public QObject, public T
 {
  public:
 
@@ -149,7 +214,7 @@ class EntityObject : public QObject, public T
   Q_PROPERTY(type name __VA_ARGS__)
 */
 
-class ClientObject : public EntityObject<Client>
+class Client : public EntityBase<ClientData>
 {
  Q_OBJECT
 
@@ -164,7 +229,7 @@ class ClientObject : public EntityObject<Client>
 
   // Maybe notifier signals and additionnal stuff that requires QObject
 
-  explicit ClientObject(QObject *parent = nullptr)
+  explicit Client(QObject *parent = nullptr)
   {
     setPropertyAttributes("id", PropertyFlag::IsPartOfUniqueIdentifier | PropertyFlag::IsRequired);
     setPropertyAttributes("firstName", 250);

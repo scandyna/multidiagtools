@@ -20,12 +20,12 @@
  ****************************************************************************/
 #include "Client.h"
 
-void Client::setId(long int id)
+void ClientData::setId(long int id)
 {
-  mId = id;
+  mData.id = id;
 }
 
-void Client::setFirstName(const QString& name)
+void ClientData::setFirstName(const QString& name)
 {
-  mFirstName = name;
+  mData.firstName = name;
 }

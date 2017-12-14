@@ -29,7 +29,7 @@
 #include <QDebug>
 
 template<typename T>
-void debugQObjectProperties(const EntityObject<T> & obj)
+void debugQObjectProperties(const EntityBase<T> & obj)
 {
   Q_ASSERT(obj.metaObject() != nullptr);
 
@@ -67,12 +67,12 @@ void debugQObjectProperties(const EntityObject<T> & obj)
 
 void sandbox()
 {
-  ClientObject co;
+  Client co;
   co.setId(25);
   qDebug() << "co id: " << co.id();
   qDebug() << "co: " << &co;
   
-  Client cli1;
+  ClientData cli1;
   cli1.setId(1);
   cli1.setFirstName("cli1");
 //   co = cli1;
