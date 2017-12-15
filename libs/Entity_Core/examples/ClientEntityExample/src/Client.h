@@ -35,11 +35,13 @@ class ColumnTemplate
 {
  public:
 
-//   Derived & operator=(const ColumnTemplate<T, Derived> & rhs)
-//   {
-//     mValue = rhs.mValue;
-//     return *this;
-//   }
+  ColumnTemplate() = default;
+  ColumnTemplate(const ColumnTemplate &) = default;
+
+  ColumnTemplate(const T & value)
+   : mValue(value)
+  {
+  }
 
   Derived & operator=(const T & value)
   {
@@ -57,63 +59,53 @@ class ColumnTemplate
     return mValue;
   }
 
-//  protected:
-// 
-//   const T & value() const
-//   {
-//     return mValue;
-//   }
-// 
-//   void setValue(const T & value)
-//   {
-//     mValue = value;
-//   }
-
  private:
 
   T mValue;
 };
 
-class firstNameColumn : public ColumnTemplate<QString, firstNameColumn>
+#define MDT_ENTITY_COLUMN(Type, name)                                 \
+  class name ## Column : public ColumnTemplate<Type, name ## Column>  \
+  {                                                                   \
+   public:                                                            \
+    using ColumnTemplate<Type, name ## Column>::operator=;            \
+    using ColumnTemplate<Type, name ## Column>::ColumnTemplate;       \
+    static const QString name()                                       \
+    {                                                                 \
+      return QString::fromUtf8("name");                               \
+    }                                                                 \
+  };
+
+MDT_ENTITY_COLUMN(QString, firstName)
+
+// class firstNameColumn : public ColumnTemplate<QString, firstNameColumn>
+// {
+//  public:
+// 
+//   using ColumnTemplate<QString, firstNameColumn>::operator=;
+// 
+//   static const QString name()
+//   {
+//     return QString::fromUtf8("firstName");
+//   }
+// };
+
+class idColumn : public ColumnTemplate<qlonglong, idColumn>
 {
  public:
 
-  using ColumnTemplate<QString, firstNameColumn>::operator=;
-//   firstNameColumn & operator=(const QString & value)
-//   {
-//     setValue(value);
-//     return *this;
-//   }
-// 
-//   firstNameColumn & operator=(const firstNameColumn & rhs)
-//   {
-//     setValue(rhs.value());
-//     return *this;
-//   }
-// 
-//   operator QString&()
-//   {
-//     return firstName;
-//   }
-// 
-//   operator const QString&() const
-//   {
-//     return firstName;
-//   }
+  using ColumnTemplate<qlonglong, idColumn>::operator=;
+  using ColumnTemplate<qlonglong, idColumn>::ColumnTemplate;
 
   static const QString name()
   {
-    return QString::fromUtf8("firstName");
+    return QString::fromUtf8("id");
   }
-
-//  private:
-// 
-//   QString firstName;
 };
 
 struct ClientDataStruct
 {
-  qlonglong id = 0;
+  idColumn id = 0;
   firstNameColumn firstName;
 };
 
