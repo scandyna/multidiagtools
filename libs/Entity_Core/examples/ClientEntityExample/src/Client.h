@@ -30,10 +30,91 @@
 
 #include <QDebug>
 
+template<typename T, typename Derived>
+class ColumnTemplate
+{
+ public:
+
+//   Derived & operator=(const ColumnTemplate<T, Derived> & rhs)
+//   {
+//     mValue = rhs.mValue;
+//     return *this;
+//   }
+
+  Derived & operator=(const T & value)
+  {
+    mValue = value;
+    return static_cast<Derived&>(*this);
+  }
+
+  operator T &()
+  {
+    return mValue;
+  }
+
+  operator const T &() const
+  {
+    return mValue;
+  }
+
+//  protected:
+// 
+//   const T & value() const
+//   {
+//     return mValue;
+//   }
+// 
+//   void setValue(const T & value)
+//   {
+//     mValue = value;
+//   }
+
+ private:
+
+  T mValue;
+};
+
+class firstNameColumn : public ColumnTemplate<QString, firstNameColumn>
+{
+ public:
+
+  using ColumnTemplate<QString, firstNameColumn>::operator=;
+//   firstNameColumn & operator=(const QString & value)
+//   {
+//     setValue(value);
+//     return *this;
+//   }
+// 
+//   firstNameColumn & operator=(const firstNameColumn & rhs)
+//   {
+//     setValue(rhs.value());
+//     return *this;
+//   }
+// 
+//   operator QString&()
+//   {
+//     return firstName;
+//   }
+// 
+//   operator const QString&() const
+//   {
+//     return firstName;
+//   }
+
+  static const QString name()
+  {
+    return QString::fromUtf8("firstName");
+  }
+
+//  private:
+// 
+//   QString firstName;
+};
+
 struct ClientDataStruct
 {
   qlonglong id = 0;
-  QString firstName;
+  firstNameColumn firstName;
 };
 
 /*! \brief Client value class
