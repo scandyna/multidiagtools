@@ -30,114 +30,6 @@
 
 #include <QDebug>
 
-template<typename T, typename Derived>
-class ColumnTemplate
-{
- public:
-
-  ColumnTemplate() = default;
-  ColumnTemplate(const ColumnTemplate &) = default;
-
-  ColumnTemplate(const T & value)
-   : mValue(value)
-  {
-  }
-
-  Derived & operator=(const T & value)
-  {
-    mValue = value;
-    return static_cast<Derived&>(*this);
-  }
-
-  operator T &()
-  {
-    return mValue;
-  }
-
-  operator const T &() const
-  {
-    return mValue;
-  }
-
- private:
-
-  T mValue;
-};
-
-#define MDT_ENTITY_COLUMN(Type, name)                                 \
-  class name ## Column : public ColumnTemplate<Type, name ## Column>  \
-  {                                                                   \
-   public:                                                            \
-    using ColumnTemplate<Type, name ## Column>::operator=;            \
-    using ColumnTemplate<Type, name ## Column>::ColumnTemplate;       \
-    static const QString name()                                       \
-    {                                                                 \
-      return QString::fromUtf8("name");                               \
-    }                                                                 \
-  };
-
-MDT_ENTITY_COLUMN(QString, firstName)
-
-// class firstNameColumn : public ColumnTemplate<QString, firstNameColumn>
-// {
-//  public:
-// 
-//   using ColumnTemplate<QString, firstNameColumn>::operator=;
-// 
-//   static const QString name()
-//   {
-//     return QString::fromUtf8("firstName");
-//   }
-// };
-
-class idColumn : public ColumnTemplate<qlonglong, idColumn>
-{
- public:
-
-  using ColumnTemplate<qlonglong, idColumn>::operator=;
-  using ColumnTemplate<qlonglong, idColumn>::ColumnTemplate;
-
-  static const QString name()
-  {
-    return QString::fromUtf8("id");
-  }
-};
-
-struct ClientDataStruct
-{
-  idColumn id = 0;
-  firstNameColumn firstName;
-};
-
-/*! \brief Client value class
- */
-class ClientData
-{
- public:
-
-  /*! \brief Set client Id
-   */
-  void setId(long int id);
-
-  /*! \brief Get client Id
-   */
-  long int id() const
-  {
-    return mData.id;
-  }
-
-  void setFirstName(const QString & name);
-
-  QString firstName() const
-  {
-    return mData.firstName;
-  }
-
- private:
-
-   ClientDataStruct mData;
-};
-
 enum class PropertyFlag
 {
   IsPartOfUniqueIdentifier = 0x01,
@@ -176,6 +68,134 @@ class PropertyAttributes
 
   PropertyFlags mFlags;
   int mMaxLength = -1;
+};
+
+
+template<typename T, typename Derived>
+class ColumnTemplate
+{
+ public:
+
+  ColumnTemplate() = default;
+  ColumnTemplate(const ColumnTemplate &) = default;
+
+  ColumnTemplate(const T & value)
+   : mValue(value)
+  {
+  }
+
+  template<typename...Ts>
+  ColumnTemplate(const T & value, const Ts & ...args)
+   : ColumnTemplate(value)
+  {
+    static_assert(sizeof...(args) == 0, "a entity column only supports a default value");
+  }
+
+  Derived & operator=(const T & value)
+  {
+    mValue = value;
+    return static_cast<Derived&>(*this);
+  }
+
+  operator T &()
+  {
+    return mValue;
+  }
+
+  operator const T &() const
+  {
+    return mValue;
+  }
+
+ private:
+
+  T mValue;
+};
+
+#define MDT_ENTITY_COLUMN(Type, name, ...)                                 \
+  class name ## Column : public ColumnTemplate<Type, name ## Column>  \
+  {                                                                   \
+   public:                                                            \
+    using ColumnTemplate<Type, name ## Column>::operator=;            \
+    using ColumnTemplate<Type, name ## Column>::ColumnTemplate;       \
+    static const QString columnName()                                 \
+    {                                                                 \
+      return QString::fromUtf8(#name);                                \
+    }                                                                 \
+  };                                                                  \
+  name ## Column name{__VA_ARGS__};
+
+struct DataStruct
+{
+  MDT_ENTITY_COLUMN(qlonglong, id, 0)
+  MDT_ENTITY_COLUMN(QString, name)
+};
+
+struct DataStruct2
+{
+  MDT_ENTITY_COLUMN(qlonglong, id, 150)
+  MDT_ENTITY_COLUMN(QString, name)
+};
+
+// class firstNameColumn : public ColumnTemplate<QString, firstNameColumn>
+// {
+//  public:
+// 
+//   using ColumnTemplate<QString, firstNameColumn>::operator=;
+// 
+//   static const QString name()
+//   {
+//     return QString::fromUtf8("firstName");
+//   }
+// };
+
+class idColumn : public ColumnTemplate<qlonglong, idColumn>
+{
+ public:
+
+  using ColumnTemplate<qlonglong, idColumn>::operator=;
+  using ColumnTemplate<qlonglong, idColumn>::ColumnTemplate;
+
+  static const QString name()
+  {
+    return QString::fromUtf8("id");
+  }
+};
+
+struct ClientDataStruct
+{
+  MDT_ENTITY_COLUMN(qlonglong, id, 0)
+  MDT_ENTITY_COLUMN(QString, firstName)
+//   firstNameColumn firstName;
+};
+
+/*! \brief Client value class
+ */
+class ClientData
+{
+ public:
+
+  /*! \brief Set client Id
+   */
+  void setId(long int id);
+
+  /*! \brief Get client Id
+   */
+  long int id() const
+  {
+    return mData.id;
+  }
+
+  void setFirstName(const QString & name);
+
+  QString firstName() const
+  {
+    return mData.firstName;
+  }
+
+ private:
+
+   ClientDataStruct mData;
 };
 
 /*! \brief Base class to create a entity
@@ -302,7 +322,8 @@ class Client : public EntityBase<ClientData>
 
   // Maybe notifier signals and additionnal stuff that requires QObject
 
-  explicit Client(QObject *parent = nullptr)
+  explicit Client(/**QObject *parent = nullptr*/)
+   /// : EntityBase(parent)
   {
     setPropertyAttributes("id", PropertyFlag::IsPartOfUniqueIdentifier | PropertyFlag::IsRequired);
     setPropertyAttributes("firstName", 250);
