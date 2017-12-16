@@ -12,10 +12,10 @@ set(SOURCE_FILES
     src/Schema/Client2.cpp
     src/Schema/Address.cpp
     src/Schema/Address2.cpp
-    src/Schema/ClientPopulation.cpp
-    src/Schema/ClientAddressView.cpp
-    src/Schema/TestSchema.cpp
-    src/Schema/LikeExpressionTestSchema.cpp
+#     src/Schema/ClientPopulation.cpp
+#     src/Schema/ClientAddressView.cpp
+#     src/Schema/TestSchema.cpp
+#     src/Schema/LikeExpressionTestSchema.cpp
 )
 
 add_library(mdtsqltest SHARED ${SOURCE_FILES})
@@ -38,26 +38,26 @@ endfunction()
 
 addSqlTest("SimpleTypesTest")
 addSqlTest("FieldNameTest")
-addSqlTest("SelectFieldTest")
-addSqlTest("ExpressionTest")
-addSqlTest("LikeExpressionTest")
-addSqlTest("LikeExpressionSqliteTest")
-addSqlTest("WhereExpressionTest")
-addSqlTest("JoinConstraintExpressionTest")
-addSqlTest("JoinConstraintFieldPairTest")
-addSqlTest("JoinConstraintTest")
-addSqlTest("JoinClauseTest")
-addSqlTest("FromClauseTest")
-addSqlTest("SelectStatementTest")
-addSqlTest("QueryTest")
-addSqlTest("SchemaFieldTest")
+# addSqlTest("SelectFieldTest")
+# addSqlTest("ExpressionTest")
+# addSqlTest("LikeExpressionTest")
+# addSqlTest("LikeExpressionSqliteTest")
+# addSqlTest("WhereExpressionTest")
+# addSqlTest("JoinConstraintExpressionTest")
+# addSqlTest("JoinConstraintFieldPairTest")
+# addSqlTest("JoinConstraintTest")
+# addSqlTest("JoinClauseTest")
+# addSqlTest("FromClauseTest")
+# addSqlTest("SelectStatementTest")
+# addSqlTest("QueryTest")
+# addSqlTest("SchemaFieldTest")
 addSqlTest("SchemaPrimaryKeyTest")
-addSqlTest("SchemaForeignKeyTest")
-addSqlTest("SchemaTableTest")
-addSqlTest("SchemaTablePopulationTest")
-addSqlTest("SchemaTest")
-addSqlTest("SchemaDriverTest")
-addSqlTest("SchemaDriverSqliteTest")
-addSqlTest("SchemaDriverMySqlTest")
-addSqlTest("SchemaDriverPostgreSqlTest")
-addSqlTest("SchemaViewTest")
+# addSqlTest("SchemaForeignKeyTest")
+# addSqlTest("SchemaTableTest")
+# addSqlTest("SchemaTablePopulationTest")
+# addSqlTest("SchemaTest")
+# addSqlTest("SchemaDriverTest")
+# addSqlTest("SchemaDriverSqliteTest")
+# addSqlTest("SchemaDriverMySqlTest")
+# addSqlTest("SchemaDriverPostgreSqlTest")
+# addSqlTest("SchemaViewTest")
