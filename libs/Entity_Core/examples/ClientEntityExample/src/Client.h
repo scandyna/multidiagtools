@@ -166,7 +166,6 @@ struct ClientDataStruct
 {
   MDT_ENTITY_COLUMN(qlonglong, id, 0)
   MDT_ENTITY_COLUMN(QString, firstName)
-//   firstNameColumn firstName;
 };
 
 /*! \brief Client value class
@@ -216,8 +215,8 @@ class ClientData
  * \code
  * struct ClientDataStruct
  * {
- *  qlonglong id = 0;
- *  QString firstName;
+ *  MDT_ENTITY_COLUMN(qlonglong, id, 0)
+ *  MDT_ENTITY_COLUMN(QString, firstName)
  * };
  * \endcode
  *

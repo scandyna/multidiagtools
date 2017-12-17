@@ -91,41 +91,11 @@ void sandbox()
   debugQObjectProperties(co);
 }
 
-// void debugData()
-// {
-// }
-// 
-// template<typename T>
-// void debugData(const T & data)
-// {
-//   qDebug() << data;
-// }
-// 
-// template<typename T, typename...Tr>
-// void debugData(const T & data, const Tr & ...rest)
-// {
-//   debugData(data);
-//   debugData(rest...);
-// }
-
-// #define TRACE(prefix, ...) debugData(__VA_ARGS__)
-
 int main(/*int argc, char **argv*/)
 {
 //   QCoreApplication app(argc, argv);
 
-//   sandbox();
-
-//   TRACE("");
-//   TRACE("A", 10);
-//   TRACE("B", 10, 20);
-//   TRACE("C", 10, 20, 30);
-
-  idColumn idVar0;
-  idColumn idVar1(1);
-  idColumn idVar12(1);
-  
-//   qDebug() << "idVar: " << idVar.name() << ": " << idVar;
+  sandbox();
 
   DataStruct ds;
   qDebug() << "ds, " << ds.id.columnName() << ": " << ds.id << " , name: " << ds.name.columnName() << ": " << ds.name;
