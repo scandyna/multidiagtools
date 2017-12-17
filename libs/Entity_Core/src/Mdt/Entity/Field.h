@@ -22,6 +22,7 @@
 #define MDT_ENTITY_FIELD_H
 
 #include "FieldTemplate.h"
+#include <boost/preprocessor/cat.hpp>
 
 namespace Mdt{ namespace Entity{
 
@@ -50,18 +51,18 @@ namespace Mdt{ namespace Entity{
    * data.firstName = "Some name";
    * \endcode
    */
-  #define MDT_ENTITY_FIELD(Type, name, ...)                         \
-    class name ## Field : public FieldTemplate<Type, name ## Field> \
-    {                                                               \
-    public:                                                         \
-      using FieldTemplate<Type, name ## Field>::operator=;          \
-      using FieldTemplate<Type, name ## Field>::FieldTemplate;     \
-      static const QString fieldName()                              \
-      {                                                             \
-        return QString::fromUtf8(#name);                            \
-      }                                                             \
-    };                                                              \
-    name ## Field name{__VA_ARGS__};
+  #define MDT_ENTITY_FIELD(Type, name, ...)                                                               \
+    class BOOST_PP_CAT(name, Field) : public Mdt::Entity::FieldTemplate<Type, BOOST_PP_CAT(name, Field)>  \
+    {                                                                                                     \
+    public:                                                                                               \
+      using FieldTemplate<Type, BOOST_PP_CAT(name, Field)>::operator=;                                    \
+      using FieldTemplate<Type, BOOST_PP_CAT(name, Field)>::FieldTemplate;                                \
+      static const QString fieldName()                                                                    \
+      {                                                                                                   \
+        return QString::fromUtf8(#name);                                                                  \
+      }                                                                                                   \
+    };                                                                                                    \
+    BOOST_PP_CAT(name, Field) name{__VA_ARGS__};
 
 }} // namespace Mdt{ namespace Entity{
 

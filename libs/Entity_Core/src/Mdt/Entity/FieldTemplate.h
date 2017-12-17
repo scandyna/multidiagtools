@@ -21,7 +21,7 @@
 #ifndef MDT_ENTITY_FIELD_TEMPLATE_H
 #define MDT_ENTITY_FIELD_TEMPLATE_H
 
-#include <QDebug>
+#include "MdtEntity_CoreExport.h"
 
 namespace Mdt{ namespace Entity{
 
@@ -34,9 +34,9 @@ namespace Mdt{ namespace Entity{
    *  the MDT_ENTITY_FIELD() macro should be used.
    */
   template<typename T, typename Derived>
-  class FieldTemplate
+  class MDT_ENTITY_CORE_EXPORT FieldTemplate
   {
-  public:
+   public:
 
     /*! \brief Default constructor
      */
@@ -81,7 +81,6 @@ namespace Mdt{ namespace Entity{
      */
     Derived & operator=(const T & value)
     {
-      qDebug() << "operator=(value&)";
       mValue = value;
       return static_cast<Derived&>(*this);
     }
@@ -90,7 +89,6 @@ namespace Mdt{ namespace Entity{
      */
     Derived & operator=(T && value)
     {
-      qDebug() << "operator=(value&&)";
       mValue = value;
       return static_cast<Derived&>(*this);
     }
