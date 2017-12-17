@@ -97,11 +97,15 @@ int main(/*int argc, char **argv*/)
 
   sandbox();
 
-  DataStruct ds;
-  qDebug() << "ds, " << ds.id.columnName() << ": " << ds.id << " , name: " << ds.name.columnName() << ": " << ds.name;
+  SomeDataStruct sdt1;
+  sdt1.id = 5;
+//   sdt1.name = "Name";
 
-  DataStruct2 ds2;
-  qDebug() << "ds2, " << ds2.id.columnName() << ": " << ds2.id << " , name: " << ds2.name.columnName() << ": " << ds2.name;
+//   DataStruct ds;
+//   qDebug() << "ds, " << ds.id.columnName() << ": " << ds.id << " , name: " << ds.name.columnName() << ": " << ds.name;
+// 
+//   DataStruct2 ds2;
+//   qDebug() << "ds2, " << ds2.id.columnName() << ": " << ds2.id << " , name: " << ds2.name.columnName() << ": " << ds2.name;
 
   return 0;
 //   return app.exec();

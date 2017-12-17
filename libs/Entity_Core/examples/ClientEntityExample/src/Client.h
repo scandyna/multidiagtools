@@ -21,12 +21,19 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include <Mdt/Entity/Field.h>
 #include <QObject>
 #include <QString>
 #include <QFlags>
 #include <QByteArray>
 #include <QHash>
 
+#include <boost/preprocessor/repetition/repeat.hpp>
+#include <boost/preprocessor/seq/elem.hpp>
+#include <boost/preprocessor/seq/size.hpp>
+#include <boost/preprocessor/tuple/elem.hpp>
+
+#include <boost/preprocessor/cat.hpp>
 
 #include <QDebug>
 
@@ -70,103 +77,59 @@ class PropertyAttributes
   int mMaxLength = -1;
 };
 
-
-template<typename T, typename Derived>
-class ColumnTemplate
-{
- public:
-
-  ColumnTemplate() = default;
-  ColumnTemplate(const ColumnTemplate &) = default;
-
-  ColumnTemplate(const T & value)
-   : mValue(value)
-  {
-  }
-
-  template<typename...Ts>
-  ColumnTemplate(const T & value, const Ts & ...args)
-   : ColumnTemplate(value)
-  {
-    static_assert(sizeof...(args) == 0, "a entity column only supports a default value");
-  }
-
-  Derived & operator=(const T & value)
-  {
-    mValue = value;
-    return static_cast<Derived&>(*this);
-  }
-
-  operator T &()
-  {
-    return mValue;
-  }
-
-  operator const T &() const
-  {
-    return mValue;
-  }
-
- private:
-
-  T mValue;
-};
-
-#define MDT_ENTITY_COLUMN(Type, name, ...)                                 \
-  class name ## Column : public ColumnTemplate<Type, name ## Column>  \
-  {                                                                   \
-   public:                                                            \
-    using ColumnTemplate<Type, name ## Column>::operator=;            \
-    using ColumnTemplate<Type, name ## Column>::ColumnTemplate;       \
-    static const QString columnName()                                 \
-    {                                                                 \
-      return QString::fromUtf8(#name);                                \
-    }                                                                 \
-  };                                                                  \
-  name ## Column name{__VA_ARGS__};
-
-struct DataStruct
-{
-  MDT_ENTITY_COLUMN(qlonglong, id, 0)
-  MDT_ENTITY_COLUMN(QString, name)
-};
-
-struct DataStruct2
-{
-  MDT_ENTITY_COLUMN(qlonglong, id, 150)
-  MDT_ENTITY_COLUMN(QString, name)
-};
-
-// class firstNameColumn : public ColumnTemplate<QString, firstNameColumn>
-// {
-//  public:
-// 
-//   using ColumnTemplate<QString, firstNameColumn>::operator=;
-// 
-//   static const QString name()
-//   {
-//     return QString::fromUtf8("firstName");
-//   }
-// };
-
-class idColumn : public ColumnTemplate<qlonglong, idColumn>
-{
- public:
-
-  using ColumnTemplate<qlonglong, idColumn>::operator=;
-  using ColumnTemplate<qlonglong, idColumn>::ColumnTemplate;
-
-  static const QString name()
-  {
-    return QString::fromUtf8("id");
-  }
-};
-
+/*! \brief Client data struct
+ *
+ * This struct will contains fields,
+ *  which provides value and a fieldName() static function.
+ */
 struct ClientDataStruct
 {
-  MDT_ENTITY_COLUMN(qlonglong, id, 0)
-  MDT_ENTITY_COLUMN(QString, firstName)
+  MDT_ENTITY_FIELD(qlonglong, id, 0)
+  MDT_ENTITY_FIELD(QString, firstName)
+  MDT_ENTITY_FIELD(QString, lastName)
 };
+
+#define PARAM_TYPE(param) \
+  BOOST_PP_TUPLE_ELEM(2, 0, param)
+
+#define PARAM_NAME(param) \
+  BOOST_PP_TUPLE_ELEM(2, 1, param)
+
+// PARAM_TYPE( (int, id22) ) PARAM_NAME( (int, id22) ) ;
+// PARAM_TYPE(BOOST_PP_SEQ_ELEM(idx, members)) PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, members));
+
+#define GENEARTE_MEMBER(z, idx, members) \
+  MDT_ENTITY_FIELD( PARAM_TYPE(BOOST_PP_SEQ_ELEM(idx, members)), PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, members)) )
+
+  // class BOOST_PP_CAT(PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, members)) , Field);
+
+#define GENEARTE_MEMBERS(members) \
+  BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(members), GENEARTE_MEMBER, members)
+
+#define MDT_ENTITY_DATA_STRUCT(name, fields) \
+  struct name \
+  { \
+    GENEARTE_MEMBERS(fields) \
+  };
+
+#define MDT_ENTITY_BASE(name, fields) \
+  MDT_ENTITY_DATA_STRUCT( BOOST_PP_CAT(name, DataStruct), fields )
+//   struct BOOST_PP_CAT(name, DataStruct) \
+//   { \
+//     GENEARTE_MEMBERS(fields) \
+//   };
+//   MDT_ENTITY_DATA_STRUCT( BOOST_PP_CAT(name, DataStruct), fields )
+
+MDT_ENTITY_DATA_STRUCT(
+  SomeDataStruct,
+  ((int, id))
+  ((QString, name))
+)
+
+MDT_ENTITY_BASE(
+  MyEntity,
+  ((int, id))
+)
 
 /*! \brief Client value class
  */
@@ -185,16 +148,31 @@ class ClientData
     return mData.id;
   }
 
+  /*! \brief Set first name
+   */
   void setFirstName(const QString & name);
 
+  /*! \brief Get first name
+   */
   QString firstName() const
   {
     return mData.firstName;
   }
 
+  /*! \brief Set last name
+   */
+  void setLastName(const QString & name);
+
+  /*! \brief Get last name
+   */
+  QString lastName() const
+  {
+    return mData.lastName;
+  }
+
  private:
 
-   ClientDataStruct mData;
+  ClientDataStruct mData;
 };
 
 /*! \brief Base class to create a entity

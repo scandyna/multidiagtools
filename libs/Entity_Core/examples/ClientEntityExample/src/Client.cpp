@@ -29,3 +29,8 @@ void ClientData::setFirstName(const QString& name)
 {
   mData.firstName = name;
 }
+
+void ClientData::setLastName(const QString& name)
+{
+  mData.lastName = name;
+}
