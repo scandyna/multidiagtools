@@ -26,4 +26,4 @@ endfunction()
 
 #================= Tests ====================
 
-# addEntity_CoreTest("")
+addEntity_CoreTest("FieldTest")

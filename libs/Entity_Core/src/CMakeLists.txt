@@ -1,7 +1,7 @@
 
 # List of source files
 set(SOURCE_FILES
-  Mdt/Entity/fake.cpp
+  Mdt/Entity/FieldTemplate.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
