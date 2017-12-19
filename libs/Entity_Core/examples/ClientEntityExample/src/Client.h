@@ -31,9 +31,16 @@
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/seq/elem.hpp>
 #include <boost/preprocessor/seq/size.hpp>
+#include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
-
 #include <boost/preprocessor/cat.hpp>
+#include <boost/preprocessor/stringize.hpp>
+
+#include <boost/preprocessor/array/data.hpp>
+
+#include <boost/preprocessor/punctuation/comma_if.hpp>
+
+#include <array>
 
 #include <QDebug>
 
@@ -95,16 +102,36 @@ struct ClientDataStruct
 #define PARAM_NAME(param) \
   BOOST_PP_TUPLE_ELEM(2, 1, param)
 
+#define PARAM_NAME_STR(param) \
+  BOOST_PP_STRINGIZE( BOOST_PP_TUPLE_ELEM(2, 1, param) )
+
 // PARAM_TYPE( (int, id22) ) PARAM_NAME( (int, id22) ) ;
 // PARAM_TYPE(BOOST_PP_SEQ_ELEM(idx, members)) PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, members));
 
 #define GENEARTE_MEMBER(z, idx, members) \
   MDT_ENTITY_FIELD( PARAM_TYPE(BOOST_PP_SEQ_ELEM(idx, members)), PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, members)) )
 
-  // class BOOST_PP_CAT(PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, members)) , Field);
-
 #define GENEARTE_MEMBERS(members) \
   BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(members), GENEARTE_MEMBER, members)
+
+/*
+ * Get the field name of a element as string.
+ * Note: the trailing comma in a initializer list is accepted in C++
+ * (we not have to do compilcated stuff to conditionnaly add the comma or not)
+ */
+#define GENERATE_FIELD_NAME(z, idx, members) \
+  PARAM_NAME_STR(BOOST_PP_SEQ_ELEM(idx, members)) ,
+
+// BOOST_PP_STRINGIZE(PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, members)))
+// BOOST_PP_CAT( BOOST_PP_STRINGIZE(PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, members))), BOOST_PP_COMMA_IF(idx) )
+
+#define GENERATE_FIELD_NAME_LIST(members) \
+  static std::array<QString, BOOST_PP_SEQ_SIZE(members)> fieldNameList() \
+  { \
+  return {{BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(members), GENERATE_FIELD_NAME, members)}}; \
+  }
+
+// return {{BOOST_PP_SEQ_FOR_EACH(GENERATE_FIELD_NAME, _, members)}};
 
 #define MDT_ENTITY_DATA_STRUCT(name, fields) \
   struct name \
@@ -112,13 +139,7 @@ struct ClientDataStruct
     GENEARTE_MEMBERS(fields) \
   };
 
-#define MDT_ENTITY_BASE(name, fields) \
-  MDT_ENTITY_DATA_STRUCT( BOOST_PP_CAT(name, DataStruct), fields )
-//   struct BOOST_PP_CAT(name, DataStruct) \
-//   { \
-//     GENEARTE_MEMBERS(fields) \
-//   };
-//   MDT_ENTITY_DATA_STRUCT( BOOST_PP_CAT(name, DataStruct), fields )
+// GENERATE_FIELD_NAME_LIST(fields)
 
 MDT_ENTITY_DATA_STRUCT(
   SomeDataStruct,
@@ -126,10 +147,11 @@ MDT_ENTITY_DATA_STRUCT(
   ((QString, name))
 )
 
-MDT_ENTITY_BASE(
-  MyEntity,
-  ((int, id))
-)
+// int id;
+// static QString str0 = GENERATE_FIELD_NAME(0, 0, ((int, id)) ) ;
+// static QString str1 = GENERATE_FIELD_NAME(1, 0, ((int, id)) ((int, b)) ) ;
+// static QString str2 = GENERATE_FIELD_NAME(1, 1, ((int, id)) ((int, b)) ) ;
+// GENERATE_FIELD_NAME_LIST( ((int, id)) )
 
 /*! \brief Client value class
  */
@@ -283,6 +305,69 @@ class EntityBase : public QObject, public T
   setPropertyAttributes(name, attributes), \
   Q_PROPERTY(type name __VA_ARGS__)
 */
+
+/**
+ * moc does not support expanding somewhat complex macros, we cannot generate properties
+ * see: https://stackoverflow.com/questions/32612309/using-a-macro-to-create-qobject-derived-classes
+ */
+
+/*
+#define GENEARTE_PROPERTY(z, idx, fields) \
+  Q_PROPERTY( PARAM_TYPE(BOOST_PP_SEQ_ELEM(idx, fields)) PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, fields)) READ PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, fields)) WRITE BOOST_PP_CAT(set, PARAM_NAME(BOOST_PP_SEQ_ELEM(idx, fields))) )
+
+#define GENEARTE_PROPERTIES(fields) \
+  BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(fields), GENEARTE_PROPERTY, fields)
+*/
+
+#define MDT_ENTITY_BASE(name, DataType, fields) \
+  class name : public EntityBase<DataType> \
+  { \
+   Q_OBJECT \
+   public: \
+    GENERATE_FIELD_NAME_LIST(fields) \
+  };
+
+// GENERATE_FIELD_NAME_LIST(fields)
+
+// Q_PROPERTY( int hardCoded READ hardCoded WRITE sethardCoded )
+
+MDT_ENTITY_DATA_STRUCT(
+  MyEntityDataStruct,
+  ((int, id))
+)
+
+class MyEntityData
+{
+ public:
+
+  void setid(int id)
+  {
+    mData.id = id;
+  }
+
+  int id() const
+  {
+    return mData.id;
+  }
+
+ private:
+
+  MyEntityDataStruct mData;
+};
+
+MDT_ENTITY_BASE(
+  MyEntityBase, MyEntityData,
+  ((int, id))
+  ((QString, name))
+)
+
+#define MDT_ENTITY(name, fields) \
+  MDT_ENTITY_DATA_STRUCT( BOOST_PP_CAT(name, DataStruct), fields )
+
+// MDT_ENTITY(
+//   MyEntity,
+//   ((int, id))
+// )
 
 class Client : public EntityBase<ClientData>
 {

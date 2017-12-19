@@ -65,6 +65,19 @@ void debugQObjectProperties(const EntityBase<T> & obj)
   }
 }
 
+template<typename T>
+void debugQObjectProperties2(const T & obj)
+{
+  Q_ASSERT(obj.metaObject() != nullptr);
+
+  const auto *metaObject = obj.metaObject();
+  qDebug() << "Class " << metaObject->className();
+  qDebug() << " fields:";
+  for(const auto & fieldName : obj.fieldNameList()){
+    qDebug() << "  " << fieldName;
+  }
+}
+
 void sandbox()
 {
   Client co;
@@ -91,14 +104,27 @@ void sandbox()
   debugQObjectProperties(co);
 }
 
+// GENERATE_FIELD_NAME_LIST( ((int, id)) ((int, b)) ((int, c)) )
+
 int main(/*int argc, char **argv*/)
 {
 //   QCoreApplication app(argc, argv);
 
-  sandbox();
+//   sandbox();
 
-  SomeDataStruct sdt1;
-  sdt1.id = 5;
+//   int id;
+//   QString str = QString::fromUtf8( GENERATE_FIELD_NAME(1, 1, ((int, id)) ((int, b)) ) );
+//   qDebug() << str;
+
+//   for(const auto & fn : fieldNameList()){
+//     qDebug() << fn;
+//   }
+//   SomeDataStruct sdt1;
+//   sdt1.id = 5;
+// 
+  MyEntityBase eb;
+//   eb.setProperty("ja", 25);
+  debugQObjectProperties2(eb);
 //   sdt1.name = "Name";
 
 //   DataStruct ds;
