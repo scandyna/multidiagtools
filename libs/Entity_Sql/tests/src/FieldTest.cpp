@@ -18,22 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TableTest.h"
-#include "Mdt/Entity/SqlTable.h"
+#include "FieldTest.h"
+#include "Mdt/Entity/SqlField.h"
+#include "Mdt/Entity/Field.h"
+#include "Mdt/Sql/Schema/Field.h"
 
 using namespace Mdt::Entity;
+using namespace Mdt::Sql::Schema;
 
-void TableTest::initTestCase()
+void FieldTest::initTestCase()
 {
 }
 
-void TableTest::cleanupTestCase()
+void FieldTest::cleanupTestCase()
 {
 }
 
 /*
  * Tests
  */
+
+void FieldTest::sqlFieldFromEntityFieldTest()
+{
+  /*
+   * Simple field
+   */
+  MDT_ENTITY_FIELD(qlonglong, simpleId)
+  const auto simpleIdSql = SqlField::fromEntityField(simpleId);
+  QCOMPARE(simpleIdSql.name(), QString("simpleId_PK"));
+
+  QFAIL("Not complete");
+}
 
 /*
  * Main
@@ -42,7 +57,7 @@ void TableTest::cleanupTestCase()
 int main(int argc, char **argv)
 {
   Mdt::CoreApplication app(argc, argv);
-  TableTest test;
+  FieldTest test;
 
 //   app.debugEnvironnement();
 

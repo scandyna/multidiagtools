@@ -18,33 +18,21 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TableTest.h"
-#include "Mdt/Entity/SqlTable.h"
+#ifndef FIELD_TEST_H
+#define FIELD_TEST_H
 
-using namespace Mdt::Entity;
+#include "TestBase.h"
 
-void TableTest::initTestCase()
+class FieldTest : public TestBase
 {
-}
+ Q_OBJECT
 
-void TableTest::cleanupTestCase()
-{
-}
+ private slots:
 
-/*
- * Tests
- */
+  void initTestCase();
+  void cleanupTestCase();
 
-/*
- * Main
- */
+  void sqlFieldFromEntityFieldTest();
+};
 
-int main(int argc, char **argv)
-{
-  Mdt::CoreApplication app(argc, argv);
-  TableTest test;
-
-//   app.debugEnvironnement();
-
-  return QTest::qExec(&test, argc, argv);
-}
+#endif // #ifndef FIELD_TEST_H

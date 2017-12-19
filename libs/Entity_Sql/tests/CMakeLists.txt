@@ -26,4 +26,5 @@ endfunction()
 
 #================= Tests ====================
 
+addEntity_SqlTest("FieldTest")
 addEntity_SqlTest("TableTest")

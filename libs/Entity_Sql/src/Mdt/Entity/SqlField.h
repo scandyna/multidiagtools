@@ -18,25 +18,42 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ENTITY_SQL_TABLE_H
-#define MDT_ENTITY_SQL_TABLE_H
+#ifndef MDT_ENTITY_SQL_FIELD_H
+#define MDT_ENTITY_SQL_FIELD_H
 
-#include "Mdt/Sql/Schema/Table.h"
+#include "Mdt/Sql/Schema/Field.h"
 #include "MdtEntity_SqlExport.h"
+#include <QString>
 
 namespace Mdt{ namespace Entity{
 
-  /*! \brief Helper to reflect a entity to a SQL table
+  /*! \brief Helper to reflect a entity fielf to a SQL field
    */
-  class MDT_ENTITY_SQL_EXPORT SqlTable
+  class MDT_ENTITY_SQL_EXPORT SqlField
   {
    public:
 
-    /*! \brief Create a SQL table from \a entity
+    /*! \brief Create a SQL field from \a entityField
+     *
+     * \tparam Field Entity field. Must provide fieldName() method:
+     * \code
+     * static QString fieldName();
+     * \endcode
+     *
+     * \pre entityField must have a non empty fieldName
      */
-    static Mdt::Sql::Schema::Table fromEntity();
+    template<typename Field>
+    static Mdt::Sql::Schema::Field fromEntityField(const Field & entityField)
+    {
+      Q_ASSERT(!entityField.fieldName().isEmpty());
+      return fromEntityField(entityField.fieldName());
+    }
+
+   private:
+
+    static Mdt::Sql::Schema::Field fromEntityField(const QString & entityFieldName);
   };
 
 }} // namespace Mdt{ namespace Entity{
 
-#endif // #ifndef MDT_ENTITY_SQL_TABLE_H
+#endif // #ifndef MDT_ENTITY_SQL_FIELD_H

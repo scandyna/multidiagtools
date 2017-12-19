@@ -1,6 +1,7 @@
 
 # List of source files
 set(SOURCE_FILES
+  Mdt/Entity/SqlField.cpp
   Mdt/Entity/SqlTable.cpp
 )
 
@@ -20,7 +21,7 @@ mdt_add_library(
   NAME Entity_Sql
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Qt5::Core
+  LINK_DEPENDENCIES Entity_Core Sql Qt5::Core
 )
 target_compile_definitions(Entity_Sql PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 
