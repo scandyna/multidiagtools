@@ -23,36 +23,6 @@
 
 #include "TestBase.h"
 
-#include <QObject>
-
-class MyEntityData
-{
- Q_GADGET
-
- Q_PROPERTY(int id READ id WRITE setId)
-
- public:
-
-  void setId(int id)
-  {
-    mId = id;
-  }
-
-  int id() const
-  {
-    return mId;
-  }
-
- private:
-
-  int mId;
-};
-
-class MyEntity : public QObject, public MyEntityData
-{
-  Q_OBJECT
-};
-
 class ReflectionTest : public TestBase
 {
  Q_OBJECT
