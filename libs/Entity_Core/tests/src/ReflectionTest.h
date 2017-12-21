@@ -32,6 +32,7 @@ class ReflectionTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void sandboxFusion();
   void sandbox();
 };
 
