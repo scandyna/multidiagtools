@@ -53,17 +53,17 @@
 #include <boost/fusion/include/adapt_assoc_struct_named.hpp>
 
 
-#include <boost/mpl/vector.hpp>
-#include <boost/mpl/transform.hpp>
-#include <boost/mpl/push_front.hpp>
-#include <boost/fusion/sequence.hpp>
-#include <boost/fusion/iterator.hpp>
-#include <boost/fusion/iterator/next.hpp>
-#include <boost/fusion/iterator/equal_to.hpp>
-#include <boost/fusion/iterator/key_of.hpp>
-#include <boost/fusion/iterator/value_of.hpp>
-
-#include <boost/fusion/container/map.hpp>
+// #include <boost/mpl/vector.hpp>
+// #include <boost/mpl/transform.hpp>
+// #include <boost/mpl/push_front.hpp>
+// #include <boost/fusion/sequence.hpp>
+// #include <boost/fusion/iterator.hpp>
+// #include <boost/fusion/iterator/next.hpp>
+// #include <boost/fusion/iterator/equal_to.hpp>
+// #include <boost/fusion/iterator/key_of.hpp>
+// #include <boost/fusion/iterator/value_of.hpp>
+//
+// #include <boost/fusion/container/map.hpp>
 
 void ReflectionTest::initTestCase()
 {
@@ -189,36 +189,117 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 // ========== to fusion map ==================
 
-struct PrintPair
-{
-  template<typename Pair>
-  void operator()(const Pair & p) const
-  {
-    qDebug() << p.second;
-  }
-};
-
-namespace Fields
-{
-  struct idField
-  {
-  };
-
-  struct firstNameField
-  {
-  };
-}
+// struct PrintPair
+// {
+//   template<typename Pair>
+//   void operator()(const Pair & p) const
+//   {
+//     qDebug() << p.second;
+//   }
+// };
 
 struct DataStruct2
 {
   int id;
   QString firstName;
 };
+
+struct DataStruct2Def
+{
+  struct idField
+  {
+    static const QString fieldName()
+    {
+      return "id";
+    }
+
+    /// For attributes: also a static function that construct it
+    /*
+     * static const attributes()
+     * {
+     *   return Attributes(...);
+     * }
+     */
+  };
+
+  struct firstNameField
+  {
+    static const QString fieldName()
+    {
+      return "firstName";
+    }
+  };
+
+  idField id;
+  firstNameField firstName;
+};
+BOOST_FUSION_ADAPT_STRUCT(
+  DataStruct2Def,
+  id,
+  firstName
+)
+
 BOOST_FUSION_ADAPT_ASSOC_STRUCT(
   DataStruct2,
-  (id, Fields::idField)
-  (firstName, Fields::firstNameField)
+  (id, DataStruct2Def::idField)
+  (firstName, DataStruct2Def::firstNameField)
 )
+
+struct PrintDef
+{
+  PrintDef(const DataStruct2 & data)
+   : mData(data)
+  {
+  }
+
+  template<typename Key>
+  void operator()(const Key &) const
+  {
+    qDebug() << "Iterating on def ...";
+    // Use boost::fusion::at_key<>() to get the value
+    qDebug() << Key::fieldName() << ": " <<  boost::fusion::at_key<Key>(mData);
+  }
+
+  const DataStruct2 & mData;
+};
+
+class Data
+{
+ public:
+
+  void setId(int id)
+  {
+    mData.id = id;
+  }
+
+  void setFirstName(const QString & fn)
+  {
+    mData.firstName = fn;
+  }
+
+  const DataStruct2 & data() const
+  {
+    return mData;
+  }
+
+  static const DataStruct2Def def()
+  {
+    return DataStruct2Def{};
+  }
+
+ private:
+
+  DataStruct2 mData;
+};
+
+class DataStorage
+{
+ public:
+
+  void printData(const Data & data){
+    boost::fusion::for_each(data.def(), PrintDef(data.data()));
+  }
+};
 
 void ReflectionTest::sandboxFusion()
 {
@@ -234,6 +315,21 @@ void ReflectionTest::sandboxFusion()
   ds.m_firstNameField.value = "Name 12";
   boost::fusion::for_each(ds, PrintField());
 
+  DataStruct2 ds2;
+  ds2.id = 22;
+  ds2.firstName = "Name 22";
+  qDebug() << "2 id: " << boost::fusion::at_key<DataStruct2Def::idField>(ds2);
+  qDebug() << "2 first name: " << boost::fusion::at_key<DataStruct2Def::firstNameField>(ds2);
+
+  boost::fusion::for_each(DataStruct2Def(), PrintDef(ds2));
+
+  Data data;
+  data.setId(5);
+  data.setFirstName("FN 5");
+  DataStorage storage;
+  storage.printData(data);
+//   DataStruct
+
 //   const auto map = AsFusionMap<DataStruct2>();
 //   boost::fusion::for_each(map, PrintPair());
 
@@ -241,7 +337,7 @@ void ReflectionTest::sandboxFusion()
 //   boost::fusion::for_each(ds2, PrintPair());
 //   std::pair<StaticField, int> field;
 //   boost::fusion::vector< std::pair<StaticField, int> > v2;
-//   
+//
 //   boost::fusion::for_each(v2, PrintPair());
 //   boost::fusion::for_each(field, PrintFV());
 //   std::tuple<int, QString> t(10, "ten");
