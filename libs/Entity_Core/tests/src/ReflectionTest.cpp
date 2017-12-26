@@ -54,16 +54,23 @@
 // #include <boost/fusion/include/adapt_assoc_struct_named.hpp>
 
 
+#include <boost/preprocessor/if.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/seq/variadic_seq_to_seq.hpp>
 #include <boost/preprocessor/seq/enum.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
+#include <boost/preprocessor/tuple/size.hpp>
 #include <boost/preprocessor/tuple/to_array.hpp>
+#include <boost/preprocessor/tuple/to_seq.hpp>
 #include <boost/preprocessor/tuple/reverse.hpp>
+#include <boost/preprocessor/tuple/pop_back.hpp>
 #include <boost/preprocessor/array/enum.hpp>
+#include <boost/preprocessor/array/size.hpp>
 #include <boost/preprocessor/array/pop_front.hpp>
+#include <boost/preprocessor/array/pop_back.hpp>
+#include <boost/preprocessor/array/to_seq.hpp>
 
 
 #include <boost/preprocessor/tuple/pop_front.hpp>
@@ -446,21 +453,45 @@ void ReflectionTest::sandboxFusion()
     MDT_ENTITY_DATA_STRUCT_DEF_ADAPT_ASSOC_MEMBER, dataStructDef, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) \
   )
 */
+/*
+#define MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName) \
+  BOOST_PP_CAT(dataStructName, Def)
+*/
 
 #define MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple) \
-  BOOST_PP_TUPLE_ELEM(0 BOOST_PP_TUPLE_REVERSE(defTuple) )
+  BOOST_PP_TUPLE_ELEM( 0, BOOST_PP_TUPLE_REVERSE(defTuple) )
 
 #define MDT_ENTITY_DEF_ELEM_NAME(defTuple) \
   BOOST_PP_CAT( MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple), Def )
 
-#define MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName) \
-  BOOST_PP_CAT(dataStructName, Def)
-
 #define MDT_ENTITY_NAME_STR(name) \
   BOOST_PP_STRINGIZE(name)
 
-#define MDT_ENTITY_DATA_STRUCT_DEF(dataStructName, name, ...) \
-  struct MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName) \
+#define MDT_ENTITY_DEF_NAMESPACE_BEGIN_OP(r, unused, elem) \
+  namespace elem {
+
+#define MDT_ENTITY_DEF_NAMESPACE_BEGIN(defTuple) \
+  BOOST_PP_IF( \
+    BOOST_PP_ARRAY_SIZE( BOOST_PP_ARRAY_POP_BACK( BOOST_PP_TUPLE_TO_ARRAY(defTuple) ) ), \
+    BOOST_PP_SEQ_FOR_EACH( \
+      MDT_ENTITY_DEF_NAMESPACE_BEGIN_OP, , BOOST_PP_TUPLE_TO_SEQ( BOOST_PP_TUPLE_POP_BACK(defTuple) ) \
+    ), \
+  )
+
+/// \todo Implement. Could be something easy (have to write } n-1 times)
+#define MDT_ENTITY_DEF_NAMESPACE_END(defTuple) \
+  BOOST_PP_IF( \
+    BOOST_PP_ARRAY_SIZE( BOOST_PP_ARRAY_POP_BACK( BOOST_PP_TUPLE_TO_ARRAY(defTuple) ) ), \
+    BOOST_PP_SEQ_FOR_EACH( \
+      MDT_ENTITY_DEF_NAMESPACE_BEGIN_OP, , BOOST_PP_TUPLE_TO_SEQ( BOOST_PP_TUPLE_POP_BACK(defTuple) ) \
+    ), \
+  )
+
+MDT_ENTITY_DEF_NAMESPACE_BEGIN( (A, MyStruct) )
+}
+
+#define MDT_ENTITY_DEF(defTuple, name, ...) \
+  struct MDT_ENTITY_DEF_ELEM_NAME(defTuple) \
   { \
     static const QString entityName() \
     { \
@@ -470,13 +501,13 @@ void ReflectionTest::sandboxFusion()
     MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_FIELD_LIST(__VA_ARGS__) \
   }; \
   BOOST_FUSION_ADAPT_STRUCT( \
-    MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName) , \
+    MDT_ENTITY_DEF_ELEM_NAME(defTuple) , \
     BOOST_PP_SEQ_ENUM( MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_SEQ(__VA_ARGS__) ) \
   ) \
   BOOST_FUSION_ADAPT_ASSOC_STRUCT( \
-    dataStructName, \
+    MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple), \
     MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC_SEQ( \
-      MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName), __VA_ARGS__ \
+      MDT_ENTITY_DEF_ELEM_NAME(defTuple), __VA_ARGS__ \
     ) \
   )
 
@@ -491,7 +522,7 @@ struct ArticleDataStruct
 };
 // }
 
-MDT_ENTITY_DATA_STRUCT_DEF(
+MDT_ENTITY_DEF(
   (ArticleDataStruct),
   Article,
   (id, FieldFlag::IsRequired | FieldFlag::IsUnique, FieldMaxLength(233) ),
