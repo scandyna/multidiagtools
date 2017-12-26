@@ -25,7 +25,7 @@ namespace Mdt{ namespace Entity{
 
   /*! \brief Create and instanciate a field definition class
    *
-   * This is a helper macro for MDT_ENTITY_DATA_STRUCT_DEF() .
+   * This is a helper macro for MDT_ENTITY_DEF() .
    *
    * Starting with a data struct:
    * \code
@@ -64,7 +64,7 @@ namespace Mdt{ namespace Entity{
    * };
    * \endcode
    *
-   * \sa MDT_ENTITY_DATA_STRUCT_DEF()
+   * \sa MDT_ENTITY_DEF()
    */
 
 }} // namespace Mdt{ namespace Entity{

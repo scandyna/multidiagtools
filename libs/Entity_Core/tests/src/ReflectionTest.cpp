@@ -61,6 +61,7 @@
 #include <boost/preprocessor/seq/enum.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/tuple/to_array.hpp>
+#include <boost/preprocessor/tuple/reverse.hpp>
 #include <boost/preprocessor/array/enum.hpp>
 #include <boost/preprocessor/array/pop_front.hpp>
 
@@ -446,6 +447,12 @@ void ReflectionTest::sandboxFusion()
   )
 */
 
+#define MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple) \
+  BOOST_PP_TUPLE_ELEM(0 BOOST_PP_TUPLE_REVERSE(defTuple) )
+
+#define MDT_ENTITY_DEF_ELEM_NAME(defTuple) \
+  BOOST_PP_CAT( MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple), Def )
+
 #define MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName) \
   BOOST_PP_CAT(dataStructName, Def)
 
@@ -474,11 +481,7 @@ void ReflectionTest::sandboxFusion()
   )
 
 
-// MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_LIST(
-//   MyId,
-//   MyName
-// )
-
+// namespace MyEntities{
 struct ArticleDataStruct
 {
   qlonglong id;
@@ -486,9 +489,10 @@ struct ArticleDataStruct
   QString remarks;
   bool other;
 };
+// }
 
 MDT_ENTITY_DATA_STRUCT_DEF(
-  ArticleDataStruct,
+  (ArticleDataStruct),
   Article,
   (id, FieldFlag::IsRequired | FieldFlag::IsUnique, FieldMaxLength(233) ),
   (description, FieldFlag::IsRequired, FieldMaxLength(250)),
@@ -496,17 +500,21 @@ MDT_ENTITY_DATA_STRUCT_DEF(
   (other)
 )
 
+// MDT_ENTITY_DATA_STRUCT_ADAPT(
+//   ArticleDataStruct,
+// )
+
 void ReflectionTest::sandBoxMacro()
 {
 //   idField id;
 //   qDebug() << id.fieldName();
-  ArticleDataStruct ads;
-  ArticleDataStructDef def;
-  qDebug() << def.entityName();
-  qDebug() << def.id.fieldName();
-
-  qDebug() << "E: " << def.entityName();
-  boost::fusion::for_each(def, PrintDef<decltype(ads)>(ads));
+//   ArticleDataStruct ads;
+//   ArticleDataStructDef def;
+//   qDebug() << def.entityName();
+//   qDebug() << def.id.fieldName();
+// 
+//   qDebug() << "E: " << def.entityName();
+//   boost::fusion::for_each(def, PrintDef<decltype(ads)>(ads));
 }
 
 void ReflectionTest::sandbox()
