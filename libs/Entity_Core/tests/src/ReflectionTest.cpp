@@ -58,7 +58,15 @@
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/seq/variadic_seq_to_seq.hpp>
+#include <boost/preprocessor/seq/enum.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
+#include <boost/preprocessor/tuple/to_array.hpp>
+#include <boost/preprocessor/array/enum.hpp>
+#include <boost/preprocessor/array/pop_front.hpp>
+
+
+#include <boost/preprocessor/tuple/pop_front.hpp>
+#include <boost/preprocessor/tuple/rem.hpp>
 
 void ReflectionTest::initTestCase()
 {
@@ -187,6 +195,8 @@ class FieldMaxLength
 class FieldAttributes
 {
  public:
+
+  FieldAttributes() = default;
 
   explicit FieldAttributes(FieldFlags flags)
    : mFlags(flags)
@@ -376,6 +386,14 @@ void ReflectionTest::sandboxFusion()
 #define MDT_ENTITY_FIELD_ELEM_DEF_NAME(elem) \
   MDT_ENTITY_FIELD_DEF_NAME( MDT_ENTITY_FIELD_ELEM_NAME(elem) )
 
+#define MDT_ENTITY_FIELD_ELEM_ATTRIBUTES_ARGS(elem) \
+  BOOST_PP_ARRAY_ENUM( \
+    BOOST_PP_ARRAY_POP_FRONT( \
+      BOOST_PP_TUPLE_TO_ARRAY(elem) \
+    ) \
+  )
+//   BOOST_PP_TUPLE_REM() BOOST_PP_TUPLE_POP_FRONT(elem)
+
 #define MDT_ENTITY_FIELD_DEF(fieldTuple) \
   struct MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) \
   { \
@@ -383,18 +401,39 @@ void ReflectionTest::sandboxFusion()
     { \
       return QStringLiteral( MDT_ENTITY_FIELD_ELEM_NAME_STR(fieldTuple) ); \
     } \
+    \
+    static const FieldAttributes fieldAttributes() \
+    { \
+      return FieldAttributes(MDT_ENTITY_FIELD_ELEM_ATTRIBUTES_ARGS(fieldTuple)); \
+    } \
   };
 
 #define MDT_ENTITY_FIELD_DEF_INSTANCE(fieldTuple) \
   MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) MDT_ENTITY_FIELD_ELEM_NAME(fieldTuple);
 
-#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER(r, data, elem) \
+#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_FIELD(r, data, elem) \
   MDT_ENTITY_FIELD_DEF(elem) \
   MDT_ENTITY_FIELD_DEF_INSTANCE(elem)
 
-#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_LIST(...) \
+#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_FIELD_LIST(...) \
+  BOOST_PP_SEQ_FOR_EACH( \
+    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_FIELD, data, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) \
+  )
+
+#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER(r, data, elem) \
+  ( MDT_ENTITY_FIELD_ELEM_NAME(elem) )
+
+#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_SEQ(...) \
   BOOST_PP_SEQ_FOR_EACH( \
     MDT_ENTITY_DATA_STRUCT_DEF_MEMBER, data, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) \
+  )
+
+#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC(r, defName, elem) \
+  ( MDT_ENTITY_FIELD_ELEM_NAME(elem) , defName::MDT_ENTITY_FIELD_ELEM_DEF_NAME(elem) )
+
+#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC_SEQ(defName, ...) \
+  BOOST_PP_SEQ_FOR_EACH( \
+    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC, defName, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) \
   )
 
 /*
@@ -421,32 +460,53 @@ void ReflectionTest::sandboxFusion()
       return QStringLiteral( MDT_ENTITY_NAME_STR(name) ); \
     } \
       \
-    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_LIST(__VA_ARGS__) \
+    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_FIELD_LIST(__VA_ARGS__) \
   }; \
   BOOST_FUSION_ADAPT_STRUCT( \
     MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName) , \
-    __VA_ARGS__ \
+    BOOST_PP_SEQ_ENUM( MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_SEQ(__VA_ARGS__) ) \
+  ) \
+  BOOST_FUSION_ADAPT_ASSOC_STRUCT( \
+    dataStructName, \
+    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC_SEQ( \
+      MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName), __VA_ARGS__ \
+    ) \
   )
+
 
 // MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_LIST(
 //   MyId,
 //   MyName
 // )
 
+struct ArticleDataStruct
+{
+  qlonglong id;
+  QString description;
+  QString remarks;
+  bool other;
+};
+
 MDT_ENTITY_DATA_STRUCT_DEF(
   ArticleDataStruct,
   Article,
-  (id),
-  (description)
+  (id, FieldFlag::IsRequired | FieldFlag::IsUnique, FieldMaxLength(233) ),
+  (description, FieldFlag::IsRequired, FieldMaxLength(250)),
+  (remarks),
+  (other)
 )
 
 void ReflectionTest::sandBoxMacro()
 {
 //   idField id;
 //   qDebug() << id.fieldName();
+  ArticleDataStruct ads;
   ArticleDataStructDef def;
   qDebug() << def.entityName();
   qDebug() << def.id.fieldName();
+
+  qDebug() << "E: " << def.entityName();
+  boost::fusion::for_each(def, PrintDef<decltype(ads)>(ads));
 }
 
 void ReflectionTest::sandbox()
