@@ -50,6 +50,8 @@ namespace Mdt{ namespace Entity{
    * data.id = 25;
    * data.firstName = "Some name";
    * \endcode
+   *
+   * \deprecated
    */
   #define MDT_ENTITY_FIELD(Type, name, ...)                                                               \
     class BOOST_PP_CAT(name, Field) : public Mdt::Entity::FieldTemplate<Type, BOOST_PP_CAT(name, Field)>  \

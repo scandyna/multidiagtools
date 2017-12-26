@@ -1,8 +1,8 @@
 
 # List of source files
 set(SOURCE_FILES
-  Mdt/Entity/FieldTemplate.cpp
-  Mdt/Entity/Field.cpp
+  Mdt/Entity/FieldDef.cpp
+  Mdt/Entity/DataStructDef.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

@@ -32,6 +32,8 @@ namespace Mdt{ namespace Entity{
    *
    * To create a entity field,
    *  the MDT_ENTITY_FIELD() macro should be used.
+   *
+   * \deprecated
    */
   template<typename T, typename Derived>
   class MDT_ENTITY_CORE_EXPORT FieldTemplate

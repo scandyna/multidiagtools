@@ -27,6 +27,7 @@
 #include <QMetaProperty>
 #include <QMetaMethod>
 #include <QVariant>
+#include <QFlags>
 #include <array>
 #include <tuple>
 #include <utility>
@@ -49,21 +50,15 @@
 #include <boost/fusion/adapted/struct/adapt_assoc_struct.hpp>
 #include <boost/fusion/include/adapt_assoc_struct.hpp>
 
-#include <boost/fusion/adapted/struct/adapt_assoc_struct_named.hpp>
-#include <boost/fusion/include/adapt_assoc_struct_named.hpp>
+// #include <boost/fusion/adapted/struct/adapt_assoc_struct_named.hpp>
+// #include <boost/fusion/include/adapt_assoc_struct_named.hpp>
 
 
-// #include <boost/mpl/vector.hpp>
-// #include <boost/mpl/transform.hpp>
-// #include <boost/mpl/push_front.hpp>
-// #include <boost/fusion/sequence.hpp>
-// #include <boost/fusion/iterator.hpp>
-// #include <boost/fusion/iterator/next.hpp>
-// #include <boost/fusion/iterator/equal_to.hpp>
-// #include <boost/fusion/iterator/key_of.hpp>
-// #include <boost/fusion/iterator/value_of.hpp>
-//
-// #include <boost/fusion/container/map.hpp>
+#include <boost/preprocessor/cat.hpp>
+#include <boost/preprocessor/stringize.hpp>
+#include <boost/preprocessor/seq/for_each.hpp>
+#include <boost/preprocessor/seq/variadic_seq_to_seq.hpp>
+#include <boost/preprocessor/tuple/elem.hpp>
 
 void ReflectionTest::initTestCase()
 {
@@ -73,181 +68,10 @@ void ReflectionTest::cleanupTestCase()
 {
 }
 
-struct PrintFV
-{
-  template<typename T>
-  void operator()(const T & x) const
-  {
-    qDebug() << "x: " << x;
-  }
-};
-
-// struct PrintPair
-// {
-//   template<typename T>
-//   void operator()(const T & p) const
-//   {
-//     qDebug() << p.first.fieldName() << ": " << p.second;
-//   }
-// };
-
-// struct StaticField
-// {
-//   static const QString fieldName()
-//   {
-//     return "Some field name";
-//   }
-// };
-
-struct PrintField
-{
-  template<typename T>
-  void operator()(const T & f) const
-  {
-    qDebug() << f.fieldName() << ": " << f.value;
-  }
-};
-
-struct DataStruct
-{
-  struct idField
-  {
-    int value;
-    static const QString fieldName()
-    {
-      return "id";
-    }
-  };
-
-  struct firstNameField
-  {
-    QString value;
-    static const QString fieldName()
-    {
-      return "firstName";
-    }
-  };
-
-  idField m_idField;
-  firstNameField m_firstNameField;
-};
-BOOST_FUSION_ADAPT_STRUCT(
-  DataStruct,
-  m_idField,
-  m_firstNameField
-)
-// BOOST_FUSION_DEFINE_STRUCT(
-//   (),
-//   DataStruct,
-//   (int, id)
-//   (QString, firstName)
-// )
-
-// ========== to fusion map ==================
-
-// template<typename Vector, typename First, typename Last, typename doContinue>
-// struct ToFusionMapIterator;
-// 
-// template<typename Vector, typename First, typename Last>
-// struct ToFusionMapIterator<Vector, First, Last, boost::mpl::false_>
-// {
-//   using Next = typename boost::fusion::result_of::next<First>::type;
-//   using type = typename boost::mpl::push_front<
-//     typename ToFusionMapIterator<
-//       Vector,
-//       Next,
-//       Last,
-//       typename boost::fusion::result_of::equal_to<Next, Last>::type
-//     >::type,
-//     boost::fusion::pair<
-//       typename boost::fusion::result_of::key_of<First>::type,
-//       typename boost::fusion::result_of::value_of_data<First>::type
-//     >
-//   >::type;
-// };
-// 
-// template<typename Vector, typename First, typename Last>
-// struct ToFusionMapIterator<Vector, First, Last, boost::mpl::true_>
-// {
-//   using type = Vector;
-// };
-// 
-// template<typename FusionAssociativeSequence>
-// struct AsFusionMap
-// {
-//   using First = typename boost::fusion::result_of::begin<FusionAssociativeSequence>::type;
-//   using Last = typename boost::fusion::result_of::end<FusionAssociativeSequence>::type;
-//   using type = typename boost::fusion::result_of::as_map<
-//     typename ToFusionMapIterator<
-//       boost::mpl::vector<>,
-//       First,
-//       Last,
-//       typename boost::fusion::result_of::equal_to<First, Last>::type
-//     >::type
-//   >::type;
-// };
-
-// ========== to fusion map ==================
-
-// struct PrintPair
-// {
-//   template<typename Pair>
-//   void operator()(const Pair & p) const
-//   {
-//     qDebug() << p.second;
-//   }
-// };
-
-struct DataStruct2
-{
-  int id;
-  QString firstName;
-};
-
-struct DataStruct2Def
-{
-  struct idField
-  {
-    static const QString fieldName()
-    {
-      return "id";
-    }
-
-    /// For attributes: also a static function that construct it
-    /*
-     * static const attributes()
-     * {
-     *   return Attributes(...);
-     * }
-     */
-  };
-
-  struct firstNameField
-  {
-    static const QString fieldName()
-    {
-      return "firstName";
-    }
-  };
-
-  idField id;
-  firstNameField firstName;
-};
-BOOST_FUSION_ADAPT_STRUCT(
-  DataStruct2Def,
-  id,
-  firstName
-)
-
-BOOST_FUSION_ADAPT_ASSOC_STRUCT(
-  DataStruct2,
-  (id, DataStruct2Def::idField)
-  (firstName, DataStruct2Def::firstNameField)
-)
-
+template<typename Data>
 struct PrintDef
 {
-  PrintDef(const DataStruct2 & data)
+  PrintDef(const Data & data)
    : mData(data)
   {
   }
@@ -255,15 +79,242 @@ struct PrintDef
   template<typename Key>
   void operator()(const Key &) const
   {
-    qDebug() << "Iterating on def ...";
-    // Use boost::fusion::at_key<>() to get the value
-    qDebug() << Key::fieldName() << ": " <<  boost::fusion::at_key<Key>(mData);
+    qDebug() << Key::fieldName() << ":";
+    static const auto attributes = Key::fieldAttributes();
+    qDebug() << " required: " << attributes.isRequired();
+    qDebug() << " unique:: " << attributes.isUnique();
+    qDebug() << " max length: " << attributes.maxLength();
+    qDebug() << " value: " << boost::fusion::at_key<Key>(mData);
   }
 
-  const DataStruct2 & mData;
+  const Data & mData;
 };
 
-class Data
+template<typename Data>
+struct ModifyData
+{
+  ModifyData(Data & data)
+   : mData(data)
+  {
+  }
+
+  template<typename Key>
+  void operator()(const Key &) const
+  {
+    modify(boost::fusion::at_key<Key>(mData));
+  }
+
+  void modify(int & value) const
+  {
+    ++value;
+  }
+
+  void modify(QString & value) const
+  {
+    value += "+";
+  }
+
+  template<typename T>
+  void modify(T &) const
+  {
+    qDebug() << "Modify unhandled type";
+  }
+
+  Data & mData;
+};
+
+class DataStorage
+{
+ public:
+
+  template<typename T>
+  void printData(const T & data)
+  {
+    qDebug() << "E: " << data.def().entityName();
+    boost::fusion::for_each(data.def(), PrintDef<decltype(data.data())>(data.data()));
+  }
+
+  /// \todo Will be a list
+  template<typename T>
+  T selectAll(const T & t)
+  {
+    T r = t;
+    qDebug() << "SELECT all from " << t.def().entityName();
+    boost::fusion::for_each(r.def(), ModifyData<decltype(r.data())>(r.data()));
+    return r;
+  }
+
+  /// \todo Will be a list
+  template<typename T>
+  T select(const T & t /*, conditions*/)
+  {
+    qDebug() << "SELECT from " << t.def().entityName() << " where ??";
+    return t;
+  }
+
+};
+
+enum class FieldFlag
+{
+  NoFlag = 0x00,
+  IsRequired = 0x01,
+  IsUnique = 0x02
+};
+Q_DECLARE_FLAGS(FieldFlags, FieldFlag)
+Q_DECLARE_OPERATORS_FOR_FLAGS(FieldFlags)
+
+class FieldMaxLength
+{
+ public:
+
+  FieldMaxLength() = default;
+
+  explicit FieldMaxLength(int length)
+   : mLength(length)
+  {
+  }
+
+  int length() const
+  {
+    return mLength;
+  }
+
+ private:
+
+  int mLength = 0;
+};
+
+class FieldAttributes
+{
+ public:
+
+  explicit FieldAttributes(FieldFlags flags)
+   : mFlags(flags)
+  {
+  }
+
+  explicit FieldAttributes(FieldMaxLength maxLength)
+   : mMaxLength(maxLength)
+  {
+  }
+
+  explicit FieldAttributes(FieldFlags flags, FieldMaxLength maxLength)
+   : mFlags(flags),
+     mMaxLength(maxLength)
+  {
+  }
+
+  bool isRequired() const
+  {
+    return mFlags.testFlag(FieldFlag::IsRequired);
+  }
+
+  bool isUnique() const
+  {
+    return mFlags.testFlag(FieldFlag::IsUnique);
+  }
+
+  int maxLength() const
+  {
+    return mMaxLength.length();
+  }
+
+ private:
+
+  FieldFlags mFlags = FieldFlag::NoFlag;
+  FieldMaxLength mMaxLength;
+};
+
+class ClientId
+{
+ public:
+
+  ClientId() = default;
+  ClientId(const ClientId &) = default;
+
+  ClientId(int id)
+   : mId(id)
+  {
+  }
+
+  void setId(int id)
+  {
+    mId = id;
+  }
+
+  int id() const
+  {
+    return mId;
+  }
+
+ private:
+
+  int mId = 0;
+};
+QDebug operator<<(QDebug dbg, const ClientId & id)
+{
+  dbg << id.id();
+  return dbg;
+}
+
+struct ClientDataStruct
+{
+  ClientId id;
+  QString firstName;
+};
+
+struct ClientDataStructDef
+{
+  static const QString entityName()
+  {
+    return "Client";
+  }
+
+  struct idField
+  {
+    static const QString fieldName()
+    {
+      return "id";
+    }
+
+    static const FieldAttributes fieldAttributes()
+    {
+      return FieldAttributes(FieldFlag::IsRequired | FieldFlag::IsUnique);
+    }
+  };
+
+  struct firstNameField
+  {
+    static const QString fieldName()
+    {
+      return "firstName";
+    }
+
+    static const FieldAttributes fieldAttributes()
+    {
+      return FieldAttributes(FieldMaxLength(250));
+    }
+  };
+
+  idField id;
+  firstNameField firstName;
+};
+// Make it possible to iterate through the data struct definition
+BOOST_FUSION_ADAPT_STRUCT(
+  ClientDataStructDef,
+  id,
+  firstName
+)
+
+BOOST_FUSION_ADAPT_ASSOC_STRUCT(
+  ClientDataStruct,
+  (id, ClientDataStructDef::idField)
+  (firstName, ClientDataStructDef::firstNameField)
+)
+
+/// \todo Create entity list + const entity list class templates ?
+
+class ClientData
 {
  public:
 
@@ -277,205 +328,138 @@ class Data
     mData.firstName = fn;
   }
 
-  const DataStruct2 & data() const
+  const ClientDataStruct & data() const
   {
     return mData;
   }
 
-  static const DataStruct2Def def()
+  ClientDataStruct & data()
   {
-    return DataStruct2Def{};
+    return mData;
+  }
+
+  static const ClientDataStructDef def()
+  {
+    return ClientDataStructDef{};
   }
 
  private:
 
-  DataStruct2 mData;
-};
-
-class DataStorage
-{
- public:
-
-  void printData(const Data & data){
-    boost::fusion::for_each(data.def(), PrintDef(data.data()));
-  }
+  ClientDataStruct mData;
 };
 
 void ReflectionTest::sandboxFusion()
 {
-  boost::fusion::vector<int, char, QString> v(1, 'c', "str");
-  qDebug() << "v[0]: " << boost::fusion::at_c<0>(v);
-  qDebug() << "v[1]: " << boost::fusion::at_c<1>(v);
-  qDebug() << "v[2]: " << boost::fusion::at_c<2>(v);
-
-  boost::fusion::for_each(v, PrintFV());
-
-  DataStruct ds;
-  ds.m_idField.value = 12;
-  ds.m_firstNameField.value = "Name 12";
-  boost::fusion::for_each(ds, PrintField());
-
-  DataStruct2 ds2;
+  ClientDataStruct ds2;
   ds2.id = 22;
   ds2.firstName = "Name 22";
-  qDebug() << "2 id: " << boost::fusion::at_key<DataStruct2Def::idField>(ds2);
-  qDebug() << "2 first name: " << boost::fusion::at_key<DataStruct2Def::firstNameField>(ds2);
+  qDebug() << "2 id: " << boost::fusion::at_key<ClientDataStructDef::idField>(ds2);
+  qDebug() << "2 first name: " << boost::fusion::at_key<ClientDataStructDef::firstNameField>(ds2);
 
-  boost::fusion::for_each(DataStruct2Def(), PrintDef(ds2));
+//   boost::fusion::for_each(ClientDataStructDef(), PrintDef(ds2));
 
-  Data data;
-  data.setId(5);
-  data.setFirstName("FN 5");
-  DataStorage storage;
-  storage.printData(data);
-//   DataStruct
-
-//   const auto map = AsFusionMap<DataStruct2>();
-//   boost::fusion::for_each(map, PrintPair());
-
-//   DataStruct2 ds2;
-//   boost::fusion::for_each(ds2, PrintPair());
-//   std::pair<StaticField, int> field;
-//   boost::fusion::vector< std::pair<StaticField, int> > v2;
-//
-//   boost::fusion::for_each(v2, PrintPair());
-//   boost::fusion::for_each(field, PrintFV());
-//   std::tuple<int, QString> t(10, "ten");
-//   boost::fusion::for_each(t, PrintFV());
-
-//   DataStruct ds;
-//   ds.id = 25;
-//   ds.firstName = "Name 25";
-//   qDebug() << "id: " << ds.id << ", fn: " << ds.firstName << " (empty: " << ds.firstName.isEmpty() << ")";
-//   boost::fusion::for_each(ds, PrintFV());
 }
 
-// class Field
-// {
-//  public:
-// 
-//   explicit Field(const QString & name)
-//    : mFieldName(name)
-//   {
-//   }
-// 
-//   QString fieldName() const
-//   {
-//     return mFieldName;
-//   }
-// 
-//  private:
-// 
-// //   constexpr int index;
-//   QString mFieldName;
-// };
+#if !BOOST_PP_VARIADICS
+ #error "Compiler preprocessor does not support variadics"
+#endif
 
-// struct ClientDataStruct
-// {
-// //   int id;
-//   QString firstName;
-// 
-//   int & id()
-//   {
-//     return std::get<0>(mTuple);
-//   }
-// 
-//   const int & id() const
-//   {
-//     return std::get<0>(mTuple);
-//   }
-// 
-//   /// static function returning
-// 
-// //   template<int index>
-// //   auto valueAt()
-// //   {
-// //     return std::get<index>(mTuple);
-// //   }
-// 
-//   // Use BOOST_xxx_ADAPT_STRUCT() or.. BOOST_xx_CREATE_STRUCT()
-//   std::tuple<int, QString> mTuple;
-// };
+#define MDT_ENTITY_FIELD_DEF_NAME(fieldName) \
+  BOOST_PP_CAT(fieldName, Field)
 
-// struct ClientStaticDefinition
-// {
-//   static const QString entityName()
-//   {
-//     return "Client";
-//   }
-// 
-//   static const Field id()
-//   {
-//     return Field("id");
-//   }
-// 
-//   static const Field firstName()
-//   {
-//     return Field("firstName");
-//   }
-// 
-// //   static std::array<Field, 2> fieldList()
-// //   {
-// //     return {{Field<0>("id"), Field<1>("firstName")}};
-// //   }
-// };
+#define MDT_ENTITY_FIELD_ELEM_NAME(elem) \
+  BOOST_PP_TUPLE_ELEM(0, elem)
 
-// class ClientData
-// {
-//  public:
-// 
-//   void setId(int id)
-//   {
-//     mData.id() = id;
-//   }
-// 
-//   int id() const
-//   {
-//     return mData.id();
-//   }
-// 
-//   static ClientStaticDefinition def()
-//   {
-//     return ClientStaticDefinition{};
-//   }
-// 
-//  private:
-// 
-//   ClientDataStruct mData;
-// };
+#define MDT_ENTITY_FIELD_ELEM_NAME_STR(elem) \
+  BOOST_PP_STRINGIZE( MDT_ENTITY_FIELD_ELEM_NAME(elem) )
 
+#define MDT_ENTITY_FIELD_ELEM_DEF_NAME(elem) \
+  MDT_ENTITY_FIELD_DEF_NAME( MDT_ENTITY_FIELD_ELEM_NAME(elem) )
 
-/// Iterate a tuple: http://blogorama.nerdworks.in/iteratingoverastdtuple/
-///                  https://codereview.stackexchange.com/questions/134814/for-each-for-tuple-likes
-///                  Boost.Fusion provides for_each() on std::tuple ! SA range_c
-/// Note: base for a runtime index ? (if needed..)
-/// Note: for conditionnal update: flag in field
+#define MDT_ENTITY_FIELD_DEF(fieldTuple) \
+  struct MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) \
+  { \
+    static const QString fieldName() \
+    { \
+      return QStringLiteral( MDT_ENTITY_FIELD_ELEM_NAME_STR(fieldTuple) ); \
+    } \
+  };
 
-template<typename T>
-void debugEntityDef(const T & entity)
+#define MDT_ENTITY_FIELD_DEF_INSTANCE(fieldTuple) \
+  MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) MDT_ENTITY_FIELD_ELEM_NAME(fieldTuple);
+
+#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER(r, data, elem) \
+  MDT_ENTITY_FIELD_DEF(elem) \
+  MDT_ENTITY_FIELD_DEF_INSTANCE(elem)
+
+#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_LIST(...) \
+  BOOST_PP_SEQ_FOR_EACH( \
+    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER, data, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) \
+  )
+
+/*
+#define MDT_ENTITY_DATA_STRUCT_DEF_ADAPT_ASSOC_MEMBER(r, dataStructDef, elem) \
+  (elem, dataStructDef::BOOST_PP_CAT(elem, Field))
+
+#define MDT_ENTITY_DATA_STRUCT_DEF_ADAPT_ASSOC_MEMBER_LIST(dataStructDef, ...) \
+  BOOST_PP_SEQ_FOR_EACH( \
+    MDT_ENTITY_DATA_STRUCT_DEF_ADAPT_ASSOC_MEMBER, dataStructDef, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) \
+  )
+*/
+
+#define MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName) \
+  BOOST_PP_CAT(dataStructName, Def)
+
+#define MDT_ENTITY_NAME_STR(name) \
+  BOOST_PP_STRINGIZE(name)
+
+#define MDT_ENTITY_DATA_STRUCT_DEF(dataStructName, name, ...) \
+  struct MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName) \
+  { \
+    static const QString entityName() \
+    { \
+      return QStringLiteral( MDT_ENTITY_NAME_STR(name) ); \
+    } \
+      \
+    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_LIST(__VA_ARGS__) \
+  }; \
+  BOOST_FUSION_ADAPT_STRUCT( \
+    MDT_ENTITY_DATA_STRUCT_DEF_NAME(dataStructName) , \
+    __VA_ARGS__ \
+  )
+
+// MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_LIST(
+//   MyId,
+//   MyName
+// )
+
+MDT_ENTITY_DATA_STRUCT_DEF(
+  ArticleDataStruct,
+  Article,
+  (id),
+  (description)
+)
+
+void ReflectionTest::sandBoxMacro()
 {
-  qDebug() << "Entity: " << entity.def().entityName();
-//   for(const auto & field : entity.def().fieldList()){
-//     qDebug() << " field: " << field.fieldName();
-//   }
+//   idField id;
+//   qDebug() << id.fieldName();
+  ArticleDataStructDef def;
+  qDebug() << def.entityName();
+  qDebug() << def.id.fieldName();
 }
-
-// auto reflectMembers(const ClientDataStruct & s)
-// {
-//   struct MetaData
-//   {
-//   };
-// }
-
 
 void ReflectionTest::sandbox()
 {
-//   qDebug() << "sizeof(ClientStaticDefinition): " << sizeof(ClientStaticDefinition);
-// 
-//   ClientData client;
-//   debugEntityDef(client);
-//   qDebug() << client.def().id().fieldName();
-//   qDebug() << client.def().firstName().fieldName();
+  ClientData client;
+  client.setId(5);
+  client.setFirstName("FN 5");
+  DataStorage storage;
+  storage.printData(client);
+  client = storage.selectAll(client);
+  storage.printData(client);
+  client = storage.select(client);
+  storage.printData(client);
 }
 
 /*
