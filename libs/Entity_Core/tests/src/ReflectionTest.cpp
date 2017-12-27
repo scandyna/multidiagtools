@@ -493,6 +493,16 @@ void ReflectionTest::sandboxFusion()
 #define MDT_ENTITY_DEF_NAMESPACE_REF(defTuple) \
   MDT_ENTITY_DEF_NAMESPACE_APPLY_OP(defTuple, MDT_ENTITY_DEF_NAMESPACE_REF_OP)
 
+#define MDT_ENTITY_DEF_ELEM_NAME_NS(defTuple) \
+  MDT_ENTITY_DEF_NAMESPACE_REF(defTuple) MDT_ENTITY_DEF_ELEM_NAME(defTuple)
+
+//   BOOST_PP_CAT( MDT_ENTITY_DEF_NAMESPACE_REF(defTuple), MDT_ENTITY_DEF_ELEM_NAME(defTuple) )
+
+#define MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME_NS(defTuple) \
+  MDT_ENTITY_DEF_NAMESPACE_REF(defTuple) MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple)
+
+// BOOST_PP_CAT( MDT_ENTITY_DEF_NAMESPACE_REF(defTuple), MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple) )
+
 /*
   BOOST_PP_IF( \
     BOOST_PP_ARRAY_SIZE( BOOST_PP_ARRAY_POP_BACK( BOOST_PP_TUPLE_TO_ARRAY(defTuple) ) ), \
@@ -509,6 +519,7 @@ void ReflectionTest::sandboxFusion()
 // MDT_ENTITY_DEF_NAMESPACE_REF( Def_tuple ) s;
 
 #define MDT_ENTITY_DEF(defTuple, name, ...) \
+  MDT_ENTITY_DEF_NAMESPACE_BEGIN(defTuple) \
   struct MDT_ENTITY_DEF_ELEM_NAME(defTuple) \
   { \
     static const QString entityName() \
@@ -518,19 +529,20 @@ void ReflectionTest::sandboxFusion()
       \
     MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_FIELD_LIST(__VA_ARGS__) \
   }; \
+  MDT_ENTITY_DEF_NAMESPACE_END(defTuple) \
   BOOST_FUSION_ADAPT_STRUCT( \
-    MDT_ENTITY_DEF_ELEM_NAME(defTuple) , \
+    MDT_ENTITY_DEF_ELEM_NAME_NS(defTuple) , \
     BOOST_PP_SEQ_ENUM( MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_SEQ(__VA_ARGS__) ) \
   ) \
   BOOST_FUSION_ADAPT_ASSOC_STRUCT( \
-    MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple), \
+    MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME_NS(defTuple), \
     MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC_SEQ( \
-      MDT_ENTITY_DEF_ELEM_NAME(defTuple), __VA_ARGS__ \
+      MDT_ENTITY_DEF_ELEM_NAME_NS(defTuple), __VA_ARGS__ \
     ) \
   )
 
 
-// namespace MyEntities{
+namespace MyEntities{
 struct ArticleDataStruct
 {
   qlonglong id;
@@ -538,10 +550,10 @@ struct ArticleDataStruct
   QString remarks;
   bool other;
 };
-// }
+}
 
 MDT_ENTITY_DEF(
-  (ArticleDataStruct),
+  (MyEntities, ArticleDataStruct),
   Article,
   (id, FieldFlag::IsRequired | FieldFlag::IsUnique, FieldMaxLength(233) ),
   (description, FieldFlag::IsRequired, FieldMaxLength(250)),
@@ -557,13 +569,13 @@ void ReflectionTest::sandBoxMacro()
 {
 //   idField id;
 //   qDebug() << id.fieldName();
-//   ArticleDataStruct ads;
-//   ArticleDataStructDef def;
-//   qDebug() << def.entityName();
-//   qDebug() << def.id.fieldName();
-// 
-//   qDebug() << "E: " << def.entityName();
-//   boost::fusion::for_each(def, PrintDef<decltype(ads)>(ads));
+  MyEntities::ArticleDataStruct ads;
+  MyEntities::ArticleDataStructDef def;
+  qDebug() << def.entityName();
+  qDebug() << def.id.fieldName();
+
+  qDebug() << "E: " << def.entityName();
+  boost::fusion::for_each(def, PrintDef<decltype(ads)>(ads));
 }
 
 void ReflectionTest::sandbox()
