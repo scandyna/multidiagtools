@@ -1,6 +1,9 @@
 
 # List of source files
 set(SOURCE_FILES
+  Mdt/Entity/FieldFlags.cpp
+  Mdt/Entity/FieldMaxLength.cpp
+  Mdt/Entity/FieldAttributes.cpp
   Mdt/Entity/FieldDef.cpp
   Mdt/Entity/Def.cpp
 )
