@@ -26,7 +26,8 @@ endfunction()
 
 #================= Tests ====================
 
-addEntity_CoreTest("DefTest")
 addEntity_CoreTest("FieldAttributesTest")
+addEntity_CoreTest("FieldDefTest")
+addEntity_CoreTest("DefTest")
 addEntity_CoreTest("FieldTest")
 addEntity_CoreTest("ReflectionTest")

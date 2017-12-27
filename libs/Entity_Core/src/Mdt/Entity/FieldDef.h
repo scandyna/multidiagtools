@@ -21,9 +21,39 @@
 #ifndef MDT_ENTITY_FIELD_DEF_H
 #define MDT_ENTITY_FIELD_DEF_H
 
-namespace Mdt{ namespace Entity{
+#include "FieldAttributes.h"
+#include <QString>
+#include <boost/preprocessor/cat.hpp>
+#include <boost/preprocessor/stringize.hpp>
+#include <boost/preprocessor/tuple/elem.hpp>
+#include <boost/preprocessor/tuple/to_array.hpp>
+#include <boost/preprocessor/array/enum.hpp>
+#include <boost/preprocessor/array/pop_front.hpp>
 
-  /*! \brief Create and instanciate a field definition class
+#if !BOOST_PP_VARIADICS
+ #error "The macro MDT_ENTITY_FIELD_DEF() requires a compiler that supports preprocessor variadics"
+#endif
+
+#define MDT_ENTITY_FIELD_DEF_NAME(fieldName) \
+  BOOST_PP_CAT(fieldName, Field)
+
+#define MDT_ENTITY_FIELD_ELEM_NAME(elem) \
+  BOOST_PP_TUPLE_ELEM(0, elem)
+
+#define MDT_ENTITY_FIELD_ELEM_NAME_STR(elem) \
+  BOOST_PP_STRINGIZE( MDT_ENTITY_FIELD_ELEM_NAME(elem) )
+
+#define MDT_ENTITY_FIELD_ELEM_DEF_NAME(elem) \
+  MDT_ENTITY_FIELD_DEF_NAME( MDT_ENTITY_FIELD_ELEM_NAME(elem) )
+
+#define MDT_ENTITY_FIELD_ELEM_ATTRIBUTES_ARGS(elem) \
+  BOOST_PP_ARRAY_ENUM( \
+    BOOST_PP_ARRAY_POP_FRONT( \
+      BOOST_PP_TUPLE_TO_ARRAY(elem) \
+    ) \
+  )
+
+  /*! \brief Create a field definition class
    *
    * This is a helper macro for MDT_ENTITY_DEF() .
    *
@@ -39,26 +69,28 @@ namespace Mdt{ namespace Entity{
    * To make a entity of this struct, some meta data must be available,
    *  like the field name, max length, ...
    *
+   * Defining fields in the def struct:
    * \code
-   * struct ClientDataStructDef
+   * struct ClientDef
    * {
-   *   MDT_ENTITY_FIELD_DEF(name)
+   *   MDT_ENTITY_FIELD_DEF( (id, FieldFlag::IsRequired | FieldFlag::IsUnique) )
    * };
    * \endcode
    *
+   * will create fields as struct with meta data:
    * \code
-   * struct ClientDataStructDef
+   * struct ClientDef
    * {
    *   struct idField
    *   {
    *     static const QString fieldName()
    *     {
-   *       return "id";
+   *       return QStringLiteral("id");
    *     }
    *
-   *     static const FieldAttributes fieldAttributes()
+   *     static const Mdt::Entity::FieldAttributes fieldAttributes()
    *     {
-   *       return FieldAttributes(FieldFlag::IsRequired | FieldFlag::IsUnique);
+   *       return Mdt::Entity::FieldAttributes(Mdt::Entity::FieldFlag::IsRequired | Mdt::Entity::FieldFlag::IsUnique);
    *     }
    *   };
    * };
@@ -66,7 +98,22 @@ namespace Mdt{ namespace Entity{
    *
    * \sa MDT_ENTITY_DEF()
    */
+#define MDT_ENTITY_FIELD_DEF(fieldTuple) \
+  struct MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) \
+  { \
+    static const QString fieldName() \
+    { \
+      return QStringLiteral( MDT_ENTITY_FIELD_ELEM_NAME_STR(fieldTuple) ); \
+    } \
+    \
+    static const Mdt::Entity::FieldAttributes fieldAttributes() \
+    { \
+      using namespace Mdt::Entity; \
+      return Mdt::Entity::FieldAttributes(MDT_ENTITY_FIELD_ELEM_ATTRIBUTES_ARGS(fieldTuple)); \
+    } \
+  };
 
-}} // namespace Mdt{ namespace Entity{
+#define MDT_ENTITY_FIELD_DEF_INSTANCE(fieldTuple) \
+  MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) MDT_ENTITY_FIELD_ELEM_NAME(fieldTuple);
 
 #endif // #ifndef MDT_ENTITY_FIELD_DEF_H
