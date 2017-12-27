@@ -467,28 +467,46 @@ void ReflectionTest::sandboxFusion()
 #define MDT_ENTITY_NAME_STR(name) \
   BOOST_PP_STRINGIZE(name)
 
+#define MDT_ENTITY_DEF_NAMESPACE_APPLY_OP(defTuple, op) \
+  BOOST_PP_IF( \
+    BOOST_PP_ARRAY_SIZE( BOOST_PP_ARRAY_POP_BACK( BOOST_PP_TUPLE_TO_ARRAY(defTuple) ) ), \
+    BOOST_PP_SEQ_FOR_EACH( \
+      op, , BOOST_PP_TUPLE_TO_SEQ( BOOST_PP_TUPLE_POP_BACK(defTuple) ) \
+    ), \
+  )
+
 #define MDT_ENTITY_DEF_NAMESPACE_BEGIN_OP(r, unused, elem) \
   namespace elem {
 
 #define MDT_ENTITY_DEF_NAMESPACE_BEGIN(defTuple) \
-  BOOST_PP_IF( \
-    BOOST_PP_ARRAY_SIZE( BOOST_PP_ARRAY_POP_BACK( BOOST_PP_TUPLE_TO_ARRAY(defTuple) ) ), \
-    BOOST_PP_SEQ_FOR_EACH( \
-      MDT_ENTITY_DEF_NAMESPACE_BEGIN_OP, , BOOST_PP_TUPLE_TO_SEQ( BOOST_PP_TUPLE_POP_BACK(defTuple) ) \
-    ), \
-  )
+  MDT_ENTITY_DEF_NAMESPACE_APPLY_OP(defTuple, MDT_ENTITY_DEF_NAMESPACE_BEGIN_OP)
 
-/// \todo Implement. Could be something easy (have to write } n-1 times)
+#define MDT_ENTITY_DEF_NAMESPACE_END_OP(r, unused, elem) \
+  }
+
 #define MDT_ENTITY_DEF_NAMESPACE_END(defTuple) \
+  MDT_ENTITY_DEF_NAMESPACE_APPLY_OP(defTuple, MDT_ENTITY_DEF_NAMESPACE_END_OP)
+
+#define MDT_ENTITY_DEF_NAMESPACE_REF_OP(r, unused, elem) \
+  elem::
+
+#define MDT_ENTITY_DEF_NAMESPACE_REF(defTuple) \
+  MDT_ENTITY_DEF_NAMESPACE_APPLY_OP(defTuple, MDT_ENTITY_DEF_NAMESPACE_REF_OP)
+
+/*
   BOOST_PP_IF( \
     BOOST_PP_ARRAY_SIZE( BOOST_PP_ARRAY_POP_BACK( BOOST_PP_TUPLE_TO_ARRAY(defTuple) ) ), \
     BOOST_PP_SEQ_FOR_EACH( \
       MDT_ENTITY_DEF_NAMESPACE_BEGIN_OP, , BOOST_PP_TUPLE_TO_SEQ( BOOST_PP_TUPLE_POP_BACK(defTuple) ) \
     ), \
   )
+*/
 
-MDT_ENTITY_DEF_NAMESPACE_BEGIN( (A, MyStruct) )
-}
+// #define Def_tuple (MyStruct)
+// 
+// MDT_ENTITY_DEF_NAMESPACE_BEGIN( Def_tuple )
+// MDT_ENTITY_DEF_NAMESPACE_END( Def_tuple )
+// MDT_ENTITY_DEF_NAMESPACE_REF( Def_tuple ) s;
 
 #define MDT_ENTITY_DEF(defTuple, name, ...) \
   struct MDT_ENTITY_DEF_ELEM_NAME(defTuple) \
