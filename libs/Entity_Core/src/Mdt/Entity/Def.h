@@ -111,7 +111,7 @@
  *
  * Starting with a data struct:
  * \code
- * struct ClientDataStruct
+ * struct PersonDataStruct
  * {
  *   qlonlong id = 0;
  *   QString firstName;
@@ -124,8 +124,8 @@
  *  Such meta data can be generated with MDT_ENTITY_DEF() macro:
  * \code
  * MDT_ENTITY_DEF(
- *   (ClientDataStruct),
- *   Client,
+ *   (PersonDataStruct),
+ *   Person,
  *   (id, FieldFlag::IsRequired | FieldFlag::IsUnique),
  *   (firstName, FieldMaxLength(250))
  *   (remarks)
@@ -134,11 +134,11 @@
  *
  * Above code will expand to:
  * \code
- * struct ClientDef
+ * struct PersonDef
  * {
  *   static const QString entityName()
  *   {
- *     return QStringLiteral("Client");
+ *     return QStringLiteral("Person");
  *   }
  *
  *   struct idField
@@ -185,6 +185,54 @@
  *   remarksField remarks;
  * };
  * \endcode
+ *
+ * Now examine the syntax to use the macro:
+ * \code
+ * MDT_ENTITY_DEF(
+ *   (PersonDataStruct),
+ *   Person,
+ *   (id, FieldFlag::IsRequired | FieldFlag::IsUnique),
+ *   (firstName, FieldMaxLength(250)),
+ *   (remarks)
+ * )
+ * \endcode
+ *
+ * The first argument
+ * \code
+ *  (PersonDataStruct)
+ * \endcode
+ *  takes the data struct name.
+ *  If PersonDataStruct was defined in a namespace
+ *  called MyEntities, we have to provide it.
+ *  Note that the macro must be called oustide
+ *  any namespace.
+ *  In our case, the first argument will become:
+ * \code
+ *  (MyEntities, PersonDataStruct)
+ * \endcode
+ * This strange syntax is due to some limitations
+ *  of the preprocessor (in my knowlage).
+ *  MDT_ENTITY_DEF() have to create the PersonDef
+ *  in the MyEntities namespace.
+ *  As far as I know, there is no way to parse ::
+ *  in the preprocessor.
+ *
+ * The second argument is the entity name:
+ * \code
+ *  Person
+ * \endcode
+ *
+ * Then, all fields are listed as a couple of tuples:
+ * \code
+ *  (id, FieldFlag::IsRequired | FieldFlag::IsUnique),
+ *  (firstName, FieldMaxLength(250)),
+ *  (remarks)
+ * \endcode
+ *
+ * The first argument of a field tuple is its name,
+ *  as it ws declared in PersonDataStruct.
+ *  The following optional arguments are attributes.
+ *  See the FieldAttributes class for details.
  */
 #define MDT_ENTITY_DEF(defTuple, name, ...)                     \
   MDT_ENTITY_DEF_NAMESPACE_BEGIN(defTuple)                      \
