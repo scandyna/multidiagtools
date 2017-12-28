@@ -32,6 +32,7 @@ class DefTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void defUsageTest();
 };
 
 #endif // #ifndef DEF_TEST_H

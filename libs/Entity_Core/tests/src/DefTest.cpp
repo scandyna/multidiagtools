@@ -19,6 +19,13 @@
  **
  ****************************************************************************/
 #include "DefTest.h"
+#include "Mdt/Entity/Def.h"
+#include <QString>
+
+/*
+ * Note: to check that the macro works properly,
+ * we not declare using namespace Mdt::Entity
+ */
 
 void DefTest::initTestCase()
 {
@@ -31,6 +38,50 @@ void DefTest::cleanupTestCase()
 /*
  * Tests
  */
+
+struct ArticleDataStruct
+{
+  qlonglong id;
+  QString description;
+  QString remarks;
+};
+
+MDT_ENTITY_DEF(
+  (ArticleDataStruct),
+  Article,
+  (id, FieldFlag::IsRequired, FieldFlag::IsUnique),
+  (description, FieldFlag::IsRequired, FieldMaxLength(250)),
+  (remarks)
+)
+
+namespace A{
+  struct SellerDataStruct
+  {
+    qlonglong id;
+    QString name;
+  };
+}
+
+MDT_ENTITY_DEF(
+  (A, SellerDataStruct),
+  Seller,
+  (id, FieldFlag::IsRequired),
+  (name)
+)
+
+void DefTest::defUsageTest()
+{
+  const ArticleDef articleDef;
+  QCOMPARE(articleDef.entityName(), QString("Article"));
+  QCOMPARE(articleDef.id.fieldName(), QString("id"));
+  QCOMPARE(articleDef.description.fieldName(), QString("description"));
+  QCOMPARE(articleDef.remarks.fieldName(), QString("remarks"));
+
+  const A::SellerDef sellerDef;
+  QCOMPARE(sellerDef.entityName(), QString("Seller"));
+  QCOMPARE(sellerDef.id.fieldName(), QString("id"));
+  QCOMPARE(sellerDef.name.fieldName(), QString("name"));
+}
 
 /*
  * Main
