@@ -21,13 +21,14 @@
 #ifndef MDT_ENTITY_FIELD_MAX_LENGTH_H
 #define MDT_ENTITY_FIELD_MAX_LENGTH_H
 
+#include "MdtEntity_CoreExport.h"
 #include <QtGlobal>
 
 namespace Mdt{ namespace Entity{
 
   /*! \brief Max length attribute of a entity field
    */
-  class FieldMaxLength
+  class MDT_ENTITY_CORE_EXPORT FieldMaxLength
   {
    public:
 

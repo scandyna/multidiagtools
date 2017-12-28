@@ -23,12 +23,13 @@
 
 #include "FieldFlags.h"
 #include "FieldMaxLength.h"
+#include "MdtEntity_CoreExport.h"
 
 namespace Mdt{ namespace Entity{
 
   /*! \brief Attributes of a entity field
    */
-  class FieldAttributes
+  class MDT_ENTITY_CORE_EXPORT FieldAttributes
   {
    public:
 
