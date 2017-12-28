@@ -29,7 +29,6 @@ namespace Mdt{ namespace Entity{
    */
   enum class FieldFlag
   {
-   /* NoFlag = 0x00, */     /*!< No flag */
     IsRequired = 0x01,  /*!< Field is required */
     IsUnique = 0x02     /*!< Field is unique */
   };
