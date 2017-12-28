@@ -21,104 +21,52 @@
 
 /*! \page libs_Entity Entity
  *
+ * In this library, the concept of a entity is a thing of interest
+ *  in the application, like a Article, a Person, etc..
  *
- * To create a entity.....
- * \code
- * MDT_ENTITY_CREATE(
- *  Client,
- *  MDT_ENTITY_WRITABLE_PROPERTY(long int, Id),
- *  MDT_ENTITY_WRITABLE_PROPERTY(QString, FirstName),
- *  MDT_ENTITY_WRITABLE_PROPERTY(QString, LasttName)
- * )
- * \endcode
+ * \note This library does not implement the
+ *       [entity component system](https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system)
  *
- * Will result to:
- * \code
- * struct ClientData
- * {
- *   long int Id;
- *   QString FirstName;
- *   QString LastName;
- * };
- * \endcode
+ * A entity can be stored (for example to a SQL database),
+ *  which requires some kind of reflection.
  *
- * And also:
+ * \section introduction Introduction
+ *
+ * Qt offers some runtime introspection with the QMetaObject.
+ *  A idea could be to create a entity as a subclass of QObject,
+ *  and define properties:
  * \code
- * class ClientObject : public QObject
+ * class Person : public QObject
  * {
  *  Q_OBJECT
- *
+ *  Q_PROPERTY(qlonglong id READ id WRITE setId);
  *  public:
- *
- *   Q_PROPERTY(long int id READ id WRITE setId, ...);
- *
- *   void setId(long int id)
- *   {
- *    mClient.setId(id);
- *   }
- *
- *   long int id() const
- *   {
- *    return mClient.id();
- *   }
- *   ...
- *
- *  private:
- *
- *   Client mClient;
+ *   qlonglong id() const;
+ *   void setId(qlonglong id);
  * };
  * \endcode
- *
- * You have to provide:
+ * The first problem with a QObject subclass is
+ *  that it is not a value class: it cannot be copied.
+ *  The second problem is that properties are runtime only.
+ *  For example, having a expression like:
  * \code
- * class Client
- * {
- *  public:
- *
- *   void setId(long int id);
- *   long int id() const;
- *
- * private:
- *
- *  ClientData mData;
- * };
+ *  client.id == 25
  * \endcode
+ *  is not possible.
  *
- * Then, qttributes ....
+ * There are several C++ libraries available for compile time reflection:
+ * - [Boost Mpl](http://www.boost.org/doc/libs/1_66_0/libs/mpl/doc/index.html)
+ * - [Boost Hana](http://www.boost.org/doc/libs/1_66_0/libs/hana/doc/html/index.html)
+ * - [iguana](https://github.com/qicosmos/iguana)
+ * - Probably many more
  *
+ * Those libraries are fully compile time, as far as I know.
+ *  Mdt::Entity keepts a part of its classes usable at runtime.
+ *  This can be usefull, for example, to create dinamicly editable entities.
  *
+ * \section createAentity Create a entity
  *
- *
- *
- * To create a entity, first create data class .................
- * \code
- * class ClientData
- * {
- *  public:
- *
- *   void setId(long int id);
- *   long int id() const;
- *
- * private:
- *
- *  long int mId;
- *  QString mFirstName;
- *  QString mLastName;
- * };
- * \endcode
- *
- * Attributes..............
- * \code
- * class ClientAttribute : public QObject
- * {
- *  Q_OBJECT
- *
- * public:
- *
- *  Q_PROPERTY(id, ...);
- * };
- * \endcode
- *
+ *  \sa MDT_ENTITY_DEF()
  */
 
 namespace Mdt{
