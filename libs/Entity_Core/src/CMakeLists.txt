@@ -6,6 +6,8 @@ set(SOURCE_FILES
   Mdt/Entity/FieldAttributes.cpp
   Mdt/Entity/FieldDef.cpp
   Mdt/Entity/Def.cpp
+  Mdt/Entity/DataTemplate.cpp
+  Mdt/Entity/Debug.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

@@ -29,5 +29,13 @@ endfunction()
 addEntity_CoreTest("FieldAttributesTest")
 addEntity_CoreTest("FieldDefTest")
 addEntity_CoreTest("DefTest")
+addEntity_CoreTest("DataTemplateTest")
+
 addEntity_CoreTest("FieldTest")
 addEntity_CoreTest("ReflectionTest")
+
+# Clang warns about explicit move that prevents copy elision.
+# For this test case, we need explicit move to check our code
+# if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+#   target_compile_options(mdtexpectedtest PRIVATE -Wno-pessimizing-move)
+# endif()
