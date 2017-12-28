@@ -1,2 +1,2 @@
 
-add_subdirectory(ClientEntityExample)
+add_subdirectory(ArticleEntityExample)
