@@ -21,6 +21,11 @@
 #ifndef MDT_ENTITY_DATA_TEMPLATE_H
 #define MDT_ENTITY_DATA_TEMPLATE_H
 
+#include <QVariant>
+// #include <boost/fusion/container.hpp>
+// #include <boost/fusion/sequence.hpp>
+#include <boost/fusion/include/size.hpp>
+
 namespace Mdt{ namespace Entity{
 
   /*! \brief Class template for entity data
@@ -50,6 +55,27 @@ namespace Mdt{ namespace Entity{
     const DataStruct & constData() const
     {
       return mData;
+    }
+
+    /*! \brief Get column count
+     */
+    int columnCount() const
+    {
+      return boost::fusion::size(constData());
+    }
+
+    /*! \brief Set value at \a column
+     */
+    template<typename T>
+    void setValue(int column, const T & value)
+    {
+    }
+
+    /*! \brief Get value at \a column
+     */
+//     template<typename T>
+    QVariant value(int column) const
+    {
     }
 
     /*! \brief Get entity definition

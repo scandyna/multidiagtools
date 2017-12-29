@@ -32,6 +32,8 @@ class DataTemplateTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void sandbox();
+
   void dataUsageTest();
 };
 
