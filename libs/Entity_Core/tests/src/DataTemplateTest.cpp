@@ -28,7 +28,13 @@
 #include <utility>
 #include <type_traits>
 #include <stdexcept>
+#include <initializer_list>
 #include <QString>
+#include <QVariant>
+
+#include <boost/fusion/container.hpp>
+#include <boost/fusion/sequence.hpp>
+#include <boost/fusion/include/size.hpp>
 
 #include <QDebug>
 
@@ -123,6 +129,60 @@ runtime_get(Tuple && t, size_t index)
   return RuntimeGetFunctionTable<tuple_type>::table[index](t);
 }
 
+/**
+ * See:
+ *  https://groups.google.com/forum/#!msg/comp.lang.c++.moderated/E6gRss0Sjx4/7o8jP19xHXcJ
+ *  https://www.codeproject.com/Articles/23304/High-Performance-Heterogeneous-Container
+ *
+ * -> https://codereview.stackexchange.com/questions/51407/stdtuple-foreach-implementation
+ * -> https://www.reddit.com/r/cpp/comments/6vyqra/variadic_switch_case/
+ */
+
+void printSomeInt(int i)
+{
+  qDebug() << "i: " << i;
+}
+
+template<typename Sequence, int... Is>
+QVariant fusion_runtime_get_impl(const Sequence & seq, int index, std::integer_sequence<int, Is...>)
+{
+  QVariant value;
+//   if(index == I){
+//     return I;
+//   }
+  
+  std::initializer_list<int> {(index == Is ? (value = boost::fusion::at_c<Is>(seq)),0 : 0)...};
+//   using swallow = int[];
+//   swallow{ (printSomeInt(Is), int{})... };
+  
+//   (qDebug() << "index: " << index << " , Is size: " << sizeof...(Is) << ", Is: " << Is)...;
+  return value;
+//   return fusion_runtime_get_impl<Is...>(index);
+}
+
+template<typename Sequence>
+QVariant fusion_runtime_get(const Sequence & seq, int index)
+{
+  constexpr int size = boost::fusion::size(seq);
+
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < size);
+
+  return fusion_runtime_get_impl(seq, index, std::make_integer_sequence<int, size>{});
+//   switch(index){
+//     case 0:
+//       return boost::fusion::at_c<0>(seq);
+//     case 1:
+//       return boost::fusion::at_c<1>(seq);
+//     case 2:
+//       return boost::fusion::at_c<2>(seq);
+//     case 3:
+//       return boost::fusion::at_c<3>(seq);
+//   }
+// 
+//   return QVariant();
+}
+
 void DataTemplateTest::sandbox()
 {
   auto t = std::make_tuple(1.0, 2.0, 3.0);
@@ -133,6 +193,11 @@ void DataTemplateTest::sandbox()
 
   for(int i = 0; i < 3; ++i){
     qDebug() << "t[" << i << "]: " << runtime_get(t, i);
+  }
+
+  auto v = boost::fusion::make_vector(1,"A",3);
+  for(int i = 0; i < 3; ++i){
+    qDebug() << "v[" << i << "]: " << fusion_runtime_get(v, i);
   }
 }
 
