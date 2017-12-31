@@ -106,58 +106,12 @@ struct ValueAtColumn
  * -> https://www.reddit.com/r/cpp/comments/6vyqra/variadic_switch_case/
  */
 
-void printSomeInt(int i)
-{
-  qDebug() << "i: " << i;
-}
-
-template<typename Sequence, int... Is>
-QVariant fusion_runtime_get_impl(const Sequence & seq, int index, std::integer_sequence<int, Is...>)
-{
-  QVariant value;
-
-  (void)std::initializer_list<int> {(index == Is ? (value = boost::fusion::at_c<Is>(seq)),0 : 0)...};
-
-  return value;
-}
-
-template<typename Sequence>
-QVariant fusion_runtime_get(const Sequence & seq, int index)
-{
-  constexpr int size = boost::fusion::result_of::size<Sequence>::type::value;
-
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < size);
-
-  return fusion_runtime_get_impl(seq, index, std::make_integer_sequence<int, size>{});
-}
-
-template<typename Sequence, int... Is>
-void refValueImpl(const Sequence & seq, int index, QVariant & value, std::integer_sequence<int, Is...>)
-{
-  (void)std::initializer_list<int> {(index == Is ? (value = boost::fusion::at_c<Is>(seq)),0 : 0)...};
-}
-
-template<typename Sequence>
-void refValue(const Sequence & seq, int index, QVariant & value)
-{
-  constexpr int size = boost::fusion::result_of::size<Sequence>::type::value;
-
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < size);
-
-  refValueImpl(seq, index, value, std::make_integer_sequence<int, size>{});
-}
-
-
 template<typename Sequence, int I>
 void setValueImplItem(Sequence & seq, const QVariant & value)
 {
   using ref_type = typename boost::fusion::result_of::at_c<Sequence, I>::type;
   using type = typename std::remove_reference<ref_type>::type;
-  
-  qDebug() << "Set value, I: " << I << ", value: " << value.value<type>();
-  
+
   boost::fusion::at_c<I>(seq) = value.value<type>();
 }
 
@@ -179,11 +133,17 @@ void setValue(Sequence & seq, int index, const QVariant & value)
   setValueImpl(seq, index, value, std::make_integer_sequence<int, size>{});
 }
 
+template<typename Sequence, int I>
+QVariant getValueImplItem(const Sequence & seq)
+{
+  return boost::fusion::at_c<I>(seq);
+}
+
 template<typename Sequence, int... Is>
 QVariant getValueImpl(const Sequence & seq, int index, std::integer_sequence<int, Is...>)
 {
   QVariant value;
-  (void)std::initializer_list<int> {(index == Is ? (value = boost::fusion::at_c<Is>(seq)),0 : 0)...};
+  (void)std::initializer_list<int> {(index == Is ? (value = getValueImplItem<Sequence, Is>(seq)),0 : 0)...};
   return value;
 }
 
@@ -203,9 +163,6 @@ void DataTemplateTest::sandbox()
 
   auto v = boost::fusion::make_vector(1,QString("A"),3);
   for(int i = 0; i < 3; ++i){
-    qDebug() << "v[" << i << "]: " << fusion_runtime_get(v, i);
-  }
-  for(int i = 0; i < 3; ++i){
     qDebug() << "v[" << i << "]: " << getValue(v, i);
   }
   boost::fusion::at_c<0>(v) = 5;
@@ -215,6 +172,12 @@ void DataTemplateTest::sandbox()
   for(int i = 0; i < 3; ++i){
     qDebug() << "v[" << i << "]: " << getValue(v, i);
   }
+
+  ArticleData art1;
+  setValue(art1.data(), 0, 25);
+  qDebug() << getValue(art1.constData(), 0);
+  setValue(art1.data(), 1, "Des 25");
+  qDebug() << getValue(art1.constData(), 1);
 
 }
 
