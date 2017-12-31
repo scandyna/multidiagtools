@@ -114,55 +114,108 @@ void printSomeInt(int i)
 template<typename Sequence, int... Is>
 QVariant fusion_runtime_get_impl(const Sequence & seq, int index, std::integer_sequence<int, Is...>)
 {
-  //using return_type = typename (boost::fusion::result_of::at_c<Sequence, Is>::type)...;
-  //using return_type = typename decltype(boost::fusion::at_c<Is>(seq))...;
-  //using return_type = std::common_type_t<decltype(boost::fusion::at_c<Is>(seq))...>;
   QVariant value;
-  //decltype(auto) value;
-//   if(index == I){
-//     return I;
-//   }
-  
+
   (void)std::initializer_list<int> {(index == Is ? (value = boost::fusion::at_c<Is>(seq)),0 : 0)...};
-//   using swallow = int[];
-//   swallow{ (printSomeInt(Is), int{})... };
-  
-//   (qDebug() << "index: " << index << " , Is size: " << sizeof...(Is) << ", Is: " << Is)...;
+
   return value;
-//   return fusion_runtime_get_impl<Is...>(index);
 }
 
 template<typename Sequence>
 QVariant fusion_runtime_get(const Sequence & seq, int index)
 {
-  //constexpr int size = boost::fusion::size(seq);
   constexpr int size = boost::fusion::result_of::size<Sequence>::type::value;
 
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < size);
 
   return fusion_runtime_get_impl(seq, index, std::make_integer_sequence<int, size>{});
-//   switch(index){
-//     case 0:
-//       return boost::fusion::at_c<0>(seq);
-//     case 1:
-//       return boost::fusion::at_c<1>(seq);
-//     case 2:
-//       return boost::fusion::at_c<2>(seq);
-//     case 3:
-//       return boost::fusion::at_c<3>(seq);
-//   }
-// 
-//   return QVariant();
+}
+
+template<typename Sequence, int... Is>
+void refValueImpl(const Sequence & seq, int index, QVariant & value, std::integer_sequence<int, Is...>)
+{
+  (void)std::initializer_list<int> {(index == Is ? (value = boost::fusion::at_c<Is>(seq)),0 : 0)...};
+}
+
+template<typename Sequence>
+void refValue(const Sequence & seq, int index, QVariant & value)
+{
+  constexpr int size = boost::fusion::result_of::size<Sequence>::type::value;
+
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < size);
+
+  refValueImpl(seq, index, value, std::make_integer_sequence<int, size>{});
+}
+
+
+template<typename Sequence, int I>
+void setValueImplItem(Sequence & seq, const QVariant & value)
+{
+  using ref_type = typename boost::fusion::result_of::at_c<Sequence, I>::type;
+  using type = typename std::remove_reference<ref_type>::type;
+  
+  qDebug() << "Set value, I: " << I << ", value: " << value.value<type>();
+  
+  boost::fusion::at_c<I>(seq) = value.value<type>();
+}
+
+template<typename Sequence, int... Is>
+void setValueImpl(Sequence & seq, int index, const QVariant & value, std::integer_sequence<int, Is...>)
+{
+  (void)std::initializer_list<int> {(index == Is ? ( setValueImplItem<Sequence, Is>(seq, value) ),0 : 0)...};
+  //(void)std::initializer_list<int> {(index == Is ? (boost::fusion::at_c<Is>(seq) = value.value<boost::fusion::result_of::at_c<Sequence, Is>>()),0 : 0)...};
+}
+
+template<typename Sequence>
+void setValue(Sequence & seq, int index, const QVariant & value)
+{
+  constexpr int size = boost::fusion::result_of::size<Sequence>::type::value;
+
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < size);
+
+  setValueImpl(seq, index, value, std::make_integer_sequence<int, size>{});
+}
+
+template<typename Sequence, int... Is>
+QVariant getValueImpl(const Sequence & seq, int index, std::integer_sequence<int, Is...>)
+{
+  QVariant value;
+  (void)std::initializer_list<int> {(index == Is ? (value = boost::fusion::at_c<Is>(seq)),0 : 0)...};
+  return value;
+}
+
+template<typename Sequence>
+QVariant getValue(const Sequence & seq, int index)
+{
+  constexpr int size = boost::fusion::result_of::size<Sequence>::type::value;
+
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < size);
+
+  return getValueImpl(seq, index, std::make_integer_sequence<int, size>{});
 }
 
 void DataTemplateTest::sandbox()
 {
 
-  auto v = boost::fusion::make_vector(1,"A",3);
+  auto v = boost::fusion::make_vector(1,QString("A"),3);
   for(int i = 0; i < 3; ++i){
     qDebug() << "v[" << i << "]: " << fusion_runtime_get(v, i);
   }
+  for(int i = 0; i < 3; ++i){
+    qDebug() << "v[" << i << "]: " << getValue(v, i);
+  }
+  boost::fusion::at_c<0>(v) = 5;
+  setValue(v, 0, 5);
+  setValue(v, 1, "B");
+  setValue(v, 2, 6);
+  for(int i = 0; i < 3; ++i){
+    qDebug() << "v[" << i << "]: " << getValue(v, i);
+  }
+
 }
 
 /**
