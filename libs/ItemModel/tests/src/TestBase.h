@@ -21,6 +21,7 @@
 #ifndef MDT_ITEM_MODEL_TEST_BASE_H
 #define MDT_ITEM_MODEL_TEST_BASE_H
 
+#include "Mdt/CoreApplication.h"
 #include "Mdt/Application.h"
 #include <QObject>
 #include <QtTest/QtTest>

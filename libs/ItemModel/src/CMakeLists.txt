@@ -44,6 +44,9 @@ set(SOURCE_FILES
     Mdt/ItemModel/HeaderProxyModelItem.cpp
     Mdt/ItemModel/HeaderProxyModelItemList.cpp
     Mdt/ItemModel/HeaderProxyModel.cpp
+    Mdt/ItemModel/AbstractStlListModel.cpp
+    Mdt/ItemModel/ReadOnlyStlListModel.cpp
+    Mdt/ItemModel/EditableStlListModel.cpp
 )
 
 find_package(Qt5 COMPONENTS Core Gui)
