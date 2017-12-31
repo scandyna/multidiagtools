@@ -67,6 +67,7 @@
  * \section createAentity Create a entity
  *
  *  \sa MDT_ENTITY_DEF()
+ *  \sa the Mdt::Entity namespace
  */
 
 namespace Mdt{
