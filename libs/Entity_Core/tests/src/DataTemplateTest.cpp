@@ -24,17 +24,19 @@
 #include "Mdt/Entity/Debug.h"
 
 
-#include <tuple>
-#include <utility>
-#include <type_traits>
-#include <stdexcept>
+// #include <tuple>
+// #include <utility>
+// #include <type_traits>
+// #include <stdexcept>
 #include <initializer_list>
+#include <type_traits>
 #include <QString>
 #include <QVariant>
 
 #include <boost/fusion/container.hpp>
 #include <boost/fusion/sequence.hpp>
 #include <boost/fusion/include/size.hpp>
+#include <boost/fusion/include/at.hpp>
 
 #include <QDebug>
 
@@ -95,40 +97,6 @@ struct ValueAtColumn
   const int mExpectedIndex;
 };
 
-template<
-  typename Tuple,
-  typename Indices = std::make_index_sequence<std::tuple_size<Tuple>::value>
->
-struct RuntimeGetFunctionTable;
-
-template<typename Tuple, size_t ... Indices>
-struct RuntimeGetFunctionTable< Tuple, std::index_sequence<Indices...> >
-{
-  using return_type = typename std::tuple_element<0, Tuple>::type &;
-  using getFunctionPointer = return_type (*)(Tuple&) noexcept;
-  static constexpr getFunctionPointer table[std::tuple_size<Tuple>::value] = {
-    &std::get<Indices>...
-  };
-};
-
-template<typename Tuple, size_t ... Indices>
-constexpr typename
-  RuntimeGetFunctionTable< Tuple, std::index_sequence<Indices...> >::getFunctionPointer
-  RuntimeGetFunctionTable< Tuple, std::index_sequence<Indices...> >::table[std::tuple_size<Tuple>::value];
-
-template<typename Tuple>
-constexpr
-typename std::tuple_element<0, typename std::remove_reference<Tuple>::type>::type &
-runtime_get(Tuple && t, size_t index)
-{
-  using tuple_type = typename std::remove_reference<Tuple>::type;
-
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < std::tuple_size<tuple_type>::value);
-
-  return RuntimeGetFunctionTable<tuple_type>::table[index](t);
-}
-
 /**
  * See:
  *  https://groups.google.com/forum/#!msg/comp.lang.c++.moderated/E6gRss0Sjx4/7o8jP19xHXcJ
@@ -146,12 +114,16 @@ void printSomeInt(int i)
 template<typename Sequence, int... Is>
 QVariant fusion_runtime_get_impl(const Sequence & seq, int index, std::integer_sequence<int, Is...>)
 {
+  //using return_type = typename (boost::fusion::result_of::at_c<Sequence, Is>::type)...;
+  //using return_type = typename decltype(boost::fusion::at_c<Is>(seq))...;
+  //using return_type = std::common_type_t<decltype(boost::fusion::at_c<Is>(seq))...>;
   QVariant value;
+  //decltype(auto) value;
 //   if(index == I){
 //     return I;
 //   }
   
-  std::initializer_list<int> {(index == Is ? (value = boost::fusion::at_c<Is>(seq)),0 : 0)...};
+  (void)std::initializer_list<int> {(index == Is ? (value = boost::fusion::at_c<Is>(seq)),0 : 0)...};
 //   using swallow = int[];
 //   swallow{ (printSomeInt(Is), int{})... };
   
@@ -163,7 +135,8 @@ QVariant fusion_runtime_get_impl(const Sequence & seq, int index, std::integer_s
 template<typename Sequence>
 QVariant fusion_runtime_get(const Sequence & seq, int index)
 {
-  constexpr int size = boost::fusion::size(seq);
+  //constexpr int size = boost::fusion::size(seq);
+  constexpr int size = boost::fusion::result_of::size<Sequence>::type::value;
 
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < size);
@@ -185,21 +158,24 @@ QVariant fusion_runtime_get(const Sequence & seq, int index)
 
 void DataTemplateTest::sandbox()
 {
-  auto t = std::make_tuple(1.0, 2.0, 3.0);
-
-  qDebug() << "t[0]: " << std::get<0>(t);
-  qDebug() << "t[1]: " << std::get<1>(t);
-  qDebug() << "t[2]: " << std::get<2>(t);
-
-  for(int i = 0; i < 3; ++i){
-    qDebug() << "t[" << i << "]: " << runtime_get(t, i);
-  }
 
   auto v = boost::fusion::make_vector(1,"A",3);
   for(int i = 0; i < 3; ++i){
     qDebug() << "v[" << i << "]: " << fusion_runtime_get(v, i);
   }
 }
+
+/**
+ * For tests, reate structs:
+ *
+ * struct NotCopiable
+ * {
+ * };
+ *
+ * struct NotMovable
+ * {
+ * };
+ */
 
 void DataTemplateTest::dataUsageTest()
 {

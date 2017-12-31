@@ -97,6 +97,11 @@
    * \endcode
    *
    * \sa MDT_ENTITY_DEF()
+   *
+   * \todo See if:
+   *    static const QString fieldName()
+   *   could be replaced with:
+   *    constexpr auto fieldName()
    */
 #define MDT_ENTITY_FIELD_DEF(fieldTuple) \
   struct MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) \
