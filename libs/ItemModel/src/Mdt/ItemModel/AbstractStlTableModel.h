@@ -18,39 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_ABSTRACT_STL_LIST_MODEL_H
-#define MDT_ITEM_MODEL_ABSTRACT_STL_LIST_MODEL_H
+#ifndef MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
+#define MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
 
 #include "MdtItemModelExport.h"
-#include <QAbstractListModel>
-#include <QModelIndex>
-#include <QVector>
 
 namespace Mdt{ namespace ItemModel{
-
-  /*! \brief Abstract base for STL compliant container list model
-   */
-  class MDT_ITEMMODEL_EXPORT AbstractStlListModel : public QAbstractListModel
-  {
-   Q_OBJECT
-
-   public:
-
-    /*! \brief Constructor
-     */
-    AbstractStlListModel(QObject *parent = nullptr);
-
-   protected:
-
-    /*! \brief Emit dataChanged() signal
-     */
-    void emitDataChangedSignal(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles = QVector<int> ());
-
-   private:
-
-    
-  };
-
 }} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_MODEL_ABSTRACT_STL_LIST_MODEL_H
+#endif // #ifndef MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H

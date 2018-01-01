@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_RESIZABLE_STL_LIST_MODEL_H
 
 #include "EditableStlListModel.h"
+#include "MdtItemModelExport.h"
 #include <type_traits>
 #include <iterator>
 
@@ -31,14 +32,14 @@ namespace Mdt{ namespace ItemModel{
   namespace Impl{
 
     template<typename Container, typename T>
-    void insertToContainer(Container & c, int row, int count)
+    void MDT_ITEMMODEL_EXPORT insertToContainer(Container & c, int row, int count)
     {
       c.insert( std::next(c.begin() , row), count, T() );
     }
 
     // QList does not have insert(iterator, count, value)
     template<typename Container, typename T>
-    void insertToContainer(QList<T> & c, int row, int count)
+    void MDT_ITEMMODEL_EXPORT insertToContainer(QList<T> & c, int row, int count)
     {
       c.reserve(c.size() + count);
       for(int i = 0; i < count; ++i){
@@ -56,7 +57,7 @@ namespace Mdt{ namespace ItemModel{
    *     - A STL compatible insert() method
    */
   template<typename Container>
-  class ResizableStlListModel : public EditableStlListModel<Container>
+  class MDT_ITEMMODEL_EXPORT ResizableStlListModel : public EditableStlListModel<Container>
   {
    public:
 

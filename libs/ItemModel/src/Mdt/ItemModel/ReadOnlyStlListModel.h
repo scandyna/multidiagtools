@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_READ_ONLY_STL_LIST_MODEL_H
 
 #include "AbstractStlListModel.h"
+#include "MdtItemModelExport.h"
 #include <QModelIndex>
 #include <QVariant>
 #include <iterator>
@@ -39,7 +40,7 @@ namespace Mdt{ namespace ItemModel{
    *           See QMetaType, especially Q_DECLARE_METATYPE() for custom types.
    */
   template<typename Container>
-  class ReadOnlyStlListModel : public AbstractStlListModel
+  class MDT_ITEMMODEL_EXPORT ReadOnlyStlListModel : public AbstractStlListModel
   {
    public:
 

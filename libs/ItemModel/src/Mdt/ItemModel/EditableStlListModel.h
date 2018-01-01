@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_EDITABLE_STL_LIST_MODEL_H
 
 #include "ReadOnlyStlListModel.h"
+#include "MdtItemModelExport.h"
 
 namespace Mdt{ namespace ItemModel{
 
@@ -34,7 +35,7 @@ namespace Mdt{ namespace ItemModel{
    *     - The end() method
    */
   template<typename Container>
-  class EditableStlListModel : public ReadOnlyStlListModel<Container>
+  class MDT_ITEMMODEL_EXPORT EditableStlListModel : public ReadOnlyStlListModel<Container>
   {
    public:
 
