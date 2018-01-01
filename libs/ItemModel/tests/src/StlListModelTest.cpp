@@ -24,6 +24,7 @@
 #include "Mdt/ItemModel/EditableStlListModel.h"
 #include <vector>
 #include <QVariantList>
+#include <QModelIndex>
 
 using namespace Mdt::ItemModel;
 
@@ -47,6 +48,11 @@ void StlListTest::stdVectorRoTest()
   std::vector<int> v{1,2,3};
   model.setContainer(v);
   QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.rowCount(QModelIndex()), 3);
+  // Check accessing at row
+  QCOMPARE(model.at(0), 1);
+  QCOMPARE(model.at(1), 2);
+  QCOMPARE(model.at(2), 3);
   // Check get data for default role
   QCOMPARE(getModelData(model, 0, 0), QVariant(1));
   QCOMPARE(getModelData(model, 1, 0), QVariant(2));
@@ -55,6 +61,10 @@ void StlListTest::stdVectorRoTest()
   QCOMPARE(getModelData(model, 0, 0, Qt::DisplayRole), QVariant(1));
   QCOMPARE(getModelData(model, 1, 0, Qt::DisplayRole), QVariant(2));
   QCOMPARE(getModelData(model, 2, 0, Qt::DisplayRole), QVariant(3));
+  // Check get data for EditRole
+  QCOMPARE(getModelData(model, 0, 0, Qt::EditRole), QVariant(1));
+  QCOMPARE(getModelData(model, 1, 0, Qt::EditRole), QVariant(2));
+  QCOMPARE(getModelData(model, 2, 0, Qt::EditRole), QVariant(3));
   // Check getting data for ToolTipRole
   QVERIFY(getModelData(model, 0, 0, Qt::ToolTipRole).isNull());
   QVERIFY(getModelData(model, 1, 0, Qt::ToolTipRole).isNull());
