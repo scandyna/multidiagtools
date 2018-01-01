@@ -122,15 +122,15 @@ void StlListModelBenchmark::stlModelListRowCountBenchmark()
   QCOMPARE(size, n);
 }
 
-void StlListModelBenchmark::stdVectorAtBenchmark()
-{
-  QFAIL("Not complete");
-}
+// void StlListModelBenchmark::stdVectorAtBenchmark()
+// {
+//   QFAIL("Not complete");
+// }
 
-void StlListModelBenchmark::stdListAtBenchmark()
-{
-  QFAIL("Not complete");
-}
+// void StlListModelBenchmark::stdListAtBenchmark()
+// {
+//   QFAIL("Not complete");
+// }
 
 
 /*

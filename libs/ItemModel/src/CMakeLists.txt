@@ -47,6 +47,7 @@ set(SOURCE_FILES
     Mdt/ItemModel/AbstractStlListModel.cpp
     Mdt/ItemModel/ReadOnlyStlListModel.cpp
     Mdt/ItemModel/EditableStlListModel.cpp
+    Mdt/ItemModel/ResizableStlListModel.cpp
 )
 
 find_package(Qt5 COMPONENTS Core Gui)

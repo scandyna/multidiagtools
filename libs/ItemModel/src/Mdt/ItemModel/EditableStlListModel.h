@@ -29,7 +29,7 @@ namespace Mdt{ namespace ItemModel{
    *
    * \tparam Container Type of a STL compatible container.
    *   It must meet requirement for ReadOnlyStlListModel,
-   *    and additionnaly provide:
+   *    and additionaly provide:
    *     - The begin() method
    *     - The end() method
    */

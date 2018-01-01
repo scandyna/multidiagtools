@@ -34,6 +34,6 @@ class StlListModelBenchmark : public TestBase
   void stlModelVectorRowCountQModelIndexBenchmark();
   void stdListSizeBenchmark();
   void stlModelListRowCountBenchmark();
-  void stdVectorAtBenchmark();
-  void stdListAtBenchmark();
+//   void stdVectorAtBenchmark();
+//   void stdListAtBenchmark();
 };

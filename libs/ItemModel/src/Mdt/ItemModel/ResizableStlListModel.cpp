@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,34 +18,4 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TestBase.h"
-
-class StlListTest : public TestBase
-{
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void stdVectorRoTest();
-  void variantListRoTest();
-  void roSignalTest();
-  void roQtModelTest();
-
-  void stdVectorRwTest();
-  void variantListRwTest();
-  void setDataSignalTest();
-  void rwQtModelTest();
-
-  void insertRowsQListTest();
-  void insertRowsStdVectorTest();
-  void insertRowsQVectorTest();
-  void insertRowsSignalTest();
-  void removeRowsQListTest();
-  void removeRowsStdVectorTest();
-  void removeRowsQVectorTest();
-  void removeRowsSignalTest();
-  void resizableQtModelTest();
-};
+#include "ResizableStlListModel.h"
