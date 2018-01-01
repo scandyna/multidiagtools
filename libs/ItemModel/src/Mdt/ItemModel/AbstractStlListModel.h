@@ -22,6 +22,8 @@
 #define MDT_ITEM_MODEL_ABSTRACT_STL_LIST_MODEL_H
 
 #include <QAbstractListModel>
+#include <QModelIndex>
+#include <QVector>
 
 namespace Mdt{ namespace ItemModel{
 
@@ -38,6 +40,10 @@ namespace Mdt{ namespace ItemModel{
     AbstractStlListModel(QObject *parent = nullptr);
 
    protected:
+
+    /*! \brief Emit dataChanged() signal
+     */
+    void emitDataChangedSignal(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles = QVector<int> ());
 
    private:
 

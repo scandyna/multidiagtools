@@ -104,9 +104,9 @@ void StlListTest::stdVectorRoTest()
   QCOMPARE(getModelData(model, 1, 0, Qt::DisplayRole), QVariant(2));
   QCOMPARE(getModelData(model, 2, 0, Qt::DisplayRole), QVariant(3));
   // Check get data for EditRole
-  QCOMPARE(getModelData(model, 0, 0, Qt::EditRole), QVariant(1));
-  QCOMPARE(getModelData(model, 1, 0, Qt::EditRole), QVariant(2));
-  QCOMPARE(getModelData(model, 2, 0, Qt::EditRole), QVariant(3));
+//   QCOMPARE(getModelData(model, 0, 0, Qt::EditRole), QVariant(1));
+//   QCOMPARE(getModelData(model, 1, 0, Qt::EditRole), QVariant(2));
+//   QCOMPARE(getModelData(model, 2, 0, Qt::EditRole), QVariant(3));
   // Check getting data for ToolTipRole
   QVERIFY(getModelData(model, 0, 0, Qt::ToolTipRole).isNull());
   QVERIFY(getModelData(model, 1, 0, Qt::ToolTipRole).isNull());
@@ -148,12 +148,27 @@ void StlListTest::roQtModelTest()
 
 void StlListTest::stdVectorRwTest()
 {
+  const Qt::ItemFlags expectedFlags = (getListModelStandardFlags() | Qt::ItemIsEditable);
   EditableStlListModel< std::vector<int> > model;
   QCOMPARE(model.rowCount(), 0);
 
-  std::vector<int> v{1,2,3};
+  std::vector<int> v{0,0,0};
   model.setContainer(v);
   QCOMPARE(model.rowCount(), 3);
+  // Check flags
+  QCOMPARE(getModelFlags(model, 0, 0), expectedFlags);
+  QCOMPARE(getModelFlags(model, 1, 0), expectedFlags);
+  QCOMPARE(getModelFlags(model, 2, 0), expectedFlags);
+  // Check setValue and at
+  QCOMPARE(model.at(0), 0);
+  QCOMPARE(model.at(1), 0);
+  QCOMPARE(model.at(2), 0);
+  model.setValue(0, 1);
+  model.setValue(1, 2);
+  model.setValue(2, 3);
+  QCOMPARE(model.at(0), 1);
+  QCOMPARE(model.at(1), 2);
+  QCOMPARE(model.at(2), 3);
   // Check get data for default role
   QCOMPARE(getModelData(model, 0, 0), QVariant(1));
   QCOMPARE(getModelData(model, 1, 0), QVariant(2));
@@ -165,23 +180,57 @@ void StlListTest::stdVectorRwTest()
   QCOMPARE(getModelData(model, 0, 0), QVariant(11));
   QCOMPARE(getModelData(model, 1, 0), QVariant(12));
   QCOMPARE(getModelData(model, 2, 0), QVariant(13));
-  // Setting data on invalid index should fail
-  QVERIFY(!setModelData(model, 0, 1, 44));
-  QCOMPARE(getModelData(model, 0, 0), QVariant(11));
-  QCOMPARE(getModelData(model, 1, 0), QVariant(12));
-  QCOMPARE(getModelData(model, 2, 0), QVariant(13));
-
-  QFAIL("Not complete");
 }
 
 void StlListTest::variantListRwTest()
 {
-  QFAIL("Not complete");
+  EditableStlListModel<QVariantList> model;
+  QVariantList l{1,"A"};
+
+  model.setContainer(l);
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("A"));
+  QVERIFY(setModelData(model, 0, 0, "B"));
+  QVERIFY(setModelData(model, 1, 0, 2));
+  QCOMPARE(getModelData(model, 0, 0), QVariant("B"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
 }
 
 void StlListTest::setDataSignalTest()
 {
-  QFAIL("Not complete");
+  using model_type = EditableStlListModel<QVariantList>;
+  model_type model;
+  QSignalSpy dataChangedSpy(&model, &model_type::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  QVariantList arguments;
+  QModelIndex index;
+
+  QVariantList l{3, "C"};
+  model.setContainer(l);
+  QCOMPARE(dataChangedSpy.count(), 0);
+
+  model.setValue(0, "A");
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  index = arguments.at(0).toModelIndex();
+  QVERIFY(index.isValid());
+  QCOMPARE(index.row(), 0);
+  QCOMPARE(index.column(), 0);
+  QCOMPARE( arguments.at(1).toModelIndex(), index );
+  dataChangedSpy.clear();
+
+  QVERIFY(setModelData(model, 1, 0, "B"));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  index = arguments.at(0).toModelIndex();
+  QVERIFY(index.isValid());
+  QCOMPARE(index.row(), 1);
+  QCOMPARE(index.column(), 0);
+  QCOMPARE( arguments.at(1).toModelIndex(), index );
+  dataChangedSpy.clear();
 }
 
 void StlListTest::rwQtModelTest()

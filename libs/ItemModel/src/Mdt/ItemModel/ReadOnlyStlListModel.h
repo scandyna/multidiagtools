@@ -67,6 +67,13 @@ namespace Mdt{ namespace ItemModel{
       return mContainer;
     }
 
+    /*! \brief Acces the internal container instance
+     */
+    Container & container()
+    {
+      return mContainer;
+    }
+
     /*! \brief Get row count
      */
     int rowCount() const
@@ -98,18 +105,26 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Get data at \a index
      *
-     * \pre if \a index is valid, its row must be in valid range ( 0 <= index.row() < rowCount() ).
+     * If \a index is invalid, a null QVariant is returned.
+     *
+     * If \a role is different than Qt::DisplayRole,
+     *  a null QVariant is returned.
+     *
+     * \pre If \a index is valid, it must be in a valid range:
+     *   - its row must be in ( 0 <= index.row() < rowCount() )
+     *   - its column must be 0
      */
     QVariant data(const QModelIndex & index, int role) const override
     {
       if(!index.isValid()){
         return QVariant();
       }
-      if( (role != Qt::DisplayRole) && (role != Qt::EditRole) ){
+      if(role != Qt::DisplayRole){
         return QVariant();
       }
       Q_ASSERT(index.row() >= 0);
       Q_ASSERT(index.row() < rowCount());
+      Q_ASSERT(index.column() == 0);
 
       return at(index.row());
     }
