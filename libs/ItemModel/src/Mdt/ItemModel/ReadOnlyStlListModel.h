@@ -55,7 +55,9 @@ namespace Mdt{ namespace ItemModel{
      */
     void setContainer(const Container & container)
     {
+      beginResetModel();
       mContainer = container;
+      endResetModel();
     }
 
     /*! \brief Acces the internal container instance
@@ -70,9 +72,6 @@ namespace Mdt{ namespace ItemModel{
     int rowCount() const
     {
       return std::distance(mContainer.cbegin(), mContainer.cend());
-      /// Call impl
-      /// auto tag = typename std::iterator_traits<typename Container::iterator>::iteragtor_category{};
-      /// Call impl(index, tag)
     }
 
     /*! \brief Get row count
@@ -116,25 +115,6 @@ namespace Mdt{ namespace ItemModel{
     }
 
    private:
-
-    /** \todo Implement iteratorAtIndex()
-     *  Implementation dependning on iterator type
-     *  General case: iterate until n (see std::advance())
-     *  Optimized: cbegin() + n
-     * See, f.ex: std::random_access_iterator_tag
-     *
-     * const_iterator constIteratorAt(int index, std::bidirectional_iterator_tag)
-     * {
-     * }
-     *
-     * const_iterator constIteratorAt(int index, std::random_access_iterator_tag)
-     * {
-     *   return std::cbegin(mContainer) + index;
-     * }
-     *
-     * NOTE: std::advance() does all this things !!
-     *       sa: std::next()
-     */
 
     Container mContainer;
   };

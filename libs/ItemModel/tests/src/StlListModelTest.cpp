@@ -22,9 +22,10 @@
 #include "qtmodeltest.h"
 #include "Mdt/ItemModel/ReadOnlyStlListModel.h"
 #include "Mdt/ItemModel/EditableStlListModel.h"
-#include <vector>
 #include <QVariantList>
 #include <QModelIndex>
+#include <QSignalSpy>
+#include <vector>
 
 using namespace Mdt::ItemModel;
 
@@ -37,11 +38,48 @@ void StlListTest::cleanupTestCase()
 }
 
 /*
+ * Helpers
+ */
+
+// Class to get efault flags
+class FlagsTestListModel : public QAbstractListModel
+{
+ public:
+
+  explicit FlagsTestListModel(QObject* parent = nullptr)
+   : QAbstractListModel(parent) {}
+
+  int rowCount(const QModelIndex &) const override
+  {
+    return 1;
+  }
+
+  QVariant data(const QModelIndex &, int) const override
+  {
+    return QVariant();
+  }
+};
+
+/*
+ * Helper functions
+ */
+
+Qt::ItemFlags getListModelStandardFlags()
+{
+  FlagsTestListModel model;
+  QModelIndex index = model.index(0, 0);
+  Q_ASSERT(index.isValid());
+  return model.flags(index);
+}
+
+
+/*
  * Tests
  */
 
 void StlListTest::stdVectorRoTest()
 {
+  const Qt::ItemFlags expectedFlags = getListModelStandardFlags();
   ReadOnlyStlListModel< std::vector<int> > model;
   QCOMPARE(model.rowCount(), 0);
 
@@ -49,6 +87,10 @@ void StlListTest::stdVectorRoTest()
   model.setContainer(v);
   QCOMPARE(model.rowCount(), 3);
   QCOMPARE(model.rowCount(QModelIndex()), 3);
+  // Check flags
+  QCOMPARE(getModelFlags(model, 0, 0), expectedFlags);
+  QCOMPARE(getModelFlags(model, 1, 0), expectedFlags);
+  QCOMPARE(getModelFlags(model, 2, 0), expectedFlags);
   // Check accessing at row
   QCOMPARE(model.at(0), 1);
   QCOMPARE(model.at(1), 2);
@@ -73,12 +115,26 @@ void StlListTest::stdVectorRoTest()
 
 void StlListTest::variantListRoTest()
 {
-  QFAIL("Not complete");
+  ReadOnlyStlListModel<QVariantList> model;
+  QVariantList l{1, "A"};
+  model.setContainer(l);
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("A"));
 }
 
 void StlListTest::roSignalTest()
 {
-  QFAIL("Not complete");
+  using model_type = ReadOnlyStlListModel<QVariantList>;
+  model_type model;
+  QSignalSpy resetSpy(&model, &model_type::modelReset);
+  QVERIFY(resetSpy.isValid());
+  QCOMPARE(resetSpy.count(), 0);
+
+  QVariantList l{2, "B"};
+  model.setContainer(l);
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(resetSpy.count(), 1);
 }
 
 void StlListTest::roQtModelTest()

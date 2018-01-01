@@ -39,8 +39,6 @@ namespace Mdt{ namespace ItemModel{
 
    protected:
 
-    
-
    private:
 
     
