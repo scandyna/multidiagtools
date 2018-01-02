@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "StlListModelTest.h"
+#include "ModelInsertRowTest.h"
 #include "qtmodeltest.h"
 #include "Mdt/ItemModel/ReadOnlyStlListModel.h"
 #include "Mdt/ItemModel/EditableStlListModel.h"
@@ -245,70 +246,8 @@ void StlListModelTest::insertRowsQListTest()
 {
   ResizableStlListModel<QVariantList> model;
   QVariantList l;
-
   model.setContainer(l);
-  QCOMPARE(model.rowCount(), 0);
-  /*
-   * Append a row
-   * ---
-   * |A|
-   * ---
-   */
-  model.appendRow();
-  QCOMPARE(model.rowCount(), 1);
-  // Check that inserted row can be used
-  QVERIFY(setModelData(model, 0, 0, "A"));
-  QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
-  /*
-   * Prepend a row
-   * ---
-   * |1|
-   * ---
-   * |A|
-   * ---
-   */
-  model.prependRow();
-  QCOMPARE(model.rowCount(), 2);
-  // Check that row was inserted at correct place
-  QVERIFY(getModelData(model, 0, 0).isNull());
-  QCOMPARE(getModelData(model, 1, 0), QVariant("A"));
-  // Check that inserted row can be used
-  QVERIFY(setModelData(model, 0, 0, 1));
-  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
-  QCOMPARE(getModelData(model, 1, 0), QVariant("A"));
-  /*
-   * Insert 2 rows before A
-   * Before:
-   *  ---
-   *  |1|
-   * >---
-   *  |A|
-   *  ---
-   * After:
-   * ---
-   * |1|
-   * ---
-   * |2|
-   * ---
-   * |3|
-   * ---
-   * |A|
-   * ---
-   */
-  QVERIFY(model.insertRows(1, 2));
-  QCOMPARE(model.rowCount(), 4);
-  // Check that rows where inserted at correctplace
-  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
-  QVERIFY(getModelData(model, 1, 0).isNull());
-  QVERIFY(getModelData(model, 2, 0).isNull());
-  QCOMPARE(getModelData(model, 3, 0), QVariant("A"));
-  // Check that inserted row can be used
-  QVERIFY(setModelData(model, 1, 0, 2));
-  QVERIFY(setModelData(model, 2, 0, 3));
-  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
-  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
-  QCOMPARE(getModelData(model, 2, 0), QVariant(3));
-  QCOMPARE(getModelData(model, 3, 0), QVariant("A"));
+  ModelInsertRowTest mt(&model);
 }
 
 void StlListModelTest::insertRowsStdVectorTest()
