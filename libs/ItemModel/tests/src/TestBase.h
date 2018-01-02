@@ -30,24 +30,33 @@
 class QAbstractItemModel;
 class QAbstractProxyModel;
 
+// Helper functions get/set data in a model
+bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
+bool setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
+QVariant getModelData(const QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
+QVariant getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
+
+// Helpers to resize model
+bool prependRowToModel(QAbstractItemModel *model);
+bool prependRowToModel(QAbstractItemModel & model);
+bool appendRowToModel(QAbstractItemModel *model);
+bool appendRowToModel(QAbstractItemModel & model);
+
+// Helper functions get/set flags in a model
+Qt::ItemFlags getModelFlags(const QAbstractItemModel *model, int row, int column);
+Qt::ItemFlags getModelFlags(const QAbstractItemModel & model, int row, int column);
+
 class TestBase : public QObject
 {
  Q_OBJECT
 
- protected:
+ public:
 
   static void displayModel(QAbstractItemModel *model);
   static void displayModel(QAbstractItemModel & model);
   static void displayModels(QAbstractItemModel *sourceModel, QAbstractProxyModel *proxyModel);
   static void displayModels(QAbstractItemModel & sourceModel, QAbstractProxyModel & proxyModel);
-  // Helper functions get/set data in a model
-  static bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
-  static bool setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
-  static QVariant getModelData(const QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
-  static QVariant getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
-  // Helper functions get/set flags in a model
-  static Qt::ItemFlags getModelFlags(const QAbstractItemModel *model, int row, int column);
-  static Qt::ItemFlags getModelFlags(const QAbstractItemModel & model, int row, int column);
+
 };
 
 #define MDT_ITEM_MODEL_TEST_MAIN_IMPL(TestClass, debugEnv) \

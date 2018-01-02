@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -30,6 +30,96 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QDebug>
+
+bool setModelData(QAbstractItemModel* model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < model->columnCount());
+
+  auto index = model->index(row, column);
+  if(!index.isValid()){
+    qDebug() << "TestBase::setModelData() - index is not valid: " << index;
+    return false;
+  }
+
+  return model->setData(index, value, role);
+}
+
+bool setModelData(QAbstractItemModel& model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
+{
+  return setModelData(&model, row, column, value, role);
+}
+
+QVariant getModelData(const QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < model->columnCount());
+
+  auto index = model->index(row, column);
+  if(!index.isValid()){
+    qDebug() << "TestBase::getModelData() - index is not valid: " << index;
+    return QVariant();
+  }
+
+  return model->data(index, role);
+}
+
+QVariant getModelData(const QAbstractItemModel& model, int row, int column, Qt::ItemDataRole role)
+{
+  return getModelData(&model, row, column, role);
+}
+
+bool prependRowToModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  return model->insertRows(0, 1);
+}
+
+bool prependRowToModel(QAbstractItemModel& model)
+{
+  return prependRowToModel(&model);
+}
+
+bool appendRowToModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  return model->insertRows(model->rowCount(), 1);
+}
+
+bool appendRowToModel(QAbstractItemModel& model)
+{
+  return appendRowToModel(&model);
+}
+
+Qt::ItemFlags getModelFlags(const QAbstractItemModel* model, int row, int column)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < model->columnCount());
+
+  auto index = model->index(row, column);
+  if(!index.isValid()){
+    qDebug() << "TestBase::getModelFlags() - index is not valid: " << index;
+    return Qt::NoItemFlags;
+  }
+
+  return model->flags(index);
+}
+
+Qt::ItemFlags getModelFlags(const QAbstractItemModel& model, int row, int column)
+{
+  return getModelFlags(&model, row, column);
+}
 
 void TestBase::displayModel(QAbstractItemModel* model)
 {
@@ -99,70 +189,4 @@ void TestBase::displayModels(QAbstractItemModel* sourceModel, QAbstractProxyMode
 void TestBase::displayModels(QAbstractItemModel& sourceModel, QAbstractProxyModel& proxyModel)
 {
   displayModels(&sourceModel, &proxyModel);
-}
-
-bool TestBase::setModelData(QAbstractItemModel* model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
-{
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(column >= 0);
-  Q_ASSERT(column < model->columnCount());
-
-  auto index = model->index(row, column);
-  if(!index.isValid()){
-    qDebug() << "TestBase::setModelData() - index is not valid: " << index;
-    return false;
-  }
-
-  return model->setData(index, value, role);
-}
-
-bool TestBase::setModelData(QAbstractItemModel& model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
-{
-  return setModelData(&model, row, column, value, role);
-}
-
-QVariant TestBase::getModelData(const QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
-{
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(column >= 0);
-  Q_ASSERT(column < model->columnCount());
-
-  auto index = model->index(row, column);
-  if(!index.isValid()){
-    qDebug() << "TestBase::getModelData() - index is not valid: " << index;
-    return QVariant();
-  }
-
-  return model->data(index, role);
-}
-
-QVariant TestBase::getModelData(const QAbstractItemModel& model, int row, int column, Qt::ItemDataRole role)
-{
-  return getModelData(&model, row, column, role);
-}
-
-Qt::ItemFlags TestBase::getModelFlags(const QAbstractItemModel* model, int row, int column)
-{
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(column >= 0);
-  Q_ASSERT(column < model->columnCount());
-
-  auto index = model->index(row, column);
-  if(!index.isValid()){
-    qDebug() << "TestBase::getModelFlags() - index is not valid: " << index;
-    return Qt::NoItemFlags;
-  }
-
-  return model->flags(index);
-}
-
-Qt::ItemFlags TestBase::getModelFlags(const QAbstractItemModel& model, int row, int column)
-{
-  return getModelFlags(&model, row, column);
 }
