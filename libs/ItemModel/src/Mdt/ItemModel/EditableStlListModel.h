@@ -65,8 +65,7 @@ namespace Mdt{ namespace ItemModel{
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
 
-      auto it = std::next(container().begin(), row);
-      *it = value;
+      *iteratorAtIndex(container(), row) = value;
       const auto _index = index(row, 0);
       emitDataChangedSignal(_index, _index);
     }
