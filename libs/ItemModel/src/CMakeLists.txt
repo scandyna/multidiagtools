@@ -44,10 +44,15 @@ set(SOURCE_FILES
     Mdt/ItemModel/HeaderProxyModelItem.cpp
     Mdt/ItemModel/HeaderProxyModelItemList.cpp
     Mdt/ItemModel/HeaderProxyModel.cpp
+    Mdt/ItemModel/StlContainer.cpp
     Mdt/ItemModel/AbstractStlListModel.cpp
     Mdt/ItemModel/ReadOnlyStlListModel.cpp
     Mdt/ItemModel/EditableStlListModel.cpp
     Mdt/ItemModel/ResizableStlListModel.cpp
+    Mdt/ItemModel/AbstractStlTableModel.cpp
+    Mdt/ItemModel/ReadOnlyStlTableModel.cpp
+    Mdt/ItemModel/EditableStlTableModel.cpp
+    Mdt/ItemModel/RowResizableStlTableModel.cpp
 )
 
 find_package(Qt5 COMPONENTS Core Gui)

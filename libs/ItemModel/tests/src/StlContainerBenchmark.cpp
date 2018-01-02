@@ -18,35 +18,53 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
-#define MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
-
-#include "MdtItemModelExport.h"
-#include <QAbstractTableModel>
+#include "StlContainerBenchmark.h"
+#include "Mdt/ItemModel/StlContainer.h"
 #include <QModelIndex>
-#include <QVector>
+#include <vector>
+#include <list>
+#include <ctime>
+#include <cstdlib>
+#include <algorithm>
 
-namespace Mdt{ namespace ItemModel{
+using namespace Mdt::ItemModel;
 
-  /*! \brief Abstract base for STL compliant container list model
-   */
-  class MDT_ITEMMODEL_EXPORT AbstractStlTableModel : public QAbstractTableModel
-  {
-   Q_OBJECT
+void StlContainerBenchmark::initTestCase()
+{
+  std::srand(std::time(0));
+}
 
-   public:
+void StlContainerBenchmark::cleanupTestCase()
+{
+}
 
-    /*! \brief Constructor
-     */
-    AbstractStlTableModel(QObject *parent = nullptr);
+/*
+ * Helpers
+ */
 
-   protected:
+template<typename Container>
+int fillContainer(Container & container)
+{
+  const int n = 100;
 
-    /*! \brief Emit dataChanged() signal
-     */
-    void emitDataChangedSignal(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles = QVector<int> ());
+  container.resize(n);
+  std::generate(container.begin(), container.end(), std::rand);
 
-  };
-}} // namespace Mdt{ namespace ItemModel{
+  return n;
+}
 
-#endif // #ifndef MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
+/*
+ * Tests
+ */
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::CoreApplication app(argc, argv);
+    StlContainerBenchmark test;
+
+  return QTest::qExec(&test, argc, argv);
+}

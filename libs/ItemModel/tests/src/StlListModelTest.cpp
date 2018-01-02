@@ -32,11 +32,11 @@
 
 using namespace Mdt::ItemModel;
 
-void StlListTest::initTestCase()
+void StlListModelTest::initTestCase()
 {
 }
 
-void StlListTest::cleanupTestCase()
+void StlListModelTest::cleanupTestCase()
 {
 }
 
@@ -44,7 +44,7 @@ void StlListTest::cleanupTestCase()
  * Helpers
  */
 
-// Class to get efault flags
+// Class to get default flags
 class FlagsTestListModel : public QAbstractListModel
 {
  public:
@@ -63,10 +63,6 @@ class FlagsTestListModel : public QAbstractListModel
   }
 };
 
-/*
- * Helper functions
- */
-
 Qt::ItemFlags getListModelStandardFlags()
 {
   FlagsTestListModel model;
@@ -80,7 +76,7 @@ Qt::ItemFlags getListModelStandardFlags()
  * Tests
  */
 
-void StlListTest::stdVectorRoTest()
+void StlListModelTest::stdVectorRoTest()
 {
   const Qt::ItemFlags expectedFlags = getListModelStandardFlags();
   ReadOnlyStlListModel< std::vector<int> > model;
@@ -116,7 +112,7 @@ void StlListTest::stdVectorRoTest()
   QVERIFY(getModelData(model, 2, 0, Qt::ToolTipRole).isNull());
 }
 
-void StlListTest::variantListRoTest()
+void StlListModelTest::variantListRoTest()
 {
   ReadOnlyStlListModel<QVariantList> model;
   QVariantList l{1, "A"};
@@ -126,7 +122,7 @@ void StlListTest::variantListRoTest()
   QCOMPARE(getModelData(model, 1, 0), QVariant("A"));
 }
 
-void StlListTest::roSignalTest()
+void StlListModelTest::roSignalTest()
 {
   using model_type = ReadOnlyStlListModel<QVariantList>;
   model_type model;
@@ -140,7 +136,7 @@ void StlListTest::roSignalTest()
   QCOMPARE(resetSpy.count(), 1);
 }
 
-void StlListTest::roQtModelTest()
+void StlListModelTest::roQtModelTest()
 {
   ReadOnlyStlListModel< std::vector<int> > model;
   std::vector<int> v{1,2,3};
@@ -149,7 +145,7 @@ void StlListTest::roQtModelTest()
   QtModelTest mt(&model);
 }
 
-void StlListTest::stdVectorRwTest()
+void StlListModelTest::stdVectorRwTest()
 {
   const Qt::ItemFlags expectedFlags = (getListModelStandardFlags() | Qt::ItemIsEditable);
   EditableStlListModel< std::vector<int> > model;
@@ -185,7 +181,7 @@ void StlListTest::stdVectorRwTest()
   QCOMPARE(getModelData(model, 2, 0), QVariant(13));
 }
 
-void StlListTest::variantListRwTest()
+void StlListModelTest::variantListRwTest()
 {
   EditableStlListModel<QVariantList> model;
   QVariantList l{1,"A"};
@@ -200,7 +196,7 @@ void StlListTest::variantListRwTest()
   QCOMPARE(getModelData(model, 1, 0), QVariant(2));
 }
 
-void StlListTest::setDataSignalTest()
+void StlListModelTest::setDataSignalTest()
 {
   using model_type = EditableStlListModel<QVariantList>;
   model_type model;
@@ -236,7 +232,7 @@ void StlListTest::setDataSignalTest()
   dataChangedSpy.clear();
 }
 
-void StlListTest::rwQtModelTest()
+void StlListModelTest::rwQtModelTest()
 {
   EditableStlListModel< std::vector<int> > model;
   std::vector<int> v{1,2,3};
@@ -245,7 +241,7 @@ void StlListTest::rwQtModelTest()
   QtModelTest mt(&model);
 }
 
-void StlListTest::insertRowsQListTest()
+void StlListModelTest::insertRowsQListTest()
 {
   ResizableStlListModel<QVariantList> model;
   QVariantList l;
@@ -315,7 +311,7 @@ void StlListTest::insertRowsQListTest()
   QCOMPARE(getModelData(model, 3, 0), QVariant("A"));
 }
 
-void StlListTest::insertRowsStdVectorTest()
+void StlListModelTest::insertRowsStdVectorTest()
 {
   ResizableStlListModel< std::vector<int> > model;
   std::vector<int> v;
@@ -328,7 +324,7 @@ void StlListTest::insertRowsStdVectorTest()
   QCOMPARE(model.rowCount(), 2);
 }
 
-void StlListTest::insertRowsQVectorTest()
+void StlListModelTest::insertRowsQVectorTest()
 {
   ResizableStlListModel< QVector<int> > model;
   QVector<int> v;
@@ -341,7 +337,7 @@ void StlListTest::insertRowsQVectorTest()
   QCOMPARE(model.rowCount(), 2);
 }
 
-void StlListTest::insertRowsSignalTest()
+void StlListModelTest::insertRowsSignalTest()
 {
   using model_type = ResizableStlListModel< std::vector<int> >;
   model_type model;
@@ -365,7 +361,7 @@ void StlListTest::insertRowsSignalTest()
   QCOMPARE(arguments.at(2), QVariant(0)); // last
 }
 
-void StlListTest::removeRowsQListTest()
+void StlListModelTest::removeRowsQListTest()
 {
   ResizableStlListModel<QVariantList> model;
   QCOMPARE(model.rowCount(), 0);
@@ -446,7 +442,7 @@ void StlListTest::removeRowsQListTest()
   QCOMPARE(model.rowCount(), 0);
 }
 
-void StlListTest::removeRowsStdVectorTest()
+void StlListModelTest::removeRowsStdVectorTest()
 {
   ResizableStlListModel< std::vector<int> > model;
   std::vector<int> v{1,2};
@@ -459,7 +455,7 @@ void StlListTest::removeRowsStdVectorTest()
   QCOMPARE(model.rowCount(), 0);
 }
 
-void StlListTest::removeRowsQVectorTest()
+void StlListModelTest::removeRowsQVectorTest()
 {
   ResizableStlListModel< QVector<int> > model;
   QVector<int> v{1,2};
@@ -472,7 +468,7 @@ void StlListTest::removeRowsQVectorTest()
   QCOMPARE(model.rowCount(), 0);
 }
 
-void StlListTest::removeRowsSignalTest()
+void StlListModelTest::removeRowsSignalTest()
 {
   using model_type = ResizableStlListModel< std::vector<int> >;
   model_type model;
@@ -496,7 +492,7 @@ void StlListTest::removeRowsSignalTest()
   QCOMPARE(arguments.at(2), QVariant(1)); // last
 }
 
-void StlListTest::resizableQtModelTest()
+void StlListModelTest::resizableQtModelTest()
 {
   ResizableStlListModel< std::vector<int> > model;
   std::vector<int> v{1,2,3};
@@ -512,7 +508,7 @@ void StlListTest::resizableQtModelTest()
 int main(int argc, char **argv)
 {
   Mdt::CoreApplication app(argc, argv);
-  StlListTest test;
+    StlListModelTest test;
 
   return QTest::qExec(&test, argc, argv);
 }

@@ -18,35 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
-#define MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
+#ifndef STL_CONTAINER_BENCHMARK_H
+#define STL_CONTAINER_BENCHMARK_H
 
-#include "MdtItemModelExport.h"
-#include <QAbstractTableModel>
-#include <QModelIndex>
-#include <QVector>
+#include "TestBase.h"
 
-namespace Mdt{ namespace ItemModel{
+class StlContainerBenchmark : public TestBase
+{
+ Q_OBJECT
 
-  /*! \brief Abstract base for STL compliant container list model
-   */
-  class MDT_ITEMMODEL_EXPORT AbstractStlTableModel : public QAbstractTableModel
-  {
-   Q_OBJECT
+ private slots:
 
-   public:
+  void initTestCase();
+  void cleanupTestCase();
 
-    /*! \brief Constructor
-     */
-    AbstractStlTableModel(QObject *parent = nullptr);
+};
 
-   protected:
-
-    /*! \brief Emit dataChanged() signal
-     */
-    void emitDataChangedSignal(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles = QVector<int> ());
-
-  };
-}} // namespace Mdt{ namespace ItemModel{
-
-#endif // #ifndef MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
+#endif // #ifndef STL_CONTAINER_BENCHMARK_H

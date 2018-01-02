@@ -18,35 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
-#define MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
-
-#include "MdtItemModelExport.h"
-#include <QAbstractTableModel>
-#include <QModelIndex>
+#include "StlTableModelBenchmark.h"
+#include "Mdt/ItemModel/ReadOnlyStlTableModel.h"
+#include "Mdt/ItemModel/EditableStlTableModel.h"
+#include "Mdt/ItemModel/RowResizableStlTableModel.h"
+#include <QVariantList>
+#include <QList>
 #include <QVector>
+#include <QModelIndex>
+#include <QSignalSpy>
+#include <vector>
 
-namespace Mdt{ namespace ItemModel{
+void StlTableModelBenchmarks::initTestCase()
+{
+}
 
-  /*! \brief Abstract base for STL compliant container list model
-   */
-  class MDT_ITEMMODEL_EXPORT AbstractStlTableModel : public QAbstractTableModel
-  {
-   Q_OBJECT
+void StlTableModelBenchmarks::cleanupTestCase()
+{
+}
 
-   public:
+/*
+ * Tests
+ */
 
-    /*! \brief Constructor
-     */
-    AbstractStlTableModel(QObject *parent = nullptr);
+/*
+ * Main
+ */
 
-   protected:
+int main(int argc, char **argv)
+{
+  Mdt::CoreApplication app(argc, argv);
+    StlTableModelBenchmarks test;
 
-    /*! \brief Emit dataChanged() signal
-     */
-    void emitDataChangedSignal(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles = QVector<int> ());
-
-  };
-}} // namespace Mdt{ namespace ItemModel{
-
-#endif // #ifndef MDT_ITEM_MODEL_ABSTRACT_STL_TABLE_MODEL_H
+  return QTest::qExec(&test, argc, argv);
+}

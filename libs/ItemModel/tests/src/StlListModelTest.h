@@ -18,9 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#ifndef STL_LIST_MODEL_TEST_H
+#define STL_LIST_MODEL_TEST_H
+
 #include "TestBase.h"
 
-class StlListTest : public TestBase
+class StlListModelTest : public TestBase
 {
  Q_OBJECT
 
@@ -49,3 +52,5 @@ class StlListTest : public TestBase
   void removeRowsSignalTest();
   void resizableQtModelTest();
 };
+
+#endif // #ifndef STL_LIST_MODEL_TEST_H

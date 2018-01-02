@@ -18,56 +18,61 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_EDITABLE_STL_LIST_MODEL_H
-#define MDT_ITEM_MODEL_EDITABLE_STL_LIST_MODEL_H
+#ifndef MDT_ITEM_MODEL_EDITABLE_STL_TABLE_MODEL_H
+#define MDT_ITEM_MODEL_EDITABLE_STL_TABLE_MODEL_H
 
-#include "ReadOnlyStlListModel.h"
+#include "ReadOnlyStlTableModel.h"
 #include "MdtItemModelExport.h"
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief Editable list model for STL compliant container
+  /*! \brief Editable table model for STL compliant container
    *
-   * \tparam Container Type of a STL compatible container.
-   *   It must meet requirement for ReadOnlyStlListModel,
+   * \tparam Table Type of a STL compatible container.
+   *   It must meet requirement for ReadOnlyStlTableModel,
    *    and additionaly provide:
    *     - The begin() method
    *     - The end() method
+   *     - The record_type must also provide begin() and end().
    */
-  template<typename Container>
-  class MDT_ITEMMODEL_EXPORT EditableStlListModel : public ReadOnlyStlListModel<Container>
+  template<typename Table>
+  class MDT_ITEMMODEL_EXPORT EditableStlTableModel : public ReadOnlyStlTableModel<Table>
   {
    public:
 
-    using value_type = typename ReadOnlyStlListModel<Container>::value_type;
+    using record_type = typename ReadOnlyStlTableModel<Table>::record_type;
+    using value_type = typename ReadOnlyStlTableModel<Table>::value_type;
 
-    using ReadOnlyStlListModel<Container>::rowCount;
-    using ReadOnlyStlListModel<Container>::index;
-    using ReadOnlyStlListModel<Container>::container;
-    using ReadOnlyStlListModel<Container>::emitDataChangedSignal;
+    using ReadOnlyStlTableModel<Table>::rowCount;
+    using ReadOnlyStlTableModel<Table>::columnCount;
+    using ReadOnlyStlTableModel<Table>::index;
+    using ReadOnlyStlTableModel<Table>::container;
+    using ReadOnlyStlTableModel<Table>::emitDataChangedSignal;
 
     /*! \brief Get flags for item at \a index
      */
     Qt::ItemFlags flags(const QModelIndex & index) const override
     {
       if(!index.isValid()){
-        return ReadOnlyStlListModel<Container>::flags(index);
+        return ReadOnlyStlTableModel<Table>::flags(index);
       }
-      return ( ReadOnlyStlListModel<Container>::flags(index) | Qt::ItemIsEditable );
+      return ( ReadOnlyStlTableModel<Table>::flags(index) | Qt::ItemIsEditable );
     }
 
-    /*! \brief Set element at \a row
+    /*! \brief Set element at \a row and \a column
      *
-     * \pre \a row must be in valid range ( 0 <= row < rowCount() ).
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
      */
-    void setValue(int row, const value_type & value)
+    void setValue(int row, int column, const value_type & value)
     {
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
+      Q_ASSERT(column >= 0);
+      Q_ASSERT(column < columnCount());
 
-      auto it = std::next(container().begin(), row);
-      *it = value;
-      const auto _index = index(row, 0);
+      *iteratorAtRowColumn(container(), row, column) = value;
+      const auto _index = index(row, column);
       emitDataChangedSignal(_index, _index);
     }
 
@@ -79,9 +84,9 @@ namespace Mdt{ namespace ItemModel{
      * If \a index is not valid,
      *  this method returns false.
      *
-     * \pre If \a index is valid, it must be in a valid range:
-     *   - its row must be in ( 0 <= index.row() < rowCount() )
-     *   - its column must be 0
+     * \pre If \a index is valid:
+     *   - its row must be in valid range ( 0 <= index.row() < rowCount() )
+     *   - its column must be in valid range ( 0 <= index.column() < columnCount() )
      */
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override
     {
@@ -93,9 +98,10 @@ namespace Mdt{ namespace ItemModel{
       }
       Q_ASSERT(index.row() >= 0);
       Q_ASSERT(index.row() < rowCount());
-      Q_ASSERT(index.column() == 0);
+      Q_ASSERT(index.column() >= 0);
+      Q_ASSERT(index.column() < columnCount());
 
-      setValue( index.row(), value.value<value_type>() );
+      setValue( index.row(), index.column(), value.value<value_type>() );
 
       return true;
     }
@@ -104,4 +110,4 @@ namespace Mdt{ namespace ItemModel{
 
 }} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_MODEL_EDITABLE_STL_LIST_MODEL_H
+#endif // #ifndef MDT_ITEM_MODEL_EDITABLE_STL_TABLE_MODEL_H

@@ -46,9 +46,6 @@ namespace Mdt{ namespace ItemModel{
      */
     void emitDataChangedSignal(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles = QVector<int> ());
 
-   private:
-
-    
   };
 
 }} // namespace Mdt{ namespace ItemModel{
