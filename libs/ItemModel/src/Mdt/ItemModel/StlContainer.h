@@ -83,7 +83,7 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a index must be in valid range ( 0 <= \a index < containerSize(container) )
      */
     template<typename Container>
-    const auto constIteratorAtIndex(const Container & container, int index)
+    auto constIteratorAtIndex(const Container & container, int index)
     {
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < containerSize(container));
@@ -110,7 +110,7 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a column must be in valid range ( 0 <= \a column < containerSize(*table.cbegin()) )
      */
     template<typename Table>
-    const auto constIteratorAtRowColumn(const Table & table, int row, int column)
+    auto constIteratorAtRowColumn(const Table & table, int row, int column)
     {
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < containerSize(table));
@@ -138,6 +138,43 @@ namespace Mdt{ namespace ItemModel{
       auto recordIt = iteratorAtIndex(table, row);
 
       return iteratorAtIndex(*recordIt, column);
+    }
+
+    /*! \brief Insert \a count copies of \a value to \a container
+     */
+    template<typename Container, typename T>
+    void MDT_ITEMMODEL_EXPORT insertToContainer(Container & container, int pos, int count, const T & value)
+    {
+      container.insert( std::next(container.begin() , pos), count, value );
+    }
+
+    /*! \brief Insert \a count copies of \a value to \a container
+     *
+     * This is a specialization for QList
+     */
+    template<typename T>
+    void MDT_ITEMMODEL_EXPORT insertToContainer(QList<T> & container, int pos, int count, const T & value)
+    {
+      container.reserve(container.size() + count);
+      for(int i = 0; i < count; ++i){
+        container.insert(pos, value);
+      }
+    }
+
+    /*! \brief Insert \a value to the end of \a container
+     */
+    template<typename Container, typename T>
+    void MDT_ITEMMODEL_EXPORT appendToContainer(Container & container, const T & value)
+    {
+      insertToContainer(container, containerSize(container), 1, value);
+    }
+
+    /*! \brief Insert \a value to the beginning of \a container
+     */
+    template<typename Container, typename T>
+    void MDT_ITEMMODEL_EXPORT prependToContainer(Container & container, const T & value)
+    {
+      insertToContainer(container, 0, 1, value);
     }
 
 }}

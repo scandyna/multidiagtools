@@ -46,6 +46,8 @@ class StlContainerTest : public TestBase
   void iteratorAtIndexStdVectorTest();
   void constIteratorAtRowColumnStdVectorTest();
   void iteratorAtRowColumnStdVectorTest();
+
+  void insertToContainerTest();
 };
 
 #endif // #ifndef STL_CONTAINER_TEST_H

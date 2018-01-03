@@ -39,6 +39,20 @@ void StlContainerTest::cleanupTestCase()
 }
 
 /*
+ * Helpers
+ */
+
+template<typename Container>
+auto constValueAtIndex(const Container & container, int index)
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < containerSize(container));
+
+  return *constIteratorAtIndex(container, index);
+}
+
+
+/*
  * Tests
  */
 
@@ -189,6 +203,63 @@ void StlContainerTest::iteratorAtRowColumnStdVectorTest()
   QCOMPARE(*iteratorAtRowColumn(t32, 2, 0), 30);
   QCOMPARE(*iteratorAtRowColumn(t32, 2, 1), 31);
 }
+
+template<typename Container>
+void insertToContainerTestImpl()
+{
+  /*
+   * Initial state
+   */
+  Container container;
+  QCOMPARE(containerSize(container), 0);
+  /*
+   * Append a element
+   * ---
+   * |1|
+   * ---
+   */
+  appendToContainer(container, 1);
+  QCOMPARE(containerSize(container), 1);
+  QCOMPARE(constValueAtIndex(container, 0), 1);
+  /*
+   * Prepend a element
+   * -------
+   * |-1| 1|
+   * -------
+   */
+  prependToContainer(container, -1);
+  QCOMPARE(containerSize(container), 2);
+  QCOMPARE(constValueAtIndex(container, 0), -1);
+  QCOMPARE(constValueAtIndex(container, 1), 1);
+  /*
+   * Insert 2 elements before '1'
+   *
+   * Before:
+   * -------
+   * |-1| 1|
+   * -------
+   *    ^
+   * After:
+   * -------------
+   * |-1| 5| 5| 1|
+   * -------------
+   */
+  insertToContainer(container, 1, 2, 5);
+  QCOMPARE(containerSize(container), 4);
+  QCOMPARE(constValueAtIndex(container, 0), -1);
+  QCOMPARE(constValueAtIndex(container, 1), 5);
+  QCOMPARE(constValueAtIndex(container, 2), 5);
+  QCOMPARE(constValueAtIndex(container, 3), 1);
+}
+
+void StlContainerTest::insertToContainerTest()
+{
+  insertToContainerTestImpl< std::vector<int> >();
+  insertToContainerTestImpl< QList<int> >();
+  insertToContainerTestImpl< QVector<int> >();
+  insertToContainerTestImpl< std::list<int> >();
+}
+
 
 /*
  * Main
