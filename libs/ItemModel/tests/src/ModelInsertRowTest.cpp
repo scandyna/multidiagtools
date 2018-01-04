@@ -23,7 +23,7 @@
 #include <QSignalSpy>
 #include <QVariantList>
 
-#include <QDebug>
+// #include <QDebug>
 
 /*
  * Helpers
@@ -61,7 +61,6 @@ void ModelInsertRowTest::runTests(QAbstractItemModel* model)
    * (some container are internally not based on QVariant)
    */
   QCOMPARE(model->rowCount(), 0);
-  QVERIFY(model->columnCount() > 0);
   /*
    * Append a row
    * ---
@@ -88,11 +87,11 @@ void ModelInsertRowTest::runTests(QAbstractItemModel* model)
   rowsInsertedSpy.clear();
   /*
    * Prepend a row
-   * ---
+   * ----
    * |-1|
    * ---
    * | 1|
-   * ---
+   * ----
    */
   QCOMPARE(rowsInsertedSpy.count(), 0);
   prependRowToModel(model);
@@ -118,21 +117,21 @@ void ModelInsertRowTest::runTests(QAbstractItemModel* model)
   /*
    * Insert 2 rows before 1
    * Before:
-   *  ---
+   *  ----
    *  |-1|
-   * >---
+   * >----
    *  | 1|
    *  ---
    * After:
-   * ---
+   * ----
    * |-1|
-   * ---
+   * ----
    * | 2|
-   * ---
+   * ----
    * | 3|
-   * ---
+   * ----
    * | 1|
-   * ---
+   * ----
    */
   QCOMPARE(rowsInsertedSpy.count(), 0);
   QVERIFY(model->insertRows(1, 2));
