@@ -278,10 +278,9 @@ void StlContainerTest::insertToContainerTest()
   insertToContainerTestImpl< std::list<int> >();
 }
 
-/// template<typename Container>
+template<typename Container>
 void removeFromContainerTestImpl()
 {
-  using Container = std::vector<int>;
   /*
    * Initial state
    * -------------
@@ -332,7 +331,10 @@ void removeFromContainerTestImpl()
 
 void StlContainerTest::removeFromContainerTest()
 {
-  removeFromContainerTestImpl();
+  removeFromContainerTestImpl< std::vector<int> >();
+  removeFromContainerTestImpl< QList<int> >();
+  removeFromContainerTestImpl< QVector<int> >();
+  removeFromContainerTestImpl< std::list<int> >();
 }
 
 
