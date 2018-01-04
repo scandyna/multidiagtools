@@ -88,6 +88,24 @@ void StlContainerTest::sizeQVectorTest()
   QCOMPARE(containerSize(v1), 1);
 }
 
+template<typename Container>
+void isEmptyTestImpl()
+{
+  Container c0;
+  QVERIFY(containerIsEmpty(c0));
+  Container c1{1};
+  QVERIFY(!containerIsEmpty(c1));
+  Container c2{1,2};
+  QVERIFY(!containerIsEmpty(c2));
+}
+
+void StlContainerTest::isEmptyTest()
+{
+  isEmptyTestImpl< std::vector<int> >();
+  isEmptyTestImpl< QList<int> >();
+  isEmptyTestImpl< QVector<int> >();
+}
+
 void StlContainerTest::stateFulCompareContainerSizeStdVectorTest()
 {
   std::vector<int> v0;
@@ -258,6 +276,63 @@ void StlContainerTest::insertToContainerTest()
   insertToContainerTestImpl< QList<int> >();
   insertToContainerTestImpl< QVector<int> >();
   insertToContainerTestImpl< std::list<int> >();
+}
+
+/// template<typename Container>
+void removeFromContainerTestImpl()
+{
+  using Container = std::vector<int>;
+  /*
+   * Initial state
+   * -------------
+   * |0|1|2|3|4|5|
+   * -------------
+   */
+  Container container{0,1,2,3,4,5};
+  QCOMPARE(containerSize(container), 6);
+  /*
+   * Remove 3 and 4
+   * ---------
+   * |0|1|2|5|
+   * ---------
+   */
+  removeFromContainer(container, 3, 2);
+  QCOMPARE(containerSize(container), 4);
+  QCOMPARE(constValueAtIndex(container, 0), 0);
+  QCOMPARE(constValueAtIndex(container, 1), 1);
+  QCOMPARE(constValueAtIndex(container, 2), 2);
+  QCOMPARE(constValueAtIndex(container, 3), 5);
+  /*
+   * Remove first element
+   * -------
+   * |1|2|5|
+   * -------
+   */
+  removeFirstFromContainer(container);
+  QCOMPARE(containerSize(container), 3);
+  QCOMPARE(constValueAtIndex(container, 0), 1);
+  QCOMPARE(constValueAtIndex(container, 1), 2);
+  QCOMPARE(constValueAtIndex(container, 2), 5);
+  /*
+   * Remove last element
+   * -----
+   * |1|2|
+   * -----
+   */
+  removeLastFromContainer(container);
+  QCOMPARE(containerSize(container), 2);
+  QCOMPARE(constValueAtIndex(container, 0), 1);
+  QCOMPARE(constValueAtIndex(container, 1), 2);
+  /*
+   * Remove the 2 last elements
+   */
+  removeFromContainer(container, 0, 2);
+  QCOMPARE(containerSize(container), 0);
+}
+
+void StlContainerTest::removeFromContainerTest()
+{
+  removeFromContainerTestImpl();
 }
 
 

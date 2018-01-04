@@ -36,6 +36,14 @@ namespace Mdt{ namespace ItemModel{
       return std::distance(container.cbegin(), container.cend());
     }
 
+    /*! \brief Check if \a container is empty
+     */
+    template<typename Container>
+    bool MDT_ITEMMODEL_EXPORT containerIsEmpty(const Container & container)
+    {
+      return ( container.cbegin() == container.cend() );
+    }
+
     /*! \brief Compare size of a container in a stateful way
      *
      * This functor compares the size of the container
@@ -175,6 +183,46 @@ namespace Mdt{ namespace ItemModel{
     void MDT_ITEMMODEL_EXPORT prependToContainer(Container & container, const T & value)
     {
       insertToContainer(container, 0, 1, value);
+    }
+
+    /*! \brief Remove \a count element starting from \a pos from \a container
+     *
+     * If \a pos + \a count is grater than upper bound of \a container,
+     *  it will be ajusted.
+     *
+     * \pre \a pos must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a pos + \a count must be in valid range ( 1 <= \a pos + \a count <= containerSize( \a container ) )
+     */
+    template<typename Container>
+    void MDT_ITEMMODEL_EXPORT removeFromContainer(Container & container, int pos, int count)
+    {
+      Q_ASSERT(pos >= 0);
+      Q_ASSERT(count >= 0);
+      Q_ASSERT( (pos + count) <= containerSize(container) );
+      container.erase( std::next(container.begin() , pos), std::next(container.begin() , pos + count) );
+    }
+
+    /*! \brief Remove the first element from \a container
+     *
+     * \pre \a container must not be empty
+     */
+    template<typename Container>
+    void MDT_ITEMMODEL_EXPORT removeFirstFromContainer(Container & container)
+    {
+      Q_ASSERT(!containerIsEmpty(container));
+      removeFromContainer(container, 0, 1);
+    }
+
+    /*! \brief Remove the last element from \a container
+     *
+     * \pre \a container must not be empty
+     */
+    template<typename Container>
+    void MDT_ITEMMODEL_EXPORT removeLastFromContainer(Container & container)
+    {
+      Q_ASSERT(!containerIsEmpty(container));
+      removeFromContainer(container, containerSize(container)-1, 1);
     }
 
 }}
