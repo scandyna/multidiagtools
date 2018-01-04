@@ -22,32 +22,12 @@
 #define MDT_ITEM_MODEL_RESIZABLE_STL_LIST_MODEL_H
 
 #include "EditableStlListModel.h"
+#include "StlContainer.h"
 #include "MdtItemModelExport.h"
 #include <type_traits>
 #include <iterator>
 
 namespace Mdt{ namespace ItemModel{
-
-  /// \todo This can be reused in other places in ItemModel
-  namespace Impl{
-
-    template<typename Container, typename T>
-    void MDT_ITEMMODEL_EXPORT insertToContainer(Container & c, int row, int count)
-    {
-      c.insert( std::next(c.begin() , row), count, T() );
-    }
-
-    // QList does not have insert(iterator, count, value)
-    template<typename Container, typename T>
-    void MDT_ITEMMODEL_EXPORT insertToContainer(QList<T> & c, int row, int count)
-    {
-      c.reserve(c.size() + count);
-      for(int i = 0; i < count; ++i){
-        c.insert(row, T());
-      }
-    }
-
-  } // namespace Impl{
 
   /*! \brief Resizable list model for STL compliant container
    *
@@ -100,7 +80,7 @@ namespace Mdt{ namespace ItemModel{
         return false;
       }
       beginInsertRows(parent, row, row+count-1);
-      Impl::insertToContainer<Container, value_type>(container(), row, count);
+      insertToContainer(container(), row, count, value_type());
       endInsertRows();
 
       return true;
@@ -142,7 +122,7 @@ namespace Mdt{ namespace ItemModel{
         return false;
       }
       beginRemoveRows(parent, row, row+count-1);
-      container().erase( std::next(container().begin() , row), std::next(container().begin() , row + count) );
+      removeFromContainer(container(), row, count);
       endRemoveRows();
 
       return true;
