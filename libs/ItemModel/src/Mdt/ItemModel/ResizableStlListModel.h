@@ -35,6 +35,7 @@ namespace Mdt{ namespace ItemModel{
    *   It must meet requirement for EditableStlListModel,
    *    and additionaly provide:
    *     - A STL compatible insert() method
+   *     - A STL compatible erase() method
    */
   template<typename Container>
   class MDT_ITEMMODEL_EXPORT ResizableStlListModel : public EditableStlListModel<Container>
