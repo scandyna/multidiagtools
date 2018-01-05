@@ -48,10 +48,6 @@ class StlListModelTest : public TestBase
   void removeRowsTest();
   void removeFirstLastRowTest();
 
-  void removeRowsQListTest();
-  void removeRowsStdVectorTest();
-  void removeRowsQVectorTest();
-  void removeRowsSignalTest();
   void resizableQtModelTest();
 };
 
