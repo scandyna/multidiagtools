@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "StlListModelTest.h"
 #include "ModelInsertRowTest.h"
+#include "ModelRemoveRowTest.h"
 #include "qtmodeltest.h"
 #include "Mdt/ItemModel/ReadOnlyStlListModel.h"
 #include "Mdt/ItemModel/EditableStlListModel.h"
@@ -242,7 +243,7 @@ void StlListModelTest::rwQtModelTest()
   QtModelTest mt(&model);
 }
 
-void StlListModelTest::insertRowsQListTest()
+void StlListModelTest::insertRowsTest()
 {
   ResizableStlListModel<QVariantList> model;
   QVariantList l;
@@ -250,33 +251,7 @@ void StlListModelTest::insertRowsQListTest()
   ModelInsertRowTest mt(&model);
 }
 
-void StlListModelTest::insertRowsStdVectorTest()
-{
-  ResizableStlListModel< std::vector<int> > model;
-  std::vector<int> v;
-
-  model.setContainer(v);
-  QCOMPARE(model.rowCount(), 0);
-  model.appendRow();
-  QCOMPARE(model.rowCount(), 1);
-  model.prependRow();
-  QCOMPARE(model.rowCount(), 2);
-}
-
-void StlListModelTest::insertRowsQVectorTest()
-{
-  ResizableStlListModel< QVector<int> > model;
-  QVector<int> v;
-
-  model.setContainer(v);
-  QCOMPARE(model.rowCount(), 0);
-  model.appendRow();
-  QCOMPARE(model.rowCount(), 1);
-  model.prependRow();
-  QCOMPARE(model.rowCount(), 2);
-}
-
-void StlListModelTest::insertRowsSignalTest()
+void StlListModelTest::prependAppendRowTest()
 {
   using model_type = ResizableStlListModel< std::vector<int> >;
   model_type model;
@@ -285,19 +260,129 @@ void StlListModelTest::insertRowsSignalTest()
   QCOMPARE(insertRowsSpy.count(), 0);
   QVariantList arguments;
 
-  std::vector<int> v;
+  /*
+   * Setup model
+   * ---
+   * |1|
+   * ---
+   */
+  std::vector<int> v{1};
   model.setContainer(v);
-  QCOMPARE(model.rowCount(), 0);
-  QCOMPARE(insertRowsSpy.count(), 0); // Set container causes a model reset
-
-  model.appendRow();
   QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(insertRowsSpy.count(), 0); // Set container causes a model reset
+  /*
+   * Append a row
+   * ---
+   * |1|
+   * ---
+   * |2|
+   * ---
+   */
+  model.appendRow();
+  // Check data
+  QCOMPARE(model.rowCount(), 2);
+  QVERIFY(setModelData(model, 1, 0, 2));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
+  // Check signal
+  QCOMPARE(insertRowsSpy.count(), 1);
+  arguments = insertRowsSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1)); // first
+  QCOMPARE(arguments.at(2), QVariant(1)); // last
+  /*
+   * Prepend a row
+   * ----
+   * |-1|
+   * ----
+   * | 1|
+   * ----
+   * | 2|
+   * ----
+   */
+  model.prependRow();
+  // Check data
+  QCOMPARE(model.rowCount(), 3);
+  QVERIFY(setModelData(model, 0, 0, -1));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(-1));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 2, 0), QVariant(2));
+  // Check signal
   QCOMPARE(insertRowsSpy.count(), 1);
   arguments = insertRowsSpy.takeFirst();
   QCOMPARE(arguments.size(), 3);
   QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
   QCOMPARE(arguments.at(1), QVariant(0)); // first
   QCOMPARE(arguments.at(2), QVariant(0)); // last
+}
+
+void StlListModelTest::removeRowsTest()
+{
+  ResizableStlListModel<QVariantList> model;
+  QCOMPARE(model.rowCount(), 0);
+  ModelRemoveRowTest mt(&model);
+}
+
+void StlListModelTest::removeFirstLastRowTest()
+{
+  using model_type = ResizableStlListModel< std::vector<int> >;
+  model_type model;
+  QSignalSpy rowsRemovedSpy(&model, &model_type::rowsRemoved);
+  QVERIFY(rowsRemovedSpy.isValid());
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+  QVariantList arguments;
+
+  /*
+   * Setup model
+   * ---
+   * |1|
+   * ---
+   * |2|
+   * ---
+   */
+  std::vector<int> v{1,2};
+  model.setContainer(v);
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(rowsRemovedSpy.count(), 0); // Set container causes a model reset
+  /*
+   * Remove last row
+   * ---
+   * |1|
+   * ---
+   */
+  model.removeLastRow();
+  // Check data
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  // Check signal
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1)); // first
+  QCOMPARE(arguments.at(2), QVariant(1)); // last
+  /*
+   * Remove first row
+   */
+  model.removeFirstRow();
+  // Check data
+  QCOMPARE(model.rowCount(), 0);
+  // Check signal
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0)); // first
+  QCOMPARE(arguments.at(2), QVariant(0)); // last
+  /*
+   * Try to call remove first/last on empty model
+   */
+  QCOMPARE(model.rowCount(), 0);
+  model.removeFirstRow();
+  QCOMPARE(model.rowCount(), 0);
+  model.removeLastRow();
+  QCOMPARE(model.rowCount(), 0);
 }
 
 void StlListModelTest::removeRowsQListTest()
@@ -379,6 +464,8 @@ void StlListModelTest::removeRowsQListTest()
   QCOMPARE(model.rowCount(), 0);
   model.removeLastRow();
   QCOMPARE(model.rowCount(), 0);
+
+  ModelRemoveRowTest mt(&model);
 }
 
 void StlListModelTest::removeRowsStdVectorTest()

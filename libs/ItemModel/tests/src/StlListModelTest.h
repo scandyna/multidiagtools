@@ -42,10 +42,12 @@ class StlListModelTest : public TestBase
   void setDataSignalTest();
   void rwQtModelTest();
 
-  void insertRowsQListTest();
-  void insertRowsStdVectorTest();
-  void insertRowsQVectorTest();
-  void insertRowsSignalTest();
+  void insertRowsTest();
+  void prependAppendRowTest();
+
+  void removeRowsTest();
+  void removeFirstLastRowTest();
+
   void removeRowsQListTest();
   void removeRowsStdVectorTest();
   void removeRowsQVectorTest();
