@@ -25,6 +25,7 @@
 #include <QtGlobal>
 #include <iterator>
 #include <algorithm>
+#include <type_traits>
 
 namespace Mdt{ namespace ItemModel{
 
@@ -34,6 +35,29 @@ namespace Mdt{ namespace ItemModel{
     int MDT_ITEMMODEL_EXPORT containerSize(const Container & container)
     {
       return std::distance(container.cbegin(), container.cend());
+    }
+
+    /*! \brief Get row count of \a table
+     */
+    template<typename Table>
+    int MDT_ITEMMODEL_EXPORT tableRowCount(const Table & table)
+    {
+      return containerSize(table);
+    }
+
+    /*! \brief Get column count for \a row in \a table
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < tableRowCount(\a table) ).
+     */
+    template<typename Table>
+    int MDT_ITEMMODEL_EXPORT tableColumnCount(const Table & table, int row)
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < tableRowCount(table));
+
+      const auto recordIt = std::next(table.cbegin(), row);
+
+      return containerSize(*recordIt);
     }
 
     /*! \brief Check if \a container is empty
@@ -114,16 +138,16 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Get a const iterator to the element at \a row and \a column
      *
-     * \pre \a row must be in valid range ( 0 <= \a row < containerSize(table) )
-     * \pre \a column must be in valid range ( 0 <= \a column < containerSize(*table.cbegin()) )
+     * \pre \a row must be in valid range ( 0 <= \a row < tableRowCount(table) )
+     * \pre \a column must be in valid range ( 0 <= \a column < tableColumnCount(table, row) )
      */
     template<typename Table>
     auto constIteratorAtRowColumn(const Table & table, int row, int column)
     {
       Q_ASSERT(row >= 0);
-      Q_ASSERT(row < containerSize(table));
+      Q_ASSERT(row < tableRowCount(table));
       Q_ASSERT(column >= 0);
-      Q_ASSERT(column < containerSize(*table.cbegin()));
+      Q_ASSERT(column < tableColumnCount(table, row));
 
       const auto recordIt = constIteratorAtIndex(table, row);
 
@@ -132,16 +156,16 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Get a iterator to the element at \a row and \a column
      *
-     * \pre \a row must be in valid range ( 0 <= \a row < containerSize(table) )
-     * \pre \a column must be in valid range ( 0 <= \a column < containerSize(*table.cbegin()) )
+     * \pre \a row must be in valid range ( 0 <= \a row < tableRowCount(table) )
+     * \pre \a column must be in valid range ( 0 <= \a column < tableColumnCount(table, row) )
      */
     template<typename Table>
     auto iteratorAtRowColumn(Table & table, int row, int column)
     {
       Q_ASSERT(row >= 0);
-      Q_ASSERT(row < containerSize(table));
+      Q_ASSERT(row < tableRowCount(table));
       Q_ASSERT(column >= 0);
-      Q_ASSERT(column < containerSize(*table.cbegin()));
+      Q_ASSERT(column < tableColumnCount(table, row));
 
       auto recordIt = iteratorAtIndex(table, row);
 
@@ -183,6 +207,61 @@ namespace Mdt{ namespace ItemModel{
     void MDT_ITEMMODEL_EXPORT prependToContainer(Container & container, const T & value)
     {
       insertToContainer(container, 0, 1, value);
+    }
+
+    /*! \brief Implementation for initializeContainer()
+     *
+     * This version works for containers that provides
+     *  a constructor of the form:
+     *  \code
+     *  Container(size_type count, const T & value);
+     *  \endcode
+     */
+    template<typename Container>
+    struct InitializeContainerImpl
+    {
+      template<typename T>
+      static Container initialize(int count, const T & value)
+      {
+        return Container(count, value);
+      }
+    };
+
+    /*! \brief Implementation for initializeContainer()
+     *
+     * This is a specialization for QList
+     */
+    template<typename T>
+    struct InitializeContainerImpl< QList<T> >
+    {
+      static QList<T> initialize(int count, const T & value)
+      {
+        QList<T> list;
+        insertToContainer(list, 0, count, value);
+        return list;
+      }
+    };
+
+    /*! \brief Initialize \a container with \a count copies of \a value
+     *
+     * \pre \a count must be >= 1
+     */
+    template<typename Container, typename T>
+    Container MDT_ITEMMODEL_EXPORT initializeContainer(int count, const T & value)
+    {
+      Q_ASSERT(count >= 1);
+
+      return InitializeContainerImpl<Container>::initialize(count, value);
+    }
+
+    /*! \brief Insert \a rowCount records initialized with \a columnCount copies of \a value to \a table before \a row
+     */
+    template<typename Table, typename T>
+    void MDT_ITEMMODEL_EXPORT insertToTable(Table & table, int row, int rowCount, int columnCount, const T & value)
+    {
+      using record_type = typename Table::value_type;
+
+      insertToContainer( table, row, rowCount, initializeContainer<record_type>(columnCount, value) );
     }
 
     /*! \brief Remove \a count element starting from \a pos from \a container

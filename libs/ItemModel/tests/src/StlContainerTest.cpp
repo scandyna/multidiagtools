@@ -88,6 +88,46 @@ void StlContainerTest::sizeQVectorTest()
   QCOMPARE(containerSize(v1), 1);
 }
 
+template<typename Table>
+void tableRowCountTestImpl()
+{
+  Table t0{};
+  QCOMPARE(tableRowCount(t0), 0);
+  Table t1{{1,10}};
+  QCOMPARE(tableRowCount(t1), 1);
+  Table t2{{1,2,3,4},{10,20,30,34}};
+  QCOMPARE(tableRowCount(t2), 2);
+  Table t3{{1,2},{10,20},{100,200}};
+  QCOMPARE(tableRowCount(t3), 3);
+}
+
+void StlContainerTest::tableRowCountTest()
+{
+  tableRowCountTestImpl< std::vector< std::vector<int> > >();
+  tableRowCountTestImpl< QVector< QVector<int> > >();
+  tableRowCountTestImpl< QList< QList<int> > >();
+  tableRowCountTestImpl< std::list< std::vector<int> > >();
+}
+
+template<typename Table>
+void tableColumnCountTestImpl()
+{
+  Table ta{{1}};
+  QCOMPARE(tableColumnCount(ta, 0), 1);
+  Table tb{{1},{10,20},{100,200,300}};
+  QCOMPARE(tableColumnCount(tb, 0), 1);
+  QCOMPARE(tableColumnCount(tb, 1), 2);
+  QCOMPARE(tableColumnCount(tb, 2), 3);
+}
+
+void StlContainerTest::tableColumnCountTest()
+{
+  tableColumnCountTestImpl< std::vector< std::vector<int> > >();
+  tableColumnCountTestImpl< QVector< QVector<int> > >();
+  tableColumnCountTestImpl< QList< QList<int> > >();
+  tableColumnCountTestImpl< std::list< std::vector<int> > >();
+}
+
 template<typename Container>
 void isEmptyTestImpl()
 {
@@ -276,6 +316,130 @@ void StlContainerTest::insertToContainerTest()
   insertToContainerTestImpl< QList<int> >();
   insertToContainerTestImpl< QVector<int> >();
   insertToContainerTestImpl< std::list<int> >();
+}
+
+template<typename Container>
+void initializeContainerTestImpl()
+{
+  const auto c1 = initializeContainer<Container>(1, 11);
+  QCOMPARE(containerSize(c1), 1);
+  QCOMPARE(*constIteratorAtIndex(c1, 0), 11);
+
+  const auto c2 = initializeContainer<Container>(2, 22);
+  QCOMPARE(containerSize(c2), 2);
+  QCOMPARE(*constIteratorAtIndex(c2, 0), 22);
+  QCOMPARE(*constIteratorAtIndex(c2, 1), 22);
+}
+
+void StlContainerTest::initializeContainerTest()
+{
+  initializeContainerTestImpl< std::vector<int> >();
+  initializeContainerTestImpl< QVector<int> >();
+  initializeContainerTestImpl< QList<int> >();
+  initializeContainerTestImpl< std::list<int> >();
+}
+
+template<typename Table>
+void insertToTableTestImpl()
+{
+  /*
+   * Initial state
+   */
+  Table table;
+  QCOMPARE(tableRowCount(table), 0);
+  /*
+   * Insert, 1 row with 2 columns
+   * -----
+   * |1|1|
+   * -----
+   */
+  insertToTable(table, 0, 1, 2, 1);
+  QCOMPARE(tableRowCount(table), 1);
+  QCOMPARE(tableColumnCount(table, 0), 2);
+  QCOMPARE(*constIteratorAtRowColumn(table, 0, 0), 1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 0, 1), 1);
+  /*
+   * Insert, before row 0, 2 rows with 1 column
+   * ----
+   * |-1|
+   * ----
+   * |-1|
+   * -------
+   * | 1| 1|
+   * -------
+   */
+  insertToTable(table, 0, 2, 1, -1);
+  QCOMPARE(tableRowCount(table), 3);
+  QCOMPARE(tableColumnCount(table, 0), 1);
+  QCOMPARE(tableColumnCount(table, 1), 1);
+  QCOMPARE(tableColumnCount(table, 2), 2);
+  QCOMPARE(*constIteratorAtRowColumn(table, 0, 0), -1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 1, 0), -1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 2, 0), 1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 2, 1), 1);
+  /*
+   * Insert, before row 2, 1 row with 3 columns
+   * ----
+   * |-1|
+   * ----
+   * |-1|
+   * ----------
+   * | 2| 2| 2|
+   * ----------
+   * | 1| 1|
+   * -------
+   */
+  insertToTable(table, 2, 1, 3, 2);
+  QCOMPARE(tableRowCount(table), 4);
+  QCOMPARE(tableColumnCount(table, 0), 1);
+  QCOMPARE(tableColumnCount(table, 1), 1);
+  QCOMPARE(tableColumnCount(table, 2), 3);
+  QCOMPARE(tableColumnCount(table, 3), 2);
+  QCOMPARE(*constIteratorAtRowColumn(table, 0, 0), -1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 1, 0), -1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 2, 0), 2);
+  QCOMPARE(*constIteratorAtRowColumn(table, 2, 1), 2);
+  QCOMPARE(*constIteratorAtRowColumn(table, 2, 2), 2);
+  QCOMPARE(*constIteratorAtRowColumn(table, 3, 0), 1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 3, 1), 1);
+  /*
+   * Insert, at end, 1 row with 2 columns
+   * ----
+   * |-1|
+   * ----
+   * |-1|
+   * ----------
+   * | 2| 2| 2|
+   * ----------
+   * | 1| 1|
+   * -------
+   * | 3| 3|
+   * -------
+   */
+  insertToTable(table, 4, 1, 2, 3);
+  QCOMPARE(tableRowCount(table), 5);
+  QCOMPARE(tableColumnCount(table, 0), 1);
+  QCOMPARE(tableColumnCount(table, 1), 1);
+  QCOMPARE(tableColumnCount(table, 2), 3);
+  QCOMPARE(tableColumnCount(table, 3), 2);
+  QCOMPARE(tableColumnCount(table, 4), 2);
+  QCOMPARE(*constIteratorAtRowColumn(table, 0, 0), -1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 1, 0), -1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 2, 0), 2);
+  QCOMPARE(*constIteratorAtRowColumn(table, 2, 1), 2);
+  QCOMPARE(*constIteratorAtRowColumn(table, 2, 2), 2);
+  QCOMPARE(*constIteratorAtRowColumn(table, 3, 0), 1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 3, 1), 1);
+  QCOMPARE(*constIteratorAtRowColumn(table, 4, 0), 3);
+  QCOMPARE(*constIteratorAtRowColumn(table, 4, 1), 3);
+}
+
+void StlContainerTest::insertToTableTest()
+{
+  insertToTableTestImpl< std::vector< std::vector<int> > >();
+  insertToTableTestImpl< QVector< QVector<int> > >();
+  insertToTableTestImpl< QList< QList<int> > >();
+  insertToTableTestImpl< std::list< std::vector<int> > >();
 }
 
 template<typename Container>
