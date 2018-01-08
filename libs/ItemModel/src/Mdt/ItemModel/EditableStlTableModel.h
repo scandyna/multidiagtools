@@ -46,7 +46,7 @@ namespace Mdt{ namespace ItemModel{
     using ReadOnlyStlTableModel<Table>::rowCount;
     using ReadOnlyStlTableModel<Table>::columnCount;
     using ReadOnlyStlTableModel<Table>::index;
-    using ReadOnlyStlTableModel<Table>::container;
+    using ReadOnlyStlTableModel<Table>::table;
     using ReadOnlyStlTableModel<Table>::emitDataChangedSignal;
 
     /*! \brief Get flags for item at \a index
@@ -71,7 +71,7 @@ namespace Mdt{ namespace ItemModel{
       Q_ASSERT(column >= 0);
       Q_ASSERT(column < columnCount());
 
-      *iteratorAtRowColumn(container(), row, column) = value;
+      *iteratorAtRowColumn(table(), row, column) = value;
       const auto _index = index(row, column);
       emitDataChangedSignal(_index, _index);
     }

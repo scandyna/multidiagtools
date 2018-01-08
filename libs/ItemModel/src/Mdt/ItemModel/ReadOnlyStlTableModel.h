@@ -66,50 +66,53 @@ namespace Mdt{ namespace ItemModel{
      */
     using value_type = typename record_type::value_type;
 
-    /*! \brief Set a instance of a container
+    /*! \brief Set a instance of a table
      *
-     * \note \a container will be copied to this model.
-     *   Any changes made to \a container directly
+     * \note \a table will be copied to this model.
+     *   Any changes made to \a table directly
      *   will not be reflected in this model.
      *
-     * \pre Each record in \a container must contain
+     * columnCount will be set to the column count of \a table .
+     *
+     * \pre Each record in \a table must contain
      *       exaclty the same count of items.
      */
-    void setContainer(const Table & container)
+    void setTable(const Table & table)
     {
-      Q_ASSERT(eachRecordHasSameColumnCount(container));
+      Q_ASSERT(eachRecordHasSameColumnCount(table));
 
       beginResetModel();
-      mContainer = container;
+      mTable = table;
+      afterTableWasSet();
       endResetModel();
     }
 
-    /*! \brief Acces the internal container instance
+    /*! \brief Acces the internal table instance
      */
-    const Table & container() const
+    const Table & table() const
     {
-      return mContainer;
+      return mTable;
     }
 
-    /*! \brief Acces the internal container instance
+    /*! \brief Acces the internal table instance
      */
-    Table & container()
+    Table & table()
     {
-      return mContainer;
+      return mTable;
     }
 
     /*! \brief Check if empty
      */
     bool isEmpty() const
     {
-      return (rowCount() == 0);
+      return containerIsEmpty(mTable);
     }
 
     /*! \brief Get row count
      */
     int rowCount() const
     {
-      return containerSize(mContainer);
+      return containerSize(mTable);
     }
 
     /*! \brief Get row count
@@ -123,13 +126,17 @@ namespace Mdt{ namespace ItemModel{
     }
 
     /*! \brief Get column count
+     *
+     * This implementation returns the column count
+     *  of the first record in the table,
+     *  or 0 if the table is empty.
      */
-    int columnCount() const
+    virtual int columnCount() const
     {
       if(isEmpty()){
         return 0;
       }
-      return containerSize(*mContainer.cbegin());
+      return tableColumnCount(mTable, 0);
     }
 
     /*! \brief Get column count
@@ -151,7 +158,7 @@ namespace Mdt{ namespace ItemModel{
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
 
-      return *std::next(mContainer.cbegin(), row);
+      return *std::next(mTable.cbegin(), row);
     }
 
     /*! \brief Access element at \a row and \a column
@@ -166,7 +173,7 @@ namespace Mdt{ namespace ItemModel{
       Q_ASSERT(column >= 0);
       Q_ASSERT(column < columnCount());
 
-      return *constIteratorAtRowColumn(mContainer, row, column);
+      return *constIteratorAtRowColumn(mTable, row, column);
     }
 
     /*! \brief Get data at \a index
@@ -198,9 +205,17 @@ namespace Mdt{ namespace ItemModel{
 
    protected:
 
+    /*! \brief Operation to be done after table was set
+     *
+     * Called by setTable()
+     */
+    virtual void afterTableWasSet()
+    {
+    }
+
    private:
 
-    Table mContainer;
+    Table mTable;
 
   };
 }} // namespace Mdt{ namespace ItemModel{
