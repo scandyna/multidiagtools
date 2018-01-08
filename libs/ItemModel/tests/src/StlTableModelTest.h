@@ -39,6 +39,17 @@ class StlTableModelTest : public TestBase
   void editableStdVectorTest();
   void setDataSignalTest();
   void editableQtModelTest();
+
+  void rowResizableColumnCountTest();
+
+  void insertRowsTest();
+  void prependAppendRowTest();
+
+  void removeRowsTest();
+  void removeFirstLastRowTest();
+
+  void rowResizableQtModelTest();
+
 };
 
 #endif // #ifndef STL_TABLE_MODEL_TEST_H

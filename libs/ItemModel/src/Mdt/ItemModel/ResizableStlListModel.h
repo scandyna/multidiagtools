@@ -42,7 +42,7 @@ namespace Mdt{ namespace ItemModel{
   {
    public:
 
-    using value_type = typename ReadOnlyStlListModel<Container>::value_type;
+    using value_type = typename EditableStlListModel<Container>::value_type;
 
     using EditableStlListModel<Container>::rowCount;
     using EditableStlListModel<Container>::index;
@@ -111,7 +111,7 @@ namespace Mdt{ namespace ItemModel{
      *
      * \pre \a row must be >= 0
      * \pre \a count must be >= 1
-     * \pre \a row + \a count must be in correct range ( 0 <= row + \a count <= rowCount() )
+     * \pre \a row + \a count must be in correct range ( 0 <= \a row + \a count <= rowCount() )
      */
     bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex()) override
     {

@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "StlTableModelTest.h"
+#include "ModelInsertRowTest.h"
+#include "ModelRemoveRowTest.h"
 #include "qtmodeltest.h"
 #include "Mdt/ItemModel/ReadOnlyStlTableModel.h"
 #include "Mdt/ItemModel/EditableStlTableModel.h"
@@ -58,7 +60,7 @@ class FlagsTestTableModel : public QAbstractTableModel
     return 1;
   }
 
-  int columnCount(const QModelIndex& /*parent*/ = QModelIndex()) const
+  int columnCount(const QModelIndex& /*parent*/ = QModelIndex()) const override
   {
     return 1;
   }
@@ -92,7 +94,7 @@ void StlTableModelTest::readOnlyStdVectorTest()
   QCOMPARE(model.columnCount(QModelIndex()), 0);
 
   Container table{{10,11},{20,21}, {30,31}};
-  model.setContainer(table);
+  model.setTable(table);
   QVERIFY(!model.isEmpty());
   QCOMPARE(model.rowCount(), 3);
   QCOMPARE(model.rowCount(QModelIndex()), 3);
@@ -146,7 +148,7 @@ void StlTableModelTest::readOnlySignalTest()
   QCOMPARE(resetSpy.count(), 0);
 
   Table t{{1,"A"},{2, "B"},{3,"C"}};
-  model.setContainer(t);
+  model.setTable(t);
   QCOMPARE(model.rowCount(), 3);
   QCOMPARE(resetSpy.count(), 1);
 }
@@ -156,7 +158,7 @@ void StlTableModelTest::readOnlyQtModelTest()
   using Table = std::vector< QVariantList >;
   ReadOnlyStlTableModel<Table> model;
   Table t{{1,"A"},{2, "B"},{3,"C"}};
-  model.setContainer(t);
+  model.setTable(t);
   QCOMPARE(model.rowCount(), 3);
   QtModelTest mt(&model);
 }
@@ -170,7 +172,7 @@ void StlTableModelTest::editableStdVectorTest()
   QCOMPARE(model.columnCount(), 0);
 
   Table t{{0,0},{0, 0},{0,0}};
-  model.setContainer(t);
+  model.setTable(t);
   QCOMPARE(model.rowCount(), 3);
   QCOMPARE(model.columnCount(), 2);
   // Check flags
@@ -215,7 +217,7 @@ void StlTableModelTest::setDataSignalTest()
   QModelIndex index;
 
   Table t{{0,0},{0, 0},{0,0}};
-  model.setContainer(t);
+  model.setTable(t);
   QCOMPARE(model.rowCount(), 3);
   QCOMPARE(model.columnCount(), 2);
   QCOMPARE(dataChangedSpy.count(), 0);
@@ -248,7 +250,199 @@ void StlTableModelTest::editableQtModelTest()
   using Table = std::vector< QVariantList >;
   EditableStlTableModel<Table> model;
   Table t{{1,"A"},{2, "B"},{3,"C"}};
-  model.setContainer(t);
+  model.setTable(t);
+  QtModelTest mt(&model);
+}
+
+void StlTableModelTest::rowResizableColumnCountTest()
+{
+  using Table = std::vector< QVariantList >;
+  RowResizableStlTableModel<Table> model;
+  QSignalSpy modelResetSpy(&model, &RowResizableStlTableModel<Table>::modelReset);
+  QVERIFY(modelResetSpy.isValid());
+  /*
+   * Initial state
+   */
+  QCOMPARE(model.columnCount(), 0);
+  QCOMPARE(model.columnCount(QModelIndex()), 0);
+  QCOMPARE(modelResetSpy.count(), 0);
+  /*
+   * Set column count
+   */
+  model.setColumnCount(5);
+  QCOMPARE(model.columnCount(), 5);
+  QCOMPARE(model.columnCount(QModelIndex()), 5);
+  QCOMPARE(modelResetSpy.count(), 1);
+  modelResetSpy.clear();
+  /*
+   * Set a table
+   */
+  Table table{{1},{2}};
+  model.setTable(table);
+  QCOMPARE(model.columnCount(), 1);
+  QCOMPARE(model.columnCount(QModelIndex()), 1);
+  QCOMPARE(modelResetSpy.count(), 1);
+  modelResetSpy.clear();
+}
+
+void StlTableModelTest::insertRowsTest()
+{
+  using Table = std::vector< QVariantList >;
+  RowResizableStlTableModel<Table> model;
+  model.setColumnCount(1);
+  ModelInsertRowTest mt(&model);
+}
+
+void StlTableModelTest::prependAppendRowTest()
+{
+  using Table = std::vector< QVariantList >;
+  RowResizableStlTableModel<Table> model;
+  QSignalSpy rowsInsertedSpy(&model, &RowResizableStlTableModel<Table>::rowsInserted);
+  QVERIFY(rowsInsertedSpy.isValid());
+  QCOMPARE(rowsInsertedSpy.count(), 0);
+  QVariantList arguments;
+  /*
+   * Setup model
+   */
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 0);
+  model.setColumnCount(2);
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(rowsInsertedSpy.count(), 0);
+  /*
+   * Prepend a row
+   * --------
+   * |-1|-11|
+   * --------
+   */
+  model.prependRow();
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 2);
+  // Check signal
+  QCOMPARE(rowsInsertedSpy.count(), 1);
+  arguments = rowsInsertedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0)); // first
+  QCOMPARE(arguments.at(2), QVariant(0)); // last
+  rowsInsertedSpy.clear();
+  // Check that inserted row can be used
+  QVERIFY(setModelData(model, 0, 0, -1));
+  QVERIFY(setModelData(model, 0, 1, -11));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(-1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant(-11));
+  /*
+   * Append a row
+   * --------
+   * |-1|-11|
+   * --------
+   * | 2| 22|
+   * --------
+   */
+  model.appendRow();
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(model.columnCount(), 2);
+  // Check signal
+  QCOMPARE(rowsInsertedSpy.count(), 1);
+  arguments = rowsInsertedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1)); // first
+  QCOMPARE(arguments.at(2), QVariant(1)); // last
+  rowsInsertedSpy.clear();
+  // Check that inserted row can be used
+  QVERIFY(setModelData(model, 1, 0, 2));
+  QVERIFY(setModelData(model, 1, 1, 22));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(-1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant(-11));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 1, 1), QVariant(22));
+}
+
+void StlTableModelTest::removeRowsTest()
+{
+  using Table = std::vector< std::vector<int> >;
+  RowResizableStlTableModel<Table> model;
+  model.setColumnCount(1);
+  ModelRemoveRowTest mt(&model);
+}
+
+void StlTableModelTest::removeFirstLastRowTest()
+{
+  using Table = std::vector< QVariantList >;
+  RowResizableStlTableModel<Table> model;
+  QSignalSpy rowsRemovedSpy(&model, &RowResizableStlTableModel<Table>::rowsRemoved);
+  QVERIFY(rowsRemovedSpy.isValid());
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+  QVariantList arguments;
+  /*
+   * Setup model
+   * ----------
+   * |11|12|13|
+   * ----------
+   * |21|22|23|
+   * ----------
+   */
+  Table table{{11,12,13},{21,22,23}};
+  model.setTable(table);
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(model.columnCount(), 3);
+  QCOMPARE(rowsRemovedSpy.count(), 0); // Set container causes a model reset
+  /*
+   * Remove last row
+   * ----------
+   * |11|12|13|
+   * ----------
+   */
+  model.removeLastRow();
+  // Check data
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 3);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(11));
+  QCOMPARE(getModelData(model, 0, 1), QVariant(12));
+  QCOMPARE(getModelData(model, 0, 2), QVariant(13));
+  // Check signal
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1)); // first
+  QCOMPARE(arguments.at(2), QVariant(1)); // last
+  /*
+   * Remove first row
+   */
+  model.removeFirstRow();
+  // Check data
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 3);
+  // Check signal
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0)); // first
+  QCOMPARE(arguments.at(2), QVariant(0)); // last
+  /*
+   * Try to call remove first/last on empty model
+   */
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 3);
+  model.removeFirstRow();
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 3);
+  model.removeLastRow();
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 3);
+}
+
+void StlTableModelTest::rowResizableQtModelTest()
+{
+  using Table = std::vector< QVariantList >;
+  RowResizableStlTableModel<Table> model;
+  Table t{{1,"A"},{2, "B"},{3,"C"}};
+  model.setTable(t);
+  QCOMPARE(model.rowCount(), 3);
   QtModelTest mt(&model);
 }
 
