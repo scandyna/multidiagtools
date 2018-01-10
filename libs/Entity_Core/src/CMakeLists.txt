@@ -8,6 +8,8 @@ set(SOURCE_FILES
   Mdt/Entity/Def.cpp
   Mdt/Entity/DataTemplate.cpp
   Mdt/Entity/Debug.cpp
+  Mdt/Entity/ValueAt.cpp
+  Mdt/Entity/DataRecordIterator.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
