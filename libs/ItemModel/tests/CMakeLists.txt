@@ -14,7 +14,7 @@ set(SOURCES_FILES
 )
 
 add_library(mdtitemmodeltest SHARED ${SOURCES_FILES})
-target_link_libraries(mdtitemmodeltest ItemModel Application_Widgets Qt5::Test)
+target_link_libraries(mdtitemmodeltest ItemModel Application_Widgets TestLib_Core Qt5::Test)
 
 #=============== Qt5 item model test library =====
 

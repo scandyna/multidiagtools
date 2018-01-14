@@ -3,6 +3,7 @@
 set(SOURCE_FILES
   Mdt/TestLib/FakeRoot.cpp
   Mdt/TestLib/CreateFile.cpp
+  Mdt/TestLib/ItemModel.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

@@ -28,3 +28,4 @@ endfunction()
 
 addTestLib_CoreTest("FakeRootTest")
 addTestLib_CoreTest("CreateFileTest")
+addTestLib_CoreTest("ItemModelTest")

@@ -31,50 +31,6 @@
 #include <QLabel>
 #include <QDebug>
 
-bool setModelData(QAbstractItemModel* model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
-{
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(column >= 0);
-  Q_ASSERT(column < model->columnCount());
-
-  auto index = model->index(row, column);
-  if(!index.isValid()){
-    qDebug() << "TestBase::setModelData() - index is not valid: " << index;
-    return false;
-  }
-
-  return model->setData(index, value, role);
-}
-
-bool setModelData(QAbstractItemModel& model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
-{
-  return setModelData(&model, row, column, value, role);
-}
-
-QVariant getModelData(const QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
-{
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(column >= 0);
-  Q_ASSERT(column < model->columnCount());
-
-  auto index = model->index(row, column);
-  if(!index.isValid()){
-    qDebug() << "TestBase::getModelData() - index is not valid: " << index;
-    return QVariant();
-  }
-
-  return model->data(index, role);
-}
-
-QVariant getModelData(const QAbstractItemModel& model, int row, int column, Qt::ItemDataRole role)
-{
-  return getModelData(&model, row, column, role);
-}
-
 bool prependRowToModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);

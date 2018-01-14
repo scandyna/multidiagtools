@@ -23,6 +23,7 @@
 
 #include "Mdt/CoreApplication.h"
 #include "Mdt/Application.h"
+#include "Mdt/TestLib/ItemModel.h"
 #include <QObject>
 #include <QtTest/QtTest>
 #include <Qt>
@@ -31,10 +32,8 @@ class QAbstractItemModel;
 class QAbstractProxyModel;
 
 // Helper functions get/set data in a model
-bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
-bool setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
-QVariant getModelData(const QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
-QVariant getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
+using Mdt::TestLib::getModelData;
+using Mdt::TestLib::setModelData;
 
 // Helpers to resize model
 bool prependRowToModel(QAbstractItemModel *model);
