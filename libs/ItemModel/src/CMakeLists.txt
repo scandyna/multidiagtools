@@ -45,6 +45,7 @@ set(SOURCE_FILES
     Mdt/ItemModel/HeaderProxyModelItemList.cpp
     Mdt/ItemModel/HeaderProxyModel.cpp
     Mdt/ItemModel/StlContainer.cpp
+    Mdt/ItemModel/StlContainerIteratorAdapter.cpp
     Mdt/ItemModel/AbstractStlListModel.cpp
     Mdt/ItemModel/ReadOnlyStlListModel.cpp
     Mdt/ItemModel/EditableStlListModel.cpp

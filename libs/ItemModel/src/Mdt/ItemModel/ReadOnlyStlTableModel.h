@@ -23,6 +23,7 @@
 
 #include "AbstractStlTableModel.h"
 #include "StlContainer.h"
+#include "StlContainerIteratorAdapter.h"
 #include "MdtItemModelExport.h"
 #include <QModelIndex>
 #include <QVariant>
@@ -41,16 +42,33 @@ namespace Mdt{ namespace ItemModel{
    *    To be usable, \a Table class must provide:
    *     - The cbegin() method
    *     - The cend() method
-   *     - The value_type (used in this class as record_type) :
-   *        must be a STL compatible container,
-   *        that also provides cbegin() and cend() .
+   *
+   * \tparam RecordAdapter Class template that can act on
+   *   a instance of a record from a instance of \a Table ,
+   *    that is default constructible, and that provides following functions:
+   *    - get the size of the record container :
+   *     \code
+   *     int containerSize(const Container & container);
+   *     \endcode
+   *    - check if the record container is empty :
+   *     \code
+   *     bool containerIsEmpty(const Container & container);
+   *     \endcode
+   *    - get the value at a index in the record container :
+   *     \code
+   *     value_type valueAtIndex(const Container & container, int index);
+   *     \endcode
+   *      Notice: a value is returned here, not a reference.
+   *      See at(int, int) const for details about this.
+   *
+   *  For a example of a implementation of \a RecordAdapter, see StlContainerIteratorAdapter.h .
    *
    * \note Goal of STL table models is to be able to work
    *    on containers on a generic way, using the STL iterators concept.
    *    However, each record of a container must have the same count
    *    of items, refered here as column count of the table model.
    */
-  template<typename Table>
+  template<typename Table, typename RecordAdapter = StlContainerIteratorAdapter<typename Table::value_type> >
   class MDT_ITEMMODEL_EXPORT ReadOnlyStlTableModel : public AbstractStlTableModel
   {
    public:
@@ -64,7 +82,7 @@ namespace Mdt{ namespace ItemModel{
      * Must be a type that QVariant can handle.
      *  See QMetaType, especially Q_DECLARE_METATYPE() for custom types.
      */
-    using value_type = typename record_type::value_type;
+    using value_type = typename RecordAdapter::value_type;
 
     /*! \brief Set a instance of a table
      *
@@ -79,7 +97,7 @@ namespace Mdt{ namespace ItemModel{
      */
     void setTable(const Table & table)
     {
-      Q_ASSERT(eachRecordHasSameColumnCount(table));
+      Q_ASSERT(eachRecordHasSameColumnCount(table, mRecordAdapter));
 
       beginResetModel();
       mTable = table;
@@ -136,7 +154,7 @@ namespace Mdt{ namespace ItemModel{
       if(isEmpty()){
         return 0;
       }
-      return tableColumnCount(mTable, 0);
+      return mRecordAdapter.containerSize( record(0) );
     }
 
     /*! \brief Get column count
@@ -161,19 +179,23 @@ namespace Mdt{ namespace ItemModel{
       return *std::next(mTable.cbegin(), row);
     }
 
-    /*! \brief Access element at \a row and \a column
+    /*! \brief Get element at \a row and \a column
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
+     * \note This method returns a value, not a reference.
+     *    This enables to return values that are not available in a container,
+     *     but calculated on the fly, or other constraint that needs to return
+     *     a transformed value.
      */
-    const value_type & at(int row, int column) const
+    value_type at(int row, int column) const
     {
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
       Q_ASSERT(column >= 0);
       Q_ASSERT(column < columnCount());
 
-      return *constIteratorAtRowColumn(mTable, row, column);
+      return mRecordAdapter.valueAtIndex( record(row), column );
     }
 
     /*! \brief Get data at \a index
@@ -203,6 +225,13 @@ namespace Mdt{ namespace ItemModel{
       return at(index.row(), index.column());
     }
 
+    /*! \brief Get the record adapter
+     */
+    const RecordAdapter & recordAdapter() const
+    {
+      return mRecordAdapter;
+    }
+
    protected:
 
     /*! \brief Operation to be done after table was set
@@ -216,7 +245,7 @@ namespace Mdt{ namespace ItemModel{
    private:
 
     Table mTable;
-
+    RecordAdapter mRecordAdapter;
   };
 }} // namespace Mdt{ namespace ItemModel{
 

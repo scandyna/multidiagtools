@@ -73,9 +73,17 @@ namespace Mdt{ namespace ItemModel{
      * This functor compares the size of the container
      *  with the size of its previous call.
      */
+    template<typename RecordAdapter>
     class MDT_ITEMMODEL_EXPORT StateFulCompareContainerSize
     {
     public:
+
+//       /*! \brief Constructor
+//        */
+//       StateFulCompareContainerSize(const RecordAdapter & recordAdapter)
+//        : mRecordAdapter(recordAdapter)
+//       {
+//       }
 
       /*! \brief Compare size of \a container with previous size
        *
@@ -86,10 +94,10 @@ namespace Mdt{ namespace ItemModel{
       bool operator()(const Container & container)
       {
         if(mPrevisouSize < 0){
-          mPrevisouSize = containerSize(container);
+          mPrevisouSize = mRecordAdapter.containerSize(container);
           return true;
         }
-        const int size = containerSize(container);
+        const int size = mRecordAdapter.containerSize(container);
         if(size != mPrevisouSize){
           mPrevisouSize = size;
           return false;
@@ -100,14 +108,15 @@ namespace Mdt{ namespace ItemModel{
     private:
 
       int mPrevisouSize = -1;
+      RecordAdapter mRecordAdapter;
     };
 
     /*! \brief Check that each record of the table has the same column count
      */
-    template<typename Table>
-    bool MDT_ITEMMODEL_EXPORT eachRecordHasSameColumnCount(const Table & table)
+    template<typename Table, typename RecordAdapter>
+    bool MDT_ITEMMODEL_EXPORT eachRecordHasSameColumnCount(const Table & table, const RecordAdapter &)
     {
-      return std::all_of(table.cbegin(), table.cend(), StateFulCompareContainerSize());
+      return std::all_of(table.cbegin(), table.cend(), StateFulCompareContainerSize<RecordAdapter>());
     }
 
     /*! \brief Get a const iterator to the element at \a index

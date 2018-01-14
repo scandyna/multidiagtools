@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "StlContainerTest.h"
 #include "Mdt/ItemModel/StlContainer.h"
+#include "Mdt/ItemModel/StlContainerIteratorAdapter.h"
 #include <QVariantList>
 #include <QList>
 #include <QStringList>
@@ -148,11 +149,14 @@ void StlContainerTest::isEmptyTest()
 
 void StlContainerTest::stateFulCompareContainerSizeStdVectorTest()
 {
-  std::vector<int> v0;
-  std::vector<int> v1{1};
+  using Container = std::vector<int>;
+  using Adapter = StlContainerIteratorAdapter<Container>;
+
+  Container v0;
+  Container v1{1};
 //   std::vector<int> v2{1,2};
 
-  StateFulCompareContainerSize cmpA;
+  StateFulCompareContainerSize<Adapter> cmpA;
   QVERIFY(cmpA(v0));
   QVERIFY(cmpA(v0));
   QVERIFY(!cmpA(v1));
@@ -160,7 +164,7 @@ void StlContainerTest::stateFulCompareContainerSizeStdVectorTest()
   QVERIFY(!cmpA(v0));
   QVERIFY(!cmpA(v1));
 
-  StateFulCompareContainerSize cmpB;
+  StateFulCompareContainerSize<Adapter> cmpB;
   QVERIFY(cmpB(v1));
   QVERIFY(cmpB(v1));
   QVERIFY(!cmpB(v0));
@@ -172,35 +176,44 @@ void StlContainerTest::stateFulCompareContainerSizeStdVectorTest()
 void StlContainerTest::eachRecordHasSameColumnCountStdVectorTest()
 {
   using Table = std::vector< std::vector<int> >;
+  using Adapter = StlContainerIteratorAdapter<Table::value_type>;
+
+  Adapter adapter;
 
   Table t00;
-  QVERIFY(eachRecordHasSameColumnCount(t00));
+  QVERIFY(eachRecordHasSameColumnCount(t00, adapter));
   Table t01{{},{1}};
-  QVERIFY(!eachRecordHasSameColumnCount(t01));
+  QVERIFY(!eachRecordHasSameColumnCount(t01, adapter));
   Table t10{{1},{}};
-  QVERIFY(!eachRecordHasSameColumnCount(t10));
+  QVERIFY(!eachRecordHasSameColumnCount(t10, adapter));
   Table t11{{1},{1}};
-  QVERIFY(eachRecordHasSameColumnCount(t11));
+  QVERIFY(eachRecordHasSameColumnCount(t11, adapter));
 }
 
 void StlContainerTest::eachRecordHasSameColumnCountQListTest()
 {
   using Table = QList< QList<int> >;
+  using Adapter = StlContainerIteratorAdapter<Table::value_type>;
+
+  Adapter adapter;
 
   Table t00;
-  QVERIFY(eachRecordHasSameColumnCount(t00));
+  QVERIFY(eachRecordHasSameColumnCount(t00, adapter));
   Table t01{{},{1}};
-  QVERIFY(!eachRecordHasSameColumnCount(t01));
+  QVERIFY(!eachRecordHasSameColumnCount(t01, adapter));
 }
 
 void StlContainerTest::eachRecordHasSameColumnCountQVectorTest()
 {
   using Table = QVector< QVector<int> >;
+  using Adapter = StlContainerIteratorAdapter<Table::value_type>;
+
+  Adapter adapter;
 
   Table t00;
-  QVERIFY(eachRecordHasSameColumnCount(t00));
+  QVERIFY(eachRecordHasSameColumnCount(t00, adapter));
   Table t01{{},{1}};
-  QVERIFY(!eachRecordHasSameColumnCount(t01));
+  QVERIFY(!eachRecordHasSameColumnCount(t01, adapter));
 }
 
 void StlContainerTest::constIteratorAtIndexStdVectorTest()
