@@ -9,6 +9,14 @@ set(SOURCE_FILES
   Mdt/Entity/DataTemplate.cpp
   Mdt/Entity/Debug.cpp
   Mdt/Entity/ValueAt.cpp
+  Mdt/Entity/FieldAt.cpp
+  Mdt/Entity/DataList.cpp
+  
+  Mdt/Entity/AbstractTableModel.cpp
+  
+  Mdt/Entity/TableModelRecordAdapter.cpp
+  Mdt/Entity/ReadOnlyTableModel.cpp
+  
   Mdt/Entity/DataRecordIterator.cpp
 )
 
@@ -28,7 +36,7 @@ mdt_add_library(
   NAME Entity_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Qt5::Core;
+  LINK_DEPENDENCIES ItemModel Qt5::Core;
 )
 target_compile_definitions(Entity_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

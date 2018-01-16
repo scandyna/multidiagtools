@@ -12,6 +12,10 @@ set(SOURCE_FILES
 add_library(mdtEntity_CoreTest SHARED ${SOURCE_FILES})
 target_link_libraries(mdtEntity_CoreTest Entity_Core Application_Core TestLib_Core Qt5::Test)
 
+# TODO Remove
+find_package(Qt5 COMPONENTS Widgets)
+target_link_libraries(mdtEntity_CoreTest Qt5::Widgets)
+
 #=============== Helper functions ===========
 
 function(addEntity_CoreTest testName)
@@ -30,9 +34,13 @@ addEntity_CoreTest("FieldAttributesTest")
 addEntity_CoreTest("FieldDefTest")
 addEntity_CoreTest("DefTest")
 addEntity_CoreTest("ValueAtTest")
+addEntity_CoreTest("FieldAtTest")
 addEntity_CoreTest("DataTemplateTest")
-addEntity_CoreTest("DataRecordIteratorTest")
+addEntity_CoreTest("DataListTest")
+addEntity_CoreTest("TableModelRecordAdapterTest")
+addEntity_CoreTest("TableModelTest")
 
+addEntity_CoreTest("DataRecordIteratorTest")
 addEntity_CoreTest("FieldTest")
 addEntity_CoreTest("ReflectionTest")
 
