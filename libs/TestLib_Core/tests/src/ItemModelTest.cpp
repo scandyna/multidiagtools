@@ -65,6 +65,50 @@ void ItemModelTest::setModelDataTest()
   QCOMPARE( getModelData(model, 2, 0), QVariant(3) );
 }
 
+void ItemModelTest::prependAppendTest()
+{
+  QStringListModel model;
+  QCOMPARE(model.rowCount(), 0);
+  /*
+   * Append a row (2x)
+   * ---
+   * |C|
+   * ---
+   * |D|
+   * ---
+   */
+  QVERIFY(appendRowToModel(&model));
+  QCOMPARE(model.rowCount(), 1);
+  QVERIFY(setModelData(model, 0, 0, "C"));
+  QVERIFY(appendRowToModel(model));
+  QCOMPARE(model.rowCount(), 2);
+  QVERIFY(setModelData(model, 1, 0, "D"));
+  QCOMPARE( getModelData(model, 0, 0), QVariant("C") );
+  QCOMPARE( getModelData(model, 1, 0), QVariant("D") );
+  /*
+   * Prepend a row (2x)
+   * ---
+   * |a|
+   * ---
+   * |b|
+   * ---
+   * |C|
+   * ---
+   * |D|
+   * ---
+   */
+  QVERIFY(prependRowToModel(&model));
+  QCOMPARE(model.rowCount(), 3);
+  QVERIFY(setModelData(model, 0, 0, "b"));
+  QVERIFY(prependRowToModel(model));
+  QCOMPARE(model.rowCount(), 4);
+  QVERIFY(setModelData(model, 0, 0, "a"));
+  QCOMPARE( getModelData(model, 0, 0), QVariant("a") );
+  QCOMPARE( getModelData(model, 1, 0), QVariant("b") );
+  QCOMPARE( getModelData(model, 2, 0), QVariant("C") );
+  QCOMPARE( getModelData(model, 3, 0), QVariant("D") );
+}
+
 /*
  * Main
  */

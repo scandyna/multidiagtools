@@ -31,30 +31,6 @@
 #include <QLabel>
 #include <QDebug>
 
-bool prependRowToModel(QAbstractItemModel* model)
-{
-  Q_ASSERT(model != nullptr);
-
-  return model->insertRows(0, 1);
-}
-
-bool prependRowToModel(QAbstractItemModel& model)
-{
-  return prependRowToModel(&model);
-}
-
-bool appendRowToModel(QAbstractItemModel* model)
-{
-  Q_ASSERT(model != nullptr);
-
-  return model->insertRows(model->rowCount(), 1);
-}
-
-bool appendRowToModel(QAbstractItemModel& model)
-{
-  return appendRowToModel(&model);
-}
-
 Qt::ItemFlags getModelFlags(const QAbstractItemModel* model, int row, int column)
 {
   Q_ASSERT(model != nullptr);

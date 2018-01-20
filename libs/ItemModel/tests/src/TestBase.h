@@ -36,10 +36,8 @@ using Mdt::TestLib::getModelData;
 using Mdt::TestLib::setModelData;
 
 // Helpers to resize model
-bool prependRowToModel(QAbstractItemModel *model);
-bool prependRowToModel(QAbstractItemModel & model);
-bool appendRowToModel(QAbstractItemModel *model);
-bool appendRowToModel(QAbstractItemModel & model);
+using Mdt::TestLib::prependRowToModel;
+using Mdt::TestLib::appendRowToModel;
 
 // Helper functions get/set flags in a model
 Qt::ItemFlags getModelFlags(const QAbstractItemModel *model, int row, int column);

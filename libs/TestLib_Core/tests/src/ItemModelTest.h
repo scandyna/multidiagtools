@@ -34,6 +34,7 @@ class ItemModelTest : public TestBase
 
   void getModelDataTest();
   void setModelDataTest();
+  void prependAppendTest();
 };
 
 #endif // #ifndef ITEM_MODEL_TEST_H

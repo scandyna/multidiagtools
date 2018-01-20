@@ -57,6 +57,22 @@ namespace Mdt{ namespace TestLib{
    */
   bool MDT_TESTLIB_CORE_EXPORT setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
 
+  /*! \brief Append a row to \a model
+   */
+  bool MDT_TESTLIB_CORE_EXPORT prependRowToModel(QAbstractItemModel *model);
+
+  /*! \brief Append a row to \a model
+   */
+  bool MDT_TESTLIB_CORE_EXPORT prependRowToModel(QAbstractItemModel & model);
+
+  /*! \brief Prepend a row to \a model
+   */
+  bool MDT_TESTLIB_CORE_EXPORT appendRowToModel(QAbstractItemModel *model);
+
+  /*! \brief Prepend a row to \a model
+   */
+  bool MDT_TESTLIB_CORE_EXPORT appendRowToModel(QAbstractItemModel & model);
+
 }} // namespace Mdt{ namespace TestLib{
 
 #endif // #ifndef MDT_TEST_LIB_ITEM_MODEL_H
