@@ -154,7 +154,7 @@ namespace Mdt{ namespace ItemModel{
       if(isEmpty()){
         return 0;
       }
-      return mRecordAdapter.containerSize( record(0) );
+      return mRecordAdapter.containerSize( constRecord(0) );
     }
 
     /*! \brief Get column count
@@ -171,7 +171,7 @@ namespace Mdt{ namespace ItemModel{
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      */
-    const record_type & record(int row) const
+    const record_type & constRecord(int row) const
     {
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
@@ -195,7 +195,7 @@ namespace Mdt{ namespace ItemModel{
       Q_ASSERT(column >= 0);
       Q_ASSERT(column < columnCount());
 
-      return mRecordAdapter.valueAtIndex( record(row), column );
+      return mRecordAdapter.valueAtIndex( constRecord(row), column );
     }
 
     /*! \brief Get data at \a index
@@ -214,7 +214,7 @@ namespace Mdt{ namespace ItemModel{
       if(!index.isValid()){
         return QVariant();
       }
-      if(role != Qt::DisplayRole){
+      if( (role != Qt::DisplayRole) && (role != Qt::EditRole) ){
         return QVariant();
       }
       Q_ASSERT(index.row() >= 0);
@@ -225,14 +225,21 @@ namespace Mdt{ namespace ItemModel{
       return at(index.row(), index.column());
     }
 
+   protected:
+
     /*! \brief Get the record adapter
      */
-    const RecordAdapter & recordAdapter() const
+    RecordAdapter & recordAdapter()
     {
       return mRecordAdapter;
     }
 
-   protected:
+    /*! \brief Get the record adapter
+     */
+    const RecordAdapter & constRecordAdapter() const
+    {
+      return mRecordAdapter;
+    }
 
     /*! \brief Operation to be done after table was set
      *
