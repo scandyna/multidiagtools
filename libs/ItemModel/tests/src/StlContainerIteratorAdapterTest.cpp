@@ -104,6 +104,60 @@ void StlContainerIteratorAdapterTest::valueAtIndexTest()
   valueAtIndexTestImpl< std::list<int> >();
 }
 
+template<typename Container>
+void setValueAtIndexTestImpl()
+{
+  StlContainerIteratorAdapter<Container> adapter;
+
+  Container c1{1};
+  QCOMPARE(adapter.valueAtIndex(c1, 0), 1);
+  adapter.setValueAtIndex(c1, 0, 11);
+  QCOMPARE(adapter.valueAtIndex(c1, 0), 11);
+
+  Container c3{1,2,3};
+  QCOMPARE(adapter.valueAtIndex(c3, 0), 1);
+  QCOMPARE(adapter.valueAtIndex(c3, 1), 2);
+  QCOMPARE(adapter.valueAtIndex(c3, 2), 3);
+  adapter.setValueAtIndex(c3, 0, 11);
+  adapter.setValueAtIndex(c3, 1, 12);
+  adapter.setValueAtIndex(c3, 2, 13);
+  QCOMPARE(adapter.valueAtIndex(c3, 0), 11);
+  QCOMPARE(adapter.valueAtIndex(c3, 1), 12);
+  QCOMPARE(adapter.valueAtIndex(c3, 2), 13);
+}
+
+void StlContainerIteratorAdapterTest::setValueAtIndexTest()
+{
+  setValueAtIndexTestImpl< std::vector<int> >();
+  setValueAtIndexTestImpl< QVector<int> >();
+  setValueAtIndexTestImpl< QList<int> >();
+  setValueAtIndexTestImpl< std::list<int> >();
+}
+
+template<typename Container>
+void initializeContainerTestImpl()
+{
+  StlContainerIteratorAdapter<Container> adapter;
+
+  auto c1 = adapter.initializeContainer(1, 11);
+  QCOMPARE(adapter.containerSize(c1), 1);
+  QCOMPARE(adapter.valueAtIndex(c1, 0), 11);
+
+  auto c3 = adapter.initializeContainer(3, 25);
+  QCOMPARE(adapter.containerSize(c3), 3);
+  QCOMPARE(adapter.valueAtIndex(c3, 0), 25);
+  QCOMPARE(adapter.valueAtIndex(c3, 1), 25);
+  QCOMPARE(adapter.valueAtIndex(c3, 2), 25);
+}
+
+void StlContainerIteratorAdapterTest::initializeContainerTest()
+{
+  initializeContainerTestImpl< std::vector<int> >();
+  initializeContainerTestImpl< QVector<int> >();
+  initializeContainerTestImpl< QList<int> >();
+  initializeContainerTestImpl< std::list<int> >();
+}
+
 /*
  * Main
  */

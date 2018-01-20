@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_ROW_RESIZABLE_STL_TABLE_MODEL_H
 
 #include "EditableStlTableModel.h"
+#include "StlContainerIteratorAdapter.h"
 #include "StlContainer.h"
 #include "MdtItemModelExport.h"
 
@@ -34,30 +35,42 @@ namespace Mdt{ namespace ItemModel{
    *    and additionaly provide:
    *     - A STL compatible insert() method
    *     - A STL compatible erase() method
-   *     - The record_type must also provide insert() and erase().
-   *     - The record_type must provide a constructor of type: record_type(size_type count)
-   *     - The value_type must be default constructible
+   *
+   * \tparam RecordAdapter Class template that meets the requirement
+   *   of EditableStlTableModel, and that also provides following functions:
+   *    - get a initialized record container :
+   *     \code
+   *     Container initializeContainer(int count, const value_type & value);
+   *     \endcode
    */
-  template<typename Table>
+  template<typename Table, typename RecordAdapter = StlContainerIteratorAdapter<typename Table::value_type> >
   class MDT_ITEMMODEL_EXPORT RowResizableStlTableModel : public EditableStlTableModel<Table>
   {
    public:
 
-    using record_type = typename EditableStlTableModel<Table>::record_type;
-    using value_type = typename EditableStlTableModel<Table>::value_type;
+    using ParentClass = EditableStlTableModel<Table, RecordAdapter>;
 
-    using EditableStlTableModel<Table>::rowCount;
-    using EditableStlTableModel<Table>::columnCount;
-    using EditableStlTableModel<Table>::index;
-    using EditableStlTableModel<Table>::table;
-    using EditableStlTableModel<Table>::isEmpty;
-    using EditableStlTableModel<Table>::beginResetModel;
-    using EditableStlTableModel<Table>::endResetModel;
-    using EditableStlTableModel<Table>::afterTableWasSet;
-    using EditableStlTableModel<Table>::beginInsertRows;
-    using EditableStlTableModel<Table>::endInsertRows;
-    using EditableStlTableModel<Table>::beginRemoveRows;
-    using EditableStlTableModel<Table>::endRemoveRows;
+    using record_type = typename ParentClass::record_type;
+    using value_type = typename ParentClass::value_type;
+
+    using ParentClass::rowCount;
+    using ParentClass::columnCount;
+    using ParentClass::index;
+    using ParentClass::table;
+    using ParentClass::isEmpty;
+
+   protected:
+
+    using ParentClass::constRecordAdapter;
+    using ParentClass::beginResetModel;
+    using ParentClass::endResetModel;
+    using ParentClass::afterTableWasSet;
+    using ParentClass::beginInsertRows;
+    using ParentClass::endInsertRows;
+    using ParentClass::beginRemoveRows;
+    using ParentClass::endRemoveRows;
+
+   public:
 
     /*! \brief Set column count
      *
@@ -115,7 +128,7 @@ namespace Mdt{ namespace ItemModel{
         return false;
       }
       beginInsertRows(parent, row, row+count-1);
-      insertToTable(table(), row, count, columnCount(), value_type());
+      insertToContainer( table(), row, count, constRecordAdapter().initializeContainer( columnCount(), value_type() ) );
       endInsertRows();
 
       return true;
@@ -167,7 +180,7 @@ namespace Mdt{ namespace ItemModel{
 
     void afterTableWasSet() override
     {
-      mColumnCount = EditableStlTableModel<Table>::columnCount();
+      mColumnCount = ParentClass::columnCount();
     }
 
     int mColumnCount = 0;

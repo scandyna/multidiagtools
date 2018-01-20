@@ -76,7 +76,7 @@ namespace Mdt{ namespace ItemModel{
     template<typename RecordAdapter>
     class MDT_ITEMMODEL_EXPORT StateFulCompareContainerSize
     {
-    public:
+     public:
 
 //       /*! \brief Constructor
 //        */

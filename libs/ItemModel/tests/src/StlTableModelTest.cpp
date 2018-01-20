@@ -101,12 +101,12 @@ void StlTableModelTest::readOnlyStdVectorTest()
   QCOMPARE(model.columnCount(), 2);
   QCOMPARE(model.columnCount(QModelIndex()), 2);
 
-  QCOMPARE(model.record(0).at(0), 10);
-  QCOMPARE(model.record(0).at(1), 11);
-  QCOMPARE(model.record(1).at(0), 20);
-  QCOMPARE(model.record(1).at(1), 21);
-  QCOMPARE(model.record(2).at(0), 30);
-  QCOMPARE(model.record(2).at(1), 31);
+  QCOMPARE(model.constRecord(0).at(0), 10);
+  QCOMPARE(model.constRecord(0).at(1), 11);
+  QCOMPARE(model.constRecord(1).at(0), 20);
+  QCOMPARE(model.constRecord(1).at(1), 21);
+  QCOMPARE(model.constRecord(2).at(0), 30);
+  QCOMPARE(model.constRecord(2).at(1), 31);
 
   QCOMPARE(model.at(0, 0), 10);
   QCOMPARE(model.at(0, 1), 11);
@@ -128,9 +128,10 @@ void StlTableModelTest::readOnlyStdVectorTest()
   QCOMPARE(getModelData(model, 1, 0, Qt::DisplayRole), QVariant(20));
   QCOMPARE(getModelData(model, 2, 0, Qt::DisplayRole), QVariant(30));
   // Check get data for EditRole
-//   QCOMPARE(getModelData(model, 0, 0, Qt::EditRole), QVariant(1));
-//   QCOMPARE(getModelData(model, 1, 0, Qt::EditRole), QVariant(2));
-//   QCOMPARE(getModelData(model, 2, 0, Qt::EditRole), QVariant(3));
+  QCOMPARE(getModelData(model, 0, 0, Qt::EditRole), QVariant(10));
+  QCOMPARE(getModelData(model, 0, 1, Qt::EditRole), QVariant(11));
+  QCOMPARE(getModelData(model, 1, 0, Qt::EditRole), QVariant(20));
+  QCOMPARE(getModelData(model, 2, 0, Qt::EditRole), QVariant(30));
   // Check getting data for ToolTipRole
   QVERIFY(getModelData(model, 0, 0, Qt::ToolTipRole).isNull());
   QVERIFY(getModelData(model, 0, 1, Qt::ToolTipRole).isNull());
@@ -202,6 +203,13 @@ void StlTableModelTest::editableStdVectorTest()
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
   QCOMPARE(getModelData(model, 2, 0), QVariant(3));
   QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  // Check also record method
+  QCOMPARE(model.record(0).at(0), QVariant(1));
+  QCOMPARE(model.record(0).at(1), QVariant("A"));
+  QCOMPARE(model.record(1).at(0), QVariant(2));
+  QCOMPARE(model.record(1).at(1), QVariant("B"));
+  QCOMPARE(model.record(2).at(0), QVariant(3));
+  QCOMPARE(model.record(2).at(1), QVariant("C"));
 }
 
 void StlTableModelTest::setDataSignalTest()

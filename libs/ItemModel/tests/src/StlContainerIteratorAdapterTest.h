@@ -35,6 +35,8 @@ class StlContainerIteratorAdapterTest : public TestBase
   void containerSizeTest();
   void containerIsEmptyTest();
   void valueAtIndexTest();
+  void setValueAtIndexTest();
+  void initializeContainerTest();
 };
 
 #endif // #ifndef STL_CONTAINER_ITERATOR_ADAPTER_TEST_H
