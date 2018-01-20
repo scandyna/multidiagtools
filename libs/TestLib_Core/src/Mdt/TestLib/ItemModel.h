@@ -49,13 +49,13 @@ namespace Mdt{ namespace TestLib{
    * \pre \a row must be in valid range ( 0 <= \a row < model->rowCount() )
    * \pre \a column must be in valid range ( 0 <= \a column < model->columnCount() )
    */
-  bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
+  bool MDT_TESTLIB_CORE_EXPORT setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
 
   /*! \brief Set \a value to \a model at \a row and \a column for \a role
    *
    * \sa setModelData(QAbstractItemModel *, int, int, const QVariant &, Qt::ItemDataRole);
    */
-  bool setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
+  bool MDT_TESTLIB_CORE_EXPORT setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
 
 }} // namespace Mdt{ namespace TestLib{
 
