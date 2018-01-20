@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_EDITABLE_STL_TABLE_MODEL_H
 
 #include "ReadOnlyStlTableModel.h"
+#include "StlContainerIteratorAdapter.h"
 #include "MdtItemModelExport.h"
 
 namespace Mdt{ namespace ItemModel{
@@ -29,34 +30,60 @@ namespace Mdt{ namespace ItemModel{
   /*! \brief Editable table model for STL compliant container
    *
    * \tparam Table Type of a STL compatible container.
-   *   It must meet requirement for ReadOnlyStlTableModel,
+   *   It must meet requirements for ReadOnlyStlTableModel,
    *    and additionaly provide:
    *     - The begin() method
    *     - The end() method
-   *     - The record_type must also provide begin() and end().
+   *
+   * \tparam RecordAdapter Class template that meets the requirement
+   *   of ReadOnlyStlTableModel, and that also provides following functions:
+   *    - set a value at a index in the record container :
+   *     \code
+   *     void setValueAtIndex(Container & container, int index, const value_type & value);
+   *     \endcode
    */
-  template<typename Table>
-  class MDT_ITEMMODEL_EXPORT EditableStlTableModel : public ReadOnlyStlTableModel<Table>
+  template<typename Table, typename RecordAdapter = StlContainerIteratorAdapter<typename Table::value_type> >
+  class MDT_ITEMMODEL_EXPORT EditableStlTableModel : public ReadOnlyStlTableModel<Table, RecordAdapter>
   {
    public:
 
-    using record_type = typename ReadOnlyStlTableModel<Table>::record_type;
-    using value_type = typename ReadOnlyStlTableModel<Table>::value_type;
+    using ParentClass = ReadOnlyStlTableModel<Table, RecordAdapter>;
 
-    using ReadOnlyStlTableModel<Table>::rowCount;
-    using ReadOnlyStlTableModel<Table>::columnCount;
-    using ReadOnlyStlTableModel<Table>::index;
-    using ReadOnlyStlTableModel<Table>::table;
-    using ReadOnlyStlTableModel<Table>::emitDataChangedSignal;
+    using record_type = typename ParentClass::record_type;
+    using value_type = typename ParentClass::value_type;
+
+    using ParentClass::rowCount;
+    using ParentClass::columnCount;
+    using ParentClass::index;
+    using ParentClass::table;
+
+   protected:
+
+    using ParentClass::recordAdapter;
+    using ParentClass::emitDataChangedSignal;
+
+   public:
 
     /*! \brief Get flags for item at \a index
      */
     Qt::ItemFlags flags(const QModelIndex & index) const override
     {
       if(!index.isValid()){
-        return ReadOnlyStlTableModel<Table>::flags(index);
+        return ParentClass::flags(index);
       }
-      return ( ReadOnlyStlTableModel<Table>::flags(index) | Qt::ItemIsEditable );
+      return ( ParentClass::flags(index) | Qt::ItemIsEditable );
+    }
+
+    /*! \brief Access record at \a row
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    record_type & record(int row)
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
+
+      return *std::next(table().begin(), row);
     }
 
     /*! \brief Set element at \a row and \a column
@@ -71,7 +98,7 @@ namespace Mdt{ namespace ItemModel{
       Q_ASSERT(column >= 0);
       Q_ASSERT(column < columnCount());
 
-      *iteratorAtRowColumn(table(), row, column) = value;
+      recordAdapter().setValueAtIndex( record(row), column, value );
       const auto _index = index(row, column);
       emitDataChangedSignal(_index, _index);
     }
