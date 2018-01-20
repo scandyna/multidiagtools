@@ -37,9 +37,6 @@ class StlContainerTest : public TestBase
   void sizeQListTest();
   void sizeQVectorTest();
 
-  void tableRowCountTest();
-  void tableColumnCountTest();
-
   void isEmptyTest();
 
   void stateFulCompareContainerSizeStdVectorTest();
@@ -49,12 +46,8 @@ class StlContainerTest : public TestBase
 
   void constIteratorAtIndexStdVectorTest();
   void iteratorAtIndexStdVectorTest();
-  void constIteratorAtRowColumnStdVectorTest();
-  void iteratorAtRowColumnStdVectorTest();
 
   void insertToContainerTest();
-  void initializeContainerTest();
-  void insertToTableTest();
   void removeFromContainerTest();
 };
 
