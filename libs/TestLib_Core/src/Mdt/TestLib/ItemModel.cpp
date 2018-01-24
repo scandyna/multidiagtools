@@ -26,6 +26,28 @@
 
 namespace Mdt{ namespace TestLib{
 
+Qt::ItemFlags getModelFlags(const QAbstractItemModel* model, int row, int column)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < model->columnCount());
+
+  auto index = model->index(row, column);
+  if(!index.isValid()){
+    qDebug() << "Mdt::TestLib::getModelData() - index is not valid: " << index;
+    return Qt::NoItemFlags;
+  }
+
+  return model->flags(index);
+}
+
+Qt::ItemFlags getModelFlags(const QAbstractItemModel& model, int row, int column)
+{
+  return getModelFlags(&model, row, column);
+}
+
 QVariant getModelData(const QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
 {
   Q_ASSERT(model != nullptr);

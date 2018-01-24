@@ -18,32 +18,21 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ModelInsertRowTest.h"
-#include "TestBase.h"
+#include "ItemModelInsertRowTest.h"
+#include "ItemModel.h"
+#include <QtTest/QtTest>
 #include <QSignalSpy>
 #include <QVariantList>
 
 // #include <QDebug>
 
-/*
- * Helpers
- */
-
-bool isEditableAt(QAbstractItemModel * model, int row, int column)
-{
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(column >= 0);
-  Q_ASSERT(column < model->columnCount());
-
-  return ( getModelFlags(model, row, column) & Qt::ItemIsEditable );
-}
+namespace Mdt{ namespace TestLib{
 
 /*
  * Tests
  */
 
-ModelInsertRowTest::ModelInsertRowTest(QAbstractItemModel* model, QObject* parent)
+ItemModelInsertRowTest::ItemModelInsertRowTest(QAbstractItemModel* model, QObject* parent)
  : QObject(parent)
 {
   Q_ASSERT(model != nullptr);
@@ -51,7 +40,7 @@ ModelInsertRowTest::ModelInsertRowTest(QAbstractItemModel* model, QObject* paren
   runTests(model);
 }
 
-void ModelInsertRowTest::runTests(QAbstractItemModel* model)
+void ItemModelInsertRowTest::runTests(QAbstractItemModel* model)
 {
   QSignalSpy rowsInsertedSpy(model, SIGNAL(rowsInserted(const QModelIndex&, int, int)));
   QVERIFY(rowsInsertedSpy.isValid());
@@ -138,7 +127,7 @@ void ModelInsertRowTest::runTests(QAbstractItemModel* model)
   QCOMPARE(model->rowCount(), 4);
   QVERIFY(getModelData(model, 1, 0).isNull());
   QVERIFY(getModelData(model, 2, 0).isNull());
-  // Check that rows where inserted at correctplace
+  // Check that rows have been inserted at correct place
   if(isEditableAt(model, 0, 0)){
     QCOMPARE(getModelData(model, 0, 0), QVariant(-1));
   }
@@ -176,3 +165,15 @@ void ModelInsertRowTest::runTests(QAbstractItemModel* model)
   QCOMPARE(arguments.at(2), QVariant(2)); // last
   rowsInsertedSpy.clear();
 }
+
+bool ItemModelInsertRowTest::isEditableAt(QAbstractItemModel* model, int row, int column)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < model->columnCount());
+
+  return ( getModelFlags(model, row, column) & Qt::ItemIsEditable );
+}
+
+}} // namespace Mdt{ namespace TestLib{

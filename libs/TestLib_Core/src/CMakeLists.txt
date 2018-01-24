@@ -4,9 +4,10 @@ set(SOURCE_FILES
   Mdt/TestLib/FakeRoot.cpp
   Mdt/TestLib/CreateFile.cpp
   Mdt/TestLib/ItemModel.cpp
+  Mdt/TestLib/ItemModelInsertRowTest.cpp
 )
 
-find_package(Qt5 COMPONENTS Core)
+find_package(Qt5 COMPONENTS Core Test)
 
 # # Get Boost include directory if not allready set
 # # We only use header onyl libraries, so we not use COMPONENTS
@@ -22,7 +23,7 @@ mdt_add_library(
   NAME TestLib_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Qt5::Core
+  LINK_DEPENDENCIES Qt5::Core Qt5::Test
 )
 target_compile_definitions(TestLib_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

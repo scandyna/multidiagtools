@@ -19,9 +19,9 @@
  **
  ****************************************************************************/
 #include "StlTableModelTest.h"
-#include "ModelInsertRowTest.h"
 #include "ModelRemoveRowTest.h"
 #include "qtmodeltest.h"
+#include "Mdt/TestLib/ItemModelInsertRowTest.h"
 #include "Mdt/ItemModel/ReadOnlyStlTableModel.h"
 #include "Mdt/ItemModel/EditableStlTableModel.h"
 #include "Mdt/ItemModel/RowResizableStlTableModel.h"
@@ -34,6 +34,7 @@
 #include <vector>
 
 using namespace Mdt::ItemModel;
+using Mdt::TestLib::ItemModelInsertRowTest;
 
 void StlTableModelTest::initTestCase()
 {
@@ -298,7 +299,7 @@ void StlTableModelTest::insertRowsTest()
   using Table = std::vector< QVariantList >;
   RowResizableStlTableModel<Table> model;
   model.setColumnCount(1);
-  ModelInsertRowTest mt(&model);
+  ItemModelInsertRowTest mt(&model);
 }
 
 void StlTableModelTest::prependAppendRowTest()

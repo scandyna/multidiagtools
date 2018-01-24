@@ -29,6 +29,21 @@ class QVariant;
 
 namespace Mdt{ namespace TestLib{
 
+  /*! \brief Get flags from \a model at \a row and \a column for \a role
+   *
+   * \pre \a model must be a valid pointer
+   * \pre \a row must be in valid range ( 0 <= \a row < model->rowCount() )
+   * \pre \a column must be in valid range ( 0 <= \a column < model->columnCount() )
+   */
+  Qt::ItemFlags MDT_TESTLIB_CORE_EXPORT getModelFlags(const QAbstractItemModel *model, int row, int column);
+
+  /*! \brief Get flags from \a model at \a row and \a column for \a role
+   *
+   * \pre \a row must be in valid range ( 0 <= \a row < model->rowCount() )
+   * \pre \a column must be in valid range ( 0 <= \a column < model->columnCount() )
+   */
+  Qt::ItemFlags MDT_TESTLIB_CORE_EXPORT getModelFlags(const QAbstractItemModel & model, int row, int column);
+
   /*! \brief Get data from \a model at \a row and \a column for \a role
    *
    * \pre \a model must be a valid pointer

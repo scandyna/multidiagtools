@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "ItemModelTest.h"
 #include "Mdt/TestLib/ItemModel.h"
+#include "Mdt/TestLib/ItemModelInsertRowTest.h"
 #include <QStringList>
 #include <QStringListModel>
 
@@ -36,6 +37,23 @@ void ItemModelTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void ItemModelTest::getModelFlagsTest()
+{
+  QStringListModel model(QStringList{"A"});
+
+  auto flags = getModelFlags(&model, 0, 0);
+  QVERIFY( flags.testFlag(Qt::ItemIsEnabled) );
+  QVERIFY( flags.testFlag(Qt::ItemIsSelectable) );
+  QVERIFY( flags.testFlag(Qt::ItemIsEditable) );
+  QVERIFY(!flags.testFlag(Qt::ItemIsTristate) );
+
+  flags = getModelFlags(model, 0, 0);
+  QVERIFY( flags.testFlag(Qt::ItemIsEnabled) );
+  QVERIFY( flags.testFlag(Qt::ItemIsSelectable) );
+  QVERIFY( flags.testFlag(Qt::ItemIsEditable) );
+  QVERIFY(!flags.testFlag(Qt::ItemIsTristate) );
+}
 
 void ItemModelTest::getModelDataTest()
 {
@@ -107,6 +125,12 @@ void ItemModelTest::prependAppendTest()
   QCOMPARE( getModelData(model, 1, 0), QVariant("b") );
   QCOMPARE( getModelData(model, 2, 0), QVariant("C") );
   QCOMPARE( getModelData(model, 3, 0), QVariant("D") );
+}
+
+void ItemModelTest::insertRowTest()
+{
+  QStringListModel model;
+  ItemModelInsertRowTest test(&model);
 }
 
 /*

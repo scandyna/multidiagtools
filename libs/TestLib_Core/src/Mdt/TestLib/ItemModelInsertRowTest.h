@@ -18,26 +18,38 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MODEL_INSERT_ROW_TEST_H
-#define MODEL_INSERT_ROW_TEST_H
+#ifndef MDT_TEST_LIB_ITEM_MODEL_INSERT_ROW_TEST_H
+#define MDT_TEST_LIB_ITEM_MODEL_INSERT_ROW_TEST_H
 
+#include "MdtTestLib_CoreExport.h"
 #include <QObject>
 #include <QAbstractItemModel>
 
-/*! \brief Class to check that inserting rows works on a item model
- */
-class ModelInsertRowTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace TestLib{
 
- public:
+  /*! \brief Class to check that inserting rows works on a item model
+   *
+   * Typical usage:
+   * \code
+   * MyModel model;
+   * Mdt::TestLib::ItemModelInsertRowTest insertRowTest(&model);
+   * \endcode
+   */
+  class MDT_TESTLIB_CORE_EXPORT ItemModelInsertRowTest : public QObject
+  {
+   Q_OBJECT
 
-  ModelInsertRowTest(QAbstractItemModel *model, QObject *parent = nullptr);
+   public:
 
- private:
+    ItemModelInsertRowTest(QAbstractItemModel *model, QObject *parent = nullptr);
 
-  void runTests(QAbstractItemModel *model);
-};
+   private:
 
+    void runTests(QAbstractItemModel *model);
 
-#endif // #ifndef MODEL_INSERT_ROW_TEST_H
+    static bool isEditableAt(QAbstractItemModel * model, int row, int column);
+  };
+
+}} // namespace Mdt{ namespace TestLib{
+
+#endif // #ifndef MDT_TEST_LIB_ITEM_MODEL_INSERT_ROW_TEST_H

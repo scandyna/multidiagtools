@@ -9,7 +9,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(SOURCES_FILES
     src/TestBase.cpp
-    src/ModelInsertRowTest.cpp
     src/ModelRemoveRowTest.cpp
 )
 

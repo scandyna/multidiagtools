@@ -32,9 +32,12 @@ class ItemModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void getModelFlagsTest();
   void getModelDataTest();
   void setModelDataTest();
   void prependAppendTest();
+
+  void insertRowTest();
 };
 
 #endif // #ifndef ITEM_MODEL_TEST_H
