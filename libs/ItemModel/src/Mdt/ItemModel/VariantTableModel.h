@@ -302,7 +302,7 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a column must be in valid range ( 0 <= column < columnCount() )
      * \pre \a data size must be <= rowCount()
      * \pre \a role must be Qt::DisplayRole or Qt::EditRole
-     * \pre If \a role is Qt::EditRole, strage strategy must be VariantTableModelStorageRule::SeparateDisplayAndEditRoleData
+     * \pre If \a role is Qt::EditRole, storage strategy must be VariantTableModelStorageRule::SeparateDisplayAndEditRoleData
      */
     void populateColumn(int column, const std::vector<QVariant> & data, Qt::ItemDataRole role = Qt::DisplayRole);
 
