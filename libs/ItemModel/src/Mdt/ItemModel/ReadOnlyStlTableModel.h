@@ -24,12 +24,8 @@
 #include "AbstractStlTableModel.h"
 #include "StlContainer.h"
 #include "StlContainerIteratorAdapter.h"
-#include "MdtItemModelExport.h"
 #include <QModelIndex>
 #include <QVariant>
-
-#include <iterator>
-// #include <algorithm>
 
 namespace Mdt{ namespace ItemModel{
 
@@ -69,7 +65,7 @@ namespace Mdt{ namespace ItemModel{
    *    of items, refered here as column count of the table model.
    */
   template<typename Table, typename RecordAdapter = StlContainerIteratorAdapter<typename Table::value_type> >
-  class MDT_ITEMMODEL_EXPORT ReadOnlyStlTableModel : public AbstractStlTableModel
+  class ReadOnlyStlTableModel : public AbstractStlTableModel
   {
    public:
 

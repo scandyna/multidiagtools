@@ -23,7 +23,6 @@
 
 #include "EditableStlListModel.h"
 #include "StlContainer.h"
-#include "MdtItemModelExport.h"
 #include <type_traits>
 #include <iterator>
 
@@ -38,7 +37,7 @@ namespace Mdt{ namespace ItemModel{
    *     - A STL compatible erase() method
    */
   template<typename Container>
-  class MDT_ITEMMODEL_EXPORT ResizableStlListModel : public EditableStlListModel<Container>
+  class ResizableStlListModel : public EditableStlListModel<Container>
   {
    public:
 

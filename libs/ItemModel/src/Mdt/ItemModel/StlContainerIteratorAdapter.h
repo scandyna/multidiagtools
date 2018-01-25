@@ -21,7 +21,6 @@
 #ifndef MDT_ITEM_MODEL_STL_CONTAINER_ITERATOR_ADAPTER_H
 #define MDT_ITEM_MODEL_STL_CONTAINER_ITERATOR_ADAPTER_H
 
-#include "MdtItemModelExport.h"
 #include <QtGlobal>
 #include <iterator>
 #include <algorithm>
@@ -74,7 +73,7 @@ namespace Mdt{ namespace ItemModel{
    * This implementation works with STL iterators.
    */
   template<typename Container>
-  class MDT_ITEMMODEL_EXPORT StlContainerIteratorAdapter
+  class StlContainerIteratorAdapter
   {
    public:
 

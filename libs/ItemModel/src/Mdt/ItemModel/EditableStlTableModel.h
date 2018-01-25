@@ -23,7 +23,6 @@
 
 #include "ReadOnlyStlTableModel.h"
 #include "StlContainerIteratorAdapter.h"
-#include "MdtItemModelExport.h"
 
 namespace Mdt{ namespace ItemModel{
 
@@ -43,7 +42,7 @@ namespace Mdt{ namespace ItemModel{
    *     \endcode
    */
   template<typename Table, typename RecordAdapter = StlContainerIteratorAdapter<typename Table::value_type> >
-  class MDT_ITEMMODEL_EXPORT EditableStlTableModel : public ReadOnlyStlTableModel<Table, RecordAdapter>
+  class EditableStlTableModel : public ReadOnlyStlTableModel<Table, RecordAdapter>
   {
    public:
 

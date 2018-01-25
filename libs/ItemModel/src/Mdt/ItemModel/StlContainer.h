@@ -21,7 +21,6 @@
 #ifndef MDT_ITEM_MODEL_STL_CONTAINER_H
 #define MDT_ITEM_MODEL_STL_CONTAINER_H
 
-#include "MdtItemModelExport.h"
 #include <QtGlobal>
 #include <iterator>
 #include <algorithm>
@@ -32,7 +31,7 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Get the size of \a container
      */
     template<typename Container>
-    int MDT_ITEMMODEL_EXPORT containerSize(const Container & container)
+    int containerSize(const Container & container)
     {
       return std::distance(container.cbegin(), container.cend());
     }
@@ -40,7 +39,7 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Check if \a container is empty
      */
     template<typename Container>
-    bool MDT_ITEMMODEL_EXPORT containerIsEmpty(const Container & container)
+    bool containerIsEmpty(const Container & container)
     {
       return ( container.cbegin() == container.cend() );
     }
@@ -51,7 +50,7 @@ namespace Mdt{ namespace ItemModel{
      *  with the size of its previous call.
      */
     template<typename RecordAdapter>
-    class MDT_ITEMMODEL_EXPORT StateFulCompareContainerSize
+    class StateFulCompareContainerSize
     {
      public:
 
@@ -84,7 +83,7 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Check that each record of the table has the same column count
      */
     template<typename Table, typename RecordAdapter>
-    bool MDT_ITEMMODEL_EXPORT eachRecordHasSameColumnCount(const Table & table, const RecordAdapter &)
+    bool eachRecordHasSameColumnCount(const Table & table, const RecordAdapter &)
     {
       return std::all_of(table.cbegin(), table.cend(), StateFulCompareContainerSize<RecordAdapter>());
     }
@@ -118,7 +117,7 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Insert \a count copies of \a value to \a container
      */
     template<typename Container, typename T>
-    void MDT_ITEMMODEL_EXPORT insertToContainer(Container & container, int pos, int count, const T & value)
+    void insertToContainer(Container & container, int pos, int count, const T & value)
     {
       container.insert( std::next(container.begin() , pos), count, value );
     }
@@ -128,7 +127,7 @@ namespace Mdt{ namespace ItemModel{
      * This is a specialization for QList
      */
     template<typename T>
-    void MDT_ITEMMODEL_EXPORT insertToContainer(QList<T> & container, int pos, int count, const T & value)
+    void insertToContainer(QList<T> & container, int pos, int count, const T & value)
     {
       container.reserve(container.size() + count);
       for(int i = 0; i < count; ++i){
@@ -139,7 +138,7 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Insert \a value to the end of \a container
      */
     template<typename Container, typename T>
-    void MDT_ITEMMODEL_EXPORT appendToContainer(Container & container, const T & value)
+    void appendToContainer(Container & container, const T & value)
     {
       insertToContainer(container, containerSize(container), 1, value);
     }
@@ -147,7 +146,7 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Insert \a value to the beginning of \a container
      */
     template<typename Container, typename T>
-    void MDT_ITEMMODEL_EXPORT prependToContainer(Container & container, const T & value)
+    void prependToContainer(Container & container, const T & value)
     {
       insertToContainer(container, 0, 1, value);
     }
@@ -162,7 +161,7 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a pos + \a count must be in valid range ( 1 <= \a pos + \a count <= containerSize( \a container ) )
      */
     template<typename Container>
-    void MDT_ITEMMODEL_EXPORT removeFromContainer(Container & container, int pos, int count)
+    void removeFromContainer(Container & container, int pos, int count)
     {
       Q_ASSERT(pos >= 0);
       Q_ASSERT(count >= 0);
@@ -175,7 +174,7 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a container must not be empty
      */
     template<typename Container>
-    void MDT_ITEMMODEL_EXPORT removeFirstFromContainer(Container & container)
+    void removeFirstFromContainer(Container & container)
     {
       Q_ASSERT(!containerIsEmpty(container));
       removeFromContainer(container, 0, 1);
@@ -186,7 +185,7 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a container must not be empty
      */
     template<typename Container>
-    void MDT_ITEMMODEL_EXPORT removeLastFromContainer(Container & container)
+    void removeLastFromContainer(Container & container)
     {
       Q_ASSERT(!containerIsEmpty(container));
       removeFromContainer(container, containerSize(container)-1, 1);
