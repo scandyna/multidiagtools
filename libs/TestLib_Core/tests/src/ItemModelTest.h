@@ -38,6 +38,7 @@ class ItemModelTest : public TestBase
   void prependAppendTest();
 
   void insertRowTest();
+  void removeRowTest();
 };
 
 #endif // #ifndef ITEM_MODEL_TEST_H

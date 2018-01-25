@@ -18,25 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MODEL_REMOVE_ROW_TEST_H
-#define MODEL_REMOVE_ROW_TEST_H
+#ifndef MDT_TEST_LIB_ITEM_MODEL_REMOVE_ROW_TEST_H
+#define MDT_TEST_LIB_ITEM_MODEL_REMOVE_ROW_TEST_H
 
 #include <QObject>
 #include <QAbstractItemModel>
 
-/*! \brief Class to check that removing rows works on a item model
- */
-class ModelRemoveRowTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace TestLib{
 
- public:
+  /*! \brief Class to check that removing rows works on a item model
+   *
+   * Typical usage:
+   * \code
+   * MyModel model;
+   * Mdt::TestLib::ItemModelRemoveRowTest removeRowTest(&model);
+   * \endcode
+   */
+  class ItemModelRemoveRowTest : public QObject
+  {
+   Q_OBJECT
 
-  ModelRemoveRowTest(QAbstractItemModel *model, QObject *parent = nullptr);
+   public:
 
- private:
+    ItemModelRemoveRowTest(QAbstractItemModel *model, QObject *parent = nullptr);
 
-  void runTests(QAbstractItemModel *model);
-};
+   private:
 
-#endif // #ifndef MODEL_REMOVE_ROW_TEST_H
+    void runTests(QAbstractItemModel *model);
+  };
+
+}} // namespace Mdt{ namespace TestLib{
+
+#endif // #ifndef MDT_TEST_LIB_ITEM_MODEL_REMOVE_ROW_TEST_H

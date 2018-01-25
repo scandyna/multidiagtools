@@ -5,6 +5,7 @@ set(SOURCE_FILES
   Mdt/TestLib/CreateFile.cpp
   Mdt/TestLib/ItemModel.cpp
   Mdt/TestLib/ItemModelInsertRowTest.cpp
+  Mdt/TestLib/ItemModelRemoveRowTest.cpp
 )
 
 find_package(Qt5 COMPONENTS Core Test)

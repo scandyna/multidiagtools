@@ -21,6 +21,7 @@
 #include "ItemModelTest.h"
 #include "Mdt/TestLib/ItemModel.h"
 #include "Mdt/TestLib/ItemModelInsertRowTest.h"
+#include "Mdt/TestLib/ItemModelRemoveRowTest.h"
 #include <QStringList>
 #include <QStringListModel>
 
@@ -131,6 +132,12 @@ void ItemModelTest::insertRowTest()
 {
   QStringListModel model;
   ItemModelInsertRowTest test(&model);
+}
+
+void ItemModelTest::removeRowTest()
+{
+  QStringListModel model;
+  ItemModelRemoveRowTest test(&model);
 }
 
 /*

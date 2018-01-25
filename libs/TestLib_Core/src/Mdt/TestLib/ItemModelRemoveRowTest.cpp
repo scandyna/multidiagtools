@@ -18,14 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ModelRemoveRowTest.h"
-#include "TestBase.h"
+#include "ItemModelRemoveRowTest.h"
+#include "ItemModel.h"
+#include <QtTest/QtTest>
 #include <QSignalSpy>
 #include <QVariantList>
 
-#include <QDebug>
+// #include <QDebug>
 
-ModelRemoveRowTest::ModelRemoveRowTest(QAbstractItemModel* model, QObject* parent)
+namespace Mdt{ namespace TestLib{
+
+ItemModelRemoveRowTest::ItemModelRemoveRowTest(QAbstractItemModel* model, QObject* parent)
  : QObject(parent)
 {
   Q_ASSERT(model != nullptr);
@@ -33,7 +36,7 @@ ModelRemoveRowTest::ModelRemoveRowTest(QAbstractItemModel* model, QObject* paren
   runTests(model);
 }
 
-void ModelRemoveRowTest::runTests(QAbstractItemModel* model)
+void ItemModelRemoveRowTest::runTests(QAbstractItemModel* model)
 {
   /*
    * Work only on int values for data
@@ -136,3 +139,5 @@ void ModelRemoveRowTest::runTests(QAbstractItemModel* model)
   QCOMPARE(arguments.at(2), QVariant(0)); // last
   rowsRemovedSpy.clear();
 }
+
+}} // namespace Mdt{ namespace TestLib{

@@ -19,9 +19,9 @@
  **
  ****************************************************************************/
 #include "StlListModelTest.h"
-#include "ModelRemoveRowTest.h"
 #include "qtmodeltest.h"
 #include "Mdt/TestLib/ItemModelInsertRowTest.h"
+#include "Mdt/TestLib/ItemModelRemoveRowTest.h"
 #include "Mdt/ItemModel/ReadOnlyStlListModel.h"
 #include "Mdt/ItemModel/EditableStlListModel.h"
 #include "Mdt/ItemModel/ResizableStlListModel.h"
@@ -34,6 +34,7 @@
 
 using namespace Mdt::ItemModel;
 using Mdt::TestLib::ItemModelInsertRowTest;
+using Mdt::TestLib::ItemModelRemoveRowTest;
 
 void StlListModelTest::initTestCase()
 {
@@ -322,7 +323,7 @@ void StlListModelTest::removeRowsTest()
 {
   ResizableStlListModel<QVariantList> model;
   QCOMPARE(model.rowCount(), 0);
-  ModelRemoveRowTest mt(&model);
+  ItemModelRemoveRowTest mt(&model);
 }
 
 void StlListModelTest::removeFirstLastRowTest()
