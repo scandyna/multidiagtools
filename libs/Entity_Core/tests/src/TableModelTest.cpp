@@ -28,10 +28,6 @@
 #include "Mdt/TestLib/ItemModelInsertRowTest.h"
 #include "Mdt/TestLib/ItemModelRemoveRowTest.h"
 
-#include <QApplication>
-#include <QTableView>
-#include <vector>
-
 using namespace Mdt::Entity;
 using namespace Mdt::TestLib;
 
@@ -100,13 +96,6 @@ void TableModelTest::readOnlyTest()
   QCOMPARE(getModelData(model, 1, 0), QVariant(2));
   QCOMPARE(getModelData(model, 1, 1), QVariant("Two"));
   QCOMPARE(getModelData(model, 1, 2), QVariant(5.2));
-
-//   QTableView tv;
-//   tv.setModel(&model);
-//   tv.show();
-//   while(tv.isVisible()){
-//     QTest::qWait(1000);
-//   }
 }
 
 void TableModelTest::editableTest()
@@ -150,13 +139,6 @@ void TableModelTest::editableTest()
   QCOMPARE(getModelData(model, 1, 0), QVariant(12));
   QCOMPARE(getModelData(model, 1, 1), QVariant("Article 12"));
   QCOMPARE(getModelData(model, 1, 2), QVariant(7.6));
-
-//   QTableView tv;
-//   tv.setModel(&model);
-//   tv.show();
-//   while(tv.isVisible()){
-//     QTest::qWait(1000);
-//   }
 }
 
 void TableModelTest::rowResizableTest()
@@ -173,19 +155,6 @@ void TableModelTest::rowResizableTest()
 
   RowResizableTableModel<ArticleDataList> modelR;
   ItemModelRemoveRowTest removeTest(&modelR);
-
-//   QTableView tv;
-//   tv.setModel(&model);
-//   tv.show();
-//   tv.resizeColumnsToContents();
-//   QTest::qWait(2000);
-//   appendRowToModel(model);
-//   QTest::qWait(2000);
-//   appendRowToModel(model);
-//   while(tv.isVisible()){
-//     QTest::qWait(1000);
-//   }
-
 }
 
 /*
@@ -194,8 +163,7 @@ void TableModelTest::rowResizableTest()
 
 int main(int argc, char **argv)
 {
-  ///Mdt::CoreApplication app(argc, argv);
-  QApplication app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   TableModelTest test;
 
 //   app.debugEnvironnement();

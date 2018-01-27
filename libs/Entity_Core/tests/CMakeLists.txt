@@ -14,7 +14,7 @@ target_link_libraries(mdtEntity_CoreTest Entity_Core Application_Core TestLib_Co
 
 # TODO Remove
 find_package(Qt5 COMPONENTS Widgets)
-target_link_libraries(mdtEntity_CoreTest Qt5::Widgets)
+target_link_libraries(mdtEntity_CoreTest)
 
 #=============== Helper functions ===========
 
