@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "SchemaPrimaryKeyTest.h"
-#include "Mdt/Application.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
@@ -209,7 +208,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   SchemaPrimaryKeyTest test;
 
   return QTest::qExec(&test, argc, argv);

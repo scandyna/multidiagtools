@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,8 +21,7 @@
 #ifndef MDT_SIMPLE_TYPES_TEST_H
 #define MDT_SIMPLE_TYPES_TEST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
 
 class SimpleTypesTest : public QObject
 {

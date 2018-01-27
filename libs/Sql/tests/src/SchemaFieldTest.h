@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,10 +21,9 @@
 #ifndef MDT_SQL_SCHEMA_FIELD_TEST_H
 #define MDT_SQL_SCHEMA_FIELD_TEST_H
 
+#include "TestBase.h"
 #include "Mdt/Sql/Schema/FieldType.h"
 #include "Mdt/Sql/Schema/FieldList.h"
-#include <QObject>
-#include <QtTest/QtTest>
 
 class SchemaFieldTest : public QObject
 {

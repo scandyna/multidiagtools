@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,7 +21,6 @@
 #include "SimpleTypesTest.h"
 #include "Schema/Client.h"
 #include "Schema/Address.h"
-#include "Mdt/Application.h"
 #include "Mdt/Sql/FieldName.h"
 #include "Mdt/Sql/TableName.h"
 #include "Mdt/Sql/SelectField.h"
@@ -209,7 +208,7 @@ void SimpleTypesTest::selectTableForeignKeyTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   SimpleTypesTest test;
 
   return QTest::qExec(&test, argc, argv);

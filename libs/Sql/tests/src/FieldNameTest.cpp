@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,7 +21,6 @@
 #include "FieldNameTest.h"
 #include "Schema/Client.h"
 #include "Schema/Address.h"
-#include "Mdt/Application.h"
 #include "Mdt/Sql/FieldName.h"
 #include "Mdt/Sql/FieldNameList.h"
 
@@ -121,7 +120,7 @@ void FieldNameTest::fieldNameListTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   FieldNameTest test;
 
   return QTest::qExec(&test, argc, argv);

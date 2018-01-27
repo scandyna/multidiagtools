@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -417,7 +417,7 @@ Sql::Schema::FieldList SchemaFieldTest::getFieldList(int N, Sql::Schema::FieldTy
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   SchemaFieldTest test;
 
   return QTest::qExec(&test, argc, argv);
