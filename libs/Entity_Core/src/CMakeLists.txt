@@ -11,13 +11,10 @@ set(SOURCE_FILES
   Mdt/Entity/ValueAt.cpp
   Mdt/Entity/FieldAt.cpp
   Mdt/Entity/DataList.cpp
-  
-  Mdt/Entity/AbstractTableModel.cpp
-  
   Mdt/Entity/TableModelRecordAdapter.cpp
   Mdt/Entity/ReadOnlyTableModel.cpp
-  
-  Mdt/Entity/DataRecordIterator.cpp
+  Mdt/Entity/EditableTableModel.cpp
+  Mdt/Entity/RowResizableTableModel.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

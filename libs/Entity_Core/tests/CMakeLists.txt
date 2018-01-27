@@ -40,7 +40,6 @@ addEntity_CoreTest("DataListTest")
 addEntity_CoreTest("TableModelRecordAdapterTest")
 addEntity_CoreTest("TableModelTest")
 
-addEntity_CoreTest("DataRecordIteratorTest")
 addEntity_CoreTest("FieldTest")
 addEntity_CoreTest("ReflectionTest")
 
