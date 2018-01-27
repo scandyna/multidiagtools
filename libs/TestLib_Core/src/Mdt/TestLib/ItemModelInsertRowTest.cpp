@@ -60,7 +60,6 @@ void ItemModelInsertRowTest::runTests(QAbstractItemModel* model)
   QVERIFY(appendRowToModel(model));
   QCOMPARE(model->rowCount(), 1);
   QVERIFY(model->columnCount() > 0);
-  QVERIFY(getModelData(model, 0, 0).isNull());
   // Check that inserted row can be used
   if(isEditableAt(model, 0, 0)){
     QVERIFY(setModelData(model, 0, 0, 1));
@@ -85,7 +84,6 @@ void ItemModelInsertRowTest::runTests(QAbstractItemModel* model)
   QCOMPARE(rowsInsertedSpy.count(), 0);
   prependRowToModel(model);
   QCOMPARE(model->rowCount(), 2);
-  QVERIFY(getModelData(model, 0, 0).isNull());
   // Check that row was inserted at correct place
   if(isEditableAt(model, 1, 0)){  // Was previously row 0
     QCOMPARE(getModelData(model, 1, 0), QVariant(1));
@@ -125,8 +123,6 @@ void ItemModelInsertRowTest::runTests(QAbstractItemModel* model)
   QCOMPARE(rowsInsertedSpy.count(), 0);
   QVERIFY(model->insertRows(1, 2));
   QCOMPARE(model->rowCount(), 4);
-  QVERIFY(getModelData(model, 1, 0).isNull());
-  QVERIFY(getModelData(model, 2, 0).isNull());
   // Check that rows have been inserted at correct place
   if(isEditableAt(model, 0, 0)){
     QCOMPARE(getModelData(model, 0, 0), QVariant(-1));

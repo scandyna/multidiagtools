@@ -297,7 +297,7 @@ void StlTableModelTest::rowResizableColumnCountTest()
 
 void StlTableModelTest::insertRowsTest()
 {
-  using Table = std::vector< QVariantList >;
+  using Table = std::vector< QList<int> >;
   RowResizableStlTableModel<Table> model;
   model.setColumnCount(1);
   ItemModelInsertRowTest mt(&model);
@@ -305,7 +305,7 @@ void StlTableModelTest::insertRowsTest()
 
 void StlTableModelTest::prependAppendRowTest()
 {
-  using Table = std::vector< QVariantList >;
+  using Table = std::vector< QList<int> >;
   RowResizableStlTableModel<Table> model;
   QSignalSpy rowsInsertedSpy(&model, &RowResizableStlTableModel<Table>::rowsInserted);
   QVERIFY(rowsInsertedSpy.isValid());
