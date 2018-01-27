@@ -22,7 +22,6 @@
 #define MDT_ENTITY_FIELD_AT_H
 
 #include "FieldAttributes.h"
-// #include "MdtEntity_CoreExport.h"
 #include <QString>
 #include <boost/fusion/include/size.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -64,6 +63,22 @@ namespace Mdt{ namespace Entity{
 
   } // namespace Impl{
 
+  /*! \brief Get count of fields in \a EntityDef
+   */
+  template<typename EntityDef>
+  static int fieldCount(const EntityDef &) noexcept
+  {
+    return boost::fusion::result_of::size<EntityDef>::type::value;
+  }
+
+  /*! \brief Get count of fields in \a EntityDef
+   */
+  template<typename EntityDef>
+  constexpr int fieldCount() noexcept
+  {
+    return boost::fusion::result_of::size<EntityDef>::type::value;
+  }
+
   /*! \brief Get the field name in \a entityDef at \a index
    *
    * This function can be used to get the field name of a entity def,
@@ -78,9 +93,9 @@ namespace Mdt{ namespace Entity{
    * \note To iterate all members of \a EntityDef , use boost::fusion::for_each().
    */
   template<typename EntityDef>
-  static const QString /*MDT_ENTITY_CORE_EXPORT*/ fieldNameAt(const EntityDef & entityDef, int index)
+  static const QString fieldNameAt(const EntityDef & entityDef, int index)
   {
-    constexpr int size = boost::fusion::result_of::size<EntityDef>::type::value;
+    constexpr int size = fieldCount<EntityDef>();
 
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < size);
@@ -102,9 +117,9 @@ namespace Mdt{ namespace Entity{
    * \note To iterate all members of \a EntityDef , use boost::fusion::for_each().
    */
   template<typename EntityDef>
-  static const FieldAttributes /*MDT_ENTITY_CORE_EXPORT*/ fieldAttributesAt(const EntityDef & entityDef, int index)
+  static const FieldAttributes fieldAttributesAt(const EntityDef & entityDef, int index)
   {
-    constexpr int size = boost::fusion::result_of::size<EntityDef>::type::value;
+    constexpr int size = fieldCount<EntityDef>();
 
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < size);

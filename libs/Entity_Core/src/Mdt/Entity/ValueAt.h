@@ -21,7 +21,6 @@
 #ifndef MDT_ENTITY_VALUE_AT_H
 #define MDT_ENTITY_VALUE_AT_H
 
-#include "MdtEntity_CoreExport.h"
 #include <QVariant>
 #include <boost/fusion/include/size.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -83,7 +82,7 @@ namespace Mdt{ namespace Entity{
    * \note To iterate all members of \a sequence , use boost::fusion::for_each().
    */
   template<typename FusionSequence>
-  void MDT_ENTITY_CORE_EXPORT setValueAt(FusionSequence & sequence, int index, const QVariant & value)
+  void setValueAt(FusionSequence & sequence, int index, const QVariant & value)
   {
     constexpr int size = boost::fusion::result_of::size<FusionSequence>::type::value;
 
@@ -106,7 +105,7 @@ namespace Mdt{ namespace Entity{
    * \note To iterate all members of \a sequence , use boost::fusion::for_each().
    */
   template<typename FusionSequence>
-  QVariant MDT_ENTITY_CORE_EXPORT valueAt(const FusionSequence & sequence, int index)
+  QVariant valueAt(const FusionSequence & sequence, int index)
   {
     constexpr int size = boost::fusion::result_of::size<FusionSequence>::type::value;
 
