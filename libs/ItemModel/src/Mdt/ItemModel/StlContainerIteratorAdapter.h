@@ -83,7 +83,7 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Get the size of \a container
      */
-    static int containerSize(const Container & container)
+    static int containerSize(const Container & container) noexcept
     {
       return std::distance(container.cbegin(), container.cend());
     }

@@ -53,6 +53,7 @@ set(SOURCE_FILES
     Mdt/ItemModel/AbstractStlTableModel.cpp
     Mdt/ItemModel/ReadOnlyStlTableModel.cpp
     Mdt/ItemModel/EditableStlTableModel.cpp
+    Mdt/ItemModel/RowResizableStlTableModelTemplate.cpp
     Mdt/ItemModel/RowResizableStlTableModel.cpp
 )
 

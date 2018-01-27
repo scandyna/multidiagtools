@@ -154,6 +154,8 @@ namespace Mdt{ namespace ItemModel{
     }
 
     /*! \brief Get column count
+     *
+     * \sa columnCount()
      */
     int columnCount(const QModelIndex & parent) const override
     {

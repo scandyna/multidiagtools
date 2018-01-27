@@ -21,7 +21,8 @@
 #ifndef MDT_ITEM_MODEL_ROW_RESIZABLE_STL_TABLE_MODEL_H
 #define MDT_ITEM_MODEL_ROW_RESIZABLE_STL_TABLE_MODEL_H
 
-#include "EditableStlTableModel.h"
+// #include "EditableStlTableModel.h"
+#include "RowResizableStlTableModelTemplate.h"
 #include "StlContainerIteratorAdapter.h"
 #include "StlContainer.h"
 
@@ -43,31 +44,23 @@ namespace Mdt{ namespace ItemModel{
    *     \endcode
    */
   template<typename Table, typename RecordAdapter = StlContainerIteratorAdapter<typename Table::value_type> >
-  class RowResizableStlTableModel : public EditableStlTableModel<Table>
+  class RowResizableStlTableModel : public RowResizableStlTableModelTemplate<Table, RecordAdapter>
   {
    public:
 
-    using ParentClass = EditableStlTableModel<Table, RecordAdapter>;
+    using ParentClass = RowResizableStlTableModelTemplate<Table, RecordAdapter>;
 
     using record_type = typename ParentClass::record_type;
     using value_type = typename ParentClass::value_type;
 
-    using ParentClass::rowCount;
     using ParentClass::columnCount;
-    using ParentClass::index;
-    using ParentClass::table;
     using ParentClass::isEmpty;
 
    protected:
 
-    using ParentClass::constRecordAdapter;
     using ParentClass::beginResetModel;
     using ParentClass::endResetModel;
     using ParentClass::afterTableWasSet;
-    using ParentClass::beginInsertRows;
-    using ParentClass::endInsertRows;
-    using ParentClass::beginRemoveRows;
-    using ParentClass::endRemoveRows;
 
    public:
 
@@ -90,89 +83,6 @@ namespace Mdt{ namespace ItemModel{
     int columnCount() const override
     {
       return mColumnCount;
-    }
-
-    /*! \brief Append a row
-     *
-     * \pre columnCount() must be > 0
-     */
-    void appendRow()
-    {
-      insertRows(rowCount(), 1);
-    }
-
-    /*! \brief Prepend a row
-     *
-     * \pre columnCount() must be > 0
-     */
-    void prependRow()
-    {
-      insertRows(0, 1);
-    }
-
-    /*! \brief Insert \a count rows before \a row
-     *
-     * \pre \a row must be in valid range ( 0 <= row <= rowCount() )
-     * \pre \a count must be > 0
-     * \pre columnCount() must be > 0
-     */
-    bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override
-    {
-      Q_ASSERT(row >= 0);
-      Q_ASSERT(row <= rowCount());
-      Q_ASSERT(count > 0);
-      Q_ASSERT(columnCount() > 0);
-
-      if(parent.isValid()){
-        return false;
-      }
-      beginInsertRows(parent, row, row+count-1);
-      insertToContainer( table(), row, count, constRecordAdapter().initializeContainer( columnCount(), value_type() ) );
-      endInsertRows();
-
-      return true;
-    }
-
-    /*! \brief Remove first row
-     */
-    void removeFirstRow()
-    {
-      if(rowCount() < 1){
-        return;
-      }
-      removeRows(0, 1);
-    }
-
-    /*! \brief Remove last row
-     */
-    void removeLastRow()
-    {
-      if(rowCount() < 1){
-        return;
-      }
-      removeRows( rowCount()-1, 1 );
-    }
-
-    /*! \brief Implement QAbstractTableModel::removeRows()
-     *
-     * \pre \a row must be >= 0
-     * \pre \a count must be >= 1
-     * \pre \a row + \a count must be in correct range ( 0 <= \a row + \a count <= rowCount() )
-     */
-    bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex()) override
-    {
-      Q_ASSERT(row >= 0);
-      Q_ASSERT(count >= 1);
-      Q_ASSERT( (row + count ) <= rowCount() );
-
-      if(parent.isValid()){
-        return false;
-      }
-      beginRemoveRows(parent, row, row+count-1);
-      removeFromContainer(table(), row, count);
-      endRemoveRows();
-
-      return true;
     }
 
    private:
