@@ -49,7 +49,7 @@ struct ArticleDataStruct
 MDT_ENTITY_DEF(
   (ArticleDataStruct),
   Article,
-  (id, FieldFlag::IsRequired, FieldFlag::IsUnique),
+  (id, FieldFlag::IsRequired | FieldFlag::IsUnique),
   (description, FieldFlag::IsRequired, FieldMaxLength(250)),
   (remarks)
 )
@@ -76,6 +76,15 @@ void DefTest::defUsageTest()
   QCOMPARE(articleDef.id.fieldName(), QString("id"));
   QCOMPARE(articleDef.description.fieldName(), QString("description"));
   QCOMPARE(articleDef.remarks.fieldName(), QString("remarks"));
+  QVERIFY(articleDef.id.fieldAttributes().isRequired());
+  QVERIFY(articleDef.id.fieldAttributes().isUnique());
+  QVERIFY(articleDef.id.fieldAttributes().maxLength() < 1);
+  QVERIFY(articleDef.description.fieldAttributes().isRequired());
+  QVERIFY(!articleDef.description.fieldAttributes().isUnique());
+  QCOMPARE(articleDef.description.fieldAttributes().maxLength(), 250);
+  QVERIFY(!articleDef.remarks.fieldAttributes().isRequired());
+  QVERIFY(!articleDef.remarks.fieldAttributes().isUnique());
+  QVERIFY(articleDef.remarks.fieldAttributes().maxLength() < 1);
 
   const A::SellerDef sellerDef;
   QCOMPARE(sellerDef.entityName(), QString("Seller"));
