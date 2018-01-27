@@ -40,7 +40,6 @@ addEntity_CoreTest("DataListTest")
 addEntity_CoreTest("TableModelRecordAdapterTest")
 addEntity_CoreTest("TableModelTest")
 
-addEntity_CoreTest("FieldTest")
 addEntity_CoreTest("ReflectionTest")
 
 # Clang warns about explicit move that prevents copy elision.
