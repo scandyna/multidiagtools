@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TABLE_TEST_H
-#define MDT_SQL_SCHEMA_TABLE_TEST_H
+#ifndef MDT_SQL_SCHEMA_TABLE_MODEL_TEST_H
+#define MDT_SQL_SCHEMA_TABLE_MODEL_TEST_H
 
 #include "TestBase.h"
 
-class SchemaTableTest : public QObject
+class SchemaTableModelTest : public QObject
 {
  Q_OBJECT
 
@@ -32,20 +32,8 @@ class SchemaTableTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void setAutoIncrementPrimaryKeyTest();
-  void setSingleFieldPrimaryKeyTest();
-  void setPrimaryKeyTest();
-
-  void setForeignKeySingleFieldTest();
-  void setForeignKeyMultipleFieldsTest();
-
-  void tablePrimaryKeyAicBenchmark();
-  void tablePrimaryKeyMcBenchmark();
-  void createClientTableBenchmark();
-  void createAddressTableBenchmark();
-  void tableTest();
-  void tableListTest();
+  void tableModelTest();
 
 };
 
-#endif // #ifndef MDT_SQL_SCHEMA_TABLE_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_TABLE_MODEL_TEST_H

@@ -19,16 +19,11 @@
  **
  ****************************************************************************/
 #include "SchemaTableTest.h"
-#include "Mdt/Application.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/ForeignTable.h"
-#include "Mdt/Sql/Schema/TableModel.h"
 #include "Mdt/Sql/Schema/TableList.h"
 #include "Schema/Client.h"
 #include "Schema/Address.h"
-#include <QComboBox>
-#include <QTableView>
-#include <QTreeView>
 
 namespace Sql = Mdt::Sql;
 
@@ -826,131 +821,13 @@ void SchemaTableTest::tableListTest()
   QVERIFY(list.isEmpty());
 }
 
-void SchemaTableTest::tableModelTest()
-{
-  using Sql::Schema::Table;
-  using Sql::Schema::TableModel;
-  using Sql::Schema::Field;
-  using Sql::Schema::FieldType;
-  using Sql::Schema::AutoIncrementPrimaryKey;
-  using Sql::Schema::PrimaryKey;
-
-  QModelIndex index;
-  /*
-   * Initial state
-   */
-  TableModel model;
-  QCOMPARE(model.rowCount(), 0);
-  /*
-   * Setup views
-   */
-  QTableView tableView;
-  tableView.setModel(&model);
-  tableView.resize(400, 200);
-  QTreeView treeView;
-  treeView.setModel(&model);
-  treeView.resize(400, 200);
-  QComboBox comboBox;
-  comboBox.setModel(&model);
-  comboBox.setModelColumn(TableModel::FieldNameColumn);
-  /*
-   * Setup fields
-   */
-  // Id_PK
-  AutoIncrementPrimaryKey Id_PK;
-  Id_PK.setFieldName("Id_PK");
-  // Name
-  Field Name;
-  Name.setName("Name");
-  Name.setType(FieldType::Varchar);
-  Name.setLength(100);
-  Name.setRequired(true);
-  /*
-   * Setup a table
-   */
-  Table Client_tbl;
-  Client_tbl.setTableName("Client_tbl");
-  Client_tbl.setAutoIncrementPrimaryKey("Id_PK");
-  Client_tbl.addField(Name);
-  /*
-   * Set to model and check
-   */
-  QCOMPARE(model.columnCount(), 7);
-  model.setTable(Client_tbl);
-  // Id_PK
-  index = model.index(0, TableModel::FieldNameColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("Id_PK"));
-  index = model.index(0, TableModel::FieldTypeColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("INTEGER"));
-  index = model.index(0, TableModel::PkFlagColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("X"));
-  index = model.index(0, TableModel::AiFlagColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("X"));
-  index = model.index(0, TableModel::NotNullFlagColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("X"));
-  index = model.index(0, TableModel::UniqueFlagColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("X"));
-  index = model.index(0, TableModel::DefaultValueColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("NULL"));
-  // Name
-  index = model.index(1, TableModel::FieldNameColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("Name"));
-  index = model.index(1, TableModel::FieldTypeColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("VARCHAR(100)"));
-  index = model.index(1, TableModel::PkFlagColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant(""));
-  index = model.index(1, TableModel::AiFlagColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant(""));
-  index = model.index(1, TableModel::NotNullFlagColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("X"));
-  index = model.index(1, TableModel::UniqueFlagColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant(""));
-  // Remarks
-
-  /*
-   * Check with Client_tbl defined in Schema
-   */
-  model.setTable(Schema::Client().toTable());
-  QCOMPARE(model.rowCount(), 4);
-  /*
-   * Play
-   */
-  tableView.show();
-  tableView.resizeColumnsToContents();
-  tableView.resizeRowsToContents();
-  treeView.show();
-  treeView.resizeColumnToContents(0);
-  treeView.resizeColumnToContents(1);
-  treeView.resizeColumnToContents(2);
-  treeView.resizeColumnToContents(3);
-  treeView.resizeColumnToContents(4);
-  treeView.resizeColumnToContents(5);
-  comboBox.show();
-//   while(tableView.isVisible()){
-//     QTest::qWait(500);
-//   }
-}
-
 /*
  * Main
  */
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   SchemaTableTest test;
 
   return QTest::qExec(&test, argc, argv);
