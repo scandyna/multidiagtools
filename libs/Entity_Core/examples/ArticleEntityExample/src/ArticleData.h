@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -41,7 +41,7 @@ class ARTICLEENTITYEXAMPLELIB_EXPORT ArticleData : public Mdt::Entity::DataTempl
    */
   qlonglong id() const
   {
-    return constData().id;
+    return constDataStruct().id;
   }
 
   /*! \brief Set description
@@ -52,7 +52,7 @@ class ARTICLEENTITYEXAMPLELIB_EXPORT ArticleData : public Mdt::Entity::DataTempl
    */
   QString description() const
   {
-    return constData().description;
+    return constDataStruct().description;
   }
 };
 

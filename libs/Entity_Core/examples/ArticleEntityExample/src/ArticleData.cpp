@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -22,10 +22,10 @@
 
 void ArticleData::setId(qlonglong id)
 {
-  data().id = id;
+  dataStruct().id = id;
 }
 
 void ArticleData::setDescription(const QString& description)
 {
-  data().description = description;
+  dataStruct().description = description;
 }
