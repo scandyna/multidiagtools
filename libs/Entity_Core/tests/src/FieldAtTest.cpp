@@ -51,6 +51,14 @@ MDT_ENTITY_DEF(
  * Tests
  */
 
+void FieldAtTest::fieldCountTest()
+{
+  ArticleDef articleDef;
+
+  QCOMPARE(fieldCount(articleDef), 3);
+  QCOMPARE(fieldCount<ArticleDef>(), 3);
+}
+
 void FieldAtTest::fieldNameAtTest()
 {
   ArticleDef articleDef;

@@ -32,6 +32,7 @@ class FieldAtTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void fieldCountTest();
   void fieldNameAtTest();
   void fieldAttributesAtTest();
 };
