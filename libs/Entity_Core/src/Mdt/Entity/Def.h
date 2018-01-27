@@ -230,9 +230,17 @@
  * \endcode
  *
  * The first argument of a field tuple is its name,
- *  as it ws declared in PersonDataStruct.
+ *  as it was declared in PersonDataStruct.
  *  The following optional arguments are attributes.
  *  See the FieldAttributes class for details.
+ */
+/** \todo Before BOOST_FUSION_ADAPT_STRUCT(),
+ *   check that MDT_ENTITY_DEF_NAME_NS() <-- i.e. the data atruct
+ *   exists.
+ *   If not, throw a error (to avoid misterious compile errors):
+ *   #ifndef MDT_ENTITY_DEF_NAME_NS()
+ *    #error "...."
+ *   #endif
  */
 #define MDT_ENTITY_DEF(defTuple, name, ...)                     \
   MDT_ENTITY_DEF_NAMESPACE_BEGIN(defTuple)                      \

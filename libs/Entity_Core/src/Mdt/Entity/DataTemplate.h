@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -21,11 +21,6 @@
 #ifndef MDT_ENTITY_DATA_TEMPLATE_H
 #define MDT_ENTITY_DATA_TEMPLATE_H
 
-#include <QVariant>
-// #include <boost/fusion/container.hpp>
-// #include <boost/fusion/sequence.hpp>
-#include <boost/fusion/include/size.hpp>
-
 namespace Mdt{ namespace Entity{
 
   /*! \brief Class template for entity data
@@ -43,39 +38,21 @@ namespace Mdt{ namespace Entity{
   {
    public:
 
+    using def_type = Def;
+    using data_struct_type = DataStruct;
+
     /*! \brief Access the data struct for modifications
      */
-    DataStruct & data()
+    DataStruct & dataStruct()
     {
-      return mData;
+      return mDataStruct;
     }
 
     /*! \brief Access data struct for read
      */
-    const DataStruct & constData() const
+    const DataStruct & constDataStruct() const
     {
-      return mData;
-    }
-
-    /*! \brief Get column count
-     */
-    int columnCount() const
-    {
-      return boost::fusion::size(constData());
-    }
-
-    /*! \brief Set value at \a column
-     */
-    template<typename T>
-    void setValue(int column, const T & value)
-    {
-    }
-
-    /*! \brief Get value at \a column
-     */
-//     template<typename T>
-    QVariant value(int column) const
-    {
+      return mDataStruct;
     }
 
     /*! \brief Get entity definition
@@ -87,7 +64,7 @@ namespace Mdt{ namespace Entity{
 
    private:
 
-    DataStruct mData;
+    DataStruct mDataStruct;
   };
 
 }} // namespace Mdt{ namespace Entity{
