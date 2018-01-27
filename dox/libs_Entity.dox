@@ -62,7 +62,7 @@
  *
  * Those libraries are fully compile time, as far as I know.
  *  Mdt::Entity keepts a part of its classes usable at runtime.
- *  This can be usefull, for example, to create dinamicly editable entities.
+ *  This can be usefull, for example, to create dynamicly editable entities.
  *
  * \section createAentity Create a entity
  *
