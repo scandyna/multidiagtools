@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -32,7 +32,7 @@ class DataTemplateTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
+//   void sandbox();
 
   void dataUsageTest();
 };
