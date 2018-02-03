@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -36,7 +36,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     static QString nameFromType(FieldType ft)
     {
-      return pvNames[static_cast<int>(ft)];
+      return QString::fromLatin1( pvNames[static_cast<int>(ft)] );
     }
 
     /*! \brief Get field type from name

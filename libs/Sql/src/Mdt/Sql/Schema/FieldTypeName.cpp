@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,14 +29,24 @@ FieldType FieldTypeName::typeFromName(const QString & name)
     return FieldType::UnknownType;
   }else if(name == QLatin1String("BOOLEAN")){
     return FieldType::Boolean;
+  }else if(name == QLatin1String("SMALLINT")){
+    return FieldType::Smallint;
   }else if(name == QLatin1String("INTEGER")){
     return FieldType::Integer;
+  }else if(name == QLatin1String("BIGINT")){
+    return FieldType::Bigint;
   }else if(name == QLatin1String("FLOAT")){
     return FieldType::Float;
   }else if(name == QLatin1String("DOUBLE")){
     return FieldType::Double;
+  }else if(name == QLatin1String("CHAR")){
+    return FieldType::Char;
   }else if(name == QLatin1String("VARCHAR")){
     return FieldType::Varchar;
+  }else if(name == QLatin1String("TEXT")){
+    return FieldType::Text;
+  }else if(name == QLatin1String("BLOB")){
+    return FieldType::Blob;
   }else if(name == QLatin1String("DATE")){
     return FieldType::Date;
   }else if(name == QLatin1String("TIME")){
@@ -51,10 +61,15 @@ FieldType FieldTypeName::typeFromName(const QString & name)
 const char *FieldTypeName::pvNames[] = {
   "",
   "BOOLEAN",
+  "SMALLINT",
   "INTEGER",
+  "BIGINT",
   "FLOAT",
   "DOUBLE",
+  "CHAR",
   "VARCHAR",
+  "TEXT",
+  "BLOB",
   "DATE",
   "TIME",
   "DATETIME"

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,10 +31,15 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   {
     UnknownType,  /*!< Unknown type (or no type) */
     Boolean,      /*!< Boolean type */
+    Smallint,     /*!< Smallint type */
     Integer,      /*!< Integer type */
+    Bigint,       /*!< Bigint type */
     Float,        /*!< Float type */
     Double,       /*!< Double type */
-    Varchar,      /*!< Variable length string */
+    Char,         /*!< Char type */
+    Varchar,      /*!< Variable length string (permit to fix a maximum length) */
+    Text,         /*!< Variable length string */
+    Blob,         /*!< Blob type */
     Date,         /*!< Date type */
     Time,         /*!< Time type */
     DateTime      /*!< DateTime type */
