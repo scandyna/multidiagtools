@@ -18,14 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_FIELD_TEST_H
-#define MDT_SQL_SCHEMA_FIELD_TEST_H
+#ifndef MDT_SQL_SCHEMA_FIELD_MODEL_TEST_H
+#define MDT_SQL_SCHEMA_FIELD_MODEL_TEST_H
 
 #include "TestBase.h"
 #include "Mdt/Sql/Schema/FieldType.h"
 #include "Mdt/Sql/Schema/FieldList.h"
 
-class SchemaFieldTest : public QObject
+class SchemaFieldModelTest : public QObject
 {
  Q_OBJECT
 
@@ -34,16 +34,7 @@ class SchemaFieldTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void fieldTypeListTest();
-  void fieldTypeNameTest();
-
-  void fieldTest();
-  void fieldListMutatingTest();
-  void fieldListVarArgConstructTest();
-  void fieldListToFieldNameList();
-
-  void fieldListFieldIndexBenchmark();
-  void fieldListToStringListTest();
+  void fiedTypeListModelTest();
 
  private:
 
@@ -51,4 +42,4 @@ class SchemaFieldTest : public QObject
   Mdt::Sql::Schema::FieldList getFieldList(int N, Mdt::Sql::Schema::FieldType type);
 };
 
-#endif // #ifndef MDT_SQL_SCHEMA_FIELD_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_FIELD_MODEL_TEST_H
