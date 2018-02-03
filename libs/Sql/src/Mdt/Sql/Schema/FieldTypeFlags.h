@@ -18,41 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_FIELD_TEST_H
-#define MDT_SQL_SCHEMA_FIELD_TEST_H
+#ifndef MDT_SQL_SCHEMA_FIELD_TYPE_FLAGS_H
+#define MDT_SQL_SCHEMA_FIELD_TYPE_FLAGS_H
 
-#include "TestBase.h"
-#include "Mdt/Sql/Schema/FieldType.h"
-#include "Mdt/Sql/Schema/FieldList.h"
+#include <QFlags>
 
-class SchemaFieldTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace Sql{ namespace Schema{
 
- private slots:
+  /*! \brief A flag used by FieldTypeFlags
+   */
+  enum class FieldTypeFlag
+  {
+    NoFlag = 0,     /*!< No flag */
+    IsUnsigned = 1  /*!< Unsigned flag */
+  };
+  Q_DECLARE_FLAGS(FieldTypeFlags, FieldTypeFlag)
 
-  void initTestCase();
-  void cleanupTestCase();
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-  void fieldLengthTest();
+Q_DECLARE_OPERATORS_FOR_FLAGS(Mdt::Sql::Schema::FieldTypeFlags)
 
-  void fieldTypeFlagsTest();
-
-  void fieldTypeListTest();
-  void fieldTypeNameTest();
-
-  void fieldTest();
-  void fieldListMutatingTest();
-  void fieldListVarArgConstructTest();
-  void fieldListToFieldNameList();
-
-  void fieldListFieldIndexBenchmark();
-  void fieldListToStringListTest();
-
- private:
-
-  // Get a FieldList with N items. Each field will be named 0,1,2,3,...,N-1
-  Mdt::Sql::Schema::FieldList getFieldList(int N, Mdt::Sql::Schema::FieldType type);
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_FIELD_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_FIELD_TYPE_FLAGS_H

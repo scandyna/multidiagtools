@@ -21,6 +21,7 @@
 #include "SchemaFieldTest.h"
 #include "Mdt/Sql/Schema/Collation.h"
 #include "Mdt/Sql/Schema/FieldLength.h"
+#include "Mdt/Sql/Schema/FieldTypeFlags.h"
 #include "Mdt/Sql/Schema/FieldTypeList.h"
 #include "Mdt/Sql/Schema/FieldTypeName.h"
 #include "Mdt/Sql/Schema/Field.h"
@@ -54,6 +55,20 @@ void SchemaFieldTest::fieldLengthTest()
   FieldLength l1(1);
   QVERIFY(!l1.isNull());
   QCOMPARE(l1.value(), 1);
+}
+
+void SchemaFieldTest::fieldTypeFlagsTest()
+{
+  using Sql::Schema::FieldTypeFlag;
+  using Sql::Schema::FieldTypeFlags;
+
+  FieldTypeFlags flags0;
+  QVERIFY(flags0.testFlag(FieldTypeFlag::NoFlag));
+  QVERIFY(!flags0.testFlag(FieldTypeFlag::IsUnsigned));
+
+  FieldTypeFlags flagsUnsigned = FieldTypeFlag::IsUnsigned;
+  QVERIFY(!flagsUnsigned.testFlag(FieldTypeFlag::NoFlag));
+  QVERIFY(flagsUnsigned.testFlag(FieldTypeFlag::IsUnsigned));
 }
 
 void SchemaFieldTest::fieldTypeListTest()

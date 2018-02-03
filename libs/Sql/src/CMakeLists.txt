@@ -34,6 +34,7 @@ set(SOURCE_FILES
 #     Mdt/Sql/Schema/DriverMySql.cpp
 #     Mdt/Sql/Schema/DriverPostgreSQL.cpp
     Mdt/Sql/Schema/FieldLength.cpp
+    Mdt/Sql/Schema/FieldTypeFlags.cpp
     Mdt/Sql/Schema/FieldList.cpp
     Mdt/Sql/Schema/FieldTypeMapImplementation.cpp
     Mdt/Sql/Schema/FieldTypeMap.cpp
