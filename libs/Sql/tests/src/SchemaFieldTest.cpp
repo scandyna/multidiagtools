@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "SchemaFieldTest.h"
 #include "Mdt/Sql/Schema/Collation.h"
+#include "Mdt/Sql/Schema/FieldLength.h"
 #include "Mdt/Sql/Schema/FieldTypeList.h"
 #include "Mdt/Sql/Schema/FieldTypeName.h"
 #include "Mdt/Sql/Schema/Field.h"
@@ -41,6 +42,19 @@ void SchemaFieldTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void SchemaFieldTest::fieldLengthTest()
+{
+  using Sql::Schema::FieldLength;
+
+  FieldLength l0;
+  QVERIFY(l0.isNull());
+  QCOMPARE(l0.value(), 0);
+
+  FieldLength l1(1);
+  QVERIFY(!l1.isNull());
+  QCOMPARE(l1.value(), 1);
+}
 
 void SchemaFieldTest::fieldTypeListTest()
 {

@@ -33,7 +33,10 @@ set(SOURCE_FILES
 #     Mdt/Sql/Schema/DriverSQLite.cpp
 #     Mdt/Sql/Schema/DriverMySql.cpp
 #     Mdt/Sql/Schema/DriverPostgreSQL.cpp
+    Mdt/Sql/Schema/FieldLength.cpp
     Mdt/Sql/Schema/FieldList.cpp
+    Mdt/Sql/Schema/FieldTypeMapImplementation.cpp
+    Mdt/Sql/Schema/FieldTypeMap.cpp
     Mdt/Sql/Schema/FieldTypeName.cpp
 #     Mdt/Sql/Schema/FieldTypeListModel.cpp
     Mdt/Sql/Schema/PrimaryKeyContainer.cpp
