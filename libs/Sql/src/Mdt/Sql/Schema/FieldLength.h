@@ -25,7 +25,7 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-  /*! \brief
+  /*! \brief Express a field length in a safe way
    */
   class FieldLength
   {
