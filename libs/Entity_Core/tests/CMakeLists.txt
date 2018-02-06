@@ -35,6 +35,8 @@ addEntity_CoreTest("ValueAtTest")
 addEntity_CoreTest("FieldAtTest")
 addEntity_CoreTest("DataTemplateTest")
 addEntity_CoreTest("DataListTest")
+addEntity_CoreTest("PrimaryKeyTest")
+addEntity_CoreTest("ItemModelPrimaryKeyTest")
 addEntity_CoreTest("TableModelRecordAdapterTest")
 addEntity_CoreTest("TableModelTest")
 
