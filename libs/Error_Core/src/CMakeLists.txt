@@ -12,6 +12,7 @@ set(SOURCE_FILES
     Mdt/ErrorLogger/FileBackend.cpp
     Mdt/ErrorLogger/FormatEngine.cpp
     Mdt/ErrorLogger/FileBackendFormatEngine.cpp
+    Mdt/Assert.cpp
 )
 
 mdt_add_library(
