@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -64,6 +64,13 @@ namespace Mdt{ namespace Entity{
     constexpr bool isUnique() const noexcept
     {
       return mFlags.testFlag(FieldFlag::IsUnique);
+    }
+
+    /*! \brief Check if the field is part of the primary key
+     */
+    constexpr bool isPrimaryKey() const noexcept
+    {
+      return mFlags.testFlag(FieldFlag::IsPrimaryKey);
     }
 
     /*! \brief Get field max length

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -29,8 +29,9 @@ namespace Mdt{ namespace Entity{
    */
   enum class FieldFlag
   {
-    IsRequired = 0x01,  /*!< Field is required */
-    IsUnique = 0x02     /*!< Field is unique */
+    IsRequired = 0x01,    /*!< Field is required */
+    IsUnique = 0x02,      /*!< Field is unique */
+    IsPrimaryKey = 0x04   /*!< Field is part of the primary key */
   };
   Q_DECLARE_FLAGS(FieldFlags, FieldFlag)
 
