@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -117,18 +117,6 @@ void AlgorithmTest::indexOfFirstEscapedTokenTest_data()
   QTest::newRow("A?B\\?|4") << "A?B\\?" << 4 << -1;
 }
 
-void AlgorithmTest::indexOfFirstEscapedTokenBenchmark()
-{
-  using Algorithm::indexOfFirstEscapedToken;
-
-  int index;
-  QString str = "ABC?D*EF%?123\\?";
-  QBENCHMARK{
-    index = indexOfFirstEscapedToken(str, 0, {'*','%','!','$','?'}, '\\');
-  }
-  QCOMPARE(index, str.size()-2);
-}
-
 void AlgorithmTest::unescapeEscapedTokensTest()
 {
   using Algorithm::unescapeEscapedTokens;
@@ -175,18 +163,6 @@ void AlgorithmTest::unescapeEscapedTokensTest_data()
   QTest::newRow("\\!") << "\\!" << "\\!";
   QTest::newRow("\\!\\?") << "\\!\\?" << "\\!?";
   QTest::newRow("\\!A\\?") << "\\!A\\?" << "\\!A?";
-}
-
-void AlgorithmTest::unescapeEscapedTokensBenchmark()
-{
-  using Algorithm::unescapeEscapedTokens;
-
-  QString str = "ABC?DEF?123\\?";
-  QString result;
-  QBENCHMARK{
-    result = unescapeEscapedTokens(str, {'!','&','|','*','?'}, '\\');
-  }
-  QCOMPARE( result , QString("ABC?DEF?123?") );
 }
 
 void AlgorithmTest::indexOfFirstNonEscapedTokenTest()
@@ -255,18 +231,6 @@ void AlgorithmTest::indexOfFirstNonEscapedTokenTest_data()
   QTest::newRow("A?B\\?|4") << "A?B\\?" << 4 << -1;
 }
 
-void AlgorithmTest::indexOfFirstNonEscapedTokenBenchmark()
-{
-  using Algorithm::indexOfFirstNonEscapedToken;
-
-  int index;
-  QString str = "ABC\\?DEF\\?123?";
-  QBENCHMARK{
-    index = indexOfFirstNonEscapedToken(str, 0, {'*','%','!','$','?'}, '\\');
-  }
-  QCOMPARE(index, str.size()-1);
-}
-
 void AlgorithmTest::replaceNonEscapedTokensTest()
 {
   using Algorithm::replaceNonEscapedTokens;
@@ -306,18 +270,6 @@ void AlgorithmTest::replaceNonEscapedTokensTest_data()
   QTest::newRow("A?") << "A?" << "A.";
   QTest::newRow("A?B?") << "A?B?" << "A.B.";
   QTest::newRow("A*B*") << "A*B*" << "A.*B.*";
-}
-
-void AlgorithmTest::replaceNonEscapedTokensBenchmark()
-{
-  using Algorithm::replaceNonEscapedTokens;
-
-  QString str = "ABC\\?DEF\\?123?";
-  QString result;
-  QBENCHMARK{
-    result = replaceNonEscapedTokens(str, {{'!',"$"},{'&',"|"},{'*',".*"},{'?',"."}}, '\\');
-  }
-  QCOMPARE( result , QString("ABC\\?DEF\\?123.") );
 }
 
 void AlgorithmTest::moveIfTest()
@@ -360,133 +312,6 @@ void AlgorithmTest::moveIfTest_data()
                          << QStringList{"B"} << QStringList{"A"};
 
 
-}
-
-void AlgorithmTest::moveIfQStringListBenchmark()
-{
-  QFETCH(QStringList, initialSourceList);
-  QFETCH(QString, matchValue);
-  QFETCH(QStringList, expectedSourceList);
-  QFETCH(QStringList, expectedDestinationList);
-
-  QStringList sourceList = initialSourceList;
-  QStringList destinationList;
-
-  const auto predicate = [matchValue](const QString & value){
-    return value == matchValue;
-  };
-  QBENCHMARK{
-    Mdt::Algorithm::moveIf(sourceList, destinationList, predicate);
-  }
-  // Check
-  QCOMPARE(sourceList, expectedSourceList);
-  QCOMPARE(destinationList, expectedDestinationList);
-}
-
-void AlgorithmTest::moveIfQStringListBenchmark_data()
-{
-  createMoveIfBenchmarkData();
-}
-
-void AlgorithmTest::moveIfQVectorQStringBenchmark()
-{
-  QFETCH(QStringList, initialSourceList);
-  QFETCH(QString, matchValue);
-  QFETCH(QStringList, expectedSourceList);
-  QFETCH(QStringList, expectedDestinationList);
-
-  auto sourceList = initialSourceList.toVector();
-  QVector<QString> destinationList;
-
-  const auto predicate = [matchValue](const QString & value){
-    return value == matchValue;
-  };
-  QBENCHMARK{
-    Mdt::Algorithm::moveIf(sourceList, destinationList, predicate);
-  }
-  // Check
-  QCOMPARE(sourceList.size(), expectedSourceList.size());
-  for(int i = 0; i < sourceList.size(); ++i){
-    QCOMPARE(sourceList.at(i), expectedSourceList.at(i));
-  }
-  QCOMPARE(destinationList.size(), expectedDestinationList.size());
-  for(int i = 0; i < destinationList.size(); ++i){
-    QCOMPARE(destinationList.at(i), expectedDestinationList.at(i));
-  }
-}
-
-void AlgorithmTest::moveIfQVectorQStringBenchmark_data()
-{
-  createMoveIfBenchmarkData();
-}
-
-void AlgorithmTest::moveIfStdVectorQStringBenchmark()
-{
-  QFETCH(QStringList, initialSourceList);
-  QFETCH(QString, matchValue);
-  QFETCH(QStringList, expectedSourceList);
-  QFETCH(QStringList, expectedDestinationList);
-
-  auto sourceList = initialSourceList.toVector().toStdVector();
-  std::vector<QString> destinationList;
-
-  const auto predicate = [matchValue](const QString & value){
-    return value == matchValue;
-  };
-  QBENCHMARK{
-    Mdt::Algorithm::moveIf(sourceList, destinationList, predicate);
-  }
-  // Check
-  QCOMPARE((int)sourceList.size(), expectedSourceList.size());
-  for(int i = 0; i < (int)sourceList.size(); ++i){
-    QCOMPARE(sourceList.at(i), expectedSourceList.at(i));
-  }
-  QCOMPARE((int)destinationList.size(), expectedDestinationList.size());
-  for(int i = 0; i < (int)destinationList.size(); ++i){
-    QCOMPARE(destinationList.at(i), expectedDestinationList.at(i));
-  }
-}
-
-void AlgorithmTest::moveIfStdVectorQStringBenchmark_data()
-{
-  createMoveIfBenchmarkData();
-}
-
-void AlgorithmTest::createMoveIfBenchmarkData()
-{
-  QTest::addColumn<QStringList>("initialSourceList");
-  QTest::addColumn<QString>("matchValue");
-  QTest::addColumn<QStringList>("expectedSourceList");
-  QTest::addColumn<QStringList>("expectedDestinationList");
-
-  QStringList initialSourceList;
-  QString matchValue;
-  QStringList expectedSourceList;
-  QStringList expectedDestinationList;
-
-  QTest::newRow("") << QStringList{} << ""
-                    << QStringList{} << QStringList{};
-
-  prepareMoveIfBenchmarkData(initialSourceList, matchValue, expectedSourceList, expectedDestinationList, 10);
-  QTest::newRow("10") << initialSourceList << matchValue << expectedSourceList << expectedDestinationList;
-
-  prepareMoveIfBenchmarkData(initialSourceList, matchValue, expectedSourceList, expectedDestinationList, 100);
-  QTest::newRow("100") << initialSourceList << matchValue << expectedSourceList << expectedDestinationList;
-
-  prepareMoveIfBenchmarkData(initialSourceList, matchValue, expectedSourceList, expectedDestinationList, 1000);
-  QTest::newRow("1000") << initialSourceList << matchValue << expectedSourceList << expectedDestinationList;
-}
-
-void AlgorithmTest::prepareMoveIfBenchmarkData(QStringList& initialSourceList, QString& matchValue,
-                                               QStringList& expectedSourceList, QStringList& expectedDestinationList, int n)
-{
-  Q_ASSERT(n > 0);
-
-  initialSourceList = generateStringList(n);
-  matchValue = initialSourceList.last();
-  expectedSourceList = initialSourceList;
-  expectedSourceList.removeAll(matchValue);
-  expectedDestinationList = initialSourceList.filter(matchValue);
 }
 
 QStringList AlgorithmTest::generateStringList(int size)

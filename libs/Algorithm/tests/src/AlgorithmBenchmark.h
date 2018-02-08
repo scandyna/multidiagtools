@@ -18,14 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ALGORITHM_TEST_H
-#define MDT_ALGORITHM_TEST_H
+#ifndef MDT_ALGORITHM_BENCHMARK_H
+#define MDT_ALGORITHM_BENCHMARK_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 #include <QStringList>
 
-class AlgorithmTest : public QObject
+class AlgorithmBenchmark : public QObject
 {
  Q_OBJECT
 
@@ -34,26 +34,27 @@ class AlgorithmTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void removeFirstLastCharIfTest();
+  void indexOfFirstEscapedTokenBenchmark();
 
-  void indexOfFirstEscapedTokenTest();
-  void indexOfFirstEscapedTokenTest_data();
+  void unescapeEscapedTokensBenchmark();
 
-  void unescapeEscapedTokensTest();
-  void unescapeEscapedTokensTest_data();
+  void indexOfFirstNonEscapedTokenBenchmark();
 
-  void indexOfFirstNonEscapedTokenTest();
-  void indexOfFirstNonEscapedTokenTest_data();
+  void replaceNonEscapedTokensBenchmark();
 
-  void replaceNonEscapedTokensTest();
-  void replaceNonEscapedTokensTest_data();
-
-  void moveIfTest();
-  void moveIfTest_data();
+  void moveIfQStringListBenchmark();
+  void moveIfQStringListBenchmark_data();
+  void moveIfQVectorQStringBenchmark();
+  void moveIfQVectorQStringBenchmark_data();
+  void moveIfStdVectorQStringBenchmark();
+  void moveIfStdVectorQStringBenchmark_data();
 
  private:
 
+  void createMoveIfBenchmarkData();
+  static void prepareMoveIfBenchmarkData(QStringList & initialSourceList, QString & matchValue,
+                                         QStringList & expectedSourceList, QStringList & expectedDestinationList, int n);
   static QStringList generateStringList(int size);
 };
 
-#endif // #ifndef MDT_ALGORITHM_TEST_H
+#endif // #ifndef MDT_ALGORITHM_BENCHMARK_H
