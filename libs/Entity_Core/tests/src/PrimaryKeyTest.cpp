@@ -95,6 +95,7 @@ void PrimaryKeyTest::primaryKeyFromEntityTest()
   QCOMPARE(articlePk.fieldAt(0).fieldIndex(), 0);
   QCOMPARE(articlePk.fieldAt(0).fieldType(), QMetaType::LongLong);
   QCOMPARE(articlePk.fieldAt(0).fieldName<ArticleDef>(), QString("id"));
+  QCOMPARE(articlePk.toFieldNameList<ArticleDef>(), QStringList({"id"}));
 
   auto linkPk = PrimaryKey::fromEntity<LinkDataStruct, LinkDef>();
   QCOMPARE(linkPk.fieldCount(), 2);
@@ -104,6 +105,7 @@ void PrimaryKeyTest::primaryKeyFromEntityTest()
   QCOMPARE(linkPk.fieldAt(1).fieldIndex(), 2);
   QCOMPARE(linkPk.fieldAt(1).fieldType(), QMetaType::LongLong);
   QCOMPARE(linkPk.fieldAt(1).fieldName<LinkDef>(), QString("endId"));
+  QCOMPARE(linkPk.toFieldNameList<LinkDef>(), QStringList({"startId","endId"}));
 }
 
 /*

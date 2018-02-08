@@ -27,6 +27,7 @@
 #include <QtGlobal>
 #include <QMetaType>
 #include <QVariant>
+#include <QStringList>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/at_key.hpp>
 #include <type_traits>
@@ -72,6 +73,23 @@ namespace Mdt{ namespace Entity{
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < fieldCount());
       return mFields[index];
+    }
+
+    /*! \brief Get a list of field names hold in this list
+     *
+     * \note The returned list is rebuilt at each call of this method
+     */
+    template<typename EntityDef>
+    QStringList toFieldNameList() const
+    {
+      QStringList fieldNames;
+
+      fieldNames.reserve( fieldCount() );
+      for(const auto & field : mFields){
+        fieldNames.append( field.fieldName<EntityDef>() );
+      }
+
+      return fieldNames;
     }
 
     /*! \brief Get the primary key of a entity
