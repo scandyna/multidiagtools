@@ -182,6 +182,57 @@ void AlgorithmBenchmark::moveIfStdVectorQStringBenchmark_data()
   createMoveIfBenchmarkData();
 }
 
+void AlgorithmBenchmark::countStringBenchmark()
+{
+  QFETCH(QStringList, stringList);
+  QFETCH(QString, str);
+  QFETCH(Qt::CaseSensitivity, caseSensitivity);
+  QFETCH(int, expectedCount);
+
+  int cnt;
+  QBENCHMARK{
+    cnt = Algorithm::count(stringList, str, caseSensitivity);
+  }
+  QCOMPARE(cnt, expectedCount);
+}
+
+void AlgorithmBenchmark::countStringBenchmark_data()
+{
+  QTest::addColumn<QStringList>("stringList");
+  QTest::addColumn<QString>("str");
+  QTest::addColumn<Qt::CaseSensitivity>("caseSensitivity");
+  QTest::addColumn<int>("expectedCount");
+
+  QTest::newRow("{a,b,c,A,B,C}|C|ci") << QStringList{"a","b","c","A","B","C"}
+                                      << "C" << Qt::CaseInsensitive << 2;
+}
+
+void AlgorithmBenchmark::hasDuplicatesBenchmark()
+{
+  QFETCH(QStringList, stringList);
+  QFETCH(Qt::CaseSensitivity, caseSensitivity);
+  QFETCH(bool, expectedHasDuplicates);
+
+  bool hasDuplicates;
+  QBENCHMARK{
+    hasDuplicates = Algorithm::hasDuplicates(stringList, caseSensitivity);
+  }
+  QCOMPARE(hasDuplicates, expectedHasDuplicates);
+}
+
+void AlgorithmBenchmark::hasDuplicatesBenchmark_data()
+{
+  QTest::addColumn<QStringList>("stringList");
+  QTest::addColumn<Qt::CaseSensitivity>("caseSensitivity");
+  QTest::addColumn<bool>("expectedHasDuplicates");
+
+  const bool hasDuplicates = true;
+//   const bool noDuplicates = false;
+
+  QTest::newRow("{a,b,c,A,B,C}|ci") << QStringList{"a","b","c","A","B","C"}
+                                    << Qt::CaseInsensitive << hasDuplicates;
+}
+
 /*
  * Helpers
  */

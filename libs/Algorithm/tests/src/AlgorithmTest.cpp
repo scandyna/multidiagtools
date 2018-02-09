@@ -314,6 +314,82 @@ void AlgorithmTest::moveIfTest_data()
 
 }
 
+void AlgorithmTest::countStringTest()
+{
+  QFETCH(QStringList, stringList);
+  QFETCH(QString, str);
+  QFETCH(Qt::CaseSensitivity, caseSensitivity);
+  QFETCH(int, expectedCount);
+
+  QCOMPARE(Algorithm::count(stringList, str, caseSensitivity), expectedCount);
+}
+
+void AlgorithmTest::countStringTest_data()
+{
+  QTest::addColumn<QStringList>("stringList");
+  QTest::addColumn<QString>("str");
+  QTest::addColumn<Qt::CaseSensitivity>("caseSensitivity");
+  QTest::addColumn<int>("expectedCount");
+
+  QTest::newRow("{}|A|cs") << QStringList{}
+                           << "A" << Qt::CaseSensitive << 0;
+
+  QTest::newRow("{A}|A|cs") << QStringList{"A"}
+                            << "A" << Qt::CaseSensitive << 1;
+
+  QTest::newRow("{A}|a|cs") << QStringList{"A"}
+                            << "a" << Qt::CaseSensitive << 0;
+
+  QTest::newRow("{A}|a|ci") << QStringList{"A"}
+                            << "a" << Qt::CaseInsensitive << 1;
+
+  QTest::newRow("{a,b,c,A,B,C}|b|cs") << QStringList{"a","b","c","A","B","C"}
+                                      << "b" << Qt::CaseSensitive << 1;
+
+  QTest::newRow("{a,b,c,A,B,C}|b|ci") << QStringList{"a","b","c","A","B","C"}
+                                      << "b" << Qt::CaseInsensitive << 2;
+
+}
+
+void AlgorithmTest::hasDuplicatesTest()
+{
+  QFETCH(QStringList, stringList);
+  QFETCH(Qt::CaseSensitivity, caseSensitivity);
+  QFETCH(bool, expectedHasDuplicates);
+
+  QCOMPARE(Algorithm::hasDuplicates(stringList, caseSensitivity), expectedHasDuplicates);
+}
+
+void AlgorithmTest::hasDuplicatesTest_data()
+{
+  QTest::addColumn<QStringList>("stringList");
+  QTest::addColumn<Qt::CaseSensitivity>("caseSensitivity");
+  QTest::addColumn<bool>("expectedHasDuplicates");
+
+  const bool hasDuplicates = true;
+  const bool noDuplicates = false;
+
+  QTest::newRow("") << QStringList{}
+                    << Qt::CaseSensitive << noDuplicates;
+
+  QTest::newRow("A") << QStringList{"A"}
+                    << Qt::CaseSensitive << noDuplicates;
+
+  QTest::newRow("Aa|cs") << QStringList{"A","a"}
+                         << Qt::CaseSensitive << noDuplicates;
+
+  QTest::newRow("Aa|ci") << QStringList{"A","a"}
+                         << Qt::CaseInsensitive << hasDuplicates;
+
+
+  QTest::newRow("aBA|cs") << QStringList{"a","B","A"}
+                          << Qt::CaseSensitive << noDuplicates;
+
+  QTest::newRow("aBA|ci") << QStringList{"a","B","A"}
+                          << Qt::CaseInsensitive<< hasDuplicates;
+
+}
+
 QStringList AlgorithmTest::generateStringList(int size)
 {
   QStringList list;

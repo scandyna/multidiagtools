@@ -51,6 +51,12 @@ class AlgorithmTest : public QObject
   void moveIfTest();
   void moveIfTest_data();
 
+  void countStringTest();
+  void countStringTest_data();
+
+  void hasDuplicatesTest();
+  void hasDuplicatesTest_data();
+
  private:
 
   static QStringList generateStringList(int size);

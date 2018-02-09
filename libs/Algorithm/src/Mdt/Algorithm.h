@@ -23,8 +23,10 @@
 
 #include "MdtAlgorithmExport.h"
 #include <QString>
+#include <QStringList>
 #include <QLatin1String>
 #include <QChar>
+#include <Qt>
 #include <algorithm>
 #include <utility>
 #include <vector>
@@ -227,6 +229,30 @@ namespace Algorithm{
     auto it = moveIf(sourceConatiner.begin(), sourceConatiner.end(), std::back_inserter(destinationContainer), p);
     sourceConatiner.erase(it, sourceConatiner.end());
   }
+
+  /*! \brief Get the number of occurences of \a string in \a stringList
+   *
+   * \pre \a string must not be empty
+   */
+  int MDT_ALGORITHM_EXPORT count(const QStringList & stringList, const QString & string, Qt::CaseSensitivity caseSensitivity);
+
+  /*! \brief Check if \a stringList has duplicate elements
+   *
+   * \code
+   * QStringList list1{"a","b","c"};
+   * hasDuplicates(list1, Qt::CaseInsensitive); // Returns false
+   * hasDuplicates(list1, Qt::CaseSensitive);   // Returns false
+   *
+   * QStringList list2{"a","b","a"};
+   * hasDuplicates(list2, Qt::CaseInsensitive); // Returns true
+   * hasDuplicates(list2, Qt::CaseSensitive);   // Returns true
+   *
+   * QStringList list3{"a","b","A"};
+   * hasDuplicates(list3, Qt::CaseInsensitive); // Returns true
+   * hasDuplicates(list3, Qt::CaseSensitive);   // Returns false
+   * \endcode
+   */
+  bool MDT_ALGORITHM_EXPORT hasDuplicates(const QStringList & stringList, Qt::CaseSensitivity caseSensitivity);
 
 }} // namespace Mdt{ namespace Algorithm{
 

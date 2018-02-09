@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -151,6 +151,27 @@ QString replaceNonEscapedTokens(const QString & str, const std::initializer_list
   }
 
   return result;
+}
+
+int count(const QStringList & stringList, const QString & string, Qt::CaseSensitivity caseSensitivity)
+{
+  Q_ASSERT(!string.isEmpty());
+
+  const auto pred = [string, caseSensitivity](const QString & currentString){
+    return (QString::compare(currentString, string, caseSensitivity) == 0);
+  };
+
+  return std::count_if(stringList.cbegin(), stringList.cend(), pred);
+}
+
+bool hasDuplicates(const QStringList & stringList, Qt::CaseSensitivity caseSensitivity)
+{
+  for(const auto & str : stringList){
+    if( count(stringList, str, caseSensitivity) > 1 ){
+      return true;
+    }
+  }
+  return false;
 }
 
 }} // namespace Mdt{ namespace Algorithm{

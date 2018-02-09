@@ -49,6 +49,12 @@ class AlgorithmBenchmark : public QObject
   void moveIfStdVectorQStringBenchmark();
   void moveIfStdVectorQStringBenchmark_data();
 
+  void countStringBenchmark();
+  void countStringBenchmark_data();
+
+  void hasDuplicatesBenchmark();
+  void hasDuplicatesBenchmark_data();
+
  private:
 
   void createMoveIfBenchmarkData();
