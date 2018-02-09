@@ -128,6 +128,13 @@ void SchemaPrimaryKeyTest::primaryKeyTest()
   QVERIFY(!pk3.contains("Z"));
   QVERIFY(!pk3.contains(""));
   /*
+   * Set field name list
+   */
+  pk3.setFieldNameList({"E","F"});
+  QCOMPARE(pk3.fieldCount(), 2);
+  QCOMPARE(pk3.fieldNameList().at(0), QString("E"));
+  QCOMPARE(pk3.fieldNameList().at(1), QString("F"));
+  /*
    * Must not compile
    */
 //   PrimaryKey badPk1("A");

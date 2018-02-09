@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,8 @@
 #define MDT_SQL_SCHEMA_PRIMARY_KEY_H
 
 #include "Field.h"
+#include "Mdt/Algorithm.h"
+#include "MdtSqlExport.h"
 #include <QStringList>
 #include <type_traits>
 
@@ -29,7 +31,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief Primary key
    */
-  class PrimaryKey
+  class MDT_SQL_EXPORT PrimaryKey
   {
    public:
 
@@ -71,6 +73,17 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       Q_ASSERT(!name.isEmpty());
       Q_ASSERT(!contains(name));
       mFieldNameList.append(name);
+    }
+
+    /*! \brief Set a list of field name to this primary key
+     *
+     * \pre \a fieldNameList must not have duplicated field names,
+     *    and this in a case insensitive way.
+     */
+    void setFieldNameList(const QStringList & fieldNameList)
+    {
+      Q_ASSERT(!Mdt::Algorithm::hasDuplicates(fieldNameList, Qt::CaseInsensitive));
+      mFieldNameList = fieldNameList;
     }
 
     /*! \brief Get field count
