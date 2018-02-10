@@ -68,13 +68,20 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       mType = AutoIncrementPrimaryKeyType;
     }
 
+    /*! \brief Set \a primaryKey to this container
+     */
+    void setPrimaryKey(const PrimaryKey & pk)
+    {
+      mPrimaryKey = pk;
+      mType = PrimaryKeyType;
+    }
+
     /*! \brief Set primary key with list of fields
      */
     template<typename...Ts>
     void setPrimaryKey(const Ts & ...fieldList)
     {
-      mPrimaryKey = PrimaryKey(fieldList...);
-      mType = PrimaryKeyType;
+      setPrimaryKey( PrimaryKey(fieldList...) );
     }
 
     /*! \brief Get field name

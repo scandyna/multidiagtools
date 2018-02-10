@@ -146,6 +146,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
   using Sql::Schema::AutoIncrementPrimaryKey;
+  using Sql::Schema::PrimaryKey;
   using Sql::Schema::PrimaryKeyContainer;
 
   /*
@@ -194,6 +195,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   /*
    * PrimaryKey
    */
+  // Variadic field
   container.setPrimaryKey(Id_A, Id_B);
   QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
   QVERIFY(container.fieldName().isEmpty());
@@ -201,6 +203,12 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   QVERIFY(container.fieldType() == FieldType::UnknownType);
   QCOMPARE(container.fieldLength(), -1);
   QCOMPARE(container.primaryKey().fieldCount(), 2);
+  // PrimaryKey
+  PrimaryKey pk(Id_B);
+  container.setPrimaryKey(pk);
+  QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QCOMPARE(container.primaryKey().fieldCount(), 1);
+  QCOMPARE(container.fieldNameList(), QStringList({"Id_B"}));
   /*
    * Clear
    */
