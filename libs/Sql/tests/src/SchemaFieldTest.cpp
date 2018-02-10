@@ -26,7 +26,9 @@
 #include "Mdt/Sql/Schema/FieldTypeName.h"
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/FieldList.h"
+#include "Mdt/Sql/Schema/FieldIndexList.h"
 #include <QStringList>
+#include <algorithm>
 
 // #include <QDebug>
 
@@ -348,6 +350,50 @@ void SchemaFieldTest::fieldListToStringListTest()
   for(int i = 0; i < N; ++i){
     QCOMPARE(nameList.at(i) , list.at(i).name());
   }
+}
+
+void SchemaFieldTest::fieldIndexListTest()
+{
+  using namespace Mdt::Sql::Schema;
+
+  /*
+   * Initial state
+   */
+  FieldIndexList list;
+  QCOMPARE(list.count(), 0);
+  QVERIFY(list.isEmpty());
+  QVERIFY(!list.containsFieldIndex(0));
+  QVERIFY(!list.containsFieldIndex(5));
+  /*
+   * Add a field index
+   */
+  list.addFieldIndex(2);
+  QCOMPARE(list.count(), 1);
+  QVERIFY(!list.isEmpty());
+  QCOMPARE(list.fieldIndexAt(0), 2);
+  QVERIFY(!list.containsFieldIndex(0));
+  QVERIFY( list.containsFieldIndex(2));
+  QVERIFY(!list.containsFieldIndex(5));
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE(list.count(), 0);
+  QVERIFY(list.isEmpty());
+}
+
+void SchemaFieldTest::fieldIndexListStlTest()
+{
+  using namespace Mdt::Sql::Schema;
+
+  FieldIndexList list;
+  list.addFieldIndex(3);
+  list.addFieldIndex(5);
+
+  QVERIFY( std::find(list.begin(), list.end(), 22) == list.end() );
+  QVERIFY( std::find(list.begin(), list.end(), 3) != list.end() );
+  QVERIFY( std::find(list.cbegin(), list.cend(), 22) == list.end() );
+  QVERIFY( std::find(list.cbegin(), list.cend(), 5) != list.end() );
 }
 
 /*

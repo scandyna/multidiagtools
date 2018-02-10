@@ -18,43 +18,27 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_FIELD_TEST_H
-#define MDT_SQL_SCHEMA_FIELD_TEST_H
+#include "FieldIndexList.h"
+#include <algorithm>
 
-#include "TestBase.h"
-#include "Mdt/Sql/Schema/FieldType.h"
-#include "Mdt/Sql/Schema/FieldList.h"
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-class SchemaFieldTest : public QObject
+void FieldIndexList::addFieldIndex(int fieldIndex)
 {
- Q_OBJECT
+  Q_ASSERT(fieldIndex >= 0);
+  Q_ASSERT(!containsFieldIndex(fieldIndex));
 
- private slots:
+  mList.push_back(fieldIndex);
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+bool FieldIndexList::containsFieldIndex(int fieldIndex) const
+{
+  return ( std::find(mList.cbegin(), mList.cend(), fieldIndex) != mList.cend() );
+}
 
-  void fieldLengthTest();
+void FieldIndexList::clear()
+{
+  mList.clear();
+}
 
-  void fieldTypeFlagsTest();
-
-  void fieldTypeListTest();
-  void fieldTypeNameTest();
-
-  void fieldTest();
-  void fieldListMutatingTest();
-  void fieldListVarArgConstructTest();
-  void fieldListToFieldNameList();
-
-  void fieldListToStringListTest();
-
-  void fieldIndexListTest();
-  void fieldIndexListStlTest();
-
- private:
-
-  // Get a FieldList with N items. Each field will be named 0,1,2,3,...,N-1
-  Mdt::Sql::Schema::FieldList getFieldList(int N, Mdt::Sql::Schema::FieldType type);
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_FIELD_TEST_H
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{

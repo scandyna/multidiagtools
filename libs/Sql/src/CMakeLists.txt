@@ -36,10 +36,12 @@ set(SOURCE_FILES
     Mdt/Sql/Schema/FieldLength.cpp
     Mdt/Sql/Schema/FieldTypeFlags.cpp
     Mdt/Sql/Schema/FieldList.cpp
+    Mdt/Sql/Schema/FieldIndexList.cpp
     Mdt/Sql/Schema/FieldTypeMapImplementation.cpp
     Mdt/Sql/Schema/FieldTypeMap.cpp
     Mdt/Sql/Schema/FieldTypeName.cpp
 #     Mdt/Sql/Schema/FieldTypeListModel.cpp
+    Mdt/Sql/Schema/PrimaryKeyFieldIndexMap.cpp
     Mdt/Sql/Schema/PrimaryKeyContainer.cpp
 #     Mdt/Sql/Schema/ForeignKeyActionSqlTransform.cpp
     Mdt/Sql/Schema/ForeignKey.cpp
