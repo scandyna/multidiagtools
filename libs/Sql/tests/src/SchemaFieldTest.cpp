@@ -52,6 +52,10 @@ void SchemaFieldTest::fieldLengthTest()
   QVERIFY(l0.isNull());
   QCOMPARE(l0.value(), 0);
 
+  FieldLength l00(0);
+  QVERIFY(l00.isNull());
+  QCOMPARE(l00.value(), 0);
+
   FieldLength l1(1);
   QVERIFY(!l1.isNull());
   QCOMPARE(l1.value(), 1);
@@ -107,10 +111,15 @@ void SchemaFieldTest::fieldTypeNameTest()
    */
   QVERIFY(FieldTypeName::nameFromType(FieldType::UnknownType).isEmpty());
   QCOMPARE(FieldTypeName::nameFromType(FieldType::Boolean), QString("BOOLEAN"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Smallint), QString("SMALLINT"));
   QCOMPARE(FieldTypeName::nameFromType(FieldType::Integer), QString("INTEGER"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Bigint), QString("BIGINT"));
   QCOMPARE(FieldTypeName::nameFromType(FieldType::Float), QString("FLOAT"));
   QCOMPARE(FieldTypeName::nameFromType(FieldType::Double), QString("DOUBLE"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Char), QString("CHAR"));
   QCOMPARE(FieldTypeName::nameFromType(FieldType::Varchar), QString("VARCHAR"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Text), QString("TEXT"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Blob), QString("BLOB"));
   QCOMPARE(FieldTypeName::nameFromType(FieldType::Date), QString("DATE"));
   QCOMPARE(FieldTypeName::nameFromType(FieldType::Time), QString("TIME"));
   QCOMPARE(FieldTypeName::nameFromType(FieldType::DateTime), QString("DATETIME"));
@@ -119,10 +128,15 @@ void SchemaFieldTest::fieldTypeNameTest()
    */
   QVERIFY(FieldTypeName::typeFromName("") == FieldType::UnknownType);
   QVERIFY(FieldTypeName::typeFromName("BOOLEAN") == FieldType::Boolean);
+  QVERIFY(FieldTypeName::typeFromName("SMALLINT") == FieldType::Smallint);
   QVERIFY(FieldTypeName::typeFromName("INTEGER") == FieldType::Integer);
+  QVERIFY(FieldTypeName::typeFromName("BIGINT") == FieldType::Bigint);
   QVERIFY(FieldTypeName::typeFromName("FLOAT") == FieldType::Float);
   QVERIFY(FieldTypeName::typeFromName("DOUBLE") == FieldType::Double);
+  QVERIFY(FieldTypeName::typeFromName("CHAR") == FieldType::Char);
   QVERIFY(FieldTypeName::typeFromName("VARCHAR") == FieldType::Varchar);
+  QVERIFY(FieldTypeName::typeFromName("TEXT") == FieldType::Text);
+  QVERIFY(FieldTypeName::typeFromName("BLOB") == FieldType::Blob);
   QVERIFY(FieldTypeName::typeFromName("DATE") == FieldType::Date);
   QVERIFY(FieldTypeName::typeFromName("TIME") == FieldType::Time);
   QVERIFY(FieldTypeName::typeFromName("DATETIME") == FieldType::DateTime);
@@ -321,21 +335,6 @@ void SchemaFieldTest::fieldListToFieldNameList()
   QCOMPARE(nameList.at(2), QString("2"));
 }
 
-void SchemaFieldTest::fieldListFieldIndexBenchmark()
-{
-  using Sql::Schema::FieldType;
-  using Sql::Schema::FieldList;
-
-  const int N = 10;
-  FieldList list = getFieldList(N, FieldType::Integer);
-
-  QBENCHMARK{
-    for(int i = 0; i < N; ++i){
-      QCOMPARE( list.fieldIndex(QString::number(i)) , i );
-    }
-  }
-}
-
 void SchemaFieldTest::fieldListToStringListTest()
 {
   using Sql::Schema::FieldType;
@@ -345,9 +344,7 @@ void SchemaFieldTest::fieldListToStringListTest()
   FieldList list = getFieldList(N, FieldType::Integer);
   QStringList nameList;
 
-  QBENCHMARK{
-    nameList = list.toFieldNameList();
-  }
+  nameList = list.toFieldNameList();
   for(int i = 0; i < N; ++i){
     QCOMPARE(nameList.at(i) , list.at(i).name());
   }
