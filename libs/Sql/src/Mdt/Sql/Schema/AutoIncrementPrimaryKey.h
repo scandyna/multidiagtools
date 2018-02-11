@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -37,10 +37,15 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     AutoIncrementPrimaryKey() = default;
 
     /*! \brief Construct a auto increment primary key
+     *
+     * \pre \a fieldType must be a valid type for a auto increment primary key
+     * \sa isValidFieldType()
      */
-    explicit AutoIncrementPrimaryKey(const QString & fieldName)
-     : pvFieldName(fieldName)
+    explicit AutoIncrementPrimaryKey(const QString & fieldName, FieldType fieldType = FieldType::Integer)
+     : pvFieldName(fieldName),
+       mFieldType(fieldType)
     {
+      Q_ASSERT(isValidFieldType(fieldType));
     }
 
     AutoIncrementPrimaryKey(const AutoIncrementPrimaryKey &) = default;
@@ -62,11 +67,22 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvFieldName;
     }
 
+    /*! \brief Set field type
+     *
+     * \pre \a fieldType must be a valid type for a auto increment primary key
+     * \sa isValidFieldType()
+     */
+    void setFieldType(FieldType fieldType)
+    {
+      Q_ASSERT(isValidFieldType(fieldType));
+      mFieldType = fieldType;
+    }
+
     /*! \brief Get field type
      */
     FieldType fieldType() const
     {
-      return FieldType::Integer;
+      return mFieldType;
     }
 
     /*! \brief Check if primary key is null
@@ -83,9 +99,17 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       pvFieldName.clear();
     }
 
+    /*! \brief Check if \a fieldType can be used in a auto increment primary key
+     */
+    static bool isValidFieldType(FieldType fieldType)
+    {
+      return ( (fieldType == FieldType::Smallint) || (fieldType == FieldType::Integer) || (fieldType == FieldType::Bigint) );
+    }
+
    private:
 
     QString pvFieldName;
+    FieldType mFieldType = FieldType::Integer;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
