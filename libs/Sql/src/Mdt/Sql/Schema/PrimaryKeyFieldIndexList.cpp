@@ -18,27 +18,41 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_PRIMARY_KEY_TEST_H
-#define MDT_SQL_SCHEMA_PRIMARY_KEY_TEST_H
+#include "PrimaryKeyFieldIndexList.h"
+#include "PrimaryKey.h"
+#include "AutoIncrementPrimaryKey.h"
+#include "FieldList.h"
+#include "Field.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-class SchemaPrimaryKeyTest : public QObject
+AutoIncrementPrimaryKey PrimaryKeyFieldIndexList::toAutoIncrementPrimaryKey(const FieldList & fieldList) const
 {
- Q_OBJECT
+  Q_ASSERT(count() == 1);
+  Q_ASSERT(fieldIndexAt(0) < fieldList.size());
 
- private slots:
+  AutoIncrementPrimaryKey pk;
+  const auto field = fieldList.at( fieldIndexAt(0) );
+  Q_ASSERT(AutoIncrementPrimaryKey::isValidFieldType(field.type()));
+  pk.setFieldName(field.name());
+  pk.setFieldType(field.type());
 
-  void initTestCase();
-  void cleanupTestCase();
+  return pk;
+}
 
-  void autoIncrementPrimaryKeyIsValidFieldTypeTest();
-  void autoIncrementPrimaryKeyTest();
-  void primaryKeyTest();
-  void primaryKeyContainerTest();
+PrimaryKey PrimaryKeyFieldIndexList::toPrimaryKey(const FieldList& fieldList) const
+{
+  Q_ASSERT(!isEmpty());
 
-  void fieldIndexListTest();
-  void fieldIndexListToPrimaryKeyTest();
-};
+  PrimaryKey pk;
 
-#endif // #ifndef MDT_SQL_SCHEMA_PRIMARY_KEY_TEST_H
+  for(const auto fieldIndex : mList){
+    Q_ASSERT(fieldIndex < fieldList.size());
+    pk.addField( fieldList.at(fieldIndex) );
+  }
+
+  return pk;
+}
+
+
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{

@@ -22,6 +22,9 @@
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
+#include "Mdt/Sql/Schema/PrimaryKeyFieldIndexList.h"
+#include "Mdt/Sql/Schema/FieldIndexList.h"
+#include "Mdt/Sql/Schema/FieldList.h"
 
 namespace Sql = Mdt::Sql;
 
@@ -36,6 +39,26 @@ void SchemaPrimaryKeyTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void SchemaPrimaryKeyTest::autoIncrementPrimaryKeyIsValidFieldTypeTest()
+{
+  using namespace Mdt::Sql::Schema;
+
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::UnknownType));
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::Boolean));
+  QVERIFY( AutoIncrementPrimaryKey::isValidFieldType(FieldType::Smallint));
+  QVERIFY( AutoIncrementPrimaryKey::isValidFieldType(FieldType::Integer));
+  QVERIFY( AutoIncrementPrimaryKey::isValidFieldType(FieldType::Bigint));
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::Float));
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::Double));
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::Char));
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::Varchar));
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::Text));
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::Blob));
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::Date));
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::Time));
+  QVERIFY(!AutoIncrementPrimaryKey::isValidFieldType(FieldType::DateTime));
+}
 
 void SchemaPrimaryKeyTest::autoIncrementPrimaryKeyTest()
 {
@@ -67,6 +90,15 @@ void SchemaPrimaryKeyTest::autoIncrementPrimaryKeyTest()
   QCOMPARE(pk2.fieldName(), QString("Id_PK_2"));
   QVERIFY(pk2.fieldType() == FieldType::Integer);
   QVERIFY(!pk2.isNull());
+  /*
+   * Set alternate field type
+   */
+  AutoIncrementPrimaryKey pk3("Id_PK_3", FieldType::Smallint);
+  QCOMPARE(pk3.fieldName(), QString("Id_PK_3"));
+  QVERIFY(pk3.fieldType() == FieldType::Smallint);
+  pk3.setFieldType(FieldType::Bigint);
+  QCOMPARE(pk3.fieldName(), QString("Id_PK_3"));
+  QVERIFY(pk3.fieldType() == FieldType::Bigint);
 }
 
 void SchemaPrimaryKeyTest::primaryKeyTest()
@@ -215,6 +247,80 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   container.clear();
   QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
   QCOMPARE(container.primaryKey().fieldCount(), 0);
+}
+
+void SchemaPrimaryKeyTest::fieldIndexListTest()
+{
+  using namespace Mdt::Sql::Schema;
+
+  /*
+   * Initial state
+   */
+  PrimaryKeyFieldIndexList list;
+  QCOMPARE(list.count(), 0);
+  QVERIFY(list.isEmpty());
+  QVERIFY(!list.containsFieldIndex(0));
+  QVERIFY(!list.containsFieldIndex(5));
+  /*
+   * Add a field index
+   */
+  list.addFieldIndex(2);
+  QCOMPARE(list.count(), 1);
+  QVERIFY(!list.isEmpty());
+  QCOMPARE(list.fieldIndexAt(0), 2);
+  QVERIFY(!list.containsFieldIndex(0));
+  QVERIFY( list.containsFieldIndex(2));
+  QVERIFY(!list.containsFieldIndex(5));
+  /*
+   * Set a field index list
+   */
+  FieldIndexList indexList;
+  indexList.addFieldIndex(5);
+  indexList.addFieldIndex(3);
+  list.setFieldIndexList(indexList);
+  QCOMPARE(list.count(), 2);
+  QCOMPARE(list.fieldIndexAt(0), 5);
+  QCOMPARE(list.fieldIndexAt(1), 3);
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE(list.count(), 0);
+  QVERIFY(list.isEmpty());
+}
+
+void SchemaPrimaryKeyTest::fieldIndexListToPrimaryKeyTest()
+{
+  using namespace Mdt::Sql::Schema;
+
+  /*
+   * Create a field list
+   */
+  FieldList fieldList;
+  Field field;
+  field.setType(FieldType::Integer);
+  field.setName("Id_PK");
+  fieldList.addField(field);
+  field.setName("Id_A");
+  fieldList.addField(field);
+  field.setName("Id_B");
+  fieldList.addField(field);
+  /*
+   * To auto increment primary key
+   */
+  PrimaryKeyFieldIndexList fieldIndexList;
+  fieldIndexList.addFieldIndex(0);
+  auto aicPk = fieldIndexList.toAutoIncrementPrimaryKey(fieldList);
+  QCOMPARE(aicPk.fieldName(), QString("Id_PK"));
+  /*
+   * To primary key
+   */
+  fieldIndexList.clear();
+  fieldIndexList.addFieldIndex(1);
+  fieldIndexList.addFieldIndex(2);
+  auto pk = fieldIndexList.toPrimaryKey(fieldList);
+  QCOMPARE(pk.fieldCount(), 2);
+  QCOMPARE(pk.fieldNameList(), QStringList({"Id_A","Id_B"}));
 }
 
 /*
