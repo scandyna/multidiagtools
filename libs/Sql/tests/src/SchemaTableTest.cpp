@@ -44,6 +44,7 @@ void SchemaTableTest::setAutoIncrementPrimaryKeyTest()
   using Sql::Schema::Table;
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
+  using Sql::Schema::PrimaryKeyType;
   using Sql::Schema::PrimaryKeyContainer;
 
   /*
@@ -59,6 +60,7 @@ void SchemaTableTest::setAutoIncrementPrimaryKeyTest()
    */
   Table table;
   QCOMPARE(table.fieldCount(), 0);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::Unknown);
   /*
    * Add auto increment PK at first
    */
@@ -93,13 +95,14 @@ void SchemaTableTest::setAutoIncrementPrimaryKeyTest()
   QVERIFY(table.contains("ID_PK"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::AutoIncrementPrimaryKey);
   QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   /*
    * Add auto increment PK after a other field
    */
   table.clear();
   QCOMPARE(table.fieldCount(), 0);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::Unknown);
   // Add Name
   table.addField(Name);
   QCOMPARE(table.fieldCount(), 1);
@@ -131,7 +134,7 @@ void SchemaTableTest::setAutoIncrementPrimaryKeyTest()
   QVERIFY(table.contains("ID_PK"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::AutoIncrementPrimaryKey);
   QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   /*
    * Set Id_PK as field first, then set it as auto increment primary key
@@ -171,7 +174,7 @@ void SchemaTableTest::setAutoIncrementPrimaryKeyTest()
   QVERIFY(table.contains("ID_PK"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::AutoIncrementPrimaryKey);
   QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   /*
    * Set Id_PK as field first, then set it as auto increment primary key
@@ -207,7 +210,7 @@ void SchemaTableTest::setAutoIncrementPrimaryKeyTest()
   QVERIFY(table.contains("ID_PK"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::AutoIncrementPrimaryKey);
   QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
 }
 
@@ -216,6 +219,7 @@ void SchemaTableTest::setSingleFieldPrimaryKeyTest()
   using Sql::Schema::Table;
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
+  using Sql::Schema::PrimaryKeyType;
   using Sql::Schema::PrimaryKeyContainer;
 
   /*
@@ -266,7 +270,7 @@ void SchemaTableTest::setSingleFieldPrimaryKeyTest()
   QVERIFY(table.contains("Code_pk"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(table.primaryKey().fieldCount(), 1);
   /*
    * Set Code_PK as primary key and check that it is automatically added as field
@@ -299,7 +303,7 @@ void SchemaTableTest::setSingleFieldPrimaryKeyTest()
   QVERIFY(table.contains("Code_pk"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(table.primaryKey().fieldCount(), 1);
   /*
    * Must not compile
@@ -312,6 +316,7 @@ void SchemaTableTest::setPrimaryKeyTest()
   using Sql::Schema::Table;
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
+  using Sql::Schema::PrimaryKeyType;
   using Sql::Schema::PrimaryKeyContainer;
 
   /*
@@ -337,6 +342,7 @@ void SchemaTableTest::setPrimaryKeyTest()
    */
   Table table;
   QCOMPARE(table.fieldCount(), 0);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::Unknown);
   /*
    * - Add Id_A
    * - Add Name
@@ -365,7 +371,7 @@ void SchemaTableTest::setPrimaryKeyTest()
   QVERIFY(table.contains("Id_A"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(table.primaryKey().fieldCount(), 1);
   /*
    * - Add Id_A
@@ -407,7 +413,7 @@ void SchemaTableTest::setPrimaryKeyTest()
   QVERIFY(table.contains("Id_B"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(table.primaryKey().fieldCount(), 2);
   /*
    * - Set Id_A and Id_B as primary key
@@ -445,7 +451,7 @@ void SchemaTableTest::setPrimaryKeyTest()
   QVERIFY(table.contains("Id_B"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(table.primaryKey().fieldCount(), 2);
   /*
    * - Add Name
@@ -483,7 +489,7 @@ void SchemaTableTest::setPrimaryKeyTest()
   QVERIFY(table.contains("Id_B"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(table.primaryKey().fieldCount(), 2);
 }
 
@@ -532,6 +538,7 @@ void SchemaTableTest::setPrimaryKeyContainerTest()
   table.addField(Id_B);
   table.addField(Name);
   QCOMPARE(table.fieldCount(), 4);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::Unknown);
   /*
    * Setup table with a auto increment primary key
    */
@@ -558,7 +565,7 @@ void SchemaTableTest::setPrimaryKeyContainerTest()
   QVERIFY(table.fieldType(1) == FieldType::Integer);
   QVERIFY(table.fieldType(2) == FieldType::Integer);
   QVERIFY(table.fieldType(3) == FieldType::Varchar);
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::AutoIncrementPrimaryKey);
   /*
    * Setup table with a primary key
    */
@@ -585,7 +592,7 @@ void SchemaTableTest::setPrimaryKeyContainerTest()
   QVERIFY(table.fieldType(1) == FieldType::Integer);
   QVERIFY(table.fieldType(2) == FieldType::Integer);
   QVERIFY(table.fieldType(3) == FieldType::Varchar);
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(table.primaryKey().fieldCount(), 2);
 }
 
@@ -730,6 +737,7 @@ void SchemaTableTest::tableTest()
   using Sql::Schema::Table;
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
+  using Sql::Schema::PrimaryKeyType;
   using Sql::Schema::AutoIncrementPrimaryKey;
   using Sql::Schema::PrimaryKey;
   using Sql::Schema::PrimaryKeyContainer;
@@ -851,8 +859,7 @@ void SchemaTableTest::tableTest()
   QVERIFY(!table.isTemporary());
   QVERIFY(table.tableName().isEmpty());
   QCOMPARE(table.fieldCount(), 0);
-  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
-  QCOMPARE(table.primaryKey().fieldCount(), 0);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyType::Unknown);
   QCOMPARE(table.foreignKeyList().size(), 0);
   QCOMPARE(table.indexList().size(), 0);
   QVERIFY(table.isNull());

@@ -70,9 +70,7 @@ void Table::setAutoIncrementPrimaryKey(const QString& fieldName, FieldType field
   Q_ASSERT(idx < fieldCount());
   mPrimaryKeyFieldIndexList.clear();
   mPrimaryKeyFieldIndexList.addFieldIndex(idx);
-
-  /// \todo Only for transition
-  mPrimaryKey.setPrimaryKey( AutoIncrementPrimaryKey(fieldName, fieldType) );
+  mPrimaryKeyType = PrimaryKeyType::AutoIncrementPrimaryKey;
 }
 
 void Table::setPrimaryKey(const PrimaryKey & primaryKey)
@@ -87,9 +85,7 @@ void Table::setPrimaryKey(const PrimaryKey & primaryKey)
     mFieldList[idx].setRequired(true);
     mPrimaryKeyFieldIndexList.addFieldIndex(idx);
   }
-
-  /// \todo Only for transition
-  mPrimaryKey.setPrimaryKey( primaryKey );
+  mPrimaryKeyType = PrimaryKeyType::PrimaryKey;
 }
 
 void Table::setPrimaryKeyContainer(const PrimaryKeyContainer& primaryKeyContainer)
@@ -182,8 +178,7 @@ bool Table::isFieldAutoIncrement(int index) const
   Q_ASSERT(index < fieldCount());
 
   if(isFieldPartOfPrimaryKey(index)){
-    /// \todo Only for transition
-    return (mPrimaryKey.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+    return (mPrimaryKeyType == PrimaryKeyType::AutoIncrementPrimaryKey);
   }
   return false;
 }
@@ -228,7 +223,7 @@ bool Table::isNull() const
 void Table::clear()
 {
   mPrimaryKeyFieldIndexList.clear();
-  mPrimaryKey.clear();
+  mPrimaryKeyType = PrimaryKeyType::Unknown;
   pvIsTemporary = false;
   mTableName.clear();
   mFieldList.clear();

@@ -42,6 +42,7 @@ set(SOURCE_FILES
     Mdt/Sql/Schema/FieldTypeName.cpp
 #     Mdt/Sql/Schema/FieldTypeListModel.cpp
     Mdt/Sql/Schema/PrimaryKeyFieldIndexList.cpp
+    Mdt/Sql/Schema/PrimaryKeyType.cpp
     Mdt/Sql/Schema/PrimaryKeyContainer.cpp
 #     Mdt/Sql/Schema/ForeignKeyActionSqlTransform.cpp
     Mdt/Sql/Schema/ForeignKey.cpp

@@ -23,11 +23,11 @@
 
 #include "Field.h"
 #include "FieldList.h"
+#include "PrimaryKeyType.h"
+#include "AutoIncrementPrimaryKey.h"
 #include "PrimaryKey.h"
 #include "PrimaryKeyFieldIndexList.h"
-
 #include "PrimaryKeyContainer.h"
-
 #include "ForeignField.h"
 #include "ForeignFieldList.h"
 #include "ForeignKeySettings.h"
@@ -289,9 +289,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Get type of stored primary key
      */
-    PrimaryKeyContainer::Type primaryKeyType() const
+    PrimaryKeyType primaryKeyType() const
     {
-      return mPrimaryKey.primaryKeyType();
+      return mPrimaryKeyType;
     }
 
     /*! \brief Get primary key
@@ -300,7 +300,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     AutoIncrementPrimaryKey autoIncrementPrimaryKey() const
     {
-      return mPrimaryKey.autoIncrementPrimaryKey();
+      Q_ASSERT(mPrimaryKeyType == PrimaryKeyType::AutoIncrementPrimaryKey);
+      Q_ASSERT(mPrimaryKeyFieldIndexList.count() == 1);
+
+      return mPrimaryKeyFieldIndexList.toAutoIncrementPrimaryKey(mFieldList);
     }
 
     /*! \brief Get primary key
@@ -309,7 +312,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     PrimaryKey primaryKey() const
     {
-      return mPrimaryKey.primaryKey();
+      Q_ASSERT(mPrimaryKeyType == PrimaryKeyType::PrimaryKey);
+      Q_ASSERT(!mPrimaryKeyFieldIndexList.isEmpty());
+
+      return mPrimaryKeyFieldIndexList.toPrimaryKey(mFieldList);
     }
 
     /*! \brief Add a field
@@ -544,8 +550,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     bool pvIsTemporary;
     QString mTableName;
+    PrimaryKeyType mPrimaryKeyType = PrimaryKeyType::Unknown;
     PrimaryKeyFieldIndexList mPrimaryKeyFieldIndexList;
-    PrimaryKeyContainer mPrimaryKey;
     FieldList mFieldList;
     ForeignKeyList mForeignKeyList;
     IndexList pvIndexList;
