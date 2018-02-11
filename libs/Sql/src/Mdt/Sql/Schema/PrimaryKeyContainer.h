@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_SCHEMA_PRIMARY_KEY_CONTAINER_H
 #define MDT_SQL_SCHEMA_PRIMARY_KEY_CONTAINER_H
 
+#include "PrimaryKeyType.h"
 #include "AutoIncrementPrimaryKey.h"
 #include "PrimaryKey.h"
 #include "FieldType.h"
@@ -43,29 +44,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Default container
      */
-    PrimaryKeyContainer()
-     : mType(PrimaryKeyType) {}
-
-    /*! \brief Primary key type
-     *
-     * If a method exist to get information
-     *  from stored primary key,
-     *  its recommended to use it.
-     *  If getting the stored primary key object itself,
-     *  this type is usefull to know which type of object is stored.
-     */
-    enum Type
-    {
-      AutoIncrementPrimaryKeyType,  /*!< This container stores a AutoIncrementPrimaryKey */
-      PrimaryKeyType                /*!< This container stores a PrimaryKey */
-    };
+    PrimaryKeyContainer() = default;
 
     /*! \brief Set primary key
      */
     void setPrimaryKey(const AutoIncrementPrimaryKey & pk)
     {
       mPrimaryKey = pk;
-      mType = AutoIncrementPrimaryKeyType;
+      mType = PrimaryKeyType::AutoIncrementPrimaryKey;
     }
 
     /*! \brief Set \a primaryKey to this container
@@ -73,7 +59,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void setPrimaryKey(const PrimaryKey & pk)
     {
       mPrimaryKey = pk;
-      mType = PrimaryKeyType;
+      mType = PrimaryKeyType::PrimaryKey;
     }
 
     /*! \brief Set primary key with list of fields
@@ -115,7 +101,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Get stored primary key type
      */
-    Type primaryKeyType() const
+    PrimaryKeyType primaryKeyType() const
     {
       return mType;
     }
@@ -139,7 +125,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    private:
 
     boost::variant<PrimaryKey, AutoIncrementPrimaryKey> mPrimaryKey;
-    Type mType;
+    PrimaryKeyType mType = PrimaryKeyType::PrimaryKey;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

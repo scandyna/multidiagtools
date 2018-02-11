@@ -110,20 +110,22 @@ int PrimaryKeyContainer::fieldLength() const
 
 AutoIncrementPrimaryKey PrimaryKeyContainer::autoIncrementPrimaryKey() const
 {
-  Q_ASSERT(mType == AutoIncrementPrimaryKeyType);
+  Q_ASSERT(mType == PrimaryKeyType::AutoIncrementPrimaryKey);
+
   return boost::get<AutoIncrementPrimaryKey>(mPrimaryKey);
 }
 
 PrimaryKey PrimaryKeyContainer::primaryKey() const
 {
-  Q_ASSERT(mType == PrimaryKeyType);
+  Q_ASSERT(mType == PrimaryKeyType::PrimaryKey);
+
   return boost::get<PrimaryKey>(mPrimaryKey);
 }
 
 void PrimaryKeyContainer::clear()
 {
   mPrimaryKey = PrimaryKey();
-  mType = PrimaryKeyType;
+  mType = PrimaryKeyType::PrimaryKey;
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

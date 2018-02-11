@@ -180,6 +180,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   using Sql::Schema::AutoIncrementPrimaryKey;
   using Sql::Schema::PrimaryKey;
   using Sql::Schema::PrimaryKeyContainer;
+  using Sql::Schema::PrimaryKeyType;
 
   /*
    * Setup fields
@@ -208,7 +209,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
    * Initial state
    */
   PrimaryKeyContainer container;
-  QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(container.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QVERIFY(container.fieldName().isEmpty());
   ///qDebug() << "List: " << container.getFieldNameList();
   QVERIFY(container.fieldNameList().isEmpty());
@@ -218,7 +219,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
    * AutoIncrementPrimaryKey
    */
   container.setPrimaryKey(Id_PK);
-  QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QVERIFY(container.primaryKeyType() == PrimaryKeyType::AutoIncrementPrimaryKey);
   QCOMPARE(container.fieldName(), QString("Id_PK"));
   QCOMPARE(container.fieldNameList(), QStringList({"Id_PK"}));
   QVERIFY(container.fieldType() == FieldType::Integer);
@@ -229,7 +230,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
    */
   // Variadic field
   container.setPrimaryKey(Id_A, Id_B);
-  QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(container.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QVERIFY(container.fieldName().isEmpty());
   QCOMPARE(container.fieldNameList(), QStringList({"Id_A","Id_B"}));
   QVERIFY(container.fieldType() == FieldType::UnknownType);
@@ -238,14 +239,14 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   // PrimaryKey
   PrimaryKey pk(Id_B);
   container.setPrimaryKey(pk);
-  QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(container.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(container.primaryKey().fieldCount(), 1);
   QCOMPARE(container.fieldNameList(), QStringList({"Id_B"}));
   /*
    * Clear
    */
   container.clear();
-  QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(container.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(container.primaryKey().fieldCount(), 0);
 }
 

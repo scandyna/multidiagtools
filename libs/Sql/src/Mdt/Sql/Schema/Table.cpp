@@ -90,12 +90,15 @@ void Table::setPrimaryKey(const PrimaryKey & primaryKey)
 
 void Table::setPrimaryKeyContainer(const PrimaryKeyContainer& primaryKeyContainer)
 {
+  Q_ASSERT(primaryKeyContainer.primaryKeyType() != PrimaryKeyType::Unknown);
   switch(primaryKeyContainer.primaryKeyType()){
-    case PrimaryKeyContainer::AutoIncrementPrimaryKeyType:
+    case PrimaryKeyType::AutoIncrementPrimaryKey:
       setAutoIncrementPrimaryKey(primaryKeyContainer.fieldName(), primaryKeyContainer.fieldType());
       break;
-    case PrimaryKeyContainer::PrimaryKeyType:
+    case PrimaryKeyType::PrimaryKey:
       setPrimaryKey(primaryKeyContainer.primaryKey());
+      break;
+    case PrimaryKeyType::Unknown:
       break;
   }
 }
