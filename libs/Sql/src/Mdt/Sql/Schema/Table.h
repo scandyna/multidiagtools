@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,7 +24,10 @@
 #include "Field.h"
 #include "FieldList.h"
 #include "PrimaryKey.h"
+#include "PrimaryKeyFieldIndexList.h"
+
 #include "PrimaryKeyContainer.h"
+
 #include "ForeignField.h"
 #include "ForeignFieldList.h"
 #include "ForeignKeySettings.h"
@@ -188,8 +191,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Create a default constructed table
      */
     Table()
-     : mPrimaryKeyFieldIndex(-1) ,
-       pvIsTemporary(false)
+     : pvIsTemporary(false)
     {
     }
 
@@ -222,15 +224,50 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Set a auto increment primary key
      *
-     * \pre fieldName must not be empty
-     * \pre A field having fieldName as name must not allready exist in this table
+     * If no field having \a fieldName as name already exists in this table,
+     *  it will be added to this table as primary key,
+     *  and its attributes (like isUnique or isRequired)
+     *  will be set according to the requirements of a primary key.
+     *
+     * If a field having \a fieldName as name already exists in this table,
+     *  its attributes (like isUnique or isRequired)
+     *  will be set according to the requirements of a primary key,
+     *  and the field will be set as primary key.
+     *
+     * \pre \a fieldName must not be empty
+     * \pre if a field having \a fieldName as name already exists in this table,
+     *   its type must be valid for a auto increment primary key.
+     * \sa AutoIncrementPrimaryKey::isValidFieldType()
      */
     void setAutoIncrementPrimaryKey(const QString & fieldName);
 
+    /*! \brief Set a auto increment primary key
+     *
+     * This method works like setAutoIncrementPrimaryKey(const QString&) ,
+     *  but the field type can be specified.
+     *
+     * \pre \a fieldName must not be empty
+     * \pre \a fieldType must be valid for a auto increment primary key
+     * \pre if a field having \a fieldName as name already exists in this table,
+     *   its type must be the same as \a fieldType .
+     * \sa AutoIncrementPrimaryKey::isValidFieldType()
+     */
+    void setAutoIncrementPrimaryKey(const QString & fieldName, FieldType fieldType);
+
     /*! \brief Set primary key
      *
-     * Will set each field in fieldList as member of the primary key of this table.
-     *  If a field does not allready exist, it will also be added to this table.
+     * Will set each field in \a primaryKey as member of the primary key of this table.
+     *  If a field does not have its required flag set, it will also be set.
+     *
+     * \pre \a primaryKey must not be null
+     * \pre Each field in \a primaryKey must already exit in this table.
+     */
+    void setPrimaryKey(const PrimaryKey & primaryKey);
+
+    /*! \brief Set primary key
+     *
+     * Will set each field in \a fieldList as member of the primary key of this table.
+     *  If a field does not already exist, it will also be added to this table.
      *  If a field does not have its required flag set, it will also be set.
      *
      * \pre Each field in fieldList must have a different field name.
@@ -240,9 +277,15 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       PrimaryKey pk(fieldList...);
       addFieldListIfNotExists(fieldList...);
-      mPrimaryKey.setPrimaryKey(pk);
-      updatePrimaryKeyFlags(pk);
+      setPrimaryKey(pk);
     }
+
+    /*! \brief Set \a primaryKeyContainer to this table
+     *
+     * \sa setAutoIncrementPrimaryKey()
+     * \sa setPrimaryKey(const PrimaryKey &)
+     */
+    void setPrimaryKeyContainer(const PrimaryKeyContainer & primaryKeyContainer);
 
     /*! \brief Get type of stored primary key
      */
@@ -367,7 +410,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     int fieldCount() const
     {
-      return (mFieldList.size() + mPrimaryKeyFieldIndex + 1);
+      return mFieldList.size();
     }
 
     /*! \brief Get index of field with fieldName in this table
@@ -378,7 +421,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * Note that field names are compared in a case insensitive way.
      *  For exapmple, Id_PK is the same field as ID_PK
      */
-    int fieldIndex(const QString & fieldName) const;
+    int fieldIndex(const QString & fieldName) const
+    {
+      return mFieldList.fieldIndex(fieldName);
+    }
 
     /*! \brief Check if a field with fieldName exists in this table
      *
@@ -492,23 +538,15 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       addFieldListIfNotExists(fieldList...);
     }
 
-    /*! \brief Set list of indexes for primary key
-     *
-     * Will set list of indexes for primary key.
-     * Each field that is part of primary key will be updated to be required.
-     */
-    void updatePrimaryKeyFlags(const PrimaryKey & pk);
-
     /*! \brief Access field at index
      */
     const Field & refFieldConst(int index) const;
 
-    int mPrimaryKeyFieldIndex; // Used if pvPrimaryKey is AutoIncrementPrimaryKey or SingleFieldPrimaryKey
     bool pvIsTemporary;
     QString mTableName;
+    PrimaryKeyFieldIndexList mPrimaryKeyFieldIndexList;
     PrimaryKeyContainer mPrimaryKey;
     FieldList mFieldList;
-    std::vector<int> mPrimaryKeyFieldIndexList;  // Used by isFieldPartOfPrimaryKey() for PrimaryKey (multi-column)
     ForeignKeyList mForeignKeyList;
     IndexList pvIndexList;
   };

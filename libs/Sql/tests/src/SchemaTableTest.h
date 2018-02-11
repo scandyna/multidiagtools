@@ -35,6 +35,7 @@ class SchemaTableTest : public QObject
   void setAutoIncrementPrimaryKeyTest();
   void setSingleFieldPrimaryKeyTest();
   void setPrimaryKeyTest();
+  void setPrimaryKeyContainerTest();
 
   void setForeignKeySingleFieldTest();
   void setForeignKeyMultipleFieldsTest();

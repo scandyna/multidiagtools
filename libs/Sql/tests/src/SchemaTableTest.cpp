@@ -68,12 +68,16 @@ void SchemaTableTest::setAutoIncrementPrimaryKeyTest()
   // Add Name
   table.addField(Name);
   QCOMPARE(table.fieldCount(), 2);
-  // Check - Note: auto increment PK allways appear as first field in table
+  // Check
   QCOMPARE(table.fieldCount(), 2);
   QCOMPARE(table.fieldName(0), QString("Id_PK"));
   QCOMPARE(table.fieldName(1), QString("Name"));
   QVERIFY(table.isFieldPartOfPrimaryKey(0));
   QVERIFY(!table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(table.isFieldRequired(0));
+  QVERIFY(!table.isFieldRequired(1));
+  QVERIFY(table.isFieldUnique(0));
+  QVERIFY(!table.isFieldUnique(1));
   QVERIFY(table.isFieldAutoIncrement(0));
   QVERIFY(!table.isFieldAutoIncrement(1));
   QVERIFY(table.fieldType(0) == FieldType::Integer);
@@ -100,17 +104,97 @@ void SchemaTableTest::setAutoIncrementPrimaryKeyTest()
   table.addField(Name);
   QCOMPARE(table.fieldCount(), 1);
   // Add Id_PK
-  table.setAutoIncrementPrimaryKey("Id_PK");
+  table.setAutoIncrementPrimaryKey("Id_PK", FieldType::Bigint);
   QCOMPARE(table.fieldCount(), 2);
-  // Check - Note: auto increment PK allways appear as first field in table
+  // Check
+  QCOMPARE(table.fieldCount(), 2);
+  QCOMPARE(table.fieldName(0), QString("Name"));
+  QCOMPARE(table.fieldName(1), QString("Id_PK"));
+  QVERIFY(!table.isFieldPartOfPrimaryKey(0));
+  QVERIFY(table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(!table.isFieldRequired(0));
+  QVERIFY(table.isFieldRequired(1));
+  QVERIFY(!table.isFieldUnique(0));
+  QVERIFY(table.isFieldUnique(1));
+  QVERIFY(!table.isFieldAutoIncrement(0));
+  QVERIFY(table.isFieldAutoIncrement(1));
+  QVERIFY(table.fieldType(0) == FieldType::Varchar);
+  QVERIFY(table.fieldType(1) == FieldType::Bigint);
+  QCOMPARE(table.fieldLength(0), 100);
+  QCOMPARE(table.fieldLength(1), -1);
+  QCOMPARE(table.fieldIndex("Id_PK"), 1);
+  QCOMPARE(table.fieldIndex("ID_PK"), 1);
+  QCOMPARE(table.fieldIndex("Name"), 0);
+  QCOMPARE(table.fieldIndex("NONE"), -1);
+  QCOMPARE(table.fieldIndex(""), -1);
+  QVERIFY(table.contains("Id_PK"));
+  QVERIFY(table.contains("ID_PK"));
+  QVERIFY(table.contains("Name"));
+  QVERIFY(!table.contains(""));
+  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
+  /*
+   * Set Id_PK as field first, then set it as auto increment primary key
+   * Use the variant that will only check field type
+   */
+  // Setup Id_PK field
+  Field Id_PK;
+  Id_PK.setName("Id_PK");
+  Id_PK.setType(FieldType::Smallint);
+  // Setup table
+  table.clear();
+  table.addField(Id_PK);
+  table.addField(Name);
+  table.setAutoIncrementPrimaryKey("Id_PK");
+  // Check
   QCOMPARE(table.fieldCount(), 2);
   QCOMPARE(table.fieldName(0), QString("Id_PK"));
   QCOMPARE(table.fieldName(1), QString("Name"));
   QVERIFY(table.isFieldPartOfPrimaryKey(0));
   QVERIFY(!table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(table.isFieldRequired(0));
+  QVERIFY(!table.isFieldRequired(1));
+  QVERIFY(table.isFieldUnique(0));
+  QVERIFY(!table.isFieldUnique(1));
   QVERIFY(table.isFieldAutoIncrement(0));
   QVERIFY(!table.isFieldAutoIncrement(1));
-  QVERIFY(table.fieldType(0) == FieldType::Integer);
+  QVERIFY(table.fieldType(0) == FieldType::Smallint);
+  QVERIFY(table.fieldType(1) == FieldType::Varchar);
+  QCOMPARE(table.fieldLength(0), -1);
+  QCOMPARE(table.fieldLength(1), 100);
+  QCOMPARE(table.fieldIndex("Id_PK"), 0);
+  QCOMPARE(table.fieldIndex("ID_PK"), 0);
+  QCOMPARE(table.fieldIndex("Name"), 1);
+  QCOMPARE(table.fieldIndex("NONE"), -1);
+  QCOMPARE(table.fieldIndex(""), -1);
+  QVERIFY(table.contains("Id_PK"));
+  QVERIFY(table.contains("ID_PK"));
+  QVERIFY(table.contains("Name"));
+  QVERIFY(!table.contains(""));
+  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
+  /*
+   * Set Id_PK as field first, then set it as auto increment primary key
+   * Use the variant that let us specify field type
+   */
+  Id_PK.setType(FieldType::Bigint);
+  // Setup table
+  table.clear();
+  table.addField(Id_PK);
+  table.addField(Name);
+  table.setAutoIncrementPrimaryKey("Id_PK", FieldType::Bigint);
+  QCOMPARE(table.fieldCount(), 2);
+  QCOMPARE(table.fieldName(0), QString("Id_PK"));
+  QCOMPARE(table.fieldName(1), QString("Name"));
+  QVERIFY(table.isFieldPartOfPrimaryKey(0));
+  QVERIFY(!table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(table.isFieldRequired(0));
+  QVERIFY(!table.isFieldRequired(1));
+  QVERIFY(table.isFieldUnique(0));
+  QVERIFY(!table.isFieldUnique(1));
+  QVERIFY(table.isFieldAutoIncrement(0));
+  QVERIFY(!table.isFieldAutoIncrement(1));
+  QVERIFY(table.fieldType(0) == FieldType::Bigint);
   QVERIFY(table.fieldType(1) == FieldType::Varchar);
   QCOMPARE(table.fieldLength(0), -1);
   QCOMPARE(table.fieldLength(1), 100);
@@ -399,6 +483,108 @@ void SchemaTableTest::setPrimaryKeyTest()
   QVERIFY(table.contains("Id_B"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
+  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QCOMPARE(table.primaryKey().fieldCount(), 2);
+}
+
+void SchemaTableTest::setPrimaryKeyContainerTest()
+{
+  using namespace Mdt::Sql::Schema;
+
+  PrimaryKeyContainer pkContainer;
+  /*
+   * Setup fields
+   * Note: we never set required flag explicitly,
+   *       so we can check that Table does it for members of primary key
+   */
+  // Id_PK
+  Field Id_PK;
+  Id_PK.setName("Id_PK");
+  Id_PK.setType(FieldType::Bigint);
+  // Id_A
+  Field Id_A;
+  Id_A.setName("Id_A");
+  Id_A.setType(FieldType::Integer);
+  // Id_B
+  Field Id_B;
+  Id_B.setName("Id_B");
+  Id_B.setType(FieldType::Integer);
+  // Name
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(100);
+  /*
+   * Setup primary keys
+   * Note: only field names are keeped in primary keys
+   */
+  // Auto increment primary key
+  AutoIncrementPrimaryKey aicPk("Id_PK", FieldType::Bigint);
+  // Primary key
+  PrimaryKey pk;
+  pk.setFieldNameList({"Id_A","Id_B"});
+  /*
+   * Init table
+   */
+  Table table;
+  table.addField(Id_PK);
+  table.addField(Id_A);
+  table.addField(Id_B);
+  table.addField(Name);
+  QCOMPARE(table.fieldCount(), 4);
+  /*
+   * Setup table with a auto increment primary key
+   */
+  pkContainer.setPrimaryKey(aicPk);
+  table.setPrimaryKeyContainer(pkContainer);
+  QCOMPARE(table.fieldCount(), 4);
+  QCOMPARE(table.fieldName(0), QString("Id_PK"));
+  QCOMPARE(table.fieldName(1), QString("Id_A"));
+  QCOMPARE(table.fieldName(2), QString("Id_B"));
+  QCOMPARE(table.fieldName(3), QString("Name"));
+  QVERIFY(table.isFieldPartOfPrimaryKey(0));
+  QVERIFY(!table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(!table.isFieldPartOfPrimaryKey(2));
+  QVERIFY(!table.isFieldPartOfPrimaryKey(3));
+  QVERIFY(table.isFieldRequired(0));
+  QVERIFY(!table.isFieldRequired(1));
+  QVERIFY(!table.isFieldRequired(2));
+  QVERIFY(!table.isFieldRequired(3));
+  QVERIFY(table.isFieldAutoIncrement(0));
+  QVERIFY(!table.isFieldAutoIncrement(1));
+  QVERIFY(!table.isFieldAutoIncrement(2));
+  QVERIFY(!table.isFieldAutoIncrement(3));
+  QVERIFY(table.fieldType(0) == FieldType::Bigint);
+  QVERIFY(table.fieldType(1) == FieldType::Integer);
+  QVERIFY(table.fieldType(2) == FieldType::Integer);
+  QVERIFY(table.fieldType(3) == FieldType::Varchar);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  /*
+   * Setup table with a primary key
+   */
+  pkContainer.setPrimaryKey(pk);
+  table.setPrimaryKeyContainer(pkContainer);
+  QCOMPARE(table.fieldCount(), 4);
+  QCOMPARE(table.fieldName(0), QString("Id_PK"));
+  QCOMPARE(table.fieldName(1), QString("Id_A"));
+  QCOMPARE(table.fieldName(2), QString("Id_B"));
+  QCOMPARE(table.fieldName(3), QString("Name"));
+  QVERIFY(!table.isFieldPartOfPrimaryKey(0));
+  QVERIFY(table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(table.isFieldPartOfPrimaryKey(2));
+  QVERIFY(!table.isFieldPartOfPrimaryKey(3));
+  QVERIFY(table.isFieldRequired(0));
+  QVERIFY(table.isFieldRequired(1));
+  QVERIFY(table.isFieldRequired(2));
+  QVERIFY(!table.isFieldRequired(3));
+  QVERIFY(!table.isFieldAutoIncrement(0));
+  QVERIFY(!table.isFieldAutoIncrement(1));
+  QVERIFY(!table.isFieldAutoIncrement(2));
+  QVERIFY(!table.isFieldAutoIncrement(3));
+  QVERIFY(table.fieldType(0) == FieldType::Bigint);
+  QVERIFY(table.fieldType(1) == FieldType::Integer);
+  QVERIFY(table.fieldType(2) == FieldType::Integer);
+  QVERIFY(table.fieldType(3) == FieldType::Varchar);
   QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
   QCOMPARE(table.primaryKey().fieldCount(), 2);
 }
