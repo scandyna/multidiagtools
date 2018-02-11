@@ -26,14 +26,17 @@
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief Field type
+   *
+   * Field types have been choosen by taking in account
+   *  MySQL, MariaDB, PostgreSQL, SQLite and QMetaType .
    */
   enum class FieldType
   {
     UnknownType,  /*!< Unknown type (or no type) */
     Boolean,      /*!< Boolean type */
-    Smallint,     /*!< Smallint type */
-    Integer,      /*!< Integer type */
-    Bigint,       /*!< Bigint type */
+    Smallint,     /*!< Smallint type , 2 bytes (16 bit) storage */
+    Integer,      /*!< Integer type , 4 bytes (32 bit) storage */
+    Bigint,       /*!< Bigint type , 8 bytes (64 bit) storage */
     Float,        /*!< Float type */
     Double,       /*!< Double type */
     Char,         /*!< Char type */
