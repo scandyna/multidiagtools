@@ -42,9 +42,16 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   {
    public:
 
-    /*! \brief Default container
+    /*! \brief Construct a null primary key container
      */
     PrimaryKeyContainer() = default;
+
+    /*! \brief Check if this container is null
+     */
+    bool isNull() const
+    {
+      return (mType == PrimaryKeyType::Unknown);
+    }
 
     /*! \brief Set primary key
      */
@@ -116,7 +123,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    private:
 
     boost::variant<PrimaryKey, AutoIncrementPrimaryKey> mPrimaryKey;
-    PrimaryKeyType mType = PrimaryKeyType::PrimaryKey;
+    PrimaryKeyType mType = PrimaryKeyType::Unknown;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

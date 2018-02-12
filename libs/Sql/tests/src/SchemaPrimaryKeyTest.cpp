@@ -209,7 +209,8 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
    * Initial state
    */
   PrimaryKeyContainer container;
-  QVERIFY(container.primaryKeyType() == PrimaryKeyType::PrimaryKey);
+  QVERIFY(container.primaryKeyType() == PrimaryKeyType::Unknown);
+  QVERIFY(container.isNull());
   QVERIFY(container.fieldName().isEmpty());
   ///qDebug() << "List: " << container.getFieldNameList();
   QVERIFY(container.fieldNameList().isEmpty());
@@ -219,6 +220,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
    */
   container.setPrimaryKey(Id_PK);
   QVERIFY(container.primaryKeyType() == PrimaryKeyType::AutoIncrementPrimaryKey);
+  QVERIFY(!container.isNull());
   QCOMPARE(container.fieldName(), QString("Id_PK"));
   QCOMPARE(container.fieldNameList(), QStringList({"Id_PK"}));
   QVERIFY(container.fieldType() == FieldType::Integer);
@@ -229,6 +231,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   // Variadic field
   container.setPrimaryKey(Id_A, Id_B);
   QVERIFY(container.primaryKeyType() == PrimaryKeyType::PrimaryKey);
+  QVERIFY(!container.isNull());
   QVERIFY(container.fieldName().isEmpty());
   QCOMPARE(container.fieldNameList(), QStringList({"Id_A","Id_B"}));
   QVERIFY(container.fieldType() == FieldType::UnknownType);
@@ -237,14 +240,15 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   PrimaryKey pk(Id_B);
   container.setPrimaryKey(pk);
   QVERIFY(container.primaryKeyType() == PrimaryKeyType::PrimaryKey);
+  QVERIFY(!container.isNull());
   QCOMPARE(container.primaryKey().fieldCount(), 1);
   QCOMPARE(container.fieldNameList(), QStringList({"Id_B"}));
   /*
    * Clear
    */
   container.clear();
-  QVERIFY(container.primaryKeyType() == PrimaryKeyType::PrimaryKey);
-  QCOMPARE(container.primaryKey().fieldCount(), 0);
+  QVERIFY(container.primaryKeyType() == PrimaryKeyType::Unknown);
+  QVERIFY(container.isNull());
 }
 
 void SchemaPrimaryKeyTest::fieldIndexListTest()

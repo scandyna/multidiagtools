@@ -105,7 +105,7 @@ PrimaryKey PrimaryKeyContainer::primaryKey() const
 void PrimaryKeyContainer::clear()
 {
   mPrimaryKey = PrimaryKey();
-  mType = PrimaryKeyType::PrimaryKey;
+  mType = PrimaryKeyType::Unknown;
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
