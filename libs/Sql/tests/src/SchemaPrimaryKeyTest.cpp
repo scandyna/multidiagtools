@@ -214,7 +214,6 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   ///qDebug() << "List: " << container.getFieldNameList();
   QVERIFY(container.fieldNameList().isEmpty());
   QVERIFY(container.fieldType() == FieldType::UnknownType);
-  QCOMPARE(container.fieldLength(), -1);
   /*
    * AutoIncrementPrimaryKey
    */
@@ -223,7 +222,6 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   QCOMPARE(container.fieldName(), QString("Id_PK"));
   QCOMPARE(container.fieldNameList(), QStringList({"Id_PK"}));
   QVERIFY(container.fieldType() == FieldType::Integer);
-  QCOMPARE(container.fieldLength(), -1);
   QCOMPARE(container.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   /*
    * PrimaryKey
@@ -234,7 +232,6 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   QVERIFY(container.fieldName().isEmpty());
   QCOMPARE(container.fieldNameList(), QStringList({"Id_A","Id_B"}));
   QVERIFY(container.fieldType() == FieldType::UnknownType);
-  QCOMPARE(container.fieldLength(), -1);
   QCOMPARE(container.primaryKey().fieldCount(), 2);
   // PrimaryKey
   PrimaryKey pk(Id_B);

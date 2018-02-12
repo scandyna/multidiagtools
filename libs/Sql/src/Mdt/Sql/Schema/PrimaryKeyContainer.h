@@ -72,8 +72,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Get field name
      *
-     * If primary key is of type
-     *  AutoIncrementPrimaryKey or SingleFieldPrimaryKey,
+     * If primary key is of type AutoIncrementPrimaryKey,
      *  its field name is returned,
      *  else a empty string is returned.
      */
@@ -85,19 +84,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Get field type
      *
-     *  AutoIncrementPrimaryKey or SingleFieldPrimaryKey,
+     * If this container holds a AutoIncrementPrimaryKey,
      *  its field type is returned,
      *  else UnknownType is returned.
      */
     FieldType fieldType() const;
-
-    /*! \brief Get field length
-     *
-     *  AutoIncrementPrimaryKey or SingleFieldPrimaryKey,
-     *  its field length is returned,
-     *  else UnknownType is returned.
-     */
-    int fieldLength() const;
 
     /*! \brief Get stored primary key type
      */

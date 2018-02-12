@@ -69,21 +69,6 @@ class FieldTypeVisitor : public boost::static_visitor<FieldType>
   }
 };
 
-class FieldLengthVisitor : public boost::static_visitor<int>
-{
- public:
-
-  int operator()(const AutoIncrementPrimaryKey &) const
-  {
-    return -1;
-  }
-
-  int operator()(const PrimaryKey &) const
-  {
-    return -1;
-  }
-};
-
 /*
  * PrimaryKeyContainer implementation
  */
@@ -101,11 +86,6 @@ QStringList PrimaryKeyContainer::fieldNameList() const
 FieldType PrimaryKeyContainer::fieldType() const
 {
   return boost::apply_visitor(FieldTypeVisitor(), mPrimaryKey);
-}
-
-int PrimaryKeyContainer::fieldLength() const
-{
-  return boost::apply_visitor( FieldLengthVisitor() , mPrimaryKey );
 }
 
 AutoIncrementPrimaryKey PrimaryKeyContainer::autoIncrementPrimaryKey() const
