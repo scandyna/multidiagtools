@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -21,10 +21,50 @@
 #ifndef MDT_ENTITY_SQL_TABLE_H
 #define MDT_ENTITY_SQL_TABLE_H
 
+#include "SqlField.h"
+#include "SqlPrimaryKey.h"
+#include "Mdt/Entity/FieldAttributes.h"
 #include "Mdt/Sql/Schema/Table.h"
+#include "Mdt/Sql/Schema/Field.h"
+#include "Mdt/Sql/Schema/FieldLength.h"
+#include "Mdt/Sql/Schema/FieldTypeMap.h"
 #include "MdtEntity_SqlExport.h"
+#include <QVariant>
+#include <boost/fusion/include/for_each.hpp>
+#include <type_traits>
 
 namespace Mdt{ namespace Entity{
+
+  namespace Impl{
+
+    /*! \internal Functor called from SqlTable::fromEntity() to add fields
+     */
+    template<typename EntityDataStruct>
+    class AddEntityFieldsToSqlTable
+    {
+     public:
+
+      AddEntityFieldsToSqlTable(Mdt::Sql::Schema::Table & table, const Mdt::Sql::Schema::FieldTypeMap & fieldTypeMap)
+       : mTable(table),
+         mFieldTypeMap(fieldTypeMap)
+      {
+      }
+
+      template<typename EntityFieldDef>
+      void operator()(const EntityFieldDef &) const
+      {
+        const auto sqlField = SqlField::fromEntityField<EntityDataStruct, EntityFieldDef>(mFieldTypeMap);
+        Q_ASSERT(!sqlField.isNull());
+        mTable.addField(sqlField);
+      }
+
+     private:
+
+      Mdt::Sql::Schema::Table & mTable;
+      const Mdt::Sql::Schema::FieldTypeMap & mFieldTypeMap;
+    };
+
+  } // namespace Impl{
 
   /*! \brief Helper to reflect a entity to a SQL table
    */
@@ -32,9 +72,20 @@ namespace Mdt{ namespace Entity{
   {
    public:
 
-    /*! \brief Create a SQL table from \a entity
+    /*! \brief Create a SQL table from a entity
      */
-    static Mdt::Sql::Schema::Table fromEntity();
+    template<typename EntityDataStruct, typename EntityDef>
+    static Mdt::Sql::Schema::Table fromEntity(const Mdt::Sql::Schema::FieldTypeMap & fieldTypeMap = Mdt::Sql::Schema::FieldTypeMap::make())
+    {
+      Mdt::Sql::Schema::Table table;
+
+      table.setTableName(EntityDef::entityName());
+      Impl::AddEntityFieldsToSqlTable<EntityDataStruct> op(table, fieldTypeMap);
+      boost::fusion::for_each(EntityDef(), op);
+      table.setPrimaryKeyContainer( SqlPrimaryKey::fromEntity<EntityDataStruct, EntityDef>(fieldTypeMap) );
+
+      return table;
+    }
   };
 
 }} // namespace Mdt{ namespace Entity{

@@ -27,4 +27,5 @@ endfunction()
 #================= Tests ====================
 
 addEntity_SqlTest("FieldTest")
+addEntity_SqlTest("PrimaryKeyTest")
 addEntity_SqlTest("TableTest")

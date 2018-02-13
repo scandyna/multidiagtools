@@ -24,15 +24,4 @@ using namespace Mdt::Sql::Schema;
 
 namespace Mdt{ namespace Entity{
 
-Sql::Schema::Field SqlField::fromEntityField(const QString & entityFieldName)
-{
-  Q_ASSERT(!entityFieldName.isEmpty());
-
-  Sql::Schema::Field sqlField;
-
-  sqlField.setName(entityFieldName);
-
-  return sqlField;
-}
-
 }} // namespace Mdt{ namespace Entity{

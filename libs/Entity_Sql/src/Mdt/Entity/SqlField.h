@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -21,9 +21,17 @@
 #ifndef MDT_ENTITY_SQL_FIELD_H
 #define MDT_ENTITY_SQL_FIELD_H
 
+#include "Mdt/Entity/FieldAttributes.h"
 #include "Mdt/Sql/Schema/Field.h"
+#include "Mdt/Sql/Schema/FieldType.h"
+#include "Mdt/Sql/Schema/FieldTypeMap.h"
+#include "Mdt/Sql/Schema/FieldLength.h"
 #include "MdtEntity_SqlExport.h"
 #include <QString>
+#include <QMetaType>
+#include <QVariant>
+#include <boost/fusion/include/at_key.hpp>
+#include <type_traits>
 
 namespace Mdt{ namespace Entity{
 
@@ -33,25 +41,48 @@ namespace Mdt{ namespace Entity{
   {
    public:
 
-    /*! \brief Create a SQL field from \a entityField
-     *
-     * \tparam Field Entity field. Must provide fieldName() method:
-     * \code
-     * static QString fieldName();
-     * \endcode
-     *
-     * \pre entityField must have a non empty fieldName
+    /*! \brief Get QMetaType from a entity field
      */
-    template<typename Field>
-    static Mdt::Sql::Schema::Field fromEntityField(const Field & entityField)
+    template<typename EntityDataStruct, typename EntityFieldDef>
+    static constexpr QMetaType::Type qmetaTypeFromEntityField() noexcept
     {
-      Q_ASSERT(!entityField.fieldName().isEmpty());
-      return fromEntityField(entityField.fieldName());
+      using fieldTypeRaw = typename boost::fusion::result_of::at_key<EntityDataStruct, EntityFieldDef>::type;
+      using fieldType = typename std::remove_reference_t<fieldTypeRaw>;
+
+      return static_cast<QMetaType::Type>( QVariant(fieldType{}).type() );
     }
 
-   private:
+    /*! \brief Get SQL field type from a entity field
+     */
+    template<typename EntityDataStruct, typename EntityFieldDef>
+    static constexpr Mdt::Sql::Schema::FieldType sqlFieldTypeFromEntityField(const Mdt::Sql::Schema::FieldTypeMap & fieldTypeMap) noexcept
+    {
+      const auto fieldLength = Mdt::Sql::Schema::FieldLength( EntityFieldDef::fieldAttributes().maxLength() );
 
-    static Mdt::Sql::Schema::Field fromEntityField(const QString & entityFieldName);
+      return fieldTypeMap.fieldTypeFromQMetaType( qmetaTypeFromEntityField<EntityDataStruct, EntityFieldDef>(), fieldLength );
+    }
+
+    /*! \brief Create a SQL field from a entity field
+     *
+     * \note For fields that are part of the primary key,
+     *   the unique and required flags are not set here.
+     *   They are later handled by Mdt::Sql::Schema::Table .
+     */
+    template<typename EntityDataStruct, typename EntityFieldDef>
+    static Mdt::Sql::Schema::Field fromEntityField(const Mdt::Sql::Schema::FieldTypeMap & fieldTypeMap)
+    {
+      Mdt::Sql::Schema::Field sqlField;
+      const FieldAttributes fieldAttributes = EntityFieldDef::fieldAttributes();
+
+      sqlField.setType( sqlFieldTypeFromEntityField<EntityDataStruct, EntityFieldDef>(fieldTypeMap) );
+      sqlField.setName( EntityFieldDef::fieldName() );
+      sqlField.setRequired( fieldAttributes.isRequired() );
+      sqlField.setUnique( fieldAttributes.isUnique() );
+      sqlField.setLength( fieldAttributes.maxLength() );
+
+      return sqlField;
+    }
+
   };
 
 }} // namespace Mdt{ namespace Entity{

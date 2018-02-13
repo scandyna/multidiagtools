@@ -2,20 +2,21 @@
 # List of source files
 set(SOURCE_FILES
   Mdt/Entity/SqlField.cpp
+  Mdt/Entity/SqlPrimaryKey.cpp
   Mdt/Entity/SqlTable.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
 
-# # Get Boost include directory if not allready set
-# # We only use header onyl libraries, so we not use COMPONENTS
-# # See: http://stackoverflow.com/questions/26749461/how-to-determine-the-boost-library-names-for-cmake
-# if(NOT Boost_FOUND)
-#   find_package(Boost REQUIRED)
-#   if(Boost_FOUND)
-#     include_directories(${Boost_INCLUDE_DIRS})
-#   endif(Boost_FOUND)
-# endif()
+# Get Boost include directory if not allready set
+# We only use header onyl libraries, so we not use COMPONENTS
+# See: http://stackoverflow.com/questions/26749461/how-to-determine-the-boost-library-names-for-cmake
+if(NOT Boost_FOUND)
+  find_package(Boost REQUIRED)
+  if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+  endif(Boost_FOUND)
+endif()
 
 mdt_add_library(
   NAME Entity_Sql
