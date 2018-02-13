@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_SCHEMA_FIELD_LENGTH_H
 #define MDT_SQL_SCHEMA_FIELD_LENGTH_H
 
+#include "Mdt/Assert.h"
 #include <QtGlobal>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -37,12 +38,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Construct a field length
      *
-     * \pre \a length must be >= 1
+     * If \a length is < 1,
+     *  this field length will be null .
+     *
+     * \pre \a length must be >= 0
      */
     explicit constexpr FieldLength(int length) noexcept
     {
-      Q_ASSERT(length >= 1);
-
+      MDT_ASSERT(length >= 0);
       mValue = length;
     }
 
