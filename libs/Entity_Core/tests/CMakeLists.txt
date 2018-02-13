@@ -40,8 +40,6 @@ addEntity_CoreTest("ItemModelPrimaryKeyTest")
 addEntity_CoreTest("TableModelRecordAdapterTest")
 addEntity_CoreTest("TableModelTest")
 
-addEntity_CoreTest("ReflectionTest")
-
 # Clang warns about explicit move that prevents copy elision.
 # For this test case, we need explicit move to check our code
 # if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
