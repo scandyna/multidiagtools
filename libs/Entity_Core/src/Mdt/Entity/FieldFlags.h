@@ -29,9 +29,21 @@ namespace Mdt{ namespace Entity{
    */
   enum class FieldFlag
   {
-    IsRequired = 0x01,    /*!< Field is required */
-    IsUnique = 0x02,      /*!< Field is unique */
-    IsPrimaryKey = 0x04   /*!< Field is part of the primary key */
+    IsRequired = 0x01,      /*!< Field is required */
+    IsUnique = 0x02,        /*!< Field is unique */
+    IsPrimaryKey = 0x04,    /*!< Field is part of the primary key */
+    HasDefaultValue = 0x08  /*!< Field has a default value.
+                              For example, if a entity data struct has a default value:
+                              \code
+                              struct MyEntity
+                              {
+                                QString code = "DEFAULT";
+                              };
+                              \endcode
+                              and this flag is set for the code field,
+                              the default value will be used by some storages as default value
+                              (for example in SQL databases).
+                             */
   };
   Q_DECLARE_FLAGS(FieldFlags, FieldFlag)
 

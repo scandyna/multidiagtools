@@ -73,6 +73,13 @@ namespace Mdt{ namespace Entity{
       return mFlags.testFlag(FieldFlag::IsPrimaryKey);
     }
 
+    /*! \brief Check if this field has a default value
+     */
+    constexpr bool hasDefaultValue() const noexcept
+    {
+      return mFlags.testFlag(FieldFlag::HasDefaultValue);
+    }
+
     /*! \brief Get field max length
      */
     constexpr int maxLength() const noexcept

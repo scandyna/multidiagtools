@@ -53,6 +53,7 @@ void FieldAttributesTest::attributesBasicTest()
   QVERIFY(!fa0.isRequired());
   QVERIFY(!fa0.isUnique());
   QVERIFY(!fa0.isPrimaryKey());
+  QVERIFY(!fa0.hasDefaultValue());
   QCOMPARE(fa0.maxLength(), 0);
 }
 
@@ -63,6 +64,7 @@ void FieldAttributesTest::attributesVariadicConstructTest()
   QVERIFY(fa1.isRequired());
   QVERIFY(!fa1.isUnique());
   QVERIFY(!fa1.isPrimaryKey());
+  QVERIFY(!fa1.hasDefaultValue());
   QCOMPARE(fa1.maxLength(), 0);
 
   FieldAttributes fa2(FieldMaxLength(250));
@@ -70,6 +72,7 @@ void FieldAttributesTest::attributesVariadicConstructTest()
   QVERIFY(!fa2.isRequired());
   QVERIFY(!fa2.isUnique());
   QVERIFY(!fa2.isPrimaryKey());
+  QVERIFY(!fa2.hasDefaultValue());
   QCOMPARE(fa2.maxLength(), 250);
 
   FieldAttributes fa3(FieldFlag::IsUnique, FieldMaxLength(12));
@@ -77,6 +80,7 @@ void FieldAttributesTest::attributesVariadicConstructTest()
   QVERIFY(!fa3.isRequired());
   QVERIFY(fa3.isUnique());
   QVERIFY(!fa3.isPrimaryKey());
+  QVERIFY(!fa3.hasDefaultValue());
   QCOMPARE(fa3.maxLength(), 12);
 
   FieldAttributes fa4(FieldMaxLength(15), FieldFlag::IsRequired);
@@ -84,6 +88,7 @@ void FieldAttributesTest::attributesVariadicConstructTest()
   QVERIFY(fa4.isRequired());
   QVERIFY(!fa4.isUnique());
   QVERIFY(!fa4.isPrimaryKey());
+  QVERIFY(!fa4.hasDefaultValue());
   QCOMPARE(fa4.maxLength(), 15);
 
   FieldAttributes fa5(FieldFlag::IsUnique | FieldFlag::IsRequired, FieldMaxLength(367));
@@ -91,6 +96,7 @@ void FieldAttributesTest::attributesVariadicConstructTest()
   QVERIFY(fa5.isRequired());
   QVERIFY(fa5.isUnique());
   QVERIFY(!fa5.isPrimaryKey());
+  QVERIFY(!fa5.hasDefaultValue());
   QCOMPARE(fa5.maxLength(), 367);
 
   FieldAttributes fa6(FieldFlag::IsPrimaryKey);
@@ -98,7 +104,16 @@ void FieldAttributesTest::attributesVariadicConstructTest()
   QVERIFY(!fa6.isRequired());
   QVERIFY(!fa6.isUnique());
   QVERIFY(fa6.isPrimaryKey());
+  QVERIFY(!fa6.hasDefaultValue());
   QCOMPARE(fa6.maxLength(), 0);
+
+  FieldAttributes fa7(FieldFlag::HasDefaultValue);
+  QVERIFY(!fa7.isNull());
+  QVERIFY(!fa7.isRequired());
+  QVERIFY(!fa7.isUnique());
+  QVERIFY(!fa7.isPrimaryKey());
+  QVERIFY(fa7.hasDefaultValue());
+  QCOMPARE(fa7.maxLength(), 0);
 }
 
 /*
