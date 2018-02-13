@@ -79,6 +79,9 @@ namespace Mdt{ namespace Entity{
       sqlField.setRequired( fieldAttributes.isRequired() );
       sqlField.setUnique( fieldAttributes.isUnique() );
       sqlField.setLength( fieldAttributes.maxLength() );
+      if(fieldAttributes.hasDefaultValue()){
+        sqlField.setDefaultValue( boost::fusion::at_key<EntityFieldDef>(EntityDataStruct{}) );
+      }
 
       return sqlField;
     }

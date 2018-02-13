@@ -43,7 +43,7 @@ struct TestCaseDataStruct
 {
   qlonglong id;
   QString name;
-  double qty;
+  double qty = 1.0;
 };
 
 MDT_ENTITY_DEF(
@@ -51,7 +51,7 @@ MDT_ENTITY_DEF(
   TestCase,
   (id, FieldFlag::IsPrimaryKey),
   (name, FieldFlag::IsRequired, FieldMaxLength(100)),
-  (qty)
+  (qty, FieldFlag::HasDefaultValue)
 )
 
 /*
@@ -118,7 +118,7 @@ void FieldTest::sqlFieldFromEntityFieldTest()
   QCOMPARE(qty.name(), QString("qty"));
   QVERIFY(!qty.isRequired());
   QVERIFY(!qty.isUnique());
-  QVERIFY(qty.defaultValue().isNull());
+  QCOMPARE(qty.defaultValue(), QVariant(1.0));
   QVERIFY(qty.length() < 1);
   QVERIFY(!qty.isNull());
 }
