@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -22,6 +22,7 @@
 #define MDT_ENTITY_DEF_H
 
 #include "FieldDef.h"
+#include "TypeTraits/EntityDefTag.h"
 #include <QString>
 #include <boost/preprocessor/if.hpp>
 #include <boost/preprocessor/cat.hpp>
@@ -233,18 +234,16 @@
  *  as it was declared in PersonDataStruct.
  *  The following optional arguments are attributes.
  *  See the FieldAttributes class for details.
- */
-/** \todo Before BOOST_FUSION_ADAPT_STRUCT(),
- *   check that MDT_ENTITY_DEF_NAME_NS() <-- i.e. the data atruct
- *   exists.
- *   If not, throw a error (to avoid misterious compile errors):
- *   #ifndef MDT_ENTITY_DEF_NAME_NS()
- *    #error "...."
- *   #endif
+ *
+ * \note If the compiler trows a lot of errors,
+ *  it should first be checked if the data struct
+ *  (PersonDataStruct in this example) have beend defined before calling MDT_ENTITY_DEF() .
+ *  Sadly, I did not find any solution to put a short error message
+ *  using the preprocessor.
  */
 #define MDT_ENTITY_DEF(defTuple, name, ...)                     \
   MDT_ENTITY_DEF_NAMESPACE_BEGIN(defTuple)                      \
-  struct MDT_ENTITY_DEF_NAME(name)                              \
+  struct MDT_ENTITY_DEF_NAME(name) : Mdt::Entity::TypeTraits::EntityDefTag   \
   {                                                             \
     constexpr MDT_ENTITY_DEF_NAME(name)() noexcept {}           \
                                                                 \
