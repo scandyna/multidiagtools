@@ -23,6 +23,7 @@
 
 #include "MdtEntity_CoreExport.h"
 #include "FieldAttributes.h"
+#include "TypeTraits/IsEntityDef.h"
 #include <QString>
 #include <QLatin1String>
 #include <QVariant>
@@ -69,6 +70,8 @@ namespace Mdt{ namespace Entity{
   template<typename T>
   void printEntityDataToConsole(const T & data)
   {
+    static_assert( TypeTraits::IsEntityDef<decltype(data.def())>::value, "def() must return a entity definition type" );
+
     printStringToConsole(QLatin1String("Entity: ") + data.def().entityName());
     boost::fusion::for_each(data.def(), PrintFieldToConsole<decltype(data.constDataStruct())>(data.constDataStruct()));
   }

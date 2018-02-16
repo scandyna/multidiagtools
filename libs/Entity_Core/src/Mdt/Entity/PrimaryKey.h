@@ -23,6 +23,7 @@
 
 #include "PrimaryKeyField.h"
 #include "Mdt/Entity/FieldAttributes.h"
+#include "TypeTraits/IsEntityDef.h"
 #include "MdtEntity_CoreExport.h"
 #include <QtGlobal>
 #include <QMetaType>
@@ -82,6 +83,8 @@ namespace Mdt{ namespace Entity{
     template<typename EntityDef>
     QStringList toFieldNameList() const
     {
+      static_assert( TypeTraits::IsEntityDef<EntityDef>::value, "EntityDef must be a entity definition type" );
+
       QStringList fieldNames;
 
       fieldNames.reserve( fieldCount() );
@@ -97,6 +100,8 @@ namespace Mdt{ namespace Entity{
     template<typename EntityDataStruct, typename EntityDef>
     static PrimaryKey fromEntity()
     {
+      static_assert( TypeTraits::IsEntityDef<EntityDef>::value, "EntityDef must be a entity definition type" );
+
       PrimaryKey pk;
       Impl::AddFieldToPrimaryKeyIf<EntityDataStruct> op(pk);
 

@@ -23,6 +23,7 @@
 
 #include "Mdt/Assert.h"
 #include "FieldAt.h"
+#include "TypeTraits/IsEntityDef.h"
 #include "MdtEntity_CoreExport.h"
 #include <QMetaType>
 #include <QVariant>
@@ -64,6 +65,7 @@ namespace Mdt{ namespace Entity{
     template<typename EntityDef>
     QString fieldName() const
     {
+      static_assert( TypeTraits::IsEntityDef<EntityDef>::value, "EntityDef must be a entity definition type" );
       return fieldNameAt(EntityDef{}, mFieldIndex);
     }
 

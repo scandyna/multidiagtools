@@ -23,6 +23,7 @@
 
 #include "FieldAt.h"
 #include "TableModelRecordAdapter.h"
+#include "TypeTraits/IsEntityDef.h"
 #include "Mdt/ItemModel/EditableStlTableModel.h"
 #include <type_traits>
 
