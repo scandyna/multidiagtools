@@ -52,7 +52,6 @@ class ArticleData : public Mdt::Entity::DataTemplate<ArticleDataStruct, ArticleD
 {
 };
 
-
 /**
  * For tests, reate structs:
  *
