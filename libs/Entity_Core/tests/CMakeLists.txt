@@ -30,6 +30,7 @@ endfunction()
 
 addEntity_CoreTest("FieldAttributesTest")
 addEntity_CoreTest("FieldDefTest")
+addEntity_CoreTest("TypeTraitsTest")
 addEntity_CoreTest("DefTest")
 addEntity_CoreTest("ValueAtTest")
 addEntity_CoreTest("FieldAtTest")
