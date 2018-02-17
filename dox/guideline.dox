@@ -77,6 +77,32 @@
  *  To solve this issue, the Ui class should be forward declared in the header,
  *   used as member of the class, using a unique_ptr.
  *   The ui_*h file can also be included in the *.cpp file.
+ *
+ *   \code
+ *   #include <QWidget>
+ *   #include <memory>
+ *
+ *   namespace Ui{
+ *     class MyWidget;
+ *   }
+ *
+ *   class MyWidget : public QWidget
+ *   {
+ *    Q_OBJECT
+ *
+ *    public:
+ *
+ *     MyWidget(QWidget *parent = nullptr);
+ *
+ *    // unique_ptr needs complete definition to destruct Ui::MyWidget
+ *    ~MyWidget();
+ *
+ *    private:
+ *
+ *     std::unique_ptr<Ui::MyWidget> mUi;
+ *   };
+ *   \endcode
+ *
  *   See Mdt::ItemEditor::StandardWindow to see a example of this usage.
  *
  * \section translations Translations
