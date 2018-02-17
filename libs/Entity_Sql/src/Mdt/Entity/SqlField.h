@@ -22,6 +22,7 @@
 #define MDT_ENTITY_SQL_FIELD_H
 
 #include "Mdt/Entity/FieldAttributes.h"
+#include "Mdt/Entity/TypeTraits/IsEntityFieldDef.h"
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/FieldType.h"
 #include "Mdt/Sql/Schema/FieldTypeMap.h"
@@ -46,6 +47,8 @@ namespace Mdt{ namespace Entity{
     template<typename EntityDataStruct, typename EntityFieldDef>
     static constexpr QMetaType::Type qmetaTypeFromEntityField() noexcept
     {
+      static_assert( TypeTraits::IsEntityFieldDef<EntityFieldDef>::value, "EntityFieldDef must be a entity field definition type" );
+
       using fieldTypeRaw = typename boost::fusion::result_of::at_key<EntityDataStruct, EntityFieldDef>::type;
       using fieldType = typename std::remove_reference_t<fieldTypeRaw>;
 
@@ -57,6 +60,8 @@ namespace Mdt{ namespace Entity{
     template<typename EntityDataStruct, typename EntityFieldDef>
     static constexpr Mdt::Sql::Schema::FieldType sqlFieldTypeFromEntityField(const Mdt::Sql::Schema::FieldTypeMap & fieldTypeMap) noexcept
     {
+      static_assert( TypeTraits::IsEntityFieldDef<EntityFieldDef>::value, "EntityFieldDef must be a entity field definition type" );
+
       const auto fieldLength = Mdt::Sql::Schema::FieldLength( EntityFieldDef::fieldAttributes().maxLength() );
 
       return fieldTypeMap.fieldTypeFromQMetaType( qmetaTypeFromEntityField<EntityDataStruct, EntityFieldDef>(), fieldLength );
@@ -71,6 +76,8 @@ namespace Mdt{ namespace Entity{
     template<typename EntityDataStruct, typename EntityFieldDef>
     static Mdt::Sql::Schema::Field fromEntityField(const Mdt::Sql::Schema::FieldTypeMap & fieldTypeMap)
     {
+      static_assert( TypeTraits::IsEntityFieldDef<EntityFieldDef>::value, "EntityFieldDef must be a entity field definition type" );
+
       Mdt::Sql::Schema::Field sqlField;
       const FieldAttributes fieldAttributes = EntityFieldDef::fieldAttributes();
 

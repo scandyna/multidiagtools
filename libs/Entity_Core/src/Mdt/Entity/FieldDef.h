@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -22,6 +22,7 @@
 #define MDT_ENTITY_FIELD_DEF_H
 
 #include "FieldAttributes.h"
+#include "TypeTraits/EntityFieldDefTag.h"
 #include <QString>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/stringize.hpp>
@@ -103,19 +104,19 @@
    *   could be replaced with:
    *    constexpr auto fieldName()
    */
-#define MDT_ENTITY_FIELD_DEF(fieldTuple) \
-  struct MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) \
-  { \
-    static const QString fieldName() \
-    { \
-      return QStringLiteral( MDT_ENTITY_FIELD_ELEM_NAME_STR(fieldTuple) ); \
-    } \
-    \
-    static const Mdt::Entity::FieldAttributes fieldAttributes() \
-    { \
-      using namespace Mdt::Entity; \
-      return Mdt::Entity::FieldAttributes(MDT_ENTITY_FIELD_ELEM_ATTRIBUTES_ARGS(fieldTuple)); \
-    } \
+#define MDT_ENTITY_FIELD_DEF(fieldTuple)                                                          \
+  struct MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) : Mdt::Entity::TypeTraits::EntityFieldDefTag  \
+  {                                                                                               \
+    static const QString fieldName()                                                              \
+    {                                                                                             \
+      return QStringLiteral( MDT_ENTITY_FIELD_ELEM_NAME_STR(fieldTuple) );                        \
+    }                                                                                             \
+                                                                                                  \
+    static const Mdt::Entity::FieldAttributes fieldAttributes()                                   \
+    {                                                                                             \
+      using namespace Mdt::Entity;                                                                \
+      return Mdt::Entity::FieldAttributes(MDT_ENTITY_FIELD_ELEM_ATTRIBUTES_ARGS(fieldTuple));     \
+    }                                                                                             \
   };
 
 #define MDT_ENTITY_FIELD_DEF_INSTANCE(fieldTuple) \

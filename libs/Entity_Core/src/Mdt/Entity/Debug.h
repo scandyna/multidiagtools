@@ -23,6 +23,7 @@
 
 #include "MdtEntity_CoreExport.h"
 #include "FieldAttributes.h"
+#include "TypeTraits/IsEntityFieldDef.h"
 #include "TypeTraits/IsEntityDef.h"
 #include <QString>
 #include <QLatin1String>
@@ -43,15 +44,17 @@ namespace Mdt{ namespace Entity{
     {
     }
 
-    template<typename Key>
-    void operator()(const Key &) const
+    template<typename EntityFieldDef>
+    void operator()(const EntityFieldDef &) const
     {
-      printStringToConsole(QLatin1String(" field ") + Key::fieldName() + QLatin1String(":"));
-      static const auto attributes = Key::fieldAttributes();
+      static_assert( TypeTraits::IsEntityFieldDef<EntityFieldDef>::value, "EntityFieldDef must be a entity field definition type" );
+
+      printStringToConsole(QLatin1String(" field ") + EntityFieldDef::fieldName() + QLatin1String(":"));
+      static const auto attributes = EntityFieldDef::fieldAttributes();
       printStringToConsole(QLatin1String("  required: ") + stringFromBool(attributes.isRequired()));
       printStringToConsole(QLatin1String("  unique: ") + stringFromBool(attributes.isUnique()));
       printStringToConsole(QLatin1String("  max length: ") + QString::number(attributes.maxLength()));
-      printStringToConsole(QLatin1String("  value: ") + QVariant(boost::fusion::at_key<Key>(mData)).toString());
+      printStringToConsole(QLatin1String("  value: ") + QVariant(boost::fusion::at_key<EntityFieldDef>(mData)).toString());
     }
 
     const Data & mData;

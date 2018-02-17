@@ -25,6 +25,7 @@
 #include "SqlPrimaryKey.h"
 #include "Mdt/Entity/FieldAttributes.h"
 #include "Mdt/Entity/TypeTraits/IsEntityDef.h"
+#include "Mdt/Entity/TypeTraits/IsEntityFieldDef.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/FieldLength.h"
@@ -54,6 +55,8 @@ namespace Mdt{ namespace Entity{
       template<typename EntityFieldDef>
       void operator()(const EntityFieldDef &) const
       {
+        static_assert( TypeTraits::IsEntityFieldDef<EntityFieldDef>::value, "EntityFieldDef must be a entity field definition type" );
+
         const auto sqlField = SqlField::fromEntityField<EntityDataStruct, EntityFieldDef>(mFieldTypeMap);
         Q_ASSERT(!sqlField.isNull());
         mTable.addField(sqlField);
