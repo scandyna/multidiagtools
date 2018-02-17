@@ -78,6 +78,7 @@
  *   used as member of the class, using a unique_ptr.
  *   The ui_*h file can also be included in the *.cpp file.
  *
+ *  Example of a widget class declaration:
  *   \code
  *   #include <QWidget>
  *   #include <memory>
@@ -101,6 +102,23 @@
  *
  *     std::unique_ptr<Ui::MyWidget> mUi;
  *   };
+ *   \endcode
+ *
+ *  Example of a widget class implementation:
+ *   \code
+ *   #include "MyWidget.h"
+ *   #include "ui_MyWidget.h"
+ *
+ *   MyWidget::MyWidget(QWidget *parent)
+ *    : QWidget(parent),
+ *      mUi( std::make_unique<Ui::MyWidget>() )
+ *   {
+ *     mUi->setupUi(this);
+ *   }
+ *
+ *   MyWidget::~MyWidget()
+ *   {
+ *   }
  *   \endcode
  *
  *   See Mdt::ItemEditor::StandardWindow to see a example of this usage.
