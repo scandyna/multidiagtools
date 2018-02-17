@@ -51,6 +51,7 @@ namespace Mdt{ namespace ItemModel{
     using record_type = typename ParentClass::record_type;
     using value_type = typename ParentClass::value_type;
 
+    using ParentClass::ParentClass;
     using ParentClass::rowCount;
     using ParentClass::columnCount;
     using ParentClass::index;
