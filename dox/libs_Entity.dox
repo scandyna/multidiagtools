@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -66,7 +66,16 @@
  *
  * \section createAentity Create a entity
  *
- *  \sa MDT_ENTITY_DEF()
+ *  The first step is to create create a data struct, which will contain all attributes of the entity.
+ *   Then, the entity can be created using MDT_ENTITY_DEF() .
+ *
+ *  The next step is to create a value class using Mdt::Entity::DataTemplate .
+ *
+ *  Starting from here, it is possible to present a list on the entities in the Qt model/view, using one of:
+ *   - Mdt::Entity::ReadOnlyTableModel
+ *   - Mdt::Entity::EditableTableModel
+ *   - Mdt::Entity::RowResizableTableModel
+ *
  *  \sa the Mdt::Entity namespace
  */
 
