@@ -21,6 +21,7 @@
 #ifndef MDT_TEST_LIB_ITEM_MODEL_REMOVE_ROW_TEST_H
 #define MDT_TEST_LIB_ITEM_MODEL_REMOVE_ROW_TEST_H
 
+#include "MdtTestLib_CoreExport.h"
 #include <QObject>
 #include <QAbstractItemModel>
 
@@ -34,7 +35,7 @@ namespace Mdt{ namespace TestLib{
    * Mdt::TestLib::ItemModelRemoveRowTest removeRowTest(&model);
    * \endcode
    */
-  class ItemModelRemoveRowTest : public QObject
+  class MDT_TESTLIB_CORE_EXPORT ItemModelRemoveRowTest : public QObject
   {
    Q_OBJECT
 

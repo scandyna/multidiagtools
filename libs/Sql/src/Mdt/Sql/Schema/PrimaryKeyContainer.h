@@ -25,6 +25,7 @@
 #include "AutoIncrementPrimaryKey.h"
 #include "PrimaryKey.h"
 #include "FieldType.h"
+#include "MdtSqlExport.h"
 #include <QStringList>
 #include <boost/variant.hpp>
 
@@ -38,7 +39,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * To store this variants of primary key in a unified way,
    *  for example in a Table, this container class helps.
    */
-  class PrimaryKeyContainer
+  class MDT_SQL_EXPORT PrimaryKeyContainer
   {
    public:
 

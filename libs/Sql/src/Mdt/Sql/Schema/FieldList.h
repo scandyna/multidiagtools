@@ -22,6 +22,7 @@
 #define MDT_SQL_SCHEMA_FIELD_LIST_H
 
 #include "Field.h"
+#include "MdtSqlExport.h"
 #include <QVector>
 #include <QStringList>
 
@@ -29,7 +30,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief List of fields
    */
-  class FieldList
+  class MDT_SQL_EXPORT FieldList
   {
    public:
 

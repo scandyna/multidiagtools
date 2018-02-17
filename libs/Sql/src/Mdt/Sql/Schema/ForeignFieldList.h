@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 
 #include "Field.h"
 #include "AutoIncrementPrimaryKey.h"
+#include "MdtSqlExport.h"
 #include <QString>
 #include <QStringList>
 
@@ -30,7 +31,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief Wrapper to pack a list of fields of foreign table when declaring foreign key
    */
-  class ForeignFieldList
+  class MDT_SQL_EXPORT ForeignFieldList
   {
    public:
 

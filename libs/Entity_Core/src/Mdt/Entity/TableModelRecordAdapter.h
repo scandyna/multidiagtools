@@ -22,7 +22,6 @@
 #define MDT_ENTITY_TABLE_MODEL_RECORD_ADAPTER_H
 
 #include "ValueAt.h"
-#include "MdtEntity_CoreExport.h"
 #include <QtGlobal>
 #include <QVariant>
 #include <boost/fusion/include/size.hpp>
@@ -35,7 +34,7 @@ namespace Mdt{ namespace Entity{
    * This implementation works subclasses of DataTemplate .
    */
   template<typename Data>
-  class MDT_ENTITY_CORE_EXPORT TableModelRecordAdapter
+  class TableModelRecordAdapter
   {
    public:
 

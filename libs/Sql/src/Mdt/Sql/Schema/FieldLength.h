@@ -22,13 +22,14 @@
 #define MDT_SQL_SCHEMA_FIELD_LENGTH_H
 
 #include "Mdt/Assert.h"
+#include "MdtSqlExport.h"
 #include <QtGlobal>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief Express a field length in a safe way
    */
-  class FieldLength
+  class MDT_SQL_EXPORT FieldLength
   {
    public:
 

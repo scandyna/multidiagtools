@@ -21,7 +21,6 @@
 #ifndef MDT_ENTITY_READ_ONLY_TABLE_MODEL_H
 #define MDT_ENTITY_READ_ONLY_TABLE_MODEL_H
 
-//#include "AbstractTableModel.h"
 #include "FieldAt.h"
 #include "TableModelRecordAdapter.h"
 #include "Mdt/ItemModel/ReadOnlyStlTableModel.h"

@@ -24,7 +24,6 @@
 #include "FieldAt.h"
 #include "TableModelRecordAdapter.h"
 #include "Mdt/ItemModel/RowResizableStlTableModelTemplate.h"
-#include "MdtEntity_CoreExport.h"
 #include <type_traits>
 
 namespace Mdt{ namespace Entity{
@@ -42,7 +41,7 @@ namespace Mdt{ namespace Entity{
    *     - value_type : a subclass of DataTemplate .
    */
   template<typename DataList>
-  class MDT_ENTITY_CORE_EXPORT RowResizableTableModel : public Mdt::ItemModel::RowResizableStlTableModelTemplate< DataList, TableModelRecordAdapter<typename DataList::value_type> >
+  class RowResizableTableModel : public Mdt::ItemModel::RowResizableStlTableModelTemplate< DataList, TableModelRecordAdapter<typename DataList::value_type> >
   {
    public:
 

@@ -22,13 +22,14 @@
 #define MDT_SQL_SCHEMA_AUTO_INCREMENT_PRIMARY_KEY_H
 
 #include "FieldType.h"
+#include "MdtSqlExport.h"
 #include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief Auto increment primary key
    */
-  class AutoIncrementPrimaryKey
+  class MDT_SQL_EXPORT AutoIncrementPrimaryKey
   {
    public:
 

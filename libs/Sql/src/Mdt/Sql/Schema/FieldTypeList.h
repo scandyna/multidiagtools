@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_SQL_SCHEMA_FIELD_TYPE_LIST_H
 
 #include "FieldType.h"
+#include "MdtSqlExport.h"
 #include <QtGlobal>
 #include <vector>
 
@@ -29,7 +30,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief List of FieldType
    */
-  class FieldTypeList
+  class MDT_SQL_EXPORT FieldTypeList
   {
    public:
 

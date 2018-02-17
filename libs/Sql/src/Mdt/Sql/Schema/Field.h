@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 
 #include "FieldType.h"
 #include "Collation.h"
+#include "MdtSqlExport.h"
 #include <QString>
 #include <QVariant>
 
@@ -30,7 +31,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief SQL schema field
    */
-  class Field final
+  class MDT_SQL_EXPORT Field final
   {
    public:
 

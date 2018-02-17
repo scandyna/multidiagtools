@@ -22,6 +22,7 @@
 #define MDT_SQL_SELECT_TABLE_H
 
 #include "Schema/ForeignKeyList.h"
+#include "MdtSqlExport.h"
 #include <QString>
 
 namespace Mdt{ namespace Sql{
@@ -43,7 +44,7 @@ namespace Mdt{ namespace Sql{
    *  a table can be designed by its table name or a alias.
    *  SelectTable represents this.
    */
-  class SelectTable
+  class MDT_SQL_EXPORT SelectTable
   {
    public:
 

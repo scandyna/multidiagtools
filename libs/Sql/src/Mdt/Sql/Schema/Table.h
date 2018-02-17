@@ -35,6 +35,7 @@
 #include "ForeignKey.h"
 #include "ForeignKeyList.h"
 #include "IndexList.h"
+#include "MdtSqlExport.h"
 #include <QString>
 #include <vector>
 #include <type_traits>
@@ -184,7 +185,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *
    * \sa TableTemplate
    */
-  class Table
+  class MDT_SQL_EXPORT Table
   {
    public:
 

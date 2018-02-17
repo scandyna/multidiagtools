@@ -22,13 +22,14 @@
 #define MDT_SQL_SCHEMA_FIELD_TYPE_NAME_H
 
 #include "FieldType.h"
+#include "MdtSqlExport.h"
 #include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief Mapping between a FieldType and its name
    */
-  class FieldTypeName
+  class MDT_SQL_EXPORT FieldTypeName
   {
    public:
 

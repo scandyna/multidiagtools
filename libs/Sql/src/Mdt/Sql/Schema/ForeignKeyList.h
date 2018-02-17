@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_SQL_SCHEMA_FOREIGN_KEY_LIST_H
 
 #include "ForeignKey.h"
+#include "MdtSqlExport.h"
 #include <QVector>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -34,7 +35,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief List of ForeignKey
    */
-  class ForeignKeyList
+  class MDT_SQL_EXPORT ForeignKeyList
   {
    public:
 
