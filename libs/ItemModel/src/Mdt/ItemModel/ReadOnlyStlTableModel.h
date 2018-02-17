@@ -80,6 +80,8 @@ namespace Mdt{ namespace ItemModel{
      */
     using value_type = typename RecordAdapter::value_type;
 
+    using AbstractStlTableModel::AbstractStlTableModel;
+
     /*! \brief Set a instance of a table
      *
      * \note \a table will be copied to this model.
