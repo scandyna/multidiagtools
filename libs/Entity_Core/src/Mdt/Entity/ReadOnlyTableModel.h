@@ -35,6 +35,19 @@ namespace Mdt{ namespace Entity{
    *     - The cbegin() method
    *     - The cend() method
    *     - value_type : a subclass of DataTemplate .
+   *
+   * Example for a entity value class based on DataTemplate :
+   * \code
+   * class MyEntityModel : public Mdt::Entity::ReadOnlyTableModel< std::vector<MyEntityData> >
+   * {
+   *  Q_OBJECT
+   *
+   *  public:
+   *
+   *   using ParentClass = Mdt::Entity::ReadOnlyTableModel< std::vector<MyEntityData> >;
+   *   using ParentClass::ParentClass;
+   * };
+   * \endcode
    */
   template<typename DataList>
   class ReadOnlyTableModel : public Mdt::ItemModel::ReadOnlyStlTableModel< DataList, TableModelRecordAdapter<typename DataList::value_type> >
@@ -45,6 +58,7 @@ namespace Mdt{ namespace Entity{
     using data_struct_type = typename DataList::value_type::data_struct_type;
 
     using ParentClass = Mdt::ItemModel::ReadOnlyStlTableModel< DataList, TableModelRecordAdapter<typename DataList::value_type> >;
+    using ParentClass::ParentClass;
     using ParentClass::headerData;
 
     /*! \brief Get header data for \a section, \a orientation and \a role
