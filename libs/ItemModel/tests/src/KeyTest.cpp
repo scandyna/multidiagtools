@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "KeyTest.h"
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 #include "Mdt/ItemModel/RowList.h"
 #include "Mdt/ItemModel/ColumnList.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
@@ -252,6 +252,9 @@ void KeyTest::primaryKeyTest()
   PrimaryKey pk2({0,4,1});
   QCOMPARE(pk2.columnCount(), 3);
   QVERIFY(!pk2.isNull());
+  QCOMPARE(pk2.columnAt(0), 0);
+  QCOMPARE(pk2.columnAt(1), 4);
+  QCOMPARE(pk2.columnAt(2), 1);
   QCOMPARE(pk2.greatestColumn(), 4);
   QVERIFY(pk2.begin() != pk2.end());
   /*
@@ -259,6 +262,14 @@ void KeyTest::primaryKeyTest()
    */
   pk2.clear();
   QVERIFY(pk2.isNull());
+  /*
+   * Add column
+   */
+  pk2.addColumn(5);
+  pk2.addColumn(3);
+  QCOMPARE(pk2.columnCount(), 2);
+  QCOMPARE(pk2.columnAt(0), 5);
+  QCOMPARE(pk2.columnAt(1), 3);
   /*
    * Construct from a ColumnList
    */
@@ -402,7 +413,7 @@ void KeyTest::foreignKeyRecordTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   KeyTest test;
 
   return QTest::qExec(&test, argc, argv);

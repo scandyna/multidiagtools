@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -56,6 +56,18 @@ namespace Mdt{ namespace ItemModel{
     PrimaryKey(PrimaryKey &&) = default;
     PrimaryKey & operator=(PrimaryKey &&) = default;
 
+    /*! \brief Add \a column to this primary key
+     *
+     * \pre \a column must be >= 0
+     * \pre \a column must not allready exist in this primary key
+     */
+    void addColumn(int column)
+    {
+      Q_ASSERT(column >= 0);
+      Q_ASSERT(!containsColumn(column));
+      mColumnList.append(column);
+    }
+
     /*! \brief Get count of columns
      */
     int columnCount() const
@@ -70,7 +82,18 @@ namespace Mdt{ namespace ItemModel{
       return mColumnList.isEmpty();
     }
 
-    /*! \brief Get the greates column
+    /*! \brief Get column at \a index
+     *
+     * \pre \a index must be in valid range ( 0 <= \a index < columnCount() ).
+     */
+    int columnAt(int index) const noexcept
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < columnCount());
+      return mColumnList.at(index);
+    }
+
+    /*! \brief Get the greatest column
      *
      * Returns -1 if this list is empty.
      */
