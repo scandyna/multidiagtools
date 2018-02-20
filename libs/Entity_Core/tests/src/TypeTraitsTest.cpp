@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "TypeTraitsTest.h"
 #include "Mdt/Entity/Def.h"
+#include "Mdt/Entity/DataTemplate.h"
 #include "Mdt/Entity/TypeTraits/IsEntityFieldDef.h"
 #include "Mdt/Entity/TypeTraits/IsEntityDef.h"
 
@@ -50,6 +51,10 @@ MDT_ENTITY_DEF(
   (id, FieldFlag::IsPrimaryKey),
   (description, FieldFlag::IsRequired, FieldMaxLength(250))
 )
+
+class ArticleData : public DataTemplate<ArticleDataStruct, ArticleDef>
+{
+};
 
 /*
  * IsEntityDef compile time tests

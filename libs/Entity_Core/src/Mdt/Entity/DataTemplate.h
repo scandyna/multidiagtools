@@ -56,7 +56,7 @@ namespace Mdt{ namespace Entity{
    *
    * MyEntityData is now usable in may places in the Mdt::Entity library.
    */
-  template<typename DataStruct, typename EntityDef>
+  template<typename EntityDataStruct, typename EntityDef>
   class DataTemplate
   {
     static_assert( TypeTraits::IsEntityDef<EntityDef>::value, "EntityDef must be a entity definition type" );
@@ -64,18 +64,18 @@ namespace Mdt{ namespace Entity{
    public:
 
     using def_type = EntityDef;
-    using data_struct_type = DataStruct;
+    using data_struct_type = EntityDataStruct;
 
     /*! \brief Access the data struct for modifications
      */
-    DataStruct & dataStruct()
+    EntityDataStruct & dataStruct()
     {
       return mDataStruct;
     }
 
     /*! \brief Access data struct for read
      */
-    const DataStruct & constDataStruct() const
+    const EntityDataStruct & constDataStruct() const
     {
       return mDataStruct;
     }
@@ -89,7 +89,7 @@ namespace Mdt{ namespace Entity{
 
    private:
 
-    DataStruct mDataStruct;
+    EntityDataStruct mDataStruct;
   };
 
 }} // namespace Mdt{ namespace Entity{
