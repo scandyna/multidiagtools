@@ -21,10 +21,8 @@
 #ifndef MDT_ITEM_MODEL_ROW_RESIZABLE_STL_TABLE_MODEL_H
 #define MDT_ITEM_MODEL_ROW_RESIZABLE_STL_TABLE_MODEL_H
 
-// #include "EditableStlTableModel.h"
 #include "RowResizableStlTableModelTemplate.h"
 #include "StlContainerIteratorAdapter.h"
-#include "StlContainer.h"
 
 namespace Mdt{ namespace ItemModel{
 

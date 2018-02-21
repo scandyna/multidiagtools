@@ -44,7 +44,7 @@ set(SOURCE_FILES
     Mdt/ItemModel/HeaderProxyModelItem.cpp
     Mdt/ItemModel/HeaderProxyModelItemList.cpp
     Mdt/ItemModel/HeaderProxyModel.cpp
-    Mdt/ItemModel/StlContainer.cpp
+    Mdt/ItemModel/StlTable.cpp
     Mdt/ItemModel/StlContainerIteratorAdapter.cpp
     Mdt/ItemModel/AbstractStlListModel.cpp
     Mdt/ItemModel/ReadOnlyStlListModel.cpp
@@ -70,7 +70,7 @@ mdt_add_library(
   NAME ItemModel
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Error_Core Algorithm FilterExpression Qt5::Core Qt5::Gui
+  LINK_DEPENDENCIES Error_Core Container Algorithm FilterExpression Qt5::Core Qt5::Gui
 )
 target_include_directories(ItemModel PUBLIC ${Boost_INCLUDE_DIRS})
 

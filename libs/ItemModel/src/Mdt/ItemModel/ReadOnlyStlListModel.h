@@ -22,7 +22,7 @@
 #define MDT_ITEM_MODEL_READ_ONLY_STL_LIST_MODEL_H
 
 #include "AbstractStlListModel.h"
-#include "StlContainer.h"
+#include "Mdt/Container/StlContainer.h"
 #include <QModelIndex>
 #include <QVariant>
 #include <iterator>
@@ -79,7 +79,7 @@ namespace Mdt{ namespace ItemModel{
      */
     int rowCount() const
     {
-      return containerSize(mContainer);
+      return Mdt::Container::containerSize(mContainer);
     }
 
     /*! \brief Get row count
@@ -101,7 +101,7 @@ namespace Mdt{ namespace ItemModel{
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
 
-      return *constIteratorAtIndex(mContainer, row);
+      return *Mdt::Container::constIteratorAtIndex(mContainer, row);
     }
 
     /*! \brief Get data at \a index

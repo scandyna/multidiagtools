@@ -23,7 +23,8 @@
 
 #include "EditableStlTableModel.h"
 #include "StlContainerIteratorAdapter.h"
-#include "StlContainer.h"
+// #include "StlContainer.h"
+#include "Mdt/Container/StlContainer.h"
 
 namespace Mdt{ namespace ItemModel{
 
@@ -104,7 +105,7 @@ namespace Mdt{ namespace ItemModel{
         return false;
       }
       beginInsertRows(parent, row, row+count-1);
-      insertToContainer( table(), row, count, constRecordAdapter().initializeContainer( columnCount(), value_type() ) );
+      Mdt::Container::insertToContainer( table(), row, count, constRecordAdapter().initializeContainer( columnCount(), value_type() ) );
       endInsertRows();
 
       return true;
@@ -146,7 +147,7 @@ namespace Mdt{ namespace ItemModel{
         return false;
       }
       beginRemoveRows(parent, row, row+count-1);
-      removeFromContainer(table(), row, count);
+      Mdt::Container::removeFromContainer(table(), row, count);
       endRemoveRows();
 
       return true;

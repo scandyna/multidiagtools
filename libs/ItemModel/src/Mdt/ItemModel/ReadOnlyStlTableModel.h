@@ -22,8 +22,9 @@
 #define MDT_ITEM_MODEL_READ_ONLY_STL_TABLE_MODEL_H
 
 #include "AbstractStlTableModel.h"
-#include "StlContainer.h"
 #include "StlContainerIteratorAdapter.h"
+#include "StlTable.h"
+#include "Mdt/Container/StlContainer.h"
 #include <QModelIndex>
 #include <QVariant>
 
@@ -121,14 +122,14 @@ namespace Mdt{ namespace ItemModel{
      */
     bool isEmpty() const
     {
-      return containerIsEmpty(mTable);
+      return Mdt::Container::containerIsEmpty(mTable);
     }
 
     /*! \brief Get row count
      */
     int rowCount() const
     {
-      return containerSize(mTable);
+      return Mdt::Container::containerSize(mTable);
     }
 
     /*! \brief Get row count

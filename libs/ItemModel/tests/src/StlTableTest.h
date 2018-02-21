@@ -23,7 +23,7 @@
 
 #include "TestBase.h"
 
-class StlContainerTest : public TestBase
+class StlTableTest : public TestBase
 {
  Q_OBJECT
 
@@ -32,23 +32,10 @@ class StlContainerTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void sizeStdVectorTest();
-  void sizeStdListTest();
-  void sizeQListTest();
-  void sizeQVectorTest();
-
-  void isEmptyTest();
-
   void stateFulCompareContainerSizeStdVectorTest();
   void eachRecordHasSameColumnCountStdVectorTest();
   void eachRecordHasSameColumnCountQListTest();
   void eachRecordHasSameColumnCountQVectorTest();
-
-  void constIteratorAtIndexStdVectorTest();
-  void iteratorAtIndexStdVectorTest();
-
-  void insertToContainerTest();
-  void removeFromContainerTest();
 };
 
 #endif // #ifndef STL_CONTAINER_TEST_H

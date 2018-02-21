@@ -22,7 +22,6 @@
 #define MDT_ITEM_MODEL_RESIZABLE_STL_LIST_MODEL_H
 
 #include "EditableStlListModel.h"
-#include "StlContainer.h"
 #include <type_traits>
 #include <iterator>
 
@@ -80,7 +79,7 @@ namespace Mdt{ namespace ItemModel{
         return false;
       }
       beginInsertRows(parent, row, row+count-1);
-      insertToContainer(container(), row, count, value_type());
+      Mdt::Container::insertToContainer(container(), row, count, value_type());
       endInsertRows();
 
       return true;
@@ -122,7 +121,7 @@ namespace Mdt{ namespace ItemModel{
         return false;
       }
       beginRemoveRows(parent, row, row+count-1);
-      removeFromContainer(container(), row, count);
+      Mdt::Container::removeFromContainer(container(), row, count);
       endRemoveRows();
 
       return true;
