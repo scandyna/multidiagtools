@@ -18,25 +18,52 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#include "StlContainerBenchmark.h"
+#include "Mdt/Container/StlContainer.h"
+#include <vector>
+#include <list>
+#include <ctime>
+#include <cstdlib>
+#include <algorithm>
 
-/*! \page libraries_page Libraries
- *
- * \ref libs_Application
- *
- * \ref libs_Error
- *
- * \ref libs_DeployUtils
- *
- * \ref libs_Translation
- *
- * \ref libs_FileSystem
- *
- * \ref libs_Container
- *
- * \ref libs_ItemModel
- *
- * \ref libs_TestLib
- *
- * \ref libs_Entity
- *
+using namespace Mdt::Container;
+
+void StlContainerBenchmark::initTestCase()
+{
+  std::srand(std::time(0));
+}
+
+void StlContainerBenchmark::cleanupTestCase()
+{
+}
+
+/*
+ * Helpers
  */
+
+template<typename Container>
+int fillContainer(Container & container)
+{
+  const int n = 100;
+
+  container.resize(n);
+  std::generate(container.begin(), container.end(), std::rand);
+
+  return n;
+}
+
+/*
+ * Tests
+ */
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::CoreApplication app(argc, argv);
+    StlContainerBenchmark test;
+
+  return QTest::qExec(&test, argc, argv);
+}

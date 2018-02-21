@@ -18,25 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#ifndef STL_CONTAINER_TEST_H
+#define STL_CONTAINER_TEST_H
 
-/*! \page libraries_page Libraries
- *
- * \ref libs_Application
- *
- * \ref libs_Error
- *
- * \ref libs_DeployUtils
- *
- * \ref libs_Translation
- *
- * \ref libs_FileSystem
- *
- * \ref libs_Container
- *
- * \ref libs_ItemModel
- *
- * \ref libs_TestLib
- *
- * \ref libs_Entity
- *
- */
+#include "TestBase.h"
+
+class StlContainerTest : public TestBase
+{
+ Q_OBJECT
+
+ private slots:
+
+  void initTestCase();
+  void cleanupTestCase();
+
+  void sizeTest();
+  void isEmptyTest();
+
+  void constIteratorAtIndexTest();
+  void iteratorAtIndexTest();
+
+  void constValueAtIndexTest();
+
+  void insertToContainerTest();
+  void removeFromContainerTest();
+};
+
+#endif // #ifndef STL_CONTAINER_TEST_H

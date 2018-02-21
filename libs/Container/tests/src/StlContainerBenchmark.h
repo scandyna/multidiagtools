@@ -18,25 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#ifndef STL_CONTAINER_BENCHMARK_H
+#define STL_CONTAINER_BENCHMARK_H
 
-/*! \page libraries_page Libraries
- *
- * \ref libs_Application
- *
- * \ref libs_Error
- *
- * \ref libs_DeployUtils
- *
- * \ref libs_Translation
- *
- * \ref libs_FileSystem
- *
- * \ref libs_Container
- *
- * \ref libs_ItemModel
- *
- * \ref libs_TestLib
- *
- * \ref libs_Entity
- *
- */
+#include "TestBase.h"
+
+class StlContainerBenchmark : public TestBase
+{
+ Q_OBJECT
+
+ private slots:
+
+  void initTestCase();
+  void cleanupTestCase();
+
+};
+
+#endif // #ifndef STL_CONTAINER_BENCHMARK_H
