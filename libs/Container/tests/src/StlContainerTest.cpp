@@ -43,6 +43,27 @@ void StlContainerTest::cleanupTestCase()
  */
 
 template<typename Container>
+void initializeTestImpl()
+{
+  auto c1 = initializeContainer<Container>(1, 10);
+  QCOMPARE(containerSize(c1), 1);
+  QCOMPARE(constValueAtIndex(c1, 0), 10);
+
+  const auto c2 = initializeContainer<Container>(2, 20);
+  QCOMPARE(containerSize(c2), 2);
+  QCOMPARE(constValueAtIndex(c2, 0), 20);
+  QCOMPARE(constValueAtIndex(c2, 1), 20);
+}
+
+void StlContainerTest::initializeTest()
+{
+  initializeTestImpl< std::vector<int> >();
+  initializeTestImpl< std::list<int> >();
+  initializeTestImpl< QVector<int> >();
+  initializeTestImpl< QList<int> >();
+}
+
+template<typename Container>
 void sizeTestImpl()
 {
   Container c0;

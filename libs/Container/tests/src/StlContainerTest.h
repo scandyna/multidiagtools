@@ -32,6 +32,8 @@ class StlContainerTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void initializeTest();
+
   void sizeTest();
   void isEmptyTest();
 

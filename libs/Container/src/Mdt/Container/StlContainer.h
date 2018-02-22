@@ -28,137 +28,189 @@
 
 namespace Mdt{ namespace Container{
 
-    /*! \brief Get the size of \a container
-     */
-    template<typename Container>
-    int containerSize(const Container & container)
-    {
-      return std::distance(container.cbegin(), container.cend());
-    }
+  namespace Impl{
 
-    /*! \brief Check if \a container is empty
-     */
-    template<typename Container>
-    bool containerIsEmpty(const Container & container)
-    {
-      return ( container.cbegin() == container.cend() );
-    }
-
-    /*! \brief Get a const iterator to the element at \a index
+    /*! \brief Implementation for initializeContainer()
      *
-     * \pre \a index must be in valid range ( 0 <= \a index < containerSize(container) )
+     * This version works for containers that provides
+     *  a constructor of the form:
+     *  \code
+     *  Container(size_type count, const T & value);
+     *  \endcode
      */
     template<typename Container>
-    auto constIteratorAtIndex(const Container & container, int index)
+    struct InitializeContainer
     {
-      Q_ASSERT(index >= 0);
-      Q_ASSERT(index < containerSize(container));
+      template<typename T>
+      static Container initialize(int count, const T & value)
+      {
+        return Container(count, value);
+      }
+    };
 
-      return std::next(container.cbegin(), index);
-    }
-
-    /*! \brief Get a iterator to the element at \a index
-     *
-     * \pre \a index must be in valid range ( 0 <= \a index < containerSize(container) )
-     */
-    template<typename Container>
-    auto iteratorAtIndex(Container & container, int index)
-    {
-      Q_ASSERT(index >= 0);
-      Q_ASSERT(index < containerSize(container));
-
-      return std::next(container.begin(), index);
-    }
-
-    /*! \brief Get const value at \a index
-     *
-     * \pre \a index must be in valid range ( 0 <= \a index < containerSize(container) )
-     */
-    template<typename Container>
-    auto constValueAtIndex(const Container & container, int index)
-    {
-      Q_ASSERT(index >= 0);
-      Q_ASSERT(index < containerSize(container));
-
-      return *constIteratorAtIndex(container, index);
-    }
-
-    /*! \brief Insert \a count copies of \a value to \a container
-     */
-    template<typename Container, typename T>
-    void insertToContainer(Container & container, int pos, int count, const T & value)
-    {
-      container.insert( std::next(container.begin() , pos), count, value );
-    }
-
-    /*! \brief Insert \a count copies of \a value to \a container
+    /*! \brief Implementation for initializeContainer()
      *
      * This is a specialization for QList
      */
     template<typename T>
-    void insertToContainer(QList<T> & container, int pos, int count, const T & value)
+    struct InitializeContainer< QList<T> >
     {
-      container.reserve(container.size() + count);
-      for(int i = 0; i < count; ++i){
-        container.insert(pos, value);
+      static QList<T> initialize(int count, const T & value)
+      {
+        QList<T> list;
+        list.reserve(count);
+        for(int i = 0; i < count; ++i){
+          list.append(value);
+        }
+        return list;
       }
-    }
+    };
 
-    /*! \brief Insert \a value to the end of \a container
-     */
-    template<typename Container, typename T>
-    void appendToContainer(Container & container, const T & value)
-    {
-      insertToContainer(container, containerSize(container), 1, value);
-    }
+  } // namespace Impl{
 
-    /*! \brief Insert \a value to the beginning of \a container
-     */
-    template<typename Container, typename T>
-    void prependToContainer(Container & container, const T & value)
-    {
-      insertToContainer(container, 0, 1, value);
-    }
+  /*! \brief Get a container initialized with \a count copies of \a value
+   *
+   * \pre \a count must be >= 1
+   */
+  template<typename Container>
+  Container initializeContainer(int count, const typename Container::value_type & value)
+  {
+    Q_ASSERT(count >= 1);
 
-    /*! \brief Remove \a count element starting from \a pos from \a container
-     *
-     * If \a pos + \a count is grater than upper bound of \a container,
-     *  it will be ajusted.
-     *
-     * \pre \a pos must be >= 0
-     * \pre \a count must be >= 1
-     * \pre \a pos + \a count must be in valid range ( 1 <= \a pos + \a count <= containerSize( \a container ) )
-     */
-    template<typename Container>
-    void removeFromContainer(Container & container, int pos, int count)
-    {
-      Q_ASSERT(pos >= 0);
-      Q_ASSERT(count >= 0);
-      Q_ASSERT( (pos + count) <= containerSize(container) );
-      container.erase( std::next(container.begin() , pos), std::next(container.begin() , pos + count) );
-    }
+    return Impl::InitializeContainer<Container>::initialize(count, value);
+  }
 
-    /*! \brief Remove the first element from \a container
-     *
-     * \pre \a container must not be empty
-     */
-    template<typename Container>
-    void removeFirstFromContainer(Container & container)
-    {
-      Q_ASSERT(!containerIsEmpty(container));
-      removeFromContainer(container, 0, 1);
-    }
+  /*! \brief Get the size of \a container
+   */
+  template<typename Container>
+  int containerSize(const Container & container)
+  {
+    return std::distance(container.cbegin(), container.cend());
+  }
 
-    /*! \brief Remove the last element from \a container
-     *
-     * \pre \a container must not be empty
-     */
-    template<typename Container>
-    void removeLastFromContainer(Container & container)
-    {
-      Q_ASSERT(!containerIsEmpty(container));
-      removeFromContainer(container, containerSize(container)-1, 1);
+  /*! \brief Check if \a container is empty
+   */
+  template<typename Container>
+  bool containerIsEmpty(const Container & container)
+  {
+    return ( container.cbegin() == container.cend() );
+  }
+
+  /*! \brief Get a const iterator to the element at \a index
+   *
+   * \pre \a index must be in valid range ( 0 <= \a index < containerSize(container) )
+   */
+  template<typename Container>
+  auto constIteratorAtIndex(const Container & container, int index)
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < containerSize(container));
+
+    return std::next(container.cbegin(), index);
+  }
+
+  /*! \brief Get a iterator to the element at \a index
+   *
+   * \pre \a index must be in valid range ( 0 <= \a index < containerSize(container) )
+   */
+  template<typename Container>
+  auto iteratorAtIndex(Container & container, int index)
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < containerSize(container));
+
+    return std::next(container.begin(), index);
+  }
+
+  /*! \brief Get const value at \a index
+   *
+   * \pre \a index must be in valid range ( 0 <= \a index < containerSize(container) )
+   */
+  template<typename Container>
+  auto constValueAtIndex(const Container & container, int index)
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < containerSize(container));
+
+    return *constIteratorAtIndex(container, index);
+  }
+
+  /*! \brief Insert \a count copies of \a value to \a container
+   */
+  template<typename Container, typename T>
+  void insertToContainer(Container & container, int pos, int count, const T & value)
+  {
+    container.insert( std::next(container.begin() , pos), count, value );
+  }
+
+  /*! \brief Insert \a count copies of \a value to \a container
+   *
+   * This is a specialization for QList
+   */
+  template<typename T>
+  void insertToContainer(QList<T> & container, int pos, int count, const T & value)
+  {
+    container.reserve(container.size() + count);
+    for(int i = 0; i < count; ++i){
+      container.insert(pos, value);
     }
+  }
+
+  /*! \brief Insert \a value to the end of \a container
+   */
+  template<typename Container, typename T>
+  void appendToContainer(Container & container, const T & value)
+  {
+    insertToContainer(container, containerSize(container), 1, value);
+  }
+
+  /*! \brief Insert \a value to the beginning of \a container
+   */
+  template<typename Container, typename T>
+  void prependToContainer(Container & container, const T & value)
+  {
+    insertToContainer(container, 0, 1, value);
+  }
+
+  /*! \brief Remove \a count element starting from \a pos from \a container
+   *
+   * If \a pos + \a count is grater than upper bound of \a container,
+   *  it will be ajusted.
+   *
+   * \pre \a pos must be >= 0
+   * \pre \a count must be >= 1
+   * \pre \a pos + \a count must be in valid range ( 1 <= \a pos + \a count <= containerSize( \a container ) )
+   */
+  template<typename Container>
+  void removeFromContainer(Container & container, int pos, int count)
+  {
+    Q_ASSERT(pos >= 0);
+    Q_ASSERT(count >= 0);
+    Q_ASSERT( (pos + count) <= containerSize(container) );
+    container.erase( std::next(container.begin() , pos), std::next(container.begin() , pos + count) );
+  }
+
+  /*! \brief Remove the first element from \a container
+   *
+   * \pre \a container must not be empty
+   */
+  template<typename Container>
+  void removeFirstFromContainer(Container & container)
+  {
+    Q_ASSERT(!containerIsEmpty(container));
+    removeFromContainer(container, 0, 1);
+  }
+
+  /*! \brief Remove the last element from \a container
+   *
+   * \pre \a container must not be empty
+   */
+  template<typename Container>
+  void removeLastFromContainer(Container & container)
+  {
+    Q_ASSERT(!containerIsEmpty(container));
+    removeFromContainer(container, containerSize(container)-1, 1);
+  }
 
 }} // namespace Mdt{ namespace Container{
 
