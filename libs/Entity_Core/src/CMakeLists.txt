@@ -38,7 +38,7 @@ mdt_add_library(
   NAME Entity_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES ItemModel Qt5::Core Error_Core; # Error_Core currently only for MDT_ASSERT()
+  LINK_DEPENDENCIES Container ItemModel Qt5::Core Error_Core; # Error_Core currently only for MDT_ASSERT()
 )
 target_compile_definitions(Entity_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

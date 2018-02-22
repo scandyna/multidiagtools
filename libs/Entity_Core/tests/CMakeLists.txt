@@ -12,8 +12,6 @@ set(SOURCE_FILES
 add_library(mdtEntity_CoreTest SHARED ${SOURCE_FILES})
 target_link_libraries(mdtEntity_CoreTest Entity_Core Application_Core TestLib_Core Qt5::Test)
 
-target_link_libraries(mdtEntity_CoreTest)
-
 #=============== Helper functions ===========
 
 function(addEntity_CoreTest testName)
