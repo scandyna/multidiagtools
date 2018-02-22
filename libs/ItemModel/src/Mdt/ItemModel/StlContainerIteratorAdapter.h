@@ -21,52 +21,13 @@
 #ifndef MDT_ITEM_MODEL_STL_CONTAINER_ITERATOR_ADAPTER_H
 #define MDT_ITEM_MODEL_STL_CONTAINER_ITERATOR_ADAPTER_H
 
+#include "Mdt/Container/StlContainer.h"
 #include <QtGlobal>
 #include <iterator>
 #include <algorithm>
 #include <type_traits>
 
 namespace Mdt{ namespace ItemModel{
-
-  namespace Impl{
-
-    /*! \brief Implementation for StlContainerIteratorAdapter::initializeContainer()
-     *
-     * This version works for containers that provides
-     *  a constructor of the form:
-     *  \code
-     *  Container(size_type count, const T & value);
-     *  \endcode
-     */
-    template<typename Container>
-    struct InitializeContainer
-    {
-      template<typename T>
-      static Container initialize(int count, const T & value)
-      {
-        return Container(count, value);
-      }
-    };
-
-    /*! \brief Implementation for StlContainerIteratorAdapter::initializeContainer()
-     *
-     * This is a specialization for QList
-     */
-    template<typename T>
-    struct InitializeContainer< QList<T> >
-    {
-      static QList<T> initialize(int count, const T & value)
-      {
-        QList<T> list;
-        list.reserve(count);
-        for(int i = 0; i < count; ++i){
-          list.append(value);
-        }
-        return list;
-      }
-    };
-
-  } // namespace Impl{
 
   /*! \brief Class template that provides the requirements for AbstractStlTableModel subclasses
    *
@@ -85,14 +46,14 @@ namespace Mdt{ namespace ItemModel{
      */
     static int containerSize(const Container & container) noexcept
     {
-      return std::distance(container.cbegin(), container.cend());
+      return Mdt::Container::containerSize(container);
     }
 
     /*! \brief Check if \a container is empty
      */
     static bool containerIsEmpty(const Container & container)
     {
-      return ( container.cbegin() == container.cend() );
+      return Mdt::Container::containerIsEmpty(container);
     }
 
     /*! \brief Get value at \a index in \a container
@@ -127,7 +88,7 @@ namespace Mdt{ namespace ItemModel{
     {
       Q_ASSERT(count >= 1);
 
-      return Impl::InitializeContainer<Container>::initialize(count, value);
+      return Mdt::Container::initializeContainer<Container>(count, value);
     }
 
   };
