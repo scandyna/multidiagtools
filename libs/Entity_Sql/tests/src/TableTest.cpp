@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -58,7 +58,7 @@ void TableTest::fromEntityTest()
 {
   using SqlFieldType = Sql::Schema::FieldType;
 
-  const auto table = SqlTable::fromEntity<ArticleDataStruct, ArticleDef>();
+  const auto table = SqlTable::fromEntity<ArticleEntity>();
 
   QCOMPARE(table.tableName(), QString("Article"));
   QCOMPARE(table.fieldCount(), 3);

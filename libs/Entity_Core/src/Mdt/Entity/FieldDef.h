@@ -107,6 +107,8 @@
 #define MDT_ENTITY_FIELD_DEF(fieldTuple)                                                          \
   struct MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) : Mdt::Entity::TypeTraits::EntityFieldDefTag  \
   {                                                                                               \
+    constexpr MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple)() noexcept {}                            \
+                                                                                                  \
     static const QString fieldName()                                                              \
     {                                                                                             \
       return QStringLiteral( MDT_ENTITY_FIELD_ELEM_NAME_STR(fieldTuple) );                        \

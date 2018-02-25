@@ -23,6 +23,7 @@
 #include "Mdt/Entity/DataTemplate.h"
 #include "Mdt/Entity/TypeTraits/IsEntityFieldDef.h"
 #include "Mdt/Entity/TypeTraits/IsEntityDef.h"
+#include "Mdt/Entity/TypeTraits/IsEntity.h"
 
 using namespace Mdt::Entity;
 using namespace Mdt::Entity::TypeTraits;
@@ -57,6 +58,17 @@ class ArticleData : public DataTemplate<ArticleDataStruct, ArticleDef>
 };
 
 /*
+ * IsEntity compile time tests
+ */
+
+static_assert(!IsEntity<ArticleDataStruct>::value, "" );
+static_assert( IsEntity<ArticleEntity>::value, "" );
+static_assert(!IsEntity<ArticleDef::idField>::value , "" );
+static_assert(!IsEntity<ArticleDef::descriptionField>::value , "" );
+static_assert(!IsEntity<int>::value, "" );
+static_assert(!IsEntity<QString>::value, "" );
+
+/*
  * IsEntityDef compile time tests
  */
 
@@ -64,6 +76,7 @@ static_assert(!IsEntityDef<ArticleDataStruct>::value, "" );
 static_assert( IsEntityDef<ArticleDef>::value, "" );
 static_assert(!IsEntityDef<ArticleDef::idField>::value , "" );
 static_assert(!IsEntityDef<ArticleDef::descriptionField>::value , "" );
+static_assert(!IsEntityDef<ArticleEntity>::value, "" );
 static_assert(!IsEntityDef<int>::value, "" );
 static_assert(!IsEntityDef<QString>::value, "" );
 
@@ -75,6 +88,7 @@ static_assert( IsEntityFieldDef<ArticleDef::idField>::value , "" );
 static_assert( IsEntityFieldDef<ArticleDef::descriptionField>::value , "" );
 static_assert(!IsEntityFieldDef<ArticleDataStruct>::value , "" );
 static_assert(!IsEntityFieldDef<ArticleDef>::value , "" );
+static_assert(!IsEntityFieldDef<ArticleEntity>::value, "" );
 static_assert(!IsEntityFieldDef<int>::value , "" );
 static_assert(!IsEntityFieldDef<QString>::value , "" );
 

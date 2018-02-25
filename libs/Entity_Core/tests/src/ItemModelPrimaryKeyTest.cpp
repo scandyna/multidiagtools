@@ -72,11 +72,11 @@ MDT_ENTITY_DEF(
 
 void ItemModelPrimaryKeyTest::impkFromEntityTest()
 {
-  const auto articleImPk = ItemModelPrimaryKey::fromEntity<ArticleDataStruct, ArticleDef>();
+  const auto articleImPk = ItemModelPrimaryKey::fromEntity<ArticleEntity>();
   QCOMPARE(articleImPk.columnCount(), 1);
   QCOMPARE(articleImPk.columnAt(0), 0);
 
-  const auto linkImPk = ItemModelPrimaryKey::fromEntity<LinkDataStruct, LinkDef>();
+  const auto linkImPk = ItemModelPrimaryKey::fromEntity<LinkEntity>();
   QCOMPARE(linkImPk.columnCount(), 2);
   QCOMPARE(linkImPk.columnAt(0), 1);
   QCOMPARE(linkImPk.columnAt(1), 2);

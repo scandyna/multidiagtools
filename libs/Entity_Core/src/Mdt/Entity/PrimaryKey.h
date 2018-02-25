@@ -23,6 +23,7 @@
 
 #include "PrimaryKeyField.h"
 #include "Mdt/Entity/FieldAttributes.h"
+#include "TypeTraits/IsEntity.h"
 #include "TypeTraits/IsEntityDef.h"
 #include "MdtEntity_CoreExport.h"
 #include <QtGlobal>
@@ -97,15 +98,16 @@ namespace Mdt{ namespace Entity{
 
     /*! \brief Get the primary key of a entity
      */
-    template<typename EntityDataStruct, typename EntityDef>
+    template<typename Entity>
     static PrimaryKey fromEntity()
     {
-      static_assert( TypeTraits::IsEntityDef<EntityDef>::value, "EntityDef must be a entity definition type" );
+      static_assert( TypeTraits::IsEntity<Entity>::value, "Entity must be a entity type" );
 
       PrimaryKey pk;
-      Impl::AddFieldToPrimaryKeyIf<EntityDataStruct> op(pk);
+      Impl::AddFieldToPrimaryKeyIf<typename Entity::data_struct_type> op(pk);
+      constexpr typename Entity::def_type def;
 
-      boost::fusion::for_each(EntityDef(), op);
+      boost::fusion::for_each(def, op);
 
       return pk;
     }

@@ -90,14 +90,14 @@ void PrimaryKeyTest::fieldTest()
 
 void PrimaryKeyTest::primaryKeyFromEntityTest()
 {
-  auto articlePk = PrimaryKey::fromEntity<ArticleDataStruct, ArticleDef>();
+  auto articlePk = PrimaryKey::fromEntity<ArticleEntity>();
   QCOMPARE(articlePk.fieldCount(), 1);
   QCOMPARE(articlePk.fieldAt(0).fieldIndex(), 0);
   QCOMPARE(articlePk.fieldAt(0).fieldType(), QMetaType::LongLong);
   QCOMPARE(articlePk.fieldAt(0).fieldName<ArticleDef>(), QString("id"));
   QCOMPARE(articlePk.toFieldNameList<ArticleDef>(), QStringList({"id"}));
 
-  auto linkPk = PrimaryKey::fromEntity<LinkDataStruct, LinkDef>();
+  auto linkPk = PrimaryKey::fromEntity<LinkEntity>();
   QCOMPARE(linkPk.fieldCount(), 2);
   QCOMPARE(linkPk.fieldAt(0).fieldIndex(), 1);
   QCOMPARE(linkPk.fieldAt(0).fieldType(), QMetaType::LongLong);

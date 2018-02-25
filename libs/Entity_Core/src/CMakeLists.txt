@@ -3,11 +3,13 @@
 set(SOURCE_FILES
   Mdt/Entity/TypeTraits/IsEntityFieldDef.cpp
   Mdt/Entity/TypeTraits/IsEntityDef.cpp
+  Mdt/Entity/TypeTraits/IsEntity.cpp
   Mdt/Entity/FieldFlags.cpp
   Mdt/Entity/FieldMaxLength.cpp
   Mdt/Entity/FieldAttributes.cpp
   Mdt/Entity/FieldDef.cpp
   Mdt/Entity/Def.cpp
+  Mdt/Entity/EntityTemplate.cpp
   Mdt/Entity/DataTemplate.cpp
   Mdt/Entity/Debug.cpp
   Mdt/Entity/ValueAt.cpp
@@ -16,6 +18,7 @@ set(SOURCE_FILES
   Mdt/Entity/PrimaryKeyField.cpp
   Mdt/Entity/PrimaryKey.cpp
   Mdt/Entity/ItemModelPrimaryKey.cpp
+  Mdt/Entity/Relation.cpp
   Mdt/Entity/TableModelRecordAdapter.cpp
   Mdt/Entity/ReadOnlyTableModel.cpp
   Mdt/Entity/EditableTableModel.cpp

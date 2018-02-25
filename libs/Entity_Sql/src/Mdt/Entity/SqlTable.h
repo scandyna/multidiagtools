@@ -24,6 +24,7 @@
 #include "SqlField.h"
 #include "SqlPrimaryKey.h"
 #include "Mdt/Entity/FieldAttributes.h"
+#include "Mdt/Entity/TypeTraits/IsEntity.h"
 #include "Mdt/Entity/TypeTraits/IsEntityDef.h"
 #include "Mdt/Entity/TypeTraits/IsEntityFieldDef.h"
 #include "Mdt/Sql/Schema/Table.h"
@@ -78,17 +79,19 @@ namespace Mdt{ namespace Entity{
 
     /*! \brief Create a SQL table from a entity
      */
-    template<typename EntityDataStruct, typename EntityDef>
+    template<typename Entity>
     static Mdt::Sql::Schema::Table fromEntity(const Mdt::Sql::Schema::FieldTypeMap & fieldTypeMap = Mdt::Sql::Schema::FieldTypeMap::make())
     {
-      static_assert( TypeTraits::IsEntityDef<EntityDef>::value, "EntityDef must be a entity definition type" );
+      static_assert( TypeTraits::IsEntity<Entity>::value, "Entity must be a entity type" );
 
       Mdt::Sql::Schema::Table table;
+      using data_struct_type = typename Entity::data_struct_type;
+      constexpr typename Entity::def_type entityDef;
 
-      table.setTableName(EntityDef::entityName());
-      Impl::AddEntityFieldsToSqlTable<EntityDataStruct> op(table, fieldTypeMap);
-      boost::fusion::for_each(EntityDef(), op);
-      table.setPrimaryKeyContainer( SqlPrimaryKey::fromEntity<EntityDataStruct, EntityDef>(fieldTypeMap) );
+      table.setTableName(entityDef.entityName());
+      Impl::AddEntityFieldsToSqlTable<data_struct_type> op(table, fieldTypeMap);
+      boost::fusion::for_each(entityDef, op);
+      table.setPrimaryKeyContainer( SqlPrimaryKey::fromEntity<Entity>(fieldTypeMap) );
 
       return table;
     }

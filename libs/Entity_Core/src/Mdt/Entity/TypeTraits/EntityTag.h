@@ -2,37 +2,31 @@
  **
  ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
- ** This file is part of multiDiagTools library.
+ ** This file is part of Mdt library.
  **
- ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** Mdt is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU Lesser General Public License as published by
  ** the Free Software Foundation, either version 3 of the License, or
  ** (at your option) any later version.
  **
- ** multiDiagTools is distributed in the hope that it will be useful,
+ ** Mdt is distributed in the hope that it will be useful,
  ** but WITHOUT ANY WARRANTY; without even the implied warranty of
  ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  ** GNU Lesser General Public License for more details.
  **
  ** You should have received a copy of the GNU Lesser General Public License
- ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef DATA_TEMPLATE_TEST_H
-#define DATA_TEMPLATE_TEST_H
+#ifndef MDT_ENTITY_TYPE_TRAITS_ENTITY_TAG_H
+#define MDT_ENTITY_TYPE_TRAITS_ENTITY_TAG_H
 
-#include "TestBase.h"
+namespace Mdt{ namespace Entity{ namespace TypeTraits{
 
-class DataTemplateTest : public TestBase
-{
- Q_OBJECT
+  struct EntityTag
+  {
+  };
 
- private slots:
+}}} // namespace Mdt{ namespace Entity{ namespace TypeTraits{
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void dataUsageTest();
-};
-
-#endif // #ifndef DATA_TEMPLATE_TEST_H
+#endif // #ifndef MDT_ENTITY_TYPE_TRAITS_ENTITY_TAG_H

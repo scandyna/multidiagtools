@@ -21,6 +21,7 @@
 #ifndef MDT_ENTITY_ITEM_MODEL_PRIMARY_KEY_H
 #define MDT_ENTITY_ITEM_MODEL_PRIMARY_KEY_H
 
+#include "TypeTraits/IsEntity.h"
 #include "TypeTraits/IsEntityDef.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include "MdtEntity_CoreExport.h"
@@ -67,15 +68,16 @@ namespace Mdt{ namespace Entity{
 
     /*! \brief Get a item model primary key from a entity
      */
-    template<typename EntityDataStruct, typename EntityDef>
+    template<typename Entity>
     static Mdt::ItemModel::PrimaryKey fromEntity()
     {
-      static_assert( TypeTraits::IsEntityDef<EntityDef>::value, "EntityDef must be a entity definition type" );
+      static_assert( TypeTraits::IsEntity<Entity>::value, "Entity must be a entity type" );
 
       Mdt::ItemModel::PrimaryKey imPk;
-      Impl::AddFieldToItemModelPrimaryKeyIf<EntityDataStruct> op(imPk);
+      Impl::AddFieldToItemModelPrimaryKeyIf<typename Entity::data_struct_type> op(imPk);
+      constexpr typename Entity::def_type def;
 
-      boost::fusion::for_each(EntityDef{}, op);
+      boost::fusion::for_each(def, op);
 
       return imPk;
     }

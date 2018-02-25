@@ -23,6 +23,8 @@
 #include "Mdt/Entity/Def.h"
 #include "Mdt/Entity/Debug.h"
 
+#include <QDebug>
+
 void DataTemplateTest::initTestCase()
 {
 }
@@ -53,7 +55,7 @@ class ArticleData : public Mdt::Entity::DataTemplate<ArticleDataStruct, ArticleD
 };
 
 /**
- * For tests, reate structs:
+ * For tests, create structs:
  *
  * struct NotCopiable
  * {

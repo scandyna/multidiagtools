@@ -22,6 +22,7 @@
 #define MDT_ENTITY_DEF_H
 
 #include "FieldDef.h"
+#include "EntityTemplate.h"
 #include "TypeTraits/EntityDefTag.h"
 #include <QString>
 #include <boost/preprocessor/if.hpp>
@@ -108,6 +109,12 @@
 #define MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME_NS(defTuple) \
   MDT_ENTITY_DEF_NAMESPACE_REF(defTuple) MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple)
 
+#define MDT_ENTITY_DEF_ENTITY_NAME(name) \
+  BOOST_PP_CAT( name, Entity )
+
+#define MDT_ENTITY_DEF_ENTITY_ALIAS(defTuple, name) \
+  using MDT_ENTITY_DEF_ENTITY_NAME(name) = Mdt::Entity::EntityTemplate<MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple), MDT_ENTITY_DEF_NAME(name)>;
+
 /*! \brief Create a entity definition class
  *
  * Starting with a data struct:
@@ -185,6 +192,8 @@
  *   firstNameField firstName;
  *   remarksField remarks;
  * };
+ *
+ * using PersonEntity = EntityTemplate<PersonDataStruct, PersonDef>;
  * \endcode
  *
  * Now examine the syntax to use the macro:
@@ -241,29 +250,30 @@
  *  Sadly, I did not find any solution to put a short error message
  *  using the preprocessor.
  */
-#define MDT_ENTITY_DEF(defTuple, name, ...)                     \
-  MDT_ENTITY_DEF_NAMESPACE_BEGIN(defTuple)                      \
-  struct MDT_ENTITY_DEF_NAME(name) : Mdt::Entity::TypeTraits::EntityDefTag   \
-  {                                                             \
-    constexpr MDT_ENTITY_DEF_NAME(name)() noexcept {}           \
-                                                                \
-    static const QString entityName()                           \
-    {                                                           \
-      return QStringLiteral( MDT_ENTITY_NAME_STR(name) );       \
-    }                                                           \
-                                                                \
-    MDT_ENTITY_DEF_MEMBER_FIELD_LIST(__VA_ARGS__)               \
-  };                                                            \
-  MDT_ENTITY_DEF_NAMESPACE_END(defTuple)                        \
-  BOOST_FUSION_ADAPT_STRUCT(                                    \
-    MDT_ENTITY_DEF_NAME_NS(defTuple, name) ,                    \
-    BOOST_PP_SEQ_ENUM( MDT_ENTITY_DEF_MEMBER_SEQ(__VA_ARGS__) ) \
-  )                                                             \
-  BOOST_FUSION_ADAPT_ASSOC_STRUCT(                              \
-    MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME_NS(defTuple),          \
-    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC_SEQ(                \
-      MDT_ENTITY_DEF_NAME_NS(defTuple, name), __VA_ARGS__       \
-    )                                                           \
+#define MDT_ENTITY_DEF(defTuple, name, ...)                                 \
+  MDT_ENTITY_DEF_NAMESPACE_BEGIN(defTuple)                                  \
+  struct MDT_ENTITY_DEF_NAME(name) : Mdt::Entity::TypeTraits::EntityDefTag  \
+  {                                                                         \
+    constexpr MDT_ENTITY_DEF_NAME(name)() noexcept {}                       \
+                                                                            \
+    static const QString entityName()                                       \
+    {                                                                       \
+      return QStringLiteral( MDT_ENTITY_NAME_STR(name) );                   \
+    }                                                                       \
+                                                                            \
+    MDT_ENTITY_DEF_MEMBER_FIELD_LIST(__VA_ARGS__)                           \
+  };                                                                        \
+  MDT_ENTITY_DEF_ENTITY_ALIAS(defTuple, name)                               \
+  MDT_ENTITY_DEF_NAMESPACE_END(defTuple)                                    \
+  BOOST_FUSION_ADAPT_STRUCT(                                                \
+    MDT_ENTITY_DEF_NAME_NS(defTuple, name) ,                                \
+    BOOST_PP_SEQ_ENUM( MDT_ENTITY_DEF_MEMBER_SEQ(__VA_ARGS__) )             \
+  )                                                                         \
+  BOOST_FUSION_ADAPT_ASSOC_STRUCT(                                          \
+    MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME_NS(defTuple),                      \
+    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC_SEQ(                            \
+      MDT_ENTITY_DEF_NAME_NS(defTuple, name), __VA_ARGS__                   \
+    )                                                                       \
   )
 
 #endif // #ifndef MDT_ENTITY_DEF_H

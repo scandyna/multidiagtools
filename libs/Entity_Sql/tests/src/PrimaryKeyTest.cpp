@@ -85,18 +85,18 @@ void PrimaryKeyTest::fromEntityTest()
 {
   const auto fieldTypeMap = Mdt::Sql::Schema::FieldTypeMap::make();
 
-  auto articlePkc = SqlPrimaryKey::fromEntity<ArticleDataStruct, ArticleDef>(fieldTypeMap);
+  auto articlePkc = SqlPrimaryKey::fromEntity<ArticleEntity>(fieldTypeMap);
   QCOMPARE(articlePkc.primaryKeyType(), Sql::Schema::PrimaryKeyType::AutoIncrementPrimaryKey);
   QCOMPARE(articlePkc.autoIncrementPrimaryKey().fieldName(), QString("id"));
 
-  auto linkPkc = SqlPrimaryKey::fromEntity<LinkDataStruct, LinkDef>(fieldTypeMap);
+  auto linkPkc = SqlPrimaryKey::fromEntity<LinkEntity>(fieldTypeMap);
   QCOMPARE(linkPkc.primaryKeyType(), Sql::Schema::PrimaryKeyType::PrimaryKey);
   auto linkPk = linkPkc.primaryKey();
   QCOMPARE(linkPk.fieldCount(), 2);
   QVERIFY(linkPk.contains("startId"));
   QVERIFY(linkPk.contains("endId"));
 
-  auto noPkPkc = SqlPrimaryKey::fromEntity<NoPkDataStruct, NoPkDef>(fieldTypeMap);
+  auto noPkPkc = SqlPrimaryKey::fromEntity<NoPkEntity>(fieldTypeMap);
   QVERIFY(noPkPkc.isNull());
 }
 

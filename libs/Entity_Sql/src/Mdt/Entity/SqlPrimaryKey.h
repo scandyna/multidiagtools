@@ -23,6 +23,7 @@
 
 // #include "SqlField.h"
 #include "Mdt/Entity/PrimaryKey.h"
+#include "Mdt/Entity/TypeTraits/IsEntity.h"
 #include "Mdt/Entity/TypeTraits/IsEntityDef.h"
 #include "Mdt/Sql/Schema/PrimaryKeyType.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
@@ -97,20 +98,22 @@ namespace Mdt{ namespace Entity{
 
     /*! \brief Get a SQL primary key container from a entity
      */
-    template<typename EntityDataStruct, typename EntityDef>
+    template<typename Entity>
     static Mdt::Sql::Schema::PrimaryKeyContainer fromEntity(const Mdt::Sql::Schema::FieldTypeMap & fieldTypeMap)
     {
-      static_assert( TypeTraits::IsEntityDef<EntityDef>::value, "EntityDef must be a entity definition type" );
+      static_assert( TypeTraits::IsEntity<Entity>::value, "Entity must be a entity type" );
+
+      using entity_def_type = typename Entity::def_type;
 
       Mdt::Sql::Schema::PrimaryKeyContainer pkc;
-      const auto entityPk = PrimaryKey::fromEntity<EntityDataStruct, EntityDef>();
+      const auto entityPk = PrimaryKey::fromEntity<Entity>();
       const auto pkType = primaryKeyType(entityPk);
       switch(pkType){
         case Mdt::Sql::Schema::PrimaryKeyType::AutoIncrementPrimaryKey:
-          pkc.setPrimaryKey( autoIncrementPrimaryKey<EntityDef>(entityPk, fieldTypeMap) );
+          pkc.setPrimaryKey( autoIncrementPrimaryKey<entity_def_type>(entityPk, fieldTypeMap) );
           break;
         case Mdt::Sql::Schema::PrimaryKeyType::PrimaryKey:
-          pkc.setPrimaryKey( primaryKey<EntityDef>(entityPk) );
+          pkc.setPrimaryKey( primaryKey<entity_def_type>(entityPk) );
           break;
         case Mdt::Sql::Schema::PrimaryKeyType::Unknown:
           break;
