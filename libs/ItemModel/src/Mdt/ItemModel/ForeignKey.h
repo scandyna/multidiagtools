@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -51,6 +51,18 @@ namespace Mdt{ namespace ItemModel{
     {
     }
 
+    /*! \brief Add \a column to this foreign key
+     *
+     * \pre \a column must be >= 0
+     * \pre \a column must not allready exist in this foreign key
+     */
+    void addColumn(int column)
+    {
+      Q_ASSERT(column >= 0);
+      Q_ASSERT(!containsColumn(column));
+      mColumnList.append(column);
+    }
+
     /*! \brief Get count of columns
      */
     int columnCount() const
@@ -63,6 +75,17 @@ namespace Mdt{ namespace ItemModel{
     bool isNull() const noexcept
     {
       return mColumnList.isEmpty();
+    }
+
+    /*! \brief Get column at \a index
+     *
+     * \pre \a index must be in valid range ( 0 <= \a index < columnCount() ).
+     */
+    int columnAt(int index) const noexcept
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < columnCount());
+      return mColumnList.at(index);
     }
 
     /*! \brief Get the greates column

@@ -310,6 +310,8 @@ void KeyTest::foreignKeyTest()
   ForeignKey fk2({1,3});
   QCOMPARE(fk2.columnCount(), 2);
   QVERIFY(!fk2.isNull());
+  QCOMPARE(fk2.columnAt(0), 1);
+  QCOMPARE(fk2.columnAt(1), 3);
   QCOMPARE(fk2.greatestColumn(), 3);
   QVERIFY(fk2.begin() != fk2.end());
   /*
@@ -317,6 +319,14 @@ void KeyTest::foreignKeyTest()
    */
   fk2.clear();
   QVERIFY(fk2.isNull());
+  /*
+   * Add column
+   */
+  fk2.addColumn(3);
+  fk2.addColumn(1);
+  QCOMPARE(fk2.columnCount(), 2);
+  QCOMPARE(fk2.columnAt(0), 3);
+  QCOMPARE(fk2.columnAt(1), 1);
   /*
    * Construct from a ColumnList
    */
