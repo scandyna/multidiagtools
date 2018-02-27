@@ -59,6 +59,16 @@ void FieldAtTest::fieldCountTest()
   QCOMPARE(fieldCount<ArticleDef>(), 3);
 }
 
+void FieldAtTest::fieldIndexTest()
+{
+  constexpr int idIndex = fieldIndex<ArticleDef, ArticleDef::idField>();
+  QCOMPARE(idIndex, 0);
+  constexpr int descriptionIndex = fieldIndex<ArticleDef, ArticleDef::descriptionField>();
+  QCOMPARE(descriptionIndex, 1);
+  const int qtyIndex = fieldIndex<ArticleDef, ArticleDef::qtyField>();
+  QCOMPARE(qtyIndex, 2);
+}
+
 void FieldAtTest::fieldNameAtTest()
 {
   ArticleDef articleDef;
