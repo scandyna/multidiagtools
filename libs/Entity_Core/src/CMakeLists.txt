@@ -18,6 +18,8 @@ set(SOURCE_FILES
   Mdt/Entity/PrimaryKeyField.cpp
   Mdt/Entity/PrimaryKey.cpp
   Mdt/Entity/ItemModelPrimaryKey.cpp
+  Mdt/Entity/ForeignKey.cpp
+  Mdt/Entity/ItemModelForeignKey.cpp
   Mdt/Entity/Relation.cpp
   Mdt/Entity/TableModelRecordAdapter.cpp
   Mdt/Entity/ReadOnlyTableModel.cpp
