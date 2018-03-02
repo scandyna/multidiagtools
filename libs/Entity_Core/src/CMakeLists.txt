@@ -21,6 +21,7 @@ set(SOURCE_FILES
   Mdt/Entity/ForeignKey.cpp
   Mdt/Entity/ItemModelForeignKey.cpp
   Mdt/Entity/Relation.cpp
+  Mdt/Entity/ItemModelRelation.cpp
   Mdt/Entity/TableModelRecordAdapter.cpp
   Mdt/Entity/ReadOnlyTableModel.cpp
   Mdt/Entity/EditableTableModel.cpp
