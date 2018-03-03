@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "SchemaForeignKeyTest.h"
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 #include "Mdt/Sql/Schema/ForeignKeyActionSqlTransform.h"
 #include "Mdt/Sql/Schema/ForeignKeySettings.h"
 #include "Mdt/Sql/Schema/ForeignTable.h"
@@ -674,7 +674,7 @@ void SchemaForeignKeyTest::foreignKeyListIteratorsTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   SchemaForeignKeyTest test;
 
   return QTest::qExec(&test, argc, argv);
