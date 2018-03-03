@@ -253,6 +253,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return mForeignTableFieldNameList;
     }
 
+    /*! \brief Get count of field pairs in this foreign key
+     */
+    int fieldPairCount() const
+    {
+      Q_ASSERT(mFieldNameList.size() == mForeignTableFieldNameList.size());
+      return mFieldNameList.size();
+    }
+
     /*! \brief Set this foreign key indexed
      *
      * When a ForeignKey is indexed, a index exists for the table that contains this foreign key.

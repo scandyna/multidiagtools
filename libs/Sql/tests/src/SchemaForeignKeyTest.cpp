@@ -349,16 +349,19 @@ void SchemaForeignKeyTest::foreignKeySetFieldsTest()
   Schema::Client client;
   Schema::Address address;
   ForeignKey fk;
+  QCOMPARE(fk.fieldPairCount(), 0);
   /*
    * Set 1 field relation
    */
   fk.setFields(address.Client_Id_FK(), ForeignField(client.Id_PK()));
+  QCOMPARE( fk.fieldPairCount(), 1 );
   QCOMPARE( fk.fieldNameList(), QStringList({"Client_Id_FK"}) );
   QCOMPARE( fk.childTableFieldNameList(), QStringList({"Client_Id_FK"}) );
   QCOMPARE( fk.foreignTableFieldNameList(), QStringList({"Id_PK"}) );
   QCOMPARE( fk.parentTableFieldNameList(), QStringList({"Id_PK"}) );
   // Check also setting fields again
   fk.setFields(address.Client_Id_FK(), ForeignField(client.Id_PK()));
+  QCOMPARE( fk.fieldPairCount(), 1 );
   QCOMPARE( fk.fieldNameList(), QStringList({"Client_Id_FK"}) );
   QCOMPARE( fk.childTableFieldNameList(), QStringList({"Client_Id_FK"}) );
   QCOMPARE( fk.foreignTableFieldNameList(), QStringList({"Id_PK"}) );
@@ -367,6 +370,7 @@ void SchemaForeignKeyTest::foreignKeySetFieldsTest()
    * Clear
    */
   fk.clear();
+  QCOMPARE(fk.fieldPairCount(), 0);
   QVERIFY(fk.fieldNameList().isEmpty());
   QVERIFY(fk.childTableFieldNameList().isEmpty());
   QVERIFY(fk.foreignTableFieldNameList().isEmpty());
@@ -389,6 +393,7 @@ void SchemaForeignKeyTest::foreignKeySetFieldsTest()
   Id_B_FK.setName("Id_B_FK");
   // Check
   fk.setFields( FieldList(Id_A_FK, Id_B_FK) , ForeignFieldList(Id_A, Id_B) );
+  QCOMPARE( fk.fieldPairCount(), 2 );
   QCOMPARE( fk.fieldNameList(), QStringList({"Id_A_FK", "Id_B_FK"}) );
   QCOMPARE( fk.childTableFieldNameList(), QStringList({"Id_A_FK", "Id_B_FK"}) );
   QCOMPARE( fk.foreignTableFieldNameList(), QStringList({"Id_A", "Id_B"}) );
