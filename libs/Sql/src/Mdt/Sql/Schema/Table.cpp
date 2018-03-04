@@ -129,7 +129,9 @@ void Table::addForeignKey(const FieldList & fieldList, const ForeignTable & fore
 void Table::addForeignKey(const ForeignKey & foreignKey)
 {
   Q_ASSERT(!foreignKey.isNull());
+  Q_ASSERT(containsAllFieldsOf(foreignKey.fieldNameList()));
 
+  mForeignKeyList.append(foreignKey);
 }
 
 ForeignKey Table::foreignKeyReferencing(const QString & tableName) const
