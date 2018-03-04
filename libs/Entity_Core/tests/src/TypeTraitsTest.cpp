@@ -21,9 +21,11 @@
 #include "TypeTraitsTest.h"
 #include "Mdt/Entity/Def.h"
 #include "Mdt/Entity/DataTemplate.h"
+#include "Mdt/Entity/Relation.h"
 #include "Mdt/Entity/TypeTraits/IsEntityFieldDef.h"
 #include "Mdt/Entity/TypeTraits/IsEntityDef.h"
 #include "Mdt/Entity/TypeTraits/IsEntity.h"
+#include "Mdt/Entity/TypeTraits/IsRelation.h"
 
 using namespace Mdt::Entity;
 using namespace Mdt::Entity::TypeTraits;
@@ -57,6 +59,21 @@ class ArticleData : public DataTemplate<ArticleDataStruct, ArticleDef>
 {
 };
 
+struct ArticleDetailDataStruct
+{
+  qlonglong id;
+  qlonglong articleId;
+};
+
+MDT_ENTITY_DEF(
+  (ArticleDetailDataStruct),
+  ArticleDetail,
+  (id, FieldFlag::IsPrimaryKey),
+  (articleId)
+)
+
+using ArticleDetailRelation = Relation<ArticleEntity, ArticleDetailEntity, ArticleDetailDef::articleIdField>;
+
 /*
  * IsEntity compile time tests
  */
@@ -65,6 +82,7 @@ static_assert(!IsEntity<ArticleDataStruct>::value, "" );
 static_assert( IsEntity<ArticleEntity>::value, "" );
 static_assert(!IsEntity<ArticleDef::idField>::value , "" );
 static_assert(!IsEntity<ArticleDef::descriptionField>::value , "" );
+static_assert(!IsEntity<ArticleDetailRelation>::value, "" );
 static_assert(!IsEntity<int>::value, "" );
 static_assert(!IsEntity<QString>::value, "" );
 
@@ -77,6 +95,7 @@ static_assert( IsEntityDef<ArticleDef>::value, "" );
 static_assert(!IsEntityDef<ArticleDef::idField>::value , "" );
 static_assert(!IsEntityDef<ArticleDef::descriptionField>::value , "" );
 static_assert(!IsEntityDef<ArticleEntity>::value, "" );
+static_assert(!IsEntityDef<ArticleDetailRelation>::value, "" );
 static_assert(!IsEntityDef<int>::value, "" );
 static_assert(!IsEntityDef<QString>::value, "" );
 
@@ -89,8 +108,22 @@ static_assert( IsEntityFieldDef<ArticleDef::descriptionField>::value , "" );
 static_assert(!IsEntityFieldDef<ArticleDataStruct>::value , "" );
 static_assert(!IsEntityFieldDef<ArticleDef>::value , "" );
 static_assert(!IsEntityFieldDef<ArticleEntity>::value, "" );
+static_assert(!IsEntityFieldDef<ArticleDetailRelation>::value, "" );
 static_assert(!IsEntityFieldDef<int>::value , "" );
 static_assert(!IsEntityFieldDef<QString>::value , "" );
+
+/*
+ * IsRelation compile time tests
+ */
+
+static_assert(!IsRelation<ArticleDef::idField>::value , "" );
+static_assert(!IsRelation<ArticleDef::descriptionField>::value , "" );
+static_assert(!IsRelation<ArticleDataStruct>::value , "" );
+static_assert(!IsRelation<ArticleDef>::value , "" );
+static_assert(!IsRelation<ArticleEntity>::value, "" );
+static_assert( IsRelation<ArticleDetailRelation>::value, "" );
+static_assert(!IsRelation<int>::value , "" );
+static_assert(!IsRelation<QString>::value , "" );
 
 /*
  * Main

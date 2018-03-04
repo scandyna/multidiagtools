@@ -24,6 +24,10 @@
 #include "Mdt/Entity/Relation.h"
 #include "Mdt/Entity/PrimaryKey.h"
 #include "Mdt/Entity/FieldAt.h"
+#include "Mdt/Entity/TypeTraits/IsEntity.h"
+#include "Mdt/Entity/TypeTraits/IsEntityDef.h"
+#include "Mdt/Entity/TypeTraits/IsEntityFieldDef.h"
+#include "Mdt/Entity/TypeTraits/IsRelation.h"
 #include "Mdt/Sql/Schema/ForeignKey.h"
 #include "Mdt/Sql/Schema/ForeignKeySettings.h"
 #include "Mdt/Sql/Schema/ForeignField.h"
@@ -39,6 +43,10 @@ namespace Mdt{ namespace Entity{
     template<typename PrimaryEntityDef, typename ForeignEntityDef, typename ForeignEntityField, typename ...ForeignEntityFields>
     void addFieldPairsToFk(Mdt::Sql::Schema::ForeignKey & sqlFk, const Mdt::Entity::PrimaryKey & pk)
     {
+      static_assert( TypeTraits::IsEntityDef<PrimaryEntityDef>::value, "PrimaryEntityDef must be a entity definition type" );
+      static_assert( TypeTraits::IsEntityDef<ForeignEntityDef>::value, "ForeignEntityDef must be a entity definition type" );
+      static_assert( TypeTraits::IsEntityFieldDef<ForeignEntityField>::value, "ForeignEntityField must be a entity field definition type" );
+
       const auto pkIndex = sqlFk.fieldPairCount();
       Q_ASSERT(pkIndex < pk.fieldCount());
 
@@ -48,6 +56,9 @@ namespace Mdt{ namespace Entity{
     template<typename PrimaryEntity, typename ForeignEntity, typename ...ForeignEntityFields>
     void setupSqlForeignKey(const Mdt::Entity::Relation<PrimaryEntity, ForeignEntity, ForeignEntityFields...> &, Mdt::Sql::Schema::ForeignKey & sqlFk)
     {
+      static_assert( TypeTraits::IsEntity<PrimaryEntity>::value, "PrimaryEntity must be a entity type" );
+      static_assert( TypeTraits::IsEntity<ForeignEntity>::value, "ForeignEntity must be a entity type" );
+
       using primary_entity_def_type = typename PrimaryEntity::def_type;
       using foreign_entity_def_type = typename ForeignEntity::def_type;
 
@@ -81,6 +92,8 @@ namespace Mdt{ namespace Entity{
     template<typename EntityRelation>
     static Mdt::Sql::Schema::ForeignKey fromEntityRelation(const Mdt::Sql::Schema::ForeignKeySettings & sqlFkSettings)
     {
+      static_assert(TypeTraits::IsRelation<EntityRelation>::value, "EntityRelation must be a entity relation type");
+
       Mdt::Sql::Schema::ForeignKey sqlFk;
 
       Impl::SqlForeignKey::setupSqlForeignKey(EntityRelation{}, sqlFk);

@@ -25,8 +25,7 @@
 #include "TypeTraits/IsEntity.h"
 #include "TypeTraits/IsEntityDef.h"
 #include "TypeTraits/IsEntityFieldDef.h"
-
-// #include "MdtEntity_CoreExport.h"
+#include "TypeTraits/RelationTag.h"
 
 namespace Mdt{ namespace Entity{
 
@@ -78,28 +77,11 @@ namespace Mdt{ namespace Entity{
    * \endcode
    */
   template<typename PrimaryEntity, typename ForeignEntity, typename ...ForeignEntityFields>
-  class Relation
+  class Relation : TypeTraits::RelationTag
   {
     static_assert( TypeTraits::IsEntity<PrimaryEntity>::value, "PrimaryEntity must be a entity type" );
     static_assert( TypeTraits::IsEntity<ForeignEntity>::value, "ForeignEntity must be a entity type" );
     static_assert( sizeof...(ForeignEntityFields) >= 1, "A relation must refer to at least 1 field in ForeignEntity" );
-
-   public:
-
-//     /*! \brief Define a relation between a primary and a foreign entity
-//      *
-//      * This version will take the primary key of the primary entity.
-//      *
-//      * \todo define FK
-//      *
-//      * Example:
-//      * \code
-//      * \endcode
-//      */
-//     template<typename PrimaryEntity, typename ForeignEntity>
-//     static Relation fromEntities()
-//     {
-//     }
   };
 
 }} // namespace Mdt{ namespace Entity{

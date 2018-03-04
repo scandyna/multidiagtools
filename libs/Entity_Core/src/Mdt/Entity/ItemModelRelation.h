@@ -24,12 +24,13 @@
 #include "Relation.h"
 #include "FieldAt.h"
 #include "PrimaryKey.h"
-// #include "ForeignKey.h"
+#include "TypeTraits/IsEntity.h"
+#include "TypeTraits/IsEntityDef.h"
+#include "TypeTraits/IsEntityFieldDef.h"
+#include "TypeTraits/IsRelation.h"
 #include "Mdt/ItemModel/RelationKey.h"
 #include "MdtEntity_CoreExport.h"
 #include <initializer_list>
-
-#include <QDebug>
 
 namespace Mdt{ namespace Entity{
 
@@ -40,6 +41,10 @@ namespace Mdt{ namespace Entity{
     template<typename PrimaryEntityDef, typename ForeignEntityDef, typename ForeignEntityField, typename ...ForeignEntityFields>
     void addColumnPairToKeyImpl(Mdt::ItemModel::RelationKey & imKey, const Mdt::Entity::PrimaryKey & pk)
     {
+      static_assert( TypeTraits::IsEntityDef<PrimaryEntityDef>::value, "PrimaryEntityDef must be a entity definition type" );
+      static_assert( TypeTraits::IsEntityDef<ForeignEntityDef>::value, "ForeignEntityDef must be a entity definition type" );
+      static_assert( TypeTraits::IsEntityFieldDef<ForeignEntityField>::value, "ForeignEntityField must be a entity field definition type" );
+
       const auto pkIndex = imKey.columnPairCount();
       Q_ASSERT(pkIndex < pk.fieldCount());
 
@@ -49,6 +54,9 @@ namespace Mdt{ namespace Entity{
     template<typename PrimaryEntity, typename ForeignEntity, typename ...ForeignEntityFields>
     void addColumnPairToKey(const Mdt::Entity::Relation<PrimaryEntity, ForeignEntity, ForeignEntityFields...> &, Mdt::ItemModel::RelationKey & imKey)
     {
+      static_assert( TypeTraits::IsEntity<PrimaryEntity>::value, "PrimaryEntity must be a entity type" );
+      static_assert( TypeTraits::IsEntity<ForeignEntity>::value, "ForeignEntity must be a entity type" );
+
       using primary_entity_def_type = typename PrimaryEntity::def_type;
       using foreign_entity_def_type = typename ForeignEntity::def_type;
 
@@ -112,6 +120,8 @@ namespace Mdt{ namespace Entity{
     template<typename EntityRelation>
     static Mdt::ItemModel::RelationKey keyFromRelation()
     {
+      static_assert(TypeTraits::IsRelation<EntityRelation>::value, "EntityRelation must be a entity relation type");
+
       Mdt::ItemModel::RelationKey key;
 
       Impl::ItemModelRelation::addColumnPairToKey(EntityRelation{}, key);
