@@ -33,6 +33,7 @@ class TableTest : public TestBase
   void cleanupTestCase();
 
   void fromEntityTest();
+  void addPrimaryKeyToTableTest();
 };
 
 #endif // #ifndef TABLE_TEST_H

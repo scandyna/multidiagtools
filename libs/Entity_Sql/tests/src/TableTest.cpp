@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "TableTest.h"
 #include "Mdt/Entity/Def.h"
+#include "Mdt/Entity/Relation.h"
 #include "Mdt/Entity/SqlTable.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include <QString>
@@ -41,6 +42,21 @@ MDT_ENTITY_DEF(
   (description, FieldMaxLength(250)),
   (qty)
 )
+
+struct ArticleVendorDataStruct
+{
+  qlonglong id;
+  qlonglong articleId;
+};
+
+MDT_ENTITY_DEF(
+  (ArticleVendorDataStruct),
+  ArticleVendor,
+  (id, FieldFlag::IsPrimaryKey),
+  (articleId)
+)
+
+using ArticleVendorRelation = Relation<ArticleEntity, ArticleVendorEntity, ArticleVendorDef::articleIdField>;
 
 void TableTest::initTestCase()
 {
@@ -82,6 +98,31 @@ void TableTest::fromEntityTest()
   QVERIFY(!table.isFieldRequired(2));
   QVERIFY(!table.isFieldUnique(2));
   QVERIFY(table.fieldLength(2) < 1);
+}
+
+void TableTest::addPrimaryKeyToTableTest()
+{
+  using Sql::Schema::ForeignKeyAction;
+
+  auto articleVendorTable = SqlTable::fromEntity<ArticleVendorEntity>();
+
+  QCOMPARE(articleVendorTable.foreignKeyList().size(), 0);
+
+  Sql::Schema::ForeignKeySettings fkSetting;
+  fkSetting.setIndexed(true);
+  fkSetting.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fkSetting.setOnUpdateAction(ForeignKeyAction::Cascade);
+
+  SqlTable::addForeignKeyFromRelationToTable<ArticleVendorRelation>(articleVendorTable, fkSetting);
+  QCOMPARE(articleVendorTable.foreignKeyList().size(), 1);
+  const auto fk = articleVendorTable.foreignKeyList().at(0);
+  QCOMPARE(fk.parentTableName(), QString("Article"));
+  QCOMPARE(fk.childTableName(), QString("ArticleVendor"));
+  QCOMPARE(fk.parentTableFieldNameList(), QStringList({"id"}));
+  QCOMPARE(fk.childTableFieldNameList(), QStringList({"articleId"}));
+  QCOMPARE(fk.onDeleteAction(), ForeignKeyAction::Restrict);
+  QCOMPARE(fk.onUpdateAction(), ForeignKeyAction::Cascade);
+  QVERIFY(fk.isIndexed());
 }
 
 /*

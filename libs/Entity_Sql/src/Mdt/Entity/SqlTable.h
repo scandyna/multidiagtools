@@ -23,14 +23,17 @@
 
 #include "SqlField.h"
 #include "SqlPrimaryKey.h"
+#include "SqlForeignKey.h"
 #include "Mdt/Entity/FieldAttributes.h"
 #include "Mdt/Entity/TypeTraits/IsEntity.h"
 #include "Mdt/Entity/TypeTraits/IsEntityDef.h"
 #include "Mdt/Entity/TypeTraits/IsEntityFieldDef.h"
+#include "Mdt/Entity/TypeTraits/IsRelation.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/FieldLength.h"
 #include "Mdt/Sql/Schema/FieldTypeMap.h"
+#include "Mdt/Sql/Schema/ForeignKeySettings.h"
 #include "MdtEntity_SqlExport.h"
 #include <QVariant>
 #include <boost/fusion/include/for_each.hpp>
@@ -94,6 +97,16 @@ namespace Mdt{ namespace Entity{
       table.setPrimaryKeyContainer( SqlPrimaryKey::fromEntity<Entity>(fieldTypeMap) );
 
       return table;
+    }
+
+    /*! \brief Add a foreign key from a entity relation to \a table
+     */
+    template<typename EntityRelation>
+    static void addForeignKeyFromRelationToTable(Mdt::Sql::Schema::Table & table, const Mdt::Sql::Schema::ForeignKeySettings & foreignKeySettings)
+    {
+      static_assert(TypeTraits::IsRelation<EntityRelation>::value, "EntityRelation must be a entity relation type");
+
+      table.addForeignKey( Mdt::Entity::SqlForeignKey::fromEntityRelation<EntityRelation>(foreignKeySettings) );
     }
   };
 
