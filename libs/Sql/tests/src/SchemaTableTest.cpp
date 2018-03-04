@@ -833,6 +833,9 @@ void SchemaTableTest::tableTest()
   QVERIFY(table.contains("ID_PK"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
+  QVERIFY(table.containsAllFieldsOf({"Id_PK","Remarks"}));
+  QVERIFY(!table.containsAllFieldsOf({"Id_PK","Remarks","NotInTable"}));
+  QVERIFY(table.containsAllFieldsOf({"Id_PK","Remarks","Name","Connector_Id_FK"}));
   QCOMPARE(table.field(1).name(), QString("Name"));
   QCOMPARE(table.field(2).name(), QString("Remarks"));
   QCOMPARE(table.foreignKeyList().size(), 1);

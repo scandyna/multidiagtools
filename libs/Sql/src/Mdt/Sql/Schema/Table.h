@@ -31,12 +31,12 @@
 #include "ForeignField.h"
 #include "ForeignFieldList.h"
 #include "ForeignKeySettings.h"
-
 #include "ForeignKey.h"
 #include "ForeignKeyList.h"
 #include "IndexList.h"
 #include "MdtSqlExport.h"
 #include <QString>
+#include <QStringList>
 #include <vector>
 #include <type_traits>
 
@@ -360,6 +360,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void addForeignKey(const FieldList & fieldList, const ForeignTable & foreignTable, const ForeignFieldList & foreignFieldList, const ForeignKeySettings & settings);
 
+    /*! \brief Add \a foreignKey to this table
+     *
+     * \pre \a foreignKey must not be null
+     * \pre each field in \a foreignKey.fieldNameList() must allready exist in this table
+     *    (this is because ForeignKey only holds field names, not their attributes).
+     */
+    void addForeignKey(const ForeignKey & foreignKey);
+
     /*! \brief Get foreign key that references table
      *
      * If no foreign key that references table exists in this table,
@@ -442,6 +450,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       return (fieldIndex(fieldName) > -1);
     }
+
+    /*! \brief Check if all fields in \a fieldNameList exist in this table
+     *
+     * Note that field names are compared in a case insensitive way.
+     *  For exapmple, Id_PK is the same field as ID_PK
+     */
+    bool containsAllFieldsOf(const QStringList & fieldNameList) const;
 
     /*! \brief Check if a field exists in this table
      *

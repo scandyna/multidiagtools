@@ -126,6 +126,12 @@ void Table::addForeignKey(const FieldList & fieldList, const ForeignTable & fore
   mForeignKeyList.addForeignKey(mTableName, fieldList, foreignTable, foreignFieldList, settings);
 }
 
+void Table::addForeignKey(const ForeignKey & foreignKey)
+{
+  Q_ASSERT(!foreignKey.isNull());
+
+}
+
 ForeignKey Table::foreignKeyReferencing(const QString & tableName) const
 {
   return mForeignKeyList.foreignKeyReferencing(tableName);
@@ -133,14 +139,20 @@ ForeignKey Table::foreignKeyReferencing(const QString & tableName) const
 
 void Table::addIndex(Index index)
 {
-#ifndef QT_NO_DEBUG
-  for(const auto & fieldName : index.fieldNameList()){
-    Q_ASSERT(contains(fieldName));
-  }
-#endif // #ifndef QT_NO_DEBUG
+  Q_ASSERT(containsAllFieldsOf(index.fieldNameList()));
 
   index.setTableName(mTableName);
   pvIndexList.append(index);
+}
+
+bool Table::containsAllFieldsOf(const QStringList& fieldNameList) const
+{
+  for(const auto & fieldName : fieldNameList){
+    if(!contains(fieldName)){
+      return false;
+    }
+  }
+  return true;
 }
 
 QString Table::fieldName(int index) const
