@@ -28,4 +28,5 @@ endfunction()
 
 addEntity_SqlTest("FieldTest")
 addEntity_SqlTest("PrimaryKeyTest")
+addEntity_SqlTest("ForeignKeyTest")
 addEntity_SqlTest("TableTest")
