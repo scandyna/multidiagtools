@@ -21,8 +21,8 @@
 #ifndef MDT_ENTITY_FIELD_MAX_LENGTH_H
 #define MDT_ENTITY_FIELD_MAX_LENGTH_H
 
+#include "Mdt/Assert.h"
 #include "MdtEntity_CoreExport.h"
-#include <QtGlobal>
 
 namespace Mdt{ namespace Entity{
 
@@ -43,7 +43,7 @@ namespace Mdt{ namespace Entity{
     constexpr explicit FieldMaxLength(int length) noexcept
      : mLength(length)
     {
-      Q_ASSERT(mLength > 0);
+      MDT_ASSERT(mLength > 0);
     }
 
     /*! \brief Check if this field max length is null
