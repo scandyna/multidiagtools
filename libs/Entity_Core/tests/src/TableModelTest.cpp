@@ -54,7 +54,7 @@ MDT_ENTITY_DEF(
   (qty)
 )
 
-class ArticleData : public DataTemplate<ArticleDataStruct, ArticleDef>
+class ArticleData : public DataTemplate<ArticleEntity>
 {
 };
 

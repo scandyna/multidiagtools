@@ -58,7 +58,7 @@ namespace Mdt{ namespace Entity{
   {
    public:
 
-    using def_type = typename DataList::value_type::def_type;
+    using entity_def_type = typename DataList::value_type::entity_def_type;
     using data_struct_type = typename DataList::value_type::data_struct_type;
 
     using ParentClass = Mdt::ItemModel::RowResizableStlTableModelTemplate< DataList, TableModelRecordAdapter<typename DataList::value_type> >;
@@ -75,9 +75,9 @@ namespace Mdt{ namespace Entity{
       if(role != Qt::DisplayRole){
         return ParentClass::headerData(section, orientation, role);
       }
-      static const def_type dataDef;
+      static const entity_def_type dataDef;
       Q_ASSERT(section >= 0);
-      Q_ASSERT(section < fieldCount<def_type>());
+      Q_ASSERT(section < fieldCount<entity_def_type>());
 
       return fieldNameAt(dataDef, section);
     }
@@ -86,7 +86,7 @@ namespace Mdt{ namespace Entity{
      */
     int columnCount() const override
     {
-      return fieldCount<def_type>();
+      return fieldCount<entity_def_type>();
     }
 
   };

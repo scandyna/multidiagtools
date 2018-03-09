@@ -27,7 +27,7 @@
 
 /*! \brief Data class of the Article entity
  */
-class ARTICLEENTITYEXAMPLELIB_EXPORT ArticleData : public Mdt::Entity::DataTemplate<ArticleDataStruct, ArticleDef>
+class ARTICLEENTITYEXAMPLELIB_EXPORT ArticleData : public Mdt::Entity::DataTemplate<ArticleEntity>
 {
  public:
 

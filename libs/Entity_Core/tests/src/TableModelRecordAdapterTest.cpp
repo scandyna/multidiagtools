@@ -45,7 +45,7 @@ MDT_ENTITY_DEF(
   (id)
 )
 
-class OneMemberData : public DataTemplate<OneMemberStruct, OneMemberDef>
+class OneMemberData : public DataTemplate<OneMemberEntity>
 {
 };
 
@@ -64,7 +64,7 @@ MDT_ENTITY_DEF(
   (qty)
 )
 
-class ArticleData : public DataTemplate<ArticleDataStruct, ArticleDef>
+class ArticleData : public DataTemplate<ArticleEntity>
 {
 };
 

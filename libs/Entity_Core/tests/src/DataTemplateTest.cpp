@@ -50,7 +50,7 @@ MDT_ENTITY_DEF(
   (description, FieldMaxLength(250))
 )
 
-class ArticleData : public Mdt::Entity::DataTemplate<ArticleDataStruct, ArticleDef>
+class ArticleData : public Mdt::Entity::DataTemplate<ArticleEntity>
 {
 };
 
