@@ -71,7 +71,8 @@
 
 #define MDT_ENTITY_DEF_MEMBER_FIELD(r, data, elem)  \
   MDT_ENTITY_FIELD_DEF(elem)                        \
-  MDT_ENTITY_FIELD_DEF_INSTANCE(elem)
+  MDT_ENTITY_FIELD_DEF_GENERATE_MEMBER_VARIABLE(elem) \
+  MDT_ENTITY_FIELD_DEF_GENERATE_INSTANCE_FUNCTION(elem)
 
 #define MDT_ENTITY_DEF_MEMBER_FIELD_LIST(...)                                 \
   BOOST_PP_SEQ_FOR_EACH(                                                      \
@@ -79,7 +80,7 @@
   )
 
 #define MDT_ENTITY_DEF_MEMBER(r, data, elem)  \
-  ( MDT_ENTITY_FIELD_ELEM_NAME(elem) )
+  ( MDT_ENTITY_FIELD_DEF_MEMBER_VARIABLE(elem) )
 
 #define MDT_ENTITY_DEF_MEMBER_SEQ(...)                                  \
   BOOST_PP_SEQ_FOR_EACH(                                                \
@@ -87,11 +88,11 @@
   )
 
 #define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC(r, defName, elem) \
-  ( MDT_ENTITY_FIELD_ELEM_NAME(elem) , defName::MDT_ENTITY_FIELD_ELEM_DEF_NAME(elem) )
+  ( MDT_ENTITY_FIELD_ELEM_NAME(elem) , defName::MDT_ENTITY_FIELD_DEF_TYPE(elem) )
 
-#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC_SEQ(defName, ...)                           \
+#define MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC_SEQ(defTuple, name, ...)                           \
   BOOST_PP_SEQ_FOR_EACH(                                                                    \
-    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC, defName, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) \
+    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC, MDT_ENTITY_DEF_NAME_NS(defTuple, name), BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) \
   )
 
 #define MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME(defTuple)  \
@@ -162,6 +163,13 @@
  *     }
  *   };
  *
+ *   static const idField m_id;
+ *
+ *   static constexpr idField id() noexcept
+ *   {
+ *     return idField{};
+ *   }
+ *
  *   struct firstNameField
  *   {
  *     static const QString fieldName()
@@ -174,6 +182,13 @@
  *       return Mdt::Entity::FieldAttributes(Mdt::Entity::FieldMaxLength(250));
  *     }
  *   };
+ *
+ *   static const firstNameField m_firstName;
+ *
+ *   static constexpr firstNameField firstName() noexcept
+ *   {
+ *     return firstNameField{};
+ *   }
  *
  *   struct remarksField
  *   {
@@ -188,12 +203,29 @@
  *     }
  *   };
  *
- *   idField id;
- *   firstNameField firstName;
- *   remarksField remarks;
+ *   static const remarksField m_remarks;
+ *
+ *   static constexpr remarksField remarks() noexcept
+ *   {
+ *     return remarksField{};
+ *   }
  * };
  *
  * using PersonEntity = EntityTemplate<PersonDataStruct, PersonDef>;
+ *
+ * BOOST_FUSION_ADAPT_STRUCT(
+ *   PersonDef,
+ *   m_id,
+ *   m_firstName,
+ *   m_remarks
+ * )
+ *
+ * BOOST_FUSION_ADAPT_ASSOC_STRUCT(
+ *   PersonDataStruct,
+ *   (id, PersonDef::idField),
+ *   (firstName, PersonDef::firstNameField),
+ *   (remarks, PersonDef::remarksField)
+ * )
  * \endcode
  *
  * Now examine the syntax to use the macro:
@@ -271,9 +303,7 @@
   )                                                                         \
   BOOST_FUSION_ADAPT_ASSOC_STRUCT(                                          \
     MDT_ENTITY_DEF_ELEM_DATA_STRUCT_NAME_NS(defTuple),                      \
-    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC_SEQ(                            \
-      MDT_ENTITY_DEF_NAME_NS(defTuple, name), __VA_ARGS__                   \
-    )                                                                       \
+    MDT_ENTITY_DATA_STRUCT_DEF_MEMBER_ASSOC_SEQ(defTuple, name, __VA_ARGS__ ) \
   )
 
 #endif // #ifndef MDT_ENTITY_DEF_H

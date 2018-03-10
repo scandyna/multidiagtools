@@ -52,6 +52,16 @@ namespace A{
   MDT_ENTITY_FIELD_DEF_INSTANCE( (field3) )
 }
 
+MDT_ENTITY_FIELD_DEF( (field4) )
+MDT_ENTITY_FIELD_DEF_GENERATE_INSTANCE_FUNCTION( (field4) )
+
+struct S5Def
+{
+  MDT_ENTITY_FIELD_DEF( (field5, FieldFlag::IsUnique, FieldMaxLength(12)) )
+  MDT_ENTITY_FIELD_DEF_GENERATE_MEMBER_VARIABLE( (field5) )
+  MDT_ENTITY_FIELD_DEF_GENERATE_INSTANCE_FUNCTION( (field5) )
+};
+
 void FieldDefTest::defUsageTest()
 {
   QCOMPARE(field0.fieldName(), QString("field0"));
@@ -70,6 +80,21 @@ void FieldDefTest::defUsageTest()
   QCOMPARE(field2.fieldAttributes().maxLength(), 250);
 
   QCOMPARE(A::field3.fieldName(), QString("field3"));
+
+  QCOMPARE(field4().fieldName(), QString("field4"));
+  QVERIFY(!field4().fieldAttributes().isRequired());
+  QVERIFY(!field4().fieldAttributes().isUnique());
+  QCOMPARE(field4().fieldAttributes().maxLength(), 0);
+
+  S5Def s5;
+  constexpr auto f5 = s5.field5();
+  QCOMPARE(f5.fieldName(), QString("field5"));
+  constexpr auto fa5 = s5.field5().fieldAttributes();
+  QVERIFY(!fa5.isRequired());
+  QVERIFY(fa5.isUnique());
+  QCOMPARE(fa5.maxLength(), 12);
+  const auto mf5 = s5.m_field5;
+  QCOMPARE(mf5.fieldName(), QString("field5"));
 }
 
 /*

@@ -44,8 +44,23 @@
 #define MDT_ENTITY_FIELD_ELEM_NAME_STR(elem) \
   BOOST_PP_STRINGIZE( MDT_ENTITY_FIELD_ELEM_NAME(elem) )
 
+/*! \internal Get the type of a field definition
+ *
+ * \code
+ * MDT_ENTITY_FIELD_DEF_TYPE( (id) )
+ * \endcode
+ * will generate:
+ * \code
+ * idField
+ * \endcode
+ */
+#define MDT_ENTITY_FIELD_DEF_TYPE(fieldTuple) \
+  MDT_ENTITY_FIELD_DEF_NAME( MDT_ENTITY_FIELD_ELEM_NAME(fieldTuple) )
+
+/*
 #define MDT_ENTITY_FIELD_ELEM_DEF_NAME(elem) \
   MDT_ENTITY_FIELD_DEF_NAME( MDT_ENTITY_FIELD_ELEM_NAME(elem) )
+*/
 
 #define MDT_ENTITY_FIELD_ELEM_ATTRIBUTES_ARGS(elem) \
   BOOST_PP_ARRAY_ENUM( \
@@ -89,7 +104,7 @@
    *       return QStringLiteral("id");
    *     }
    *
-   *     static const Mdt::Entity::FieldAttributes fieldAttributes()
+   *     static constexpr Mdt::Entity::FieldAttributes fieldAttributes()
    *     {
    *       return Mdt::Entity::FieldAttributes(Mdt::Entity::FieldFlag::IsRequired | Mdt::Entity::FieldFlag::IsUnique);
    *     }
@@ -105,16 +120,16 @@
    *    constexpr auto fieldName()
    */
 #define MDT_ENTITY_FIELD_DEF(fieldTuple)                                                          \
-  struct MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) : Mdt::Entity::TypeTraits::EntityFieldDefTag  \
+  struct MDT_ENTITY_FIELD_DEF_TYPE(fieldTuple) : Mdt::Entity::TypeTraits::EntityFieldDefTag  \
   {                                                                                               \
-    constexpr MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple)() noexcept {}                            \
+    constexpr MDT_ENTITY_FIELD_DEF_TYPE(fieldTuple)() noexcept {}                            \
                                                                                                   \
     static const QString fieldName()                                                              \
     {                                                                                             \
       return QStringLiteral( MDT_ENTITY_FIELD_ELEM_NAME_STR(fieldTuple) );                        \
     }                                                                                             \
                                                                                                   \
-    static const Mdt::Entity::FieldAttributes fieldAttributes()                                   \
+    static constexpr Mdt::Entity::FieldAttributes fieldAttributes()                                   \
     {                                                                                             \
       using namespace Mdt::Entity;                                                                \
       return Mdt::Entity::FieldAttributes(MDT_ENTITY_FIELD_ELEM_ATTRIBUTES_ARGS(fieldTuple));     \
@@ -122,6 +137,53 @@
   };
 
 #define MDT_ENTITY_FIELD_DEF_INSTANCE(fieldTuple) \
-  MDT_ENTITY_FIELD_ELEM_DEF_NAME(fieldTuple) MDT_ENTITY_FIELD_ELEM_NAME(fieldTuple);
+  MDT_ENTITY_FIELD_DEF_TYPE(fieldTuple) MDT_ENTITY_FIELD_ELEM_NAME(fieldTuple);
+
+/*! \internal Get the member variable name of a field definition
+ *
+ * \code
+ * MDT_ENTITY_FIELD_DEF_MEMBER_VARIABLE( (id) )
+ * \endcode
+ * will generate:
+ * \code
+ * m_id
+ * \endcode
+ */
+#define MDT_ENTITY_FIELD_DEF_MEMBER_VARIABLE(fieldTuple) \
+  BOOST_PP_CAT(m_, MDT_ENTITY_FIELD_ELEM_NAME(fieldTuple))
+
+/*! \internal Generate a member variable of a field definition
+ *
+ * \code
+ * MDT_ENTITY_FIELD_DEF_GENERATE_MEMBER_VARIABLE( (id) )
+ * \endcode
+ * will generate:
+ * \code
+ * const idField m_id;
+ * \endcode
+ *
+ * \note having a member instance of a field definition is required for BOOST_FUSION_ADAPT_STRUCT()
+ */
+#define MDT_ENTITY_FIELD_DEF_GENERATE_MEMBER_VARIABLE(fieldTuple) \
+  const MDT_ENTITY_FIELD_DEF_TYPE(fieldTuple) MDT_ENTITY_FIELD_DEF_MEMBER_VARIABLE(fieldTuple);
+
+/*! \internal Generate a function that returns a instance of a field definition
+ *
+ * \code
+ * MDT_ENTITY_FIELD_DEF_GENERATE_INSTANCE_FUNCTION( (id) )
+ * \endcode
+ * will generate:
+ * \code
+ * static constexpr idField id() noexcept
+ * {
+ *   return idField{};
+ * }
+ * \endcode
+ */
+#define MDT_ENTITY_FIELD_DEF_GENERATE_INSTANCE_FUNCTION(fieldTuple) \
+  static constexpr MDT_ENTITY_FIELD_DEF_TYPE(fieldTuple) MDT_ENTITY_FIELD_ELEM_NAME(fieldTuple)() noexcept \
+  { \
+    return MDT_ENTITY_FIELD_DEF_TYPE(fieldTuple){}; \
+  }
 
 #endif // #ifndef MDT_ENTITY_FIELD_DEF_H

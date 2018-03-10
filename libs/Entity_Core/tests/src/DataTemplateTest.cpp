@@ -71,8 +71,8 @@ void DataTemplateTest::dataUsageTest()
   ArticleData art1;
   const auto def = art1.def();
   QCOMPARE(def.entityName(), QString("Article"));
-  QCOMPARE(def.id.fieldName(), QString("id"));
-  QCOMPARE(def.description.fieldName(), QString("description"));
+  QCOMPARE(def.id().fieldName(), QString("id"));
+  QCOMPARE(def.description().fieldName(), QString("description"));
   art1.dataStruct().id = 1;
   art1.dataStruct().description = "Article 1";
   QCOMPARE(art1.constDataStruct().id, 1);

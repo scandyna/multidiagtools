@@ -85,33 +85,33 @@ void DefTest::defUsageTest()
 {
   constexpr ArticleDef articleDef;
   QCOMPARE(articleDef.entityName(), QString("Article"));
-  QCOMPARE(articleDef.id.fieldName(), QString("id"));
-  QCOMPARE(articleDef.description.fieldName(), QString("description"));
-  QCOMPARE(articleDef.remarks.fieldName(), QString("remarks"));
-  QVERIFY(articleDef.id.fieldAttributes().isRequired());
-  QVERIFY(articleDef.id.fieldAttributes().isUnique());
-  QVERIFY(articleDef.id.fieldAttributes().maxLength() < 1);
-  QVERIFY(articleDef.description.fieldAttributes().isRequired());
-  QVERIFY(!articleDef.description.fieldAttributes().isUnique());
-  QCOMPARE(articleDef.description.fieldAttributes().maxLength(), 250);
-  QVERIFY(!articleDef.remarks.fieldAttributes().isRequired());
-  QVERIFY(!articleDef.remarks.fieldAttributes().isUnique());
-  QVERIFY(articleDef.remarks.fieldAttributes().maxLength() < 1);
+  QCOMPARE(articleDef.id().fieldName(), QString("id"));
+  QCOMPARE(articleDef.description().fieldName(), QString("description"));
+  QCOMPARE(articleDef.remarks().fieldName(), QString("remarks"));
+  QVERIFY(articleDef.id().fieldAttributes().isRequired());
+  QVERIFY(articleDef.id().fieldAttributes().isUnique());
+  QVERIFY(articleDef.id().fieldAttributes().maxLength() < 1);
+  QVERIFY(articleDef.description().fieldAttributes().isRequired());
+  QVERIFY(!articleDef.description().fieldAttributes().isUnique());
+  QCOMPARE(articleDef.description().fieldAttributes().maxLength(), 250);
+  QVERIFY(!articleDef.remarks().fieldAttributes().isRequired());
+  QVERIFY(!articleDef.remarks().fieldAttributes().isUnique());
+  QVERIFY(articleDef.remarks().fieldAttributes().maxLength() < 1);
 
   constexpr ArticleEntity::def_type articleDef2;
   QCOMPARE(articleDef2.entityName(), QString("Article"));
-  QCOMPARE(articleDef2.id.fieldName(), QString("id"));
-  QCOMPARE(articleDef2.description.fieldName(), QString("description"));
-  QCOMPARE(articleDef2.remarks.fieldName(), QString("remarks"));
+  QCOMPARE(articleDef2.id().fieldName(), QString("id"));
+  QCOMPARE(articleDef2.description().fieldName(), QString("description"));
+  QCOMPARE(articleDef2.remarks().fieldName(), QString("remarks"));
 
   const A::SellerDef sellerDef;
   QCOMPARE(sellerDef.entityName(), QString("Seller"));
-  QCOMPARE(sellerDef.id.fieldName(), QString("id"));
-  QCOMPARE(sellerDef.name.fieldName(), QString("name"));
+  QCOMPARE(sellerDef.id().fieldName(), QString("id"));
+  QCOMPARE(sellerDef.name().fieldName(), QString("name"));
 
   constexpr A::SellerEntity::def_type sellerDef2;
   QCOMPARE(sellerDef2.entityName(), QString("Seller"));
-  QCOMPARE(sellerDef2.id.fieldName(), QString("id"));
+  QCOMPARE(sellerDef2.id().fieldName(), QString("id"));
 }
 
 /*
