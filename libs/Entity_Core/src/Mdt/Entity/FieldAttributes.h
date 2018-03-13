@@ -96,7 +96,7 @@ namespace Mdt{ namespace Entity{
     template<typename ...Ts>
     constexpr void setArgs(FieldFlags flags, Ts... rest) noexcept
     {
-      mFlags = flags;
+      mFlags |= flags;
       setArgs(rest...);
     }
 

@@ -114,6 +114,26 @@ void FieldAttributesTest::attributesVariadicConstructTest()
   QVERIFY(!fa7.isPrimaryKey());
   QVERIFY(fa7.hasDefaultValue());
   QCOMPARE(fa7.maxLength(), 0);
+
+  /*
+   * Attributes are mostly called with comas ',' only,
+   * including for flags. Check that this works.
+   */
+  FieldAttributes fa8(FieldFlag::IsPrimaryKey, FieldFlag::IsUnique);
+  QVERIFY(!fa8.isNull());
+  QVERIFY(!fa8.isRequired());
+  QVERIFY(fa8.isUnique());
+  QVERIFY(fa8.isPrimaryKey());
+  QVERIFY(!fa8.hasDefaultValue());
+  QCOMPARE(fa8.maxLength(), 0);
+
+  FieldAttributes fa9(FieldFlag::IsPrimaryKey, FieldMaxLength(20), FieldFlag::IsRequired);
+  QVERIFY(!fa9.isNull());
+  QVERIFY(fa9.isRequired());
+  QVERIFY(!fa9.isUnique());
+  QVERIFY(fa9.isPrimaryKey());
+  QVERIFY(!fa9.hasDefaultValue());
+  QCOMPARE(fa9.maxLength(), 20);
 }
 
 /*
