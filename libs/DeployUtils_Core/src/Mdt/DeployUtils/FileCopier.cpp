@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -123,7 +123,7 @@ bool FileCopier::copyFile(const QString & sourceFilePath, const QString & destin
       const QString msg = tr("Could not remove destination file '%1'")
                           .arg(destinationFileInfo.absoluteFilePath());
       auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-      error.stackError( mdtErrorFromQFile(destinationFile, this) );
+      error.stackError( mdtErrorFromQFileQ(destinationFile, this) );
       setLastError(error);
       return false;
     }
@@ -135,7 +135,7 @@ bool FileCopier::copyFile(const QString & sourceFilePath, const QString & destin
     const QString msg = tr("Could not copy file '%1' to '%2'")
                         .arg(sourceFileInfo.absoluteFilePath(), destinationDirectoryPath);
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    error.stackError( mdtErrorFromQFile(sourceFile, this) );
+    error.stackError( mdtErrorFromQFileQ(sourceFile, this) );
     setLastError(error);
     return false;
   }

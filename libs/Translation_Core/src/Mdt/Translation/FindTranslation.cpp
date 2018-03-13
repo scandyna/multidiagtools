@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -47,7 +47,7 @@ Mdt::Expected< Mdt::Translation::TranslationInfoList > findTranslations(const Md
   if(translationsDirectory.isEmpty()){
     const auto msg = QCoreApplication::translate("findTranslations()","Could not find translations directory. Searched in: '%1'")
                                                  .arg(pathPrefixList.toStringList().join(QChar::fromLatin1('\n')));
-    auto error = mdtErrorNew(msg, Mdt::Error::Critical, QString());
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "");
     return error;
   }
   QDir dir(translationsDirectory);
