@@ -15,6 +15,9 @@ set(SOURCE_FILES
   Mdt/Entity/Debug.cpp
   Mdt/Entity/ValueAt.cpp
   Mdt/Entity/FieldAt.cpp
+  Mdt/Entity/FieldDataValidatorState.cpp
+  Mdt/Entity/FieldDataValidatorCommonImplementation.cpp
+  Mdt/Entity/FieldDataValidator.cpp
   Mdt/Entity/DataList.cpp
   Mdt/Entity/PrimaryKeyField.cpp
   Mdt/Entity/PrimaryKey.cpp
