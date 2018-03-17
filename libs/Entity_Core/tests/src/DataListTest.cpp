@@ -68,6 +68,10 @@ class ArticleData : public Mdt::Entity::DataTemplate<ArticleEntity>
 template<typename Container>
 using ArticleDataList = DataList<ArticleData, Container>;
 
+class ExtendArticleDataList : public DataList<ArticleData>
+{
+};
+
 /*
  * Tests
  */
@@ -80,7 +84,6 @@ void commonTestImpl()
   QCOMPARE(l0.size(), 0);
   QCOMPARE(l0.count(), 0);
   QVERIFY(l0.isEmpty());
-  
   // Initial size with default constructed elements
   ArticleDataList<Container> l1(1);
   QCOMPARE(l1.size(), 1);
@@ -108,6 +111,22 @@ void DataListTest::commonTest()
   commonTestImpl< std::list<ArticleData> >();
   commonTestImpl< QVector<ArticleData> >();
   commonTestImpl< QList<ArticleData> >();
+}
+
+void DataListTest::extendTest()
+{
+  ExtendArticleDataList list;
+  QCOMPARE(list.size(), 0);
+  QCOMPARE(list.count(), 0);
+  QVERIFY(list.isEmpty());
+
+  ArticleData d1;
+  d1.setId(1);
+  list.append(d1);
+  QCOMPARE(list.count(), 1);
+  QCOMPARE(list.at(0).id(), 1);
+  list[0].setId(10);
+  QCOMPARE(list.at(0).id(), 10);
 }
 
 /*

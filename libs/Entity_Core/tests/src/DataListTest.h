@@ -33,6 +33,7 @@ class DataListTest : public TestBase
   void cleanupTestCase();
 
   void commonTest();
+  void extendTest();
 };
 
 #endif // #ifndef DATA_LIST_TEST_H

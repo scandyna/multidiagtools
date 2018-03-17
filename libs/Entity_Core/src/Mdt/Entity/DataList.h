@@ -39,6 +39,18 @@ namespace Mdt{ namespace Entity{
    *
    * using ArticleDataList = DataList<ArticleData>;
    * \endcode
+   *
+   * To add functionnality to the specific data list, inheritance could be used:
+   * \code
+   * class ArticleDataList : public DataList<ArticleData>
+   * {
+   *  public:
+   *
+   *   int rowOfArticleName(const QString & name) const;
+   * };
+   * \endcode
+   * Note that adding members to the derived class is not recommanded
+   *  (there values can be loosed in case of slicing).
    */
   template<typename EntityData, typename Container = std::vector<EntityData> >
   class DataList

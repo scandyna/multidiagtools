@@ -44,7 +44,7 @@ namespace Mdt{ namespace Entity{
         case FieldDataValidatorState::Ok:
           break;
       }
-      return mdtErrorNewT(FieldDataValidatorState, state, msg, Mdt::Error::Critical, "FieldDataValidator");
+      return mdtErrorNewT(FieldDataValidatorState, state, msg, Mdt::Error::Warning, "FieldDataValidator");
     }
 
   }} // namespace Impl{ namespace FieldDataValidator{
