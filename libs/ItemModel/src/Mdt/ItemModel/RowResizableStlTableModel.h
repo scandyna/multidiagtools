@@ -31,8 +31,14 @@ namespace Mdt{ namespace ItemModel{
    * \tparam Table Type of a STL compatible container.
    *   It must meet requirement for EditableStlTableModel,
    *    and additionaly provide:
-   *     - A STL compatible insert() method
-   *     - A STL compatible erase() method
+   *     - A STL compatible %insert() method:
+   *        \code
+   *        iterator insert(iterator pos, size_type count, const T & value);
+   *        \endcode
+   *     - A STL compatible %erase() method:
+   *        \code
+   *        iterator erase(iterator first, iterator last);
+   *        \endcode
    *
    * \tparam RecordAdapter Class template that meets the requirement
    *   of EditableStlTableModel, and that also provides following functions:

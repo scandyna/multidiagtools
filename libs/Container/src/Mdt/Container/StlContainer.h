@@ -136,20 +136,35 @@ namespace Mdt{ namespace Container{
   }
 
   /*! \brief Insert \a count copies of \a value to \a container
+   *
+   * \tparam Container STL compatible container that provides a %insert() method of this form:
+   *    \code
+   *    iterator insert(iterator pos, size_type count, const T & value);
+   *    \endcode
+   *
+   * \pre \a pos must be >= 0
+   * \pre \a count must be >= 1
    */
   template<typename Container, typename T>
   void insertToContainer(Container & container, int pos, int count, const T & value)
   {
+    Q_ASSERT(pos >= 0);
+    Q_ASSERT(count >= 0);
     container.insert( std::next(container.begin() , pos), count, value );
   }
 
   /*! \brief Insert \a count copies of \a value to \a container
    *
-   * This is a specialization for QList
+   * This is a specialization for QList.
+   *
+   * \pre \a pos must be >= 0
+   * \pre \a count must be >= 1
    */
   template<typename T>
   void insertToContainer(QList<T> & container, int pos, int count, const T & value)
   {
+    Q_ASSERT(pos >= 0);
+    Q_ASSERT(count >= 0);
     container.reserve(container.size() + count);
     for(int i = 0; i < count; ++i){
       container.insert(pos, value);
@@ -174,8 +189,10 @@ namespace Mdt{ namespace Container{
 
   /*! \brief Remove \a count element starting from \a pos from \a container
    *
-   * If \a pos + \a count is grater than upper bound of \a container,
-   *  it will be ajusted.
+   * \tparam Container STL compatible container that provides a %erase() method of this form:
+   *    \code
+   *    iterator erase(iterator first, iterator last);
+   *    \endcode
    *
    * \pre \a pos must be >= 0
    * \pre \a count must be >= 1
