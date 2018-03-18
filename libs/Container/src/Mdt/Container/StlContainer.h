@@ -210,6 +210,16 @@ namespace Mdt{ namespace Container{
     insertToContainer(container, 0, 1, value);
   }
 
+  /*! \brief Remove all elements from \a first up to (but not including) \a last
+   *
+   * \return a iterator following the last removed element.
+   */
+  template<typename Container>
+  typename Container::iterator callErase(Container & container, typename Container::iterator first, typename Container::iterator last)
+  {
+    return container.erase(first, last);
+  }
+
   /*! \brief Remove \a count element starting from \a pos from \a container
    *
    * \tparam Container STL compatible container that provides a %erase() method of this form:
@@ -227,7 +237,7 @@ namespace Mdt{ namespace Container{
     Q_ASSERT(pos >= 0);
     Q_ASSERT(count >= 0);
     Q_ASSERT( (pos + count) <= containerSize(container) );
-    container.erase( std::next(container.begin() , pos), std::next(container.begin() , pos + count) );
+   callErase( container, std::next(container.begin() , pos), std::next(container.begin() , pos + count) );
   }
 
   /*! \brief Remove the first element from \a container

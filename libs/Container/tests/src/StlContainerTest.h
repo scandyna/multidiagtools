@@ -43,6 +43,8 @@ class StlContainerTest : public TestBase
   void constValueAtIndexTest();
 
   void callInsertTest();
+  void callEraseTest();
+
   void insertToContainerTest();
   void removeFromContainerTest();
 };

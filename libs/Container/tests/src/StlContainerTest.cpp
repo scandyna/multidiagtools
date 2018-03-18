@@ -186,6 +186,47 @@ void StlContainerTest::callInsertTest()
 }
 
 template<typename Container>
+void callEraseTestImpl()
+{
+  Container container{1,2,3};
+  QCOMPARE(containerSize(container), 3);
+
+  /*
+   * |1|2|3|  -->  |1|3|
+   *    f l           i
+   */
+  auto i = callErase( container, std::next(container.begin(), 1), std::next(container.begin(), 2) );
+  QCOMPARE(containerSize(container), 2);
+  QCOMPARE(constValueAtIndex(container, 0), 1);
+  QCOMPARE(constValueAtIndex(container, 1), 3);
+  QVERIFY( i == std::next(container.begin(), 1) );
+
+  /*
+   * |1|3|  -->  |1|
+   *    i l         i
+   */
+  i = callErase( container, i, container.end() );
+  QCOMPARE(containerSize(container), 1);
+  QCOMPARE(constValueAtIndex(container, 0), 1);
+  QVERIFY( i == container.end() );
+  /*
+   * |1|  -->  |
+   *  f l       i
+   */
+  i = callErase( container, container.begin(), container.end() );
+  QCOMPARE(containerSize(container), 0);
+  QVERIFY( i == container.end() );
+}
+
+void StlContainerTest::callEraseTest()
+{
+  callEraseTestImpl< std::vector<int> >();
+  callEraseTestImpl< std::list<int> >();
+  callEraseTestImpl< QVector<int> >();
+  callEraseTestImpl< QList<int> >();
+}
+
+template<typename Container>
 void insertToContainerTestImpl()
 {
   /*
