@@ -31,7 +31,7 @@ namespace Mdt{ namespace Entity{
   /*! \brief Row resizable table model for STL compliant list of entity data
    *
    * \tparam DataList Type of a STL compatible container, able to work on BidirectionalIterator .
-   *    To be usable, \a DataList class must provide:
+   *    To be usable, \a %DataList class must provide:
    *     - The cbegin() method
    *     - The cend() method
    *     - The begin() method
@@ -49,6 +49,21 @@ namespace Mdt{ namespace Entity{
    *  public:
    *
    *   using ParentClass = Mdt::Entity::RowResizableTableModel< std::vector<MyEntityData> >;
+   *   using ParentClass::ParentClass;
+   * };
+   * \endcode
+   *
+   * It is also possible to use the DataList class template:
+   * \code
+   * using MyEntityDataList = Mdt::Entity::DataList<MyEntityData>;
+   *
+   * class MyEntityModel : public Mdt::Entity::RowResizableTableModel<MyEntityDataList>
+   * {
+   *  Q_OBJECT
+   *
+   *  public:
+   *
+   *   using ParentClass = Mdt::Entity::RowResizableTableModel<MyEntityDataList>;
    *   using ParentClass::ParentClass;
    * };
    * \endcode
