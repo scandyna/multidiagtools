@@ -22,6 +22,8 @@
 #define MDT_CONTAINER_STL_CONTAINER_H
 
 #include <QtGlobal>
+#include <QString>
+#include <QStringList>
 #include <iterator>
 #include <algorithm>
 #include <type_traits>
@@ -61,6 +63,24 @@ namespace Mdt{ namespace Container{
         list.reserve(count);
         for(int i = 0; i < count; ++i){
           list.append(value);
+        }
+        return list;
+      }
+    };
+
+    /*! \brief Implementation for initializeContainer()
+     *
+     * This is a specialization for QStringList
+     */
+    template<>
+    struct InitializeContainer<QStringList>
+    {
+      static QStringList initialize(int count, const QString & str)
+      {
+        QStringList list;
+        list.reserve(count);
+        for(int i = 0; i < count; ++i){
+          list.append(str);
         }
         return list;
       }

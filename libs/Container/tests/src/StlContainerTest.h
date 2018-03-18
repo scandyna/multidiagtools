@@ -33,6 +33,7 @@ class StlContainerTest : public TestBase
   void cleanupTestCase();
 
   void initializeTest();
+  void initializeQStringListTest();
 
   void sizeTest();
   void isEmptyTest();

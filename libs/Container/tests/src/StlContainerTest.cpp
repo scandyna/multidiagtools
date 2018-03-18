@@ -65,6 +65,18 @@ void StlContainerTest::initializeTest()
   initializeTestImpl< QList<int> >();
 }
 
+void StlContainerTest::initializeQStringListTest()
+{
+  auto c1 = initializeContainer<QStringList>(1, "A");
+  QCOMPARE(containerSize(c1), 1);
+  QCOMPARE(constValueAtIndex(c1, 0), QString("A"));
+
+  auto c2 = initializeContainer<QStringList>(2, "B");
+  QCOMPARE(containerSize(c2), 2);
+  QCOMPARE(constValueAtIndex(c2, 0), QString("B"));
+  QCOMPARE(constValueAtIndex(c2, 1), QString("B"));
+}
+
 template<typename Container>
 void sizeTestImpl()
 {
