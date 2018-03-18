@@ -135,6 +135,47 @@ namespace Mdt{ namespace Container{
     return *constIteratorAtIndex(container, index);
   }
 
+  /*! \brief Call insert on a container
+   *
+   * \pre \a count must be >= 1
+   * \return a iterator pointing to the first of the inserted items.
+   */
+  template<typename Container, typename T>
+  typename Container::iterator callInsert(Container & container, typename Container::iterator pos, int count, const T & value)
+  {
+    Q_ASSERT(count >= 1);
+    return container.insert(pos, count, value);
+  }
+
+  /*! \brief Call insert on a container
+   *
+   * This is a specialization for QList.
+   *
+   * \pre \a count must be >= 1
+   * \return a iterator pointing to the first of the inserted items.
+   */
+  template<typename T>
+  typename QList<T>::iterator callInsert(QList<T> & container, typename QList<T>::iterator pos, int count, const T & value)
+  {
+    Q_ASSERT(count >= 1);
+
+    /*
+     * After a call to reserve(),
+     * QList will detach, and pos becomes a invalid iterator.
+     * So, calculate the index referred by pos
+     * then get a valid iterator back.
+     */
+    const int index = std::distance(container.begin(), pos);
+    Q_ASSERT(index >= 0);
+    container.reserve(container.size() + count);
+    auto it = std::next(container.begin(), index);
+    for(int i = 0; i < count; ++i){
+      it = container.insert(it, value);
+    }
+
+    return it;
+  }
+
   /*! \brief Insert \a count copies of \a value to \a container
    *
    * \tparam Container STL compatible container that provides a %insert() method of this form:
@@ -149,26 +190,8 @@ namespace Mdt{ namespace Container{
   void insertToContainer(Container & container, int pos, int count, const T & value)
   {
     Q_ASSERT(pos >= 0);
-    Q_ASSERT(count >= 0);
-    container.insert( std::next(container.begin() , pos), count, value );
-  }
-
-  /*! \brief Insert \a count copies of \a value to \a container
-   *
-   * This is a specialization for QList.
-   *
-   * \pre \a pos must be >= 0
-   * \pre \a count must be >= 1
-   */
-  template<typename T>
-  void insertToContainer(QList<T> & container, int pos, int count, const T & value)
-  {
-    Q_ASSERT(pos >= 0);
-    Q_ASSERT(count >= 0);
-    container.reserve(container.size() + count);
-    for(int i = 0; i < count; ++i){
-      container.insert(pos, value);
-    }
+    Q_ASSERT(count >= 1);
+    callInsert(container, std::next(container.begin() , pos), count, value);
   }
 
   /*! \brief Insert \a value to the end of \a container

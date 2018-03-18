@@ -28,6 +28,8 @@
 #include <vector>
 #include <list>
 
+// #include <QDebug>
+
 using namespace Mdt::Container;
 
 void StlContainerTest::initTestCase()
@@ -155,6 +157,32 @@ void StlContainerTest::constValueAtIndexTest()
   constValueAtIndexTestImpl< std::list<int> >();
   constValueAtIndexTestImpl< QVector<int> >();
   constValueAtIndexTestImpl< QList<int> >();
+}
+
+template<typename Container>
+void callInsertTestImpl()
+{
+  Container container;
+  QCOMPARE(containerSize(container), 0);
+
+  auto it = callInsert(container, container.begin(), 1, 10);
+  QCOMPARE(containerSize(container), 1);
+  QCOMPARE(constValueAtIndex(container, 0), 10);
+  QVERIFY(it == container.begin());
+
+  it = callInsert(container, std::next(container.begin(), 1), 1, 20);
+  QCOMPARE(containerSize(container), 2);
+  QCOMPARE(constValueAtIndex(container, 0), 10);
+  QCOMPARE(constValueAtIndex(container, 1), 20);
+  QVERIFY(it == std::next(container.begin(), 1));
+}
+
+void StlContainerTest::callInsertTest()
+{
+  callInsertTestImpl< std::vector<int> >();
+  callInsertTestImpl< std::list<int> >();
+  callInsertTestImpl< QVector<int> >();
+  callInsertTestImpl< QList<int> >();
 }
 
 template<typename Container>
