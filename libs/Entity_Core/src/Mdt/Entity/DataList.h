@@ -169,11 +169,30 @@ namespace Mdt{ namespace Entity{
       return *Mdt::Container::iteratorAtIndex(mContainer, index);
     }
 
+    /*! \brief Insert \a count copies of \a data before \a pos into this list
+     *
+     * \pre \a count must be >= 1
+     */
+    iterator insert(iterator pos, int count, const EntityData & data)
+    {
+      Q_ASSERT(count >= 0);
+      return Mdt::Container::callInsert(mContainer, pos, count, data);
+    }
+
     /*! \brief Add \a data to the end of this list
      */
     void append(const EntityData & data)
     {
       Mdt::Container::appendToContainer(mContainer, data);
+    }
+
+    /*! \brief Remove all data from first up to (but not including) last
+     *
+     * \return a %iterator to the same item that end() referred to before the call.
+     */
+    iterator erase(iterator first, iterator last)
+    {
+      return Mdt::Container::callErase(mContainer, first, last);
     }
 
     /*! \brief Remove last element from this data list

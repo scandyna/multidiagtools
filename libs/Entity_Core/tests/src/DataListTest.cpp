@@ -21,12 +21,14 @@
 #include "DataListTest.h"
 #include "Mdt/Entity/Def.h"
 #include "Mdt/Entity/DataList.h"
+#include "Mdt/Container/StlContainer.h"
 #include <QVector>
 #include <QList>
 #include <vector>
 #include <list>
 
 using namespace Mdt::Entity;
+using namespace Mdt::Container;
 
 void DataListTest::initTestCase()
 {
@@ -102,6 +104,13 @@ void commonTestImpl()
   QCOMPARE(l1.count(), 1);
   QCOMPARE(l1.at(0).id(), 1);
   l1.removeLast();
+  QVERIFY(l1.isEmpty());
+  // Insert
+  insertToContainer(l1, 0, 1, ad1);
+  QCOMPARE(l1.count(), 1);
+  QCOMPARE(l1.at(0).id(), 1);
+  // Erase
+  removeFromContainer(l1, 0, 1);
   QVERIFY(l1.isEmpty());
 }
 
