@@ -79,6 +79,15 @@ namespace Mdt{ namespace ItemModel{
       insertRows(rowCount(), 1);
     }
 
+    /*! \brief Append a row initialized with \a record
+     *
+     * \pre columnCount() must be > 0
+     */
+    void appendRow(const record_type & record)
+    {
+      insertRows(rowCount(), 1, record);
+    }
+
     /*! \brief Prepend a row
      *
      * \pre columnCount() must be > 0
@@ -86,6 +95,38 @@ namespace Mdt{ namespace ItemModel{
     void prependRow()
     {
       insertRows(0, 1);
+    }
+
+    /*! \brief Prepend a row initialized with \a record
+     *
+     * \pre columnCount() must be > 0
+     */
+    void prependRow(const record_type & record)
+    {
+      insertRows(0, 1, record);
+    }
+
+    /*! \brief Insert \a count rows before \a row initialized with \a record
+     *
+     * \pre \a row must be in valid range ( 0 <= row <= rowCount() )
+     * \pre \a count must be > 0
+     * \pre columnCount() must be > 0
+     */
+    bool insertRows(int row, int count, const record_type & record , const QModelIndex & parent = QModelIndex())
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row <= rowCount());
+      Q_ASSERT(count > 0);
+      Q_ASSERT(columnCount() > 0);
+
+      if(parent.isValid()){
+        return false;
+      }
+      beginInsertRows(parent, row, row+count-1);
+      Mdt::Container::insertToContainer( table(), row, count, record );
+      endInsertRows();
+
+      return true;
     }
 
     /*! \brief Insert \a count rows before \a row
@@ -101,14 +142,7 @@ namespace Mdt{ namespace ItemModel{
       Q_ASSERT(count > 0);
       Q_ASSERT(columnCount() > 0);
 
-      if(parent.isValid()){
-        return false;
-      }
-      beginInsertRows(parent, row, row+count-1);
-      Mdt::Container::insertToContainer( table(), row, count, constRecordAdapter().initializeContainer( columnCount(), value_type() ) );
-      endInsertRows();
-
-      return true;
+      return insertRows( row, count, constRecordAdapter().initializeContainer( columnCount(), value_type() ), parent );
     }
 
     /*! \brief Remove first row

@@ -31,6 +31,7 @@
 #include <QVector>
 #include <QModelIndex>
 #include <QSignalSpy>
+#include <QStringList>
 #include <vector>
 
 using namespace Mdt::ItemModel;
@@ -295,6 +296,68 @@ void StlTableModelTest::rowResizableColumnCountTest()
   modelResetSpy.clear();
 }
 
+void StlTableModelTest::insertRowsWithDataTest()
+{
+  using Table = std::vector<QStringList>;
+  RowResizableStlTableModel<Table> model;
+  QSignalSpy rowsInsertedSpy(&model, &RowResizableStlTableModel<Table>::rowsInserted);
+  QVERIFY(rowsInsertedSpy.isValid());
+  QCOMPARE(rowsInsertedSpy.count(), 0);
+  QVariantList arguments;
+  /*
+   * Setup model
+   */
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 0);
+  model.setColumnCount(2);
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(rowsInsertedSpy.count(), 0);
+  /*
+   * -------
+   * |A0|B0|
+   * -------
+   */
+  QVERIFY( model.insertRows(0, 1, QStringList({"A0","B0"})) );
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("A0"));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B0"));
+  // Check signal
+  QCOMPARE(rowsInsertedSpy.count(), 1);
+  arguments = rowsInsertedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0)); // first
+  QCOMPARE(arguments.at(2), QVariant(0)); // last
+  rowsInsertedSpy.clear();
+  /*
+   * Insert 2 rows to the end
+   * -------
+   * |A0|B0|
+   * -------
+   * |C |D |
+   * -------
+   * |C |D |
+   * -------
+   */
+  QVERIFY( model.insertRows(1, 2, QStringList({"C","D"})) );
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("A0"));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B0"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("C"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("D"));
+  QCOMPARE(getModelData(model, 2, 0), QVariant("C"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("D"));
+  // Check signal
+  QCOMPARE(rowsInsertedSpy.count(), 1);
+  arguments = rowsInsertedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1)); // first
+  QCOMPARE(arguments.at(2), QVariant(2)); // last
+  rowsInsertedSpy.clear();
+}
+
 void StlTableModelTest::insertRowsTest()
 {
   using Table = std::vector< QList<int> >;
@@ -368,6 +431,67 @@ void StlTableModelTest::prependAppendRowTest()
   QCOMPARE(getModelData(model, 0, 1), QVariant(-11));
   QCOMPARE(getModelData(model, 1, 0), QVariant(2));
   QCOMPARE(getModelData(model, 1, 1), QVariant(22));
+}
+
+void StlTableModelTest::prependAppendRowWithDataTest()
+{
+  using Table = std::vector<QStringList>;
+  RowResizableStlTableModel<Table> model;
+  QSignalSpy rowsInsertedSpy(&model, &RowResizableStlTableModel<Table>::rowsInserted);
+  QVERIFY(rowsInsertedSpy.isValid());
+  QCOMPARE(rowsInsertedSpy.count(), 0);
+  QVariantList arguments;
+  /*
+   * Setup model
+   */
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 0);
+  model.setColumnCount(2);
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(rowsInsertedSpy.count(), 0);
+  /*
+   * Prepend a row
+   * -----
+   * |A|B|
+   * -----
+   */
+  model.prependRow({"A","B"});
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B"));
+  // Check signal
+  QCOMPARE(rowsInsertedSpy.count(), 1);
+  arguments = rowsInsertedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0)); // first
+  QCOMPARE(arguments.at(2), QVariant(0)); // last
+  rowsInsertedSpy.clear();
+  /*
+   * Append a row
+   * -----
+   * |A|B|
+   * -----
+   * |C|D|
+   * -----
+   */
+  model.appendRow({"C","D"});
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant("C"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("D"));
+  // Check signal
+  QCOMPARE(rowsInsertedSpy.count(), 1);
+  arguments = rowsInsertedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1)); // first
+  QCOMPARE(arguments.at(2), QVariant(1)); // last
+  rowsInsertedSpy.clear();
 }
 
 void StlTableModelTest::removeRowsTest()

@@ -42,8 +42,10 @@ class StlTableModelTest : public TestBase
 
   void rowResizableColumnCountTest();
 
+  void insertRowsWithDataTest();
   void insertRowsTest();
   void prependAppendRowTest();
+  void prependAppendRowWithDataTest();
 
   void removeRowsTest();
   void removeFirstLastRowTest();
