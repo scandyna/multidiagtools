@@ -22,6 +22,7 @@
 #include "Mdt/Entity/ValueAt.h"
 #include <boost/fusion/container.hpp>
 #include <QString>
+#include <QMetaType>
 
 using namespace Mdt::Entity;
 
@@ -52,6 +53,38 @@ void ValueAtTest::fusionVectorGetSetTest()
   QCOMPARE(valueAt(v, 1), QVariant("B"));
   QCOMPARE(valueAt(v, 2), QVariant(4.2));
   QCOMPARE(valueAt(v, 3), QVariant('c'));
+}
+
+class PersonId
+{
+ public:
+
+  PersonId() = default;
+  PersonId(qulonglong id)
+   : mId(id)
+  {
+  }
+
+  qulonglong value() const
+  {
+    return mId;
+  }
+
+ private:
+
+  qulonglong mId = 0;
+};
+Q_DECLARE_METATYPE(PersonId)
+
+void ValueAtTest::customTypeTest()
+{
+  auto v = boost::fusion::make_vector( PersonId(1), QString("A") );
+  QCOMPARE(valueAt(v, 0).value<PersonId>().value(), 1ull);
+  QCOMPARE(valueAt(v, 1), QVariant("A"));
+  setValueAt(v, 0, PersonId(2));
+  setValueAt(v, 1, QString("B"));
+  QCOMPARE(valueAt(v, 0).value<PersonId>().value(), 2ull);
+  QCOMPARE(valueAt(v, 1), QVariant("B"));
 }
 
 /*

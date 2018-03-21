@@ -33,6 +33,7 @@ class ValueAtTest : public TestBase
   void cleanupTestCase();
 
   void fusionVectorGetSetTest();
+  void customTypeTest();
 };
 
 #endif // #ifndef VALUE_AT_TEST_H

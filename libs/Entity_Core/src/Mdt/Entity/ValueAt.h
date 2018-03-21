@@ -56,7 +56,7 @@ namespace Mdt{ namespace Entity{
     template<typename FusionSequence, int I>
     QVariant valueAtIndex(const FusionSequence & sequence)
     {
-      return boost::fusion::at_c<I>(sequence);
+      return QVariant::fromValue( boost::fusion::at_c<I>(sequence) );
     }
 
     template<typename FusionSequence, int... Is>
@@ -81,15 +81,20 @@ namespace Mdt{ namespace Entity{
    * \note If the index is known at compile time, boost::fusion::at_c() should be used.
    * \note To iterate all members of \a sequence , use boost::fusion::for_each().
    */
-  template<typename FusionSequence>
-  void setValueAt(FusionSequence & sequence, int index, const QVariant & value)
+  template<typename FusionSequence, typename T>
+  void setValueAt(FusionSequence & sequence, int index, const T & value)
   {
     constexpr int size = boost::fusion::result_of::size<FusionSequence>::type::value;
 
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < size);
 
-    Impl::setValueAt(sequence, index, value, std::make_integer_sequence<int, size>{});
+    /*
+     * Impl::setValueAt() will compile a instance for each type in the tuple.
+     * Not using QVariant will introduce compile error because of incompatibel types
+     * (index checking is done at runtime).
+     */
+    Impl::setValueAt(sequence, index, QVariant::fromValue(value), std::make_integer_sequence<int, size>{});
   }
 
   /*! \brief Get the value in \a sequence at \a index
