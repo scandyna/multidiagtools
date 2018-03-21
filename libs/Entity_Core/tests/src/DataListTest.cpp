@@ -86,6 +86,7 @@ void commonTestImpl()
   QCOMPARE(l0.size(), 0);
   QCOMPARE(l0.count(), 0);
   QVERIFY(l0.isEmpty());
+  QCOMPARE(l0.def().entityName(), QString("Article"));
   // Initial size with default constructed elements
   ArticleDataList<Container> l1(1);
   QCOMPARE(l1.size(), 1);

@@ -73,12 +73,23 @@ namespace Mdt{ namespace Entity{
   {
    public:
 
-    using entity_def_type = typename DataList::value_type::entity_def_type;
-    using data_struct_type = typename DataList::value_type::data_struct_type;
+    /*! \brief STL-style value
+     */
+    using value_type = typename DataList::value_type;
+
+    using entity_def_type = typename value_type::entity_def_type;
+    using data_struct_type = typename value_type::data_struct_type;
 
     using ParentClass = Mdt::ItemModel::RowResizableStlTableModelTemplate< DataList, TableModelRecordAdapter<typename DataList::value_type> >;
     using ParentClass::ParentClass;
     using ParentClass::headerData;
+
+    /*! \brief Get entity definition
+     */
+    static const entity_def_type def()
+    {
+      return value_type::def();
+    }
 
     /*! \brief Get header data for \a section, \a orientation and \a role
      */
@@ -94,7 +105,7 @@ namespace Mdt{ namespace Entity{
       Q_ASSERT(section >= 0);
       Q_ASSERT(section < fieldCount<entity_def_type>());
 
-      return fieldNameAt(dataDef, section);
+      return fieldNameAt(def(), section);
     }
 
     /*! \brief Get column count

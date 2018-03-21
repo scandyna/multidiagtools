@@ -93,6 +93,8 @@ namespace Mdt{ namespace Entity{
      */
     using value_type = typename Container::value_type;
 
+    using entity_def_type = typename value_type::entity_def_type;
+
     /*! \brief Construct a empty data list
      */
     explicit DataList() = default;
@@ -119,6 +121,13 @@ namespace Mdt{ namespace Entity{
     /*! \brief Move assign \a other to this data list
      */
     DataList & operator=(DataList && other) = default;
+
+    /*! \brief Get entity definition
+     */
+    static const entity_def_type def()
+    {
+      return value_type::def();
+    }
 
     /*! \brief Check if this data list is empty
      */

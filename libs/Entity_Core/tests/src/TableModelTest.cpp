@@ -85,6 +85,7 @@ void TableModelTest::readOnlyTest()
   articles.push_back(article);
 
   ReadOnlyTableModel<ArticleDataList> model;
+  QCOMPARE(model.def().entityName(), QString("Article"));
   model.setTable(articles);
 
   QCOMPARE(model.rowCount(), 2);
@@ -114,6 +115,7 @@ void TableModelTest::editableTest()
   articles.push_back(article);
 
   EditableTableModel<ArticleDataList> model;
+  QCOMPARE(model.def().entityName(), QString("Article"));
   model.setTable(articles);
 
   QCOMPARE(model.rowCount(), 2);
@@ -146,6 +148,7 @@ void TableModelTest::rowResizableTest()
   using ArticleDataList = std::vector<ArticleData>;
 
   RowResizableTableModel<ArticleDataList> model;
+  QCOMPARE(model.def().entityName(), QString("Article"));
   QCOMPARE(model.rowCount(), 0);
   QCOMPARE(model.columnCount(), 3);
   checkArticleModelHeaderData(model);
