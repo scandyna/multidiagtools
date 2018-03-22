@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -66,7 +66,7 @@ namespace Mdt{ namespace ItemModel{
    * view->setModel( container.modelForView() );
    * \endcode
    *
-   * If we have to access proxy models frquently,
+   * If we have to access proxy models frequently,
    *  for example to change some setup,
    *  it can be helpful to create a custom container.
    *
