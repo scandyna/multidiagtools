@@ -23,7 +23,7 @@
 #include <QMetaType>
 #include <QVariant>
 
-#include <QDebug>
+// #include <QDebug>
 
 class ArticleId : public Mdt::Entity::IntegralUniqueIdTemplate<>
 {
