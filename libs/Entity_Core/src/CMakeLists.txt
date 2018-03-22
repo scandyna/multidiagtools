@@ -11,6 +11,7 @@ set(SOURCE_FILES
   Mdt/Entity/FieldDef.cpp
   Mdt/Entity/Def.cpp
   Mdt/Entity/EntityTemplate.cpp
+  Mdt/Entity/IntegralUniqueIdTemplate.cpp
   Mdt/Entity/DataTemplate.cpp
   Mdt/Entity/Debug.cpp
   Mdt/Entity/ValueAt.cpp
