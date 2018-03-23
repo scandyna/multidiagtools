@@ -26,8 +26,6 @@
 #include "Mdt/Entity/DataList.h"
 #include <QScopedPointer>
 
-#include <QTableView>
-
 using namespace Mdt::Entity;
 
 /*
@@ -58,23 +56,6 @@ using ArticleDataList = DataList<ArticleData>;
 /*
  * Tests
  */
-
-void FieldAttributesItemDelegateTest::sandbox()
-{
-  RowResizableTableModel<ArticleDataList> model;
-  FieldAttributesItemDelegate<ArticleEntity> delegate;
-  QTableView view;
-  
-  view.setItemDelegate(&delegate);
-  view.setModel(&model);
-  model.appendRow();
-  view.resize(500, 500);
-  view.show();
-
-  while(view.isVisible()){
-    QTest::qWait(500);
-  }
-}
 
 void FieldAttributesItemDelegateTest::fieldAttributesAtColumnTest()
 {

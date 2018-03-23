@@ -29,7 +29,6 @@ class FieldAttributesItemDelegateTest : public TestBase
 
  private slots:
 
-  void sandbox();
   void fieldAttributesAtColumnTest();
   void createEditorTest();
 };
