@@ -145,6 +145,7 @@ add_subdirectory(libs/Translation_Widgets)
 add_subdirectory(libs/Sql)
 add_subdirectory(libs/Entity_Core)
 add_subdirectory(libs/Entity_Sql)
+add_subdirectory(libs/Entity_Widgets)
 add_subdirectory(libs/Railway_Core)
 add_subdirectory(libs/Railway_Widgets)
 
