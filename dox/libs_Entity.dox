@@ -76,6 +76,56 @@
  *   - Mdt::Entity::EditableTableModel
  *   - Mdt::Entity::RowResizableTableModel
  *
+ *  %Relation between entities can be defined using Mdt::Entity::Relation .
+ *
+ * \subsection entityDataStructTypes Note on types in data struct
+ *
+ *  As mentionned by MDT_ENTITY_DEF() , a entity is created starting from a data struct:
+ *  \code
+ *  struct PersonDataStruct
+ *  {
+ *    qlonglong id = 0;
+ *    QString firstName
+ *  };
+ *  \endcode
+ *  In the data struct, only types that are natively handled by QVariant should be used.
+ *  For example, prefer qlonglong instead of long long .
+ *
+ *  It is alos common to use custom types (that maybe wraps a primitive type) for type safety.
+ *  As long as it is declared to the QMetaType using Q_DECLARE_METATYPE() ,it could be put into the data struct.
+ *  Doing so will later cause problems with APIs that are based on QVariant (like item models),
+ *  because converting it from/to Qt known types will not automatically be possible.
+ *  To avoid to mutch boiler plate code, QVariant natively supported types should be used whenever possible.
+ *
+ *  To enforce type safety, custom type can be used.
+ *  A example could be a unique identifier, based on Mdt::Entity::IntegralUniqueIdTemplate :
+ *  \code
+ *  class PersonId : public Mdt::Entity::IntegralUniqueIdTemplate<>
+ *  {
+ *   public:
+ *
+ *    using IntegralUniqueIdTemplate<>::IntegralUniqueIdTemplate;
+ *  };
+ *  \endcode
+ *  This class should not be put into the data struct (PersonDataStruct),
+ *  but exposed by the data class:
+ *  \code
+ *  class PersonData : public Mdt::Entity::DataTemplate<PersonEntity>
+ *  {
+ *   public:
+ *
+ *    void setPersonId(PersonId id)
+ *    {
+ *      dataStruct().id = id.value();
+ *    }
+ *
+ *    PersonId personeId() const
+ *    {
+ *      return PersonId( constDataStruct().id );
+ *    }
+ *  };
+ *  \endcode
+ *
  *  \sa the Mdt::Entity namespace
  */
 
