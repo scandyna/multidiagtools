@@ -86,6 +86,9 @@ void TableModelTest::readOnlyTest()
 
   ReadOnlyTableModel<ArticleDataList> model;
   QCOMPARE(model.def().entityName(), QString("Article"));
+  QCOMPARE(model.fieldIndex(model.def().id()), 0);
+  QCOMPARE(model.fieldIndex(model.def().description()), 1);
+  QCOMPARE(model.fieldIndex(model.def().qty()), 2);
   model.setTable(articles);
 
   QCOMPARE(model.rowCount(), 2);
@@ -116,6 +119,9 @@ void TableModelTest::editableTest()
 
   EditableTableModel<ArticleDataList> model;
   QCOMPARE(model.def().entityName(), QString("Article"));
+  QCOMPARE(model.fieldIndex(model.def().id()), 0);
+  QCOMPARE(model.fieldIndex(model.def().description()), 1);
+  QCOMPARE(model.fieldIndex(model.def().qty()), 2);
   model.setTable(articles);
 
   QCOMPARE(model.rowCount(), 2);
@@ -149,6 +155,9 @@ void TableModelTest::rowResizableTest()
 
   RowResizableTableModel<ArticleDataList> model;
   QCOMPARE(model.def().entityName(), QString("Article"));
+  QCOMPARE(model.fieldIndex(model.def().id()), 0);
+  QCOMPARE(model.fieldIndex(model.def().description()), 1);
+  QCOMPARE(model.fieldIndex(model.def().qty()), 2);
   QCOMPARE(model.rowCount(), 0);
   QCOMPARE(model.columnCount(), 3);
   checkArticleModelHeaderData(model);

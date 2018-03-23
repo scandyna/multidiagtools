@@ -75,6 +75,16 @@ namespace Mdt{ namespace Entity{
       return value_type::def();
     }
 
+    /*! \brief Get the field index of \a fieldDef
+     */
+    template<typename FieldDef>
+    static int fieldIndex(FieldDef fieldDef) noexcept
+    {
+      static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
+
+      return value_type::fieldIndex(fieldDef);
+    }
+
     /*! \brief Get header data for \a section, \a orientation and \a role
      */
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override

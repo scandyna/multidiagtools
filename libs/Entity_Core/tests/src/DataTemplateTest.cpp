@@ -80,6 +80,13 @@ void DataTemplateTest::dataUsageTest()
   Mdt::Entity::printEntityDataToConsole(art1);
 }
 
+void DataTemplateTest::fieldIndexTest()
+{
+  ArticleData article;
+  QCOMPARE(article.fieldIndex(article.def().id()), 0);
+  QCOMPARE(article.fieldIndex(article.def().description()), 1);
+}
+
 /*
  * Main
  */

@@ -23,6 +23,8 @@
 
 #include "TypeTraits/IsEntity.h"
 #include "TypeTraits/IsEntityDef.h"
+#include "TypeTraits/IsEntityFieldDef.h"
+#include "FieldAt.h"
 
 namespace Mdt{ namespace Entity{
 
@@ -90,6 +92,15 @@ namespace Mdt{ namespace Entity{
     static const entity_def_type def()
     {
       return entity_def_type{};
+    }
+
+    /*! \brief Get the field index of \a FieldDef
+     */
+    template<typename FieldDef>
+    static int fieldIndex(FieldDef) noexcept
+    {
+      static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
+      return Mdt::Entity::fieldIndex<entity_def_type, FieldDef>();
     }
 
    private:

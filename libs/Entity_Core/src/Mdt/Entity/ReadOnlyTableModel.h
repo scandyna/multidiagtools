@@ -23,6 +23,7 @@
 
 #include "FieldAt.h"
 #include "TableModelRecordAdapter.h"
+#include "TypeTraits/IsEntityFieldDef.h"
 #include "Mdt/ItemModel/ReadOnlyStlTableModel.h"
 #include <type_traits>
 
@@ -70,6 +71,16 @@ namespace Mdt{ namespace Entity{
     static const entity_def_type def()
     {
       return value_type::def();
+    }
+
+    /*! \brief Get the field index of \a fieldDef
+     */
+    template<typename FieldDef>
+    static int fieldIndex(FieldDef fieldDef) noexcept
+    {
+      static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
+
+      return value_type::fieldIndex(fieldDef);
     }
 
     /*! \brief Get header data for \a section, \a orientation and \a role

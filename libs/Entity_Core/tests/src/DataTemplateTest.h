@@ -33,6 +33,7 @@ class DataTemplateTest : public TestBase
   void cleanupTestCase();
 
   void dataUsageTest();
+  void fieldIndexTest();
 };
 
 #endif // #ifndef DATA_TEMPLATE_TEST_H
