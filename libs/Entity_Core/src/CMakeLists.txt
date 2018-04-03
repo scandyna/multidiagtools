@@ -31,6 +31,9 @@ set(SOURCE_FILES
   Mdt/Entity/ReadOnlyTableModel.cpp
   Mdt/Entity/EditableTableModel.cpp
   Mdt/Entity/RowResizableTableModel.cpp
+  Mdt/Entity/StlTableProxyImplementationInterface.cpp
+  Mdt/Entity/StlTableProxyIterator.cpp
+  Mdt/Entity/StlTableProxy.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

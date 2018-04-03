@@ -31,8 +31,8 @@ namespace Mdt{ namespace Entity{
 
   /*! \brief Read only table model for STL compliant list of entity data
    *
-   * \tparam DataList Type of a STL compatible container, able to work on BidirectionalIterator .
-   *    To be usable, \a DataList class must provide:
+   * \tparam %DataList Type of a STL compatible container, able to work on BidirectionalIterator .
+   *    To be usable, \a %DataList class must provide:
    *     - The cbegin() method
    *     - The cend() method
    *     - value_type : a subclass of DataTemplate .
