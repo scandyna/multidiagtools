@@ -21,7 +21,6 @@
 #ifndef MDT_ENTITY_STL_TABLE_PROXY_ITERATOR_H
 #define MDT_ENTITY_STL_TABLE_PROXY_ITERATOR_H
 
-#include "StlTableProxyImplementationInterface.h"
 #include <QtGlobal>
 #include <iterator>
 #include <type_traits>
