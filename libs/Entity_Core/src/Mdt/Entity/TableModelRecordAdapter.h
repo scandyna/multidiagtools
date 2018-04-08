@@ -31,7 +31,7 @@ namespace Mdt{ namespace Entity{
 
   /*! \brief Class template that provides the requirements for Mdt::ItemModel::AbstractStlTableModel subclasses
    *
-   * This implementation works subclasses of DataTemplate .
+   * This implementation works for subclasses of DataTemplate .
    */
   template<typename Data>
   class TableModelRecordAdapter
