@@ -36,6 +36,7 @@ class ItemModelTest : public TestBase
   void getModelDataTest();
   void setModelDataTest();
   void prependAppendTest();
+  void removeFirstLastTest();
 
   void insertRowTest();
   void removeRowTest();

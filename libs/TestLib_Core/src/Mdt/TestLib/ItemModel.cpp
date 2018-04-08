@@ -116,4 +116,30 @@ bool appendRowToModel(QAbstractItemModel& model)
   return appendRowToModel(&model);
 }
 
+bool removeFirstRowFromModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(model->rowCount() > 0);
+
+  return model->removeRow(0);
+}
+
+bool removeFirstRowFromModel(QAbstractItemModel& model)
+{
+  return removeFirstRowFromModel(&model);
+}
+
+bool removeLastRowFromModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(model->rowCount() > 0);
+
+  return model->removeRow( model->rowCount()-1 );
+}
+
+bool removeLastRowFromModel(QAbstractItemModel & model)
+{
+  return removeLastRowFromModel(&model);
+}
+
 }} // namespace Mdt{ namespace TestLib{

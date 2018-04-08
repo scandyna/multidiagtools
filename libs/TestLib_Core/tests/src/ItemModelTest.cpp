@@ -128,6 +128,54 @@ void ItemModelTest::prependAppendTest()
   QCOMPARE( getModelData(model, 3, 0), QVariant("D") );
 }
 
+void ItemModelTest::removeFirstLastTest()
+{
+  QStringListModel model;
+  /*
+   * Fill the model with some data
+   * ---
+   * |1|
+   * ---
+   * |2|
+   * ---
+   * |3|
+   * ---
+   */
+  QCOMPARE(model.rowCount(), 0);
+  QVERIFY(model.insertRows(0, 3));
+  QCOMPARE(model.rowCount(), 3);
+  QVERIFY(setModelData(model, 0, 0, 1));
+  QVERIFY(setModelData(model, 1, 0, 2));
+  QVERIFY(setModelData(model, 2, 0, 3));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 2, 0), QVariant(3));
+  /*
+   * Remove the first row
+   * ---
+   * |2|
+   * ---
+   * |3|
+   * ---
+   */
+  QCOMPARE(model.rowCount(), 3);
+  QVERIFY(removeFirstRowFromModel(model));
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(3));
+  /*
+   * Remove the last row
+   * ---
+   * |2|
+   * ---
+   */
+  QVERIFY(removeLastRowFromModel(model));
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(2));
+  QVERIFY(removeLastRowFromModel(model));
+  QCOMPARE(model.rowCount(), 0);
+}
+
 void ItemModelTest::insertRowTest()
 {
   QStringListModel model;

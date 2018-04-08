@@ -88,6 +88,30 @@ namespace Mdt{ namespace TestLib{
    */
   bool MDT_TESTLIB_CORE_EXPORT appendRowToModel(QAbstractItemModel & model);
 
+  /*! \brief Remove the first row from \a model
+   *
+   * \pre \a model must not be empty
+   */
+  bool MDT_TESTLIB_CORE_EXPORT removeFirstRowFromModel(QAbstractItemModel *model);
+
+  /*! \brief Remove the first row from \a model
+   *
+   * \pre \a model must not be empty
+   */
+  bool MDT_TESTLIB_CORE_EXPORT removeFirstRowFromModel(QAbstractItemModel & model);
+
+  /*! \brief Remove the last row from \a model
+   *
+   * \pre \a model must not be empty
+   */
+  bool MDT_TESTLIB_CORE_EXPORT removeLastRowFromModel(QAbstractItemModel *model);
+
+  /*! \brief Remove the last row from \a model
+   *
+   * \pre \a model must not be empty
+   */
+  bool MDT_TESTLIB_CORE_EXPORT removeLastRowFromModel(QAbstractItemModel & model);
+
 }} // namespace Mdt{ namespace TestLib{
 
 #endif // #ifndef MDT_TEST_LIB_ITEM_MODEL_H
