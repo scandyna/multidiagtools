@@ -26,8 +26,6 @@
 #include <iterator>
 #include <type_traits>
 
-#include <QDebug>
-
 namespace Mdt{ namespace Entity{
 
   /*! \brief STL style iterator base for StlTableProxy iterators
@@ -40,20 +38,6 @@ namespace Mdt{ namespace Entity{
     /*! \brief STL style value type
      */
     using value_type = typename std::remove_cv<EntityData>::type;
-//     using value_type = EntityData;
-    
-
-//     /*! \brief STL reference
-//      */
-//     using reference = value_type &;
-
-//     /*! \brief Const reference
-//      */
-//     using const_reference = const value_type &;
-
-    /*! \brief STL pointer
-     */
-    using pointer = value_type*;
 
     /*! \brief STL style difference
      */
@@ -245,9 +229,6 @@ namespace Mdt{ namespace Entity{
     }
 
     int mCurrentRow = -1;
-//     const Impl *mImpl;
-//     const StlTableProxyImplementationInterface *mImpl;
-//     const Impl & mImpl;
   };
 
   /*! \brief STL const iterator proxy
@@ -270,17 +251,9 @@ namespace Mdt{ namespace Entity{
      */
     using reference = const value_type &;
 
-//     /*! \brief STL reference
-//      */
-//     using reference = typename ParentClass::reference;
-
-//     /*! \brief Const reference
-//      */
-//     using const_reference = typename ParentClass::const_reference;
-
     /*! \brief STL pointer
      */
-    using pointer = typename ParentClass::pointer;
+    using pointer = const value_type *;
 
     /*! \brief STL style difference
      */
@@ -312,101 +285,17 @@ namespace Mdt{ namespace Entity{
       return mImpl->constRecordAt( currentRow() );
     }
 
+    /*! \brief Member access operator
+     */
+    pointer operator->() const
+    {
+      return &**this;
+    }
+
    private:
 
     const Impl *mImpl = nullptr;
   };
-
-  /*! \internal Dereference proxy for STL table proxy iterator
-   */
-  template<typename EntityData, typename Impl>
-  class StlTableProxyIteratorDereferenceProxy
-  {
-   public:
-
-    using value_type = typename std::remove_cv<EntityData>::type;
-    using const_reference = const value_type &;
-
-    StlTableProxyIteratorDereferenceProxy() = delete;
-
-    StlTableProxyIteratorDereferenceProxy(const StlTableProxyIteratorDereferenceProxy &) = default;
-    StlTableProxyIteratorDereferenceProxy & operator=(const StlTableProxyIteratorDereferenceProxy &) = default;
-
-    StlTableProxyIteratorDereferenceProxy(StlTableProxyIteratorDereferenceProxy &&) = default;
-    StlTableProxyIteratorDereferenceProxy & operator=(StlTableProxyIteratorDereferenceProxy &&) = default;
-
-    StlTableProxyIteratorDereferenceProxy(int row, Impl *impl)
-     : mCurrentRow(row),
-       mImpl(impl)
-    {
-      Q_ASSERT(mCurrentRow >= 0);
-      Q_ASSERT(mImpl != nullptr);
-    }
-
-    operator const_reference() const
-    {
-      Q_ASSERT(mImpl != nullptr);
-      Q_ASSERT(mCurrentRow >= 0);
-      Q_ASSERT(mCurrentRow < mImpl->rowCount());
-
-      qDebug() << "DP - get[" << mCurrentRow << "] " << mImpl->recordAt(mCurrentRow).firstName();
-      return mImpl->recordAt(mCurrentRow);
-    }
-
-    operator value_type &&()
-    {
-      Q_ASSERT(mImpl != nullptr);
-      Q_ASSERT(mCurrentRow >= 0);
-      Q_ASSERT(mCurrentRow < mImpl->rowCount());
-
-      qDebug() << "DP - get&&[" << mCurrentRow << "] " << mImpl->recordAt(mCurrentRow).firstName();
-
-      return std::forward( mImpl->recordAt(mCurrentRow) );
-    }
-
-    StlTableProxyIteratorDereferenceProxy operator=(const_reference data)
-    {
-      Q_ASSERT(mImpl != nullptr);
-      Q_ASSERT(mCurrentRow >= 0);
-      Q_ASSERT(mCurrentRow < mImpl->rowCount());
-
-      qDebug() << "DP - set&[" << mCurrentRow << "] " << data.firstName();
-      mImpl->setRecordAt(mCurrentRow, data);
-
-      return *this;
-    }
-
-//     StlTableProxyIteratorDereferenceProxy operator=(value_type && data)
-//     {
-//       Q_ASSERT(mImpl != nullptr);
-//       Q_ASSERT(mCurrentRow >= 0);
-//       Q_ASSERT(mCurrentRow < mImpl->rowCount());
-// 
-//       qDebug() << "DP - set&&[" << mCurrentRow << "] " << data.firstName();
-//       mImpl->setRecordAt(mCurrentRow, data);
-// 
-//       return *this;
-//     }
-
-   private:
-
-    int mCurrentRow;
-    Impl *mImpl;
-  };
-
-  template<typename EntityData, typename Impl>
-  void swap(StlTableProxyIteratorDereferenceProxy<EntityData, Impl> a, StlTableProxyIteratorDereferenceProxy<EntityData, Impl> b)
-  {
-    using proxy = Mdt::Entity::StlTableProxyIteratorDereferenceProxy<EntityData, Impl>;
-    using value_type = typename proxy::value_type;
-
-    qDebug() << "Swap..";
-    value_type va = a;
-    value_type vb = b;
-    b = va;
-    a = vb;
-    qDebug() << "Swap END";
-  }
 
   /*! \brief STL iterator for StlTableProxy
    */
@@ -428,17 +317,9 @@ namespace Mdt{ namespace Entity{
      */
     using reference = value_type &;
 
-//     /*! \brief STL reference
-//      */
-//     using reference = typename ParentClass::reference;
-
-//     /*! \brief Const reference
-//      */
-//     using const_reference = typename ParentClass::const_reference;
-
     /*! \brief STL pointer
      */
-    using pointer = typename ParentClass::pointer;
+    using pointer = value_type *;
 
     /*! \brief STL style difference
      */
@@ -446,7 +327,6 @@ namespace Mdt{ namespace Entity{
 
     /*! \brief STL iterator category
      */
-    ///using iterator_category = std::output_iterator_tag;
     using iterator_category = typename ParentClass::iterator_category;
 
     /*! \brief Construct a past the end iterator
@@ -471,12 +351,12 @@ namespace Mdt{ namespace Entity{
       return mImpl->recordAt( currentRow() );
     }
 
-//     /*! \brief Dereference this iterator
-//      */
-//     StlTableProxyIteratorDereferenceProxy<EntityData, Impl> operator*()
-//     {
-//       return StlTableProxyIteratorDereferenceProxy<EntityData, Impl>( currentRow(), mImpl );
-//     }
+    /*! \brief Member access operator
+     */
+    pointer operator->()
+    {
+      return &**this;
+    }
 
    private:
 
@@ -484,23 +364,5 @@ namespace Mdt{ namespace Entity{
   };
 
 }} // namespace Mdt{ namespace Entity{
-
-// namespace std{
-// 
-//   template<typename EntityData, typename Impl>
-//   void swap(Mdt::Entity::StlTableProxyIteratorDereferenceProxy<EntityData, Impl> & a, Mdt::Entity::StlTableProxyIteratorDereferenceProxy<EntityData, Impl> & b)
-//   {
-//     using proxy = Mdt::Entity::StlTableProxyIteratorDereferenceProxy<EntityData, Impl>;
-//     using value_type = typename proxy::value_type;
-// 
-//     qDebug() << "Swap..";
-//     value_type va = a;
-//     value_type vb = b;
-//     b = va;
-//     a = vb;
-//     qDebug() << "Swap END";
-//   }
-// 
-// } // namespace std{
 
 #endif // #ifndef MDT_ENTITY_STL_TABLE_PROXY_ITERATOR_H

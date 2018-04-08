@@ -33,9 +33,9 @@ set(SOURCE_FILES
   Mdt/Entity/RowResizableTableModel.cpp
   Mdt/Entity/AbstractCachedRepository.cpp
   Mdt/Entity/RepositoryHandle.cpp
+  Mdt/Entity/StlTableProxyIterator.cpp
   Mdt/Entity/CachedRepositoryStlTableProxy.cpp
 #   Mdt/Entity/StlTableProxyImplementationInterface.cpp
-#   Mdt/Entity/StlTableProxyIterator.cpp
 #   Mdt/Entity/StlTableProxy.cpp
 )
 
