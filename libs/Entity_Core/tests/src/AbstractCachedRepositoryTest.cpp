@@ -94,6 +94,13 @@ class AbstractPersonRepository : public Mdt::Entity::AbstractCachedRepository<Pe
   virtual PersonData personById(PersonId id) const = 0;
 };
 
+PersonData buildPerson(const QString & baseName)
+{
+  PersonData data;
+  data.setFirstName("f" + baseName);
+  return data;
+}
+
 class MemoryPersonRepository : public AbstractPersonRepository
 {
  public:
@@ -121,13 +128,6 @@ class MemoryPersonRepository : public AbstractPersonRepository
       appendRecordToCache(mMem[i]);
     }
     return true;
-  }
-
-  PersonData buildPerson(const QString & baseName) const
-  {
-    PersonData data;
-    data.setFirstName("f" + baseName);
-    return data;
   }
 
   int storageRowCount() const
@@ -203,6 +203,26 @@ void AbstractCachedRepositoryTest::getSetRecordAtTest()
   repository.recordAt(1).setFirstName("EfB");
   QCOMPARE(repository.constRecordAt(0).firstName(), QString("EfA"));
   QCOMPARE(repository.constRecordAt(1).firstName(), QString("EfB"));
+}
+
+void AbstractCachedRepositoryTest::insertRecordsTest()
+{
+  MemoryPersonRepository repository;
+  QCOMPARE(repository.rowCount(), 0);
+  repository.insertRecords(0, 2, buildPerson("Z"));
+  QCOMPARE(repository.rowCount(), 2);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fZ"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fZ"));
+}
+
+void AbstractCachedRepositoryTest::removeRecordsTest()
+{
+  MemoryPersonRepository repository;
+  repository.populate({"A","B"});
+  QVERIFY(repository.fetchAll());
+  QCOMPARE(repository.rowCount(), 2);
+  repository.removeRecords(0, 2);
+  QCOMPARE(repository.rowCount(), 0);
 }
 
 /*

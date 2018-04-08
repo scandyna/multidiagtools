@@ -21,6 +21,7 @@
 #ifndef MDT_ENTITY_ABSTRACT_REPOSITORY_H
 #define MDT_ENTITY_ABSTRACT_REPOSITORY_H
 
+#include "Mdt/Container/StlContainer.h"
 #include <QtGlobal>
 #include <vector>
 
@@ -113,6 +114,36 @@ namespace Mdt{ namespace Entity{
     {
       mCache.clear();
       return fetchRecords( cachedRowCountLimit() );
+    }
+
+    /*! \brief Insert \a count copies of \a record
+     *
+     * Records will be inserted to the cache.
+     *
+     * \pre \a pos must be >= 0
+     * \pre \a count must be >= 1
+     */
+    void insertRecords(int pos, int count, const value_type & record)
+    {
+      Q_ASSERT(pos >= 0);
+      Q_ASSERT(count >= 1);
+      Mdt::Container::insertToContainer(mCache, pos, count, record);
+    }
+
+    /*! \brief Remove \a count records starting from \a pos from
+     *
+     * Records are removed from the cache.
+     *
+     * \pre \a pos must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a pos + \a count must be in valid range ( 1 <= \a pos + \a count <= rowCount() )
+     */
+    void removeRecords(int pos, int count)
+    {
+      Q_ASSERT(pos >= 0);
+      Q_ASSERT(count >= 0);
+      Q_ASSERT( (pos + count) <= rowCount() );
+      Mdt::Container::removeFromContainer(mCache, pos, count);
     }
 
    protected:
