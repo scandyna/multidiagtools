@@ -250,7 +250,7 @@ namespace Mdt{ namespace Entity{
 //     const Impl & mImpl;
   };
 
-  /*! \brief STL const iterator for StlTableProxy
+  /*! \brief STL const iterator proxy
    */
   template<typename EntityData, typename Impl>
   class StlTableProxyConstIterator : public StlTableProxyIteratorBase<EntityData, StlTableProxyConstIterator<EntityData, Impl> >
@@ -309,7 +309,7 @@ namespace Mdt{ namespace Entity{
      */
     reference operator*() const
     {
-      return mImpl->recordAt( currentRow() );
+      return mImpl->constRecordAt( currentRow() );
     }
 
    private:
@@ -466,10 +466,17 @@ namespace Mdt{ namespace Entity{
 
     /*! \brief Dereference this iterator
      */
-    StlTableProxyIteratorDereferenceProxy<EntityData, Impl> operator*()
+    reference operator*() const
     {
-      return StlTableProxyIteratorDereferenceProxy<EntityData, Impl>( currentRow(), mImpl );
+      return mImpl->recordAt( currentRow() );
     }
+
+//     /*! \brief Dereference this iterator
+//      */
+//     StlTableProxyIteratorDereferenceProxy<EntityData, Impl> operator*()
+//     {
+//       return StlTableProxyIteratorDereferenceProxy<EntityData, Impl>( currentRow(), mImpl );
+//     }
 
    private:
 
