@@ -53,7 +53,7 @@ set(SOURCE_FILES
 #     Mdt/Sql/Schema/TableModel.cpp
     Mdt/Sql/Schema/View.cpp
 #     Mdt/Sql/Schema/ViewSqlTransform.cpp
-#     Mdt/Sql/Schema/Schema.cpp
+    Mdt/Sql/Schema/Schema.cpp
 )
 
 find_package(Qt5 COMPONENTS Sql)
