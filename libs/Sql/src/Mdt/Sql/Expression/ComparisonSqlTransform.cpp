@@ -1,0 +1,62 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+#include "ComparisonSqlTransform.h"
+#include "LikeExpressionSqlTransform.h"
+#include <QStringBuilder>
+
+namespace Mdt{ namespace Sql{ namespace Expression{
+
+QString GetCompareEqualToSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral("=") % right;
+}
+
+QString GetCompareEqualToSql::operator()(const QString & left, const LikeExpression & right, const QSqlDatabase & db) const
+{
+  return left % QStringLiteral(" ") % LikeExpressionSqlTransform::getSql(boost::proto::value(right), db);
+}
+
+QString GetCompareNotEqualToSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral("<>") % right;
+}
+
+QString GetCompareLessSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral("<") % right;
+}
+
+QString GetCompareLessEqualSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral("<=") % right;
+}
+
+QString GetCompareGreaterSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral(">") % right;
+}
+
+QString GetCompareGreaterEqualSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral(">=") % right;
+}
+
+}}} // namespace Mdt{ namespace Sql{ namespace Expression{
