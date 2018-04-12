@@ -231,6 +231,7 @@ QString DriverImplementationInterface::getSqlToCreateTable(const Table & table) 
       firstFieldIndex = 1;
       break;
     case PrimaryKeyType::PrimaryKey:
+    case PrimaryKeyType::Unknown:
       firstFieldIndex = 0;
       break;
   }

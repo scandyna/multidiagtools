@@ -505,6 +505,53 @@ void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
   QCOMPARE(driver.getForeignKeyDefinition(fk), expectedSql);
 }
 
+void SchemaDriverSqliteTest::tableDefinitionNoPkTest()
+{
+  using namespace Sql::Schema;
+
+  DriverSQLite driver(database());
+  QString expectedSql;
+  /*
+   * Setup fields
+   */
+  // Name
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(50);
+  // Remarks
+  Field Remarks;
+  Remarks.setName("Remarks");
+  Remarks.setType(FieldType::Varchar);
+  Remarks.setLength(100);
+  /*
+   * Check SQL to create table:
+   *  - 1 field
+   */
+  Table table;
+  table.setTableName("Client_tbl");
+  table.addField(Name);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - 2 fields
+   */
+  table.clear();
+  table.setTableName("Client_tbl");
+  table.addField(Name);
+  table.addField(Remarks);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL,\n";
+  expectedSql += "  \"Remarks\" VARCHAR(100) DEFAULT NULL\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+}
+
 void SchemaDriverSqliteTest::tableDefinitionTest()
 {
   using Sql::Schema::Field;

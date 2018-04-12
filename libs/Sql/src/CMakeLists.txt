@@ -1,36 +1,36 @@
 
 # List of source files
 set(SOURCE_FILES 
-#     Mdt/Sql/Error.cpp
+    Mdt/Sql/Error.cpp
 #     Mdt/Sql/Query.cpp
-#     Mdt/Sql/InsertQuery.cpp
+    Mdt/Sql/InsertQuery.cpp
     Mdt/Sql/SelectTable.cpp
-#     Mdt/Sql/SelectFieldSqlTransform.cpp
+    Mdt/Sql/SelectFieldSqlTransform.cpp
     Mdt/Sql/SelectFieldItem.cpp
-#     Mdt/Sql/SelectFieldItemSqlTransform.cpp
-#     Mdt/Sql/SelectFieldListSqlTransform.cpp
+    Mdt/Sql/SelectFieldItemSqlTransform.cpp
+    Mdt/Sql/SelectFieldListSqlTransform.cpp
     Mdt/Sql/Expression/TerminalSqlTransform.cpp
     Mdt/Sql/Expression/ComparisonSqlTransform.cpp
     Mdt/Sql/Expression/LogicalSqlTransform.cpp
     Mdt/Sql/Expression/LikeExpressionSqlTransform.cpp
     Mdt/Sql/JoinConstraintFieldPairList.cpp
-#     Mdt/Sql/JoinConstraintFieldPairListSqlTransform.cpp
+    Mdt/Sql/JoinConstraintFieldPairListSqlTransform.cpp
     Mdt/Sql/JoinConstraintExpression.cpp
     Mdt/Sql/JoinConstraint.cpp
-#     Mdt/Sql/JoinConstraintSqlTransform.cpp
-#     Mdt/Sql/JoinClauseItemSqlTransform.cpp
-#     Mdt/Sql/JoinClauseItemListSqlTransform.cpp
+    Mdt/Sql/JoinConstraintSqlTransform.cpp
+    Mdt/Sql/JoinClauseItemSqlTransform.cpp
+    Mdt/Sql/JoinClauseItemListSqlTransform.cpp
     Mdt/Sql/JoinClause.cpp
-#     Mdt/Sql/JoinClauseSqlTransform.cpp
+    Mdt/Sql/JoinClauseSqlTransform.cpp
     Mdt/Sql/FromClause.cpp
-#     Mdt/Sql/FromClauseSqlTransform.cpp
+    Mdt/Sql/FromClauseSqlTransform.cpp
     Mdt/Sql/WhereExpression.cpp
     Mdt/Sql/SelectStatement.cpp
-#     Mdt/Sql/SelectStatementSqlTransform.cpp
+    Mdt/Sql/SelectStatementSqlTransform.cpp
 #     Mdt/Sql/SelectQuery.cpp
-#     Mdt/Sql/Schema/Driver.cpp
-#     Mdt/Sql/Schema/DriverImplementationInterface.cpp
-#     Mdt/Sql/Schema/DriverSQLite.cpp
+    Mdt/Sql/Schema/Driver.cpp
+    Mdt/Sql/Schema/DriverImplementationInterface.cpp
+    Mdt/Sql/Schema/DriverSQLite.cpp
 #     Mdt/Sql/Schema/DriverMySql.cpp
 #     Mdt/Sql/Schema/DriverPostgreSQL.cpp
     Mdt/Sql/Schema/FieldLength.cpp
@@ -52,7 +52,7 @@ set(SOURCE_FILES
     Mdt/Sql/Schema/Table.cpp
 #     Mdt/Sql/Schema/TableModel.cpp
     Mdt/Sql/Schema/View.cpp
-#     Mdt/Sql/Schema/ViewSqlTransform.cpp
+    Mdt/Sql/Schema/ViewSqlTransform.cpp
     Mdt/Sql/Schema/Schema.cpp
 )
 

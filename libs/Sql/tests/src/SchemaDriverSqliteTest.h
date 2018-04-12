@@ -45,6 +45,7 @@ class SchemaDriverSqliteTest : public TestBase
   void primaryKeyDefinitionTest();
   void indexDefinitionTest();
   void foreignKeyDefinitionTest();
+  void tableDefinitionNoPkTest();
   void tableDefinitionTest();
 
   void simpleCreateAndDropTableTest();
