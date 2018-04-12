@@ -78,6 +78,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *  and setting it using setImplementation() or make<>().
    *
    * For a overview of C++ fundamental types, see http://en.cppreference.com/w/cpp/language/types
+   *
+   * To instantiate a FieldTypeMap with its default implementation:
+   * \code
+   * const auto fieldTypeMap = FieldTypeMap::make();
+   * \endcode
    */
   class MDT_SQL_EXPORT FieldTypeMap
   {
@@ -160,6 +165,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     FieldTypeFlags fieldTypeFlagsFromQMetaType(QMetaType::Type qmetaType) const;
 
     /*! \brief Get the field type flags that corresponds to \a qvariantType
+     *
+     * Note that QVariant::Type is marked as deprecated in Qt's documentation.
      *
      * \pre This map must contain a implementation.
      * \sa isValid()
