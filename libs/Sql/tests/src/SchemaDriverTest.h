@@ -21,8 +21,7 @@
 #ifndef MDT_SQL_SCHEMA_DRIVER_TEST_H
 #define MDT_SQL_SCHEMA_DRIVER_TEST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
 
 class SchemaDriverTest : public QObject
 {

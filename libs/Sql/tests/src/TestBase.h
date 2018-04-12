@@ -21,8 +21,6 @@
 #ifndef MDT_SQL_TEST_BASE_H
 #define MDT_SQL_TEST_BASE_H
 
-#include "Mdt/Application.h"
-
 #include "Mdt/CoreApplication.h"
 #include <QTemporaryFile>
 #include <QSqlDatabase>

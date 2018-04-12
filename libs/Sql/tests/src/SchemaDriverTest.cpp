@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "SchemaDriverTest.h"
-#include "Mdt/Application.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Schema/DriverSQLite.h"
 #include <QSqlDatabase>
@@ -62,7 +61,7 @@ void SchemaDriverTest::driverTypeMapTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   SchemaDriverTest test;
 
   return QTest::qExec(&test, argc, argv);

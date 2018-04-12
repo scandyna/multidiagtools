@@ -12,14 +12,14 @@ set(SOURCE_FILES
     src/Schema/Client2.cpp
     src/Schema/Address.cpp
     src/Schema/Address2.cpp
-#     src/Schema/ClientPopulation.cpp
-#     src/Schema/ClientAddressView.cpp
-#     src/Schema/TestSchema.cpp
+    src/Schema/ClientPopulation.cpp
+    src/Schema/ClientAddressView.cpp
+    src/Schema/TestSchema.cpp
 #     src/Schema/LikeExpressionTestSchema.cpp
 )
 
 add_library(mdtsqltest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtsqltest Sql Application_Widgets Qt5::Test)
+target_link_libraries(mdtsqltest Sql Application_Core Qt5::Test)
 
 #=============== Helper functions ===========
 
@@ -61,8 +61,8 @@ addSqlTest("SchemaTableBenchmark")
 # addSqlTest("SchemaTableModelTest")
 # addSqlTest("SchemaTablePopulationTest")
 # addSqlTest("SchemaTest")
-# addSqlTest("SchemaDriverTest")
-# addSqlTest("SchemaDriverSqliteTest")
+addSqlTest("SchemaDriverTest")
+addSqlTest("SchemaDriverSqliteTest")
 # addSqlTest("SchemaDriverMySqlTest")
 # addSqlTest("SchemaDriverPostgreSqlTest")
 # addSqlTest("SchemaViewTest")
