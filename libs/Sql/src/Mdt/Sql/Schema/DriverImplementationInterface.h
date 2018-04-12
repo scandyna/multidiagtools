@@ -84,36 +84,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual FieldTypeList getAvailableFieldTypeList() const;
 
-    /*! \brief Get SQL field type from QMetaType::Type
-     *
-     * Can be overloaded if default implementation does not match
-     */
-    virtual FieldType fieldTypeFromQMetaType(QMetaType::Type qmt) const;
-
-    /*! \brief Get SQL field type from QMetaType::Type
-     *
-     * \sa fieldTypeFromQMetaType() and Qt's QVariant documentation (QVariant::Type is obselete)
-     */
-    FieldType fieldTypeFromQVariantType(QVariant::Type qvt) const
-    {
-      return fieldTypeFromQMetaType(static_cast<QMetaType::Type>(qvt));
-    }
-
-    /*! \brief Get QMetaType::Type from SQL field type
-     *
-     * Can be overloaded if default implementation does not match
-     */
-    virtual QMetaType::Type fieldTypeToQMetaType(FieldType ft) const;
-
-    /*! \brief Get QVariant::Type from SQL field type
-     *
-     * \sa fieldTypeToQMetaType() and Qt's QVariant documentation (QVariant::Type is obselete)
-     */
-    QVariant::Type fieldTypeToQVariantType(FieldType ft) const
-    {
-      return static_cast<QVariant::Type>(fieldTypeToQMetaType(ft));
-    }
-
     /*! \brief Get field type from string
      *
      * Extracts the field tape name and retruns corresponding field type.

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,7 +35,6 @@ class SchemaDriverSqliteTest : public TestBase
   void driverInstanceTest();
 
   void availableFieldTypeTest();
-  void fieldTypeMapTest();
   void fieldTypeFromStringTest();
   void fieldLengthFromStringTest();
 

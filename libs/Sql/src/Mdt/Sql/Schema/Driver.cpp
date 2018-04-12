@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,8 +21,8 @@
 #include "Driver.h"
 #include "DriverImplementationInterface.h"
 #include "DriverSQLite.h"
-#include "DriverMySql.h"
-#include "DriverPostgreSQL.h"
+// #include "DriverMySql.h"
+// #include "DriverPostgreSQL.h"
 #include <QObject>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -38,10 +38,10 @@ Driver::Driver(const QSqlDatabase & db)
       mImpl = std::make_unique<DriverSQLite>(db);
       break;
     case DriverType::MySQL:
-      mImpl = std::make_unique<DriverMySql>(db);
+//       mImpl = std::make_unique<DriverMySql>(db);
       break;
     case DriverType::PostgreSQL:
-      mImpl = std::make_unique<DriverPostgreSQL>(db);
+//       mImpl = std::make_unique<DriverPostgreSQL>(db);
       break;
     case DriverType::MariaDB:
     case DriverType::Unknown:
@@ -71,30 +71,6 @@ FieldTypeList Driver::getAvailableFieldTypeList() const
 {
   Q_ASSERT(isValid());
   return mImpl->getAvailableFieldTypeList();
-}
-
-FieldType Driver::fieldTypeFromQMetaType(QMetaType::Type qmt) const
-{
-  Q_ASSERT(isValid());
-  return mImpl->fieldTypeFromQMetaType(qmt);
-}
-
-FieldType Driver::fieldTypeFromQVariantType(QVariant::Type qvt) const
-{
-  Q_ASSERT(isValid());
-  return mImpl->fieldTypeFromQVariantType(qvt);
-}
-
-QMetaType::Type Driver::fieldTypeToQMetaType(FieldType ft) const
-{
-  Q_ASSERT(isValid());
-  return mImpl->fieldTypeToQMetaType(ft);
-}
-
-QVariant::Type Driver::fieldTypeToQVariantType(FieldType ft) const
-{
-  Q_ASSERT(isValid());
-  return mImpl->fieldTypeToQVariantType(ft);
 }
 
 bool Driver::createTable(const Table & table)

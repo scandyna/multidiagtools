@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "DriverImplementationInterface.h"
 #include "ForeignKeyActionSqlTransform.h"
+#include "PrimaryKeyType.h"
+#include "FieldTypeMap.h"
 #include "Mdt/Sql/Error.h"
 #include "../InsertQuery.h"
 #include "ViewSqlTransform.h"
@@ -47,56 +49,6 @@ FieldTypeList DriverImplementationInterface::getAvailableFieldTypeList() const
   list.append(FieldType::DateTime);
 
   return list;
-}
-
-FieldType DriverImplementationInterface::fieldTypeFromQMetaType(QMetaType::Type qmt) const
-{
-  switch(qmt){
-    case QMetaType::Bool:
-      return FieldType::Boolean;
-    case QMetaType::Int:
-      return FieldType::Integer;
-    case QMetaType::Float:
-      return FieldType::Float;
-    case QMetaType::Double:
-      return FieldType::Double;
-    case QMetaType::QString:
-      return FieldType::Varchar;
-    case QMetaType::QDate:
-      return FieldType::Date;
-    case QMetaType::QTime:
-      return FieldType::Time;
-    case QMetaType::QDateTime:
-      return FieldType::DateTime;
-    default:
-      break;
-  }
-  return FieldType::UnknownType;
-}
-
-QMetaType::Type DriverImplementationInterface::fieldTypeToQMetaType(FieldType ft) const
-{
-  switch(ft){
-    case FieldType::Boolean:
-      return QMetaType::Bool;
-    case FieldType::Integer:
-      return QMetaType::Int;
-    case FieldType::Float:
-      return QMetaType::Float;
-    case FieldType::Double:
-      return QMetaType::Double;
-    case FieldType::Varchar:
-      return QMetaType::QString;
-    case FieldType::Date:
-      return QMetaType::QDate;
-    case FieldType::Time:
-      return QMetaType::QTime;
-    case FieldType::DateTime:
-      return QMetaType::QDateTime;
-    case FieldType::UnknownType:
-      return QMetaType::UnknownType;
-  }
-  return QMetaType::UnknownType;
 }
 
 FieldType DriverImplementationInterface::fieldTypeFromString(const QString & fieldTypeString) const
@@ -155,13 +107,14 @@ Mdt::Expected<FieldList> DriverImplementationInterface::getTableFieldListFromDat
 {
   Mdt::Expected<FieldList> ret;
   FieldList fieldList;
+  const auto fieldTypeMap = FieldTypeMap::make();
 
   auto record = database().record(tableName);
   for(int i = 0; i < record.count(); ++i){
     Field field;
     QSqlField qtField = record.field(i);
     field.setName( qtField.name() );
-    field.setType( fieldTypeFromQVariantType(qtField.type()) );
+    field.setType( fieldTypeMap.fieldTypeFromQVariantType(qtField.type(), FieldLength(qtField.length())) );
     field.setRequired( (qtField.requiredStatus() == QSqlField::Required) );
     field.setLength( qtField.length() );
     field.setDefaultValue( qtField.defaultValue() );
@@ -269,15 +222,15 @@ QString DriverImplementationInterface::getSqlToCreateTable(const Table & table) 
   // Table name
   sql += escapeTableName(table.tableName()) % QStringLiteral(" (\n");
   /*
-   * If primary key is a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey
+   * If primary key is a AutoIncrementPrimaryKey
    * we add them as field (else it will be a table constraint)
    */
   switch(table.primaryKeyType()){
-    case PrimaryKeyContainer::AutoIncrementPrimaryKeyType:
+    case PrimaryKeyType::AutoIncrementPrimaryKey:
       sql += QStringLiteral("  ") % getPrimaryKeyFieldDefinition(table.autoIncrementPrimaryKey());
       firstFieldIndex = 1;
       break;
-    case PrimaryKeyContainer::PrimaryKeyType:
+    case PrimaryKeyType::PrimaryKey:
       firstFieldIndex = 0;
       break;
   }
@@ -286,7 +239,7 @@ QString DriverImplementationInterface::getSqlToCreateTable(const Table & table) 
       sql += QStringLiteral(",\n");
     }
   }
-  // Add fields (other than AutoIncrementPrimaryKey or SingleFieldPrimaryKey)
+  // Add fields (other than AutoIncrementPrimaryKey
   Q_ASSERT(lastFieldIndex >= 0);
   for(int i = firstFieldIndex; i < lastFieldIndex; ++i){
     sql += QStringLiteral("  ") % getFieldDefinition(table.field(i)) % QStringLiteral(",\n");
@@ -295,7 +248,7 @@ QString DriverImplementationInterface::getSqlToCreateTable(const Table & table) 
     sql += QStringLiteral("  ") % getFieldDefinition(table.field(lastFieldIndex));
   }
   // Add primary key constraint if needed
-  if(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType){
+  if(table.primaryKeyType() == PrimaryKeyType::PrimaryKey){
     const auto pk = table.primaryKey();
     if(pk.fieldCount() > 0){
       sql += QStringLiteral(",\n  ") % getPrimaryKeyDefinition(pk);

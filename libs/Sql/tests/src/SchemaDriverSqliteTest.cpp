@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Schema/DriverSQLite.h"
 #include "Mdt/Sql/Schema/ForeignTable.h"
+#include "Mdt/Sql/Schema/PrimaryKeyType.h"
 #include "Schema/Client.h"
 #include "Schema/Address.h"
 #include "Schema/ClientAddressView.h"
@@ -84,47 +85,6 @@ void SchemaDriverSqliteTest::availableFieldTypeTest()
   QVERIFY(list.at(5) == FieldType::Date);
   QVERIFY(list.at(6) == FieldType::Time);
   QVERIFY(list.at(7) == FieldType::DateTime);
-}
-
-void SchemaDriverSqliteTest::fieldTypeMapTest()
-{
-  using Mdt::Sql::Schema::FieldType;
-
-  Mdt::Sql::Schema::Driver driver(database());
-  QVERIFY(driver.isValid());
-
-  /*
-   * Check FieldType <-> QMetaType mapping
-   */
-  // QMetaType -> FieldType
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::UnknownType) == FieldType::UnknownType);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QPolygon) == FieldType::UnknownType);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Int) == FieldType::Integer);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Bool) == FieldType::Boolean);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Double) == FieldType::Double);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Float) == FieldType::Float);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QDate) == FieldType::Date);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QTime) == FieldType::Time);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QDateTime) == FieldType::DateTime);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QString) == FieldType::Varchar);
-  // FieldType -> QMetaType
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::UnknownType) == QMetaType::UnknownType);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Boolean) == QMetaType::Bool);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Integer) == QMetaType::Int);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Float) == QMetaType::Float);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Double) == QMetaType::Double);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Varchar) == QMetaType::QString);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Date) == QMetaType::QDate);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Time) == QMetaType::QTime);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::DateTime) == QMetaType::QDateTime);
-  // QVariant::Type -> FieldType
-  QVERIFY(driver.fieldTypeFromQVariantType(QVariant::Int) == FieldType::Integer);
-  QVERIFY(driver.fieldTypeFromQVariantType(QVariant::Bool) == FieldType::Boolean);
-  QVERIFY(driver.fieldTypeFromQVariantType(QVariant::String) == FieldType::Varchar);
-  // FieldType -> QVariant::Type
-  QVERIFY(driver.fieldTypeToQVariantType(FieldType::Integer) == QVariant::Int);
-  QVERIFY(driver.fieldTypeToQVariantType(FieldType::Boolean) == QVariant::Bool);
-  QVERIFY(driver.fieldTypeToQVariantType(FieldType::Varchar) == QVariant::String);
 }
 
 void SchemaDriverSqliteTest::fieldTypeFromStringTest()
@@ -857,7 +817,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   using Mdt::Sql::Schema::FieldList;
   using Mdt::Sql::Schema::Table;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-  using Mdt::Sql::Schema::PrimaryKeyContainer;
+  using Mdt::Sql::Schema::PrimaryKeyType;
   using Mdt::Sql::Schema::CaseSensitivity;
 
   Mdt::Sql::Schema::DriverSQLite driver(database());
@@ -922,7 +882,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   QVERIFY(field.defaultValue().isNull());
   QVERIFY(field.isRequired());
   QVERIFY(field.collation().isNull());
-  QVERIFY(Connector_tbl.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QVERIFY(Connector_tbl.primaryKeyType() == PrimaryKeyType::AutoIncrementPrimaryKey);
   QCOMPARE(Connector_tbl.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   // Name
   field = fieldList.at(1);
@@ -1033,6 +993,7 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   using Sql::Schema::FieldType;
   using Sql::Schema::Field;
   using Sql::Schema::Table;
+  using Sql::Schema::PrimaryKeyType;
   using Sql::Schema::PrimaryKeyContainer;
 
 //   Sql::Schema::DriverSQLite driver(database());
@@ -1084,7 +1045,7 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   QVERIFY(ret);
   pk = ret.value();
   // Check
-  QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QVERIFY(pk.primaryKeyType() == PrimaryKeyType::AutoIncrementPrimaryKey);
   QCOMPARE(pk.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   // Get primary key from database - Use passing Table version
   /// \todo Uncomment if this overload hase some sense
@@ -1110,7 +1071,7 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   QVERIFY(ret);
   pk = ret.value();
   // Check
-  QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(pk.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(pk.primaryKey().fieldCount(), 1);
   QCOMPARE(pk.primaryKey().fieldNameList().at(0), QString("Code_PK"));
   // Drop table
@@ -1129,7 +1090,7 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   QVERIFY(ret);
   pk = ret.value();
   // Check
-  QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(pk.primaryKeyType() == PrimaryKeyType::PrimaryKey);
   QCOMPARE(pk.primaryKey().fieldCount(), 2);
   QCOMPARE(pk.primaryKey().fieldNameList().at(0), QString("Id_A"));
   QCOMPARE(pk.primaryKey().fieldNameList().at(1), QString("Id_B"));
@@ -1530,7 +1491,7 @@ void SchemaDriverSqliteTest::simpleCreateAndDropSchemaTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   SchemaDriverSqliteTest test;
 
   return QTest::qExec(&test, argc, argv);
