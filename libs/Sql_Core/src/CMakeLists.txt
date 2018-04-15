@@ -28,6 +28,7 @@ set(SOURCE_FILES
     Mdt/Sql/SelectStatement.cpp
     Mdt/Sql/SelectStatementSqlTransform.cpp
 #     Mdt/Sql/SelectQuery.cpp
+    Mdt/Sql/SQLiteDatabase.cpp
     Mdt/Sql/Schema/Driver.cpp
     Mdt/Sql/Schema/DriverImplementationInterface.cpp
     Mdt/Sql/Schema/DriverSQLite.cpp
@@ -68,3 +69,4 @@ mdt_set_library_description(
   NAME Sql_Core
   DESCRIPTION "Sql provides additions for database (schema, ...)."
 )
+# target_compile_definitions(Sql_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)

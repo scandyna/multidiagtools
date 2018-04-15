@@ -130,6 +130,61 @@
     </message>
 </context>
 <context>
+    <name>SQLiteDatabase</name>
+    <message>
+        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="45"/>
+        <source>Create a new SQLite database failed because file path refers to a directory.
+File path: &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="52"/>
+        <source>Create a new SQLite database failed because file named &apos;%1&apos; allready exists.
+Directory: &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="61"/>
+        <source>Create a new SQLite database file named &apos;%1&apos; failed.
+Directory: &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="78"/>
+        <source>Open SQLite database failed because file named &apos;%1&apos; does not exist.
+Directory: &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="85"/>
+        <source>Open SQLite database failed because file path refers to a directory.
+File path: &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="98"/>
+        <source>Open SQLite database file named &apos;%1&apos; failed.
+Directory: &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="108"/>
+        <source>Open SQLite database failed because file named &apos;%1&apos; is not a SQLite database (or it is encrypted).
+Directory: &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="124"/>
+        <source>Get schema version failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="131"/>
+        <source>Get schema version failed: query returned no result.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Sql::Error</name>
     <message>
         <location filename="../src/Mdt/Sql/Error.cpp" line="101"/>
