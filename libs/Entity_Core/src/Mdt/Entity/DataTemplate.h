@@ -73,6 +73,13 @@ namespace Mdt{ namespace Entity{
 
     static_assert( TypeTraits::IsEntityDef<entity_def_type>::value, "def_type must be a entity definition type" );
 
+    /*! \brief Set data struct
+     */
+    void setDataStruct(const data_struct_type & ds)
+    {
+      mDataStruct = ds;
+    }
+
     /*! \brief Access the data struct for modifications
      */
     data_struct_type & dataStruct()
