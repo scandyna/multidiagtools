@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,12 +23,13 @@
 
 #include "Mdt/Error.h"
 #include <QSqlError>
+#include <QString>
 
 /*! \brief Get a Mdt::Error from last error of given query
  *
  * \sa mdtErrorFromQSqlQueryQ()
  */
-#define mdtErrorFromQSqlQuery(query, className) Mdt::Sql::Error::fromQSqlQuery(query, __FILE__, __LINE__, className, __FUNCTION__)
+#define mdtErrorFromQSqlQuery(query, className) Mdt::Sql::Error::fromQSqlQuery(query, QString::fromLocal8Bit(__FILE__), __LINE__, QString::fromLatin1(className), QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Get a Mdt::Error from last error of given query
  *
@@ -37,13 +38,13 @@
  *
  * \sa mdtErrorFromQSqlQuery()
  */
-#define mdtErrorFromQSqlQueryQ(query, obj) Mdt::Sql::Error::fromQSqlQuery(query, __FILE__, __LINE__, obj, __FUNCTION__)
+#define mdtErrorFromQSqlQueryQ(query, obj) Mdt::Sql::Error::fromQSqlQuery(query, QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Get a Mdt::Error from last error in \a queryModel
  *
  * \sa mdtErrorFromQSqlQueryModelQ()
  */
-#define mdtErrorFromQSqlQueryModel(queryModel, className) Mdt::Sql::Error::fromQSqlQueryModel(queryModel, __FILE__, __LINE__, className, __FUNCTION__)
+#define mdtErrorFromQSqlQueryModel(queryModel, className) Mdt::Sql::Error::fromQSqlQueryModel(queryModel, QString::fromLocal8Bit(__FILE__), __LINE__, QString::fromLatin1(className), QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Get a Mdt::Error from last error in \a queryModel
  *
@@ -52,13 +53,13 @@
  *
  * \sa mdtErrorFromQSqlQueryModel()
  */
-#define mdtErrorFromQSqlQueryModelQ(queryModel, obj) Mdt::Sql::Error::fromQSqlQueryModel(queryModel, __FILE__, __LINE__, obj, __FUNCTION__)
+#define mdtErrorFromQSqlQueryModelQ(queryModel, obj) Mdt::Sql::Error::fromQSqlQueryModel(queryModel, QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Get a Mdt::Error from last error of given database
  *
  * \sa mdtErrorFromQSqlDatabaseQ()
  */
-#define mdtErrorFromQSqlDatabase(db, className) Mdt::Sql::Error::fromQSqlDatabase(db, __FILE__, __LINE__, className, __FUNCTION__)
+#define mdtErrorFromQSqlDatabase(db, className) Mdt::Sql::Error::fromQSqlDatabase(db, QString::fromLocal8Bit(__FILE__), __LINE__, QString::fromLatin1(className), QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Get a Mdt::Error from last error of given database
  *
@@ -67,7 +68,7 @@
  *
  * \sa mdtErrorFromQSqlDatabase()
  */
-#define mdtErrorFromQSqlDatabaseQ(db, obj) Mdt::Sql::Error::fromQSqlDatabase(db, __FILE__, __LINE__, obj, __FUNCTION__)
+#define mdtErrorFromQSqlDatabaseQ(db, obj) Mdt::Sql::Error::fromQSqlDatabase(db, QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
 
 class QSqlQuery;
 class QSqlDatabase;
