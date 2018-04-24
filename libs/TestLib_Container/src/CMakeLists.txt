@@ -1,12 +1,8 @@
 
 # List of source files
 set(SOURCE_FILES
-  Mdt/TestLib/FakeRoot.cpp
-  Mdt/TestLib/CreateFile.cpp
-  Mdt/TestLib/ItemModel.cpp
-  Mdt/TestLib/ItemModelInsertRowTest.cpp
-  Mdt/TestLib/ItemModelRemoveRowTest.cpp
-  Mdt/TestLib/CompareHelper.cpp
+  Mdt/TestLib/CompareRowList.cpp
+  Mdt/TestLib/CompareColumnList.cpp
 )
 
 find_package(Qt5 COMPONENTS Core Test)
@@ -22,14 +18,14 @@ find_package(Qt5 COMPONENTS Core Test)
 # endif()
 
 mdt_add_library(
-  NAME TestLib_Core
+  NAME TestLib_Container
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Qt5::Core Qt5::Test
+  LINK_DEPENDENCIES TestLib_Core Container Qt5::Core Qt5::Test
 )
-target_compile_definitions(TestLib_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
+target_compile_definitions(TestLib_Container PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 
 mdt_set_library_description(
-  NAME TestLib_Core
+  NAME TestLib_Container
   DESCRIPTION "TestLib provides some additions to QTestLib."
 )
