@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,7 +24,7 @@
 #include <algorithm>
 
 #ifdef QT_DEBUG
-#define mdtItemModelRowColumnListAssert(list)  \
+#define mdtContainerRowColumnListAssert(list)  \
 for(const auto col : list)  \
 {                           \
   Q_ASSERT(col >= 0);       \
@@ -32,15 +32,15 @@ for(const auto col : list)  \
   Q_ASSERT_X(s.size() == mList.size(), "RowColumnListBase", "at least one column exists more than once, which is not allowed");                   \
 }
 #else
-#define mdtItemModelRowColumnListAssert(list)
+#define mdtContainerRowColumnListAssert(list)
 #endif // #ifdef QT_DEBUG
 
-namespace Mdt{ namespace ItemModel{
+namespace Mdt{ namespace Container{
 
 RowColumnListBase::RowColumnListBase(std::initializer_list< int > list)
  : mList(list)
 {
-  mdtItemModelRowColumnListAssert(mList);
+  mdtContainerRowColumnListAssert(mList);
 }
 
 bool RowColumnListBase::contains(int e) const
@@ -69,4 +69,4 @@ void RowColumnListBase::clear()
   mList.clear();
 }
 
-}} // namespace Mdt{ namespace ItemModel{
+}} // namespace Mdt{ namespace Container{

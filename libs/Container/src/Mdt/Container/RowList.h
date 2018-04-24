@@ -18,8 +18,47 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ColumnList.h"
+#ifndef MDT_CONTAINER_ROW_LIST_H
+#define MDT_CONTAINER_ROW_LIST_H
 
-namespace Mdt{ namespace ItemModel{
+#include "RowColumnListBase.h"
+#include "MdtContainerExport.h"
+#include <QMetaType>
+#include <initializer_list>
 
-}} // namespace Mdt{ namespace ItemModel{
+namespace Mdt{ namespace Container{
+
+  /*! \brief A list of row indexes
+   */
+  class MDT_CONTAINER_EXPORT RowList : public RowColumnListBase
+  {
+   public:
+
+    /*! \brief Construct a empty list
+     */
+    RowList() noexcept = default;
+
+    /*! \brief Construct a list of rows
+     *
+     * \pre Each row in \a list must be >= 0
+     * \pre Each row in \a list must be unique
+     */
+    explicit RowList(std::initializer_list<int> list)
+     : RowColumnListBase(list)
+    {}
+
+    /*! \brief Get the greatest row
+     *
+     * Returns -1 if this list is empty.
+     */
+    int greatestRow() const
+    {
+      return greatest();
+    }
+
+  };
+
+}} // namespace Mdt{ namespace Container{
+Q_DECLARE_METATYPE(Mdt::Container::RowList)
+
+#endif // #ifndef MDT_CONTAINER_ROW_LIST_H

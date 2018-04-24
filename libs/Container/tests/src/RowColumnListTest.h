@@ -18,8 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ColumnList.h"
+#ifndef ROW_COLUMN_LIST_TEST_H
+#define ROW_COLUMN_LIST_TEST_H
 
-namespace Mdt{ namespace ItemModel{
+#include "TestBase.h"
 
-}} // namespace Mdt{ namespace ItemModel{
+class RowColumnListTest : public TestBase
+{
+ Q_OBJECT
+
+ private slots:
+
+  void rowListTest();
+  void columnListTest();
+  void columnListQVariantTest();
+};
+
+#endif // #ifndef ROW_COLUMN_LIST_TEST_H

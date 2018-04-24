@@ -28,3 +28,4 @@ endfunction()
 
 addContainerTest("StlContainerTest")
 addContainerTest("StlContainerBenchmark")
+addContainerTest("RowColumnListTest")

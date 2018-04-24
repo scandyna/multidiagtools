@@ -26,7 +26,6 @@ set(SOURCE_FILES
     Mdt/ItemModel/SortProxyModel.cpp
     Mdt/ItemModel/FormatProxyModel.cpp
     Mdt/ItemModel/ProxyModelContainer.cpp
-    Mdt/ItemModel/RowColumnListBase.cpp
     Mdt/ItemModel/RowList.cpp
     Mdt/ItemModel/ColumnList.cpp
     Mdt/ItemModel/ForeignKeyList.cpp

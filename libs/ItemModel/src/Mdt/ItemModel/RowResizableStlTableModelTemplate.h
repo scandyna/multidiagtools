@@ -23,7 +23,6 @@
 
 #include "EditableStlTableModel.h"
 #include "StlContainerIteratorAdapter.h"
-// #include "StlContainer.h"
 #include "Mdt/Container/StlContainer.h"
 
 namespace Mdt{ namespace ItemModel{

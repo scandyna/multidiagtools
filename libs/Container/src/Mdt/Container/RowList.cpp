@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ColumnList.h"
+#include "RowList.h"
 
-namespace Mdt{ namespace ItemModel{
+namespace Mdt{ namespace Container{
 
-}} // namespace Mdt{ namespace ItemModel{
+}} // namespace Mdt{ namespace Container{

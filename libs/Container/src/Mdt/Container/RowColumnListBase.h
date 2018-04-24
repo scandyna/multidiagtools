@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,19 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_ROW_COLUMN_LIST_BASE_H
-#define MDT_ITEM_MODEL_ROW_COLUMN_LIST_BASE_H
+#ifndef MDT_CONTAINER_ROW_COLUMN_LIST_BASE_H
+#define MDT_CONTAINER_ROW_COLUMN_LIST_BASE_H
 
-#include "MdtItemModelExport.h"
+#include "MdtContainerExport.h"
 #include <QtGlobal>
 #include <vector>
 #include <initializer_list>
 
-namespace Mdt{ namespace ItemModel{
+namespace Mdt{ namespace Container{
 
   /*! \brief Common base for RowList and ColumnList
    */
-  class MDT_ITEMMODEL_EXPORT RowColumnListBase
+  class MDT_CONTAINER_EXPORT RowColumnListBase
   {
    public:
 
@@ -162,6 +162,6 @@ namespace Mdt{ namespace ItemModel{
     std::vector<int> mList;
   };
 
-}} // namespace Mdt{ namespace ItemModel{
+}} // namespace Mdt{ namespace Container{
 
-#endif // #ifndef MDT_ITEM_MODEL_ROW_COLUMN_LIST_BASE_H
+#endif // #ifndef MDT_CONTAINER_ROW_COLUMN_LIST_BASE_H

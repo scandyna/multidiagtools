@@ -20,6 +20,6 @@
  ****************************************************************************/
 #include "ColumnList.h"
 
-namespace Mdt{ namespace ItemModel{
+namespace Mdt{ namespace Container{
 
 }} // namespace Mdt{ namespace ItemModel{

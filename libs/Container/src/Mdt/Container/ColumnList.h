@@ -18,19 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_COLUMN_LIST_H
-#define MDT_ITEM_MODEL_COLUMN_LIST_H
+#ifndef MDT_CONTAINER_COLUMN_LIST_H
+#define MDT_CONTAINER_COLUMN_LIST_H
 
-#include "Mdt/Container/RowColumnListBase.h"
-#include "MdtItemModelExport.h"
+#include "RowColumnListBase.h"
+#include "MdtContainerExport.h"
 #include <QMetaType>
 #include <initializer_list>
 
-namespace Mdt{ namespace ItemModel{
+namespace Mdt{ namespace Container{
 
-  /*! \brief A list of column indexes in a item model
+  /*! \brief A list of column indexes
    */
-  class MDT_ITEMMODEL_EXPORT ColumnList : public Mdt::Container::RowColumnListBase
+  class MDT_CONTAINER_EXPORT ColumnList : public RowColumnListBase
   {
    public:
 
@@ -63,8 +63,8 @@ namespace Mdt{ namespace ItemModel{
 
   };
 
-}} // namespace Mdt{ namespace ItemModel{
+}} // namespace Mdt{ namespace Container{
 
-Q_DECLARE_METATYPE(Mdt::ItemModel::ColumnList)
+Q_DECLARE_METATYPE(Mdt::Container::ColumnList)
 
-#endif // #ifndef MDT_ITEM_MODEL_COLUMN_LIST_H
+#endif // #ifndef MDT_CONTAINER_COLUMN_LIST_H

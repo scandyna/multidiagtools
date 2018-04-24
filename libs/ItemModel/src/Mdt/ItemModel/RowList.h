@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_MODEL_ROW_LIST_H
 #define MDT_ITEM_MODEL_ROW_LIST_H
 
-#include "RowColumnListBase.h"
+#include "Mdt/Container/RowColumnListBase.h"
 #include "MdtItemModelExport.h"
 #include <QMetaType>
 #include <QModelIndexList>
@@ -31,7 +31,7 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief A list of row indexes in a item model
    */
-  class MDT_ITEMMODEL_EXPORT RowList : public RowColumnListBase
+  class MDT_ITEMMODEL_EXPORT RowList : public Mdt::Container::RowColumnListBase
   {
    public:
 

@@ -2,6 +2,9 @@
 # List of source files
 set(SOURCE_FILES
   Mdt/Container/StlContainer.cpp
+  Mdt/Container/RowColumnListBase.cpp
+  Mdt/Container/ColumnList.cpp
+  Mdt/Container/RowList.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
