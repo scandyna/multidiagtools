@@ -5,7 +5,7 @@ find_package(Qt5 COMPONENTS Core)
 # set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(SOURCE_FILES
-    Mdt/Algorithm.cpp
+  Mdt/Algorithm.cpp
 )
 
 mdt_add_library(

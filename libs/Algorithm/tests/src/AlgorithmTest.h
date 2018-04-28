@@ -57,6 +57,11 @@ class AlgorithmTest : public QObject
   void hasDuplicatesTest();
   void hasDuplicatesTest_data();
 
+  void forEachAdjacentPairIntTest();
+  void forEachAdjacentPairIntTest_data();
+  void forEachAdjacentPairStringTest();
+  void forEachAdjacentPairStringTest_data();
+
  private:
 
   static QStringList generateStringList(int size);

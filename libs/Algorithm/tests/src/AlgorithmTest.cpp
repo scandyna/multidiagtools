@@ -22,9 +22,11 @@
 #include "Mdt/Algorithm.h"
 #include "Mdt/CoreApplication.h"
 #include <QString>
+#include <QStringList>
 #include <QLatin1String>
 #include <QChar>
 #include <QVector>
+#include <QList>
 #include <vector>
 #include <cmath>
 
@@ -388,6 +390,62 @@ void AlgorithmTest::hasDuplicatesTest_data()
   QTest::newRow("aBA|ci") << QStringList{"a","B","A"}
                           << Qt::CaseInsensitive<< hasDuplicates;
 
+}
+
+void AlgorithmTest::forEachAdjacentPairIntTest()
+{
+  using namespace Mdt::Algorithm;
+
+  QFETCH(QVector<int>, inVector);
+  QFETCH(QList<int>, expectedResult);
+
+  QList<int> result;
+
+  const auto f = [&result](int a, int b){
+    result.append(a+b);
+  };
+
+  forEachAdjacentPair(inVector.cbegin(), inVector.cend(), f);
+  QCOMPARE(result, expectedResult);
+}
+
+void AlgorithmTest::forEachAdjacentPairIntTest_data()
+{
+  QTest::addColumn< QVector<int> >("inVector");
+  QTest::addColumn< QList<int> >("expectedResult");
+
+  QTest::newRow("") << QVector<int>{} << QList<int>{};
+  QTest::newRow("1") << QVector<int>{1} << QList<int>{};
+  QTest::newRow("1,2") << QVector<int>{1,2} << QList<int>{3};
+  QTest::newRow("1,2,3") << QVector<int>{1,2,3} << QList<int>{3,5};
+}
+
+void AlgorithmTest::forEachAdjacentPairStringTest()
+{
+  using namespace Mdt::Algorithm;
+
+  QFETCH(QStringList, stringList);
+  QFETCH(QStringList, expectedResult);
+
+  QStringList result;
+
+  const auto f = [&result](const QString & a, const QString & b){
+    result.append(a+b);
+  };
+
+  forEachAdjacentPair(stringList.cbegin(), stringList.cend(), f);
+  QCOMPARE(result, expectedResult);
+}
+
+void AlgorithmTest::forEachAdjacentPairStringTest_data()
+{
+  QTest::addColumn<QStringList>("stringList");
+  QTest::addColumn<QStringList>("expectedResult");
+
+  QTest::newRow("") << QStringList{} << QStringList{};
+  QTest::newRow("A") << QStringList{"A"} << QStringList{};
+  QTest::newRow("A,B") << QStringList{"A","B"} << QStringList{"AB"};
+  QTest::newRow("A,B,C") << QStringList{"A","B","C"} << QStringList{"AB","BC"};
 }
 
 QStringList AlgorithmTest::generateStringList(int size)

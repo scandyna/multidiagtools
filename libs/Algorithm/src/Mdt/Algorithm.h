@@ -254,6 +254,48 @@ namespace Algorithm{
    */
   bool MDT_ALGORITHM_EXPORT hasDuplicates(const QStringList & stringList, Qt::CaseSensitivity caseSensitivity);
 
+  /*! \brief Applies the given function object \a f to the result of dereferencing every pair of adjacent iterators in the range [\a first, \a last)
+   *
+   * This function template is similar to [std::for_each()](http://en.cppreference.com/w/cpp/algorithm/for_each),
+   *  but it calls \a f for each adjacent iterators \a first and \a first + 1.
+   *
+   * The iterator types are mutable, f may modify the elements of the range trough the dereferenced iterator.
+   *  If f returns a result, the result is ignored.
+   *
+   * \tparam ForwardIt Type of a iterator that meets the requirement of [ForwardIterator](http://en.cppreference.com/w/cpp/concept/ForwardIterator).
+   * \tparam BinaryFunction A function object with a signature equivalent to:
+   *          \code
+   *          void f(const Type & a, const Type & b);
+   *          \endcode
+   *
+   * Example:
+   * \code
+   * std::vector<int> inVector{1,2,3,4,5};
+   * std::vector<int> outVector;
+   *
+   * const auto f = [&outVector](int a, int b){
+   *   outVector.push_back(a+b);
+   * };
+   *
+   * Mdt::Algorithm::forEachAdjacentPair(inVector.cbegin(), inVector.cend(), f);
+   *
+   * // outVector: {3,5,7,9}
+   * \endcode
+   */
+  template<typename ForwardIt, typename BinaryFunction>
+  constexpr void forEachAdjacentPair(ForwardIt first, ForwardIt last, BinaryFunction f)
+  {
+    if(first != last){
+      auto trailer = first;
+      ++first;
+      while(first != last){
+        f(*trailer, *first);
+        ++first;
+        ++trailer;
+      }
+    }
+  }
+
 }} // namespace Mdt{ namespace Algorithm{
 
 #endif // #ifndef MDT_ALGORITHM_H
