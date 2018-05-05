@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,13 +22,14 @@
 #define MDT_ITEM_MODEL_ROW_RANGE_H
 
 #include "Range.h"
+#include "MdtItemModelExport.h"
 #include <QModelIndex>
 
 namespace Mdt{ namespace ItemModel{
 
   /*! \brief RowRange represents a range of rows in item models
    */
-  class RowRange : public Range
+  class MDT_ITEMMODEL_EXPORT RowRange : public Range
   {
    public:
 

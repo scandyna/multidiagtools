@@ -21,8 +21,7 @@
 #ifndef MDT_ITEM_MODEL_RANGE_TEST_H
 #define MDT_ITEM_MODEL_RANGE_TEST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
 
 class RangeTest : public QObject
 {

@@ -358,7 +358,7 @@ void RangeTest::columnSetFirstLastIndexTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   RangeTest test;
 
   return QTest::qExec(&test, argc, argv);
