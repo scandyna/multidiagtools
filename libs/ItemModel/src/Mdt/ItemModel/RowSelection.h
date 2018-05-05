@@ -25,7 +25,6 @@
 #include "RowRangeList.h"
 #include "MdtItemModelExport.h"
 #include <QtGlobal>
-// #include <vector>
 
 class QItemSelectionModel;
 
@@ -132,54 +131,6 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a range must be valid
      */
     bool isRangeIncluded(const RowRange & range) const;
-
-//     /*! \brief Check if range \a a is included in range \a b
-//      *
-//      * Returns true if range \a a is completely included in range \a b .
-//      *  If both ranges just overlapps, no one is included
-//      *  and this method returns false.
-//      *
-//      * \pre ranges \a a and \a b must both be valid
-//      */
-//     static bool isRangeIncluded(const RowRange & a, const RowRange & b);
-
-//     /*! \brief Compare ranges \a a and \a b
-//      *
-//      * Returns true if range \a a < \a b
-//      *
-//      * \pre ranges \a a and \a b must both be valid
-//      * \pre ranges \a a and \a b must not include each other
-//      */
-//     static bool compareRanges(const RowRange & a, const RowRange & b);
-
-//     /*! \brief Sort the ranges in \a list
-//      */
-//     static void sortRanges(RowRangeList & list);
-
-//     /*! \brief Check if ranges \a a and \a b are adjacent
-//      *
-//      * \pre ranges \a a and \a b must both be valid
-//      * \pre range \a a must be < range \a b
-//      * \pre ranges \a a and \a b must not include each other
-//      */
-//     static bool isRangeAdjacent(const RowRange & a, const RowRange & b);
-
-//     /*! \brief Merge ranges \a a and \a b
-//      *
-//      * \pre ranges \a a and \a b must both be valid
-//      * \pre ranges \a a and \a b must be adjacent
-//      */
-//     static RowRange mergeRanges(const RowRange & a, const RowRange & b);
-
-//     /*! \brief Merge adjacent ranges in \a list
-//      */
-//     static void mergeAdjacentRanges(RowRangeList & list);
-
-//     /*! \brief Check if row range \a a and \a b are consecutive
-//      *
-//      * \pre ranges \a a and \a b must be valid
-//      */
-//     static bool rangesAreConsecutive(const RowRange & a, const RowRange & b);
 
     /*! \brief Get a row selection from \a selectionModel
      *

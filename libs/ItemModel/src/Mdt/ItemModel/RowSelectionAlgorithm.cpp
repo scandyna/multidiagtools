@@ -21,7 +21,7 @@
 #include "RowSelectionAlgorithm.h"
 #include "Mdt/Algorithm.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemModel{
 
@@ -90,7 +90,6 @@ RowRange mergeRanges(const RowRange& a, const RowRange& b)
   Q_ASSERT(compareRanges(a, b));
   Q_ASSERT(!Mdt::ItemModel::isRangeIncluded(a, b));
   Q_ASSERT(!Mdt::ItemModel::isRangeIncluded(b, a));
-//   Q_ASSERT(isRangeAdjacent(a, b));
 
   RowRange rowRange;
 
@@ -121,33 +120,12 @@ RowRangeList::const_iterator findLastAdjacentRange(RowRangeList::const_iterator 
   Q_ASSERT(trailer != last);
 
   return trailer;
-
-//   if(first == last){
-//     return last;
-//   }
-//   bool foundOne = false;
-//   auto trailer = first;
-//   ++first;
-//   while(first != last){
-//     qDebug() << "trailer(" << trailer->firstRow() << "-" << trailer->lastRow() << ")  first(" << first->firstRow() << "-" << first->lastRow() << ")";
-//     if(isRangeAdjacent(*trailer, *first)){
-//       foundOne = true;
-//     }else{
-//       break;
-//     }
-//     ++trailer;
-//     ++first;
-//   }
-//   if(foundOne){
-//     return trailer;
-//   }
-//   return trailer;
 }
 
-QString rowRangeToString(const RowRange & r)
-{
-  return "(" + QString::number(r.firstRow()) + "-" + QString::number(r.lastRow()) + ")";
-}
+// QString rowRangeToString(const RowRange & r)
+// {
+//   return "(" + QString::number(r.firstRow()) + "-" + QString::number(r.lastRow()) + ")";
+// }
 
 void mergeAdjacentRanges(RowRangeList& list)
 {
@@ -156,10 +134,6 @@ void mergeAdjacentRanges(RowRangeList& list)
   }
 
   RowRangeList tmpList;
-//   const auto & constInList = list;
-
-  qDebug() << "---- START-------";
-  
   auto first = list.cbegin();
   const auto last = list.cend();
   auto trailer = first;
@@ -167,89 +141,14 @@ void mergeAdjacentRanges(RowRangeList& list)
   while(first != last){
     first = findLastAdjacentRange(trailer, last);
     if(trailer == first){
-      qDebug() << "add(" << rowRangeToString(*trailer) << ")";
       tmpList.push_back(*trailer);
     }else{
-      qDebug() << "merge( t(" << rowRangeToString(*trailer) << "), f(" << rowRangeToString(*first) << ") )";
-      qDebug() << "add(" << rowRangeToString( mergeRanges(*trailer, *first) ) << ")";
       tmpList.push_back( mergeRanges(*trailer, *first) );
     }
     trailer = first + 1;
     ++first;
   }
-
-  
-  /*! \todo Must find the last adjacent pair starting from a index
-   * 
-   */
-//   auto first = list.cbegin();
-//   const auto last = list.cend();
-//   auto trailer = first;
-//   while(first != last){
-//     trailer = findLastAdjacentRange(first, last);
-//     if(trailer != last){
-//       qDebug() << "merge(t,f)";
-//       tmpList.push_back( mergeRanges(*trailer, *first) );
-//     }else{
-//       qDebug() << "add a";
-//       tmpList.push_back(*first);
-//       if(first != last){
-//         qDebug() << "add b";
-//         ++first;
-//         tmpList.push_back(*first);
-//       }
-//     }
-//     ++first;
-// //     ++trailer;
-//   }
-  
-//   while(first != last){
-//     it = findLastAdjacent(first, ...);
-//     if(it != last){
-//       merge(first, it);
-//     }
-//     first = it;
-//   }
-
-//   const auto f = [&tmpList](const RowRange & a, const RowRange & b){
-//     qDebug() << "a(" << a.firstRow() << "," << a.lastRow() << "), b(" << b.firstRow() << "," << b.lastRow() << ")";
-//     if(isRangeAdjacent(a, b)){
-//       qDebug() << "merge(a,b)";
-//       tmpList.push_back( mergeRanges(a, b) );
-//     }else{
-//       qDebug() << "add a and b";
-//       tmpList.push_back(a);
-//       tmpList.push_back(b);
-//     }
-//   };
-
-  
-  
-  
-//   while(hasAdjacentRanges(list)){
-//     Mdt::Algorithm::forEachAdjacentPair(list.cbegin(), list.cend(), f);
-//     list = tmpList;
-//   }
-  
-//   auto it = list.cbegin();
-//   while(it != list.cend()){
-//     it = findAdjacentRanges(it, list.cend());
-//     Mdt::Algorithm::forEachAdjacentPair(it, list.cend(), f);
-//   }
-  /** \todo Must proceed until list is no longer mergeable
-   *
-   * ForwardIt findAdjacentRanges(ForwardIt first, ForwardIt last);
-   * void mergeAdjacentRanges(ForwardIt first, ForwardIt last);
-   *
-   * do{
-   *   it = findAdjacentRanges(list.cbegin(), list.cend());
-   *   mergeAdjacentRanges(it, list.end());
-   * }while(it != list.cend());
-   */
-  
-//   Mdt::Algorithm::forEachAdjacentPair(list.cbegin(), list.cend(), f);
   list = tmpList;
-  qDebug() << "---- DONE-------";
 }
 
 }} // namespace Mdt{ namespace ItemModel{

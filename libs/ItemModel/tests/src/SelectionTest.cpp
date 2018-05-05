@@ -38,8 +38,6 @@ void SelectionTest::rowDefaultConstructTest()
   RowSelection s;
   QCOMPARE(s.rangeCount(), 0);
   QVERIFY(s.isEmpty());
-
-  QFAIL("Not complete");
 }
 
 void SelectionTest::rowIsRangeIncludedTest()
@@ -265,41 +263,6 @@ void SelectionTest::rowIsRangeAdjacentTest()
   QVERIFY(!isRangeAdjacent(a, b));
 }
 
-// void SelectionTest::rowRangesAreConsecutiveTest()
-// {
-//   RowRange a, b;
-// 
-//   a.setFirstRow(0);
-//   a.setLastRow(1);
-//   b.setFirstRow(2);
-//   b.setLastRow(3);
-//   QVERIFY(RowSelection::rangesAreConsecutive(a, b));
-//   QVERIFY(RowSelection::rangesAreConsecutive(b, a));
-// 
-//   a.setFirstRow(0);
-//   a.setLastRow(1);
-//   b.setFirstRow(3);
-//   b.setLastRow(4);
-//   QVERIFY(!RowSelection::rangesAreConsecutive(a, b));
-//   QVERIFY(!RowSelection::rangesAreConsecutive(b, a));
-// 
-//   a.setFirstRow(0);
-//   a.setLastRow(0);
-//   b.setFirstRow(0);
-//   b.setLastRow(1);
-//   QVERIFY(RowSelection::rangesAreConsecutive(a, b));
-//   QVERIFY(RowSelection::rangesAreConsecutive(b, a));
-// 
-//   a.setFirstRow(0);
-//   a.setLastRow(0);
-//   b.setFirstRow(0);
-//   b.setLastRow(0);
-//   QVERIFY(RowSelection::rangesAreConsecutive(a, b));
-//   QVERIFY(RowSelection::rangesAreConsecutive(b, a));
-// 
-//   QFAIL("Not complete");
-// }
-
 void SelectionTest::rowMergeRangesTest()
 {
   RowRange a, b, r;
@@ -403,12 +366,6 @@ void SelectionTest::rowFindLastAdjacentRangeTest()
   RowRange r;
 
   /*
-   * list:
-   */
-//   auto it = findLastAdjacentRange(list.cbegin(), list.cend());
-//   QVERIFY(it == list.cend());
-
-  /*
    * list: (0-1)
    */
   list.clear();
@@ -430,9 +387,6 @@ void SelectionTest::rowFindLastAdjacentRangeTest()
   appendToContainer(list, r);
   it = findLastAdjacentRange(list.cbegin(), list.cend());
   QVERIFY(it == list.cbegin()+1);
-//   ++it;
-//   it = findLastAdjacentRange(it, list.cend());
-//   QVERIFY(it == list.cend());
 
   /*
    * list: (0-1) (3-4)
@@ -465,9 +419,6 @@ void SelectionTest::rowFindLastAdjacentRangeTest()
   appendToContainer(list, r);
   it = findLastAdjacentRange(list.cbegin(), list.cend());
   QVERIFY(it == list.cbegin()+2);
-//   ++it;
-//   it = findLastAdjacentRange(it, list.cend());
-//   QVERIFY(it == list.cend());
 
   /*
    * list: (0-1)(1-2) (4-5)
@@ -509,11 +460,6 @@ void SelectionTest::rowFindLastAdjacentRangeTest()
   ++it;
   it = findLastAdjacentRange(it, list.cend());
   QVERIFY(it == list.cbegin()+3);
-//   ++it;
-//   it = findLastAdjacentRange(it, list.cend());
-//   QVERIFY(it == list.cend());
-
-//   QFAIL("Not correct (new contract)");
 }
 
 void SelectionTest::rowMergeAdjacentRangesTest()
@@ -675,8 +621,6 @@ void SelectionTest::rowAppendRangeTest()
   QCOMPARE(s.rangeCount(), 1);
   QCOMPARE(s.rangeAt(0).firstRow(), 0);
   QCOMPARE(s.rangeAt(0).lastRow(), 3);
-
-  QFAIL("Not complete");
 }
 
 void SelectionTest::rowFromSelectionModelTest()

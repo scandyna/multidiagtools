@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "RowSelection.h"
 #include "RowSelectionAlgorithm.h"
-// #include "Mdt/Algorithm.h"
 #include <QItemSelectionModel>
 #include <QItemSelection>
 #include <QItemSelectionRange>
@@ -28,7 +27,7 @@
 #include <QModelIndex>
 #include <algorithm>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemModel{
 
@@ -42,14 +41,6 @@ void RowSelection::appendRange(const RowRange& range)
   mRangeList.push_back(range);
   sortRangeList();
   mergeAdjacentRanges(mRangeList);
-
-  // merge each adjacent ranges
-  
-  
-  
-  
-
-  
 }
 
 bool RowSelection::isRangeIncluded(const RowRange& range) const
@@ -63,123 +54,6 @@ bool RowSelection::isRangeIncluded(const RowRange& range) const
   return std::any_of(mRangeList.cbegin(), mRangeList.cend(), pred);
 }
 
-// bool RowSelection::isRangeIncluded(const RowRange& a, const RowRange& b)
-// {
-//   Q_ASSERT(a.isValid());
-//   Q_ASSERT(b.isValid());
-// 
-//   /*
-//    * a:   |1|2|
-//    * b: |0|1|2|3|
-//    */
-// 
-//   return (a.firstRow() >= b.firstRow()) && (a.lastRow() <= b.lastRow());
-// }
-
-// bool RowSelection::compareRanges(const RowRange& a, const RowRange& b)
-// {
-//   Q_ASSERT(a.isValid());
-//   Q_ASSERT(b.isValid());
-//   Q_ASSERT(!Mdt::ItemModel::isRangeIncluded(a, b));
-//   Q_ASSERT(!Mdt::ItemModel::isRangeIncluded(b, a));
-// 
-//   /*
-//    * a: |0|1|2|
-//    * b:   |1|2|3|
-//    */
-// 
-//   return a.firstRow() < b.firstRow();
-// }
-
-// void RowSelection::sortRanges(RowRangeList& list)
-// {
-//   std::sort(list.begin(), list.end(), compareRanges);
-// }
-
-// bool RowSelection::isRangeAdjacent(const RowRange& a, const RowRange& b)
-// {
-//   Q_ASSERT(a.isValid());
-//   Q_ASSERT(b.isValid());
-//   Q_ASSERT(!Mdt::ItemModel::isRangeIncluded(a, b));
-//   Q_ASSERT(!Mdt::ItemModel::isRangeIncluded(b, a));
-//   Q_ASSERT(compareRanges(a, b));
-// 
-//   /*
-//    * Adjacent:
-//    * a: |0|1|
-//    * b:     |2|3|
-//    *
-//    * Adjacent:
-//    * a: |0|1|2|
-//    * b:   |1|2|3|
-//    *
-//    * Not adjacent:
-//    * a: |0|1|
-//    * b:       |3|4|
-//    */
-// 
-//   return (b.firstRow() - a.lastRow()) <= 1;
-// }
-
-// RowRange RowSelection::mergeRanges(const RowRange& a, const RowRange& b)
-// {
-//   Q_ASSERT(a.isValid());
-//   Q_ASSERT(b.isValid());
-//   Q_ASSERT(isRangeAdjacent(a, b));
-// 
-//   RowRange rowRange;
-// 
-//   rowRange.setFirstRow(a.firstRow());
-//   rowRange.setLastRow(b.lastRow());
-// 
-//   return rowRange;
-// }
-
-// void RowSelection::mergeAdjacentRanges(RowRangeList& list)
-// {
-//   if(list.size() < 2){
-//     return;
-//   }
-// 
-//   RowRangeList tmpList;
-// //   const auto & constInList = list;
-// 
-//   const auto f = [&tmpList](const RowRange & a, const RowRange & b){
-//     qDebug() << "a(" << a.firstRow() << "," << a.lastRow() << "), b(" << b.firstRow() << "," << b.lastRow() << ")";
-//     if(isRangeAdjacent(a, b)){
-//       qDebug() << "merge(a,b)";
-//       tmpList.push_back( mergeRanges(a, b) );
-//     }else{
-//       qDebug() << "add a and b";
-//       tmpList.push_back(a);
-//       tmpList.push_back(b);
-//     }
-//   };
-//   
-//   /** \todo Must proceed until list is no longer mergeable
-//    *
-//    * ForwardIt findAdjacentRanges(ForwardIt first, ForwardIt last);
-//    * void mergeAdjacentRanges(ForwardIt first, ForwardIt last);
-//    *
-//    * do{
-//    *   it = findAdjacentRanges(list.cbegin(), list.cend());
-//    *   mergeAdjacentRanges(it, list.end());
-//    * }while(it != list.cend());
-//    */
-//   
-//   Mdt::Algorithm::forEachAdjacentPair(list.cbegin(), list.cend(), f);
-// 
-//   list = tmpList;
-// }
-
-// bool RowSelection::rangesAreConsecutive(const RowRange& a, const RowRange& b)
-// {
-//   Q_ASSERT(a.isValid());
-//   Q_ASSERT(b.isValid());
-// 
-//   return std::abs(a.lastRow() - b.firstRow()) < 1;
-// }
-
 RowSelection RowSelection::fromSelectionModel(const QItemSelectionModel* selectionModel)
 {
   RowSelection rowSelection;
@@ -188,12 +62,7 @@ RowSelection RowSelection::fromSelectionModel(const QItemSelectionModel* selecti
     return rowSelection;
   }
   const auto itemSelection = selectionModel->selection();
-  
-//   qDebug() << itemSelection;
-  qDebug() << "--------";
-  
   for(const auto & itemSelectionRange : itemSelection){
-    qDebug() << itemSelectionRange;
     RowRange rowRange;
     rowRange.setFirstRow(itemSelectionRange.top());
     rowRange.setLastRow(itemSelectionRange.bottom());
@@ -205,10 +74,6 @@ RowSelection RowSelection::fromSelectionModel(const QItemSelectionModel* selecti
 
 void RowSelection::sortRangeList()
 {
-//   const auto pred = [](const RowRange & a, const RowRange & b){
-//     return a.lastRow() < b.firstRow();
-//   };
-//   std::sort(mRangeList.begin(), mRangeList.end(), compareRanges);
   sortRanges(mRangeList);
 }
 

@@ -89,15 +89,12 @@ namespace Mdt{ namespace ItemModel{
    * \pre ranges \a a and \a b must both be valid
    * \pre range \a a must be < range \a b
    * \pre ranges \a a and \a b must not include each other
-   * 
-   * \pre ranges \a a and \a b must be adjacent <-- WRONG
    */
   RowRange MDT_ITEMMODEL_EXPORT mergeRanges(const RowRange & a, const RowRange & b);
 
   /*! \brief Merge adjacent ranges in \a list
    */
   void MDT_ITEMMODEL_EXPORT mergeAdjacentRanges(RowRangeList & list);
-
 
 }} // namespace Mdt{ namespace ItemModel{
 

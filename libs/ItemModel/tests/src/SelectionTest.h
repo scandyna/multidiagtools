@@ -35,7 +35,6 @@ class SelectionTest : public QObject
   void rowCompareRangesTest();
   void rowSortRangeTest();
   void rowIsRangeAdjacentTest();
-//   void rowRangesAreConsecutiveTest();
   void rowFindAdjacentRangesTest();
   void rowFindLastAdjacentRangeTest();
   void rowMergeRangesTest();

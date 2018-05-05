@@ -3,6 +3,9 @@
 set(SOURCE_FILES
     Mdt/ItemModel/Range.cpp
     Mdt/ItemModel/RowRange.cpp
+    Mdt/ItemModel/RowRangeList.cpp
+    Mdt/ItemModel/RowSelectionAlgorithm.cpp
+    Mdt/ItemModel/RowSelection.cpp
     Mdt/ItemModel/ColumnRange.cpp
     Mdt/ItemModel/IndexFormatMapItem.cpp
     Mdt/ItemModel/IndexFormatMap.cpp
