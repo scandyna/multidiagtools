@@ -621,6 +621,11 @@ void SelectionTest::rowAppendRangeTest()
   QCOMPARE(s.rangeCount(), 1);
   QCOMPARE(s.rangeAt(0).firstRow(), 0);
   QCOMPARE(s.rangeAt(0).lastRow(), 3);
+  /*
+   * Clear
+   */
+  s.clear();
+  QVERIFY(s.isEmpty());
 }
 
 void SelectionTest::rowFromSelectionModelTest()

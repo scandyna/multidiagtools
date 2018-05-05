@@ -33,10 +33,17 @@ namespace Mdt{ namespace ItemModel{
   /*! \brief Selection of rows in a item model
    *
    * \code
-   * const auto selection = RowSelection::fromSelectionModel(view->selectionModel());
-   * for(const auto & rowRange : selection){
-   *   model->removeRows(rowRange.firstRow(), rowRange.rowCount());
-   * }
+   * #include "MyTableModel.h"
+   * #include <Mdt/ItemModel/RowSelection.h>
+   * #include <Mdt/ItemModel/RemoveRows.h>
+   * #include <QTableView>
+   *
+   * MyTableModel *model;
+   * QTableView *view;
+   * // Setup model and view (omitted here)
+   *
+   * const auto selection = Mdt::ItemModel::RowSelection::fromSelectionModel(view->selectionModel());
+   * Mdt::ItemModel::removeRows(model, selection);
    * \endcode
    */
   class MDT_ITEMMODEL_EXPORT RowSelection
@@ -97,6 +104,10 @@ namespace Mdt{ namespace ItemModel{
       Q_ASSERT(index < rangeCount());
       return mRangeList[index];
     }
+
+    /*! \brief Clear this selection
+     */
+    void clear();
 
     /*! \brief Get a const iterator to the first range in this row selection
      */

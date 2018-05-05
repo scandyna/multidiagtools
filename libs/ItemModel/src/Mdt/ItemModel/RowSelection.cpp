@@ -43,6 +43,11 @@ void RowSelection::appendRange(const RowRange& range)
   mergeAdjacentRanges(mRangeList);
 }
 
+void RowSelection::clear()
+{
+  mRangeList.clear();
+}
+
 bool RowSelection::isRangeIncluded(const RowRange& range) const
 {
   Q_ASSERT(range.isValid());
