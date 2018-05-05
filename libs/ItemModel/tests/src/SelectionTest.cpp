@@ -626,6 +626,40 @@ void SelectionTest::rowAppendRangeTest()
    */
   s.clear();
   QVERIFY(s.isEmpty());
+  /*
+   * Check also that the selection is allways sorted
+   * (this is required for removeRows())
+   */
+  /*
+   * ---
+   * |4|
+   * ---
+   */
+  r.setFirstRow(4);
+  r.setLastRow(4);
+  s.appendRange(r);
+  QCOMPARE(s.rangeCount(), 1);
+  QCOMPARE(s.rangeAt(0).firstRow(), 4);
+  QCOMPARE(s.rangeAt(0).lastRow(), 4);
+  /*
+   * ---
+   * |1|
+   * ---
+   * |2|
+   * ---
+   * | |
+   * ---
+   * |4|
+   * ---
+   */
+  r.setFirstRow(1);
+  r.setLastRow(2);
+  s.appendRange(r);
+  QCOMPARE(s.rangeCount(), 2);
+  QCOMPARE(s.rangeAt(0).firstRow(), 1);
+  QCOMPARE(s.rangeAt(0).lastRow(), 2);
+  QCOMPARE(s.rangeAt(1).firstRow(), 4);
+  QCOMPARE(s.rangeAt(1).lastRow(), 4);
 }
 
 void SelectionTest::rowFromSelectionModelTest()
