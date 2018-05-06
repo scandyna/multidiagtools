@@ -40,8 +40,7 @@ using Mdt::TestLib::prependRowToModel;
 using Mdt::TestLib::appendRowToModel;
 
 // Helper functions get/set flags in a model
-Qt::ItemFlags getModelFlags(const QAbstractItemModel *model, int row, int column);
-Qt::ItemFlags getModelFlags(const QAbstractItemModel & model, int row, int column);
+using Mdt::TestLib::getModelFlags;
 
 class TestBase : public QObject
 {

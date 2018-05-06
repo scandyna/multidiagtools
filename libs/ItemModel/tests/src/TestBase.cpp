@@ -31,28 +31,6 @@
 #include <QLabel>
 #include <QDebug>
 
-Qt::ItemFlags getModelFlags(const QAbstractItemModel* model, int row, int column)
-{
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(column >= 0);
-  Q_ASSERT(column < model->columnCount());
-
-  auto index = model->index(row, column);
-  if(!index.isValid()){
-    qDebug() << "TestBase::getModelFlags() - index is not valid: " << index;
-    return Qt::NoItemFlags;
-  }
-
-  return model->flags(index);
-}
-
-Qt::ItemFlags getModelFlags(const QAbstractItemModel& model, int row, int column)
-{
-  return getModelFlags(&model, row, column);
-}
-
 void TestBase::displayModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
