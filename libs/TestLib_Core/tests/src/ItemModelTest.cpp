@@ -39,6 +39,16 @@ void ItemModelTest::cleanupTestCase()
  * Tests
  */
 
+void ItemModelTest::getDefaultQAbstractTableModelFlagsTest()
+{
+  const auto flags = getDefaultQAbstractTableModelFlags();
+
+  QVERIFY( flags.testFlag(Qt::ItemIsEnabled) );
+  QVERIFY( flags.testFlag(Qt::ItemIsSelectable) );
+  QVERIFY(!flags.testFlag(Qt::ItemIsEditable) );
+  QVERIFY(!flags.testFlag(Qt::ItemIsTristate) );
+}
+
 void ItemModelTest::getModelFlagsTest()
 {
   QStringListModel model(QStringList{"A"});

@@ -44,6 +44,10 @@ namespace Mdt{ namespace TestLib{
    */
   Qt::ItemFlags MDT_TESTLIB_CORE_EXPORT getModelFlags(const QAbstractItemModel & model, int row, int column);
 
+  /*! \brief Get the default flags for a QAbstractTableModel
+   */
+  Qt::ItemFlags MDT_TESTLIB_CORE_EXPORT getDefaultQAbstractTableModelFlags();
+
   /*! \brief Get data from \a model at \a row and \a column for \a role
    *
    * \pre \a model must be a valid pointer

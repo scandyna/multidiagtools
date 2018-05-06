@@ -32,6 +32,7 @@ class ItemModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void getDefaultQAbstractTableModelFlagsTest();
   void getModelFlagsTest();
   void getModelDataTest();
   void setModelDataTest();

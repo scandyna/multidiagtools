@@ -20,11 +20,38 @@
  ****************************************************************************/
 #include "ItemModel.h"
 #include <QAbstractItemModel>
+#include <QAbstractTableModel>
 #include <QModelIndex>
 #include <QVariant>
 #include <QDebug>
 
 namespace Mdt{ namespace TestLib{
+
+/*
+ * Class used to get default flags for QAbstractTableModel
+ */
+class DefaultQAbstractTableModelFlagsModel : public QAbstractTableModel
+{
+ public:
+
+  explicit DefaultQAbstractTableModelFlagsModel(QObject* parent = nullptr)
+   : QAbstractTableModel(parent) {}
+
+  int rowCount(const QModelIndex &) const override
+  {
+    return 1;
+  }
+
+  int columnCount(const QModelIndex&) const override
+  {
+    return 1;
+  }
+
+  QVariant data(const QModelIndex &, int) const override
+  {
+    return QVariant();
+  }
+};
 
 Qt::ItemFlags getModelFlags(const QAbstractItemModel* model, int row, int column)
 {
@@ -46,6 +73,11 @@ Qt::ItemFlags getModelFlags(const QAbstractItemModel* model, int row, int column
 Qt::ItemFlags getModelFlags(const QAbstractItemModel& model, int row, int column)
 {
   return getModelFlags(&model, row, column);
+}
+
+Qt::ItemFlags getDefaultQAbstractTableModelFlags()
+{
+  return getModelFlags(DefaultQAbstractTableModelFlagsModel{}, 0, 0);
 }
 
 QVariant getModelData(const QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
