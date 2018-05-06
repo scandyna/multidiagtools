@@ -10,7 +10,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtContainerTest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtContainerTest Container Application_Core Qt5::Test)
+target_link_libraries(mdtContainerTest Container Application_Core TestLib_Container Qt5::Test)
 
 #=============== Helper functions ===========
 
@@ -29,3 +29,4 @@ endfunction()
 addContainerTest("StlContainerTest")
 addContainerTest("StlContainerBenchmark")
 addContainerTest("RowColumnListTest")
+addContainerTest("TableCacheOperationTest")

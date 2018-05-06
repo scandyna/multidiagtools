@@ -5,6 +5,8 @@ set(SOURCE_FILES
   Mdt/Container/RowColumnListBase.cpp
   Mdt/Container/ColumnList.cpp
   Mdt/Container/RowList.cpp
+  Mdt/Container/TableCacheOperationIndex.cpp
+  Mdt/Container/TableCacheOperationMap.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
