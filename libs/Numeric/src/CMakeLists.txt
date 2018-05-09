@@ -3,6 +3,7 @@ set(SOURCE_FILES
   Mdt/Numeric/Double.cpp
   Mdt/Numeric/Resistance.cpp
   Mdt/Numeric/Length.cpp
+  Mdt/Numeric/IntegralRange.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
