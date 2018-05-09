@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -72,6 +72,18 @@ void RowColumnRangeTest::rowSetFirstCountTest()
   QVERIFY(r.isValid());
 }
 
+void RowColumnRangeTest::rowClearTest()
+{
+  RowRange r;
+
+  QVERIFY(r.isNull());
+  r.setFirstRow(0);
+  r.setRowCount(1);
+  QVERIFY(!r.isNull());
+  r.clear();
+  QVERIFY(r.isNull());
+}
+
 void RowColumnRangeTest::columnInitialStateTest()
 {
   ColumnRange r;
@@ -114,6 +126,18 @@ void RowColumnRangeTest::columnSetFirstCountTest()
   QVERIFY(!r.isEmpty());
   QVERIFY(!r.isNull());
   QVERIFY(r.isValid());
+}
+
+void RowColumnRangeTest::columnClearTest()
+{
+  ColumnRange r;
+
+  QVERIFY(r.isNull());
+  r.setFirstColumn(0);
+  r.setColumnCount(1);
+  QVERIFY(!r.isNull());
+  r.clear();
+  QVERIFY(r.isNull());
 }
 
 /*

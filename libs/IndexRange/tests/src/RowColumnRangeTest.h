@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -32,10 +32,12 @@ class RowColumnRangeTest : public QObject
   void rowInitialStateTest();
   void rowSetFirstLastTest();
   void rowSetFirstCountTest();
+  void rowClearTest();
 
   void columnInitialStateTest();
   void columnSetFirstLastTest();
   void columnSetFirstCountTest();
+  void columnClearTest();
 };
 
 #endif // #ifndef ROW_COLUMN_RANGE_TEST_H

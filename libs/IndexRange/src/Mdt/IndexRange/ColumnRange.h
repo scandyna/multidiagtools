@@ -129,6 +129,13 @@ namespace Mdt{ namespace IndexRange{
       return mRange.isNull();
     }
 
+    /*! \brief Clear this range
+     */
+    constexpr void clear() noexcept
+    {
+      mRange.clear();
+    }
+
    private:
 
     Mdt::Numeric::IntegralRange<int> mRange;
