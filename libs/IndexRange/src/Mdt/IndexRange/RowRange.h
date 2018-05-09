@@ -23,7 +23,6 @@
 
 #include "Mdt/Numeric/IntegralRange.h"
 #include "MdtIndexRangeExport.h"
-// #include <QModelIndex>
 
 namespace Mdt{ namespace IndexRange{
 
@@ -39,13 +38,6 @@ namespace Mdt{ namespace IndexRange{
     {
       mRange.setFirst(row);
     }
-
-    /*! \brief Set first model index
-     */
-//     constexpr void setFirstIndex(const QModelIndex & index) noexcept
-//     {
-//       setFirstRow(index.row());
-//     }
 
     /*! \brief Get first row
      *
@@ -66,13 +58,6 @@ namespace Mdt{ namespace IndexRange{
     {
       mRange.setLast(row);
     }
-
-    /*! \brief Set last model index
-     */
-//     constexpr void setLastIndex(const QModelIndex & index) noexcept
-//     {
-//       setLastRow(index.row());
-//     }
 
     /*! \brief Get last row
      *

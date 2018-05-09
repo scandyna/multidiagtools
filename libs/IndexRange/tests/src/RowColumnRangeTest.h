@@ -32,12 +32,10 @@ class RowColumnRangeTest : public QObject
   void rowInitialStateTest();
   void rowSetFirstLastTest();
   void rowSetFirstCountTest();
-//   void rowSetFirstLastIndexTest();
 
   void columnInitialStateTest();
   void columnSetFirstLastTest();
   void columnSetFirstCountTest();
-//   void columnSetFirstLastIndexTest();
 };
 
 #endif // #ifndef ROW_COLUMN_RANGE_TEST_H

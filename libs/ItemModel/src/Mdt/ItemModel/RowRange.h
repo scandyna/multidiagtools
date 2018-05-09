@@ -21,7 +21,8 @@
 #ifndef MDT_ITEM_MODEL_ROW_RANGE_H
 #define MDT_ITEM_MODEL_ROW_RANGE_H
 
-#include "Range.h"
+// #include "Range.h"
+#include "Mdt/IndexRange/RowRange.h"
 #include "MdtItemModelExport.h"
 #include <QModelIndex>
 
@@ -29,16 +30,16 @@ namespace Mdt{ namespace ItemModel{
 
   /*! \brief RowRange represents a range of rows in item models
    */
-  class MDT_ITEMMODEL_EXPORT RowRange : public Range
+  class MDT_ITEMMODEL_EXPORT RowRange : public Mdt::IndexRange::RowRange
   {
    public:
 
-    /*! \brief Set first row
-     */
-    constexpr void setFirstRow(int row) noexcept
-    {
-      setFirst(row);
-    }
+//     /*! \brief Set first row
+//      */
+//     constexpr void setFirstRow(int row) noexcept
+//     {
+//       setFirst(row);
+//     }
 
     /*! \brief Set first model index
      */
@@ -47,25 +48,25 @@ namespace Mdt{ namespace ItemModel{
       setFirstRow(index.row());
     }
 
-    /*! \brief Get first row
-     *
-     * \warning The first row is returned as it was set.
-     *           The validity of this range should be checked
-     *           before using the returned value.
-     *
-     * \sa isValid()
-     */
-    constexpr int firstRow() const noexcept
-    {
-      return first();
-    }
+//     /*! \brief Get first row
+//      *
+//      * \warning The first row is returned as it was set.
+//      *           The validity of this range should be checked
+//      *           before using the returned value.
+//      *
+//      * \sa isValid()
+//      */
+//     constexpr int firstRow() const noexcept
+//     {
+//       return first();
+//     }
 
-    /*! \brief Set last row
-     */
-    constexpr void setLastRow(int row) noexcept
-    {
-      setLast(row);
-    }
+//     /*! \brief Set last row
+//      */
+//     constexpr void setLastRow(int row) noexcept
+//     {
+//       setLast(row);
+//     }
 
     /*! \brief Set last model index
      */
@@ -74,46 +75,46 @@ namespace Mdt{ namespace ItemModel{
       setLastRow(index.row());
     }
 
-    /*! \brief Get last row
-     *
-     * \warning The last row is returned as it was set.
-     *           The validity of this range should be checked
-     *           before using the returned value.
-     *
-     * \sa isValid()
-     */
-    constexpr int lastRow() const noexcept
-    {
-      return last();
-    }
+//     /*! \brief Get last row
+//      *
+//      * \warning The last row is returned as it was set.
+//      *           The validity of this range should be checked
+//      *           before using the returned value.
+//      *
+//      * \sa isValid()
+//      */
+//     constexpr int lastRow() const noexcept
+//     {
+//       return last();
+//     }
 
-    /*! \brief Set row count
-     *
-     * \note This method must be called after setFirstRow()
-     */
-    constexpr void setRowCount(int count) noexcept
-    {
-      setCount(count);
-    }
+//     /*! \brief Set row count
+//      *
+//      * \note This method must be called after setFirstRow()
+//      */
+//     constexpr void setRowCount(int count) noexcept
+//     {
+//       setCount(count);
+//     }
 
-    /*! \brief Get row count
-     *
-     * Returns row count of this range if it is valid,
-     *  otherwise 0.
-     *
-     * \sa isValid()
-     */
-    constexpr int rowCount() const noexcept
-    {
-      return count();
-    }
+//     /*! \brief Get row count
+//      *
+//      * Returns row count of this range if it is valid,
+//      *  otherwise 0.
+//      *
+//      * \sa isValid()
+//      */
+//     constexpr int rowCount() const noexcept
+//     {
+//       return count();
+//     }
 
-    /*! \brief Check if this range contains row
-     */
-    constexpr bool containsRow(int row) const noexcept
-    {
-      return contains(row);
-    }
+//     /*! \brief Check if this range contains row
+//      */
+//     constexpr bool containsRow(int row) const noexcept
+//     {
+//       return contains(row);
+//     }
 
   };
 

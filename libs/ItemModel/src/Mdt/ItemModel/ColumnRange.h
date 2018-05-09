@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,23 +21,17 @@
 #ifndef MDT_ITEM_MODEL_COLUMN_RANGE_H
 #define MDT_ITEM_MODEL_COLUMN_RANGE_H
 
-#include "Range.h"
+#include "Mdt/IndexRange/ColumnRange.h"
+#include "MdtItemModelExport.h"
 #include <QModelIndex>
 
 namespace Mdt{ namespace ItemModel{
 
   /*! \brief ColumnRange represents a range of columns in item models
    */
-  class ColumnRange : public Range
+  class MDT_ITEMMODEL_EXPORT ColumnRange : public Mdt::IndexRange::ColumnRange
   {
    public:
-
-    /*! \brief Set first column
-     */
-    constexpr void setFirstColumn(int column) noexcept
-    {
-      setFirst(column);
-    }
 
     /*! \brief Set first model index
      */
@@ -46,74 +40,12 @@ namespace Mdt{ namespace ItemModel{
       setFirstColumn(index.column());
     }
 
-    /*! \brief Get first column
-     *
-     * \warning The first column is returned as it was set.
-     *           The validity of this range should be checked
-     *           before using the returned value.
-     *
-     * \sa isValid()
-     */
-    constexpr int firstColumn() const noexcept
-    {
-      return first();
-    }
-
-    /*! \brief Set last column
-     */
-    constexpr void setLastColumn(int column) noexcept
-    {
-      setLast(column);
-    }
-
     /*! \brief Set last model index
      */
     constexpr void setLastIndex(const QModelIndex & index) noexcept
     {
       setLastColumn(index.column());
     }
-
-    /*! \brief Get last column
-     *
-     * \warning The last column is returned as it was set.
-     *           The validity of this range should be checked
-     *           before using the returned value.
-     *
-     * \sa isValid()
-     */
-    constexpr int lastColumn() const noexcept
-    {
-      return last();
-    }
-
-    /*! \brief Set column count
-     *
-     * \note This method must be called after setFirstColumn()
-     */
-    constexpr void setColumnCount(int count) noexcept
-    {
-      setCount(count);
-    }
-
-    /*! \brief Get column count
-     *
-     * Returns column count of this range if it is valid,
-     *  otherwise 0.
-     *
-     * \sa isValid()
-     */
-    constexpr int columnCount() const noexcept
-    {
-      return count();
-    }
-    
-    /*! \brief Check if this range contains column
-     */
-    constexpr bool containsColumn(int column) const noexcept
-    {
-      return contains(column);
-    }
-
   };
 
 }} // namespace Mdt{ namespace ItemModel{

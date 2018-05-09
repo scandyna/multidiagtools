@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -32,21 +32,8 @@ class RangeTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void initialStateTest();
-  void setFirstLastTest();
-  void setFirstCountTest();
-  void containsTest();
-
-  void setGetBenchmark();
-
-  void rowInitialStateTest();
-  void rowSetFirstLastTest();
-  void rowSetFirstCountTest();
   void rowSetFirstLastIndexTest();
 
-  void columnInitialStateTest();
-  void columnSetFirstLastTest();
-  void columnSetFirstCountTest();
   void columnSetFirstLastIndexTest();
 };
 
