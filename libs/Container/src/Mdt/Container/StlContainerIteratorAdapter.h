@@ -18,18 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_STL_CONTAINER_ITERATOR_ADAPTER_H
-#define MDT_ITEM_MODEL_STL_CONTAINER_ITERATOR_ADAPTER_H
+#ifndef MDT_CONTAINER_STL_CONTAINER_ITERATOR_ADAPTER_H
+#define MDT_CONTAINER_STL_CONTAINER_ITERATOR_ADAPTER_H
 
-#include "Mdt/Container/StlContainer.h"
+#include "StlContainer.h"
 #include <QtGlobal>
 #include <iterator>
 #include <algorithm>
 #include <type_traits>
 
-namespace Mdt{ namespace ItemModel{
+namespace Mdt{ namespace Container{
 
-  /*! \brief Class template that provides the requirements for AbstractStlTableModel subclasses
+  /*! \brief Class template that provides the requirements various adapters (mainly record adapters)
    *
    * This implementation works with STL iterators.
    */
@@ -93,6 +93,6 @@ namespace Mdt{ namespace ItemModel{
 
   };
 
-}} // namespace Mdt{ namespace ItemModel{
+}} // namespace Mdt{ namespace Container{
 
-#endif // #ifndef MDT_ITEM_MODEL_STL_CONTAINER_ITERATOR_ADAPTER_H
+#endif // #ifndef MDT_CONTAINER_STL_CONTAINER_ITERATOR_ADAPTER_H

@@ -2,11 +2,13 @@
 # List of source files
 set(SOURCE_FILES
   Mdt/Container/StlContainer.cpp
+  Mdt/Container/StlContainerIteratorAdapter.cpp
   Mdt/Container/RowColumnListBase.cpp
   Mdt/Container/ColumnList.cpp
   Mdt/Container/RowList.cpp
   Mdt/Container/TableCacheOperationIndex.cpp
   Mdt/Container/TableCacheOperationMap.cpp
+  Mdt/Container/TableCache.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
@@ -25,7 +27,7 @@ mdt_add_library(
   NAME Container
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Qt5::Core
+  LINK_DEPENDENCIES IndexRange Qt5::Core
 )
 target_compile_definitions(Container PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

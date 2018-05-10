@@ -28,5 +28,7 @@ endfunction()
 
 addContainerTest("StlContainerTest")
 addContainerTest("StlContainerBenchmark")
+addContainerTest("StlContainerIteratorAdapterTest")
 addContainerTest("RowColumnListTest")
 addContainerTest("TableCacheOperationTest")
+addContainerTest("TableCacheTest")

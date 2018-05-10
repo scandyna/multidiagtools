@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "StlContainerIteratorAdapterTest.h"
-#include "Mdt/ItemModel/StlContainerIteratorAdapter.h"
+#include "Mdt/Container/StlContainerIteratorAdapter.h"
 #include <QVariantList>
 #include <QList>
 #include <QStringList>
@@ -28,7 +28,7 @@
 #include <vector>
 #include <list>
 
-using namespace Mdt::ItemModel;
+using namespace Mdt::Container;
 
 void StlContainerIteratorAdapterTest::initTestCase()
 {

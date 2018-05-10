@@ -1,13 +1,13 @@
 
 # List of source files
 set(SOURCE_FILES
-    Mdt/ItemModel/Range.cpp
     Mdt/ItemModel/RowRange.cpp
     Mdt/ItemModel/RowRangeList.cpp
     Mdt/ItemModel/RowSelectionAlgorithm.cpp
     Mdt/ItemModel/RowSelection.cpp
     Mdt/ItemModel/RemoveRows.cpp
     Mdt/ItemModel/ColumnRange.cpp
+    Mdt/ItemModel/AbstractCachedTableModel.cpp
     Mdt/ItemModel/IndexFormatMapItem.cpp
     Mdt/ItemModel/IndexFormatMap.cpp
     Mdt/ItemModel/RowOrColumnFormatMapItem.cpp
@@ -48,7 +48,7 @@ set(SOURCE_FILES
     Mdt/ItemModel/HeaderProxyModelItemList.cpp
     Mdt/ItemModel/HeaderProxyModel.cpp
     Mdt/ItemModel/StlTable.cpp
-    Mdt/ItemModel/StlContainerIteratorAdapter.cpp
+#     Mdt/ItemModel/StlContainerIteratorAdapter.cpp
     Mdt/ItemModel/AbstractStlListModel.cpp
     Mdt/ItemModel/ReadOnlyStlListModel.cpp
     Mdt/ItemModel/EditableStlListModel.cpp
@@ -73,7 +73,7 @@ mdt_add_library(
   NAME ItemModel
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Error_Core Container Algorithm FilterExpression Qt5::Core Qt5::Gui
+  LINK_DEPENDENCIES Error_Core IndexRange Container Algorithm FilterExpression Qt5::Core Qt5::Gui
 )
 target_include_directories(ItemModel PUBLIC ${Boost_INCLUDE_DIRS})
 
