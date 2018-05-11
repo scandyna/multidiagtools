@@ -53,6 +53,33 @@ void ValueAtTest::fusionVectorGetSetTest()
   QCOMPARE(valueAt(v, 1), QVariant("B"));
   QCOMPARE(valueAt(v, 2), QVariant(4.2));
   QCOMPARE(valueAt(v, 3), QVariant('c'));
+  setValueAt(v, 0, QVariant(3));
+  setValueAt(v, 1, QVariant("C"));
+  setValueAt(v, 2, QVariant(5.2));
+  setValueAt(v, 3, QVariant('d'));
+  QCOMPARE(valueAt(v, 0), QVariant(3));
+  QCOMPARE(valueAt(v, 1), QVariant("C"));
+  QCOMPARE(valueAt(v, 2), QVariant(5.2));
+  QCOMPARE(valueAt(v, 3), QVariant('d'));
+}
+
+void ValueAtTest::setQVariantTest()
+{
+  auto v = boost::fusion::make_vector(1,QString("A"),3.2,'b');
+  QVariant var;
+
+  var = 3;
+  setValueAt(v, 0, var);
+  var = "C";
+  setValueAt(v, 1, var);
+  var = 5.2;
+  setValueAt(v, 2, var);
+  var = 'd';
+  setValueAt(v, 3, var);
+  QCOMPARE(valueAt(v, 0), QVariant(3));
+  QCOMPARE(valueAt(v, 1), QVariant("C"));
+  QCOMPARE(valueAt(v, 2), QVariant(5.2));
+  QCOMPARE(valueAt(v, 3), QVariant('d'));
 }
 
 class PersonId

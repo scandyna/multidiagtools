@@ -76,6 +76,32 @@ namespace Mdt{ namespace Entity{
    *
    * \tparam FusionSequence A Boost Fusion Sequence that can be accessed with boost::fusion::at_c() .
    * \pre \a index must be in valid range ( 0 <= \a index < boost::fusion::result_of::size() ).
+   * \note If the index is known at compile time, boost::fusion::at_c() should be used.
+   * \note To iterate all members of \a sequence , use boost::fusion::for_each().
+   */
+  template<typename FusionSequence>
+  void setValueAt(FusionSequence & sequence, int index, const QVariant & value)
+  {
+    constexpr int size = boost::fusion::result_of::size<FusionSequence>::type::value;
+
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < size);
+
+    /*
+     * Impl::setValueAt() will compile a instance for each type in the tuple.
+     * Not using QVariant will introduce compile error because of incompatibel types
+     * (index checking is done at runtime).
+     */
+    Impl::setValueAt(sequence, index, value, std::make_integer_sequence<int, size>{});
+  }
+
+  /*! \brief Set \a value in \a sequence at \a index
+   *
+   * This function can be used to set the value of a Boost Fusion Sequence
+   *  while the index is only known at runtime.
+   *
+   * \tparam FusionSequence A Boost Fusion Sequence that can be accessed with boost::fusion::at_c() .
+   * \pre \a index must be in valid range ( 0 <= \a index < boost::fusion::result_of::size() ).
    * \note This only works if all types in \a sequence can be handled by QVariant.
    *    See the QMetaType and Q_DECLARE_METATYPE() documentation.
    * \note If the index is known at compile time, boost::fusion::at_c() should be used.
@@ -89,12 +115,7 @@ namespace Mdt{ namespace Entity{
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < size);
 
-    /*
-     * Impl::setValueAt() will compile a instance for each type in the tuple.
-     * Not using QVariant will introduce compile error because of incompatibel types
-     * (index checking is done at runtime).
-     */
-    Impl::setValueAt(sequence, index, QVariant::fromValue(value), std::make_integer_sequence<int, size>{});
+    setValueAt(sequence, index, QVariant::fromValue(value));
   }
 
   /*! \brief Get the value in \a sequence at \a index
