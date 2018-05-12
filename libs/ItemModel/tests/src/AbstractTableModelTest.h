@@ -51,6 +51,10 @@ class AbstractTableModelTest : public QObject
   void readOnlySetDataTest();
   void editableSetDataTest();
 
+  void readOnlyPrependAppendRowsTest();
+  void editablePrependAppendRowsTest();
+  void itemModelInsertRowTest();
+
   void readOnlyQtModelTest();
   void editableQtModelTest();
 

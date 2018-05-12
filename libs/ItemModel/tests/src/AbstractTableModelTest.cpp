@@ -24,6 +24,7 @@
 #include "Mdt/TestLib/ItemModel.h"
 #include "Mdt/TestLib/ItemModelInsertRowTest.h"
 #include "Mdt/TestLib/ItemModelRemoveRowTest.h"
+#include "Mdt/Container/StlContainer.h"
 #include <QSignalSpy>
 #include <QVariant>
 #include <QVariantList>
@@ -35,6 +36,7 @@
 
 // using namespace Mdt::ItemModel;
 using namespace Mdt::TestLib;
+// using namespace Mdt::Container;
 
 /*
  * A read only table model
@@ -86,6 +88,17 @@ class ReadOnlyTableModel : public Mdt::ItemModel::AbstractTableModel
     Q_ASSERT(column < columnCount());
 
     return mTable[row][column];
+  }
+
+  bool insertRowsImpl(int row, int count) override
+  {
+    Q_ASSERT(row >= 0);
+    Q_ASSERT(row <= rowCount());
+    Q_ASSERT(count >= 1);
+
+    Mdt::Container::insertToContainer(mTable, row, count, Record());
+
+    return true;
   }
 
   Table mTable;
@@ -370,6 +383,71 @@ void AbstractTableModelTest::editableSetDataTest()
   QCOMPARE(getModelData(model, 0, 0), QVariant(15));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A15"));
   QCOMPARE(dataChangedSpy.count(), 0);
+}
+
+void AbstractTableModelTest::readOnlyPrependAppendRowsTest()
+{
+  ReadOnlyTableModel model;
+
+  populateModel(model, {{2,"B"}});
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B"));
+
+  QVERIFY(model.prependRow());
+  QCOMPARE(model.rowCount(), 2);
+  QVERIFY(getModelData(model, 0, 0).isNull());
+  QVERIFY(getModelData(model, 0, 1).isNull());
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+
+  QVERIFY(model.appendRow());
+  QCOMPARE(model.rowCount(), 3);
+  QVERIFY(getModelData(model, 0, 0).isNull());
+  QVERIFY(getModelData(model, 0, 1).isNull());
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QVERIFY(getModelData(model, 2, 0).isNull());
+  QVERIFY(getModelData(model, 2, 1).isNull());
+}
+
+void AbstractTableModelTest::editablePrependAppendRowsTest()
+{
+  EditableTableModel model;
+
+  populateModel(model, {{2,"B"}});
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B"));
+
+  QVERIFY(model.prependRow());
+  QCOMPARE(model.rowCount(), 2);
+  QVERIFY(setModelData(model, 0, 0, 1));
+  QVERIFY(setModelData(model, 0, 1, "A"));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+
+  QVERIFY(model.appendRow());
+  QCOMPARE(model.rowCount(), 3);
+  QVERIFY(setModelData(model, 2, 0, 3));
+  QVERIFY(setModelData(model, 2, 1, "C"));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 0), QVariant(3));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+}
+
+void AbstractTableModelTest::itemModelInsertRowTest()
+{
+  ReadOnlyTableModel model1;
+  ItemModelInsertRowTest test1(&model1);
+
+  EditableTableModel model2;
+  ItemModelInsertRowTest test2(&model2);
 }
 
 void AbstractTableModelTest::readOnlyQtModelTest()

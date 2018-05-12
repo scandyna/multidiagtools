@@ -174,6 +174,28 @@ namespace Mdt{ namespace ItemModel{
      */
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
 
+    /*! \brief Insert \a count rows before \a row into the model
+     *
+     * Will call insertRowsImpl() if \a parent is not valid,
+     *  otherwise it does nothing and returns false.
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row <= rowCount() )
+     * \pre \a count muste be > 0
+     */
+    bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
+
+    /*! \brief Add a row to the beginning of this model
+     *
+     * \sa insertRows()
+     */
+    bool prependRow();
+
+    /*! \brief Add a row to the end of this model
+     *
+     * \sa insertRows()
+     */
+    bool appendRow();
+
    protected:
 
     /*! \brief Get count of rows
@@ -207,6 +229,21 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
      */
     virtual bool setEditRoleData(int row, int column, const QVariant & value);
+
+    /*! \brief Insert \a count rows before \a row into the model
+     *
+     * If the model supports inserting rows, this method should be implemented.
+     *
+     * This method is called from insertRows() if all preconditions ar satisfied.
+     *  The implementation should not call beginInsertRows() and endInsertRows(),
+     *  this is done in insertRows() .
+     *
+     * This default implementation does nothing and returns false.
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row <= rowCount() )
+     * \pre \a count muste be > 0
+     */
+    virtual bool insertRowsImpl(int row, int count);
 
     /*! \brief Set this model editable
      */

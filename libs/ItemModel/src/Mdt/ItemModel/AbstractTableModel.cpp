@@ -87,7 +87,38 @@ bool AbstractTableModel::setData(const QModelIndex& index, const QVariant& value
   return true;
 }
 
+bool AbstractTableModel::insertRows(int row, int count, const QModelIndex& parent)
+{
+  if(parent.isValid()){
+    return false;
+  }
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row <= rowCountImpl());
+  Q_ASSERT(count >= 0);
+
+  beginInsertRows(parent, row, row+count-1);
+  const bool ok = insertRowsImpl(row, count);
+  endInsertRows();
+
+  return ok;
+}
+
+bool AbstractTableModel::prependRow()
+{
+  return insertRows(0, 1);
+}
+
+bool AbstractTableModel::appendRow()
+{
+  return insertRows(rowCountImpl(), 1);
+}
+
 bool AbstractTableModel::setEditRoleData(int, int, const QVariant&)
+{
+  return false;
+}
+
+bool AbstractTableModel::insertRowsImpl(int, int)
 {
   return false;
 }
