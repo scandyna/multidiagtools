@@ -1,0 +1,406 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+#include "AbstractTableModelTest.h"
+#include "qtmodeltest.h"
+#include "Mdt/ItemModel/AbstractTableModel.h"
+#include "Mdt/TestLib/ItemModel.h"
+#include "Mdt/TestLib/ItemModelInsertRowTest.h"
+#include "Mdt/TestLib/ItemModelRemoveRowTest.h"
+#include <QSignalSpy>
+#include <QVariant>
+#include <QVariantList>
+#include <QMetaType>
+#include <vector>
+#include <array>
+
+// #include <QDebug>
+
+// using namespace Mdt::ItemModel;
+using namespace Mdt::TestLib;
+
+/*
+ * A read only table model
+ */
+class ReadOnlyTableModel : public Mdt::ItemModel::AbstractTableModel
+{
+ public:
+
+  using Record = std::array<QVariant, 2>;
+  using Table = std::vector<Record>;
+
+  using ParentClass = AbstractTableModel;
+  using ParentClass::emitDataChanged;
+
+  ReadOnlyTableModel(QObject *parent = nullptr)
+   : AbstractTableModel(parent)
+  {
+  }
+
+  void setTable(const Table & table)
+  {
+    mTable = table;
+  }
+
+ protected:
+
+  Table & table()
+  {
+    return mTable;
+  }
+
+ private:
+
+  int rowCountImpl() const override
+  {
+    return mTable.size();
+  }
+
+  int columnCountImpl() const override
+  {
+    return 2;
+  }
+
+  QVariant displayRoleData(int row, int column) const
+  {
+    Q_ASSERT(row >= 0);
+    Q_ASSERT(row < rowCount());
+    Q_ASSERT(column >= 0);
+    Q_ASSERT(column < columnCount());
+
+    return mTable[row][column];
+  }
+
+  Table mTable;
+};
+
+/*
+ * A editable table model
+ */
+class EditableTableModel : public ReadOnlyTableModel
+{
+ public:
+
+  using ParentClass = ReadOnlyTableModel;
+  using ParentClass::emitDataChanged;
+
+  EditableTableModel(QObject* parent = nullptr)
+   : ReadOnlyTableModel(parent)
+  {
+    setModelEditable(true);
+  }
+
+ private:
+
+  bool setEditRoleData(int row, int column, const QVariant& value) override
+  {
+    Q_ASSERT(row >= 0);
+    Q_ASSERT(row < rowCount());
+    Q_ASSERT(column >= 0);
+    Q_ASSERT(column < columnCount());
+
+    table()[row][column] = value;
+    return true;
+  }
+};
+
+/*
+ * Helpers
+ */
+
+void populateModel(ReadOnlyTableModel & model, const ReadOnlyTableModel::Table & tableData)
+{
+  model.setTable(tableData);
+}
+
+/*
+ * Tests
+ */
+
+void AbstractTableModelTest::readOnlyConstructTest()
+{
+  ReadOnlyTableModel model;
+  QCOMPARE(model.columnCount(), 2);
+
+  QObject parent;
+  auto *dModel = new ReadOnlyTableModel(&parent);
+  QCOMPARE(dModel->columnCount(), 2);
+}
+
+void AbstractTableModelTest::editableConstructTest()
+{
+  EditableTableModel model;
+  QCOMPARE(model.columnCount(), 2);
+
+  QObject parent;
+  auto *dModel = new EditableTableModel(&parent);
+  QCOMPARE(dModel->columnCount(), 2);
+}
+
+void AbstractTableModelTest::readOnlyRowCountTest()
+{
+  ReadOnlyTableModel model;
+
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.rowCount(QModelIndex()), 0);
+
+  populateModel(model, {{1,"A"}});
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.rowCount(QModelIndex()), 1);
+  QCOMPARE(model.rowCount(model.index(0, 0)), 0);
+}
+
+void AbstractTableModelTest::editableRowCountTest()
+{
+  EditableTableModel model;
+
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.rowCount(QModelIndex()), 0);
+
+  populateModel(model, {{1,"A"}});
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.rowCount(QModelIndex()), 1);
+  QCOMPARE(model.rowCount(model.index(0, 0)), 0);
+}
+
+void AbstractTableModelTest::readOnlyColumnCountTest()
+{
+  ReadOnlyTableModel model;
+
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(model.columnCount(QModelIndex()), 2);
+
+  populateModel(model, {{1,"A"}});
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(model.columnCount(QModelIndex()), 2);
+  QCOMPARE(model.columnCount(model.index(0, 0)), 0);
+}
+
+void AbstractTableModelTest::editableColumnCountTest()
+{
+  EditableTableModel model;
+
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(model.columnCount(QModelIndex()), 2);
+
+  populateModel(model, {{1,"A"}});
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(model.columnCount(QModelIndex()), 2);
+  QCOMPARE(model.columnCount(model.index(0, 0)), 0);
+}
+
+void AbstractTableModelTest::readOnlyFlagsTest()
+{
+  const auto defaultFlags = getDefaultQAbstractTableModelFlags();
+  ReadOnlyTableModel model;
+  QCOMPARE(model.flags(QModelIndex()), Qt::NoItemFlags);
+
+  populateModel(model, {{1,"A"}});
+  QCOMPARE(getModelFlags(model, 0, 0), defaultFlags);
+  QCOMPARE(getModelFlags(model, 0, 1), defaultFlags);
+  QCOMPARE(model.flags(QModelIndex()), Qt::NoItemFlags);
+}
+
+void AbstractTableModelTest::editableFlagsTest()
+{
+  const auto expectedFlags = getDefaultQAbstractTableModelFlags() | Qt::ItemIsEditable;
+  EditableTableModel model;
+  QCOMPARE(model.flags(QModelIndex()), Qt::NoItemFlags);
+
+  populateModel(model, {{1,"A"}});
+  QCOMPARE(getModelFlags(model, 0, 0), expectedFlags);
+  QCOMPARE(getModelFlags(model, 0, 1), expectedFlags);
+  QCOMPARE(model.flags(QModelIndex()), Qt::NoItemFlags);
+}
+
+void AbstractTableModelTest::readOnlyDataTest()
+{
+  ReadOnlyTableModel model;
+
+  populateModel(model, {{1,"A"}});
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 0, 0, Qt::FontRole), QVariant());
+  QCOMPARE(getModelData(model, 0, 1, Qt::FontRole), QVariant());
+  QVERIFY(model.data(QModelIndex()).isNull());
+}
+
+void AbstractTableModelTest::editableDataTest()
+{
+  EditableTableModel model;
+
+  populateModel(model, {{1,"A"}});
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 0, 0, Qt::FontRole), QVariant());
+  QCOMPARE(getModelData(model, 0, 1, Qt::FontRole), QVariant());
+  QVERIFY(model.data(QModelIndex()).isNull());
+}
+
+void AbstractTableModelTest::emitDataChangedTest()
+{
+  QVariantList arguments;
+  QModelIndex topLeft, bottomRight;
+  QVector<int> roles;
+  EditableTableModel model;
+  QSignalSpy dataChangedSpy(&model, &ReadOnlyTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+
+  populateModel(model, {{1,"A"},{2,"B"},{3,"C"}});
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 2);
+
+  /*
+   * emitDataChanged(QModelIndex)
+   */
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  model.emitDataChanged(model.index(0, 0));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 0);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 0);
+  QCOMPARE(bottomRight.column(), 0);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.count(), 0);
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  model.emitDataChanged(model.index(2, 1));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 2);
+  QCOMPARE(topLeft.column(), 1);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 2);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.count(), 0);
+}
+
+void AbstractTableModelTest::readOnlySetDataTest()
+{
+  ReadOnlyTableModel model;
+  QSignalSpy dataChangedSpy(&model, &ReadOnlyTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+
+  populateModel(model, {{1,"A"}});
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QVERIFY(!setModelData(model, 0, 0, 15));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(dataChangedSpy.count(), 0);
+}
+
+void AbstractTableModelTest::editableSetDataTest()
+{
+  EditableTableModel model;
+  QModelIndex topLeft, bottomRight;
+  QVector<int> roles;
+  QSignalSpy dataChangedSpy(&model, &ReadOnlyTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  QVariantList arguments;
+
+  populateModel(model, {{1,"A"}});
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 2);
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QVERIFY(setModelData(model, 0, 0, 15));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(15));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 0);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 0);
+  QCOMPARE(bottomRight.column(), 0);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.count(), 0);
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QVERIFY(setModelData(model, 0, 1, "A15"));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(15));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A15"));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 0);
+  QCOMPARE(topLeft.column(), 1);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 0);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.count(), 0);
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QVERIFY(!setModelData(model, 0, 0, 0, Qt::FontRole));
+  QCOMPARE(getModelData(model, 0, 0), QVariant(15));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A15"));
+  QCOMPARE(dataChangedSpy.count(), 0);
+}
+
+void AbstractTableModelTest::readOnlyQtModelTest()
+{
+  ReadOnlyTableModel model;
+
+  QtModelTest mt0(&model);
+
+  populateModel(model, {{1,"A"},{2,"B"},{3,"C"}});
+  QtModelTest mt3(&model);
+}
+
+void AbstractTableModelTest::editableQtModelTest()
+{
+  EditableTableModel model;
+
+  QtModelTest mt0(&model);
+
+  populateModel(model, {{1,"A"},{2,"B"},{3,"C"}});
+  QtModelTest mt3(&model);
+}
+
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::CoreApplication app(argc, argv);
+  AbstractTableModelTest test;
+
+  return QTest::qExec(&test, argc, argv);
+}

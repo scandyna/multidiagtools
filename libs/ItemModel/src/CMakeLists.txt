@@ -7,6 +7,7 @@ set(SOURCE_FILES
     Mdt/ItemModel/RowSelection.cpp
     Mdt/ItemModel/RemoveRows.cpp
     Mdt/ItemModel/ColumnRange.cpp
+    Mdt/ItemModel/AbstractTableModel.cpp
     Mdt/ItemModel/AbstractCachedTableModel.cpp
     Mdt/ItemModel/IndexFormatMapItem.cpp
     Mdt/ItemModel/IndexFormatMap.cpp
@@ -48,7 +49,6 @@ set(SOURCE_FILES
     Mdt/ItemModel/HeaderProxyModelItemList.cpp
     Mdt/ItemModel/HeaderProxyModel.cpp
     Mdt/ItemModel/StlTable.cpp
-#     Mdt/ItemModel/StlContainerIteratorAdapter.cpp
     Mdt/ItemModel/AbstractStlListModel.cpp
     Mdt/ItemModel/ReadOnlyStlListModel.cpp
     Mdt/ItemModel/EditableStlListModel.cpp
