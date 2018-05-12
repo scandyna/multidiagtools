@@ -70,7 +70,7 @@ namespace Mdt{ namespace ItemModel{
    * };
    * \endcode
    *
-   * Example for a editable table model:
+   * Example for a editable and resizable table model:
    * \code
    * class EditableTableModel : public Mdt::ItemModel::AbstractTableModel
    * {
@@ -99,6 +99,18 @@ namespace Mdt{ namespace ItemModel{
    *   QVariant displayRoleData(int row, int column) const
    *   {
    *     return mTable[row][column];
+   *   }
+   *
+   *   bool insertRowsImpl(int row, int count) override
+   *   {
+   *     Mdt::Container::insertToContainer(mTable, row, count, Record());
+   *     return true;
+   *   }
+   *
+   *   bool removeRowsImpl(int row, int count) override
+   *   {
+   *     Mdt::Container::removeFromContainer(mTable, row, count);
+   *     return true;
    *   }
    *
    *   using Record = std::array<QVariant, 2>;
