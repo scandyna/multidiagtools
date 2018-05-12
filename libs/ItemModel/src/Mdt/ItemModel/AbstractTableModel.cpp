@@ -113,12 +113,43 @@ bool AbstractTableModel::appendRow()
   return insertRows(rowCountImpl(), 1);
 }
 
+bool AbstractTableModel::removeRows(int row, int count, const QModelIndex& parent)
+{
+  if(parent.isValid()){
+    return false;
+  }
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 1);
+  Q_ASSERT( (row+count) <= rowCountImpl() );
+
+  beginRemoveRows(parent, row, row+count-1);
+  const bool ok = removeRowsImpl(row, count);
+  endRemoveRows();
+
+  return ok;
+}
+
+bool AbstractTableModel::removeFirstRow()
+{
+  return removeRows(0, 1);
+}
+
+bool AbstractTableModel::removeLastRow()
+{
+  return removeRows(rowCount()-1, 1);
+}
+
 bool AbstractTableModel::setEditRoleData(int, int, const QVariant&)
 {
   return false;
 }
 
 bool AbstractTableModel::insertRowsImpl(int, int)
+{
+  return false;
+}
+
+bool AbstractTableModel::removeRowsImpl(int, int)
 {
   return false;
 }

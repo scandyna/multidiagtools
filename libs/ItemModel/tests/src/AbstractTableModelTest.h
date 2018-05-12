@@ -55,6 +55,10 @@ class AbstractTableModelTest : public QObject
   void editablePrependAppendRowsTest();
   void itemModelInsertRowTest();
 
+  void readOnlyRemoveFirstLastRowTest();
+  void editableRemoveFirstLastRowTest();
+  void itemModelRemoveRowTest();
+
   void readOnlyQtModelTest();
   void editableQtModelTest();
 

@@ -180,7 +180,7 @@ namespace Mdt{ namespace ItemModel{
      *  otherwise it does nothing and returns false.
      *
      * \pre \a row must be in valid range ( 0 <= \a row <= rowCount() )
-     * \pre \a count muste be > 0
+     * \pre \a count muste be >= 1
      */
     bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
 
@@ -195,6 +195,25 @@ namespace Mdt{ namespace ItemModel{
      * \sa insertRows()
      */
     bool appendRow();
+
+    /*! \brief Remove \a count rows starting from \a row
+     *
+     * Will call removeRowsImpl() if \a parent is not valid,
+     *  otherwise it does nothing and returns false.
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count muste be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+     */
+    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
+
+    /*! \brief Remove the first row
+     */
+    bool removeFirstRow();
+
+    /*! \brief Remove the last row
+     */
+    bool removeLastRow();
 
    protected:
 
@@ -244,6 +263,22 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a count muste be > 0
      */
     virtual bool insertRowsImpl(int row, int count);
+
+    /*! \brief Remove \a count rows starting from \a row
+     *
+     * If the model supports removing rows, this method should be implemented.
+     *
+     * This method is called from removeRows() if all preconditions ar satisfied.
+     *  The implementation should not call beginRemoveRows() and endRemoveRows(),
+     *  this is done in insertRows() .
+     *
+     * This default implementation does nothing and returns false.
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count muste be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+     */
+    virtual bool removeRowsImpl(int row, int count);
 
     /*! \brief Set this model editable
      */

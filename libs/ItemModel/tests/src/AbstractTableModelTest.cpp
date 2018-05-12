@@ -101,6 +101,17 @@ class ReadOnlyTableModel : public Mdt::ItemModel::AbstractTableModel
     return true;
   }
 
+  bool removeRowsImpl(int row, int count) override
+  {
+    Q_ASSERT(row >= 0);
+    Q_ASSERT(count >= 1);
+    Q_ASSERT( (row + count) <= rowCountImpl());
+
+    Mdt::Container::removeFromContainer(mTable, row, count);
+
+    return true;
+  }
+
   Table mTable;
 };
 
@@ -448,6 +459,55 @@ void AbstractTableModelTest::itemModelInsertRowTest()
 
   EditableTableModel model2;
   ItemModelInsertRowTest test2(&model2);
+}
+
+template<typename Model>
+void removeFirstLastRowTestImpl()
+{
+  Model model;
+
+  populateModel(model, {{1,"A"},{2,"B"},{3,"C"}});
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 0), QVariant(3));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+
+  QVERIFY(removeFirstRowFromModel(model));
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(3));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("C"));
+
+  QVERIFY(removeLastRowFromModel(model));
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B"));
+
+  QVERIFY(removeLastRowFromModel(model));
+  QCOMPARE(model.rowCount(), 0);
+}
+
+void AbstractTableModelTest::readOnlyRemoveFirstLastRowTest()
+{
+  removeFirstLastRowTestImpl<ReadOnlyTableModel>();
+}
+
+void AbstractTableModelTest::editableRemoveFirstLastRowTest()
+{
+  removeFirstLastRowTestImpl<EditableTableModel>();
+}
+
+void AbstractTableModelTest::itemModelRemoveRowTest()
+{
+  /*
+   * This test requires that setData() is implemented
+   */
+  EditableTableModel model;
+  ItemModelRemoveRowTest test(&model);
 }
 
 void AbstractTableModelTest::readOnlyQtModelTest()
