@@ -50,6 +50,7 @@ class ReadOnlyTableModel : public Mdt::ItemModel::AbstractTableModel
 
   using ParentClass = AbstractTableModel;
   using ParentClass::emitDataChanged;
+  using ParentClass::emitVerticalHeaderDataChanged;
 
   ReadOnlyTableModel(QObject *parent = nullptr)
    : AbstractTableModel(parent)
@@ -157,6 +158,12 @@ void populateModel(ReadOnlyTableModel & model, const ReadOnlyTableModel::Table &
 /*
  * Tests
  */
+
+void AbstractTableModelTest::initTestCase()
+{
+  // For QSignalSpy
+  qRegisterMetaType<Qt::Orientation>();
+}
 
 void AbstractTableModelTest::readOnlyConstructTest()
 {
@@ -277,6 +284,8 @@ void AbstractTableModelTest::editableDataTest()
   QCOMPARE(model.columnCount(), 2);
   QCOMPARE(getModelData(model, 0, 0), QVariant(1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 0, 0, Qt::EditRole), QVariant(1));
+  QCOMPARE(getModelData(model, 0, 1, Qt::EditRole), QVariant("A"));
   QCOMPARE(getModelData(model, 0, 0, Qt::FontRole), QVariant());
   QCOMPARE(getModelData(model, 0, 1, Qt::FontRole), QVariant());
   QVERIFY(model.data(QModelIndex()).isNull());
@@ -326,6 +335,47 @@ void AbstractTableModelTest::emitDataChangedTest()
   QCOMPARE(bottomRight.column(), 1);
   roles = arguments.at(2).value< QVector<int> >();
   QCOMPARE(roles.count(), 0);
+}
+
+void AbstractTableModelTest::emitVerticalHeaderDataChangedTest()
+{
+  Mdt::IndexRange::RowRange rowRange;
+  QVariantList arguments;
+  ReadOnlyTableModel model;
+  QSignalSpy headerDataChangedSpy(&model, &ReadOnlyTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  QVERIFY(appendRowToModel(model));
+  QVERIFY(appendRowToModel(model));
+
+  /*
+   * RowRange
+   */
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  rowRange.setFirstRow(0);
+  rowRange.setLastRow(1);
+  model.emitVerticalHeaderDataChanged(rowRange);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(0));             // first
+  QCOMPARE(arguments.at(2), QVariant(1));             // last
+
+  /*
+   * Single row
+   */
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  model.emitVerticalHeaderDataChanged(0);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(0));             // first
+  QCOMPARE(arguments.at(2), QVariant(0));             // last
 }
 
 void AbstractTableModelTest::readOnlySetDataTest()

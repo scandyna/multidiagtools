@@ -29,7 +29,7 @@ class AbstractTableModelTest : public QObject
 
  private slots:
 
-//   void initTestCase();
+  void initTestCase();
 
   void readOnlyConstructTest();
   void editableConstructTest();
@@ -47,6 +47,8 @@ class AbstractTableModelTest : public QObject
   void editableDataTest();
 
   void emitDataChangedTest();
+
+  void emitVerticalHeaderDataChangedTest();
 
   void readOnlySetDataTest();
   void editableSetDataTest();

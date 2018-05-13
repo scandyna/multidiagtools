@@ -21,6 +21,7 @@
 #ifndef MDT_ITEM_MODEL_ABSTRACT_TABLE_MODEL_H
 #define MDT_ITEM_MODEL_ABSTRACT_TABLE_MODEL_H
 
+#include "Mdt/IndexRange/RowRange.h"
 #include "MdtItemModelExport.h"
 #include <QAbstractTableModel>
 
@@ -250,6 +251,20 @@ namespace Mdt{ namespace ItemModel{
      */
     virtual QVariant displayRoleData(int row, int column) const = 0;
 
+    /*! \brief Get edit role data
+     *
+     * If the table model has to display specific data while editing a item,
+     *  this method can be re-implemented.
+     *
+     * This implementation returns displayRoleData() .
+     *
+     * This method is called by data() if all preconditions ar satisfied.
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
+     */
+    virtual QVariant editRoleData(int row, int column) const;
+
     /*! \brief Set \a value at \a row and \a column
      *
      * This method is called by setData() if all preconditions ar satisfied.
@@ -308,6 +323,18 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a index must be in valid range ( \a index.row() < rowCount() and \a index.column() < columnCount() )
      */
     void emitDataChanged(const QModelIndex & index);
+
+    /*! \brief Emit the headerDataChanged() signal for the vertical header
+     *
+     * \pre \a rowRange must not be null
+     */
+    void emitVerticalHeaderDataChanged(const Mdt::IndexRange::RowRange & rowRange);
+
+    /*! \brief Emit the headerDataChanged() signal for the vertical header
+     *
+     * \pre \a row must be in valid range (0 <= \a row < rowCount()).
+     */
+    void emitVerticalHeaderDataChanged(int row);
 
    private:
 

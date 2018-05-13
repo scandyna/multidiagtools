@@ -59,13 +59,17 @@ QVariant AbstractTableModel::data(const QModelIndex& index, int role) const
   if(!index.isValid()){
     return QVariant();
   }
-  if(role != Qt::DisplayRole){
-    return QVariant();
-  }
   Q_ASSERT(index.row() < rowCountImpl());
   Q_ASSERT(index.column() < columnCountImpl());
 
-  return displayRoleData(index.row(), index.column());
+  if(role == Qt::DisplayRole){
+    return displayRoleData(index.row(), index.column());
+  }
+  if(role == Qt::EditRole){
+    return editRoleData(index.row(), index.column());
+  }
+
+  return QVariant();
 }
 
 bool AbstractTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
@@ -154,6 +158,11 @@ bool AbstractTableModel::removeRowsImpl(int, int)
   return false;
 }
 
+QVariant AbstractTableModel::editRoleData(int row, int column) const
+{
+  return displayRoleData(row, column);
+}
+
 void AbstractTableModel::setModelEditable(bool editable)
 {
   mIsModelEditable = editable;
@@ -166,6 +175,21 @@ void AbstractTableModel::emitDataChanged(const QModelIndex& index)
   Q_ASSERT(index.column() < columnCountImpl());
 
   emit dataChanged(index, index);
+}
+
+void AbstractTableModel::emitVerticalHeaderDataChanged(const IndexRange::RowRange& rowRange)
+{
+  Q_ASSERT(!rowRange.isNull());
+
+  emit headerDataChanged(Qt::Vertical, rowRange.firstRow(), rowRange.lastRow());
+}
+
+void AbstractTableModel::emitVerticalHeaderDataChanged(int row)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  emit headerDataChanged(Qt::Vertical, row, row);
 }
 
 }} // namespace Mdt{ namespace ItemModel{
