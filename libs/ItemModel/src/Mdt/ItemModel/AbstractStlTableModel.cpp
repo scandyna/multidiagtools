@@ -32,4 +32,9 @@ void AbstractStlTableModel::emitDataChangedSignal(const QModelIndex& topLeft, co
   emit dataChanged(topLeft, bottomRight, roles);
 }
 
+void AbstractStlTableModel::emitVerticalHeaderDataChanged(int firstRow, int lastRow)
+{
+  emit headerDataChanged(Qt::Vertical, firstRow, lastRow);
+}
+
 }} // namespace Mdt{ namespace ItemModel{

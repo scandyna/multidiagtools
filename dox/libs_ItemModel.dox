@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,30 @@
 /*! \page libs_ItemModel Item model library
  *
  * Some additions to Qt models (model/view framework)
+ *
+ * \section ItemModelAndSelections Item model and selections
+ *
+ *  A classical problem to deal with is to remove a set of rows regarding a selection.
+ *
+ *  |Row|First name | Last name |
+ *  |:-:|:---------:|:---------:|
+ *  | 1 |     S     |           |
+ *  | 2 |           |           |
+ *  | 3 |           |     S     |
+ *  | 4 |     S     |     S     |
+ *
+ * The goal is to remove each row that has at least 1 selection:
+ * \code
+ * #include "MyTableModel.h"
+ * #include <Mdt/ItemModel/RemoveRows.h>
+ * #include <QTableView>
+ *
+ * MyTableModel *model;
+ * QTableView *view;
+ * // Setup model and view (omitted here)
+ *
+ * Mdt::ItemModel::removeRows(model, view->selectionModel());
+ * \endcode
  */
 
 

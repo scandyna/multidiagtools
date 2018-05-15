@@ -1,8 +1,16 @@
 
 # List of source files
 set(SOURCE_FILES
+  Mdt/Railway/Entity/VehicleTypeClass.cpp
   Mdt/Railway/Entity/VehicleType.cpp
+  Mdt/Railway/VehicleTypeClassData.cpp
+  Mdt/Railway/VehicleTypeClassDataList.cpp
+  Mdt/Railway/VehicleTypeClassTableModel.cpp
+  Mdt/Railway/VehicleTypeClassEdition.cpp
+  Mdt/Railway/VehicleTypeData.cpp
   Mdt/Railway/VehicleTypeModel.cpp
+  Mdt/Railway/VehicleTypeClassRepository.cpp
+  Mdt/Railway/VehicleTypeEdition.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
@@ -21,7 +29,7 @@ mdt_add_library(
   NAME Railway_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES ItemModel Qt5::Core Entity_Core;
+  LINK_DEPENDENCIES ItemModel Qt5::Core Entity_Core Error_Core;
 )
 target_compile_definitions(Railway_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

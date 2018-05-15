@@ -46,7 +46,7 @@ namespace Mdt{ namespace Entity{
    * using PersonRepository = Mdt::Entity::RepositoryHandle<AbstractPersonRepository>;
    * \endcode
    * Note that the handle, %PersonRepository, refers to the interface %AbstractPersonRepository ,
-   *  not the any concrete implementation.
+   *  not to any concrete implementation.
    *  This avoids dependencies of any specific implementation of the repository.
    *
    * Lets take a example of a SQL repository implementation:
@@ -61,6 +61,13 @@ namespace Mdt{ namespace Entity{
    * auto personRepository = PersonRepository::make<SqlPersonRepository>();
    * \endcode
    *
+   * To call implementation specific methods:
+   * \code
+   * auto & personSqlRepository = personRepository.repositoryImpl<SqlPersonRepository>();
+   * personSqlRepository.setDatabaseConnection(..);
+   * personSqlRepository.setDbSpecificSetup(..);
+   * \endcode
+   *
    * If the repository inherits AbstractCachedRepository, the handle, PersonRepository,
    *  can be used in the STL compatible table models by using CachedRepositoryStlTableProxy .
    */
@@ -69,7 +76,7 @@ namespace Mdt{ namespace Entity{
   {
    public:
 
-    /*! \brief Construct a null repsiotory handle
+    /*! \brief Construct a null repository handle
      */
     RepositoryHandle() = default;
 
@@ -102,6 +109,21 @@ namespace Mdt{ namespace Entity{
     {
       Q_ASSERT(!isNull());
       return *( mRepository.get() );
+    }
+
+    /*! \brief Access the hold repository
+     *
+     * Returns a reference to the implementation.
+     *
+     * \pre This handle must not be null
+     * \pre \a RepositoryImpl must be the real implementation
+     */
+    template<typename RepositoryImpl>
+    RepositoryImpl & repositoryImpl()
+    {
+      Q_ASSERT(!isNull());
+      Q_ASSERT(dynamic_cast<RepositoryImpl*>( mRepository.get()) != nullptr);
+      return *( dynamic_cast<RepositoryImpl*>( mRepository.get()) );
     }
 
     /*! \brief Create a repository handle with a repository implementation

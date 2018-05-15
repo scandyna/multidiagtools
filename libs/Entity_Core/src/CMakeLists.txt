@@ -31,10 +31,15 @@ set(SOURCE_FILES
   Mdt/Entity/ReadOnlyTableModel.cpp
   Mdt/Entity/EditableTableModel.cpp
   Mdt/Entity/RowResizableTableModel.cpp
+  Mdt/Entity/TableCache.cpp
+  Mdt/Entity/AbstractRepository.cpp
   Mdt/Entity/AbstractCachedRepository.cpp
+  Mdt/Entity/AbstractCachedEntityRepository.cpp
   Mdt/Entity/RepositoryHandle.cpp
   Mdt/Entity/StlTableProxyIterator.cpp
   Mdt/Entity/CachedRepositoryStlTableProxy.cpp
+  Mdt/Entity/CachedRepositoryTableModel.cpp
+  Mdt/Entity/CachedEntityRepositoryTableModel.cpp
 #   Mdt/Entity/StlTableProxyImplementationInterface.cpp
 #   Mdt/Entity/StlTableProxy.cpp
 )

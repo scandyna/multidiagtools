@@ -22,7 +22,7 @@
 #define MDT_ITEM_MODEL_EDITABLE_STL_TABLE_MODEL_H
 
 #include "ReadOnlyStlTableModel.h"
-#include "StlContainerIteratorAdapter.h"
+#include "Mdt/Container/StlContainerIteratorAdapter.h"
 
 namespace Mdt{ namespace ItemModel{
 
@@ -41,7 +41,7 @@ namespace Mdt{ namespace ItemModel{
    *     void setValueAtIndex(Container & container, int index, const value_type & value);
    *     \endcode
    */
-  template<typename Table, typename RecordAdapter = StlContainerIteratorAdapter<typename Table::value_type> >
+  template<typename Table, typename RecordAdapter = Mdt::Container::StlContainerIteratorAdapter<typename Table::value_type> >
   class EditableStlTableModel : public ReadOnlyStlTableModel<Table, RecordAdapter>
   {
    public:

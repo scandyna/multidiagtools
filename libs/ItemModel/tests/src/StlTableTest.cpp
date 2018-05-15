@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "StlTableTest.h"
 #include "Mdt/ItemModel/StlTable.h"
-#include "Mdt/ItemModel/StlContainerIteratorAdapter.h"
+#include "Mdt/Container/StlContainerIteratorAdapter.h"
 #include <QVariantList>
 #include <QList>
 #include <QStringList>
@@ -30,6 +30,7 @@
 #include <list>
 
 using namespace Mdt::ItemModel;
+using namespace Mdt::Container;
 
 void StlTableTest::initTestCase()
 {

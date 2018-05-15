@@ -21,6 +21,10 @@
 
 /*! \page libs_Entity Entity
  *
+ * \todo Explain 2 approches:
+ *   - Accept to depend on Entity library in business model and use validadtors, item delegates, ... that uses Entiy attributes (central eay to give some common constraints)
+ *   - Depend on Entity in only some parts
+ *
  * In this library, the concept of a entity is a thing of interest
  *  in the application, like a Article, a Person, etc..
  *
@@ -124,6 +128,41 @@
  *      return PersonId( constDataStruct().id );
  *    }
  *  };
+ *  \endcode
+ *
+ *  \section entityRepository Entity repository
+ *
+ *  \code
+ *  class AbstractPersonRepository : public Mdt::Entity::AbstractCachedRepository<PersonData>
+ *  {
+ *  };
+ *
+ *  using PersonRepository = Mdt::Entity::RepositoryHandle<AbstractPersonRepository>;
+ *  using PersonRepositoryStlTableProxy = Mdt::Entity::CachedRepositoryStlTableProxy<AbstractPersonRepository>;
+ *  \endcode
+ *
+ *  \code
+ *  class EditPersonTableModel : public Mdt::Entity::EditableTableModel<PersonRepositoryStlTableProxy>
+ *  {
+ *   Q_OBJECT
+ *
+ *   public:
+ *
+ *    using ParentClass = Mdt::Entity::EditableTableModel<PersonRepositoryStlTableProxy>;
+ *    using ParentClass::ParentClass;
+ *  };
+ *  \endcode
+ *
+ *  \code
+ *  class SqlPersonRepository : public AbstractPersonRepository
+ *  {
+ *  };
+ *  \endcode
+ *
+ *  \code
+ *  auto personRepository = PersonRepository::make<SqlPersonRepository>();
+ *  EditPersonTableModel model:
+ *  model.table().setRepository(personRepository);
  *  \endcode
  *
  *  \sa the Mdt::Entity namespace

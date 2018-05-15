@@ -10,7 +10,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtEntity_CoreTest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtEntity_CoreTest Entity_Core Application_Core TestLib_Core Qt5::Test)
+target_link_libraries(mdtEntity_CoreTest Entity_Core Application_Core TestLib_Core TestLib_Container Qt5::Test)
 
 #=============== Helper functions ===========
 
@@ -45,10 +45,14 @@ addEntity_CoreTest("RelationTest")
 addEntity_CoreTest("ItemModelRelationTest")
 addEntity_CoreTest("TableModelRecordAdapterTest")
 addEntity_CoreTest("TableModelTest")
+addEntity_CoreTest("TableCacheTest")
 addEntity_CoreTest("AbstractCachedRepositoryTest")
+addEntity_CoreTest("AbstractCachedEntityRepositoryTest")
 addEntity_CoreTest("RepositoryHandleTest")
 addEntity_CoreTest("StlTableProxyIteratorTest")
-addEntity_CoreTest("CachedRepositoryStlTableProxyTest")
+# addEntity_CoreTest("CachedRepositoryStlTableProxyTest")
+addEntity_CoreTest("CachedRepositoryTableModelTest")
+addEntity_CoreTest("CachedEntityRepositoryTableModelTest")
 # addEntity_CoreTest("StlTableProxyTest")
 
 # Clang warns about explicit move that prevents copy elision.

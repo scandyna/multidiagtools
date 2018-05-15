@@ -31,9 +31,18 @@ class AbstractCachedRepositoryTest : public TestBase
 
   void rowCountLimitTest();
   void fetchAllTest();
+  void fetchAllSignalTest();
   void getSetRecordAtTest();
   void insertRecordsTest();
+  void insertRecordsAndSubmitTest();
+  void insertRecordsAndSubmitSignalTest();
   void removeRecordsTest();
+  void dataTest();
+  void setDataTest();
+  void setDataAndSubmitTest();
+  void setDataAndSubmitSignalTest();
+  void insertRecordSetDataAndSubmitTest();
+  void insertRecordSetDataAndSubmitSignalTest();
 };
 
 #endif // #ifndef ABSTRACT_CACHED_REPOSITORY_TEST_H

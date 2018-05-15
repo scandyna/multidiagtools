@@ -29,7 +29,8 @@ namespace Mdt{ namespace Container{
   {
     None,     /*!< No operation on the element */
     Insert,   /*!< The element was inserted to the cache */
-    Update    /*!< The element was updated in the cache */
+    Update,   /*!< The element was updated in the cache */
+    Delete    /*!< The element was deleted from the cache */
   };
 
 }} // namespace Mdt{ namespace Container{

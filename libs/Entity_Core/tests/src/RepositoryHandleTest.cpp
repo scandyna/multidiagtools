@@ -21,7 +21,7 @@
 #include "RepositoryHandleTest.h"
 #include "Mdt/Entity/Def.h"
 #include "Mdt/Entity/DataTemplate.h"
-#include "Mdt/Entity/AbstractCachedRepository.h"
+#include "Mdt/Entity/AbstractCachedEntityRepository.h"
 #include "Mdt/Entity/RepositoryHandle.h"
 #include <QStringList>
 
@@ -64,11 +64,9 @@ class PersonData : public Mdt::Entity::DataTemplate<PersonEntity>
  * Repository
  */
 
-class AbstractPersonRepository : public Mdt::Entity::AbstractCachedRepository<PersonData>
+class AbstractPersonRepository : public Mdt::Entity::AbstractCachedEntityRepository<PersonData>
 {
  public:
-
-  virtual void populate(const QStringList & baseNames) = 0;
 
 };
 
@@ -78,7 +76,7 @@ class MemoryPersonRepository : public AbstractPersonRepository
 {
  public:
 
-  void populate(const QStringList & baseNames) override
+  void populate(const QStringList & baseNames)
   {
     mMem.clear();
     for(const auto & baseName : baseNames){
@@ -107,6 +105,11 @@ class MemoryPersonRepository : public AbstractPersonRepository
   int storageRowCount() const
   {
     return mMem.size();
+  }
+
+  bool insertRecordToStorage(const PersonData & record) override
+  {
+    return false;
   }
 
   std::vector<PersonData> mMem;
@@ -149,7 +152,8 @@ void RepositoryHandleTest::createAndUseTest()
 
   personRepository = PersonRepository::make<MemoryPersonRepository>();
   QVERIFY(!personRepository.isNull());
-  personRepository.repository().populate({"A","B"});
+  auto & personMemoryRepository = personRepository.repositoryImpl<MemoryPersonRepository>();
+  personMemoryRepository.populate({"A","B"});
   QVERIFY(personRepository.repository().fetchAll());
   QCOMPARE(personRepository.constRepository().rowCount(), 2);
   QCOMPARE(personRepository.constRepository().constRecordAt(0).firstName(), QString("fA"));
@@ -159,7 +163,7 @@ void RepositoryHandleTest::createAndUseTest()
 void RepositoryHandleTest::useInObjectsTest()
 {
   auto personRepository = PersonRepository::make<MemoryPersonRepository>();
-  personRepository.repository().populate({"A","B"});
+  personRepository.repositoryImpl<MemoryPersonRepository>().populate({"A","B"});
   QVERIFY(personRepository.repository().fetchAll());
 
   PersonBo pbo1;

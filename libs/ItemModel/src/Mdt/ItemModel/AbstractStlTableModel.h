@@ -40,11 +40,15 @@ namespace Mdt{ namespace ItemModel{
      */
     AbstractStlTableModel(QObject *parent = nullptr);
 
-   protected:
+   protected slots:
 
     /*! \brief Emit dataChanged() signal
      */
     void emitDataChangedSignal(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles = QVector<int> ());
+
+    /*! \brief Emit headerDataChanged(Qt::Vertical, \a firstRow, \a lastRow)
+     */
+    void emitVerticalHeaderDataChanged(int firstRow, int lastRow);
 
   };
 }} // namespace Mdt{ namespace ItemModel{

@@ -22,9 +22,9 @@
 #define MDT_ITEM_MODEL_READ_ONLY_STL_TABLE_MODEL_H
 
 #include "AbstractStlTableModel.h"
-#include "StlContainerIteratorAdapter.h"
 #include "StlTable.h"
 #include "Mdt/Container/StlContainer.h"
+#include "Mdt/Container/StlContainerIteratorAdapter.h"
 #include <QModelIndex>
 #include <QVariant>
 
@@ -65,7 +65,7 @@ namespace Mdt{ namespace ItemModel{
    *    However, each record of a container must have the same count
    *    of items, refered here as column count of the table model.
    */
-  template<typename Table, typename RecordAdapter = StlContainerIteratorAdapter<typename Table::value_type> >
+  template<typename Table, typename RecordAdapter = Mdt::Container::StlContainerIteratorAdapter<typename Table::value_type> >
   class ReadOnlyStlTableModel : public AbstractStlTableModel
   {
    public:

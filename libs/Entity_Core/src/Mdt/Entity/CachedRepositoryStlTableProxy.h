@@ -44,6 +44,16 @@ namespace Mdt{ namespace Entity{
       mRepository = repository;
     }
 
+    RepositoryHandle<RepositoryInterface> & repository()
+    {
+      return mRepository;
+    }
+
+    const RepositoryHandle<RepositoryInterface> & constRepository() const
+    {
+      return mRepository;
+    }
+
     int rowCount() const
     {
       if(mRepository.isNull()){
@@ -116,6 +126,20 @@ namespace Mdt{ namespace Entity{
     void setRepository(const RepositoryHandle<RepositoryInterface> & repository)
     {
       mImpl.setRepository(repository);
+    }
+
+    /*! \brief Acces repository of this proxy
+     */
+    RepositoryHandle<RepositoryInterface> & repository()
+    {
+      return mImpl.repository();
+    }
+
+    /*! \brief Acces repository of this proxy
+     */
+    const RepositoryHandle<RepositoryInterface> & constRepository() const
+    {
+      return mImpl.constRepository();
     }
 
     /*! \brief Get row count

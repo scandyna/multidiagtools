@@ -24,6 +24,7 @@
 #include "TableCacheOperation.h"
 #include "TableCacheOperationIndex.h"
 #include "RowList.h"
+#include "Mdt/IndexRange/RowRange.h"
 #include "MdtContainerExport.h"
 #include <QtGlobal>
 #include <vector>
@@ -39,6 +40,10 @@ namespace Mdt{ namespace Container{
     /*! \brief STL style const iterator
      */
     using const_iterator = std::vector<TableCacheOperationIndex>::const_iterator;
+
+    /*! \brief STL style iterator
+     */
+    using iterator = std::vector<TableCacheOperationIndex>::iterator;
 
     /*! \brief Get a iterator to the first element in this map
      */
@@ -93,6 +98,16 @@ namespace Mdt{ namespace Container{
      */
     void insertRecords(int pos, int count);
 
+    /*! \brief Set the operation at \a row in the cache
+     *
+     * If no operation exists for \a row , it will be added and set to \a operation .
+     *
+     * If a operation allready exists at \a row , it will be updated regarding opertaionFromExisting() .
+     *
+     * \pre \a row must be >= 0
+     */
+    void setOperationAtRow(int row, TableCacheOperation operation);
+
     /*! \brief Get the operation at \a row in the cache
      *
      * \pre \a row must be >= 0
@@ -103,17 +118,67 @@ namespace Mdt{ namespace Container{
      */
     RowList getRowsToInsertIntoStorage() const;
 
+//     /*! \brief Commit changes
+//      *
+//      * The operation for each indexes in this cache
+//      *  will be set to TableCacheOperation::None .
+//      *  This way, it is now possible to query which indexes
+//      *  have been sent to the storage.
+//      *
+//      * Do not forget to call removedAllIndexes()
+//      *  once all needed information have been retrieved.
+//      */
+//     void commitChanges();
+
     /*! \brief Commit changes
      *
-     * The operation for each indexes in this cache
-     *  will be set to TableCacheOperation::None .
-     *  This way, it is now possible to query which indexes
-     *  have been sent to the storage.
-     *
-     * Do not forget to call removedAllIndexes()
-     *  once all needed information have been retrieved.
+     * Will clear all operations in this map
+     *  and update committed states, like firstCommitedRow and lastCommittedRow .
      */
     void commitChanges();
+
+    /*! \brief Get the range of committed rows
+     *
+     * Returns a range of rows that have been committed.
+     *  If commitChanges() was not called, or no operation exists in this map,
+     *  a null range is returned.
+     */
+    Mdt::IndexRange::RowRange committedRows() const
+    {
+      return mCommittedRows;
+    }
+
+    /*! \brief Get the operation regarding \a existingOperation
+     *
+     * |    Existing operation     |         Operation         |          Result           |
+     * |:-------------------------:|:-------------------------:|:-------------------------:|
+     * |TableCacheOperation::None  |TableCacheOperation::None  |TableCacheOperation::None  |
+     * |TableCacheOperation::None  |TableCacheOperation::Insert|TableCacheOperation::Insert|
+     * |TableCacheOperation::None  |TableCacheOperation::Update|TableCacheOperation::Update|
+     * |TableCacheOperation::None  |TableCacheOperation::Delete|TableCacheOperation::Delete|
+     * |TableCacheOperation::Insert|TableCacheOperation::None  | ?? |
+     * |TableCacheOperation::Insert|TableCacheOperation::Insert|TableCacheOperation::Insert|
+     * |TableCacheOperation::Insert|TableCacheOperation::Update|TableCacheOperation::Insert|
+     * |TableCacheOperation::Insert|TableCacheOperation::Delete| ?? |
+     * |TableCacheOperation::Update|TableCacheOperation::None  | ?? |
+     * |TableCacheOperation::Update|TableCacheOperation::Insert| ?? |
+     * |TableCacheOperation::Update|TableCacheOperation::Update|TableCacheOperation::Update|
+     * |TableCacheOperation::Update|TableCacheOperation::Delete|TableCacheOperation::Delete|
+     * |TableCacheOperation::Delete|TableCacheOperation::None  | ?? |
+     * |TableCacheOperation::Delete|TableCacheOperation::Insert|TableCacheOperation::Delete|
+     * |TableCacheOperation::Delete|TableCacheOperation::Update|TableCacheOperation::Update|
+     * |TableCacheOperation::Delete|TableCacheOperation::Delete|TableCacheOperation::Delete|
+     */
+    static TableCacheOperation opertaionFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation);
+    
+
+   private:
+
+    TableCacheOperationIndex findIndex(int row, int column) const;
+
+    iterator findRowIterator(int row);
+    const_iterator findRowConstIterator(int row) const;
+    TableCacheOperationIndex findRow(int row) const;
 
     /*! \brief Get the first row that have been committed to the storage
      *
@@ -127,12 +192,10 @@ namespace Mdt{ namespace Container{
      */
     int getLastCommittedRow() const;
 
-   private:
-
-    TableCacheOperationIndex findIndex(int row, int column) const;
-    TableCacheOperationIndex findRow(int row) const;
+    void setCommittedRows();
 
     std::vector<TableCacheOperationIndex> mMap;
+    Mdt::IndexRange::RowRange mCommittedRows;
   };
 
 }} // namespace Mdt{ namespace Container{

@@ -25,6 +25,7 @@
 #include "Mdt/Entity/RepositoryHandle.h"
 #include "Mdt/Entity/CachedRepositoryStlTableProxy.h"
 #include "Mdt/Entity/RowResizableTableModel.h"
+#include "Mdt/Entity/FieldAt.h"
 
 #include "Mdt/Entity/EditableTableModel.h"
 #include "Mdt/Entity/ReadOnlyTableModel.h"
@@ -81,6 +82,10 @@ class AbstractPersonRepository : public Mdt::Entity::AbstractCachedRepository<Pe
 
   virtual void populate(const QStringList & baseNames) = 0;
 
+  int columnCount() const override
+  {
+    return fieldCount<PersonDef>();
+  }
 };
 
 using PersonRepository = Mdt::Entity::RepositoryHandle<AbstractPersonRepository>;
@@ -127,6 +132,11 @@ class MemoryPersonRepository : public AbstractPersonRepository
   int storageRowCount() const
   {
     return mMem.size();
+  }
+
+  bool insertRecordToStorage(const PersonData & record) override
+  {
+    return false;
   }
 
   std::vector<PersonData> mMem;

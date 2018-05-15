@@ -27,6 +27,7 @@ namespace Mdt{ namespace Container{
 void TableCacheOperationMap::clear()
 {
   mMap.clear();
+  mCommittedRows.clear();
 }
 
 void TableCacheOperationMap::insertRecords(int pos, int count)
@@ -38,6 +39,16 @@ void TableCacheOperationMap::insertRecords(int pos, int count)
   for(int i = 0; i < count; ++i){
     mMap.emplace_back( TableCacheOperationIndex(row, TableCacheOperation::Insert) );
     ++row;
+  }
+}
+
+void TableCacheOperationMap::setOperationAtRow(int row, TableCacheOperation operation)
+{
+  const auto it = findRowIterator(row);
+  if(it == mMap.cend()){
+    mMap.push_back( TableCacheOperationIndex(row, operation) );
+  }else{
+    it->setOperation( opertaionFromExisting(it->operation(), operation) );
   }
 }
 
@@ -63,9 +74,113 @@ RowList TableCacheOperationMap::getRowsToInsertIntoStorage() const
 
 void TableCacheOperationMap::commitChanges()
 {
-  for(auto & index : mMap){
-    index.setOperation(TableCacheOperation::None);
+  setCommittedRows();
+  mMap.clear();
+//   for(auto & index : mMap){
+//     index.setOperation(TableCacheOperation::None);
+//   }
+}
+
+TableCacheOperation TableCacheOperationMap::opertaionFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation)
+{
+  switch(existingOperation){
+    case TableCacheOperation::None:
+      return operation;
+    case TableCacheOperation::Insert:
+      switch(operation){
+        ///case TableCacheOperation::None:
+        case TableCacheOperation::Insert:
+        case TableCacheOperation::Update:
+          return TableCacheOperation::Insert;
+        ///case TableCacheOperation::Delete:
+      }
+      break;
+    case TableCacheOperation::Update:
+      switch(operation){
+        ///case TableCacheOperation::None:
+        ///case TableCacheOperation::Insert:
+        case TableCacheOperation::Update:
+          return TableCacheOperation::Update;
+        case TableCacheOperation::Delete:
+          return TableCacheOperation::Delete;
+      }
+      break;
+    case TableCacheOperation::Delete:
+      switch(operation){
+        ///case TableCacheOperation::None:
+        case TableCacheOperation::Insert:
+          return TableCacheOperation::Delete;
+        case TableCacheOperation::Update:
+          return TableCacheOperation::Update;
+        case TableCacheOperation::Delete:
+          return TableCacheOperation::Delete;
+      }
+      break;
   }
+}
+
+TableCacheOperationIndex TableCacheOperationMap::findIndex(int row, int column) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(column >= 0);
+
+  const auto pred = [row, column](const TableCacheOperationIndex & index){
+    return (index.row() == row) && (index.column() == column);
+  };
+  const auto it = std::find_if( mMap.cbegin(), mMap.cend(), pred );
+  if(it == mMap.cend()){
+    return TableCacheOperationIndex();
+  }
+
+  return *it;
+}
+
+template<typename Iterator>
+Iterator findRowIteratorT(int row, Iterator first, Iterator last)
+{
+  Q_ASSERT(row >= 0);
+
+  const auto pred = [row](const TableCacheOperationIndex & index){
+    return index.row() == row;
+  };
+
+  return std::find_if( first, last, pred );
+}
+
+TableCacheOperationMap::iterator TableCacheOperationMap::findRowIterator(int row)
+{
+  Q_ASSERT(row >= 0);
+
+  return findRowIteratorT( row, mMap.begin(), mMap.end() );
+}
+
+TableCacheOperationMap::const_iterator TableCacheOperationMap::findRowConstIterator(int row) const
+{
+  Q_ASSERT(row >= 0);
+
+  return findRowIteratorT( row, mMap.cbegin(), mMap.cend() );
+}
+
+TableCacheOperationIndex TableCacheOperationMap::findRow(int row) const
+{
+  Q_ASSERT(row >= 0);
+
+  const auto it = findRowConstIterator(row);
+  if(it == mMap.cend()){
+    return TableCacheOperationIndex();
+  }
+
+  return *it;
+}
+
+void TableCacheOperationMap::setCommittedRows()
+{
+  mCommittedRows.clear();
+  if(isEmpty()){
+    return;
+  }
+  mCommittedRows.setFirstRow( getFirstCommittedRow() );
+  mCommittedRows.setLastRow( getLastCommittedRow() );
 }
 
 int TableCacheOperationMap::getFirstCommittedRow() const
@@ -92,37 +207,6 @@ int TableCacheOperationMap::getLastCommittedRow() const
   Q_ASSERT(it != mMap.cend());
 
   return it->row();
-}
-
-TableCacheOperationIndex TableCacheOperationMap::findIndex(int row, int column) const
-{
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(column >= 0);
-
-  const auto pred = [row, column](const TableCacheOperationIndex & index){
-    return (index.row() == row) && (index.column() == column);
-  };
-  const auto it = std::find_if( mMap.cbegin(), mMap.cend(), pred );
-  if(it == mMap.cend()){
-    return TableCacheOperationIndex();
-  }
-
-  return *it;
-}
-
-TableCacheOperationIndex TableCacheOperationMap::findRow(int row) const
-{
-  Q_ASSERT(row >= 0);
-
-  const auto pred = [row](const TableCacheOperationIndex & index){
-    return index.row() == row;
-  };
-  const auto it = std::find_if( mMap.cbegin(), mMap.cend(), pred );
-  if(it == mMap.cend()){
-    return TableCacheOperationIndex();
-  }
-
-  return *it;
 }
 
 }} // namespace Mdt{ namespace Container{

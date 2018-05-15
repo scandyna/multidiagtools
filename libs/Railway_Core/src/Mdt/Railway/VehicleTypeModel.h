@@ -21,7 +21,7 @@
 #ifndef MDT_RAILWAY_VEHICLE_TYPE_MODEL_H
 #define MDT_RAILWAY_VEHICLE_TYPE_MODEL_H
 
-#include "Entity/VehicleType.h"
+#include "VehicleTypeData.h"
 #include "Mdt/Entity/RowResizableTableModel.h"
 #include "MdtRailway_CoreExport.h"
 #include <vector>
@@ -30,13 +30,13 @@ namespace Mdt{ namespace Railway{
 
   /*! \brief Table model for vehicle type
    */
-  class MDT_RAILWAY_CORE_EXPORT VehicleTypeModel : public Mdt::Entity::RowResizableTableModel< std::vector<Entity::VehicleTypeData> >
+  class MDT_RAILWAY_CORE_EXPORT VehicleTypeModel : public Mdt::Entity::RowResizableTableModel< std::vector<VehicleTypeData> >
   {
    Q_OBJECT
 
    public:
 
-    using ParentClass = Mdt::Entity::RowResizableTableModel< std::vector<Entity::VehicleTypeData> >;
+    using ParentClass = Mdt::Entity::RowResizableTableModel< std::vector<VehicleTypeData> >;
     using ParentClass::ParentClass;
 
    public slots:

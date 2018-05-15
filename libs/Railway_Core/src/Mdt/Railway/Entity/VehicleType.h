@@ -22,16 +22,16 @@
 #define MDT_RAILWAY_ENTITY_VEHICLE_TYPE_H
 
 #include "Mdt/Entity/Def.h"
-#include "Mdt/Entity/DataTemplate.h"
+#include "MdtRailway_CoreExport.h"
 #include <QtGlobal>
 #include <QString>
 
 namespace Mdt{ namespace Railway{ namespace Entity{
 
-  struct VehicleTypeDataStruct
+  struct MDT_RAILWAY_CORE_EXPORT VehicleTypeDataStruct
   {
     qulonglong id;
-    QString name;
+    QString manufacturerSerie;
   };
 
 }}} // namespace Mdt{ namespace Railway{ namespace Entity{
@@ -40,15 +40,7 @@ MDT_ENTITY_DEF(
   (Mdt, Railway, Entity, VehicleTypeDataStruct),
   VehicleType,
   (id, FieldFlag::IsPrimaryKey),
-  (name, FieldFlag::IsRequired, FieldMaxLength(50))
+  (manufacturerSerie, FieldFlag::IsRequired, FieldMaxLength(10))
 )
-
-namespace Mdt{ namespace Railway{ namespace Entity{
-
-  class VehicleTypeData : public Mdt::Entity::DataTemplate<VehicleTypeDataStruct, VehicleTypeDef>
-  {
-  };
-
-}}} // namespace Mdt{ namespace Railway{ namespace Entity{
 
 #endif // #ifndef MDT_RAILWAY_ENTITY_VEHICLE_TYPE_H

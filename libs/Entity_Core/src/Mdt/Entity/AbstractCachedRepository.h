@@ -18,12 +18,15 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ENTITY_ABSTRACT_REPOSITORY_H
-#define MDT_ENTITY_ABSTRACT_REPOSITORY_H
+#ifndef MDT_ENTITY_ABSTRACT_CACHED_REPOSITORY_H
+#define MDT_ENTITY_ABSTRACT_CACHED_REPOSITORY_H
 
-#include "Mdt/Container/StlContainer.h"
+#include "AbstractRepository.h"
+// #include "TableCache.h"
+#include "Mdt/Container/RowList.h"
+#include "Mdt/Container/TableCache.h"
 #include <QtGlobal>
-#include <vector>
+#include <QVariant>
 
 namespace Mdt{ namespace Entity{
 
@@ -34,26 +37,39 @@ namespace Mdt{ namespace Entity{
    * {
    *  public:
    *
+   *   int columnCount() const override;
+   *   QVariant data(int row, int column) const override;
+   *   void setData(int row, int column, const QVariant & data) override;
    *   bool fetchRecords(int count) override;
    * };
    * \endcode
+   *
+   * To create a cached repository for a single entity based on Mdt::Entity::DataTemplate ,
+   *  consider using Mdt::Entity::AbstractCachedEntityRepository .
    */
-  template<typename EntityData>
-  class AbstractCachedRepository
+  template<typename Record>
+  class AbstractCachedRepository : public AbstractRepository
   {
    public:
 
     /*! \brief STL style value type
+     *
+     * \todo Remove once possible
      */
-    using value_type = EntityData;
+    using value_type = Record;
+
+    using record_type = Record;
 
     /*! \brief Construct a repository
      */
-    AbstractCachedRepository() = default;
+    AbstractCachedRepository(QObject *parent = nullptr)
+     : AbstractRepository(parent)
+    {
+    }
 
-    /*! \brief Destructor
-     */
-    virtual ~AbstractCachedRepository() = default;
+//     /*! \brief Destructor
+//      */
+//     virtual ~AbstractCachedRepository() = default;
 
     AbstractCachedRepository(const AbstractCachedRepository &) = delete;
     AbstractCachedRepository & operator=(const AbstractCachedRepository &) = delete;
@@ -83,37 +99,75 @@ namespace Mdt{ namespace Entity{
      */
     int rowCount() const
     {
-      return mCache.size();
+      return mCache.rowCount();
+    }
+
+    /*! \brief Get count of columns
+     */
+    virtual int columnCount() const = 0;
+
+    /*! \brief Get data at \a row and \a column
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
+     */
+    virtual QVariant data(int row, int column) const = 0;
+
+    /*! \brief Set \a data at \a row and \a column
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
+     */
+    void setData(int row, int column, const QVariant & data)
+    {
+      setDataToCache(row, column, data);
     }
 
     /*! \brief Get record a \a row
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
      */
-    const EntityData & constRecordAt(int row) const
+    const Record & constRecordAt(int row) const
     {
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
-      return mCache[row];
+      return mCache.constRecordAt(row);
     }
 
     /*! \brief Get record a \a row
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     * \note Calling this method will mark the entiere record at \a row as edited in the cache
+     * \todo Should be protected and should not change oprations
      */
-    EntityData & recordAt(int row)
+    Record & recordAt(int row)
     {
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
-      return mCache[row];
+      return mCache.recordAt(row);
+    }
+
+    /*! \brief Get the operation at \a row in the cache
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     */
+    Mdt::Container::TableCacheOperation operationAtRow(int row) const
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
+      return mCache.operationAtRow(row);
     }
 
     /*! \brief Fetch all data from the underlaying storage, until defined row count limit
      */
     bool fetchAll()
     {
+      beginResetCache();
       mCache.clear();
-      return fetchRecords( cachedRowCountLimit() );
+      const bool ok = fetchRecords( cachedRowCountLimit() );
+      endResetCache();
+
+      return ok;
     }
 
     /*! \brief Insert \a count copies of \a record
@@ -123,14 +177,14 @@ namespace Mdt{ namespace Entity{
      * \pre \a pos must be >= 0
      * \pre \a count must be >= 1
      */
-    void insertRecords(int pos, int count, const value_type & record)
+    void insertRecords(int pos, int count, const Record & record)
     {
       Q_ASSERT(pos >= 0);
       Q_ASSERT(count >= 1);
-      Mdt::Container::insertToContainer(mCache, pos, count, record);
+      mCache.insertRecords(pos, count, record);
     }
 
-    /*! \brief Remove \a count records starting from \a pos from
+    /*! \brief Remove \a count records starting from \a pos
      *
      * Records are removed from the cache.
      *
@@ -143,7 +197,24 @@ namespace Mdt{ namespace Entity{
       Q_ASSERT(pos >= 0);
       Q_ASSERT(count >= 0);
       Q_ASSERT( (pos + count) <= rowCount() );
-      Mdt::Container::removeFromContainer(mCache, pos, count);
+      mCache.removeRecords(pos, count);
+    }
+
+    /*! \brief Submit changes
+     *
+     * Will submit changes done in the cache to the storage.
+     */
+    bool submitChanges()
+    {
+      if(!insertNewRecordsToStorage()){
+        return false;
+      }
+      mCache.commitChanges();
+      const auto committedRows = mCache.committedRows();
+      if(!committedRows.isNull()){
+        emitOperationAtRowsChanged(committedRows.firstRow(), committedRows.lastRow());
+      }
+      return true;
     }
 
    protected:
@@ -152,7 +223,7 @@ namespace Mdt{ namespace Entity{
      *
      * To add the fetched records to the cache, use appendRecordToCache() .
      *
-     * If the storage has less recors available than \a count
+     * If the storage has less records available than \a count
      *  (or no records at all), this method should return true.
      *  false should be returned on errors, like DB connection failure,
      *  file read errors, etc..
@@ -180,18 +251,46 @@ namespace Mdt{ namespace Entity{
      *
      * \pre rowCount() must be < cachedRowCountLimit()
      */
-    void appendRecordToCache(const EntityData & record)
+    void appendRecordToCache(const Record & record)
     {
       Q_ASSERT(rowCount() < cachedRowCountLimit());
-      mCache.push_back(record);
+      mCache.appendRecordFromStorage(record);
+//       mCache.appendRecord(record, TableCacheMarking::NotMarkOperation);
     }
+
+    /*! \brief Insert \a record to the underlaying storage
+     */
+    virtual bool insertRecordToStorage(const Record & record) = 0;
+
+    /*! \brief Set \a data at \a row and \a column into the cache
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
+     */
+    virtual void setDataToCache(int row, int column, const QVariant & data) = 0;
 
    private:
 
-    std::vector<EntityData> mCache;
+    bool insertNewRecordsToStorage()
+    {
+      const auto rowList = mCache.getRowsToInsertIntoStorage();
+      for(const auto row : rowList){
+        if(!insertRecordToStorage( constRecordAt(row) )){
+          return false;
+        }
+      }
+//       mCache.removeIndexesForRows(rowList);
+      return true;
+    }
+
+    bool updateModifiedRecordsInStorage()
+    {
+    }
+
+    Mdt::Container::TableCache<Record> mCache;
     int mCachedRowCountLimit = 5000;
   };
 
 }} // namespace Mdt{ namespace Entity{
 
-#endif // #ifndef MDT_ENTITY_ABSTRACT_REPOSITORY_H
+#endif // #ifndef MDT_ENTITY_ABSTRACT_CACHED_REPOSITORY_H

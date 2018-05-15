@@ -22,7 +22,7 @@
 #define MDT_ITEM_MODEL_ROW_RESIZABLE_STL_TABLE_MODEL_H
 
 #include "RowResizableStlTableModelTemplate.h"
-#include "StlContainerIteratorAdapter.h"
+#include "Mdt/Container/StlContainerIteratorAdapter.h"
 
 namespace Mdt{ namespace ItemModel{
 
@@ -47,7 +47,7 @@ namespace Mdt{ namespace ItemModel{
    *     Container initializeContainer(int count, const value_type & value);
    *     \endcode
    */
-  template<typename Table, typename RecordAdapter = StlContainerIteratorAdapter<typename Table::value_type> >
+  template<typename Table, typename RecordAdapter = Mdt::Container::StlContainerIteratorAdapter<typename Table::value_type> >
   class RowResizableStlTableModel : public RowResizableStlTableModelTemplate<Table, RecordAdapter>
   {
    public:

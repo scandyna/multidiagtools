@@ -19,9 +19,25 @@
  **
  ****************************************************************************/
 #include "VehicleTypeTest.h"
+#include "Mdt/Railway/VehicleTypeClassEditionWindow.h"
 #include "Mdt/Railway/VehicleTypeEditionWidget.h"
+#include "Mdt/Railway/VehicleTypeEditionWindow.h"
+#include "Mdt/Railway/VehicleTypeClassSqlRepository.h"
+
+#include "Mdt/Railway/VehicleTypeClassRepository.h"
+#include "Mdt/Railway/SqlSchema.h"
+#include "Mdt/Sql/SQLiteDatabase.h"
+// #include "Mdt/Sql/SQLiteDatabaseFileDialog.h"
+#include <QSqlDatabase>
+#include <QFile>
+#include <QTemporaryFile>
+#include <vector>
+#include <algorithm>
+
+#include <QDebug>
 
 using namespace Mdt::Railway;
+using namespace Mdt::Sql;
 
 void VehicleTypeTest::initTestCase()
 {
@@ -31,11 +47,64 @@ void VehicleTypeTest::cleanupTestCase()
 {
 }
 
+class MemoryVehicleTypeClassRepository : public AbstractVehicleTypeClassRepository
+{
+ public:
+
+  bool fetchRecords(int count) override
+  {
+    const int n = std::min(count, storageRowCount());
+    for(int i = 0; i < n; ++i){
+      appendRecordToCache(mStorage[i]);
+    }
+    return true;
+  }
+
+ private:
+
+  int storageRowCount() const
+  {
+    return mStorage.size();
+  }
+
+  std::vector<VehicleTypeClassData> mStorage;
+};
+
 void VehicleTypeTest::sandbox()
 {
-  VehicleTypeEditionWidget w;
-  w.show();
-  while(w.isVisible()){
+//   VehicleTypeEditionWidget w;
+//   w.show();
+//   VehicleTypeEditionWindow window;
+
+//   QTemporaryFile dbFile;
+//   QFile dbFile("railway.sqlite");
+//   QVERIFY(dbFile.open(QFile::ReadWrite));
+//   qDebug() << "DB file: " << dbFile.fileName();
+  SqlSchema schema;
+  SQLiteDatabase sqliteDb;
+  const QString dbFile = "railway.sqlite";
+  if(!sqliteDb.openExisting(dbFile)){
+    QVERIFY(sqliteDb.createNew(dbFile));
+    QVERIFY(schema.createSchema(sqliteDb.database()));
+  }
+  auto dbConnection = sqliteDb.database();
+//   auto dbConnection = QSqlDatabase::addDatabase("QSQLITE");
+  QVERIFY(dbConnection.isValid());
+//   dbConnection.setDatabaseName("railway.sqlite");
+//   qDebug() << "DB file: " << dbConnection.databaseName();
+//   QVERIFY(dbConnection.open());
+// 
+//   SqlSchema schema;
+//   QVERIFY(schema.createSchema(dbConnection));
+
+  auto vehicleTypeClassRepository = VehicleTypeClassRepository::make<VehicleTypeClassSqlRepository>();
+  vehicleTypeClassRepository.repositoryImpl<VehicleTypeClassSqlRepository>().setDbConnection(dbConnection);
+  QVERIFY(vehicleTypeClassRepository.repository().fetchAll());
+
+  VehicleTypeClassEditionWindow window;
+  window.setVehicleTypeClassRepository(vehicleTypeClassRepository);
+  window.show();
+  while(window.isVisible()){
     QTest::qWait(500);
   }
 }

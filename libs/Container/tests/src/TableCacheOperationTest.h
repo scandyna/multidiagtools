@@ -31,8 +31,10 @@ class TableCacheOperationTest : public TestBase
 
   void indexTest();
 
+  void operationFromExistingTest();
   void insertRecordsTest();
   void insertCommitChangesTest();
+  void setOperationAtRowTest();
 };
 
 #endif // #ifndef TABLE_CACHE_OPERATION_TEST_H
