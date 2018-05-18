@@ -20,9 +20,7 @@
  ****************************************************************************/
 #include "CachedRepositoryTableModelTest.h"
 #include "Mdt/Entity/CachedRepositoryTableModel.h"
-#include "Mdt/Entity/Def.h"
-#include "Mdt/Entity/DataTemplate.h"
-#include "Mdt/Entity/AbstractCachedEntityRepository.h"
+#include "Mdt/Entity/AbstractCachedRepository.h"
 #include "Mdt/Entity/RepositoryHandle.h"
 #include "Mdt/TestLib/ItemModel.h"
 #include "Mdt/TestLib/ItemModelInsertRowTest.h"
@@ -40,46 +38,75 @@ using namespace Mdt::TestLib;
  * Entities and data
  */
 
-struct PersonDataStruct
-{
-  qulonglong id;
-  QString firstName;
-};
-
-MDT_ENTITY_DEF(
-  (PersonDataStruct),
-  Person,
-  (id, FieldFlag::IsPrimaryKey),
-  (firstName, FieldMaxLength(5))
-)
-
-class PersonData : public Mdt::Entity::DataTemplate<PersonEntity>
+class PersonData
 {
  public:
 
+  void setId(int id)
+  {
+    mId = id;
+  }
+
+  int id() const
+  {
+    return mId;
+  }
+
   void setFirstName(const QString & name)
   {
-    dataStruct().firstName = name.trimmed();
+    mFirstName = name;
     Q_ASSERT(!firstName().isEmpty());
   }
 
   QString firstName() const
   {
-    return constDataStruct().firstName;
+    return mFirstName;
   }
+
+ private:
+
+  int mId = 0;
+  QString mFirstName;
 };
 
 /*
  * Repository
  */
 
-class AbstractPersonRepository : public Mdt::Entity::AbstractCachedEntityRepository<PersonData>
+class AbstractPersonRepository : public Mdt::Entity::AbstractCachedRepository<PersonData>
 {
  public:
 
+  int columnCount() const override
+  {
+    return 2;
+  }
+
+  QVariant data(int row, int column) const override
+  {
+    switch(column){
+      case 0:
+        return constRecordAt(row).id();
+      case 1:
+        return constRecordAt(row).firstName();
+    }
+    return QVariant();
+  }
+
+ private:
+
+  void setDataToCache(int row, int column, const QVariant& data) override
+  {
+    switch(column){
+      case 0:
+        recordAt(row).setId(data.toULongLong());
+      case 1:
+        recordAt(row).setFirstName(data.toString());
+    }
+  }
 };
 
-using PersonRepository = Mdt::Entity::RepositoryHandle<AbstractPersonRepository>;
+using PersonRepositoryHandle = Mdt::Entity::RepositoryHandle<AbstractPersonRepository>;
 
 /*
  * Table model
@@ -104,7 +131,7 @@ PersonData buildPerson(const QString & baseName)
   return data;
 }
 
-class PersonMemoryRepository : public AbstractPersonRepository
+class MemoryPersonRepository : public AbstractPersonRepository
 {
  public:
 
@@ -132,7 +159,8 @@ class PersonMemoryRepository : public AbstractPersonRepository
 
   bool insertRecordToStorage(const PersonData & record) override
   {
-    return false;
+    mMem.push_back(record);
+    return true;
   }
 
   std::vector<PersonData> mMem;
@@ -145,11 +173,11 @@ class PersonMemoryRepository : public AbstractPersonRepository
 void CachedRepositoryTableModelTest::sandbox()
 {
   EditPersonTableModel model;
-  auto personRepository = PersonRepository::make<PersonMemoryRepository>();
-  personRepository.repositoryImpl<PersonMemoryRepository>().populate({"A","B"});
-  model.setRepository(personRepository);
+  auto personRepositoryHandle = PersonRepositoryHandle::make<MemoryPersonRepository>();
+  personRepositoryHandle.repositoryImpl<MemoryPersonRepository>().populate({"A","B"});
+  model.setRepository(personRepositoryHandle);
   QCOMPARE(model.rowCount(), 0);
-  QVERIFY(personRepository.repository().fetchAll());
+  QVERIFY(personRepositoryHandle.repository().fetchAll());
   QCOMPARE(model.rowCount(), 2);
   
   /// \todo Call fetch all after setup and check that the model has rceived notification
@@ -157,9 +185,9 @@ void CachedRepositoryTableModelTest::sandbox()
 
 void CachedRepositoryTableModelTest::setFetchedRepositoryTest()
 {
-  auto personRepository = PersonRepository::make<PersonMemoryRepository>();
-  personRepository.repositoryImpl<PersonMemoryRepository>().populate({"A","B","C"});
-  QVERIFY(personRepository.repository().fetchAll());
+  auto personRepositoryHandle = PersonRepositoryHandle::make<MemoryPersonRepository>();
+  personRepositoryHandle.repositoryImpl<MemoryPersonRepository>().populate({"A","B","C"});
+  QVERIFY(personRepositoryHandle.repository().fetchAll());
 
   EditPersonTableModel model;
   QSignalSpy modelResetSpy(&model, &EditPersonTableModel::modelReset);
@@ -168,7 +196,7 @@ void CachedRepositoryTableModelTest::setFetchedRepositoryTest()
   QCOMPARE(model.rowCount(), 0);
   QCOMPARE(model.columnCount(), 0);
   QCOMPARE(modelResetSpy.count(), 0);
-  model.setRepository(personRepository);
+  model.setRepository(personRepositoryHandle);
   QCOMPARE(modelResetSpy.count(), 1);
   QCOMPARE(model.rowCount(), 3);
   QCOMPARE(model.columnCount(), 2);
@@ -176,8 +204,8 @@ void CachedRepositoryTableModelTest::setFetchedRepositoryTest()
 
 void CachedRepositoryTableModelTest::setRepositoryThenFetchTest()
 {
-  auto personRepository = PersonRepository::make<PersonMemoryRepository>();
-  personRepository.repositoryImpl<PersonMemoryRepository>().populate({"A","B","C"});
+  auto personRepositoryHandle = PersonRepositoryHandle::make<MemoryPersonRepository>();
+  personRepositoryHandle.repositoryImpl<MemoryPersonRepository>().populate({"A","B","C"});
 
   EditPersonTableModel model;
   QSignalSpy modelResetSpy(&model, &EditPersonTableModel::modelReset);
@@ -186,13 +214,13 @@ void CachedRepositoryTableModelTest::setRepositoryThenFetchTest()
   QCOMPARE(model.rowCount(), 0);
   QCOMPARE(model.columnCount(), 0);
   QCOMPARE(modelResetSpy.count(), 0);
-  model.setRepository(personRepository);
+  model.setRepository(personRepositoryHandle);
   QCOMPARE(modelResetSpy.count(), 1);
   QCOMPARE(model.rowCount(), 0);
   QCOMPARE(model.columnCount(), 2);
   modelResetSpy.clear();
 
-  QVERIFY(personRepository.repository().fetchAll());
+  QVERIFY(personRepositoryHandle.repository().fetchAll());
   QCOMPARE(modelResetSpy.count(), 1);
   QCOMPARE(model.rowCount(), 3);
   QCOMPARE(model.columnCount(), 2);
@@ -200,11 +228,11 @@ void CachedRepositoryTableModelTest::setRepositoryThenFetchTest()
 
 void CachedRepositoryTableModelTest::dataTest()
 {
-  auto personRepository = PersonRepository::make<PersonMemoryRepository>();
-  personRepository.repositoryImpl<PersonMemoryRepository>().populate({"A","B","C"});
-  QVERIFY(personRepository.repository().fetchAll());
+  auto personRepositoryHandle = PersonRepositoryHandle::make<MemoryPersonRepository>();
+  personRepositoryHandle.repositoryImpl<MemoryPersonRepository>().populate({"A","B","C"});
+  QVERIFY(personRepositoryHandle.repository().fetchAll());
   EditPersonTableModel model;
-  model.setRepository(personRepository);
+  model.setRepository(personRepositoryHandle);
 
   QCOMPARE(model.rowCount(), 3);
   QCOMPARE(model.columnCount(), 2);
@@ -221,7 +249,7 @@ void CachedRepositoryTableModelTest::insertRowsTest()
   EditPersonTableModel model;
   QVERIFY(!appendRowToModel(model));
 
-  auto personRepositoryHandle = PersonRepository::make<PersonMemoryRepository>();
+  auto personRepositoryHandle = PersonRepositoryHandle::make<MemoryPersonRepository>();
   model.setRepository(personRepositoryHandle);
 
   QCOMPARE(model.rowCount(), 0);
@@ -234,7 +262,7 @@ void CachedRepositoryTableModelTest::insertRowsTest()
 void CachedRepositoryTableModelTest::itemModelInsertRowTest()
 {
   EditPersonTableModel model;
-  auto personRepositoryHandle = PersonRepository::make<PersonMemoryRepository>();
+  auto personRepositoryHandle = PersonRepositoryHandle::make<MemoryPersonRepository>();
   model.setRepository(personRepositoryHandle);
 
   ItemModelInsertRowTest test(&model);
