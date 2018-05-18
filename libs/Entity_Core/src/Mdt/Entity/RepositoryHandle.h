@@ -43,9 +43,9 @@ namespace Mdt{ namespace Entity{
    *
    * Define a repository interface handle could simply be:
    * \code
-   * using PersonRepository = Mdt::Entity::RepositoryHandle<AbstractPersonRepository>;
+   * using PersonRepositoryHandle = Mdt::Entity::RepositoryHandle<AbstractPersonRepository>;
    * \endcode
-   * Note that the handle, %PersonRepository, refers to the interface %AbstractPersonRepository ,
+   * Note that the handle, %PersonRepositoryHandle, refers to the interface %AbstractPersonRepository ,
    *  not to any concrete implementation.
    *  This avoids dependencies of any specific implementation of the repository.
    *
@@ -58,18 +58,15 @@ namespace Mdt{ namespace Entity{
    *
    * To create a instance of a repository:
    * \code
-   * auto personRepository = PersonRepository::make<SqlPersonRepository>();
+   * auto personRepositoryHandle = PersonRepositoryHandle::make<SqlPersonRepository>();
    * \endcode
    *
    * To call implementation specific methods:
    * \code
-   * auto & personSqlRepository = personRepository.repositoryImpl<SqlPersonRepository>();
+   * auto & personSqlRepository = personRepositoryHandle.repositoryImpl<SqlPersonRepository>();
    * personSqlRepository.setDatabaseConnection(..);
    * personSqlRepository.setDbSpecificSetup(..);
    * \endcode
-   *
-   * If the repository inherits AbstractCachedRepository, the handle, PersonRepository,
-   *  can be used in the STL compatible table models by using CachedRepositoryStlTableProxy .
    */
   template<typename RepositoryInterface>
   class RepositoryHandle
