@@ -192,4 +192,14 @@ void AbstractTableModel::emitVerticalHeaderDataChanged(int row)
   emit headerDataChanged(Qt::Vertical, row, row);
 }
 
+void AbstractTableModel::emitVerticalHeaderDataChanged(int firstRow, int lastRow)
+{
+  Q_ASSERT(firstRow >= 0);
+  Q_ASSERT(firstRow < rowCount());
+  Q_ASSERT(lastRow >= 0);
+  Q_ASSERT(lastRow < rowCount());
+
+  emit headerDataChanged(Qt::Vertical, firstRow, lastRow);
+}
+
 }} // namespace Mdt{ namespace ItemModel{

@@ -376,6 +376,19 @@ void AbstractTableModelTest::emitVerticalHeaderDataChangedTest()
   QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
   QCOMPARE(arguments.at(1), QVariant(0));             // first
   QCOMPARE(arguments.at(2), QVariant(0));             // last
+
+  /*
+   * firstRow, lastRow
+   */
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  model.emitVerticalHeaderDataChanged(0, 1);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(0));             // first
+  QCOMPARE(arguments.at(2), QVariant(1));             // last
 }
 
 void AbstractTableModelTest::readOnlySetDataTest()

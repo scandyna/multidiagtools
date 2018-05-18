@@ -336,6 +336,13 @@ namespace Mdt{ namespace ItemModel{
      */
     void emitVerticalHeaderDataChanged(int row);
 
+    /*! \brief Emit the headerDataChanged() signal for the vertical header
+     *
+     * \pre \a firstRow must be in valid range (0 <= \a firstRow < rowCount()).
+     * \pre \a lastRow must be in valid range (0 <= \a lastRow < rowCount()).
+     */
+    void emitVerticalHeaderDataChanged(int firstRow, int lastRow);
+
    private:
 
     bool mIsModelEditable = false;
