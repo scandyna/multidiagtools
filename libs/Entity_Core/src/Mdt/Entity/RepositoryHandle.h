@@ -123,6 +123,21 @@ namespace Mdt{ namespace Entity{
       return *( dynamic_cast<RepositoryImpl*>( mRepository.get()) );
     }
 
+    /*! \brief Access the hold repository
+     *
+     * Returns a reference to the implementation.
+     *
+     * \pre This handle must not be null
+     * \pre \a RepositoryImpl must be the real implementation
+     */
+    template<typename RepositoryImpl>
+    const RepositoryImpl & constRepositoryImpl() const
+    {
+      Q_ASSERT(!isNull());
+      Q_ASSERT(dynamic_cast<RepositoryImpl*>( mRepository.get()) != nullptr);
+      return *( dynamic_cast<RepositoryImpl*>( mRepository.get()) );
+    }
+
     /*! \brief Create a repository handle with a repository implementation
      */
     template<typename Repository>
