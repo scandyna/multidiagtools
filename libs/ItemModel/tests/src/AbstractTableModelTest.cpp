@@ -125,6 +125,7 @@ class EditableTableModel : public ReadOnlyTableModel
 
   using ParentClass = ReadOnlyTableModel;
   using ParentClass::emitDataChanged;
+  using ParentClass::emitDataAtRowsChanged;
 
   EditableTableModel(QObject* parent = nullptr)
    : ReadOnlyTableModel(parent)
@@ -330,6 +331,24 @@ void AbstractTableModelTest::emitDataChangedTest()
   topLeft = arguments.at(0).toModelIndex();
   QCOMPARE(topLeft.row(), 2);
   QCOMPARE(topLeft.column(), 1);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 2);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.count(), 0);
+
+  /*
+   * emitDataAtRowsChanged(first, last)
+   */
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  model.emitDataAtRowsChanged(1, 2);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 1);
+  QCOMPARE(topLeft.column(), 0);
   bottomRight = arguments.at(1).toModelIndex();
   QCOMPARE(bottomRight.row(), 2);
   QCOMPARE(bottomRight.column(), 1);

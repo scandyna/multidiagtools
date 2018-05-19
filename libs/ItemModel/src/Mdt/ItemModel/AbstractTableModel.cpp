@@ -177,6 +177,19 @@ void AbstractTableModel::emitDataChanged(const QModelIndex& index)
   emit dataChanged(index, index);
 }
 
+void AbstractTableModel::emitDataAtRowsChanged(int firstRow, int lastRow)
+{
+  Q_ASSERT(firstRow >= 0);
+  Q_ASSERT(firstRow < rowCountImpl());
+  Q_ASSERT(lastRow >= 0);
+  Q_ASSERT(lastRow < rowCountImpl());
+
+  const auto topLeft = index(firstRow, 0);
+  const auto bottomRight = index(lastRow, columnCount()-1);
+
+  emit dataChanged(topLeft, bottomRight);
+}
+
 void AbstractTableModel::emitVerticalHeaderDataChanged(const IndexRange::RowRange& rowRange)
 {
   Q_ASSERT(!rowRange.isNull());

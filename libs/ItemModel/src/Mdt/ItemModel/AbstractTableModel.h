@@ -324,6 +324,18 @@ namespace Mdt{ namespace ItemModel{
      */
     void emitDataChanged(const QModelIndex & index);
 
+    /*! \brief Emit the dataChanged() signal
+     *
+     * This helper can be used when a range of rows has changed.
+     *
+     * The role argument of dataChanged() will not be populated,
+     *  meaning that all roles should be considered modified.
+     *
+     * \pre \a firstRow must be in valid range ( 0 <= \a firstRow < rowCount() )
+     * \pre \a lastRow must be in valid range ( 0 <= \a lastRow < rowCount() )
+     */
+    void emitDataAtRowsChanged(int firstRow, int lastRow);
+
     /*! \brief Emit the headerDataChanged() signal for the vertical header
      *
      * \pre \a rowRange must not be null
