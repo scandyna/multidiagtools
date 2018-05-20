@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -62,6 +62,17 @@ namespace Mdt{ namespace Sql{
       return mFieldName;
     }
 
+    /*! \brief Check if field names \a a and \a b are equal
+     *
+     * The comparison is done in a case insensitive way,
+     *  for example id_pk is the same as Id_PK .
+     */
+    friend
+    bool operator==(const FieldName & a, const FieldName & b)
+    {
+      return (QString::compare(a.mFieldName, b.mFieldName, Qt::CaseInsensitive) == 0);
+    }
+    
    private:
 
     QString mFieldName;

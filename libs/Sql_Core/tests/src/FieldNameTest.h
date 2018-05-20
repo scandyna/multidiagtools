@@ -33,6 +33,7 @@ class FieldNameTest : public QObject
   void cleanupTestCase();
 
   void fieldNameTest();
+  void fieldNameCompareEqualTest();
   void fieldNameListTest();
 };
 

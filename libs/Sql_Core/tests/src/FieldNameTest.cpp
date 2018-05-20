@@ -63,7 +63,18 @@ void FieldNameTest::fieldNameTest()
   QCOMPARE(fieldNameTestFunction(Id_PK), QString("Id_PK"));
   // Null flag
   QVERIFY(FieldName("").isNull());
+//   QVERIFY(FieldName(" ").isNull());
   QVERIFY(!FieldName("C").isNull());
+}
+
+void FieldNameTest::fieldNameCompareEqualTest()
+{
+  using Sql::FieldName;
+
+  QVERIFY( FieldName("A") == FieldName("A") );
+  QVERIFY( FieldName("A") == FieldName("a") );
+  QVERIFY( FieldName("a") == FieldName("A") );
+  QVERIFY( !(FieldName("A") == FieldName("B")) );
 }
 
 void FieldNameTest::fieldNameListTest()
