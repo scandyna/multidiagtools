@@ -38,6 +38,8 @@ endfunction()
 
 addSqlCoreTest("SimpleTypesTest")
 addSqlCoreTest("FieldNameTest")
+addSqlCoreTest("FieldNameValueMapTest")
+addSqlCoreTest("FieldNameValueMapBenchmark")
 # addSqlCoreTest("SelectFieldTest")
 # addSqlCoreTest("ExpressionTest")
 # addSqlCoreTest("LikeExpressionTest")

@@ -2,6 +2,7 @@
 # List of source files
 set(SOURCE_FILES 
     Mdt/Sql/Error.cpp
+    Mdt/Sql/FieldNameValueMap.cpp
 #     Mdt/Sql/Query.cpp
     Mdt/Sql/InsertQuery.cpp
     Mdt/Sql/SelectTable.cpp
