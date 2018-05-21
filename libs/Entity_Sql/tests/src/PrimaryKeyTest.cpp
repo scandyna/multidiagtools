@@ -20,7 +20,9 @@
  ****************************************************************************/
 #include "PrimaryKeyTest.h"
 #include "Mdt/Entity/SqlPrimaryKey.h"
+#include "Mdt/Entity/SqlPrimaryKeyRecord.h"
 #include "Mdt/Entity/Def.h"
+#include "Mdt/Entity/DataTemplate.h"
 #include <QString>
 
 using namespace Mdt::Entity;
@@ -51,6 +53,16 @@ MDT_ENTITY_DEF(
   (description, FieldFlag::IsRequired, FieldMaxLength(250))
 )
 
+class ArticleData : public Mdt::Entity::DataTemplate<ArticleEntity>
+{
+ public:
+
+  void setId(qlonglong id)
+  {
+    dataStruct().id = id;
+  }
+};
+
 struct LinkDataStruct
 {
   qlonglong startId;
@@ -65,6 +77,21 @@ MDT_ENTITY_DEF(
   (endId, FieldFlag::IsPrimaryKey),
   (linkName, FieldFlag::IsRequired, FieldMaxLength(100))
 )
+
+class LinkData : public Mdt::Entity::DataTemplate<LinkEntity>
+{
+ public:
+
+  void setStartId(qlonglong id)
+  {
+    dataStruct().startId = id;
+  }
+
+  void setEndId(qlonglong id)
+  {
+    dataStruct().endId = id;
+  }
+};
 
 struct NoPkDataStruct
 {
@@ -98,6 +125,23 @@ void PrimaryKeyTest::fromEntityTest()
 
   auto noPkPkc = SqlPrimaryKey::fromEntity<NoPkEntity>(fieldTypeMap);
   QVERIFY(noPkPkc.isNull());
+}
+
+void PrimaryKeyTest::sqlPkRecordFromEntityDataTest()
+{
+  ArticleData articleData;
+  articleData.setId(15);
+  auto articlePkRecord = SqlPrimaryKeyRecord::fromEntityData(articleData);
+  QCOMPARE(articlePkRecord.fieldCount(), 1);
+  QCOMPARE(articlePkRecord.value("id"), QVariant(15));
+
+  LinkData linkData;
+  linkData.setStartId(5);
+  linkData.setEndId(9);
+  auto linkPkRecord = SqlPrimaryKeyRecord::fromEntityData(linkData);
+  QCOMPARE(linkPkRecord.fieldCount(), 2);
+  QCOMPARE(linkPkRecord.value("startId"), QVariant(5));
+  QCOMPARE(linkPkRecord.value("endId"), QVariant(9));
 }
 
 /*

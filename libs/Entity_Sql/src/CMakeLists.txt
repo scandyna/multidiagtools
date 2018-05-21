@@ -3,6 +3,7 @@
 set(SOURCE_FILES
   Mdt/Entity/SqlField.cpp
   Mdt/Entity/SqlPrimaryKey.cpp
+  Mdt/Entity/SqlPrimaryKeyRecord.cpp
   Mdt/Entity/SqlForeignKey.cpp
   Mdt/Entity/SqlTable.cpp
   Mdt/Entity/SqlSelectStatement.cpp
