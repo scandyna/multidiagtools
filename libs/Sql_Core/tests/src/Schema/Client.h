@@ -20,6 +20,16 @@ namespace Schema{
     {
       return field(1);
     }
+
+    Mdt::Sql::Schema::Field FieldA() const
+    {
+      return field(2);
+    }
+
+    Mdt::Sql::Schema::Field FieldB() const
+    {
+      return field(3);
+    }
   };
 
 } // namespace Schema{
