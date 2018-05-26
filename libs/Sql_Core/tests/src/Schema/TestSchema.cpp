@@ -24,6 +24,7 @@
 #include "Client2.h"
 #include "Address.h"
 #include "Address2.h"
+#include "Link.h"
 #include "ClientAddressView.h"
 
 namespace Sql = Mdt::Sql;
@@ -40,6 +41,7 @@ TestSchema::TestSchema()
   addView(ClientAdrressView());
   addTable(Client2());
   addTable(Address2());
+  addTable(Link());
   // Add a table population for Client
   TablePopulation tp;
   tp.setName("Client data");
