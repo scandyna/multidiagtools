@@ -12,6 +12,7 @@ set(SOURCE_FILES
     src/Schema/Client2.cpp
     src/Schema/Address.cpp
     src/Schema/Address2.cpp
+    src/Schema/Link.cpp
     src/Schema/ClientPopulation.cpp
     src/Schema/ClientAddressView.cpp
     src/Schema/TestSchema.cpp
@@ -40,6 +41,7 @@ addSqlCoreTest("SimpleTypesTest")
 addSqlCoreTest("FieldNameTest")
 addSqlCoreTest("FieldNameValueMapTest")
 addSqlCoreTest("FieldNameValueMapBenchmark")
+addSqlCoreTest("PrimaryKeyRecordTest")
 # addSqlCoreTest("SelectFieldTest")
 # addSqlCoreTest("ExpressionTest")
 # addSqlCoreTest("LikeExpressionTest")
@@ -51,7 +53,7 @@ addSqlCoreTest("FieldNameValueMapBenchmark")
 # addSqlCoreTest("JoinClauseTest")
 # addSqlCoreTest("FromClauseTest")
 # addSqlCoreTest("SelectStatementTest")
-# addSqlCoreTest("QueryTest")
+addSqlCoreTest("QueryTest")
 addSqlCoreTest("SQLiteDatabaseTest")
 addSqlCoreTest("SchemaFieldTypeMapTest")
 addSqlCoreTest("SchemaFieldTest")
