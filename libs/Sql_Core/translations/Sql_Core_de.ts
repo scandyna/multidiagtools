@@ -130,6 +130,19 @@
     </message>
 </context>
 <context>
+    <name>Mdt::Sql::UpdateQuery</name>
+    <message>
+        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="59"/>
+        <source>Preparing query to update &apos;%1&apos; failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="74"/>
+        <source>Executing query to update &apos;%1&apos; failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SQLiteDatabase</name>
     <message>
         <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="45"/>
