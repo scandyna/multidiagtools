@@ -48,6 +48,37 @@ void FieldNameValueMapTest::addGetTest()
   QVERIFY(map.containsFieldName("B"));
   QCOMPARE(map.value("A"), QVariant(1));
   QCOMPARE(map.value("B"), QVariant(2));
+
+  map.clear();
+  QVERIFY(map.isEmpty());
+}
+
+void FieldNameValueMapTest::toFieldNameListTest()
+{
+  FieldNameValueMap map;
+
+  map.addValue(FieldName("A"), 1);
+  QCOMPARE(map.toFieldNameList(), QStringList({"A"}));
+
+  map.addValue(FieldName("C"), 3);
+  QCOMPARE(map.toFieldNameList(), QStringList({"A","C"}));
+
+  map.addValue(FieldName("B"), 2);
+  QCOMPARE(map.toFieldNameList(), QStringList({"A","C","B"}));
+}
+
+void FieldNameValueMapTest::toValueListTest()
+{
+  FieldNameValueMap map;
+
+  map.addValue(FieldName("A"), 1);
+  QCOMPARE(map.toValueList(), QVariantList({1}));
+
+  map.addValue(FieldName("C"), 3);
+  QCOMPARE(map.toValueList(), QVariantList({1,3}));
+
+  map.addValue(FieldName("B"), 2);
+  QCOMPARE(map.toValueList(), QVariantList({1,3,2}));
 }
 
 /*

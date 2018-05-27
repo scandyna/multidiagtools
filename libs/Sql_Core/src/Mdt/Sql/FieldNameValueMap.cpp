@@ -42,6 +42,35 @@ QVariant FieldNameValueMap::value(const QString& fieldName) const
   return QVariant();
 }
 
+void FieldNameValueMap::clear()
+{
+  mMap.clear();
+}
+
+QStringList FieldNameValueMap::toFieldNameList() const
+{
+  QStringList fieldNames;
+
+  fieldNames.reserve(mMap.size());
+  for(const auto & item : mMap){
+    fieldNames.append( item.first );
+  }
+
+  return fieldNames;
+}
+
+QVariantList FieldNameValueMap::toValueList() const
+{
+  QVariantList values;
+
+  values.reserve(mMap.size());
+  for(const auto & item : mMap){
+    values.append( item.second );
+  }
+
+  return values;
+}
+
 bool FieldNameValueMap::containsFieldName(const QString& fieldName) const
 {
   Q_ASSERT(!fieldName.trimmed().isEmpty());

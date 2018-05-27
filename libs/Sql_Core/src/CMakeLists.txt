@@ -3,8 +3,12 @@
 set(SOURCE_FILES 
     Mdt/Sql/Error.cpp
     Mdt/Sql/FieldNameValueMap.cpp
+    Mdt/Sql/PrimaryKeyRecord.cpp
 #     Mdt/Sql/Query.cpp
+    Mdt/Sql/AbstractQuery.cpp
     Mdt/Sql/InsertQuery.cpp
+    Mdt/Sql/UpdateStatement.cpp
+    Mdt/Sql/UpdateQuery.cpp
     Mdt/Sql/SelectTable.cpp
     Mdt/Sql/SelectFieldSqlTransform.cpp
     Mdt/Sql/SelectFieldItem.cpp

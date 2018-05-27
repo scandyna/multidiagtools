@@ -18,20 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef FIELD_NAME_VALUE_MAP_TEST_H
-#define FIELD_NAME_VALUE_MAP_TEST_H
+#ifndef PRIMARY_KEY_RECORD_TEST_H
+#define PRIMARY_KEY_RECORD_TEST_H
 
 #include "TestBase.h"
 
-class FieldNameValueMapTest : public QObject
+class PrimaryKeyRecordTest : public QObject
 {
  Q_OBJECT
 
  private slots:
 
-  void addGetTest();
-  void toFieldNameListTest();
-  void toValueListTest();
+  void constructTest();
+  void addValueTest();
 };
 
-#endif // #ifndef FIELD_NAME_VALUE_MAP_TEST_H
+#endif // #ifndef PRIMARY_KEY_RECORD_TEST_H

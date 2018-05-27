@@ -18,20 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef FIELD_NAME_VALUE_MAP_TEST_H
-#define FIELD_NAME_VALUE_MAP_TEST_H
+#include "PrimaryKeyRecord.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace Sql{
 
-class FieldNameValueMapTest : public QObject
+void PrimaryKeyRecord::addValue(const FieldName& fieldName, const QVariant& value)
 {
- Q_OBJECT
+  Q_ASSERT(!fieldName.isNull());
+  Q_ASSERT(!mMap.containsFieldName(fieldName.toString()));
 
- private slots:
+  mMap.addValue(fieldName, value);
+}
 
-  void addGetTest();
-  void toFieldNameListTest();
-  void toValueListTest();
-};
+QVariant PrimaryKeyRecord::value(const QString& fieldName) const
+{
+  Q_ASSERT(!fieldName.trimmed().isEmpty());
 
-#endif // #ifndef FIELD_NAME_VALUE_MAP_TEST_H
+  return mMap.value(fieldName);
+}
+
+}} // namespace Mdt{ namespace Sql{

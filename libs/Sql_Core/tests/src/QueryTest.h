@@ -18,20 +18,43 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef FIELD_NAME_VALUE_MAP_TEST_H
-#define FIELD_NAME_VALUE_MAP_TEST_H
+#ifndef MDT_SQL_QUERY_TEST_H
+#define MDT_SQL_QUERY_TEST_H
 
 #include "TestBase.h"
+#include "Mdt/Sql/PrimaryKeyRecord.h"
+#include <QTemporaryFile>
+#include <QSqlDatabase>
 
-class FieldNameValueMapTest : public QObject
+class QueryTest : public QObject
 {
  Q_OBJECT
 
  private slots:
 
-  void addGetTest();
-  void toFieldNameListTest();
-  void toValueListTest();
+  void initTestCase();
+  void cleanupTestCase();
+
+  void insertQueryTest();
+
+  void updateStatementTest();
+  void updateStatementPrimaryKeyConditionsTest();
+  void updateStatementToConditionsValueListTest();
+  void updateQueryTest();
+
+ private:
+
+  // Create test database schema - Will FAIL on problem
+  void createDatabaseSchema();
+
+  Mdt::Sql::PrimaryKeyRecord buildPrimaryKeyRecord(int id);
+  Mdt::Sql::PrimaryKeyRecord buildPrimaryKeyRecord(int idA, int idB);
+
+  bool insertClient(int id, const QString & name);
+  bool cleanupClientTable();
+
+  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase mDatabase;
 };
 
-#endif // #ifndef FIELD_NAME_VALUE_MAP_TEST_H
+#endif // #ifndef MDT_SQL_QUERY_TEST_H

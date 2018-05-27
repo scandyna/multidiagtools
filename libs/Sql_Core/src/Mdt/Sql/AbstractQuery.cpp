@@ -18,20 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef FIELD_NAME_VALUE_MAP_TEST_H
-#define FIELD_NAME_VALUE_MAP_TEST_H
+#include "AbstractQuery.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace Sql{
 
-class FieldNameValueMapTest : public QObject
+AbstractQuery::AbstractQuery(const QSqlDatabase& db)
+ : mDatabase(db)
 {
- Q_OBJECT
+  Q_ASSERT(mDatabase.isValid());
+}
 
- private slots:
+void AbstractQuery::setLastError(const Error& error)
+{
+  mLastError = error;
+  mLastError.commit();
+}
 
-  void addGetTest();
-  void toFieldNameListTest();
-  void toValueListTest();
-};
-
-#endif // #ifndef FIELD_NAME_VALUE_MAP_TEST_H
+}} // namespace Mdt{ namespace Sql{

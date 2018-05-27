@@ -24,7 +24,9 @@
 #include "FieldName.h"
 #include "MdtSql_CoreExport.h"
 #include <QString>
+#include <QStringList>
 #include <QVariant>
+#include <QVariantList>
 #include <utility>
 #include <vector>
 
@@ -74,6 +76,24 @@ namespace Mdt{ namespace Sql{
     {
       return mMap.empty();
     }
+
+    /*! \brief Clear this map
+     */
+    void clear();
+
+    /*! \brief Get a list of field names this map is containing
+     *
+     * \note The order of field names in the returned list
+     *    is the result of consecutive calls to addValue() .
+     */
+    QStringList toFieldNameList() const;
+
+    /*! \brief Get a list of values this map is containing
+     *
+     * \note The order of values in the returned list
+     *    is the result of consecutive calls to addValue() .
+     */
+    QVariantList toValueList() const;
 
    private:
 

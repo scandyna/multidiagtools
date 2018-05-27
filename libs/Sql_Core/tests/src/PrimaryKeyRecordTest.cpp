@@ -18,20 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef FIELD_NAME_VALUE_MAP_TEST_H
-#define FIELD_NAME_VALUE_MAP_TEST_H
+#include "PrimaryKeyRecordTest.h"
+#include "Mdt/Sql/PrimaryKeyRecord.h"
 
-#include "TestBase.h"
+using namespace Mdt::Sql;
 
-class FieldNameValueMapTest : public QObject
+/*
+ * Tests
+ */
+
+void PrimaryKeyRecordTest::constructTest()
 {
- Q_OBJECT
+  PrimaryKeyRecord record0;
+  QCOMPARE(record0.fieldCount(), 0);
+  QVERIFY(record0.isNull());
+}
 
- private slots:
+void PrimaryKeyRecordTest::addValueTest()
+{
+  PrimaryKeyRecord record;
+  QCOMPARE(record.fieldCount(), 0);
+  QVERIFY(record.isNull());
+  QCOMPARE(record.value("A"), QVariant());
 
-  void addGetTest();
-  void toFieldNameListTest();
-  void toValueListTest();
-};
+  record.addValue(FieldName("A"), 1);
+  QCOMPARE(record.fieldCount(), 1);
+  QVERIFY(!record.isNull());
+  QCOMPARE(record.value("A"), QVariant(1));
+}
 
-#endif // #ifndef FIELD_NAME_VALUE_MAP_TEST_H
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::CoreApplication app(argc, argv);
+  PrimaryKeyRecordTest test;
+
+  return QTest::qExec(&test, argc, argv);
+}
