@@ -54,13 +54,43 @@ void TableCacheTest::setGetTest()
   QCOMPARE(tc2.constRecordAt(1), 2);
   QCOMPARE(tc2.operationAtRow(0), TableCacheOperation::Update);
   QCOMPARE(tc2.operationAtRow(1), TableCacheOperation::None);
-  tc2.recordAt(1) = 20;
+  tc2.refRecordAtForUpdate(1) = 20;
   QCOMPARE(tc2.constRecordAt(0), 10);
   QCOMPARE(tc2.constRecordAt(1), 20);
   QCOMPARE(tc2.operationAtRow(0), TableCacheOperation::Update);
   QCOMPARE(tc2.operationAtRow(1), TableCacheOperation::Update);
   tc2.clear();
   QVERIFY(tc2.isEmpty());
+}
+
+void TableCacheTest::refRecordAtTest()
+{
+  TableCache<int> tc{1,2};
+
+  QCOMPARE(tc.rowCount(), 2);
+  QCOMPARE(tc.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(tc.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(tc.getRowsToUpdateInStorage(), RowList());
+
+  QCOMPARE(tc.constRecordAt(0), 1);
+  QCOMPARE(tc.constRecordAt(1), 2);
+  QCOMPARE(tc.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(tc.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(tc.getRowsToUpdateInStorage(), RowList());
+
+  tc.refRecordAt(0) = 10;
+  QCOMPARE(tc.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(tc.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(tc.getRowsToUpdateInStorage(), RowList());
+  QCOMPARE(tc.constRecordAt(0), 10);
+  QCOMPARE(tc.constRecordAt(1), 2);
+
+  tc.refRecordAtForUpdate(0) = 100;
+  QCOMPARE(tc.operationAtRow(0), TableCacheOperation::Update);
+  QCOMPARE(tc.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(tc.getRowsToUpdateInStorage(), RowList({0}));
+  QCOMPARE(tc.constRecordAt(0), 100);
+  QCOMPARE(tc.constRecordAt(1), 2);
 }
 
 void TableCacheTest::insertRecordsTest()
@@ -106,6 +136,59 @@ void TableCacheTest::insertRecordsFromStorageTest()
   QCOMPARE(tc.rowCount(), 1);
   QCOMPARE(tc.constRecordAt(0), 10);
   QCOMPARE(tc.operationAtRow(0), TableCacheOperation::None);
+}
+
+void TableCacheTest::removeRecordsTest()
+{
+  TableCache<int> tc;
+  QCOMPARE(tc.rowCount(), 0);
+
+  tc.appendRecordFromStorage(1);
+  tc.appendRecordFromStorage(2);
+  tc.appendRecordFromStorage(3);
+  QCOMPARE(tc.rowCount(), 3);
+  QCOMPARE(tc.constRecordAt(0), 1);
+  QCOMPARE(tc.constRecordAt(1), 2);
+  QCOMPARE(tc.constRecordAt(2), 3);
+  QCOMPARE(tc.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(tc.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(tc.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(tc.getRowsToDeleteInStorage(), RowList());
+  QVERIFY(tc.committedRows().isNull());
+
+  tc.removeRecords(1, 1);
+  QCOMPARE(tc.rowCount(), 3);
+  QCOMPARE(tc.constRecordAt(0), 1);
+  QCOMPARE(tc.constRecordAt(1), 2);
+  QCOMPARE(tc.constRecordAt(2), 3);
+  QCOMPARE(tc.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(tc.operationAtRow(1), TableCacheOperation::Delete);
+  QCOMPARE(tc.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(tc.getRowsToDeleteInStorage(), RowList({1}));
+  QVERIFY(tc.committedRows().isNull());
+
+  tc.commitChanges();
+  QCOMPARE(tc.rowCount(), 2);
+  QCOMPARE(tc.constRecordAt(0), 1);
+  QCOMPARE(tc.constRecordAt(1), 3);
+  QCOMPARE(tc.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(tc.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(tc.getRowsToDeleteInStorage(), RowList());
+  QVERIFY(!tc.committedRows().isNull());
+  QCOMPARE(tc.committedRows().firstRow(), 1);
+  QCOMPARE(tc.committedRows().lastRow(), 1);
+}
+
+void TableCacheTest::removeRecordsFromStorageTest()
+{
+
+  QFAIL("Not complete");
+}
+
+void TableCacheTest::insertRemoveSetTest()
+{
+
+  QFAIL("Not complete");
 }
 
 /*

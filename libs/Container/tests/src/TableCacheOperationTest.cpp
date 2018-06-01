@@ -52,22 +52,22 @@ void TableCacheOperationTest::indexTest()
 
 void TableCacheOperationTest::operationFromExistingTest()
 {
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::None, TableCacheOperation::None), TableCacheOperation::None);
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::None, TableCacheOperation::Insert), TableCacheOperation::Insert);
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::None, TableCacheOperation::Update), TableCacheOperation::Update);
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::None, TableCacheOperation::Delete), TableCacheOperation::Delete);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::None, TableCacheOperation::None), TableCacheOperation::None);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::None, TableCacheOperation::Insert), TableCacheOperation::Insert);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::None, TableCacheOperation::Update), TableCacheOperation::Update);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::None, TableCacheOperation::Delete), TableCacheOperation::Delete);
   ///QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Insert, TableCacheOperation::None), TableCacheOperation::None);
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Insert, TableCacheOperation::Insert), TableCacheOperation::Insert);
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Insert, TableCacheOperation::Update), TableCacheOperation::Insert);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::Insert, TableCacheOperation::Insert), TableCacheOperation::Insert);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::Insert, TableCacheOperation::Update), TableCacheOperation::Insert);
   ///QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Insert, TableCacheOperation::Delete), TableCacheOperation::None);
   ///QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Update, TableCacheOperation::None), TableCacheOperation::None);
   ///QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Update, TableCacheOperation::Insert), TableCacheOperation::None);
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Update, TableCacheOperation::Update), TableCacheOperation::Update);
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Update, TableCacheOperation::Delete), TableCacheOperation::Delete);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::Update, TableCacheOperation::Update), TableCacheOperation::Update);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::Update, TableCacheOperation::Delete), TableCacheOperation::Delete);
   ///QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Delete, TableCacheOperation::None), TableCacheOperation::None);
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Delete, TableCacheOperation::Insert), TableCacheOperation::Delete);
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Delete, TableCacheOperation::Update), TableCacheOperation::Update);
-  QCOMPARE(TableCacheOperationMap::opertaionFromExisting(TableCacheOperation::Delete, TableCacheOperation::Delete), TableCacheOperation::Delete);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::Delete, TableCacheOperation::Insert), TableCacheOperation::Delete);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::Delete, TableCacheOperation::Update), TableCacheOperation::Update);
+  QCOMPARE(TableCacheOperationMap::operationFromExisting(TableCacheOperation::Delete, TableCacheOperation::Delete), TableCacheOperation::Delete);
 
   QFAIL("Not complete");
 }
@@ -172,6 +172,98 @@ void TableCacheOperationTest::setOperationAtRowTest()
   QCOMPARE(map.indexCount(), 2);
   QCOMPARE(map.operationAtRow(0), TableCacheOperation::Update);
   QCOMPARE(map.operationAtRow(1), TableCacheOperation::Update);
+}
+
+void TableCacheOperationTest::getRowsToUpdateInStorageTest()
+{
+  TableCacheOperationMap map;
+
+  QCOMPARE(map.indexCount(), 0);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(map.getRowsToUpdateInStorage(), RowList());
+
+  map.setOperationAtRow(0, TableCacheOperation::Update);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::Update);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(map.getRowsToUpdateInStorage(), RowList({0}));
+
+  map.setOperationAtRow(2, TableCacheOperation::Update);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::Update);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(2), TableCacheOperation::Update);
+  QCOMPARE(map.getRowsToUpdateInStorage(), RowList({0,2}));
+}
+
+void TableCacheOperationTest::removeRecordsTest()
+{
+  TableCacheOperationMap map;
+
+  QCOMPARE(map.indexCount(), 0);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(map.getRowsToDeleteInStorage(), RowList());
+
+  map.removeRecords(1, 2);
+  QCOMPARE(map.indexCount(), 2);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::Delete);
+  QCOMPARE(map.operationAtRow(2), TableCacheOperation::Delete);
+  QCOMPARE(map.getRowsToDeleteInStorage(), RowList({1,2}));
+
+  map.commitChanges();
+  QCOMPARE(map.indexCount(), 0);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
+  QCOMPARE(map.getRowsToDeleteInStorage(), RowList());
+
+  map.removeRecords(1, 1);
+  QCOMPARE(map.indexCount(), 1);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::Delete);
+  QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
+  QCOMPARE(map.getRowsToDeleteInStorage(), RowList({1}));
+
+  map.removeRecords(3, 2);
+  QCOMPARE(map.indexCount(), 3);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::Delete);
+  QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(3), TableCacheOperation::Delete);
+  QCOMPARE(map.operationAtRow(4), TableCacheOperation::Delete);
+  QCOMPARE(map.getRowsToDeleteInStorage(), RowList({1,3,4}));
+}
+
+void TableCacheOperationTest::insertSetRemoveTest()
+{
+  TableCacheOperationMap map;
+  QCOMPARE(map.indexCount(), 0);
+
+  map.setOperationAtRow(1, TableCacheOperation::Update);
+  QCOMPARE(map.indexCount(), 1);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::Update);
+  QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
+
+  map.insertRecords(1, 1);
+  QCOMPARE(map.indexCount(), 1);  // This is important
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::Update); // Check which operation must be (maybe asseretion ??)
+  QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
+
+  QFAIL("Not complete");
 }
 
 /*

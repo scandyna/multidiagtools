@@ -31,8 +31,12 @@ class TableCacheTest : public TestBase
 
   void constructTest();
   void setGetTest();
+  void refRecordAtTest();
   void insertRecordsTest();
   void insertRecordsFromStorageTest();
+  void removeRecordsTest();
+  void removeRecordsFromStorageTest();
+  void insertRemoveSetTest();
 };
 
 #endif // #ifndef TABLE_CACHE_TEST_H

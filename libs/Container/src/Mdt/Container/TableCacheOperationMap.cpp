@@ -35,11 +35,30 @@ void TableCacheOperationMap::insertRecords(int pos, int count)
   Q_ASSERT(pos >= 0);
   Q_ASSERT(count >= 0);
 
-  int row = pos;
-  for(int i = 0; i < count; ++i){
-    mMap.emplace_back( TableCacheOperationIndex(row, TableCacheOperation::Insert) );
-    ++row;
-  }
+  updateOrAddOperationsForRows(pos, count, TableCacheOperation::Insert);
+//   int row = pos;
+//   for(int i = 0; i < count; ++i){
+//     mMap.emplace_back( TableCacheOperationIndex(row, TableCacheOperation::Insert) );
+//     ++row;
+//   }
+}
+
+void TableCacheOperationMap::removeRecords(int pos, int count)
+{
+  Q_ASSERT(pos >= 0);
+  Q_ASSERT(count >= 0);
+
+  updateOrAddOperationsForRows(pos, count, TableCacheOperation::Delete);
+//   int row = pos;
+//   for(int i = 0; i < count; ++i){
+//     auto operationIndex = operationIndexAtIfExists(i);
+//     if(operationIndex.isNull()){
+//       mMap.emplace_back( TableCacheOperationIndex(row, TableCacheOperation::Delete) );
+//     }else{
+//       operationIndex.setOperation( operationFromExisting(operationIndex.operation(), TableCacheOperation::Delete) );
+//     }
+//     ++row;
+//   }
 }
 
 void TableCacheOperationMap::setOperationAtRow(int row, TableCacheOperation operation)
@@ -48,7 +67,7 @@ void TableCacheOperationMap::setOperationAtRow(int row, TableCacheOperation oper
   if(it == mMap.cend()){
     mMap.push_back( TableCacheOperationIndex(row, operation) );
   }else{
-    it->setOperation( opertaionFromExisting(it->operation(), operation) );
+    it->setOperation( operationFromExisting(it->operation(), operation) );
   }
 }
 
@@ -61,15 +80,17 @@ TableCacheOperation TableCacheOperationMap::operationAtRow(int row) const
 
 RowList TableCacheOperationMap::getRowsToInsertIntoStorage() const
 {
-  RowList rowList;
+  return getRowsForOperation(TableCacheOperation::Insert);
+}
 
-  for(const auto & index : mMap){
-    if(index.operation() == TableCacheOperation::Insert){
-      rowList.append(index.row());
-    }
-  }
+RowList TableCacheOperationMap::getRowsToUpdateInStorage() const
+{
+  return getRowsForOperation(TableCacheOperation::Update);
+}
 
-  return rowList;
+RowList TableCacheOperationMap::getRowsToDeleteInStorage() const
+{
+  return getRowsForOperation(TableCacheOperation::Delete);
 }
 
 void TableCacheOperationMap::commitChanges()
@@ -81,7 +102,7 @@ void TableCacheOperationMap::commitChanges()
 //   }
 }
 
-TableCacheOperation TableCacheOperationMap::opertaionFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation)
+TableCacheOperation TableCacheOperationMap::operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation)
 {
   switch(existingOperation){
     case TableCacheOperation::None:
@@ -173,6 +194,27 @@ TableCacheOperationIndex TableCacheOperationMap::findRow(int row) const
   return *it;
 }
 
+void TableCacheOperationMap::updateOrAddOperationsForRows(int row, int count, TableCacheOperation operation)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 0);
+
+  for(int i = 0; i < count; ++i){
+    setOperationAtRow(row, operation);
+    ++row;
+  }
+}
+
+TableCacheOperationIndex TableCacheOperationMap::operationIndexAtIfExists(int index) const
+{
+  Q_ASSERT(index >= 0);
+
+  if(index < indexCount()){
+    return mMap[index];
+  }
+  return TableCacheOperationIndex();
+}
+
 void TableCacheOperationMap::setCommittedRows()
 {
   mCommittedRows.clear();
@@ -207,6 +249,19 @@ int TableCacheOperationMap::getLastCommittedRow() const
   Q_ASSERT(it != mMap.cend());
 
   return it->row();
+}
+
+RowList TableCacheOperationMap::getRowsForOperation(TableCacheOperation operation) const
+{
+  RowList rowList;
+
+  for(const auto & index : mMap){
+    if(index.operation() == operation){
+      rowList.append(index.row());
+    }
+  }
+
+  return rowList;
 }
 
 }} // namespace Mdt{ namespace Container{

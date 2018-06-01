@@ -98,6 +98,13 @@ namespace Mdt{ namespace Container{
      */
     void insertRecords(int pos, int count);
 
+    /*! \brief Add indexes to mark \a count records, starting from \a pos , as deleted records
+     *
+     * \pre \a pos must be >= 0
+     * \pre \a count must be >= 0
+     */
+    void removeRecords(int pos, int count);
+
     /*! \brief Set the operation at \a row in the cache
      *
      * If no operation exists for \a row , it will be added and set to \a operation .
@@ -118,6 +125,14 @@ namespace Mdt{ namespace Container{
      */
     RowList getRowsToInsertIntoStorage() const;
 
+    /*! \brief Get a list of rows that have to be updated in the storage
+     */
+    RowList getRowsToUpdateInStorage() const;
+
+    /*! \brief Get a list of rows that have to be deleted in the storage
+     */
+    RowList getRowsToDeleteInStorage() const;
+
 //     /*! \brief Commit changes
 //      *
 //      * The operation for each indexes in this cache
@@ -133,7 +148,7 @@ namespace Mdt{ namespace Container{
     /*! \brief Commit changes
      *
      * Will clear all operations in this map
-     *  and update committed states, like firstCommitedRow and lastCommittedRow .
+     *  and update committed states, like committedRows .
      */
     void commitChanges();
 
@@ -169,7 +184,7 @@ namespace Mdt{ namespace Container{
      * |TableCacheOperation::Delete|TableCacheOperation::Update|TableCacheOperation::Update|
      * |TableCacheOperation::Delete|TableCacheOperation::Delete|TableCacheOperation::Delete|
      */
-    static TableCacheOperation opertaionFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation);
+    static TableCacheOperation operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation);
     
 
    private:
@@ -192,7 +207,10 @@ namespace Mdt{ namespace Container{
      */
     int getLastCommittedRow() const;
 
+    void updateOrAddOperationsForRows(int row, int count, TableCacheOperation operation);
+    TableCacheOperationIndex operationIndexAtIfExists(int index) const;
     void setCommittedRows();
+    RowList getRowsForOperation(TableCacheOperation operation) const;
 
     std::vector<TableCacheOperationIndex> mMap;
     Mdt::IndexRange::RowRange mCommittedRows;

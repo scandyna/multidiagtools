@@ -61,6 +61,13 @@ namespace Mdt{ namespace Container{
    *   signal(mChache.firstCommitedRow(), mCache.lastModifiedRow());
    * }
    * \endcode
+   *
+   * \note TableCache works only at the record level, i.e. does not provide
+   *    access to the data at row and column.
+   *    This is to avoid restricting a column access API.
+   *    STL could be a solution, but for some usage,
+   *    some STL requirement can simply not be met with reasonably simple API
+   *    (for example, dereferencing .............................)
    */
   template<typename Record>
   class TableCache
@@ -118,11 +125,44 @@ namespace Mdt{ namespace Container{
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
      * \note Calling this method will mark the entiere record at \a row as edited in the cache
      */
+    [[deprecated]]
     Record & recordAt(int row)
     {
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
       mOperationMap.setOperationAtRow(row, TableCacheOperation::Update);
+      return mCache[row];
+    }
+
+    /*! \brief Access the record at \a row for a update
+     *
+     * Will mark the record at \a row as edited in the cache.
+     *
+     * If the record must be modified without marking,
+     *  for example because the data has changed from the storage,
+     *  use refRecordAt() .
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     */
+    Record & refRecordAtForUpdate(int row)
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
+      mOperationMap.setOperationAtRow(row, TableCacheOperation::Update);
+      return mCache[row];
+    }
+
+    /*! \brief Access the record at \a row
+     *
+     * No marking is done by calling this method.
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     * \sa refRecordAtForUpdate()
+     */
+    Record & refRecordAt(int row)
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
       return mCache[row];
     }
 
@@ -155,6 +195,20 @@ namespace Mdt{ namespace Container{
       return mOperationMap.getRowsToInsertIntoStorage();
     }
 
+    /*! \brief Get a list of rows that have to be updated in the storage
+     */
+    RowList getRowsToUpdateInStorage() const
+    {
+      return mOperationMap.getRowsToUpdateInStorage();
+    }
+
+    /*! \brief Get a list of rows that have to be deleted in the storage
+     */
+    RowList getRowsToDeleteInStorage() const
+    {
+      return mOperationMap.getRowsToDeleteInStorage();
+    }
+
     /*! \brief Clear this cache
      */
     void clear()
@@ -172,7 +226,7 @@ namespace Mdt{ namespace Container{
     /*! \brief Commit changes
      *
      * Will clear all operation marking in this cache
-     *  and update committed states, like firstCommitedRow and lastCommittedRow .
+     *  and update committed states, like committedRows .
      *
      * \code
      * bool submitAll()
@@ -190,6 +244,7 @@ namespace Mdt{ namespace Container{
      */
     void commitChanges()
     {
+      removeDeletedRecords();
       mOperationMap.commitChanges();
     }
 
@@ -251,10 +306,18 @@ namespace Mdt{ namespace Container{
       Q_ASSERT(pos >= 0);
       Q_ASSERT(count >= 0);
       Q_ASSERT( (pos + count) <= rowCount() );
-      
+      mOperationMap.removeRecords(pos, count);
     }
 
    private:
+
+    void removeDeletedRecords()
+    {
+      const auto rows = getRowsToDeleteInStorage();
+      for(const auto row : rows){
+        removeFromContainer(mCache, row, 1);
+      }
+    }
 
     Table mCache;
     TableCacheOperationMap mOperationMap;
