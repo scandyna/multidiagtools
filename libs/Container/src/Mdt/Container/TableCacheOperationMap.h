@@ -185,7 +185,6 @@ namespace Mdt{ namespace Container{
      * |TableCacheOperation::Delete|TableCacheOperation::Delete|TableCacheOperation::Delete|
      */
     static TableCacheOperation operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation);
-    
 
    private:
 
@@ -195,18 +194,7 @@ namespace Mdt{ namespace Container{
     const_iterator findRowConstIterator(int row) const;
     TableCacheOperationIndex findRow(int row) const;
 
-    /*! \brief Get the first row that have been committed to the storage
-     *
-     * \pre This map must not be empty
-     */
-    int getFirstCommittedRow() const;
-
-    /*! \brief Get the last row that have been committed to the storage
-     *
-     * \pre This map must not be empty
-     */
-    int getLastCommittedRow() const;
-
+    static bool isCommittedRow(const TableCacheOperationIndex & index);
     void updateOrAddOperationsForRows(int row, int count, TableCacheOperation operation);
     TableCacheOperationIndex operationIndexAtIfExists(int index) const;
     void setCommittedRows();

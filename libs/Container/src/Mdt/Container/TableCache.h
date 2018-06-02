@@ -296,6 +296,7 @@ namespace Mdt{ namespace Container{
     /*! \brief Remove \a count records starting from \a pos
      *
      * Records are marked as delete operation, but not removed from the cache.
+     *  Removing records from the cache is done by commitChanges().
      *
      * \pre \a pos must be >= 0
      * \pre \a count must be >= 1

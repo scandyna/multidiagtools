@@ -174,9 +174,7 @@ void TableCacheTest::removeRecordsTest()
   QCOMPARE(tc.operationAtRow(0), TableCacheOperation::None);
   QCOMPARE(tc.operationAtRow(1), TableCacheOperation::None);
   QCOMPARE(tc.getRowsToDeleteInStorage(), RowList());
-  QVERIFY(!tc.committedRows().isNull());
-  QCOMPARE(tc.committedRows().firstRow(), 1);
-  QCOMPARE(tc.committedRows().lastRow(), 1);
+  QVERIFY(tc.committedRows().isNull());
 }
 
 void TableCacheTest::removeRecordsFromStorageTest()

@@ -97,9 +97,6 @@ void TableCacheOperationMap::commitChanges()
 {
   setCommittedRows();
   mMap.clear();
-//   for(auto & index : mMap){
-//     index.setOperation(TableCacheOperation::None);
-//   }
 }
 
 TableCacheOperation TableCacheOperationMap::operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation)
@@ -221,34 +218,27 @@ void TableCacheOperationMap::setCommittedRows()
   if(isEmpty()){
     return;
   }
-  mCommittedRows.setFirstRow( getFirstCommittedRow() );
-  mCommittedRows.setLastRow( getLastCommittedRow() );
+
+  RowList committedRows;
+  for(const auto index : mMap){
+    if(isCommittedRow(index)){
+      Q_ASSERT(index.row() >= 0);
+      committedRows.append(index.row());
+    }
+  }
+
+  const auto firstLastIt = std::minmax_element(committedRows.cbegin(), committedRows.cend());
+  if( (firstLastIt.first != committedRows.cend()) && (firstLastIt.second != committedRows.cend()) ){
+    const auto firstIt = firstLastIt.first;
+    const auto lastIt = firstLastIt.second;
+    mCommittedRows.setFirstRow( *firstIt );
+    mCommittedRows.setLastRow( *lastIt );
+  }
 }
 
-int TableCacheOperationMap::getFirstCommittedRow() const
+bool TableCacheOperationMap::isCommittedRow(const TableCacheOperationIndex & index)
 {
-  Q_ASSERT(!isEmpty());
-
-  const auto pred = [](const TableCacheOperationIndex & a, const TableCacheOperationIndex & b){
-    return a.row() < b.row();
-  };
-  const auto it = std::min_element(mMap.cbegin(), mMap.cend(), pred);
-  Q_ASSERT(it != mMap.cend());
-
-  return it->row();
-}
-
-int TableCacheOperationMap::getLastCommittedRow() const
-{
-  Q_ASSERT(!isEmpty());
-
-  const auto pred = [](const TableCacheOperationIndex & a, const TableCacheOperationIndex & b){
-    return a.row() < b.row();
-  };
-  const auto it = std::max_element(mMap.cbegin(), mMap.cend(), pred);
-  Q_ASSERT(it != mMap.cend());
-
-  return it->row();
+  return index.operation() != TableCacheOperation::Delete;
 }
 
 RowList TableCacheOperationMap::getRowsForOperation(TableCacheOperation operation) const
