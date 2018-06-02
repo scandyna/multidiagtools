@@ -23,6 +23,7 @@
 
 #include "AbstractTableModel.h"
 #include "Mdt/Container/TableCacheOperation.h"
+// #include "Mdt/Container/RowList.h"
 #include "Mdt/IndexRange/RowRange.h"
 #include "MdtItemModelExport.h"
 
@@ -60,9 +61,29 @@ namespace Mdt{ namespace ItemModel{
      */
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    /*! \brief Set data for \a role at \a index
+    /*! \brief Get flags for \a index
+     *
+     * If \a index is not valid, Qt::NoItemFlags is returned.
+     *
+     * If this model is read only, QAbstractTableModel::flags() is returned.
+     *  If this model is editable, Qt::ItemIsEditable is alos added to QAbstractTableModel::flags().
      */
-    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
+    Qt::ItemFlags flags(const QModelIndex & index) const override;
+
+    /*! \brief Remove \a count rows starting from \a row
+     *
+     * Will call removeRowsFromCache() if \a parent is not valid,
+     *  otherwise it does nothing and returns false.
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count muste be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+     */
+    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
+
+//     /*! \brief Set data for \a role at \a index
+//      */
+//     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
 
 //    public slots:
 // 
@@ -85,6 +106,25 @@ namespace Mdt{ namespace ItemModel{
      */
     virtual bool insertRowsToCache(int row, int count) = 0;
 
+    /*! \brief Remove \a count rows, starting from \a row , from cache
+     *
+     * This method is called from removeRows() .
+     *  The implementation has not to worry about calling beginRemoveRows() and endRemoveRows(),
+     *  this is done by removeRows()
+     */
+    virtual bool removeRowsFromCache(int row, int count) = 0;
+
+//     /*! \brief Insert the data for each row in \a rowList to the storage
+//      *
+//      * This implementation will call insertRowToStorage() for each
+//      *  row in \a rowList .
+//      */
+//     virtual bool insertRowsToStorage(const Mdt::Container::RowList & rowList);
+// 
+//     /*! \brief Insert the data for \a row to the storage
+//      */
+//     virtual bool insertRowToStorage(int row) = 0;
+
 //     /*! \brief Insert the data for \a row into the storage
 //      */
 //     virtual bool insertRowIntoStorage(int row) = 0;
@@ -106,6 +146,11 @@ namespace Mdt{ namespace ItemModel{
     {
       return insertRowsToCache(row, count);
     }
+
+//     bool removeRowsImpl(int row, int count) override
+//     {
+//       return removeRowsFromCache(row, count);
+//     }
 
 //     bool insertRowsIntoStorage(const Mdt::Container::RowList & rows);
   };

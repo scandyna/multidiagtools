@@ -164,8 +164,9 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Get the data at \a index for \a role
      *
-     * Will call displayRoleData() if \a index is valid (and in valid ranges),
-     *  and \a role is Qt::DisplayRole, otherwise a invalid QVariant is returned.
+     * If \a index is valid, the following method will be called:
+     *  - displayRoleData() if \a role is Qt::DisplayRole
+     *  - editRoleData() if \a role is Qt::EditRole
      *
      * For more complex models that supports other roles than Qt::DisplayRole,
      *  this method should be re-implemented.
@@ -183,7 +184,10 @@ namespace Mdt{ namespace ItemModel{
      * If setEditRoleData() returns true, this method will also emit the dataChanged() signal,
      *  and returns true.
      *
+     * \note The dataChanged() signal is not emitted, preventing multimple emition.
      * \sa setEditRoleData()
+     * \sa emitDataChanged()
+     * \sa emitDataAtRowsChanged()
      */
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
 

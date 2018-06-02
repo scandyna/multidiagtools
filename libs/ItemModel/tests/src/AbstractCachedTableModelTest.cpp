@@ -32,6 +32,8 @@
 #include <QMetaType>
 #include <vector>
 #include <array>
+#include <initializer_list>
+#include <algorithm>
 
 // #include <QDebug>
 
@@ -75,12 +77,27 @@ class CachedTableModel : public Mdt::ItemModel::AbstractCachedTableModel
     if( !insertRowsIntoStorage( mCache.getRowsToInsertIntoStorage() ) ){
       return false;
     }
+    if( !removeRowsFromStorage( mCache.getRowsToDeleteInStorage() ) ){
+      return false;
+    }
     mCache.commitChanges();
     const auto rowRange = mCache.committedRows();
     if(!rowRange.isNull()){
       emitVerticalHeaderDataChanged(rowRange);
     }
     return true;
+  }
+
+  void populate(std::initializer_list<Record> initTable)
+  {
+    beginResetModel();
+    mCache.clear();
+    mStorage.clear();
+    for(const auto & record : initTable){
+      mStorage.push_back(record);
+      mCache.appendRecordFromStorage(record);
+    }
+    endResetModel();
   }
 
  private:
@@ -102,13 +119,19 @@ class CachedTableModel : public Mdt::ItemModel::AbstractCachedTableModel
 
   bool setEditRoleData(int row, int column, const QVariant& value) override
   {
-    mCache.recordAt(row)[column] = value;
+    mCache.refRecordAtForUpdate(row)[column] = value;
     return true;
   }
 
   bool insertRowsToCache(int row, int count) override
   {
     mCache.insertRecords(row, count, Record());
+    return true;
+  }
+
+  bool removeRowsFromCache(int row, int count) override
+  {
+    mCache.removeRecords(row, count);
     return true;
   }
 
@@ -125,6 +148,22 @@ class CachedTableModel : public Mdt::ItemModel::AbstractCachedTableModel
   bool insertRowIntoStorage(int row)
   {
     mStorage.push_back( mCache.constRecordAt(row) );
+    return true;
+  }
+
+  bool removeRowsFromStorage(const RowList & rows)
+  {
+    for(auto row : rows){
+      if(!removeRowFromStorage(row)){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool removeRowFromStorage(int row)
+  {
+    removeFromContainer(mStorage, row, 1);
     return true;
   }
 
@@ -147,6 +186,33 @@ void AbstractCachedTableModelTest::initTestCase()
  * Tests
  */
 
+void AbstractCachedTableModelTest::testClassPopulateTest()
+{
+  CachedTableModel model;
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 2);
+
+  model.populate({{1,"A"}});
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(model.storageRowCount(), 1);
+  QCOMPARE(model.storageData(0, 0), QVariant(1));
+  QCOMPARE(model.storageData(0, 1), QVariant("A"));
+
+  model.populate({{2,"B"},{3,"C"}});
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(3));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("C"));
+  QCOMPARE(model.storageRowCount(), 2);
+  QCOMPARE(model.storageData(0, 0), QVariant(2));
+  QCOMPARE(model.storageData(0, 1), QVariant("B"));
+  QCOMPARE(model.storageData(1, 0), QVariant(3));
+  QCOMPARE(model.storageData(1, 1), QVariant("C"));
+}
+
 void AbstractCachedTableModelTest::constructTest()
 {
   CachedTableModel model;
@@ -159,7 +225,7 @@ void AbstractCachedTableModelTest::constructTest()
   QCOMPARE(model2->columnCount(), 2);
 }
 
-void AbstractCachedTableModelTest::insertRowsTest()
+void AbstractCachedTableModelTest::insertRowsAndSubmitTest()
 {
   CachedTableModel model;
   const auto defaultFlags = getDefaultQAbstractTableModelFlags() | Qt::ItemIsEditable;
@@ -179,7 +245,7 @@ void AbstractCachedTableModelTest::insertRowsTest()
   QCOMPARE(model.storageRowCount(), 1);
 }
 
-void AbstractCachedTableModelTest::insertRowsHeaderTest()
+void AbstractCachedTableModelTest::insertRowsAndSubmitHeaderTest()
 {
   QVariantList arguments;
   CachedTableModel model;
@@ -264,6 +330,88 @@ void AbstractCachedTableModelTest::setDataHeaderTest()
   QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
   QCOMPARE(arguments.at(1), QVariant(0));             // first
   QCOMPARE(arguments.at(2), QVariant(0));             // last
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("1"));
+}
+
+void AbstractCachedTableModelTest::removeRowsAndSubmitTest()
+{
+  CachedTableModel model;
+
+  model.populate({{1,"A"},{2,"B"}});
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  auto flags = getModelFlags(model, 0, 0);
+  QVERIFY(flags.testFlag(Qt::ItemIsEditable));
+  flags = getModelFlags(model, 0, 1);
+  QVERIFY(flags.testFlag(Qt::ItemIsEditable));
+  flags = getModelFlags(model, 1, 0);
+  QVERIFY(flags.testFlag(Qt::ItemIsEditable));
+  flags = getModelFlags(model, 1, 1);
+  QVERIFY(flags.testFlag(Qt::ItemIsEditable));
+
+  QVERIFY(removeFirstRowFromModel(model));
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  flags = getModelFlags(model, 0, 0);
+  QVERIFY(!flags.testFlag(Qt::ItemIsEditable));
+  flags = getModelFlags(model, 0, 1);
+  QVERIFY(!flags.testFlag(Qt::ItemIsEditable));
+  flags = getModelFlags(model, 1, 0);
+  QVERIFY(flags.testFlag(Qt::ItemIsEditable));
+  flags = getModelFlags(model, 1, 1);
+  QVERIFY(flags.testFlag(Qt::ItemIsEditable));
+  QCOMPARE(model.storageRowCount(), 2);
+  QCOMPARE(model.storageData(0, 0), QVariant(1));
+  QCOMPARE(model.storageData(0, 1), QVariant("A"));
+  QCOMPARE(model.storageData(1, 0), QVariant(2));
+  QCOMPARE(model.storageData(1, 1), QVariant("B"));
+
+  QVERIFY(model.submit());
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 0), QVariant(2));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B"));
+  flags = getModelFlags(model, 0, 0);
+  QVERIFY(flags.testFlag(Qt::ItemIsEditable));
+  flags = getModelFlags(model, 0, 1);
+  QVERIFY(flags.testFlag(Qt::ItemIsEditable));
+  QCOMPARE(model.storageRowCount(), 1);
+  QCOMPARE(model.storageData(0, 0), QVariant(2));
+  QCOMPARE(model.storageData(0, 1), QVariant("B"));
+}
+
+void AbstractCachedTableModelTest::removeRowsAndSubmitHeaderTest()
+{
+  QVariantList arguments;
+  CachedTableModel model;
+  QSignalSpy headerDataChangedSpy(&model, &CachedTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+
+  model.populate({{1,"A"},{2,"B"}});
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("1"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("2"));
+
+  QVERIFY(removeFirstRowFromModel(model));
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(0));             // first
+  QCOMPARE(arguments.at(2), QVariant(0));             // last
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("2"));
+
+  QVERIFY(model.submit());
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("1"));
 }
 

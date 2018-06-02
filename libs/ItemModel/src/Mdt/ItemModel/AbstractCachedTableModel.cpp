@@ -19,9 +19,10 @@
  **
  ****************************************************************************/
 #include "AbstractCachedTableModel.h"
+#include "Mdt/IndexRange/RowRange.h"
 #include <QLatin1String>
 
-// #include <QDebug>
+#include <QDebug>
 
 using namespace Mdt::Container;
 
@@ -46,6 +47,8 @@ QVariant AbstractCachedTableModel::headerData(int section, Qt::Orientation orien
       return QLatin1String("*");
     case TableCacheOperation::Update:
       return QLatin1String("e");
+    case TableCacheOperation::Delete:
+      return QLatin1String("x");
     case TableCacheOperation::None:
       break;
   }
@@ -53,21 +56,49 @@ QVariant AbstractCachedTableModel::headerData(int section, Qt::Orientation orien
   return ParentClass::headerData(section, orientation, role);
 }
 
-bool AbstractCachedTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
+Qt::ItemFlags AbstractCachedTableModel::flags(const QModelIndex& index) const
 {
-  if(!ParentClass::setData(index, value, role)){
+  if(index.isValid()){
+    Q_ASSERT(index.row() < rowCountImpl());
+    if(operationAtRow(index.row()) == TableCacheOperation::Delete){
+      return Qt::ItemIsSelectable;
+    }
+  }
+
+  return ParentClass::flags(index);
+}
+
+bool AbstractCachedTableModel::removeRows(int row, int count, const QModelIndex& parent)
+{
+  if(parent.isValid()){
     return false;
   }
-  Q_ASSERT(index.isValid());
-  Q_ASSERT(index.row() < rowCountImpl());
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 1);
+  Q_ASSERT( (row+count) <= rowCountImpl() );
 
-  emitVerticalHeaderDataChanged(index.row());
+  if(!removeRowsFromCache(row, count)){
+    return false;
+  }
+  Mdt::IndexRange::RowRange rowRange;
+  rowRange.setFirstRow(row);
+  rowRange.setRowCount(count);
+  emitVerticalHeaderDataChanged(rowRange);
 
   return true;
 }
 
-// bool AbstractCachedTableModel::submit()
+// bool AbstractCachedTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
 // {
+//   if(!ParentClass::setData(index, value, role)){
+//     return false;
+//   }
+//   Q_ASSERT(index.isValid());
+//   Q_ASSERT(index.row() < rowCountImpl());
+// 
+//   emitVerticalHeaderDataChanged(index.row());
+// 
+//   return true;
 // }
 
 }} // namespace Mdt{ namespace ItemModel{

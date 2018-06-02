@@ -31,12 +31,16 @@ class AbstractCachedTableModelTest : public QObject
 
   void initTestCase();
 
+  void testClassPopulateTest();
+
   void constructTest();
-  void insertRowsTest();
-  void insertRowsHeaderTest();
+  void insertRowsAndSubmitTest();
+  void insertRowsAndSubmitHeaderTest();
   void itemModelInsertRowTest();
   void setDataTest();
   void setDataHeaderTest();
+  void removeRowsAndSubmitTest();
+  void removeRowsAndSubmitHeaderTest();
   void qtModelTest();
 };
 

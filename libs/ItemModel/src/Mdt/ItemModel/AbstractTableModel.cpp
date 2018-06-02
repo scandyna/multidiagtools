@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "AbstractTableModel.h"
 
+// #include <QDebug>
+
 namespace Mdt{ namespace ItemModel{
 
 AbstractTableModel::AbstractTableModel(QObject* parent)
@@ -86,7 +88,7 @@ bool AbstractTableModel::setData(const QModelIndex& index, const QVariant& value
   if(!setEditRoleData(index.row(), index.column(), value)){
     return false;
   }
-  emitDataChanged(index);
+//   emitDataChanged(index);
 
   return true;
 }
