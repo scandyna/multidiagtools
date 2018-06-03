@@ -21,6 +21,7 @@
 #include "TableCacheOperationMap.h"
 #include <algorithm>
 #include <iterator>
+#include <functional>
 
 namespace Mdt{ namespace Container{
 
@@ -90,7 +91,10 @@ RowList TableCacheOperationMap::getRowsToUpdateInStorage() const
 
 RowList TableCacheOperationMap::getRowsToDeleteInStorage() const
 {
-  return getRowsForOperation(TableCacheOperation::Delete);
+  auto rowList = getRowsForOperation(TableCacheOperation::Delete);
+  std::sort(rowList.begin(), rowList.end(), std::greater<>());
+
+  return rowList;
 }
 
 void TableCacheOperationMap::commitChanges()

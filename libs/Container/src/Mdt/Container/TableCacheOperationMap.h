@@ -130,6 +130,9 @@ namespace Mdt{ namespace Container{
     RowList getRowsToUpdateInStorage() const;
 
     /*! \brief Get a list of rows that have to be deleted in the storage
+     *
+     * \note The returned list is sorted in descending way,
+     *    which helps avoiding problems when removing a list of rows.
      */
     RowList getRowsToDeleteInStorage() const;
 

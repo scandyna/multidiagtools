@@ -212,7 +212,7 @@ void TableCacheOperationTest::removeRecordsTest()
   QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(1), TableCacheOperation::Delete);
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::Delete);
-  QCOMPARE(map.getRowsToDeleteInStorage(), RowList({1,2}));
+  QCOMPARE(map.getRowsToDeleteInStorage(), RowList({2,1}));
   QVERIFY(map.committedRows().isNull());
 
   map.commitChanges();
@@ -242,7 +242,7 @@ void TableCacheOperationTest::removeRecordsTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::Delete);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::Delete);
-  QCOMPARE(map.getRowsToDeleteInStorage(), RowList({1,3,4}));
+  QCOMPARE(map.getRowsToDeleteInStorage(), RowList({4,3,1}));
   QVERIFY(map.committedRows().isNull());
 }
 
