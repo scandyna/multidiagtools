@@ -18,52 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_UPDATE_QUERY_H
-#define MDT_SQL_UPDATE_QUERY_H
+#ifndef MDT_SQL_DELETE_STATEMENT_H
+#define MDT_SQL_DELETE_STATEMENT_H
 
-#include "AbstractQuery.h"
 #include "FieldName.h"
 #include "PrimaryKeyRecord.h"
-#include "UpdateStatement.h"
 #include "MdtSql_CoreExport.h"
 #include <QString>
 #include <QVariant>
+#include <QSqlDatabase>
 
 namespace Mdt{ namespace Sql{
 
-  /*! \brief Update data in a database table
+  /*! \brief Representation of a SQL DELETE statement
    *
-   * Usage with basic type checking:
-   * \code
-   * using namespace Mdt::Sql;
-   *
-   * PrimaryKeyRecord primaryKeyRecord;
-   * primaryKeyRecord.addValue(FieldName("Id_PK"), 25);
-   *
-   * UpdateQuery query(db);
-   * query.setTableName("Client_tbl");
-   * query.addValue(FieldName("Name"), "Name 1");
-   * query.addValue(FieldName("Remark"), "Remarks 1");
-   * query.setConditions(primaryKeyRecord);
-   * if(!query.exec()){
-   *   // Error handling. query.lastError() constains a error description.
-   * }
-   * \endcode
-   *
-   * \note It is also possible to not sepcify the conditions,
-   *   if which case all the records in the table will be updated.
+   * \sa DeleteQuery
    */
-  class MDT_SQL_CORE_EXPORT UpdateQuery : public AbstractQuery
+  class MDT_SQL_CORE_EXPORT DeleteStatement
   {
-   Q_OBJECT
-
    public:
-
-    /*! \brief Construct a update query that acts on db
-     *
-     * \pre \a db must be valid (must have a driver loaded)
-     */
-    UpdateQuery(const QSqlDatabase & db);
 
     /*! \brief Set table name
      *
@@ -71,12 +44,12 @@ namespace Mdt{ namespace Sql{
      */
     void setTableName(const QString & name);
 
-    /*! \brief Add a value to this query
-     *
-     * \pre \a fieldName must not be null
-     * \pre \a fieldName must not allready exist in this statement
+    /*! \brief Get table name
      */
-    void addValue(const FieldName & fieldName, const QVariant & value);
+    QString tableName() const
+    {
+      return mTableName;
+    }
 
     /*! \brief Set the conditions for this update statement
      *
@@ -84,15 +57,41 @@ namespace Mdt{ namespace Sql{
      */
     void setConditions(const PrimaryKeyRecord & primaryKeyRecord);
 
-    /*! \brief Execute this query
+    /*! \brief Clear this statement
      */
-    bool exec();
+    void clear();
+
+    /*! \brief Get a SQL DELETE statement for prepared query
+     *
+     * Will generate SQL of the form:
+     * \code
+     * DELETE FROM Person
+     * WHERE Id_PK = ?
+     * \endcode
+     *
+     * This can be used with QSqlQuery
+     *
+     * \sa DeleteQuery
+     * \pre \a db must be valid (must have a driver loaded)
+     */
+    QString toPrepareStatementSql(const QSqlDatabase & db) const;
+
+    /*! \brief Get a list of values for the conditions this query is containing
+     */
+    QVariantList toConditionsValueList() const
+    {
+      return mPkrConditions.toValueList();
+    }
 
    private:
 
-    UpdateStatement mStatement;
+    static QString escapeFieldName(const QString & fieldName, const QSqlDatabase & db);
+    static QString escapeTableName(const QString & tableName, const QSqlDatabase & db);
+
+    QString mTableName;
+    PrimaryKeyRecord mPkrConditions;
   };
 
 }} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_UPDATE_QUERY_H
+#endif // #ifndef MDT_SQL_DELETE_STATEMENT_H

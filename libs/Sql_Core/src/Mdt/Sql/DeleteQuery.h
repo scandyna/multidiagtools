@@ -18,20 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_UPDATE_QUERY_H
-#define MDT_SQL_UPDATE_QUERY_H
+#ifndef MDT_SQL_DELETE_QUERY_H
+#define MDT_SQL_DELETE_QUERY_H
 
 #include "AbstractQuery.h"
 #include "FieldName.h"
 #include "PrimaryKeyRecord.h"
-#include "UpdateStatement.h"
+#include "DeleteStatement.h"
 #include "MdtSql_CoreExport.h"
 #include <QString>
 #include <QVariant>
 
 namespace Mdt{ namespace Sql{
 
-  /*! \brief Update data in a database table
+  /*! \brief Delete data in a database table
    *
    * Usage with basic type checking:
    * \code
@@ -40,10 +40,8 @@ namespace Mdt{ namespace Sql{
    * PrimaryKeyRecord primaryKeyRecord;
    * primaryKeyRecord.addValue(FieldName("Id_PK"), 25);
    *
-   * UpdateQuery query(db);
+   * DeleteQuery query(db);
    * query.setTableName("Client_tbl");
-   * query.addValue(FieldName("Name"), "Name 1");
-   * query.addValue(FieldName("Remark"), "Remarks 1");
    * query.setConditions(primaryKeyRecord);
    * if(!query.exec()){
    *   // Error handling. query.lastError() constains a error description.
@@ -51,9 +49,9 @@ namespace Mdt{ namespace Sql{
    * \endcode
    *
    * \note It is also possible to not sepcify the conditions,
-   *   if which case all the records in the table will be updated.
+   *   if which case all the records in the table will be deleted.
    */
-  class MDT_SQL_CORE_EXPORT UpdateQuery : public AbstractQuery
+  class MDT_SQL_CORE_EXPORT DeleteQuery : public AbstractQuery
   {
    Q_OBJECT
 
@@ -63,20 +61,13 @@ namespace Mdt{ namespace Sql{
      *
      * \pre \a db must be valid (must have a driver loaded)
      */
-    UpdateQuery(const QSqlDatabase & db);
+    DeleteQuery(const QSqlDatabase & db);
 
     /*! \brief Set table name
      *
      * \pre \a name must not be empty
      */
     void setTableName(const QString & name);
-
-    /*! \brief Add a value to this query
-     *
-     * \pre \a fieldName must not be null
-     * \pre \a fieldName must not allready exist in this statement
-     */
-    void addValue(const FieldName & fieldName, const QVariant & value);
 
     /*! \brief Set the conditions for this update statement
      *
@@ -88,11 +79,15 @@ namespace Mdt{ namespace Sql{
      */
     bool exec();
 
+    /*! \brief Clear this query
+     */
+    void clear();
+
    private:
 
-    UpdateStatement mStatement;
+    DeleteStatement mStatement;
   };
 
 }} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_UPDATE_QUERY_H
+#endif // #ifndef MDT_SQL_DELETE_QUERY_H

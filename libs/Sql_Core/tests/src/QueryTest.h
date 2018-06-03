@@ -42,6 +42,11 @@ class QueryTest : public QObject
   void updateStatementToConditionsValueListTest();
   void updateQueryTest();
 
+  void deleteStatementTest();
+  void deleteStatementPrimaryKeyConditionsTest();
+  void deleteStatementToConditionsValueListTest();
+  void deleteQueryTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

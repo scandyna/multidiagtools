@@ -9,6 +9,8 @@ set(SOURCE_FILES
     Mdt/Sql/InsertQuery.cpp
     Mdt/Sql/UpdateStatement.cpp
     Mdt/Sql/UpdateQuery.cpp
+    Mdt/Sql/DeleteStatement.cpp
+    Mdt/Sql/DeleteQuery.cpp
     Mdt/Sql/SelectTable.cpp
     Mdt/Sql/SelectFieldSqlTransform.cpp
     Mdt/Sql/SelectFieldItem.cpp

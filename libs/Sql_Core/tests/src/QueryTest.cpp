@@ -24,6 +24,8 @@
 #include "Mdt/Sql/InsertQuery.h"
 #include "Mdt/Sql/UpdateStatement.h"
 #include "Mdt/Sql/UpdateQuery.h"
+#include "Mdt/Sql/DeleteStatement.h"
+#include "Mdt/Sql/DeleteQuery.h"
 // #include "Mdt/Sql/SelectQuery.h"
 #include "Mdt/Error.h"
 #include "Schema/TestSchema.h"
@@ -248,6 +250,108 @@ void QueryTest::updateQueryTest()
   }
 
   QVERIFY(cleanupClientTable());
+}
+
+void QueryTest::deleteStatementTest()
+{
+  Mdt::Sql::DeleteStatement statement;
+  Mdt::Sql::PrimaryKeyRecord pkr;
+  QString expectedSql;
+  const auto db = mDatabase;
+
+  /*
+   * Check basic API - 1 field condition
+   */
+  statement.clear();
+  statement.setTableName("Client_tbl");
+  statement.setConditions( buildPrimaryKeyRecord(1) );
+  expectedSql = "DELETE FROM \"Client_tbl\"\n"\
+                "WHERE \"Id_PK\"=?";
+  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+  /*
+   * Basic API - no condition
+   */
+  statement.clear();
+  statement.setTableName("Client_tbl");
+  expectedSql = "DELETE FROM \"Client_tbl\"";
+  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+}
+
+void QueryTest::deleteStatementPrimaryKeyConditionsTest()
+{
+  Mdt::Sql::DeleteStatement statement;
+  QString expectedSql;
+  const auto db = mDatabase;
+
+  /*
+   * 1 field PK
+   */
+  statement.clear();
+  statement.setTableName("Client_tbl");
+  statement.setConditions( buildPrimaryKeyRecord(1) );
+  expectedSql = "DELETE FROM \"Client_tbl\"\n"\
+                "WHERE \"Id_PK\"=?";
+  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+  /*
+   * 2 fields PK
+   */
+  statement.clear();
+  statement.setTableName("Link_tbl");
+  statement.setConditions( buildPrimaryKeyRecord(1, 2) );
+  expectedSql = "DELETE FROM \"Link_tbl\"\n"\
+                "WHERE \"IdA_PK\"=? AND \"IdB_PK\"=?";
+  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+}
+
+void QueryTest::deleteStatementToConditionsValueListTest()
+{
+  Mdt::Sql::DeleteStatement statement;
+
+  /*
+   * 1 field PK
+   */
+  statement.clear();
+  statement.setTableName("Client_tbl");
+  statement.setConditions( buildPrimaryKeyRecord(1) );
+  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
+  /*
+   * 2 fields PK
+   */
+  statement.setConditions( buildPrimaryKeyRecord(2,1) );
+  QCOMPARE(statement.toConditionsValueList(), QVariantList({2,1}));
+}
+
+void QueryTest::deleteQueryTest()
+{
+  Mdt::Sql::DeleteQuery query(mDatabase);
+
+  QVERIFY(cleanupClientTable());
+  QVERIFY(insertClient(1, "Name 1"));
+  QVERIFY(insertClient(2, "Name 2"));
+  QVERIFY(insertClient(3, "Name 3"));
+
+  query.setTableName("Client_tbl");
+  query.setConditions( buildPrimaryKeyRecord(2) );
+  QVERIFY(query.exec());
+  {
+    QSqlQuery q(mDatabase);
+    QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(1));
+    QCOMPARE(q.value(1), QVariant("Name 1"));
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(3));
+    QCOMPARE(q.value(1), QVariant("Name 3"));
+  }
+
+  query.clear();
+  query.setTableName("Client_tbl");
+  QVERIFY(query.exec());
+  {
+    QSqlQuery q(mDatabase);
+    QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
+    QVERIFY(!q.next());
+  }
 }
 
 /*

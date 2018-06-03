@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>Mdt::Sql::DeleteQuery</name>
+    <message>
+        <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="52"/>
+        <source>Preparing query to delete in &apos;%1&apos; failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="63"/>
+        <source>Executing query to delete in &apos;%1&apos; failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::Sql::Error</name>
     <message>
         <location filename="../src/Mdt/Sql/Error.cpp" line="39"/>
