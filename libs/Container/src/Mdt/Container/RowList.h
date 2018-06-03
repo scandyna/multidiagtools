@@ -47,6 +47,15 @@ namespace Mdt{ namespace Container{
      : RowColumnListBase(list)
     {}
 
+    /*! \brief Get the smallest row
+     *
+     * Returns -1 if this list is empty.
+     */
+    int smallestRow() const
+    {
+      return smallest();
+    }
+
     /*! \brief Get the greatest row
      *
      * Returns -1 if this list is empty.

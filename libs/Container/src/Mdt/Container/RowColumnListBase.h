@@ -111,6 +111,12 @@ namespace Mdt{ namespace Container{
      */
     int greatest() const;
 
+    /*! \brief Get the smallest element
+     *
+     * Returns -1 if this list is empty.
+     */
+    int smallest() const;
+
     /*! \brief Clear
      */
     void clear();

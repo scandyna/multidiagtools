@@ -64,6 +64,15 @@ int RowColumnListBase::greatest() const
   return *it;
 }
 
+int RowColumnListBase::smallest() const
+{
+  const auto it = std::min_element(mList.cbegin(), mList.cend());
+  if(it == mList.cend()){
+    return -1;
+  }
+  return *it;
+}
+
 void RowColumnListBase::clear()
 {
   mList.clear();

@@ -38,6 +38,7 @@ void RowColumnListTest::rowListTest()
   QVERIFY(list1.isEmpty());
   QVERIFY(list1.begin() == list1.end());
   QVERIFY(!list1.contains(0));
+  QCOMPARE(list1.smallestRow(), -1);
   QCOMPARE(list1.greatestRow(), -1);
   /*
    * Construct list
@@ -47,6 +48,7 @@ void RowColumnListTest::rowListTest()
   QVERIFY(!list2.isEmpty());
   QCOMPARE(list2.at(1), 3);
   QVERIFY(list2.begin() != list2.end());
+  QCOMPARE(list2.smallestRow(), 0);
   QCOMPARE(list2.greatestRow(), 3);
   /*
    * Check contains
