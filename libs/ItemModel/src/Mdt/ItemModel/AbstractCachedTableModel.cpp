@@ -22,7 +22,7 @@
 #include "Mdt/IndexRange/RowRange.h"
 #include <QLatin1String>
 
-#include <QDebug>
+// #include <QDebug>
 
 using namespace Mdt::Container;
 
@@ -48,6 +48,7 @@ QVariant AbstractCachedTableModel::headerData(int section, Qt::Orientation orien
     case TableCacheOperation::Update:
       return QLatin1String("e");
     case TableCacheOperation::Delete:
+    case TableCacheOperation::InsertDelete:
       return QLatin1String("x");
     case TableCacheOperation::None:
       break;
@@ -58,9 +59,12 @@ QVariant AbstractCachedTableModel::headerData(int section, Qt::Orientation orien
 
 Qt::ItemFlags AbstractCachedTableModel::flags(const QModelIndex& index) const
 {
-  if(index.isValid()){
-    Q_ASSERT(index.row() < rowCountImpl());
-    if(operationAtRow(index.row()) == TableCacheOperation::Delete){
+  /*
+   * After removing rows, some views seems to query flags on out of range row
+   */
+  if(index.isValid() && (index.row() < rowCountImpl()) ){
+    const auto op = operationAtRow(index.row());
+    if( (op == TableCacheOperation::Delete) || (op == TableCacheOperation::InsertDelete) ){
       return Qt::ItemIsSelectable;
     }
   }
@@ -68,37 +72,24 @@ Qt::ItemFlags AbstractCachedTableModel::flags(const QModelIndex& index) const
   return ParentClass::flags(index);
 }
 
-bool AbstractCachedTableModel::removeRows(int row, int count, const QModelIndex& parent)
+void AbstractCachedTableModel::beginInsertRows(int firstRow, int lastRow)
 {
-  if(parent.isValid()){
-    return false;
-  }
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(count >= 1);
-  Q_ASSERT( (row+count) <= rowCountImpl() );
-
-  if(!removeRowsFromCache(row, count)){
-    return false;
-  }
-  Mdt::IndexRange::RowRange rowRange;
-  rowRange.setFirstRow(row);
-  rowRange.setRowCount(count);
-  emitVerticalHeaderDataChanged(rowRange);
-
-  return true;
+  ParentClass::beginInsertRows(QModelIndex(), firstRow, lastRow);
 }
 
-// bool AbstractCachedTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
-// {
-//   if(!ParentClass::setData(index, value, role)){
-//     return false;
-//   }
-//   Q_ASSERT(index.isValid());
-//   Q_ASSERT(index.row() < rowCountImpl());
-// 
-//   emitVerticalHeaderDataChanged(index.row());
-// 
-//   return true;
-// }
+void AbstractCachedTableModel::endInsertRows()
+{
+  ParentClass::endInsertRows();
+}
+
+void AbstractCachedTableModel::beginRemoveRows(int firstRow, int lastRow)
+{
+  ParentClass::beginRemoveRows(QModelIndex(), firstRow, lastRow);
+}
+
+void AbstractCachedTableModel::endRemoveRows()
+{
+  ParentClass::endRemoveRows();
+}
 
 }} // namespace Mdt{ namespace ItemModel{

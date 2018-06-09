@@ -40,7 +40,10 @@ class AbstractCachedTableModelTest : public QObject
   void setDataTest();
   void setDataHeaderTest();
   void removeRowsAndSubmitTest();
+  void removeRowsAndSubmitResizeSignalsTest();
   void removeRowsAndSubmitHeaderTest();
+  void insertRemoveRowsAndSubmitTest();
+  void insertRemoveRowsAndSubmitHeaderTest();
   void qtModelTest();
 };
 

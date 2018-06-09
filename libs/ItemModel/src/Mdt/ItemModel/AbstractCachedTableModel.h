@@ -70,64 +70,29 @@ namespace Mdt{ namespace ItemModel{
      */
     Qt::ItemFlags flags(const QModelIndex & index) const override;
 
-    /*! \brief Remove \a count rows starting from \a row
-     *
-     * Will call removeRowsFromCache() if \a parent is not valid,
-     *  otherwise it does nothing and returns false.
-     *
-     * \pre \a row must be >= 0
-     * \pre \a count muste be >= 1
-     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+   public slots:
+
+    /*! \brief Begins a row insertion operation
      */
-    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
+    void beginInsertRows(int firstRow, int lastRow);
 
-//     /*! \brief Set data for \a role at \a index
-//      */
-//     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
+    /*! \brief End a row insertion operation
+     */
+    void endInsertRows();
 
-//    public slots:
-// 
-//     /*! \brief Submit cached data to the storage
-//      */
-//     bool submit() override;
+    /*! \brief Begins a row removal operation
+     */
+    void beginRemoveRows(int firstRow, int lastRow);
+
+    /*! \brief End a row removal operation
+     */
+    void endRemoveRows();
 
    protected:
 
     /*! \brief Get the count of rows in the cache
      */
     virtual int cachedRowCount() const = 0;
-
-    /*! \brief Insert \a count rows before \a row into the cache
-     *
-     * This method is called from insertRows() .
-     *  The inserted rows should be marked as insert operation.
-     *  The implementation has not to worry about calling beginInsertRows() and endInsertRows(),
-     *  this is done by insertRows()
-     */
-    virtual bool insertRowsToCache(int row, int count) = 0;
-
-    /*! \brief Remove \a count rows, starting from \a row , from cache
-     *
-     * This method is called from removeRows() .
-     *  The implementation has not to worry about calling beginRemoveRows() and endRemoveRows(),
-     *  this is done by removeRows()
-     */
-    virtual bool removeRowsFromCache(int row, int count) = 0;
-
-//     /*! \brief Insert the data for each row in \a rowList to the storage
-//      *
-//      * This implementation will call insertRowToStorage() for each
-//      *  row in \a rowList .
-//      */
-//     virtual bool insertRowsToStorage(const Mdt::Container::RowList & rowList);
-// 
-//     /*! \brief Insert the data for \a row to the storage
-//      */
-//     virtual bool insertRowToStorage(int row) = 0;
-
-//     /*! \brief Insert the data for \a row into the storage
-//      */
-//     virtual bool insertRowIntoStorage(int row) = 0;
 
     /*! \brief Get the operation at \a row in the cache
      *
@@ -141,18 +106,6 @@ namespace Mdt{ namespace ItemModel{
     {
       return cachedRowCount();
     }
-
-    bool insertRowsImpl(int row, int count) override
-    {
-      return insertRowsToCache(row, count);
-    }
-
-//     bool removeRowsImpl(int row, int count) override
-//     {
-//       return removeRowsFromCache(row, count);
-//     }
-
-//     bool insertRowsIntoStorage(const Mdt::Container::RowList & rows);
   };
 
 }} // namespace Mdt{ namespace ItemModel{

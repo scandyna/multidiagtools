@@ -284,7 +284,7 @@ namespace Mdt{ namespace ItemModel{
      *
      * If the model supports inserting rows, this method should be implemented.
      *
-     * This method is called from insertRows() if all preconditions ar satisfied.
+     * This method is called from insertRows() if all preconditions are satisfied.
      *  The implementation should not call beginInsertRows() and endInsertRows(),
      *  this is done in insertRows() .
      *
