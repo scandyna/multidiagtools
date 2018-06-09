@@ -25,6 +25,7 @@
 #include "Mdt/Entity/AbstractCachedEntityRepository.h"
 #include "Mdt/Entity/RepositoryHandle.h"
 #include "Mdt/TestLib/ItemModel.h"
+#include "Mdt/Container/StlContainer.h"
 #include <QSignalSpy>
 #include <QVariantList>
 #include <QStringList>
@@ -109,7 +110,7 @@ PersonData buildPerson(const QString & baseName)
   return data;
 }
 
-class PersonMemoryRepository : public AbstractPersonRepository
+class MemoryPersonRepository : public AbstractPersonRepository
 {
  public:
 
@@ -135,9 +136,22 @@ class PersonMemoryRepository : public AbstractPersonRepository
     return mMem.size();
   }
 
-  bool insertRecordToStorage(const PersonData & record) override
+  bool insertRecordToStorage(const PersonData & record, QVariant & autoId) override
   {
-    return false;
+    mMem.push_back(record);
+    return true;
+  }
+
+  bool updateRecordInStorage(int row) override
+  {
+    mMem[row] = constRecordAt(row);
+    return true;
+  }
+
+  bool removeRecordFromStorage(int row) override
+  {
+    Mdt::Container::removeFromContainer(mMem, row, 1);
+    return true;
   }
 
   std::vector<PersonData> mMem;
@@ -160,10 +174,18 @@ void CachedEntityRepositoryTableModelTest::fieldIndexTest()
   QCOMPARE(model.fieldIndex(model.def().firstName()), 1);
 }
 
+void CachedEntityRepositoryTableModelTest::horizontalHeaderTest()
+{
+  EditPersonTableModel model;
+  QCOMPARE(model.headerData(0, Qt::Horizontal), QVariant("id"));
+  QVERIFY(model.headerData(0, Qt::Horizontal, Qt::DecorationRole).isNull());
+  QCOMPARE(model.headerData(1, Qt::Horizontal), QVariant("firstName"));
+}
+
 void CachedEntityRepositoryTableModelTest::setDataTest()
 {
   EditPersonTableModel model;
-  auto personRepositoryHandle = PersonRepositoryHandle::make<PersonMemoryRepository>();
+  auto personRepositoryHandle = PersonRepositoryHandle::make<MemoryPersonRepository>();
   model.setRepository(personRepositoryHandle);
 
   QVERIFY(appendRowToModel(model));

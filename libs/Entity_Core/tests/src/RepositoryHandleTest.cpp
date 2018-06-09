@@ -23,6 +23,7 @@
 #include "Mdt/Entity/DataTemplate.h"
 #include "Mdt/Entity/AbstractCachedEntityRepository.h"
 #include "Mdt/Entity/RepositoryHandle.h"
+#include "Mdt/Container/StlContainer.h"
 #include <QStringList>
 
 using namespace Mdt::Entity;
@@ -107,9 +108,21 @@ class MemoryPersonRepository : public AbstractPersonRepository
     return mMem.size();
   }
 
-  bool insertRecordToStorage(const PersonData & record) override
+  bool insertRecordToStorage(const PersonData & record, QVariant & autoId) override
   {
     return false;
+  }
+
+  bool removeRecordFromStorage(int row) override
+  {
+    Mdt::Container::removeFromContainer(mMem, row, 1);
+    return true;
+  }
+
+  bool updateRecordInStorage(int row) override
+  {
+    mMem[row] = constRecordAt(row);
+    return true;
   }
 
   std::vector<PersonData> mMem;

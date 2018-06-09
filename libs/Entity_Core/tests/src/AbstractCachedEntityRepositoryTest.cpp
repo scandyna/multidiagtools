@@ -23,6 +23,7 @@
 #include "Mdt/Entity/Def.h"
 #include "Mdt/Entity/DataTemplate.h"
 #include "Mdt/Entity/IntegralUniqueIdTemplate.h"
+#include "Mdt/Container/StlContainer.h"
 // #include "Mdt/Entity/FieldAt.h"
 #include <QStringList>
 #include <QSignalSpy>
@@ -51,11 +52,11 @@ MDT_ENTITY_DEF(
   (firstName, FieldMaxLength(5))
 )
 
-class PersonId : public Mdt::Entity::IntegralUniqueIdTemplate<>
+class PersonId : public Mdt::Entity::IntegralUniqueIdTemplate<int>
 {
  public:
 
-  using IntegralUniqueIdTemplate<>::IntegralUniqueIdTemplate;
+  using IntegralUniqueIdTemplate::IntegralUniqueIdTemplate;
 };
 
 class PersonData : public Mdt::Entity::DataTemplate<PersonEntity>
@@ -144,10 +145,38 @@ class MemoryPersonRepository : public AbstractPersonRepository
     return true;
   }
 
-  bool insertRecordToStorage(const PersonData& record) override
+  bool insertRecordToStorage(const PersonData& record, QVariant & autoId) override
   {
-    mMem.push_back(record);
+    auto recordCpy = record;
+    auto id = getNextId();
+    recordCpy.setId(id);
+    mMem.push_back(recordCpy);
+    autoId = id;
     return true;
+  }
+
+  bool removeRecordFromStorage(int row) override
+  {
+    Mdt::Container::removeFromContainer(mMem, row, 1);
+    return true;
+  }
+
+  bool updateRecordInStorage(int row) override
+  {
+    mMem[row] = constRecordAt(row);
+    return true;
+  }
+
+  int getNextId() const
+  {
+    const auto cmp = [](const PersonData & a, const PersonData & b){
+      return a.id() < b.id();
+    };
+    const auto it = std::max_element(mMem.cbegin(), mMem.cend(), cmp);
+    if(it == mMem.cend()){
+      return 1;
+    }
+    return it->id().value() + 1;
   }
 
   std::vector<PersonData> mMem;
@@ -193,6 +222,28 @@ void AbstractCachedEntityRepositoryTest::setDataTest()
   QCOMPARE(repository.data(0, 1), QVariant("A"));
   QCOMPARE(repository.data(1, 1), QVariant("f"));
   QCOMPARE(repository.data(2, 1), QVariant("f"));
+}
+
+void AbstractCachedEntityRepositoryTest::insertRecordsAndSubmitTest()
+{
+  MemoryPersonRepository repository;
+  QCOMPARE(repository.rowCount(), 0);
+  QCOMPARE(repository.storageRowCount(), 0);
+
+  repository.insertRecords(0, 1, buildPerson("A"));
+  QCOMPARE(repository.rowCount(), 1);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::Insert);
+  QCOMPARE(repository.storageRowCount(), 0);
+
+  QVERIFY(repository.submitChanges());
+  QCOMPARE(repository.rowCount(), 1);
+  QCOMPARE(repository.constRecordAt(0).id().value(), 1);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.storageRowCount(), 1);
+  QCOMPARE(repository.storage()[0].id().value(), 1);
+  QCOMPARE(repository.storage()[0].firstName(), QString("fA"));
 }
 
 /*

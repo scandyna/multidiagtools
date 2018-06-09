@@ -21,12 +21,9 @@
 #ifndef MDT_ENTITY_CACHED_REPOSITORY_TABLE_MODEL_H
 #define MDT_ENTITY_CACHED_REPOSITORY_TABLE_MODEL_H
 
-#include "RowResizableTableModel.h"
-#include "CachedRepositoryStlTableProxy.h"
-
 #include "RepositoryHandle.h"
+#include "Mdt/Error.h"
 #include "Mdt/ItemModel/AbstractCachedTableModel.h"
-
 #include <QObject>
 #include <QLatin1String>
 
@@ -46,24 +43,15 @@ namespace Mdt{ namespace Entity{
    *  using CachedEntityRepositoryTableModel can need less work to implement.
    */
   template<typename RepositoryInterface>
-  //class CachedRepositoryTableModel : public RowResizableTableModel< CachedRepositoryStlTableProxy<RepositoryInterface> >
   class CachedRepositoryTableModel : public Mdt::ItemModel::AbstractCachedTableModel
   {
+    using ParentClass = Mdt::ItemModel::AbstractCachedTableModel;
+
    public:
 
-    using ParentClass = Mdt::ItemModel::AbstractCachedTableModel;
     using ParentClass::ParentClass;
 
     using record_type = typename RepositoryInterface::record_type;
-
-//     using ParentClass = RowResizableTableModel< CachedRepositoryStlTableProxy<RepositoryInterface> >;
-//     using ParentClass::ParentClass;
-//     using ParentClass::table;
-//     using ParentClass::beginResetModel;
-//     using ParentClass::endResetModel;
-//     using ParentClass::connect;
-//     using ParentClass::disconnect;
-//     using ParentClass::rowCount;
 
     /*! \brief Set a repository to this table model
      */
@@ -73,7 +61,12 @@ namespace Mdt{ namespace Entity{
 
       disconnect(mCacheAboutToBeResetConnection);
       disconnect(mCacheResetConnection);
-//       disconnect(mVerticalHeaderDataChangedConnection);
+      disconnect(mVerticalHeaderDataChangedConnection);
+      disconnect(mDataChangedConnection);
+      disconnect(mRowsAboutToBeInsertedConnection);
+      disconnect(mRowsInsertedConnection);
+      disconnect(mRowsAboutToBeRemovedConnection);
+      disconnect(mRowsRemovedConnection);
 
       mRepositoryHandle = repositoryHandle;
 
@@ -81,17 +74,83 @@ namespace Mdt{ namespace Entity{
         connect( &mRepositoryHandle.repository(), &RepositoryInterface::cacheAboutToBeReset, this, &CachedRepositoryTableModel::beginResetModel );
       mCacheResetConnection =
         connect( &mRepositoryHandle.repository(), &RepositoryInterface::cacheReset, this, &CachedRepositoryTableModel::endResetModel );
+      mVerticalHeaderDataChangedConnection =
+        connect( &mRepositoryHandle.repository(), &RepositoryInterface::operationAtRowsChanged, this, &CachedRepositoryTableModel::emitVerticalHeaderDataChanged );
+      mDataChangedConnection =
+        connect( &mRepositoryHandle.repository(), &RepositoryInterface::dataAtRowsChanged, this, &CachedRepositoryTableModel::emitDataAtRowsChanged );
+      mRowsAboutToBeInsertedConnection =
+        connect( &mRepositoryHandle.repository(), &RepositoryInterface::rowsAboutToBeInserted, this, &CachedRepositoryTableModel::beginInsertRows );
+      mRowsInsertedConnection =
+        connect( &mRepositoryHandle.repository(), &RepositoryInterface::rowsInserted, this, &CachedRepositoryTableModel::endInsertRows );
+      mRowsAboutToBeRemovedConnection =
+        connect( &mRepositoryHandle.repository(), &RepositoryInterface::rowsAboutToBeRemoved, this, &CachedRepositoryTableModel::beginRemoveRows );
+      mRowsRemovedConnection =
+        connect( &mRepositoryHandle.repository(), &RepositoryInterface::rowsRemoved, this, &CachedRepositoryTableModel::endRemoveRows );
 
       endResetModel();
+    }
 
-//       table().setRepository(repository);
-//       mCacheAboutToBeResetConnection =
-//         connect( &table().repository().repository(), &RepositoryInterface::cacheAboutToBeReset, this, &CachedRepositoryTableModel::beginResetModel );
-//       mCacheResetConnection =
-//         connect( &table().repository().repository(), &RepositoryInterface::cacheReset, this, &CachedRepositoryTableModel::endResetModel );
-//       mVerticalHeaderDataChangedConnection =
-//         connect( &table().repository().repository(), &RepositoryInterface::operationAtRowsChanged, this, &CachedRepositoryTableModel::emitVerticalHeaderDataChanged );
-//       endResetModel();
+    /*! \brief Insert \a count rows before \a row into the model
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row <= rowCount() )
+     * \pre \a count muste be >= 1
+     */
+    bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override
+    {
+      if(parent.isValid()){
+        return false;
+      }
+      if(mRepositoryHandle.isNull()){
+        return false;
+      }
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row <= rowCount());
+      Q_ASSERT(count >= 0);
+
+      mRepositoryHandle.repository().insertRecords(row, count, record_type());
+
+      return true;
+    }
+
+    /*! \brief Remove \a count rows starting from \a row
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count muste be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+     */
+    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override
+    {
+      if(parent.isValid()){
+        return false;
+      }
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(count >= 1);
+      Q_ASSERT( (row+count) <= rowCount() );
+      Q_ASSERT(!mRepositoryHandle.isNull());
+
+      mRepositoryHandle.repository().removeRecords(row, count);
+
+      return true;
+    }
+
+    /*! \brief Submit changes to the storage
+     *
+     * \note QTableView will call submit() on row change,
+     *   and ignores if it succeeded or failed.
+     *   This is why we use submitChanges() here.
+     */
+    bool submitChanges()
+    {
+      return mRepositoryHandle.repository().submitChanges();
+    }
+
+    /*! \brief Get last error
+     *
+     * This implementation returns last error from repository.
+     */
+    virtual Mdt::Error lastError() const
+    {
+      return mRepositoryHandle.constRepository().lastError();
     }
 
    private:
@@ -134,20 +193,6 @@ namespace Mdt{ namespace Entity{
       return true;
     }
 
-    bool insertRowsToCache(int row, int count) override
-    {
-      Q_ASSERT(row >= 0);
-      Q_ASSERT(row <= rowCount());
-      Q_ASSERT(count >= 1);
-
-      if(mRepositoryHandle.isNull()){
-        return false;
-      }
-      mRepositoryHandle.repository().insertRecords(row, count, record_type());
-
-      return true;
-    }
-
     Mdt::Container::TableCacheOperation operationAtRow(int row) const override
     {
       Q_ASSERT(!mRepositoryHandle.isNull());
@@ -155,10 +200,25 @@ namespace Mdt{ namespace Entity{
       return mRepositoryHandle.constRepository().operationAtRow(row);
     }
 
+    void emitVerticalHeaderDataChanged(int firstRow, int lastRow)
+    {
+      ParentClass::emitVerticalHeaderDataChanged(firstRow, lastRow);
+    }
+
+    void emitDataAtRowsChanged(int firstRow, int lastRow)
+    {
+      ParentClass::emitDataAtRowsChanged(firstRow, lastRow);
+    }
+
     RepositoryHandle<RepositoryInterface> mRepositoryHandle;
     QMetaObject::Connection mCacheAboutToBeResetConnection;
     QMetaObject::Connection mCacheResetConnection;
-//     QMetaObject::Connection mVerticalHeaderDataChangedConnection;
+    QMetaObject::Connection mVerticalHeaderDataChangedConnection;
+    QMetaObject::Connection mDataChangedConnection;
+    QMetaObject::Connection mRowsAboutToBeInsertedConnection;
+    QMetaObject::Connection mRowsInsertedConnection;
+    QMetaObject::Connection mRowsAboutToBeRemovedConnection;
+    QMetaObject::Connection mRowsRemovedConnection;
   };
 
 }} // namespace Mdt{ namespace Entity{

@@ -47,4 +47,39 @@ void AbstractRepository::emitOperationAtRowsChanged(int firstRow, int lastRow)
   emit operationAtRowsChanged(firstRow, lastRow);
 }
 
+void AbstractRepository::emitOperationAtRowChanged(int row)
+{
+  emit operationAtRowsChanged(row, row);
+}
+
+void AbstractRepository::emitDataAtRowsChanged(int firstRow, int lastRow)
+{
+  emit dataAtRowsChanged(firstRow, lastRow);
+}
+
+void AbstractRepository::emitDataAtRowChanged(int row)
+{
+  emit dataAtRowsChanged(row, row);
+}
+
+void AbstractRepository::beginInsertRows(int firstRow, int lastRow)
+{
+  emit rowsAboutToBeInserted(firstRow, lastRow);
+}
+
+void AbstractRepository::endInsertRows()
+{
+  emit rowsInserted();
+}
+
+void AbstractRepository::beginRemoveRows(int firstRow, int lastRow)
+{
+  emit rowsAboutToBeRemoved(firstRow, lastRow);
+}
+
+void AbstractRepository::endRemoveRows()
+{
+  emit rowsRemoved();
+}
+
 }} // namespace Mdt{ namespace Entity{

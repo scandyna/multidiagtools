@@ -76,6 +76,42 @@ namespace Mdt{ namespace Entity{
      */
     void operationAtRowsChanged(int firstRow, int lastRow);
 
+    /*! \brief This signal is emitted after some data has been set some rows
+     *
+     * \note This signal is only emitted if the repository has a cache
+     * \note This signal is not emitted after inserting or removing rows
+     * \sa AbstractCachedRepository
+     */
+    void dataAtRowsChanged(int firstRow, int lastRow);
+
+    /*! \brief This signal is emitted just before rows are inserted to the cache
+     *
+     * \note This signal is only emitted if the repository has a cache
+     * \sa AbstractCachedRepository
+     */
+    void rowsAboutToBeInserted(int firstRow, int lastRow);
+
+    /*! \brief This signal is emitted after rows have been inserted to the cache
+     *
+     * \note This signal is only emitted if the repository has a cache
+     * \sa AbstractCachedRepository
+     */
+    void rowsInserted();
+
+    /*! \brief This signal is emitted just before rows are removed from the cache
+     *
+     * \note This signal is only emitted if the repository has a cache
+     * \sa AbstractCachedRepository
+     */
+    void rowsAboutToBeRemoved(int firstRow, int lastRow);
+
+    /*! \brief This signal is emitted after rows have been removed from the cache
+     *
+     * \note This signal is only emitted if the repository has a cache
+     * \sa AbstractCachedRepository
+     */
+    void rowsRemoved();
+
    protected:
 
     /*! \brief Set last error
@@ -93,6 +129,34 @@ namespace Mdt{ namespace Entity{
     /*! \brief Emit the operationAtRowsChanged() signal
      */
     void emitOperationAtRowsChanged(int firstRow, int lastRow);
+
+    /*! \brief Emit the operationAtRowsChanged() signal
+     */
+    void emitOperationAtRowChanged(int row);
+
+    /*! \brief Emit the dataAtRowsChanged() signal
+     */
+    void emitDataAtRowsChanged(int firstRow, int lastRow);
+
+    /*! \brief Emit the dataAtRowsChanged() signal
+     */
+    void emitDataAtRowChanged(int row);
+
+    /*! \brief Begins a row insertion operation
+     */
+    void beginInsertRows(int firstRow, int lastRow);
+
+    /*! \brief End a row insertion operation
+     */
+    void endInsertRows();
+
+    /*! \brief Begins a row removal operation
+     */
+    void beginRemoveRows(int firstRow, int lastRow);
+
+    /*! \brief End a row removal operation
+     */
+    void endRemoveRows();
 
    private:
 

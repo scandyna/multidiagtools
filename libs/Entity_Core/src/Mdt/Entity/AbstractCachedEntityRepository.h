@@ -22,6 +22,7 @@
 #define MDT_ENTITY_ABSTRACT_CACHED_ENTITY_REPOSITORY_H
 
 #include "AbstractCachedRepository.h"
+#include "PrimaryKey.h"
 #include "FieldAt.h"
 #include "ValueAt.h"
 #include "TypeTraits/IsEntityDef.h"
@@ -48,6 +49,7 @@ namespace Mdt{ namespace Entity{
    public:
 
     using entity_data_type = EntityData;
+    using entity_type = typename EntityData::entity_template_type;
     using entity_def_type = typename entity_data_type::entity_def_type;
     using data_struct_type = typename entity_data_type::data_struct_type;
 
@@ -56,7 +58,8 @@ namespace Mdt{ namespace Entity{
     using ParentClass = AbstractCachedRepository<EntityData>;
     using ParentClass::rowCount;
     using ParentClass::constRecordAt;
-    using ParentClass::recordAt;
+    using ParentClass::refRecordAt;
+    using ParentClass::refRecordAtForUpdate;
 
     /*! \brief Get count of columns
      */
@@ -94,9 +97,24 @@ namespace Mdt{ namespace Entity{
       Q_ASSERT(column >= 0);
       Q_ASSERT(column < columnCount());
 
-      setValueAt( recordAt(row).dataStruct(), column, data );
+      setValueAt( refRecordAtForUpdate(row).dataStruct(), column, data );
     }
 
+    void setAutoIdToCache(int row, const QVariant & id) override
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
+
+      if(!id.isNull()){
+        const auto pk = PrimaryKey::fromEntity<entity_type>();
+        if(pk.fieldCount() == 1){
+          const auto column = pk.fieldAt(0).fieldIndex();
+          Q_ASSERT(column >= 0);
+          Q_ASSERT(column < columnCount());
+          setValueAt( refRecordAt(row).dataStruct(), column, id );
+        }
+      }
+    }
   };
 
 }} // namespace Mdt{ namespace Entity{

@@ -22,6 +22,7 @@
 #define MDT_ENTITY_CACHED_ENTITY_REPOSITORY_TABLE_MODEL_H
 
 #include "CachedRepositoryTableModel.h"
+#include "FieldAt.h"
 #include "TypeTraits/IsEntityFieldDef.h"
 
 namespace Mdt{ namespace Entity{
@@ -76,6 +77,22 @@ namespace Mdt{ namespace Entity{
       static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
 
       return entity_data_type::fieldIndex(fieldDef);
+    }
+
+    /*! \brief Get header data for \a section, \a orientation and \a role
+     */
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override
+    {
+      if(orientation != Qt::Horizontal){
+        return ParentClass::headerData(section, orientation, role);
+      }
+      if(role != Qt::DisplayRole){
+        return ParentClass::headerData(section, orientation, role);
+      }
+      Q_ASSERT(section >= 0);
+      Q_ASSERT(section < fieldCount( def() ));
+
+      return fieldNameAt(def(), section);
     }
 
   };

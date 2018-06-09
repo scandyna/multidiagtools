@@ -21,6 +21,7 @@
 #include "AbstractCachedRepositoryTest.h"
 #include "Mdt/Entity/AbstractCachedRepository.h"
 #include "Mdt/Entity/IntegralUniqueIdTemplate.h"
+#include "Mdt/Container/StlContainer.h"
 #include <QStringList>
 #include <QSignalSpy>
 #include <QVariantList>
@@ -30,12 +31,13 @@
 // #include <QDebug>
 
 using namespace Mdt::Entity;
+using Mdt::Container::TableCacheOperation;
 
-class PersonId : public Mdt::Entity::IntegralUniqueIdTemplate<>
+class PersonId : public Mdt::Entity::IntegralUniqueIdTemplate<int>
 {
  public:
 
-  using IntegralUniqueIdTemplate<>::IntegralUniqueIdTemplate;
+  using IntegralUniqueIdTemplate::IntegralUniqueIdTemplate;
 };
 
 
@@ -78,7 +80,7 @@ class AbstractPersonRepository : public Mdt::Entity::AbstractCachedRepository<Pe
 {
  public:
 
-  virtual PersonData personById(PersonId id) const = 0;
+//   virtual PersonData personById(PersonId id) const = 0;
 
   int columnCount() const override
   {
@@ -102,9 +104,9 @@ class AbstractPersonRepository : public Mdt::Entity::AbstractCachedRepository<Pe
   {
     switch(column){
       case 0:
-        recordAt(row).setId(data.toULongLong());
+        refRecordAtForUpdate(row).setId(data.toULongLong());
       case 1:
-        recordAt(row).setFirstName(data.toString());
+        refRecordAtForUpdate(row).setFirstName(data.toString());
     }
   }
 };
@@ -122,17 +124,16 @@ class MemoryPersonRepository : public AbstractPersonRepository
 
   void populate(const QStringList & baseNames)
   {
-    qDebug() << "Mem: pop..";
     mMem.clear();
     for(const auto & baseName : baseNames){
       mMem.push_back( buildPerson(baseName) );
     }
   }
 
-  PersonData personById(PersonId id) const override
-  {
-    Q_ASSERT(!id.isNull());
-  }
+//   PersonData personById(PersonId id) const override
+//   {
+//     Q_ASSERT(!id.isNull());
+//   }
 
   int storageRowCount() const
   {
@@ -155,10 +156,43 @@ class MemoryPersonRepository : public AbstractPersonRepository
     return true;
   }
 
-  bool insertRecordToStorage(const PersonData& record) override
+  void setAutoIdToCache(int row, const QVariant& id) override
   {
-    mMem.push_back(record);
+    refRecordAt(row).setId(id.toInt());
+  }
+
+  bool insertRecordToStorage(const PersonData & record, QVariant & autoId) override
+  {
+    auto recordCpy = record;
+    auto id = getNextId();
+    recordCpy.setId(id);
+    mMem.push_back(recordCpy);
+    autoId = id;
     return true;
+  }
+
+  bool removeRecordFromStorage(int row) override
+  {
+    Mdt::Container::removeFromContainer(mMem, row, 1);
+    return true;
+  }
+
+  bool updateRecordInStorage(int row) override
+  {
+    mMem[row] = constRecordAt(row);
+    return true;
+  }
+
+  int getNextId() const
+  {
+    const auto cmp = [](const PersonData & a, const PersonData & b){
+      return a.id() < b.id();
+    };
+    const auto it = std::max_element(mMem.cbegin(), mMem.cend(), cmp);
+    if(it == mMem.cend()){
+      return 1;
+    }
+    return it->id().value() + 1;
   }
 
   std::vector<PersonData> mMem;
@@ -244,8 +278,8 @@ void AbstractCachedRepositoryTest::getSetRecordAtTest()
   QCOMPARE(repository.rowCount(), 2);
   QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
   QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
-  repository.recordAt(0).setFirstName("EfA");
-  repository.recordAt(1).setFirstName("EfB");
+  repository.refRecordAt(0).setFirstName("EfA");
+  repository.refRecordAt(1).setFirstName("EfB");
   QCOMPARE(repository.constRecordAt(0).firstName(), QString("EfA"));
   QCOMPARE(repository.constRecordAt(1).firstName(), QString("EfB"));
 }
@@ -274,9 +308,11 @@ void AbstractCachedRepositoryTest::insertRecordsAndSubmitTest()
 
   QVERIFY(repository.submitChanges());
   QCOMPARE(repository.rowCount(), 1);
+  QCOMPARE(repository.constRecordAt(0).id().value(), 1);
   QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
   QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::None);
   QCOMPARE(repository.storageRowCount(), 1);
+  QCOMPARE(repository.storage()[0].id().value(), 1);
   QCOMPARE(repository.storage()[0].firstName(), QString("fA"));
 }
 
@@ -286,6 +322,10 @@ void AbstractCachedRepositoryTest::insertRecordsAndSubmitSignalTest()
   QCOMPARE(repository.rowCount(), 0);
   QSignalSpy opChangedSpy(&repository, &MemoryPersonRepository::operationAtRowsChanged);
   QVERIFY(opChangedSpy.isValid());
+  QSignalSpy rowsAboutToBeInsertedSpy(&repository, &MemoryPersonRepository::rowsAboutToBeInserted);
+  QVERIFY(rowsAboutToBeInsertedSpy.isValid());
+  QSignalSpy rowsInsertedSpy(&repository, &MemoryPersonRepository::rowsInserted);
+  QVERIFY(rowsInsertedSpy.isValid());
   QVariantList arguments;
 
   /*
@@ -295,31 +335,386 @@ void AbstractCachedRepositoryTest::insertRecordsAndSubmitSignalTest()
   QVERIFY(repository.submitChanges());
   QCOMPARE(repository.rowCount(), 0);
   QCOMPARE(opChangedSpy.count(), 0);
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 0);
+  QCOMPARE(rowsInsertedSpy.count(), 0);
 
+  repository.insertRecords(0, 2, buildPerson("A"));
+  QCOMPARE(repository.rowCount(), 2);
   QCOMPARE(opChangedSpy.count(), 0);
-  repository.insertRecords(0, 1, buildPerson("A"));
-  QCOMPARE(repository.rowCount(), 1);
-  QCOMPARE(opChangedSpy.count(), 0);
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 1);
+  arguments = rowsAboutToBeInsertedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(0)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+  QCOMPARE(rowsInsertedSpy.count(), 1);
+  arguments = rowsInsertedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 0);
 
   QVERIFY(repository.submitChanges());
-  QCOMPARE(repository.rowCount(), 1);
+  QCOMPARE(repository.rowCount(), 2);
   QCOMPARE(opChangedSpy.count(), 1);
   arguments = opChangedSpy.takeFirst();
   QCOMPARE(arguments.count(), 2);
   QCOMPARE(arguments.at(0), QVariant(0)); // firstRow
-  QCOMPARE(arguments.at(1), QVariant(0)); // lastRow
-
-  QFAIL("Not complete");
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 0);
+  QCOMPARE(rowsInsertedSpy.count(), 0);
 }
 
-void AbstractCachedRepositoryTest::removeRecordsTest()
+void AbstractCachedRepositoryTest::removeRecordsAndSubmitTest()
 {
   MemoryPersonRepository repository;
+
+  repository.populate({"A","B","C","D","E"});
+  QVERIFY(repository.fetchAll());
+  QCOMPARE(repository.rowCount(), 5);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(2).firstName(), QString("fC"));
+  QCOMPARE(repository.constRecordAt(3).firstName(), QString("fD"));
+  QCOMPARE(repository.constRecordAt(4).firstName(), QString("fE"));
+  QCOMPARE(repository.storageRowCount(), 5);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+  QCOMPARE(repository.storage().at(2).firstName(), QString("fC"));
+  QCOMPARE(repository.storage().at(3).firstName(), QString("fD"));
+  QCOMPARE(repository.storage().at(4).firstName(), QString("fE"));
+
+  /*
+   * Remove 1 record
+   */
+
+  repository.removeRecords(4, 1);
+  QCOMPARE(repository.rowCount(), 5);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(2).firstName(), QString("fC"));
+  QCOMPARE(repository.constRecordAt(3).firstName(), QString("fD"));
+  QCOMPARE(repository.constRecordAt(4).firstName(), QString("fE"));
+  QCOMPARE(repository.storageRowCount(), 5);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+  QCOMPARE(repository.storage().at(2).firstName(), QString("fC"));
+  QCOMPARE(repository.storage().at(3).firstName(), QString("fD"));
+  QCOMPARE(repository.storage().at(4).firstName(), QString("fE"));
+
+  QVERIFY(repository.submitChanges());
+  QCOMPARE(repository.rowCount(), 4);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(2).firstName(), QString("fC"));
+  QCOMPARE(repository.constRecordAt(3).firstName(), QString("fD"));
+  QCOMPARE(repository.storageRowCount(), 4);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+  QCOMPARE(repository.storage().at(2).firstName(), QString("fC"));
+  QCOMPARE(repository.storage().at(3).firstName(), QString("fD"));
+
+  /*
+   * Remove 2 non consecutive records
+   */
+
+  repository.removeRecords(0, 1);
+  repository.removeRecords(2, 1);
+  QCOMPARE(repository.rowCount(), 4);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(2).firstName(), QString("fC"));
+  QCOMPARE(repository.constRecordAt(3).firstName(), QString("fD"));
+  QCOMPARE(repository.storageRowCount(), 4);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+  QCOMPARE(repository.storage().at(2).firstName(), QString("fC"));
+  QCOMPARE(repository.storage().at(3).firstName(), QString("fD"));
+
+  QVERIFY(repository.submitChanges());
+  QCOMPARE(repository.rowCount(), 2);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fD"));
+  QCOMPARE(repository.storageRowCount(), 2);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fB"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fD"));
+}
+
+void AbstractCachedRepositoryTest::removeRecordsAndSubmitSignalTest()
+{
+  MemoryPersonRepository repository;
+  QSignalSpy opChangedSpy(&repository, &MemoryPersonRepository::operationAtRowsChanged);
+  QSignalSpy rowsAboutToBeRemovedSpy(&repository, &MemoryPersonRepository::rowsAboutToBeRemoved);
+  QSignalSpy rowsRemovedSpy(&repository, &MemoryPersonRepository::rowsRemoved);
+  QVERIFY(opChangedSpy.isValid());
+  QVERIFY(rowsAboutToBeRemovedSpy.isValid());
+  QVERIFY(rowsRemovedSpy.isValid());
+  QVariantList arguments;
+
+  repository.populate({"A","B"});
+  QVERIFY(repository.fetchAll());
+  QCOMPARE(opChangedSpy.count(), 0);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+
+  repository.removeRecords(1, 1);
+  QCOMPARE(opChangedSpy.count(), 1);
+  arguments = opChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+
+  QVERIFY(repository.submitChanges());
+  QCOMPARE(opChangedSpy.count(), 0);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 1);
+  arguments = rowsAboutToBeRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+}
+
+void AbstractCachedRepositoryTest::insertRecordsRemoveAndSubmitTest()
+{
+  MemoryPersonRepository repository;
+  QCOMPARE(repository.rowCount(), 0);
+  QCOMPARE(repository.storageRowCount(), 0);
+
   repository.populate({"A","B"});
   QVERIFY(repository.fetchAll());
   QCOMPARE(repository.rowCount(), 2);
-  repository.removeRecords(0, 2);
-  QCOMPARE(repository.rowCount(), 0);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.storageRowCount(), 2);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+
+  repository.insertRecords(2, 3, buildPerson("N"));
+  QCOMPARE(repository.rowCount(), 5);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(2).firstName(), QString("fN"));
+  QCOMPARE(repository.constRecordAt(3).firstName(), QString("fN"));
+  QCOMPARE(repository.constRecordAt(4).firstName(), QString("fN"));
+  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(1), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(2), Mdt::Container::TableCacheOperation::Insert);
+  QCOMPARE(repository.operationAtRow(3), Mdt::Container::TableCacheOperation::Insert);
+  QCOMPARE(repository.operationAtRow(4), Mdt::Container::TableCacheOperation::Insert);
+  QCOMPARE(repository.storageRowCount(), 2);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+
+  repository.removeRecords(3, 2);
+  QCOMPARE(repository.rowCount(), 5);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(2).firstName(), QString("fN"));
+  QCOMPARE(repository.constRecordAt(3).firstName(), QString("fN"));
+  QCOMPARE(repository.constRecordAt(4).firstName(), QString("fN"));
+  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(1), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(2), Mdt::Container::TableCacheOperation::Insert);
+  QCOMPARE(repository.operationAtRow(3), Mdt::Container::TableCacheOperation::InsertDelete);
+  QCOMPARE(repository.operationAtRow(4), Mdt::Container::TableCacheOperation::InsertDelete);
+  QCOMPARE(repository.storageRowCount(), 2);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+
+  QVERIFY(repository.submitChanges());
+  QCOMPARE(repository.rowCount(), 3);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(2).firstName(), QString("fN"));
+  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(1), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(2), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.storageRowCount(), 3);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+  QCOMPARE(repository.storage().at(2).firstName(), QString("fN"));
+
+  repository.insertRecords(3, 2, buildPerson("N2"));
+  QCOMPARE(repository.rowCount(), 5);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(2).firstName(), QString("fN"));
+  QCOMPARE(repository.constRecordAt(3).firstName(), QString("fN2"));
+  QCOMPARE(repository.constRecordAt(4).firstName(), QString("fN2"));
+  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(1), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(2), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(3), Mdt::Container::TableCacheOperation::Insert);
+  QCOMPARE(repository.operationAtRow(4), Mdt::Container::TableCacheOperation::Insert);
+  QCOMPARE(repository.storageRowCount(), 3);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+  QCOMPARE(repository.storage().at(2).firstName(), QString("fN"));
+
+  repository.removeRecords(3, 1);
+  QCOMPARE(repository.rowCount(), 5);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(2).firstName(), QString("fN"));
+  QCOMPARE(repository.constRecordAt(3).firstName(), QString("fN2"));
+  QCOMPARE(repository.constRecordAt(4).firstName(), QString("fN2"));
+  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(1), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(2), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(3), Mdt::Container::TableCacheOperation::InsertDelete);
+  QCOMPARE(repository.operationAtRow(4), Mdt::Container::TableCacheOperation::Insert);
+  QCOMPARE(repository.storageRowCount(), 3);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+  QCOMPARE(repository.storage().at(2).firstName(), QString("fN"));
+
+  QVERIFY(repository.submitChanges());
+  QCOMPARE(repository.rowCount(), 4);
+  QCOMPARE(repository.constRecordAt(0).firstName(), QString("fA"));
+  QCOMPARE(repository.constRecordAt(1).firstName(), QString("fB"));
+  QCOMPARE(repository.constRecordAt(2).firstName(), QString("fN"));
+  QCOMPARE(repository.constRecordAt(3).firstName(), QString("fN2"));
+  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(1), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(2), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(3), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.storageRowCount(), 4);
+  QCOMPARE(repository.storage().at(0).firstName(), QString("fA"));
+  QCOMPARE(repository.storage().at(1).firstName(), QString("fB"));
+  QCOMPARE(repository.storage().at(2).firstName(), QString("fN"));
+  QCOMPARE(repository.storage().at(3).firstName(), QString("fN2"));
+
+}
+
+void AbstractCachedRepositoryTest::insertRecordsRemoveAndSubmitSignalTest()
+{
+  MemoryPersonRepository repository;
+  QSignalSpy opChangedSpy(&repository, &MemoryPersonRepository::operationAtRowsChanged);
+  QSignalSpy rowsAboutToBeRemovedSpy(&repository, &MemoryPersonRepository::rowsAboutToBeRemoved);
+  QSignalSpy rowsRemovedSpy(&repository, &MemoryPersonRepository::rowsRemoved);
+  QVERIFY(opChangedSpy.isValid());
+  QVERIFY(rowsAboutToBeRemovedSpy.isValid());
+  QVERIFY(rowsRemovedSpy.isValid());
+  QVariantList arguments;
+
+  /*
+   * |row|data|operation|
+   * --------------------
+   * | 0 | fA |  None   |
+   * | 1 | fB |  None   |
+   */
+  repository.populate({"A","B"});
+  QVERIFY(repository.fetchAll());
+  QCOMPARE(repository.rowCount(), 2);
+  QCOMPARE(opChangedSpy.count(), 0);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+
+  /*
+   * |row|data|operation|
+   * --------------------
+   * | 0 | fA | None    |
+   * | 1 | fB | None    |
+   * | 2 | fN | Insert  |
+   * | 3 | fN | Insert  |
+   * | 4 | fN | Insert  |
+   */
+  repository.insertRecords(2, 3, buildPerson("N"));
+  QCOMPARE(repository.rowCount(), 5);
+  QCOMPARE(opChangedSpy.count(), 0);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+
+  /*
+   * |row|data|  operation   |
+   * -------------------------
+   * | 0 | fA | None         |
+   * | 1 | fB | None         |
+   * | 2 | fN | Insert       |
+   * | 3 | fN | InsertDelete |
+   * | 4 | fN | InsertDelete |
+   */
+  repository.removeRecords(3, 2);
+  QCOMPARE(repository.rowCount(), 5);
+  QCOMPARE(opChangedSpy.count(), 1);
+  arguments = opChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(3)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(4)); // lastRow
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+
+  /*
+   * |row|data|operation|
+   * --------------------
+   * | 0 | fA | None    |
+   * | 1 | fB | None    |
+   * | 2 | fN | None    |
+   */
+  QVERIFY(repository.submitChanges());
+  QCOMPARE(repository.rowCount(), 3);
+  QCOMPARE(opChangedSpy.count(), 1);
+  arguments = opChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(2)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(2)); // lastRow
+  // NOTE: Currently, adjacent rows are not grouped (this could be a optimisation)
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 2);
+  arguments = rowsAboutToBeRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(4)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(4)); // lastRow
+  arguments = rowsAboutToBeRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(3)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(3)); // lastRow
+  QCOMPARE(rowsRemovedSpy.count(), 2);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 0);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 0);
+
+  /*
+   * |row|data|  operation   |
+   * -------------------------
+   * | 0 | fA | None         |
+   * | 1 | fB | None         |
+   * | 2 | fN | None         |
+   * | 3 | fO | InsertDelete |
+   * | 4 | fO | Insert       |
+   */
+  repository.insertRecords(3, 2, buildPerson("O"));
+  repository.removeRecords(3, 1);
+  QCOMPARE(repository.rowCount(), 5);
+  QCOMPARE(opChangedSpy.count(), 1);
+  arguments = opChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(3)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(3)); // lastRow
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+
+  /*
+   * |row|data|  operation   |
+   * -------------------------
+   * | 0 | fA | None         |
+   * | 1 | fB | None         |
+   * | 2 | fN | None         |
+   * | 3 | fO | None         |
+   */
+  QVERIFY(repository.submitChanges());
+  QCOMPARE(repository.rowCount(), 4);
+  QCOMPARE(opChangedSpy.count(), 1);
+  arguments = opChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(3)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(3)); // lastRow
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 1);
+  arguments = rowsAboutToBeRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(3)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(3)); // lastRow
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 0);
 }
 
 void AbstractCachedRepositoryTest::dataTest()
@@ -362,16 +757,16 @@ void AbstractCachedRepositoryTest::setDataAndSubmitTest()
 
   QCOMPARE(repository.rowCount(), 3);
   QCOMPARE(repository.columnCount(), 2);
-  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::None);
-  QCOMPARE(repository.operationAtRow(1), Mdt::Container::TableCacheOperation::None);
-  QCOMPARE(repository.operationAtRow(2), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(2), TableCacheOperation::None);
   repository.setData(0, 1, "A");
   QCOMPARE(repository.data(0, 1), QVariant("A"));
   QCOMPARE(repository.data(1, 1), QVariant("f"));
   QCOMPARE(repository.data(2, 1), QVariant("f"));
-  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::Update);
-  QCOMPARE(repository.operationAtRow(1), Mdt::Container::TableCacheOperation::None);
-  QCOMPARE(repository.operationAtRow(2), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(0), TableCacheOperation::Update);
+  QCOMPARE(repository.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(2), TableCacheOperation::None);
   QCOMPARE(repository.storage()[0].firstName(), QString("f"));
   QCOMPARE(repository.storage()[1].firstName(), QString("f"));
   QCOMPARE(repository.storage()[2].firstName(), QString("f"));
@@ -380,9 +775,9 @@ void AbstractCachedRepositoryTest::setDataAndSubmitTest()
   QCOMPARE(repository.data(0, 1), QVariant("A"));
   QCOMPARE(repository.data(1, 1), QVariant("f"));
   QCOMPARE(repository.data(2, 1), QVariant("f"));
-  QCOMPARE(repository.operationAtRow(0), Mdt::Container::TableCacheOperation::None);
-  QCOMPARE(repository.operationAtRow(1), Mdt::Container::TableCacheOperation::None);
-  QCOMPARE(repository.operationAtRow(2), Mdt::Container::TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(repository.operationAtRow(2), TableCacheOperation::None);
   QCOMPARE(repository.storage()[0].firstName(), QString("A"));
   QCOMPARE(repository.storage()[1].firstName(), QString("f"));
   QCOMPARE(repository.storage()[2].firstName(), QString("f"));
@@ -390,7 +785,38 @@ void AbstractCachedRepositoryTest::setDataAndSubmitTest()
 
 void AbstractCachedRepositoryTest::setDataAndSubmitSignalTest()
 {
-  QFAIL("Not complete");
+  MemoryPersonRepository repository;
+  repository.populate({"",""});
+  QVERIFY(repository.fetchAll());
+  QSignalSpy dataAtRowsChangedSpy(&repository, &MemoryPersonRepository::dataAtRowsChanged);
+  QVERIFY(dataAtRowsChangedSpy.isValid());
+  QSignalSpy operationAtRowsChangedSpy(&repository, &MemoryPersonRepository::operationAtRowsChanged);
+  QVERIFY(operationAtRowsChangedSpy.isValid());
+  QVariantList arguments;
+
+  QCOMPARE(repository.rowCount(), 2);
+  QCOMPARE(dataAtRowsChangedSpy.count(), 0);
+  QCOMPARE(operationAtRowsChangedSpy.count(), 0);
+
+  repository.setData(0, 1, "A");
+  QCOMPARE(dataAtRowsChangedSpy.count(), 1);
+  arguments = dataAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(0)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(0)); // lastRow
+  QCOMPARE(operationAtRowsChangedSpy.count(), 1);
+  arguments = operationAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(0)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(0)); // lastRow
+
+  QVERIFY(repository.submitChanges());
+  QCOMPARE(dataAtRowsChangedSpy.count(), 0);
+  QCOMPARE(operationAtRowsChangedSpy.count(), 1);
+  arguments = operationAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(0)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(0)); // lastRow
 }
 
 void AbstractCachedRepositoryTest::insertRecordSetDataAndSubmitTest()

@@ -31,6 +31,7 @@ class CachedEntityRepositoryTableModelTest : public TestBase
 
   void defTest();
   void fieldIndexTest();
+  void horizontalHeaderTest();
   void setDataTest();
 
   void qtModelTest();

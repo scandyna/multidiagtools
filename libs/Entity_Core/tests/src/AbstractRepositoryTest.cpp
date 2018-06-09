@@ -36,7 +36,9 @@ class PersonRepository : public AbstractRepository
  public:
 
   using ParentClass::emitOperationAtRowsChanged;
+  using ParentClass::emitOperationAtRowChanged;
   using ParentClass::emitDataAtRowsChanged;
+  using ParentClass::emitDataAtRowChanged;
 };
 
 /*
@@ -58,6 +60,13 @@ void AbstractRepositoryTest::emitOperationAtRowsChangedTest()
   QCOMPARE(arguments.count(), 2);
   QCOMPARE(arguments.at(0), QVariant(0)); // firstRow
   QCOMPARE(arguments.at(1), QVariant(3)); // lastRow
+
+  repository.emitOperationAtRowChanged(1);
+  QCOMPARE(spy.count(), 1);
+  arguments = spy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
 }
 
 void AbstractRepositoryTest::emitDataAtRowsChangedTest()
@@ -76,7 +85,7 @@ void AbstractRepositoryTest::emitDataAtRowsChangedTest()
   QCOMPARE(arguments.at(0), QVariant(0)); // firstRow
   QCOMPARE(arguments.at(1), QVariant(3)); // lastRow
 
-  repository.emitDataAtRowsChanged(1);
+  repository.emitDataAtRowChanged(1);
   QCOMPARE(spy.count(), 1);
   arguments = spy.takeFirst();
   QCOMPARE(arguments.count(), 2);

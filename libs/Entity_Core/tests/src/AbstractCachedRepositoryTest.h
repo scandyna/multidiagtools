@@ -36,7 +36,10 @@ class AbstractCachedRepositoryTest : public TestBase
   void insertRecordsTest();
   void insertRecordsAndSubmitTest();
   void insertRecordsAndSubmitSignalTest();
-  void removeRecordsTest();
+  void removeRecordsAndSubmitTest();
+  void removeRecordsAndSubmitSignalTest();
+  void insertRecordsRemoveAndSubmitTest();
+  void insertRecordsRemoveAndSubmitSignalTest();
   void dataTest();
   void setDataTest();
   void setDataAndSubmitTest();

@@ -32,6 +32,7 @@ class AbstractCachedEntityRepositoryTest : public TestBase
   void columnCountTest();
   void dataTest();
   void setDataTest();
+  void insertRecordsAndSubmitTest();
 };
 
 #endif // #ifndef ABSTRACT_CACHED_ENTITY_REPOSITORY_TEST_H

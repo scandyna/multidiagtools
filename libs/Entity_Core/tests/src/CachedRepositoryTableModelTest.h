@@ -30,11 +30,27 @@ class CachedRepositoryTableModelTest : public TestBase
  private slots:
 
   void sandbox();
+
+  void initTestCase();
   void setFetchedRepositoryTest();
   void setRepositoryThenFetchTest();
   void dataTest();
   void insertRowsTest();
   void itemModelInsertRowTest();
+  void insertRowsAndSubmitTest();
+  void insertRowsAndSubmitHeaderTest();
+  void insertRowsAndSubmitResizeSignalsTest();
+  void insertRowsFromRepositoryAndSubmitTest();
+  void insertRowsFromRepositoryAndSubmitResizeSignalsTest();
+  void removeRowsAndSubmitTest();
+  void removeRowsAndSubmitHeaderTest();
+  void removeRowsAndSubmitResizeSignalsTest();
+  void removeRowsFromRepositoryAndSubmitTest();
+  void insertRecordsRemoveAndSubmitHeaderTest();
+  void setDataAndSubmitTest();
+  void setDataAndSubmitSignalTest();
+  void setDataFromRepositoryAndSubmitTest();
+  void setDataFromRepositoryAndSubmitSignalTest();
 
   void qtModelTest();
 };

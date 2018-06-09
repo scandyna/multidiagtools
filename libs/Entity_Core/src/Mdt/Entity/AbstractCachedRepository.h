@@ -22,11 +22,13 @@
 #define MDT_ENTITY_ABSTRACT_CACHED_REPOSITORY_H
 
 #include "AbstractRepository.h"
-// #include "TableCache.h"
 #include "Mdt/Container/RowList.h"
 #include "Mdt/Container/TableCache.h"
+#include "Mdt/IndexRange/RowRange.h"
 #include <QtGlobal>
 #include <QVariant>
+
+// #include <QDebug>
 
 namespace Mdt{ namespace Entity{
 
@@ -66,10 +68,6 @@ namespace Mdt{ namespace Entity{
      : AbstractRepository(parent)
     {
     }
-
-//     /*! \brief Destructor
-//      */
-//     virtual ~AbstractCachedRepository() = default;
 
     AbstractCachedRepository(const AbstractCachedRepository &) = delete;
     AbstractCachedRepository & operator=(const AbstractCachedRepository &) = delete;
@@ -115,12 +113,16 @@ namespace Mdt{ namespace Entity{
 
     /*! \brief Set \a data at \a row and \a column
      *
+     * This will also mark the data as edited in the cache.
+     *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
      */
     void setData(int row, int column, const QVariant & data)
     {
       setDataToCache(row, column, data);
+      emitDataAtRowChanged(row);
+      emitOperationAtRowChanged(row);
     }
 
     /*! \brief Get record a \a row
@@ -134,12 +136,45 @@ namespace Mdt{ namespace Entity{
       return mCache.constRecordAt(row);
     }
 
+    /*! \brief Access the record at \a row for a update
+     *
+     * Will mark the record at \a row as edited in the cache.
+     *
+     * If the record must be modified without marking,
+     *  for example because the data has changed from the storage,
+     *  use refRecordAt() .
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     */
+    [[deprecated]]
+    Record & refRecordAtForUpdate(int row)
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
+      return mCache.refRecordAtForUpdate(row);
+    }
+
+    /*! \brief Access the record at \a row
+     *
+     * No marking is done by calling this method.
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     * \sa refRecordAtForUpdate()
+     */
+    Record & refRecordAt(int row)
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
+      return mCache.refRecordAt(row);
+    }
+
     /*! \brief Get record a \a row
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
      * \note Calling this method will mark the entiere record at \a row as edited in the cache
      * \todo Should be protected and should not change oprations
      */
+    [[deprecated]]
     Record & recordAt(int row)
     {
       Q_ASSERT(row >= 0);
@@ -181,12 +216,19 @@ namespace Mdt{ namespace Entity{
     {
       Q_ASSERT(pos >= 0);
       Q_ASSERT(count >= 1);
+
+      Mdt::IndexRange::RowRange rowRange;
+      rowRange.setFirstRow(pos);
+      rowRange.setRowCount(count);
+
+      beginInsertRows(rowRange.firstRow(), rowRange.lastRow());
       mCache.insertRecords(pos, count, record);
+      endInsertRows();
     }
 
     /*! \brief Remove \a count records starting from \a pos
      *
-     * Records are removed from the cache.
+     * Records are marked as deleted in the cache.
      *
      * \pre \a pos must be >= 0
      * \pre \a count must be >= 1
@@ -197,7 +239,12 @@ namespace Mdt{ namespace Entity{
       Q_ASSERT(pos >= 0);
       Q_ASSERT(count >= 0);
       Q_ASSERT( (pos + count) <= rowCount() );
+
       mCache.removeRecords(pos, count);
+      Mdt::IndexRange::RowRange rowRange;
+      rowRange.setFirstRow(pos);
+      rowRange.setRowCount(count);
+      emitOperationAtRowsChanged(rowRange.firstRow(), rowRange.lastRow());
     }
 
     /*! \brief Submit changes
@@ -206,7 +253,14 @@ namespace Mdt{ namespace Entity{
      */
     bool submitChanges()
     {
+      if(!updateModifiedRecordsInStorage()){
+        return false;
+      }
       if(!insertNewRecordsToStorage()){
+        return false;
+      }
+      removeRecordsToDeleteFromCacheOnly();
+      if(!removeRecordsToDeleteFromStorage()){
         return false;
       }
       mCache.commitChanges();
@@ -255,19 +309,57 @@ namespace Mdt{ namespace Entity{
     {
       Q_ASSERT(rowCount() < cachedRowCountLimit());
       mCache.appendRecordFromStorage(record);
-//       mCache.appendRecord(record, TableCacheMarking::NotMarkOperation);
     }
 
-    /*! \brief Insert \a record to the underlaying storage
-     */
-    virtual bool insertRecordToStorage(const Record & record) = 0;
-
     /*! \brief Set \a data at \a row and \a column into the cache
+     *
+     * Implement this method to edit data in the cache.
+     *  The implementation should use refRecordAtForUpdate() ,
+     *  this way the cache will be marked as updated.
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
      */
     virtual void setDataToCache(int row, int column, const QVariant & data) = 0;
+
+    /*! \brief Set a auto ID to the cache
+     *
+     * If the repository uses auto ID
+     *  (for example SQL auto increment primary key),
+     *  this method should be implemented to set the auto ID.
+     *
+     * Example:
+     * \code
+     * void setAutoIdToCache(int row, const QVariant & id) override
+     * {
+     *   refRecordAt(row)[0] = id;
+     * }
+     * \endcode
+     *
+     * \note this method should not set any operation marking in the cache
+     * \note this method should not emit any signal
+     */
+    virtual void setAutoIdToCache(int row, const QVariant & id)
+    {
+      Q_UNUSED(row);
+      Q_UNUSED(id);
+    }
+
+    /*! \brief Insert \a record to the underlaying storage
+     *
+     * If the repository uses auto ID
+     *  (for example SQL auto increment primary key),
+     *  \a autoId should be set by the implementation.
+     */
+    virtual bool insertRecordToStorage(const Record & record, QVariant & autoId) = 0;
+
+    /*! \brief Remove the record at \a row from the storage
+     */
+    virtual bool removeRecordFromStorage(int row) = 0;
+
+    /*! \brief Update the record at \a row in the storage
+     */
+    virtual bool updateRecordInStorage(int row) = 0;
 
    private:
 
@@ -275,16 +367,50 @@ namespace Mdt{ namespace Entity{
     {
       const auto rowList = mCache.getRowsToInsertIntoStorage();
       for(const auto row : rowList){
-        if(!insertRecordToStorage( constRecordAt(row) )){
+        QVariant autoId;
+        if(!insertRecordToStorage( constRecordAt(row), autoId )){
           return false;
         }
+        if(!autoId.isNull()){
+          setAutoIdToCache(row, autoId);
+        }
       }
-//       mCache.removeIndexesForRows(rowList);
+      return true;
+    }
+
+    void removeRecordsToDeleteFromCacheOnly()
+    {
+      const auto rowList = mCache.getRowsToDeleteInCacheOnly();
+      for(const auto row : rowList){
+        beginRemoveRows(row, row);
+        mCache.removeRecordInCache(row);
+        endRemoveRows();
+      }
+    }
+
+    bool removeRecordsToDeleteFromStorage()
+    {
+      const auto rowList = mCache.getRowsToDeleteInStorage();
+      for(const auto row : rowList){
+        if(!removeRecordFromStorage(row)){
+          return false;
+        }
+        beginRemoveRows(row, row);
+        mCache.removeRecordInCache(row);
+        endRemoveRows();
+      }
       return true;
     }
 
     bool updateModifiedRecordsInStorage()
     {
+      const auto rowList = mCache.getRowsToUpdateInStorage();
+      for(const auto row : rowList){
+        if(!updateRecordInStorage(row)){
+          return false;
+        }
+      }
+      return true;
     }
 
     Mdt::Container::TableCache<Record> mCache;
