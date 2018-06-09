@@ -62,6 +62,36 @@ namespace Mdt{ namespace Container{
    * }
    * \endcode
    *
+   * When removing rows, 2 situations can occur:
+   *  - The data referred by the row has allready been stored
+   *  - The row has been inserted in the cache, but the data does not exist in the storage
+   *
+   * To remove rows, a good solution is to remove each row from the greatest to the lowest one.
+   *  This avoids having to recalculate the row to match the new size of the cache.
+   *
+   * Example:
+   * \code
+   * auto rowList = mCache.getRowsToDeleteInCacheOnly();
+   * for(const auto row : rowList){
+   *   notifyRemoveRowBegins(row);
+   *   mCache.removeRecordInCache(row);
+   *   notifyRemoveRowDone();
+   * }
+   * // Remove data in the storage.
+   * beginTransaction();
+   * rowList = mCache.getRowsToDeleteInStorage();
+   * for(const auto row : rowList){
+   *   removeRecordFromStorage(row);
+   * }
+   * if(commitTransaction()){
+   *   for(const auto row : rowList){
+   *     notifyRemoveRowBegins(row);
+   *     mCache.removeRecordInCache(row);
+   *     notifyRemoveRowDone();
+   *   }
+   * }
+   * \endcode
+   *
    * \note TableCache works only at the record level, i.e. does not provide
    *    access to the data at row and column.
    *    This is to avoid restricting a column access API.
@@ -206,10 +236,24 @@ namespace Mdt{ namespace Container{
      *
      * \note The returned list is sorted in descending way,
      *    which helps avoiding problems when removing a list of rows.
+     *
+     * \todo Must be removed because need a single pass remove rows
      */
     RowList getRowsToDeleteInStorage() const
     {
       return mOperationMap.getRowsToDeleteInStorage();
+    }
+
+    /*! \brief Get a list of rows that have to be deleted from the cache only
+     *
+     * \note The returned list is sorted in descending way,
+     *    which helps avoiding problems when removing a list of rows.
+     *
+     * \todo Must be removed because need a single pass remove rows
+     */
+    RowList getRowsToDeleteInCacheOnly() const
+    {
+      return mOperationMap.getRowsToDeleteInCacheOnly();
     }
 
     /*! \brief Clear this cache
@@ -220,16 +264,12 @@ namespace Mdt{ namespace Container{
       mOperationMap.clear();
     }
 
-//     /*! \brief Clear operations
-//      *
-//      * Will remove all operation marking in this cache.
-//      */
-//     
-
     /*! \brief Commit changes
      *
      * Will clear all operation marking in this cache
      *  and update committed states, like committedRows .
+     *  The rows that have been marked as to be removed,
+     *  will also be removed from this cache.
      *
      * \code
      * bool submitAll()
@@ -310,16 +350,53 @@ namespace Mdt{ namespace Container{
       Q_ASSERT(pos >= 0);
       Q_ASSERT(count >= 0);
       Q_ASSERT( (pos + count) <= rowCount() );
+
       mOperationMap.removeRecords(pos, count);
+    }
+
+    /*! \brief Remove a record in the cache
+     *
+     * The record at \a row will be removed from the cache.
+     *  The corresponding marking is also removed as well.
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     */
+    void removeRecordInCache(int row)
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
+
+      mOperationMap.removeOperationAtRow(row);
+      removeFromContainer(mCache, row, 1);
+    }
+
+    /*! \brief Remove \a count records starting from \a pos
+     *
+     * Records will be removed from the cache.
+     *  No operation marking is done.
+     *
+     * \pre \a pos must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a pos + \a count must be in valid range ( 1 <= \a pos + \a count <= rowCount() )
+     *
+     * \todo should be renamed removeRecordsInCache()
+     */
+    [[deprecated]]
+    void removeRecordsFromStorage(int pos, int count)
+    {
+      Q_ASSERT(pos >= 0);
+      Q_ASSERT(count >= 0);
+      Q_ASSERT( (pos + count) <= rowCount() );
+      removeFromContainer(mCache, pos, count);
     }
 
    private:
 
     void removeDeletedRecords()
     {
-      const auto rows = getRowsToDeleteInStorage();
+      const auto rows = mOperationMap.getRowsToDeleteInCache();
       for(const auto row : rows){
-        removeFromContainer(mCache, row, 1);
+        removeRecordInCache(row);
       }
     }
 

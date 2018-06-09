@@ -35,8 +35,10 @@ class TableCacheOperationTest : public TestBase
   void insertRecordsTest();
   void insertCommitChangesTest();
   void setOperationAtRowTest();
+  void removeOperationAtRowTest();
   void getRowsToUpdateInStorageTest();
   void removeRecordsTest();
+  void insertRemoveRecordsTest();
   void insertSetRemoveTest();
 };
 

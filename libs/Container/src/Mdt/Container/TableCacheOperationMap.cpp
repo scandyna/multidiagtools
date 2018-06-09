@@ -36,12 +36,8 @@ void TableCacheOperationMap::insertRecords(int pos, int count)
   Q_ASSERT(pos >= 0);
   Q_ASSERT(count >= 0);
 
+  shiftRowsInMap(pos, count);
   updateOrAddOperationsForRows(pos, count, TableCacheOperation::Insert);
-//   int row = pos;
-//   for(int i = 0; i < count; ++i){
-//     mMap.emplace_back( TableCacheOperationIndex(row, TableCacheOperation::Insert) );
-//     ++row;
-//   }
 }
 
 void TableCacheOperationMap::removeRecords(int pos, int count)
@@ -50,20 +46,23 @@ void TableCacheOperationMap::removeRecords(int pos, int count)
   Q_ASSERT(count >= 0);
 
   updateOrAddOperationsForRows(pos, count, TableCacheOperation::Delete);
-//   int row = pos;
-//   for(int i = 0; i < count; ++i){
-//     auto operationIndex = operationIndexAtIfExists(i);
-//     if(operationIndex.isNull()){
-//       mMap.emplace_back( TableCacheOperationIndex(row, TableCacheOperation::Delete) );
-//     }else{
-//       operationIndex.setOperation( operationFromExisting(operationIndex.operation(), TableCacheOperation::Delete) );
-//     }
-//     ++row;
-//   }
+}
+
+void TableCacheOperationMap::removeOperationAtRow(int row)
+{
+  Q_ASSERT(row >= 0);
+
+  const auto it = findRowIterator(row);
+  if(it != mMap.cend()){
+    mMap.erase(it);
+    shiftRowsInMap(row, -1);
+  }
 }
 
 void TableCacheOperationMap::setOperationAtRow(int row, TableCacheOperation operation)
 {
+  Q_ASSERT(row >= 0);
+
   const auto it = findRowIterator(row);
   if(it == mMap.cend()){
     mMap.push_back( TableCacheOperationIndex(row, operation) );
@@ -97,6 +96,22 @@ RowList TableCacheOperationMap::getRowsToDeleteInStorage() const
   return rowList;
 }
 
+RowList TableCacheOperationMap::getRowsToDeleteInCacheOnly() const
+{
+  auto rowList = getRowsForOperation(TableCacheOperation::InsertDelete);
+  std::sort(rowList.begin(), rowList.end(), std::greater<>());
+
+  return rowList;
+}
+
+RowList TableCacheOperationMap::getRowsToDeleteInCache() const
+{
+  auto rowList = getRowsForOperation(TableCacheOperation::Delete, TableCacheOperation::InsertDelete);
+  std::sort(rowList.begin(), rowList.end(), std::greater<>());
+
+  return rowList;
+}
+
 void TableCacheOperationMap::commitChanges()
 {
   setCommittedRows();
@@ -114,7 +129,8 @@ TableCacheOperation TableCacheOperationMap::operationFromExisting(TableCacheOper
         case TableCacheOperation::Insert:
         case TableCacheOperation::Update:
           return TableCacheOperation::Insert;
-        ///case TableCacheOperation::Delete:
+        case TableCacheOperation::Delete:
+          return TableCacheOperation::InsertDelete;
       }
       break;
     case TableCacheOperation::Update:
@@ -138,6 +154,17 @@ TableCacheOperation TableCacheOperationMap::operationFromExisting(TableCacheOper
           return TableCacheOperation::Delete;
       }
       break;
+  }
+}
+
+void TableCacheOperationMap::shiftRowsInMap(int row, int count)
+{
+  Q_ASSERT(row >= 0);
+
+  for(auto & index : mMap){
+    if(index.row() >= row){
+      index.setRow(index.row() + count);
+    }
   }
 }
 
@@ -242,7 +269,8 @@ void TableCacheOperationMap::setCommittedRows()
 
 bool TableCacheOperationMap::isCommittedRow(const TableCacheOperationIndex & index)
 {
-  return index.operation() != TableCacheOperation::Delete;
+  return (index.operation() == TableCacheOperation::Insert) || (index.operation() == TableCacheOperation::Update);
+//   return (index.operation() != TableCacheOperation::Delete) && (index.operation() != TableCacheOperation::InsertDelete);
 }
 
 RowList TableCacheOperationMap::getRowsForOperation(TableCacheOperation operation) const
@@ -251,6 +279,19 @@ RowList TableCacheOperationMap::getRowsForOperation(TableCacheOperation operatio
 
   for(const auto & index : mMap){
     if(index.operation() == operation){
+      rowList.append(index.row());
+    }
+  }
+
+  return rowList;
+}
+
+RowList TableCacheOperationMap::getRowsForOperation(TableCacheOperation operation1, TableCacheOperation operation2) const
+{
+  RowList rowList;
+
+  for(const auto & index : mMap){
+    if( (index.operation() == operation1) || (index.operation() == operation2) ){
       rowList.append(index.row());
     }
   }

@@ -78,6 +78,14 @@ namespace Mdt{ namespace Container{
      */
     TableCacheOperationIndex & operator=(TableCacheOperationIndex && other) = default;
 
+    /*! \brief Set the row of this index
+     */
+    void setRow(int row)
+    {
+      Q_ASSERT(row >= 0);
+      mRow = row;
+    }
+
     /*! \brief Get the row of this index
      */
     int row() const

@@ -80,6 +80,19 @@ namespace Mdt{ namespace Container{
       return mMap.size();
     }
 
+    /*! \brief Get the index at \a i
+     *
+     * \pre \a i must be >= 0
+     * \pre \a i must be < indexCount()
+     */
+    const TableCacheOperationIndex & indexAt(int i)
+    {
+      Q_ASSERT(i >= 0);
+      Q_ASSERT(i < indexCount());
+
+      return mMap[i];
+    }
+
     /*! \brief Check if this map is empty
      */
     bool isEmpty() const
@@ -104,6 +117,12 @@ namespace Mdt{ namespace Container{
      * \pre \a count must be >= 0
      */
     void removeRecords(int pos, int count);
+
+    /*! \brief Remove the operation at \a row from thi map
+     *
+     * \pre \a row must be >= 0
+     */
+    void removeOperationAtRow(int row);
 
     /*! \brief Set the operation at \a row in the cache
      *
@@ -136,17 +155,21 @@ namespace Mdt{ namespace Container{
      */
     RowList getRowsToDeleteInStorage() const;
 
-//     /*! \brief Commit changes
-//      *
-//      * The operation for each indexes in this cache
-//      *  will be set to TableCacheOperation::None .
-//      *  This way, it is now possible to query which indexes
-//      *  have been sent to the storage.
-//      *
-//      * Do not forget to call removedAllIndexes()
-//      *  once all needed information have been retrieved.
-//      */
-//     void commitChanges();
+    /*! \brief Get a list of rows that have to be deleted from the cache only
+     *
+     * \note The returned list is sorted in descending way,
+     *    which helps avoiding problems when removing a list of rows.
+     */
+    RowList getRowsToDeleteInCacheOnly() const;
+
+    /*! \brief Get a list of all rows that have to be deleted from the cache
+     *
+     * This is equivalent of the result of getRowsToDeleteInStorage() + getRowsToDeleteInCacheOnly()
+     *
+     * \note The returned list is sorted in descending way,
+     *    which helps avoiding problems when removing a list of rows.
+     */
+    RowList getRowsToDeleteInCache() const;
 
     /*! \brief Commit changes
      *
@@ -168,28 +191,39 @@ namespace Mdt{ namespace Container{
 
     /*! \brief Get the operation regarding \a existingOperation
      *
-     * |    Existing operation     |         Operation         |          Result           |
-     * |:-------------------------:|:-------------------------:|:-------------------------:|
-     * |TableCacheOperation::None  |TableCacheOperation::None  |TableCacheOperation::None  |
-     * |TableCacheOperation::None  |TableCacheOperation::Insert|TableCacheOperation::Insert|
-     * |TableCacheOperation::None  |TableCacheOperation::Update|TableCacheOperation::Update|
-     * |TableCacheOperation::None  |TableCacheOperation::Delete|TableCacheOperation::Delete|
-     * |TableCacheOperation::Insert|TableCacheOperation::None  | ?? |
-     * |TableCacheOperation::Insert|TableCacheOperation::Insert|TableCacheOperation::Insert|
-     * |TableCacheOperation::Insert|TableCacheOperation::Update|TableCacheOperation::Insert|
-     * |TableCacheOperation::Insert|TableCacheOperation::Delete| ?? |
-     * |TableCacheOperation::Update|TableCacheOperation::None  | ?? |
-     * |TableCacheOperation::Update|TableCacheOperation::Insert| ?? |
-     * |TableCacheOperation::Update|TableCacheOperation::Update|TableCacheOperation::Update|
-     * |TableCacheOperation::Update|TableCacheOperation::Delete|TableCacheOperation::Delete|
-     * |TableCacheOperation::Delete|TableCacheOperation::None  | ?? |
-     * |TableCacheOperation::Delete|TableCacheOperation::Insert|TableCacheOperation::Delete|
-     * |TableCacheOperation::Delete|TableCacheOperation::Update|TableCacheOperation::Update|
-     * |TableCacheOperation::Delete|TableCacheOperation::Delete|TableCacheOperation::Delete|
+     * |       Existing operation        |            Operation            |          Result           |
+     * |:-------------------------------:|:-------------------------------:|:-------------------------:|
+     * |TableCacheOperation::None        |TableCacheOperation::None        |TableCacheOperation::None  |
+     * |TableCacheOperation::None        |TableCacheOperation::Insert      |TableCacheOperation::Insert|
+     * |TableCacheOperation::None        |TableCacheOperation::Update      |TableCacheOperation::Update|
+     * |TableCacheOperation::None        |TableCacheOperation::Delete      |TableCacheOperation::Delete|
+     * |TableCacheOperation::None        |TableCacheOperation::InsertDelete| ?? |
+     * |TableCacheOperation::Insert      |TableCacheOperation::None        | ?? |
+     * |TableCacheOperation::Insert      |TableCacheOperation::Insert      |TableCacheOperation::Insert|
+     * |TableCacheOperation::Insert      |TableCacheOperation::Update      |TableCacheOperation::Insert|
+     * |TableCacheOperation::Insert      |TableCacheOperation::Delete      |TableCacheOperation::InsertDelete|
+     * |TableCacheOperation::Insert      |TableCacheOperation::InsertDelete| ?? |
+     * |TableCacheOperation::Update      |TableCacheOperation::None        | ?? |
+     * |TableCacheOperation::Update      |TableCacheOperation::Insert      | ?? |
+     * |TableCacheOperation::Update      |TableCacheOperation::Update      |TableCacheOperation::Update|
+     * |TableCacheOperation::Update      |TableCacheOperation::Delete      |TableCacheOperation::Delete|
+     * |TableCacheOperation::Update      |TableCacheOperation::InsertDelete| ?? |
+     * |TableCacheOperation::Delete      |TableCacheOperation::None        | ?? |
+     * |TableCacheOperation::Delete      |TableCacheOperation::Insert      |TableCacheOperation::Delete|
+     * |TableCacheOperation::Delete      |TableCacheOperation::Update      |TableCacheOperation::Update|
+     * |TableCacheOperation::Delete      |TableCacheOperation::Delete      |TableCacheOperation::Delete|
+     * |TableCacheOperation::Delete      |TableCacheOperation::InsertDelete|TableCacheOperation::Delete|
+     * |TableCacheOperation::InsertDelete|TableCacheOperation::None        | ?? |
+     * |TableCacheOperation::InsertDelete|TableCacheOperation::Insert      | ?? |
+     * |TableCacheOperation::InsertDelete|TableCacheOperation::Update      | ?? |
+     * |TableCacheOperation::InsertDelete|TableCacheOperation::Delete      | ?? |
+     * |TableCacheOperation::InsertDelete|TableCacheOperation::InsertDelete| ?? |
      */
     static TableCacheOperation operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation);
 
    private:
+
+    void shiftRowsInMap(int row, int count);
 
     TableCacheOperationIndex findIndex(int row, int column) const;
 
@@ -202,6 +236,7 @@ namespace Mdt{ namespace Container{
     TableCacheOperationIndex operationIndexAtIfExists(int index) const;
     void setCommittedRows();
     RowList getRowsForOperation(TableCacheOperation operation) const;
+    RowList getRowsForOperation(TableCacheOperation operation1, TableCacheOperation operation2) const;
 
     std::vector<TableCacheOperationIndex> mMap;
     Mdt::IndexRange::RowRange mCommittedRows;

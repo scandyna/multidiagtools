@@ -27,10 +27,12 @@ namespace Mdt{ namespace Container{
    */
   enum class TableCacheOperation
   {
-    None,     /*!< No operation on the element */
-    Insert,   /*!< The element was inserted to the cache */
-    Update,   /*!< The element was updated in the cache */
-    Delete    /*!< The element was deleted from the cache */
+    None,         /*!< No operation on the element */
+    Insert,       /*!< The element was inserted to the cache */
+    Update,       /*!< The element was updated in the cache */
+    Delete,       /*!< The element was deleted from the cache */
+    InsertDelete  /*!< The element has been inserted to the cache,
+                        then marked as to be deleted. */
   };
 
 }} // namespace Mdt{ namespace Container{
