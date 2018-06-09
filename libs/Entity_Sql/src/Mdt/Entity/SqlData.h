@@ -55,7 +55,7 @@ namespace Mdt{ namespace Entity{
 
         Q_ASSERT(mColumn < mSqlRecord.count());
 
-        boost::fusion::at_key<EntityFieldDef>(mDataStruct) = mSqlRecord.value(mColumn).value<fieldType>();
+        boost::fusion::at_key<EntityFieldDef>(mDataStruct) = mSqlRecord.value(mColumn).template value<fieldType>();
         ++mColumn;
       }
 
