@@ -32,7 +32,7 @@ class AbstractCachedRepositoryTest : public TestBase
   void rowCountLimitTest();
   void fetchAllTest();
   void fetchAllSignalTest();
-  void getSetRecordAtTest();
+//   void getSetRecordAtTest();
   void insertRecordsTest();
   void insertRecordsAndSubmitTest();
   void insertRecordsAndSubmitSignalTest();

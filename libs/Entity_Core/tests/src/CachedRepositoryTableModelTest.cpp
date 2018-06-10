@@ -102,9 +102,9 @@ class AbstractPersonRepository : public Mdt::Entity::AbstractCachedRepository<Pe
   {
     switch(column){
       case 0:
-        refRecordAtForUpdate(row).setId(data.toULongLong());
+        recordAt(row).setId(data.toULongLong());
       case 1:
-        refRecordAtForUpdate(row).setFirstName(data.toString());
+        recordAt(row).setFirstName(data.toString());
     }
   }
 };

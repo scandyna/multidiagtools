@@ -58,8 +58,8 @@ namespace Mdt{ namespace Entity{
     using ParentClass = AbstractCachedRepository<EntityData>;
     using ParentClass::rowCount;
     using ParentClass::constRecordAt;
-    using ParentClass::refRecordAt;
-    using ParentClass::refRecordAtForUpdate;
+    using ParentClass::recordAt;
+//     using ParentClass::refRecordAtForUpdate;
 
     /*! \brief Get count of columns
      */
@@ -97,7 +97,7 @@ namespace Mdt{ namespace Entity{
       Q_ASSERT(column >= 0);
       Q_ASSERT(column < columnCount());
 
-      setValueAt( refRecordAtForUpdate(row).dataStruct(), column, data );
+      setValueAt( recordAt(row).dataStruct(), column, data );
     }
 
     void setAutoIdToCache(int row, const QVariant & id) override
@@ -111,7 +111,7 @@ namespace Mdt{ namespace Entity{
           const auto column = pk.fieldAt(0).fieldIndex();
           Q_ASSERT(column >= 0);
           Q_ASSERT(column < columnCount());
-          setValueAt( refRecordAt(row).dataStruct(), column, id );
+          setValueAt( recordAt(row).dataStruct(), column, id );
         }
       }
     }

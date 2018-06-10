@@ -121,6 +121,7 @@ namespace Mdt{ namespace Entity{
     void setData(int row, int column, const QVariant & data)
     {
       setDataToCache(row, column, data);
+      mCache.setRecordAtUpdated(row);
       emitDataAtRowChanged(row);
       emitOperationAtRowChanged(row);
     }
@@ -134,52 +135,6 @@ namespace Mdt{ namespace Entity{
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
       return mCache.constRecordAt(row);
-    }
-
-    /*! \brief Access the record at \a row for a update
-     *
-     * Will mark the record at \a row as edited in the cache.
-     *
-     * If the record must be modified without marking,
-     *  for example because the data has changed from the storage,
-     *  use refRecordAt() .
-     *
-     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
-     */
-    [[deprecated]]
-    Record & refRecordAtForUpdate(int row)
-    {
-      Q_ASSERT(row >= 0);
-      Q_ASSERT(row < rowCount());
-      return mCache.refRecordAtForUpdate(row);
-    }
-
-    /*! \brief Access the record at \a row
-     *
-     * No marking is done by calling this method.
-     *
-     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
-     * \sa refRecordAtForUpdate()
-     */
-    Record & refRecordAt(int row)
-    {
-      Q_ASSERT(row >= 0);
-      Q_ASSERT(row < rowCount());
-      return mCache.refRecordAt(row);
-    }
-
-    /*! \brief Get record a \a row
-     *
-     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
-     * \note Calling this method will mark the entiere record at \a row as edited in the cache
-     * \todo Should be protected and should not change oprations
-     */
-    [[deprecated]]
-    Record & recordAt(int row)
-    {
-      Q_ASSERT(row >= 0);
-      Q_ASSERT(row < rowCount());
-      return mCache.recordAt(row);
     }
 
     /*! \brief Get the operation at \a row in the cache
@@ -314,11 +269,26 @@ namespace Mdt{ namespace Entity{
     /*! \brief Set \a data at \a row and \a column into the cache
      *
      * Implement this method to edit data in the cache.
-     *  The implementation should use refRecordAtForUpdate() ,
-     *  this way the cache will be marked as updated.
+     *
+     * Example:
+     * \code
+     * void setDataToCache(int row, int column, const QVariant & data)
+     * {
+     *   switch(column){
+     *     case 0:
+     *       recordAt(row).setId(data.toULongLong());
+     *       break;
+     *     case 1:
+     *       recordAt(row).setFirstName(data.toString());
+     *       break;
+     *   }
+     * }
+     * \endcode
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
+     * \note this method should not set any operation marking in the cache
+     * \note this method should not emit any signal
      */
     virtual void setDataToCache(int row, int column, const QVariant & data) = 0;
 
@@ -332,10 +302,11 @@ namespace Mdt{ namespace Entity{
      * \code
      * void setAutoIdToCache(int row, const QVariant & id) override
      * {
-     *   refRecordAt(row)[0] = id;
+     *   recordAt(row).setId(id.toULongLong());
      * }
      * \endcode
      *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \note this method should not set any operation marking in the cache
      * \note this method should not emit any signal
      */
@@ -343,6 +314,20 @@ namespace Mdt{ namespace Entity{
     {
       Q_UNUSED(row);
       Q_UNUSED(id);
+    }
+
+    /*! \brief Get record a \a row
+     *
+     * No marking is done by calling this method.
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     */
+    Record & recordAt(int row)
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
+
+      return mCache.recordAt(row);
     }
 
     /*! \brief Insert \a record to the underlaying storage
