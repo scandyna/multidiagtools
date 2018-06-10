@@ -152,48 +152,38 @@ namespace Mdt{ namespace Container{
 
     /*! \brief Get record a \a row
      *
+     * No marking is done by calling this method,
+     *  this must be done using setRecordAtUpdated()
+     *
+     * Example:
+     * \code
+     * void setRecord(int row, const Record & record)
+     * {
+     *   mCache.recordAt(row) = record;
+     *   mCache.setRecordAtUpdated(row);
+     * }
+     * \endcode
+     *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
-     * \note Calling this method will mark the entiere record at \a row as edited in the cache
      */
-    [[deprecated]]
     Record & recordAt(int row)
     {
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
-      mOperationMap.setOperationAtRow(row, TableCacheOperation::Update);
+
       return mCache[row];
     }
 
-    /*! \brief Access the record at \a row for a update
-     *
-     * Will mark the record at \a row as edited in the cache.
-     *
-     * If the record must be modified without marking,
-     *  for example because the data has changed from the storage,
-     *  use refRecordAt() .
+    /*! \brief Mark the record at \a row as updated
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
      */
-    Record & refRecordAtForUpdate(int row)
+    void setRecordAtUpdated(int row)
     {
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());
-      mOperationMap.setOperationAtRow(row, TableCacheOperation::Update);
-      return mCache[row];
-    }
 
-    /*! \brief Access the record at \a row
-     *
-     * No marking is done by calling this method.
-     *
-     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
-     * \sa refRecordAtForUpdate()
-     */
-    Record & refRecordAt(int row)
-    {
-      Q_ASSERT(row >= 0);
-      Q_ASSERT(row < rowCount());
-      return mCache[row];
+      mOperationMap.setOperationAtRow(row, TableCacheOperation::Update);
     }
 
     /*! \brief Get record a \a row
@@ -296,6 +286,9 @@ namespace Mdt{ namespace Container{
      * Returns a range of rows that have been committed.
      *  If commitChanges() was not called, or no operation marking exists in this cache,
      *  a null range is returned.
+     *
+     * \todo Should be renamed updatedRows() .
+     *    It helps to notify which range of rows are to update, for example in a UI (to reflect the new operation)
      */
     Mdt::IndexRange::RowRange committedRows() const
     {
@@ -368,26 +361,6 @@ namespace Mdt{ namespace Container{
 
       mOperationMap.removeOperationAtRow(row);
       removeFromContainer(mCache, row, 1);
-    }
-
-    /*! \brief Remove \a count records starting from \a pos
-     *
-     * Records will be removed from the cache.
-     *  No operation marking is done.
-     *
-     * \pre \a pos must be >= 0
-     * \pre \a count must be >= 1
-     * \pre \a pos + \a count must be in valid range ( 1 <= \a pos + \a count <= rowCount() )
-     *
-     * \todo should be renamed removeRecordsInCache()
-     */
-    [[deprecated]]
-    void removeRecordsFromStorage(int pos, int count)
-    {
-      Q_ASSERT(pos >= 0);
-      Q_ASSERT(count >= 0);
-      Q_ASSERT( (pos + count) <= rowCount() );
-      removeFromContainer(mCache, pos, count);
     }
 
    private:

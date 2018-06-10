@@ -30,13 +30,11 @@ class TableCacheTest : public TestBase
  private slots:
 
   void constructTest();
-  void setGetTest();
-  void refRecordAtTest();
+  void setRecordAtTest();
   void insertRecordsTest();
   void insertRecordsFromStorageTest();
   void removeRecordsTest();
   void removeRecordInCacheTest();
-  void removeRecordsFromStorageTest();
   void insertRemoveRecordsTest();
   void insertSetRemoveTest();
 };
