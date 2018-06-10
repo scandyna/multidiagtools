@@ -48,9 +48,6 @@ namespace Mdt{ namespace ItemModel{
    * Will take in account each selected row for all columns in \a selectionModel
    *  ( it does not call QItemSelectionModel::selectedRows(int column) ).
    *  To know how the row selection is made, see RowSelection .
-   *
-   * \pre \a selectionModel must not be empty
-   * \pre \a selectionModel must have valid ranges for \a model
    */
   bool MDT_ITEMMODEL_EXPORT removeRows(QAbstractItemModel *model, const QItemSelectionModel * selectionModel);
 

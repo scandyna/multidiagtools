@@ -37,6 +37,9 @@ void RemoveRowsTest::removeRowsRangeTest()
   QStringListModel model(QStringList{"A","B","C","D"});
   RowRange r;
 
+//   QVERIFY( removeRows(&model, r) );
+//   QCOMPARE(model.stringList(), QStringList({"A","B","C","D"}));
+
   r.setFirstRow(1);
   r.setLastRow(2);
   QVERIFY( removeRows(&model, r) );
@@ -88,6 +91,14 @@ void RemoveRowsTest::removeRowsSelectionModelTest()
 {
   QStringListModel model(QStringList{"A","B","C","D","E"});
   QItemSelectionModel selectionModel(&model);
+
+  /*
+   * A empty selection must be accepted,
+   * do nothing and return true.
+   */
+  selectionModel.clear();
+  QVERIFY( removeRows(&model, &selectionModel) );
+  QCOMPARE(model.stringList(), QStringList({"A","B","C","D","E"}));
 
   /*
    * ---

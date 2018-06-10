@@ -61,7 +61,10 @@ bool removeRows(QAbstractItemModel* model, const QItemSelectionModel* selectionM
 {
   Q_ASSERT(model != nullptr);
   Q_ASSERT(selectionModel != nullptr);
-  ///Q_ASSERT(!selectionModel->hasSelection());
+
+  if(!selectionModel->hasSelection()){
+    return true;
+  }
 
   return removeRows(model, RowSelection::fromSelectionModel(selectionModel) );
 }
