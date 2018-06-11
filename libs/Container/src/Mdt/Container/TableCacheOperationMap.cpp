@@ -23,6 +23,8 @@
 #include <iterator>
 #include <functional>
 
+// #include <QDebug>
+
 namespace Mdt{ namespace Container{
 
 void TableCacheOperationMap::clear()
@@ -43,9 +45,25 @@ void TableCacheOperationMap::insertRecords(int pos, int count)
 void TableCacheOperationMap::removeRecords(int pos, int count)
 {
   Q_ASSERT(pos >= 0);
-  Q_ASSERT(count >= 0);
+  Q_ASSERT(count >= 1);
 
   updateOrAddOperationsForRows(pos, count, TableCacheOperation::Delete);
+}
+
+void TableCacheOperationMap::cancelRemoveRecords(int pos, int count)
+{
+  Q_ASSERT(pos >= 0);
+  Q_ASSERT(count >= 1);
+
+  Mdt::IndexRange::RowRange rowRange;
+  rowRange.setFirstRow(pos);
+  rowRange.setRowCount(count);
+  for(int row = rowRange.firstRow(); row <= rowRange.lastRow(); ++row){
+    const auto op = operationAtRow(row);
+    if( (op == TableCacheOperation::Delete) || (op == TableCacheOperation::InsertDelete) ){
+      removeOperationAtRow(row);
+    }
+  }
 }
 
 void TableCacheOperationMap::removeOperationAtRow(int row)
@@ -55,7 +73,17 @@ void TableCacheOperationMap::removeOperationAtRow(int row)
   const auto it = findRowIterator(row);
   if(it != mMap.cend()){
     mMap.erase(it);
-    shiftRowsInMap(row, -1);
+  }
+}
+
+void TableCacheOperationMap::shiftRowsInMap(int row, int count)
+{
+  Q_ASSERT(row >= 0);
+
+  for(auto & index : mMap){
+    if(index.row() >= row){
+      index.setRow(index.row() + count);
+    }
   }
 }
 
@@ -154,17 +182,6 @@ TableCacheOperation TableCacheOperationMap::operationFromExisting(TableCacheOper
           return TableCacheOperation::Delete;
       }
       break;
-  }
-}
-
-void TableCacheOperationMap::shiftRowsInMap(int row, int count)
-{
-  Q_ASSERT(row >= 0);
-
-  for(auto & index : mMap){
-    if(index.row() >= row){
-      index.setRow(index.row() + count);
-    }
   }
 }
 

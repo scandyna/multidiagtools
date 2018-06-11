@@ -114,15 +114,29 @@ namespace Mdt{ namespace Container{
     /*! \brief Add indexes to mark \a count records, starting from \a pos , as deleted records
      *
      * \pre \a pos must be >= 0
-     * \pre \a count must be >= 0
+     * \pre \a count must be >= 1
      */
     void removeRecords(int pos, int count);
+
+    /*! \brief Cancel the removal of \a count records starting from \a pos
+     *
+     * \pre \a pos must be >= 0
+     * \pre \a count muste be >= 1
+     */
+    void cancelRemoveRecords(int pos, int count);
 
     /*! \brief Remove the operation at \a row from thi map
      *
      * \pre \a row must be >= 0
      */
     void removeOperationAtRow(int row);
+
+    /*! \brief Shift the rows starting from \a row with a offset of \a count
+     *
+     * \pre \a row must be >= 0
+     * \note \a count can also be < 0
+     */
+    void shiftRowsInMap(int row, int count);
 
     /*! \brief Set the operation at \a row in the cache
      *
@@ -222,8 +236,6 @@ namespace Mdt{ namespace Container{
     static TableCacheOperation operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation);
 
    private:
-
-    void shiftRowsInMap(int row, int count);
 
     TableCacheOperationIndex findIndex(int row, int column) const;
 

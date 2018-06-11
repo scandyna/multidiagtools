@@ -347,6 +347,23 @@ namespace Mdt{ namespace Container{
       mOperationMap.removeRecords(pos, count);
     }
 
+    /*! \brief Cancel the removal of \a count records starting from \a pos
+     *
+     * \pre \a pos must be >= 0
+     * \pre \a count muste be >= 1
+     * \pre \a pos + \a count must be in valid range ( 1 <= \a pos + \a count <= rowCount() )
+     *
+     * \todo Should return a RowRange with rows that have been updated ?
+     */
+    void cancelRemoveRecords(int pos, int count)
+    {
+      Q_ASSERT(pos >= 0);
+      Q_ASSERT(count >= 0);
+      Q_ASSERT( (pos + count) <= rowCount() );
+
+      mOperationMap.cancelRemoveRecords(pos, count);
+    }
+
     /*! \brief Remove a record in the cache
      *
      * The record at \a row will be removed from the cache.
@@ -360,6 +377,7 @@ namespace Mdt{ namespace Container{
       Q_ASSERT(row < rowCount());
 
       mOperationMap.removeOperationAtRow(row);
+      mOperationMap.shiftRowsInMap(row, -1);
       removeFromContainer(mCache, row, 1);
     }
 

@@ -34,6 +34,7 @@ class TableCacheTest : public TestBase
   void insertRecordsTest();
   void insertRecordsFromStorageTest();
   void removeRecordsTest();
+  void cancelRemoveRecordsTest();
   void removeRecordInCacheTest();
   void insertRemoveRecordsTest();
   void insertSetRemoveTest();
