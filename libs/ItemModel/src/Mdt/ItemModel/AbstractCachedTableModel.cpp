@@ -72,6 +72,10 @@ Qt::ItemFlags AbstractCachedTableModel::flags(const QModelIndex& index) const
   return ParentClass::flags(index);
 }
 
+void AbstractCachedTableModel::cancelRemoveRows(int, int)
+{
+}
+
 void AbstractCachedTableModel::beginInsertRows(int firstRow, int lastRow)
 {
   ParentClass::beginInsertRows(QModelIndex(), firstRow, lastRow);

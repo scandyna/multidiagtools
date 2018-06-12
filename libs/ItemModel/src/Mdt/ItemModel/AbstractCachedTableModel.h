@@ -70,6 +70,16 @@ namespace Mdt{ namespace ItemModel{
      */
     Qt::ItemFlags flags(const QModelIndex & index) const override;
 
+    /*! \brief Cancel the removal of \a count rows starting from \a row
+     *
+     * This default implementation does nothing.
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count muste be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+     */
+    virtual void cancelRemoveRows(int row, int count);
+
    public slots:
 
     /*! \brief Begins a row insertion operation

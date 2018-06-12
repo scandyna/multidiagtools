@@ -33,6 +33,10 @@ class RemoveRowsTest : public QObject
   void removeRowsSelectionTest();
   void removeRowsSelectionModelTest();
   void removeRowsSelectionModelTableTest();
+
+  void cancelRemoveRowsRangeTest();
+  void cancelRemoveRowsSelectionTest();
+  void cancelRemoveRowsSelectionModelTest();
 };
 
 #endif // #ifndef REMOVE_ROWS_TEST_H

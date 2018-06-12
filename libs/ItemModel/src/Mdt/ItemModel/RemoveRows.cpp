@@ -66,7 +66,40 @@ bool removeRows(QAbstractItemModel* model, const QItemSelectionModel* selectionM
     return true;
   }
 
-  return removeRows(model, RowSelection::fromSelectionModel(selectionModel) );
+  return removeRows( model, RowSelection::fromSelectionModel(selectionModel) );
+}
+
+void cancelRemoveRows(AbstractCachedTableModel* model, const RowRange& rowRange)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(rowRange.isValid());
+  Q_ASSERT(rowRange.lastRow() < model->rowCount());
+
+  model->cancelRemoveRows(rowRange.firstRow(), rowRange.rowCount());
+}
+
+void cancelRemoveRows(AbstractCachedTableModel* model, const RowSelection& selection)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(!selection.isEmpty());
+
+  auto rFirst = std::make_reverse_iterator(selection.cend());
+  const auto rLast = std::make_reverse_iterator(selection.cbegin());
+  while(rFirst != rLast){
+    cancelRemoveRows(model, *rFirst);
+    ++rFirst;
+  }
+}
+
+void cancelRemoveRows(AbstractCachedTableModel* model, const QItemSelectionModel* selectionModel)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(selectionModel != nullptr);
+
+  if(!selectionModel->hasSelection()){
+    return;
+  }
+  cancelRemoveRows( model, RowSelection::fromSelectionModel(selectionModel) );
 }
 
 }} // namespace Mdt{ namespace ItemModel{

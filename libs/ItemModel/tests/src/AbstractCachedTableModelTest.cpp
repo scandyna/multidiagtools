@@ -174,7 +174,8 @@ class CachedTableModel : public Mdt::ItemModel::AbstractCachedTableModel
 
   bool setEditRoleData(int row, int column, const QVariant& value) override
   {
-    mCache.refRecordAtForUpdate(row)[column] = value;
+    mCache.recordAt(row)[column] = value;
+    mCache.setRecordAtUpdated(row);
     return true;
   }
 
