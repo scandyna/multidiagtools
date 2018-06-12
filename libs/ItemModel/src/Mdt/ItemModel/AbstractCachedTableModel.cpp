@@ -65,7 +65,7 @@ Qt::ItemFlags AbstractCachedTableModel::flags(const QModelIndex& index) const
   if(index.isValid() && (index.row() < rowCountImpl()) ){
     const auto op = operationAtRow(index.row());
     if( (op == TableCacheOperation::Delete) || (op == TableCacheOperation::InsertDelete) ){
-      return Qt::ItemIsSelectable;
+      return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
     }
   }
 
