@@ -18,32 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_EXPRESSION_GRAMMAR_TEST_H
-#define MDT_EXPRESSION_GRAMMAR_TEST_H
+#ifndef MDT_QUERY_EXPRESSION_ENTITY_NAME_H
+#define MDT_QUERY_EXPRESSION_ENTITY_NAME_H
 
-#include "TestBase.h"
+#include "MdtQueryExpression_CoreExport.h"
+#include <QString>
 
-class ExpressionGrammarTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace QueryExpression{
 
- private:
-
-  /*
-   * Compile time tests
+  /*! \brief Wrapper for compile time checking
    */
+  class MDT_QUERYEXPRESSION_CORE_EXPORT EntityName
+  {
+   public:
 
-  void literalValueTest();
-  void terminalTest();
-  void comparisonTest();
+    /*! \breif Construct explicitly from a field name
+     */
+    explicit EntityName(const QString & name)
+     : mEntityName(name) {}
 
- private slots:
+    /*! \brief Check if this field name is null
+     */
+    bool isNull() const
+    {
+      return mEntityName.isEmpty();
+    }
 
-  void fieldNameTest();
-  void entityNameTest();
+    /*! \brief Get filed name as string
+     */
+    QString toString() const
+    {
+      return mEntityName;
+    }
+    
+   private:
 
-  void fieldTerminalTest();
+    QString mEntityName;
+  };
 
-};
+}} // namespace Mdt{ namespace QueryExpression{
 
-#endif // #ifndef MDT_EXPRESSION_GRAMMAR_TEST_H
+#endif // MDT_QUERY_EXPRESSION_ENTITY_NAME_H

@@ -3,6 +3,7 @@
 set(SOURCE_FILES
   Mdt/QueryExpression/LiteralValue.cpp
   Mdt/QueryExpression/FieldName.cpp
+  Mdt/QueryExpression/EntityName.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

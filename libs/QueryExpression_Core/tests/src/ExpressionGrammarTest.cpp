@@ -21,6 +21,7 @@
 #include "ExpressionGrammarTest.h"
 #include "Mdt/QueryExpression/LiteralValue.h"
 #include "Mdt/QueryExpression/FieldName.h"
+#include "Mdt/QueryExpression/EntityName.h"
 #include <boost/proto/matches.hpp>
 #include <boost/proto/literal.hpp>
 
@@ -85,6 +86,17 @@ void ExpressionGrammarTest::fieldNameTest()
   QVERIFY(FieldName("A") == FieldName("a"));
   QVERIFY( !(FieldName("A") == FieldName("B")) );
 }
+
+void ExpressionGrammarTest::entityNameTest()
+{
+  EntityName n("");
+  QVERIFY(n.isNull());
+
+  EntityName a("A");
+  QVERIFY(!a.isNull());
+  QCOMPARE(a.toString(), QString("A"));
+}
+
 
 void ExpressionGrammarTest::fieldTerminalTest()
 {
