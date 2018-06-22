@@ -27,3 +27,4 @@ endfunction()
 #================= Tests ====================
 
 addQueryExpression_CoreTest("ExpressionGrammarTest")
+addQueryExpression_CoreTest("SelectQueryTest")
