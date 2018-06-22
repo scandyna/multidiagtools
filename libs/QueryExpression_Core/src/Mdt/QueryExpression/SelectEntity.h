@@ -33,11 +33,37 @@ namespace Mdt{ namespace QueryExpression{
   {
    public:
 
-    /*! \brief Constructor
+    /*! \brief Construct a null select entity
+     */
+    SelectEntity() noexcept = default;
+
+    /*! \brief Copy construct a select entity from \a other
+     */
+    SelectEntity(const SelectEntity & other) = default;
+
+    /*! \brief Copy assign \a other to this select entity
+     */
+    SelectEntity & operator=(const SelectEntity & other) = default;
+
+    /*! \brief Move construct a select entity from \a other
+     */
+    SelectEntity(SelectEntity && other) = default;
+
+    /*! \brief Move assign \a other to this select entity
+     */
+    SelectEntity & operator=(SelectEntity && other) = default;
+
+    /*! \brief Construct a select entity
      *
      * \pre \a name must not be null
      */
     SelectEntity(const EntityName & name, const QString & alias = QString());
+
+    /*! \brief Set the entity name and alias
+     *
+     * \pre \a name must not be null
+     */
+    void setNameAndAlias(const EntityName & name, const QString & alias = QString());
 
     /*! \brief Get the entity name
      */

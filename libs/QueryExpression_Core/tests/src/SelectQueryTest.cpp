@@ -39,6 +39,12 @@ void SelectQueryTest::selectEntityTest()
   QCOMPARE(person2.name(), QString("Person2"));
   QCOMPARE(person2.alias(), QString("P2"));
   QCOMPARE(person2.aliasOrName(), QString("P2"));
+
+  SelectEntity se;
+  se.setNameAndAlias( EntityName("Entity"), "E" );
+  QCOMPARE(se.name(), QString("Entity"));
+  QCOMPARE(se.alias(), QString("E"));
+  QCOMPARE(se.aliasOrName(), QString("E"));
 }
 
 void SelectQueryTest::simpleSetGetTest()

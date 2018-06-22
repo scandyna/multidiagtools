@@ -29,4 +29,12 @@ SelectEntity::SelectEntity(const EntityName& name, const QString& alias)
   Q_ASSERT(!name.isNull());
 }
 
+void SelectEntity::setNameAndAlias(const EntityName& name, const QString& alias)
+{
+  Q_ASSERT(!name.isNull());
+
+  mName = name.toString();
+  mAlias = alias;
+}
+
 }} // namespace Mdt{ namespace QueryExpression{
