@@ -27,6 +27,9 @@
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
 #include <boost/variant.hpp>
+#include <boost/proto/expr.hpp>
+#include <boost/proto/extends.hpp>
+#include <boost/proto/operators.hpp>
 
 namespace Mdt{ namespace QueryExpression{
 
@@ -36,15 +39,35 @@ namespace Mdt{ namespace QueryExpression{
   {
   };
 
+  /*! \internal Tag for SelectField
+   */
+  struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectFieldTag
+  {
+  };
+
   /*! \internal Data variant for SelectField
    */
   using SelectFieldVariant = boost::variant<SelectAllField, EntityAndField>;
 
   /*! \brief Represents a field and the optional field alias and maybe a SelectEntity
    */
-  class MDT_QUERYEXPRESSION_CORE_EXPORT SelectField
+  struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectField : boost::proto::extends<
+                                                        boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<SelectFieldVariant> >,
+                                                        SelectField,
+                                                        boost::proto::default_domain
+                                                      >
   {
+   private:
+
+    using Domain = boost::proto::default_domain;
+    using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<SelectFieldVariant> >;
+    using ParentClass = boost::proto::extends< Expression, SelectField, Domain >;
+
    public:
+
+    using value_type = SelectFieldVariant;
+    using reference = value_type &;
+    using const_reference = const value_type &;
 
     /*! \brief Construct a select all field
      */
@@ -83,12 +106,8 @@ namespace Mdt{ namespace QueryExpression{
      */
     const SelectFieldVariant & internalVariant() const
     {
-      return mVariant;
+      return boost::proto::value(*this);
     }
-
-   private:
-
-    SelectFieldVariant mVariant;
   };
 
 }} // namespace Mdt{ namespace QueryExpression{

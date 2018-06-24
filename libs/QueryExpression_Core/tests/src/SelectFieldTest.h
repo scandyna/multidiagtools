@@ -33,7 +33,7 @@ class SelectFieldTest : public QObject
    * Compile time tests
    */
 
-  void grammardTest();
+  void terminalGrammarTest();
 
  private slots:
 

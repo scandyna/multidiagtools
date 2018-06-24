@@ -21,6 +21,9 @@
 #include "SelectFieldTest.h"
 #include "Mdt/QueryExpression/SelectField.h"
 #include <boost/variant/get.hpp>
+#include <boost/proto/matches.hpp>
+// #include <boost/proto/literal.hpp>
+// #include <boost/proto/transform/arg.hpp>
 
 using namespace Mdt::QueryExpression;
 
@@ -28,7 +31,13 @@ using namespace Mdt::QueryExpression;
  * Compile time tests
  */
 
-void SelectFieldTest::grammardTest()
+template<typename Expr, typename Grammar>
+constexpr bool expressionMatchesGrammar()
+{
+  return boost::proto::matches< Expr, Grammar >::value;
+}
+
+void SelectFieldTest::terminalGrammarTest()
 {
 
 }

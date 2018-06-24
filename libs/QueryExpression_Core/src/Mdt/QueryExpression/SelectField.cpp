@@ -27,13 +27,13 @@ SelectField::SelectField(SelectAllField)
 }
 
 SelectField::SelectField(const FieldName& fieldName, const QString& fieldAlias)
- : mVariant( EntityAndField(fieldName, fieldAlias) )
+ : ParentClass( Expression::make( EntityAndField(fieldName, fieldAlias) ) )
 {
   Q_ASSERT(!fieldName.isNull());
 }
 
 SelectField::SelectField(const SelectEntity& entity, const FieldName& fieldName, const QString& fieldAlias)
- : mVariant( EntityAndField(entity, fieldName, fieldAlias) )
+ : ParentClass( Expression::make( EntityAndField(entity, fieldName, fieldAlias) ) )
 {
   Q_ASSERT(!entity.isNull());
   Q_ASSERT(!fieldName.isNull());
