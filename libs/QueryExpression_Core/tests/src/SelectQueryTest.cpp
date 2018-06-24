@@ -28,25 +28,6 @@ using namespace Mdt::QueryExpression;
  * Tests
  */
 
-void SelectQueryTest::selectEntityTest()
-{
-  SelectEntity person1( EntityName("Person1") );
-  QCOMPARE(person1.name(), QString("Person1"));
-  QVERIFY(person1.alias().isEmpty());
-  QCOMPARE(person1.aliasOrName(), QString("Person1"));
-
-  SelectEntity person2( EntityName("Person2"), "P2" );
-  QCOMPARE(person2.name(), QString("Person2"));
-  QCOMPARE(person2.alias(), QString("P2"));
-  QCOMPARE(person2.aliasOrName(), QString("P2"));
-
-  SelectEntity se;
-  se.setNameAndAlias( EntityName("Entity"), "E" );
-  QCOMPARE(se.name(), QString("Entity"));
-  QCOMPARE(se.alias(), QString("E"));
-  QCOMPARE(se.aliasOrName(), QString("E"));
-}
-
 void SelectQueryTest::simpleSetGetTest()
 {
   SelectQuery query;

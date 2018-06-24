@@ -18,18 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SELECT_QUERY_TEST_H
-#define SELECT_QUERY_TEST_H
+#include "SelectQuery.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace QueryExpression{
 
-class SelectQueryTest : public QObject
+// void SelectQuery::setEntityName(const QString& name)
+// {
+//   mEntityName = name;
+// }
+
+void SelectQuery::setEntityName(const EntityName& name, const QString & alias)
 {
- Q_OBJECT
+  mEntity.setNameAndAlias(name, alias);
+}
 
- private slots:
+void SelectQuery::addField(const FieldName& fieldName, const QString& fieldAlias)
+{
 
-  void simpleSetGetTest();
-};
+}
 
-#endif // #ifndef SELECT_QUERY_TEST_H
+}} // namespace Mdt{ namespace QueryExpression{

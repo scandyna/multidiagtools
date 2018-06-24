@@ -65,6 +65,13 @@ namespace Mdt{ namespace QueryExpression{
      */
     void setNameAndAlias(const EntityName & name, const QString & alias = QString());
 
+    /*! \brief Check if this select entity is null
+     */
+    bool isNull() const noexcept
+    {
+      return mName.isEmpty();
+    }
+
     /*! \brief Get the entity name
      */
     QString name() const

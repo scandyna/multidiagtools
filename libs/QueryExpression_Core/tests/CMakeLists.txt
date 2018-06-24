@@ -28,3 +28,5 @@ endfunction()
 
 addQueryExpression_CoreTest("ExpressionGrammarTest")
 addQueryExpression_CoreTest("SelectQueryTest")
+addQueryExpression_CoreTest("SelectFieldTest")
+addQueryExpression_CoreTest("SelectFieldListTest")

@@ -18,18 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SELECT_QUERY_TEST_H
-#define SELECT_QUERY_TEST_H
+#ifndef MDT_QUERY_EXPRESSION_SELECT_FIELD_LIST_H
+#define MDT_QUERY_EXPRESSION_SELECT_FIELD_LIST_H
 
-#include "TestBase.h"
+#include "FieldName.h"
+#include "EntityName.h"
+#include "MdtQueryExpression_CoreExport.h"
+#include <QString>
 
-class SelectQueryTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace QueryExpression{
 
- private slots:
+  /*! \brief A list of fields in a SelectQuery
+   */
+  class MDT_QUERYEXPRESSION_CORE_EXPORT SelectFieldList
+  {
+   public:
 
-  void simpleSetGetTest();
-};
+    /*! \brief Add a field named \a fieldName to this list
+     *
+     * \pre \a fieldName must not be null
+     */
+    void addField(const FieldName & fieldName, const QString & fieldAlias = QString());
 
-#endif // #ifndef SELECT_QUERY_TEST_H
+    /*! \brief Add a field composed by ...
+     */
+    void addField(const EntityName & entityName, const FieldName & fieldName, const QString & fieldAlias = QString());
+
+   private:
+
+    
+  };
+
+}} // namespace Mdt{ namespace QueryExpression{
+
+#endif // #ifndef MDT_QUERY_EXPRESSION_SELECT_FIELD_LIST_H

@@ -18,18 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SELECT_QUERY_TEST_H
-#define SELECT_QUERY_TEST_H
+#ifndef TEST_MAIN_H
+#define TEST_MAIN_H
 
 #include "TestBase.h"
 
-class SelectQueryTest : public QObject
+class SelectFieldTest : public QObject
 {
  Q_OBJECT
 
+ private:
+
+  /*
+   * Compile time tests
+   */
+
+  void grammardTest();
+
  private slots:
 
-  void simpleSetGetTest();
+  void selectEntityTest();
+  void entityAndFieldTest();
+
+  void constructGetTest();
+
 };
 
-#endif // #ifndef SELECT_QUERY_TEST_H
+#endif // #ifndef TEST_MAIN_H

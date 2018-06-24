@@ -18,18 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SELECT_QUERY_TEST_H
-#define SELECT_QUERY_TEST_H
+#include "SelectFieldListTest.h"
+#include "Mdt/QueryExpression/SelectFieldList.h"
 
-#include "TestBase.h"
+using namespace Mdt::QueryExpression;
 
-class SelectQueryTest : public QObject
+/*
+ * Tests
+ */
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
 {
- Q_OBJECT
+  Mdt::CoreApplication app(argc, argv);
+  SelectFieldListTest test;
 
- private slots:
-
-  void simpleSetGetTest();
-};
-
-#endif // #ifndef SELECT_QUERY_TEST_H
+  return QTest::qExec(&test, argc, argv);
+}
