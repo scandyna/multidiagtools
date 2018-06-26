@@ -35,7 +35,7 @@ namespace Mdt{ namespace Sql{
   {
   };
 
-  /*! \brief Raw SQL constainer for SelectFieldItem
+  /*! \brief Raw SQL container for SelectFieldItem
    */
   struct SelectFieldRawSql
   {

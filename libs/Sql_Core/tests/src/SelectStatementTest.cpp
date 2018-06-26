@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "SelectStatementTest.h"
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 #include "Mdt/Sql/SelectStatement.h"
 #include "Mdt/Sql/FieldName.h"
 #include "Mdt/Sql/TableName.h"
@@ -381,7 +381,7 @@ void SelectStatementTest::selectFromWhereSqlTransformTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   SelectStatementTest test;
 
   return QTest::qExec(&test, argc, argv);

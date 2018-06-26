@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "ExpressionTest.h"
-#include "Mdt/Application.h"
+#include "Mdt/CoreApplication.h"
 #include "Mdt/Sql/Expression/Terminal.h"
 #include "Mdt/Sql/Expression/Comparison.h"
 #include "Mdt/Sql/Expression/TerminalSqlTransform.h"
@@ -243,7 +243,7 @@ void ExpressionTest::comparisonSqlTransformTest()
   // >
   expectedSql = "\"Client_tbl\".\"Id_PK\">25";
   QCOMPARE(transform(clientId > 25, 0, db), expectedSql);
-  // <=
+  // >=
   expectedSql = "\"Client_tbl\".\"Id_PK\">=25";
   QCOMPARE(transform(clientId >= 25, 0, db), expectedSql);
 }
@@ -255,7 +255,7 @@ void ExpressionTest::comparisonSqlTransformTest()
 
 int main(int argc, char **argv)
 {
-  Mdt::Application app(argc, argv);
+  Mdt::CoreApplication app(argc, argv);
   ExpressionTest test;
 
   return QTest::qExec(&test, argc, argv);
