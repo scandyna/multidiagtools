@@ -23,6 +23,8 @@
 #include "Mdt/QueryExpression/EntityName.h"
 #include "Mdt/QueryExpression/LiteralValue.h"
 #include "Mdt/QueryExpression/Terminal.h"
+#include "Mdt/QueryExpression/Comparison.h"
+#include "Mdt/QueryExpression/ExpressionGrammar.h"
 #include <boost/proto/matches.hpp>
 #include <boost/proto/literal.hpp>
 
@@ -73,9 +75,99 @@ void ExpressionGrammarTest::terminalTest()
 
 void ExpressionGrammarTest::comparisonTest()
 {
-  
+  SelectField A(EntityName("A"), FieldName("a"));
+  SelectField B(EntityName("B"), FieldName("b"));
+
+  // ==
+  static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 == A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A == B ) , Comparison >() , "" );
+  // !=
+  static_assert(  expressionMatchesGrammar< decltype( A != 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 != A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A != B ) , Comparison >() , "" );
+  // <
+  static_assert(  expressionMatchesGrammar< decltype( A < 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 < A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A < B ) , Comparison >() , "" );
+  // <=
+  static_assert(  expressionMatchesGrammar< decltype( A <= 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 <= A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A <= B ) , Comparison >() , "" );
+  // >
+  static_assert(  expressionMatchesGrammar< decltype( A > 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 > A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A > B ) , Comparison >() , "" );
+  // >=
+  static_assert(  expressionMatchesGrammar< decltype( A >= 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 >= A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A >= B ) , Comparison >() , "" );
+  // Invalid expressions
+  static_assert( !expressionMatchesGrammar< decltype( 25 + A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A + 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A + B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 - A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A - 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A - B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 * A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A * 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A * B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 / A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A / 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A / B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 % A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A % 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A % B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 << A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A << 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A << B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 >> A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A >> 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A >> B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 || A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A || 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A || B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 && A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A && 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A && B ) , Comparison >() , "" );
 }
 
+void ExpressionGrammarTest::expressionTest()
+{
+  using Like = LikeExpression;
+
+  SelectField clientId(EntityName("Client"), FieldName("id"));
+  SelectField adrClientId(EntityName("Address"), FieldName("Client_id"));
+
+  static_assert(  expressionMatchesGrammar< decltype( clientId == 25 ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( clientId == adrClientId ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( clientId == Like("?25?") ) , ExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId != Like("?25?") ) , ExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId < Like("?25?") ) , ExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId > Like("?25?") ) , ExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId <= Like("?25?") ) , ExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId >= Like("?25?") ) , ExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( Like("?25?") == clientId ) , ExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId && 25 ) , ExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId && adrClientId ) , ExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId || 25 ) , ExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId || adrClientId ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == 25) && (adrClientId == 52) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (adrClientId < 20) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId < 25) && (adrClientId == clientId) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (adrClientId < 100) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (adrClientId < 100) && (adrClientId > 2) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (clientId < 1000) && (adrClientId < 100) && (adrClientId > 2) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == 25) || (adrClientId == 52) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (adrClientId < 20) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId < 25) || (adrClientId == clientId) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (adrClientId < 100) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (adrClientId < 100) || (adrClientId > 2) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (clientId < 1000) || (adrClientId < 100) || (adrClientId > 2) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && ( (adrClientId < 20) || (clientId < 50) ) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( ( (clientId == adrClientId) || (clientId == 2) ) && ( (adrClientId < 20) || (clientId < 50) ) ) , ExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || ( (adrClientId > 20) && (adrClientId < 50) ) ) , ExpressionGrammar >() , "" );
+}
 
 /*
  * Runtime tests

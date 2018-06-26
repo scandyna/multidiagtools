@@ -18,33 +18,4 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_EXPRESSION_GRAMMAR_TEST_H
-#define MDT_EXPRESSION_GRAMMAR_TEST_H
-
-#include "TestBase.h"
-
-class ExpressionGrammarTest : public QObject
-{
- Q_OBJECT
-
- private:
-
-  /*
-   * Compile time tests
-   */
-
-  void literalValueTest();
-  void terminalTest();
-  void comparisonTest();
-  void expressionTest();
-
- private slots:
-
-  void fieldNameTest();
-  void entityNameTest();
-
-  void fieldTerminalTest();
-
-};
-
-#endif // #ifndef MDT_EXPRESSION_GRAMMAR_TEST_H
+#include "ExpressionGrammar.h"

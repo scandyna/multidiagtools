@@ -53,19 +53,11 @@ namespace Mdt{ namespace QueryExpression{
     using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QString> >;
     using ParentClass = boost::proto::extends< Expression, LikeExpression, Domain >;
 
-//     typedef boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QString> >  terminal_type;
-//     typedef LikeExpressionTerminal< Domain >                                                      LikeExpression_t;
-//     typedef boost::proto::extends< terminal_type, LikeExpression_t, Domain >                      base_type;
-
    public:
 
     using value_type = QString;
     using reference = value_type &;
     using const_reference = const value_type &;
-
-//     typedef QString          value_type;
-//     typedef QString &        reference;
-//     typedef const QString &  const_reference;
 
     /*
      * This will define operator()= , which permit to give better error messages with grammars.

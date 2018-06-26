@@ -12,6 +12,8 @@ set(SOURCE_FILES
   Mdt/QueryExpression/Terminal.cpp
   Mdt/QueryExpression/LikeExpression.cpp
   Mdt/QueryExpression/LikeExpressionRegexTransform.cpp
+  Mdt/QueryExpression/Comparison.cpp
+  Mdt/QueryExpression/ExpressionGrammar.cpp
   Mdt/QueryExpression/SelectQuery.cpp
 )
 

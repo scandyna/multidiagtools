@@ -18,33 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_EXPRESSION_GRAMMAR_TEST_H
-#define MDT_EXPRESSION_GRAMMAR_TEST_H
+#ifndef MDT_QUERY_EXPRESSION_EXPRESSION_GRAMMAR_H
+#define MDT_QUERY_EXPRESSION_EXPRESSION_GRAMMAR_H
 
-#include "TestBase.h"
+#include "Comparison.h"
+#include "MdtQueryExpression_CoreExport.h"
 
-class ExpressionGrammarTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace QueryExpression{
 
- private:
-
-  /*
-   * Compile time tests
+  /*! \brief Grammar of a where expression
    */
+  struct MDT_QUERYEXPRESSION_CORE_EXPORT ExpressionGrammar : boost::proto::or_<
+                                                              boost::proto::logical_and< ExpressionGrammar , ExpressionGrammar > ,
+                                                              boost::proto::logical_or< ExpressionGrammar , ExpressionGrammar > ,
+                                                              Comparison
+                                                            >
+  {
+  };
 
-  void literalValueTest();
-  void terminalTest();
-  void comparisonTest();
-  void expressionTest();
+}} // namespace Mdt{ namespace QueryExpression{
 
- private slots:
-
-  void fieldNameTest();
-  void entityNameTest();
-
-  void fieldTerminalTest();
-
-};
-
-#endif // #ifndef MDT_EXPRESSION_GRAMMAR_TEST_H
+#endif // #ifndef MDT_QUERY_EXPRESSION_EXPRESSION_GRAMMAR_H
