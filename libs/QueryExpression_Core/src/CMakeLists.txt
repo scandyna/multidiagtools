@@ -9,6 +9,9 @@ set(SOURCE_FILES
   Mdt/QueryExpression/EntityAndField.cpp
   Mdt/QueryExpression/SelectField.cpp
   Mdt/QueryExpression/SelectFieldList.cpp
+  Mdt/QueryExpression/Terminal.cpp
+  Mdt/QueryExpression/LikeExpression.cpp
+  Mdt/QueryExpression/LikeExpressionRegexTransform.cpp
   Mdt/QueryExpression/SelectQuery.cpp
 )
 
@@ -28,7 +31,7 @@ mdt_add_library(
   NAME QueryExpression_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Qt5::Core;
+  LINK_DEPENDENCIES Algorithm Qt5::Core;
 )
 target_compile_definitions(QueryExpression_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

@@ -19,9 +19,10 @@
  **
  ****************************************************************************/
 #include "ExpressionGrammarTest.h"
-#include "Mdt/QueryExpression/LiteralValue.h"
 #include "Mdt/QueryExpression/FieldName.h"
 #include "Mdt/QueryExpression/EntityName.h"
+#include "Mdt/QueryExpression/LiteralValue.h"
+#include "Mdt/QueryExpression/Terminal.h"
 #include <boost/proto/matches.hpp>
 #include <boost/proto/literal.hpp>
 
@@ -60,7 +61,14 @@ void ExpressionGrammarTest::literalValueTest()
 
 void ExpressionGrammarTest::terminalTest()
 {
-  
+  SelectField A( FieldName("A") );
+
+  // LeftTerminal
+  static_assert(  expressionMatchesGrammar< decltype( A ) , LeftTerminal >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , LeftTerminal >() , "" );
+  // RightTerminal
+  static_assert(  expressionMatchesGrammar< decltype( A ) , RightTerminal >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , RightTerminal >() , "" );
 }
 
 void ExpressionGrammarTest::comparisonTest()
