@@ -14,6 +14,13 @@ set(SOURCE_FILES
   Mdt/QueryExpression/LikeExpressionRegexTransform.cpp
   Mdt/QueryExpression/Comparison.cpp
   Mdt/QueryExpression/ExpressionGrammar.cpp
+  Mdt/QueryExpression/ComparisonOperator.cpp
+  Mdt/QueryExpression/LogicalOperator.cpp
+  Mdt/QueryExpression/ExpressionTreeGraph.cpp
+  Mdt/QueryExpression/ExpressionTree.cpp
+  Mdt/QueryExpression/AbstractExpressionTreeVisitor.cpp
+  Mdt/QueryExpression/TravserseTreeGraph.cpp
+  Mdt/QueryExpression/TypeTraits/Graph.cpp
   Mdt/QueryExpression/SelectQuery.cpp
 )
 

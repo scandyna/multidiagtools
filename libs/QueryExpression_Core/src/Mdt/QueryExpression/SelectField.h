@@ -69,6 +69,8 @@ namespace Mdt{ namespace QueryExpression{
     using reference = value_type &;
     using const_reference = const value_type &;
 
+//     SelectField() = default;
+
     /*! \brief Construct a select all field
      */
     SelectField(SelectAllField);
