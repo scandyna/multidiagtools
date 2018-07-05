@@ -39,6 +39,16 @@ namespace Mdt{ namespace QueryExpression{
    * {
    *  public:
    *
+   *   void processPreorder(Mdt::QueryExpression::LogicalOperator op) override
+   *   {
+   *     mExpressionString += "(";
+   *   }
+   *
+   *   void processPostorder(Mdt::QueryExpression::LogicalOperator op) override
+   *   {
+   *     mExpressionString += ")";
+   *   }
+   *
    *   void processInorder(Mdt::QueryExpression::ComparisonOperator op) override
    *   {
    *     mExpressionString += comparisonOperatorToString(op);
@@ -128,13 +138,17 @@ namespace Mdt{ namespace QueryExpression{
      */
     void postorder(ExpressionTreeVertex v, const ExpressionTreeGraph & g);
 
-    /*! \brief
+    /*! \brief Implement this method to do something on edge
+     *
+     * This default implementation does nothing
      */
-    void onEdge(ExpressionTreeEdge e, const ExpressionTreeGraph & g);
+    virtual void onEdge(ExpressionTreeEdge e, const ExpressionTreeGraph & g);
 
-    /*! \brief
+    /*! \brief Implement this method to do something post edge
+     *
+     * This default implementation does nothing
      */
-    void postEdge(ExpressionTreeEdge e, const ExpressionTreeGraph & g);
+    virtual void postEdge(ExpressionTreeEdge e, const ExpressionTreeGraph & g);
 
     /*! \brief Called by preorder()
      *

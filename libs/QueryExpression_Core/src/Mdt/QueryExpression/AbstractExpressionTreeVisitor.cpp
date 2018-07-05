@@ -21,8 +21,6 @@
 #include "AbstractExpressionTreeVisitor.h"
 #include <boost/variant.hpp>
 
-#include <QDebug>
-
 namespace Mdt{ namespace QueryExpression{
 
 namespace AbstractExpressionTreeVisitorImpl{
@@ -221,8 +219,6 @@ namespace AbstractExpressionTreeVisitorImpl{
 
 void AbstractExpressionTreeVisitor::preorder(ExpressionTreeVertex v, const ExpressionTreeGraph & g)
 {
-  qDebug() << "preorder, v: " << v;
-
   const auto vertexVariant = g[v];
   AbstractExpressionTreeVisitorImpl::CallProcessPreorder visitor(*this);
   boost::apply_visitor(visitor, vertexVariant);
@@ -230,8 +226,6 @@ void AbstractExpressionTreeVisitor::preorder(ExpressionTreeVertex v, const Expre
 
 void AbstractExpressionTreeVisitor::inorder(ExpressionTreeVertex v, const ExpressionTreeGraph & g)
 {
-  qDebug() << "inorder, v: " << v;
-
   const auto vertexVariant = g[v];
   AbstractExpressionTreeVisitorImpl::CallProcessInorder visitor(*this);
   boost::apply_visitor(visitor, vertexVariant);
@@ -239,18 +233,16 @@ void AbstractExpressionTreeVisitor::inorder(ExpressionTreeVertex v, const Expres
 
 void AbstractExpressionTreeVisitor::postorder(ExpressionTreeVertex v, const ExpressionTreeGraph & g)
 {
-  qDebug() << "postorder, v: " << v;
-
   const auto vertexVariant = g[v];
   AbstractExpressionTreeVisitorImpl::CallProcessPostorder visitor(*this);
   boost::apply_visitor(visitor, vertexVariant);
 }
 
-void AbstractExpressionTreeVisitor::onEdge(ExpressionTreeEdge e, const ExpressionTreeGraph & g)
+void AbstractExpressionTreeVisitor::onEdge(ExpressionTreeEdge, const ExpressionTreeGraph &)
 {
 }
 
-void AbstractExpressionTreeVisitor::postEdge(ExpressionTreeEdge e, const ExpressionTreeGraph & g)
+void AbstractExpressionTreeVisitor::postEdge(ExpressionTreeEdge, const ExpressionTreeGraph &)
 {
 }
 
