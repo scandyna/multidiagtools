@@ -32,7 +32,7 @@ class ExpressionTreeTest : public QObject
   void sandbox();
 
   void simpleBuildTreeTest();
-  void buildTreeTest();
+  void buildAndVisitTreeTest();
 };
 
 #endif // #ifndef TEST_MAIN_H

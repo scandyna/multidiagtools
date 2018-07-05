@@ -56,7 +56,7 @@ ExpressionTreeVertex ExpressionTree::addNode(ExpressionTreeVertex leftChild, Log
 
 void ExpressionTree::clear()
 {
-
+  mGraph.clear();
 }
 
 ExpressionTreeVertex ExpressionTree::addVertex(ComparisonOperator op)

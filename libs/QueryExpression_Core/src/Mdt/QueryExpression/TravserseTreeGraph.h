@@ -57,8 +57,9 @@ namespace Mdt{ namespace QueryExpression{
       }
     }else{
       visitor.inorder(v, g);
-      visitor.postorder(v, g);
     }
+
+    visitor.postorder(v, g);
   }
 
   /*! \brief Traverse a expression tree with a visitor

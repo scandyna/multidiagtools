@@ -428,6 +428,12 @@ class AbstractExpressionToStringVisitor : public Mdt::QueryExpression::AbstractE
         return "==";
       case ComparisonOperator::Less:
         return "<";
+      case ComparisonOperator::LessEqual:
+        return "<=";
+      case ComparisonOperator::Greater:
+        return ">";
+      case ComparisonOperator::GreaterEqual:
+        return ">=";
     }
   }
 
@@ -450,9 +456,59 @@ class AbstractExpressionToStringVisitor : public Mdt::QueryExpression::AbstractE
 
 };
 
+class ExpressionToPrefixStringVisitor : public AbstractExpressionToStringVisitor
+{
+ public:
+
+  void processPreorder(Mdt::QueryExpression::ComparisonOperator op) override
+  {
+    qDebug() << "processPreorder: " << comparisonOperatorToString(op);
+    mExpressionString += comparisonOperatorToString(op) + " ";
+  }
+
+  void processPreorder(Mdt::QueryExpression::LogicalOperator op) override
+  {
+    mExpressionString += logicalOperatorToString(op) + " ";
+  }
+
+  void processPreorder(const Mdt::QueryExpression::EntityAndField & field) override
+  {
+    mExpressionString += field.fieldAliasOrName() + " ";
+  }
+
+  void processPreorder(const QVariant& value) override
+  {
+    mExpressionString += value.toString() + " ";
+  }
+
+  void clear()
+  {
+    mExpressionString.clear();
+  }
+
+  QString toString() const
+  {
+    return mExpressionString;
+  }
+
+ private:
+
+  QString mExpressionString;
+};
+
 class ExpressionToInfixStringVisitor : public AbstractExpressionToStringVisitor
 {
  public:
+
+  void processPreorder(Mdt::QueryExpression::LogicalOperator op) override
+  {
+    mExpressionString += "(";
+  }
+
+  void processPostorder(Mdt::QueryExpression::LogicalOperator op) override
+  {
+    mExpressionString += ")";
+  }
 
   void processInorder(Mdt::QueryExpression::ComparisonOperator op) override
   {
@@ -463,6 +519,7 @@ class ExpressionToInfixStringVisitor : public AbstractExpressionToStringVisitor
   void processInorder(Mdt::QueryExpression::LogicalOperator op) override
   {
     qDebug() << "processInorder: " << logicalOperatorToString(op);
+    qDebug() << "-> cur exp: " << mExpressionString;
     mExpressionString += ")" + logicalOperatorToString(op) + "(";
   }
 
@@ -480,6 +537,51 @@ class ExpressionToInfixStringVisitor : public AbstractExpressionToStringVisitor
     }else{
       mExpressionString += value.toString();
     }
+  }
+
+  void clear()
+  {
+    mExpressionString.clear();
+  }
+
+  QString toString() const
+  {
+    return mExpressionString;
+  }
+
+ private:
+
+  QString mExpressionString;
+};
+
+class ExpressionToPostfixStringVisitor : public AbstractExpressionToStringVisitor
+{
+ public:
+
+  void processPostorder(Mdt::QueryExpression::ComparisonOperator op) override
+  {
+    qDebug() << "processPostorder: " << comparisonOperatorToString(op);
+    mExpressionString += comparisonOperatorToString(op) + " ";
+  }
+
+  void processPostorder(Mdt::QueryExpression::LogicalOperator op) override
+  {
+    mExpressionString += logicalOperatorToString(op) + " ";
+  }
+
+  void processPostorder(const Mdt::QueryExpression::EntityAndField & field) override
+  {
+    mExpressionString += field.fieldAliasOrName() + " ";
+  }
+
+  void processPostorder(const QVariant& value) override
+  {
+    mExpressionString += value.toString() + " ";
+  }
+
+  void clear()
+  {
+    mExpressionString.clear();
   }
 
   QString toString() const
@@ -515,12 +617,15 @@ void ExpressionTreeTest::simpleBuildTreeTest()
   QFAIL("Not complete");
 }
 
-void ExpressionTreeTest::buildTreeTest()
+void ExpressionTreeTest::buildAndVisitTreeTest()
 {
   SelectEntity person(EntityName("Person"), "P");
   SelectField clientId(person, FieldName("id"));
   ExpressionTree tree;
+  ExpressionTreeVertex leftVertex, rightVertex;
+  ExpressionToPrefixStringVisitor prefixVisitor;
   ExpressionToInfixStringVisitor infixVisitor;
+  ExpressionToPostfixStringVisitor postFixVisitor;
   QString expectedString;
 
   /*
@@ -529,9 +634,77 @@ void ExpressionTreeTest::buildTreeTest()
    *  (id) (25)
    */
   tree.addNode(clientId, ComparisonOperator::Equal, 25);
-  traverseExpressionTree(tree, infixVisitor);
+  // Prefix expression
+  expectedString = "== id 25 ";
+  traverseExpressionTree(tree, prefixVisitor);
+  QCOMPARE(prefixVisitor.toString(), expectedString);
+  // Infix expression
   expectedString = "id==25";
+  traverseExpressionTree(tree, infixVisitor);
   QCOMPARE(infixVisitor.toString(), expectedString);
+  // Postfix expression
+  expectedString = "id 25 == ";
+  traverseExpressionTree(tree, postFixVisitor);
+  QCOMPARE(postFixVisitor.toString(), expectedString);
+
+  /*
+   *         (OR)
+   *        /    \
+   *     (==)     (<)
+   *    /   \     /  \
+   *  (id) (25) (id) (150)
+   */
+  tree.clear();
+  leftVertex = tree.addNode(clientId, ComparisonOperator::Equal, 25);
+  rightVertex = tree.addNode(clientId, ComparisonOperator::Less, 150);
+  tree.addNode(leftVertex, LogicalOperator::Or, rightVertex);
+  // Prefix expression
+  prefixVisitor.clear();
+  expectedString = "|| == id 25 < id 150 ";
+  traverseExpressionTree(tree, prefixVisitor);
+  QCOMPARE(prefixVisitor.toString(), expectedString);
+  // Infix expression
+  infixVisitor.clear();
+  expectedString = "(id==25)||(id<150)";
+  traverseExpressionTree(tree, infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  // Postfix expression
+  postFixVisitor.clear();
+  expectedString = "id 25 == id 150 < || ";
+  traverseExpressionTree(tree, postFixVisitor);
+  QCOMPARE(postFixVisitor.toString(), expectedString);
+
+  /*
+   *              (AND)
+   *             /     \
+   *         (OR)       (>=)
+   *        /    \      /  \
+   *     (==)     (<) (id) (200)
+   *    /   \     /  \
+   *  (id) (25) (id) (150)
+   */
+  qDebug() << "Next...........";
+  tree.clear();
+  leftVertex = tree.addNode(clientId, ComparisonOperator::Equal, 25);
+  rightVertex = tree.addNode(clientId, ComparisonOperator::Less, 150);
+  leftVertex = tree.addNode(leftVertex, LogicalOperator::Or, rightVertex);
+  rightVertex = tree.addNode(clientId, ComparisonOperator::GreaterEqual, 200);
+  tree.addNode(leftVertex, LogicalOperator::And, rightVertex);
+  // Prefix expression
+  prefixVisitor.clear();
+  expectedString = "&& || == id 25 < id 150 >= id 200 ";
+  traverseExpressionTree(tree, prefixVisitor);
+  QCOMPARE(prefixVisitor.toString(), expectedString);
+  // Infix expression
+  infixVisitor.clear();
+  expectedString = "((id==25)||(id<150))&&(id>=200)";
+  traverseExpressionTree(tree, infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  // Postfix expression
+  postFixVisitor.clear();
+  expectedString = "id 25 == id 150 < || id 200 >= && ";
+  traverseExpressionTree(tree, postFixVisitor);
+  QCOMPARE(postFixVisitor.toString(), expectedString);
 
   QFAIL("Not complete");
 }

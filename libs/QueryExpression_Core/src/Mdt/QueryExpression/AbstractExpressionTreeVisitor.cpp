@@ -19,14 +19,213 @@
  **
  ****************************************************************************/
 #include "AbstractExpressionTreeVisitor.h"
+#include <boost/variant.hpp>
 
 #include <QDebug>
 
 namespace Mdt{ namespace QueryExpression{
 
+namespace AbstractExpressionTreeVisitorImpl{
+
+  /*! \internal
+   */
+  class CallForSelectFieldVariantBase : public boost::static_visitor<>
+  {
+    public:
+
+    CallForSelectFieldVariantBase(AbstractExpressionTreeVisitor & treeVisitor)
+    : mTreeVisitor(treeVisitor)
+    {
+    }
+
+    void operator()(const SelectAllField)
+    {
+      Q_ASSERT_X(false, "processInorder", "SelectAllField is not allowed in a condition expression");
+    }
+
+    protected:
+
+    AbstractExpressionTreeVisitor & treeVisitor()
+    {
+      return mTreeVisitor;
+    }
+
+    private:
+
+    AbstractExpressionTreeVisitor & mTreeVisitor;
+  };
+
+  /*! \internal
+   */
+  class CallProcessPreorderForSelectFieldVariant : public CallForSelectFieldVariantBase
+  {
+    public:
+
+    using ParentClass = CallForSelectFieldVariantBase;
+    using ParentClass::ParentClass;
+    using ParentClass::operator();
+
+    void operator()(const EntityAndField & field)
+    {
+      treeVisitor().processPreorder(field);
+    }
+  };
+
+  /*! \internal
+   */
+  class CallProcessInorderForSelectFieldVariant : public CallForSelectFieldVariantBase
+  {
+    public:
+
+    using ParentClass = CallForSelectFieldVariantBase;
+    using ParentClass::ParentClass;
+    using ParentClass::operator();
+
+    void operator()(const EntityAndField & field)
+    {
+      treeVisitor().processInorder(field);
+    }
+  };
+
+  /*! \internal
+   */
+  class CallProcessPostorderForSelectFieldVariant : public CallForSelectFieldVariantBase
+  {
+    public:
+
+    using ParentClass = CallForSelectFieldVariantBase;
+    using ParentClass::ParentClass;
+    using ParentClass::operator();
+
+    void operator()(const EntityAndField & field)
+    {
+      treeVisitor().processPostorder(field);
+    }
+  };
+
+  /*! \internal
+   */
+  class CallProcessPreorder : public boost::static_visitor<>
+  {
+    public:
+
+    CallProcessPreorder(AbstractExpressionTreeVisitor & treeVisitor)
+    : mTreeVisitor(treeVisitor)
+    {
+    }
+
+    void operator()(ComparisonOperator op)
+    {
+      mTreeVisitor.processPreorder(op);
+    }
+
+    void operator()(LogicalOperator op)
+    {
+      mTreeVisitor.processPreorder(op);
+    }
+
+    void operator()(const SelectFieldVariant & field)
+    {
+      CallProcessPreorderForSelectFieldVariant visitor(mTreeVisitor);
+      boost::apply_visitor(visitor, field);
+    }
+
+    void operator()(const QVariant & value)
+    {
+      mTreeVisitor.processPreorder(value);
+    }
+
+
+    private:
+
+    AbstractExpressionTreeVisitor & mTreeVisitor;
+  };
+
+  /*! \internal
+   */
+  class CallProcessInorder : public boost::static_visitor<>
+  {
+    public:
+
+    CallProcessInorder(AbstractExpressionTreeVisitor & treeVisitor)
+    : mTreeVisitor(treeVisitor)
+    {
+    }
+
+    void operator()(ComparisonOperator op)
+    {
+      mTreeVisitor.processInorder(op);
+    }
+
+    void operator()(LogicalOperator op)
+    {
+      mTreeVisitor.processInorder(op);
+    }
+
+    void operator()(const SelectFieldVariant & field)
+    {
+      CallProcessInorderForSelectFieldVariant visitor(mTreeVisitor);
+      boost::apply_visitor(visitor, field);
+    }
+
+    void operator()(const QVariant & value)
+    {
+      mTreeVisitor.processInorder(value);
+    }
+
+
+    private:
+
+    AbstractExpressionTreeVisitor & mTreeVisitor;
+  };
+
+  /*! \internal
+   */
+  class CallProcessPostorder : public boost::static_visitor<>
+  {
+    public:
+
+    CallProcessPostorder(AbstractExpressionTreeVisitor & treeVisitor)
+    : mTreeVisitor(treeVisitor)
+    {
+    }
+
+    void operator()(ComparisonOperator op)
+    {
+      mTreeVisitor.processPostorder(op);
+    }
+
+    void operator()(LogicalOperator op)
+    {
+      mTreeVisitor.processPostorder(op);
+    }
+
+    void operator()(const SelectFieldVariant & field)
+    {
+      CallProcessPostorderForSelectFieldVariant visitor(mTreeVisitor);
+      boost::apply_visitor(visitor, field);
+    }
+
+    void operator()(const QVariant & value)
+    {
+      mTreeVisitor.processPostorder(value);
+    }
+
+
+    private:
+
+    AbstractExpressionTreeVisitor & mTreeVisitor;
+  };
+
+} // namespace AbstractExpressionTreeVisitorImpl{
+
 void AbstractExpressionTreeVisitor::preorder(ExpressionTreeVertex v, const ExpressionTreeGraph & g)
 {
+  qDebug() << "preorder, v: " << v;
 
+  const auto vertexVariant = g[v];
+  AbstractExpressionTreeVisitorImpl::CallProcessPreorder visitor(*this);
+  boost::apply_visitor(visitor, vertexVariant);
 }
 
 void AbstractExpressionTreeVisitor::inorder(ExpressionTreeVertex v, const ExpressionTreeGraph & g)
@@ -40,7 +239,11 @@ void AbstractExpressionTreeVisitor::inorder(ExpressionTreeVertex v, const Expres
 
 void AbstractExpressionTreeVisitor::postorder(ExpressionTreeVertex v, const ExpressionTreeGraph & g)
 {
+  qDebug() << "postorder, v: " << v;
 
+  const auto vertexVariant = g[v];
+  AbstractExpressionTreeVisitorImpl::CallProcessPostorder visitor(*this);
+  boost::apply_visitor(visitor, vertexVariant);
 }
 
 void AbstractExpressionTreeVisitor::onEdge(ExpressionTreeEdge e, const ExpressionTreeGraph & g)

@@ -28,7 +28,6 @@
 #include "EntityAndField.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QVariant>
-#include <boost/variant.hpp>
 
 namespace Mdt{ namespace QueryExpression{
 
@@ -137,6 +136,42 @@ namespace Mdt{ namespace QueryExpression{
      */
     void postEdge(ExpressionTreeEdge e, const ExpressionTreeGraph & g);
 
+    /*! \brief Called by preorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processPreorder(ComparisonOperator op)
+    {
+      Q_UNUSED(op);
+    }
+
+    /*! \brief Called by preorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processPreorder(LogicalOperator op)
+    {
+      Q_UNUSED(op);
+    }
+
+    /*! \brief Called by preorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processPreorder(const EntityAndField & field)
+    {
+      Q_UNUSED(field);
+    }
+
+    /*! \brief Called by preorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processPreorder(const QVariant & value)
+    {
+      Q_UNUSED(value);
+    }
+
     /*! \brief Called by inorder()
      *
      * This default implementation does nothing
@@ -173,75 +208,43 @@ namespace Mdt{ namespace QueryExpression{
       Q_UNUSED(value);
     }
 
+    /*! \brief Called by postorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processPostorder(ComparisonOperator op)
+    {
+      Q_UNUSED(op);
+    }
+
+    /*! \brief Called by postorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processPostorder(LogicalOperator op)
+    {
+      Q_UNUSED(op);
+    }
+
+    /*! \brief Called by postorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processPostorder(const EntityAndField & field)
+    {
+      Q_UNUSED(field);
+    }
+
+    /*! \brief Called by postorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processPostorder(const QVariant & value)
+    {
+      Q_UNUSED(value);
+    }
+
   };
-
-  namespace AbstractExpressionTreeVisitorImpl{
-
-    /*! \internal
-     */
-    class CallProcessInorderForSelectFieldVariant : public boost::static_visitor<>
-    {
-     public:
-
-      CallProcessInorderForSelectFieldVariant(AbstractExpressionTreeVisitor & treeVisitor)
-      : mTreeVisitor(treeVisitor)
-      {
-      }
-
-      void operator()(const SelectAllField)
-      {
-        Q_ASSERT_X(false, "processInorder", "SelectAllField is not allowed in a condition expression");
-      }
-
-      void operator()(const EntityAndField & field)
-      {
-        mTreeVisitor.processInorder(field);
-      }
-
-     private:
-
-      AbstractExpressionTreeVisitor & mTreeVisitor;
-    };
-
-    /*! \internal
-     */
-    class CallProcessInorder : public boost::static_visitor<>
-    {
-     public:
-
-      CallProcessInorder(AbstractExpressionTreeVisitor & treeVisitor)
-      : mTreeVisitor(treeVisitor)
-      {
-      }
-
-      void operator()(ComparisonOperator op)
-      {
-        mTreeVisitor.processInorder(op);
-      }
-
-      void operator()(LogicalOperator op)
-      {
-        mTreeVisitor.processInorder(op);
-      }
-
-      void operator()(const SelectFieldVariant & field)
-      {
-        CallProcessInorderForSelectFieldVariant visitor(mTreeVisitor);
-        boost::apply_visitor(visitor, field);
-      }
-
-      void operator()(const QVariant & value)
-      {
-        mTreeVisitor.processInorder(value);
-      }
-
-
-     private:
-
-      AbstractExpressionTreeVisitor & mTreeVisitor;
-    };
-
-  } // namespace AbstractExpressionTreeVisitorImpl{
 
 }} // namespace Mdt{ namespace QueryExpression{
 
