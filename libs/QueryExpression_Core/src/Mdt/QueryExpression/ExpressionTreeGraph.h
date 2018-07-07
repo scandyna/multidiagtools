@@ -24,6 +24,7 @@
 #include "LogicalOperator.h"
 #include "ComparisonOperator.h"
 #include "SelectField.h"
+#include "LikeExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QVariant>
 #include <boost/variant.hpp>
@@ -33,7 +34,7 @@ namespace Mdt{ namespace QueryExpression{
 
   /*! \internal Vertex data used in ExpressionTreeGraph
    */
-  using ExpressionTreeVertexData = boost::variant<LogicalOperator, ComparisonOperator, QVariant, SelectFieldVariant>;
+  using ExpressionTreeVertexData = boost::variant<LogicalOperator, ComparisonOperator, QVariant, SelectFieldVariant, LikeExpressionData>;
 
   /*! \internal Graph for ExpressionTree
    */

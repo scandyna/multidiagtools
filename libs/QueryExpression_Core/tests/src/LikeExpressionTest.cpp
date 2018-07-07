@@ -44,8 +44,8 @@ void LikeExpressionTest::likeExpressionTest()
   QCOMPARE( likeExpressionTestFunction(Like("A?B")) , QString("A?B") );
 
   Like A("?A?");
-  QCOMPARE( boost::proto::_value()(A), QString("?A?"));
-  QCOMPARE( boost::proto::value(A), QString("?A?"));
+  QCOMPARE( (boost::proto::_value()(A)).toString(), QString("?A?"));
+  QCOMPARE( boost::proto::value(A).toString(), QString("?A?"));
 }
 
 void LikeExpressionTest::likeExpressionRegexTransformEscapeTest()

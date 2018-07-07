@@ -30,6 +30,34 @@
 
 namespace Mdt{ namespace QueryExpression{
 
+  /*! \internal
+   */
+  class MDT_QUERYEXPRESSION_CORE_EXPORT LikeExpressionData
+  {
+   public:
+
+    LikeExpressionData() noexcept = default;
+
+    LikeExpressionData(const QString & str)
+     : mString(str)
+    {
+    }
+
+    LikeExpressionData(const LikeExpressionData &) = default;
+    LikeExpressionData & operator=(const LikeExpressionData &) = default;
+    LikeExpressionData(LikeExpressionData &&) = default;
+    LikeExpressionData & operator=(LikeExpressionData &&) = default;
+
+    QString toString() const
+    {
+      return mString;
+    }
+
+   private:
+
+    const QString mString;
+  };
+
   /*! \brief Expression using wildcards
    *
    * Supported wildcards are:
@@ -42,7 +70,7 @@ namespace Mdt{ namespace QueryExpression{
    * To match a wildcard, escape it with a '\'.
    */
   struct MDT_QUERYEXPRESSION_CORE_EXPORT LikeExpression : boost::proto::extends<
-                                                            boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QString> >,
+                                                            boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<LikeExpressionData> >,
                                                             LikeExpression,
                                                             boost::proto::default_domain
                                                           >
@@ -50,12 +78,12 @@ namespace Mdt{ namespace QueryExpression{
    private:
 
     using Domain = boost::proto::default_domain;
-    using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QString> >;
+    using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<LikeExpressionData> >;
     using ParentClass = boost::proto::extends< Expression, LikeExpression, Domain >;
 
    public:
 
-    using value_type = QString;
+    using value_type = LikeExpressionData;
     using reference = value_type &;
     using const_reference = const value_type &;
 
@@ -68,7 +96,7 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Construct a like expression
      */
     explicit LikeExpression(const QString & expr)
-    : ParentClass(Expression::make( QString(expr) ))
+    : ParentClass(Expression::make( LikeExpressionData(expr) ))
     {
     }
 
@@ -76,7 +104,7 @@ namespace Mdt{ namespace QueryExpression{
      */
     QString expression() const
     {
-      return boost::proto::value(*this);
+      return (boost::proto::value(*this)).toString();
     }
   };
 

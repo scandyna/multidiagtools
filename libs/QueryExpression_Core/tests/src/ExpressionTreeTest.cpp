@@ -23,6 +23,7 @@
 #include "Mdt/QueryExpression/ExpressionTree.h"
 #include "Mdt/QueryExpression/AbstractExpressionTreeVisitor.h"
 #include "Mdt/QueryExpression/TravserseTreeGraph.h"
+#include "Mdt/QueryExpression/FilterExpression.h"
 #include <QMetaType>
 
 #include "Mdt/QueryExpression/Terminal.h"
@@ -53,121 +54,6 @@
 #include <vector>
 
 namespace Mdt{ namespace QueryExpression{
-
-//   enum class Operator
-//   {
-//     BinaryEqual,
-//     LogicalOr
-//   };
-
-  QString operatorToString(ComparisonOperator op)
-  {
-    switch(op){
-      case ComparisonOperator::Equal:
-        return "==";
-    }
-    return QString();
-  }
-
-//   using ExpressionTreeVertexData = boost::variant<Operator, QVariant, SelectFieldVariant>;
-// 
-//   /*! \internal Graph for ExpressionTree
-//    */
-//   using ExpressionGraph = boost::adjacency_list<
-//     boost::vecS,              // OutEdgeList: vecS (std::vector)
-//     boost::vecS,              // VertexList: vecS (std::vector)
-//     boost::directedS,         // Directed: directedS (directed graph)
-//     ExpressionTreeVertexData, // VertexProperties: we use our custom struct
-//     boost::no_property,       // EdgeProperties: we use no property
-//     boost::no_property,       // GraphProperties: no_property (None)
-//     boost::listS              // EdgeList: listS (std::list)
-//   >;
-// 
-//   /*! \brief
-//    */
-//   using ExpressionTreeVertex = boost::graph_traits<ExpressionGraph>::vertex_descriptor;
-
-//   /*! \brief 
-//    *
-//    * The following examples assume using the QueryExpression namespace:
-//    * \code
-//    * using namespace Mdt::QueryExpression
-//    * \endcode
-//    */
-//   class ExpressionTree
-//   {
-//    public:
-// 
-//     ExpressionTreeVertex addNode(const SelectFieldVariant & left, Operator op, const QVariant & right)
-//     {
-//       const auto lv = addVertex(left);
-//       const auto rv = addVertex(right);
-//       const auto v = addVertex(op);
-// 
-//       mRoot = v;
-// 
-//       addEdge(v, lv);
-//       addEdge(v, rv);
-//       
-//       qDebug() << "Add node Field" << operatorToString(op) << right << ", lv: " << lv << ", rv: " << rv << " , v: " << v << ", root: " << mRoot;
-// 
-//       return v;
-//     }
-// 
-//     ExpressionTreeVertex addNode(ExpressionTreeVertex leftChild, Operator op, ExpressionTreeVertex rightChild)
-//     {
-//       const auto v = addVertex(op);
-//       
-//       mRoot = v;
-//       
-//       addEdge(v, leftChild);
-//       addEdge(v, rightChild);
-//       
-//       qDebug() << "Add OR node, v: " << v << ", left child: " << leftChild << ", right child: " << rightChild << ", root: " << mRoot;
-//       
-//       return v;
-//     }
-// 
-//     void clear()
-//     {
-//       mGraph.clear();
-//     }
-// 
-//     const ExpressionGraph & internalGraph() const
-//     {
-//       return mGraph;
-//     }
-// 
-//     ExpressionTreeVertex internalRootVertex() const
-//     {
-//       return mRoot;
-//     }
-// 
-//    private:
-// 
-//     ExpressionTreeVertex addVertex(Operator op)
-//     {
-//       return boost::add_vertex(ExpressionTreeVertexData(op) ,mGraph);
-//     }
-// 
-//     ExpressionTreeVertex addVertex(const SelectFieldVariant & field)
-//     {
-//       return boost::add_vertex(ExpressionTreeVertexData(field), mGraph);
-//     }
-// 
-//     ExpressionTreeVertex addVertex(const QVariant & value)
-//     {
-//       return boost::add_vertex(ExpressionTreeVertexData(value) ,mGraph);
-//     }
-// 
-//     void addEdge(ExpressionTreeVertex left, ExpressionTreeVertex right)
-//     {
-//       boost::add_edge(left, right, mGraph);
-//     }
-// 
-//     ExpressionGraph mGraph;
-//     ExpressionTreeVertex mRoot;
-//   };
 
   struct AddEqualExpressionToTree : boost::proto::callable
   {
@@ -261,7 +147,7 @@ class VertexPropertyWriter
     qDebug() << "Prop of v: " << v;
     const auto vertexVariant = mGraph[v];
     VertexPropertyWriterVertexVisitor visitor;
-    boost::apply_visitor(visitor, vertexVariant);
+//     boost::apply_visitor(visitor, vertexVariant);
     out << " [label=\"" << v << "\n" << visitor.str << "\"]";
   }
 
@@ -270,109 +156,13 @@ class VertexPropertyWriter
   const Mdt::QueryExpression::ExpressionTreeGraph & mGraph;
 };
 
-struct ExpressionTreeVisitor
-{
-//   using event_filter = boost::on_discover_vertex;
-  using event_filter = boost::on_finish_vertex;
-
-  void operator()(Mdt::QueryExpression::ExpressionTreeVertex v, const Mdt::QueryExpression::ExpressionTreeGraph & g)
-  {
-    const auto vertexVariant = g[v];
-    VertexPropertyWriterVertexVisitor visitor;
-    boost::apply_visitor(visitor, vertexVariant);
-    qDebug() << QString::fromStdString(visitor.str);
-    if(visitor.str == "OR"){
-      str += "(";
-    }else{
-      str += visitor.str;
-    }
-    qDebug() << "Current str: " << QString::fromStdString(str);
-  }
-
-  std::string str;
-};
-
 std::string vertexVariantToString(Mdt::QueryExpression::ExpressionTreeVertex v, const Mdt::QueryExpression::ExpressionTreeGraph & g)
 {
   const auto vertexVariant = g[v];
   VertexPropertyWriterVertexVisitor visitor;
-  boost::apply_visitor(visitor, vertexVariant);
+//   boost::apply_visitor(visitor, vertexVariant);
   return visitor.str;
 }
-
-/// \todo Check boost visitor for order (g, v) or (v, g) ? -> it seems to be (v, g) and (e, g)
-template<typename TreeGraph>
-class TreeGraphVisitor
-{
- public:
-
-  using Vertex = typename boost::graph_traits<TreeGraph>::vertex_descriptor;
-  using Edge = typename boost::graph_traits<TreeGraph>::edge_descriptor;
-
-  void preorder(Vertex v, const TreeGraph & g)
-  {
-//     qDebug() << "Pre, v: " << v << QString::fromStdString(vertexVariantToString(v, g));
-  }
-
-  void inorder(Vertex v, const TreeGraph & g)
-  {
-    qDebug() << "In, v: " << v << QString::fromStdString(vertexVariantToString(v, g));
-    
-  }
-
-  void postorder(Vertex v, const TreeGraph & g)
-  {
-//     qDebug() << "Post, v: " << v << QString::fromStdString(vertexVariantToString(v, g));
-  }
-
-  void onEdge(Edge e, const TreeGraph & g)
-  {
-  }
-
-  void postEdge(Edge e, const TreeGraph & g)
-  {
-  }
-
-  std::string str;
-};
-
-// template<typename Graph>
-// constexpr bool isDirectedGraph()
-// {
-//   return std::is_same< typename boost::graph_traits<Graph>::directed_category, boost::directed_tag >::value;
-// }
-
-// /*! \brief
-//  *
-//  * Source: http://boost-users.boost.narkive.com/sN4cBmiE/bgl-traversal-algorithm-for-tree
-//  *
-//  * \todo order of arguments should match DFS, BFS provided by boost::graph
-//  */
-// template<typename TreeGraph, typename TreeGraphVisitor>
-// void traverseTreeGraph(typename boost::graph_traits<TreeGraph>::vertex_descriptor v, TreeGraph & g, TreeGraphVisitor & visitor)
-// {
-//   static_assert( isDirectedGraph<TreeGraph>()  , "traverseTreeGraph() requires a directed graph (else it will run to infinite loop)" );
-// 
-//   visitor.preorder(v, g);
-// 
-//   typename boost::graph_traits<TreeGraph>::adjacency_iterator it, end;
-//   std::tie(it, end) = boost::adjacent_vertices(v, g);
-//   if(it != end){
-//     // Current node is not a leaf
-//     visitor.onEdge( boost::edge(v, *it, g).first, g );
-//     traverseTreeGraph(*it, g, visitor);
-//     visitor.postEdge( boost::edge(v, *it++, g).first, g );
-//     while(it != end){
-//       visitor.inorder(v, g);
-//       visitor.onEdge( boost::edge(v, *it, g).first, g );
-//       traverseTreeGraph(*it, g, visitor);
-//       visitor.postEdge( boost::edge(v, *it++, g).first, g );
-//     }
-//   }else{
-//     visitor.inorder(v, g);
-//     visitor.postorder(v, g);
-//   }
-// }
 
 void ExpressionTreeTest::sandbox()
 {
@@ -393,23 +183,10 @@ void ExpressionTreeTest::sandbox()
   qDebug() << "***  (clientId == 25) || (clientId == 44) || (clientId == 256)  ***";
   transform( (clientId == 25) || (clientId == 44) || (clientId == 256), 0, tree);
   
-  std::ofstream graphVizFile("graphvizOut.dot");
-  QVERIFY(graphVizFile.good());
-  VertexPropertyWriter vp( tree.internalGraph() );
-  boost::write_graphviz(graphVizFile, tree.internalGraph(), vp);
-
-  qDebug() << "BFS ...";
-  boost::bfs_visitor<ExpressionTreeVisitor> bfsVis;
-  boost::breadth_first_search( tree.internalGraph(), tree.internalRootVertex(), boost::visitor(bfsVis) );
-  
-  qDebug() << "DFS ...";
-  boost::dfs_visitor<ExpressionTreeVisitor> dfsVis;
-  boost::depth_first_search( tree.internalGraph(), boost::visitor(dfsVis) );
-
-  qDebug() << "Traverse tree ...";
-  TreeGraphVisitor<Mdt::QueryExpression::ExpressionTreeGraph> tvis;
-  traverseTreeGraph( tree.internalGraph(), tree.internalRootVertex(), tvis );
-  qDebug() << QString::fromStdString(tvis.str);
+//   std::ofstream graphVizFile("graphvizOut.dot");
+//   QVERIFY(graphVizFile.good());
+//   VertexPropertyWriter vp( tree.internalGraph() );
+//   boost::write_graphviz(graphVizFile, tree.internalGraph(), vp);
 }
 
 /*
@@ -426,6 +203,8 @@ class AbstractExpressionToStringVisitor : public Mdt::QueryExpression::AbstractE
     switch(op){
       case ComparisonOperator::Equal:
         return "==";
+      case ComparisonOperator::NotEqual:
+        return "!=";
       case ComparisonOperator::Less:
         return "<";
       case ComparisonOperator::LessEqual:
@@ -455,6 +234,10 @@ class AbstractExpressionToStringVisitor : public Mdt::QueryExpression::AbstractE
   }
 
 };
+
+/*
+ * Test visitors
+ */
 
 class ExpressionToPrefixStringVisitor : public AbstractExpressionToStringVisitor
 {
@@ -539,6 +322,11 @@ class ExpressionToInfixStringVisitor : public AbstractExpressionToStringVisitor
     }
   }
 
+  void processInorder(const LikeExpressionData& data) override
+  {
+    mExpressionString += data.toString();
+  }
+
   void clear()
   {
     mExpressionString.clear();
@@ -605,16 +393,23 @@ void ExpressionTreeTest::simpleBuildTreeTest()
   ExpressionTreeVertex leftVertex, rightVertex, rootVertex;
 
   ExpressionTree tree;
+  QVERIFY(tree.isNull());
+
   leftVertex = tree.addNode(clientId, ComparisonOperator::Equal, 44);
+  QVERIFY(!tree.isNull());
   QCOMPARE(tree.internalRootVertex(), leftVertex);
   rightVertex = tree.addNode(clientId, ComparisonOperator::Less, 25); // Root vertex is ambigous for now
   rootVertex = tree.addNode(leftVertex, LogicalOperator::Or, rightVertex);
   QCOMPARE(tree.internalRootVertex(), rootVertex);
-  
-  qDebug() << "L: " << leftVertex << ", R: " << rightVertex << ", root: " << rootVertex << ", Groot: " << tree.internalRootVertex();
-  
 
-  QFAIL("Not complete");
+  tree.clear();
+  QVERIFY(tree.isNull());
+  QCOMPARE((int)tree.internalRootVertex(), 0);
+  leftVertex = tree.addNode(clientId, ComparisonOperator::Equal, 55);
+  QCOMPARE(tree.internalRootVertex(), leftVertex);
+  rightVertex = tree.addNode(clientId, ComparisonOperator::Less, 46); // Root vertex is ambigous for now
+  rootVertex = tree.addNode(leftVertex, LogicalOperator::Or, rightVertex);
+  QCOMPARE(tree.internalRootVertex(), rootVertex);
 }
 
 void ExpressionTreeTest::buildAndVisitTreeTest()
@@ -705,8 +500,65 @@ void ExpressionTreeTest::buildAndVisitTreeTest()
   expectedString = "id 25 == id 150 < || id 200 >= && ";
   traverseExpressionTree(tree, postFixVisitor);
   QCOMPARE(postFixVisitor.toString(), expectedString);
+}
 
-  QFAIL("Not complete");
+void ExpressionTreeTest::filterExpressionTest()
+{
+  using Like = LikeExpression;
+
+  SelectEntity person(EntityName("Person"), "P");
+  SelectField clientId(person, FieldName("id"));
+  ExpressionToInfixStringVisitor infixVisitor;
+  QString expectedString;
+  FilterExpression filter;
+
+  filter.setFilter(clientId == 15);
+  expectedString = "id==15";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId == "A");
+  expectedString = "id==\"A\"";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId == Like("?B*"));
+  expectedString = "id==?B*";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId != 15);
+  expectedString = "id!=15";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId < 20);
+  expectedString = "id<20";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId <= 20);
+  expectedString = "id<=20";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId > 20);
+  expectedString = "id>20";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId >= 20);
+  expectedString = "id>=20";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
 }
 
 

@@ -133,6 +133,10 @@ namespace AbstractExpressionTreeVisitorImpl{
       mTreeVisitor.processPreorder(value);
     }
 
+    void operator()(const LikeExpressionData & data)
+    {
+      mTreeVisitor.processPreorder(data);
+    }
 
     private:
 
@@ -171,6 +175,10 @@ namespace AbstractExpressionTreeVisitorImpl{
       mTreeVisitor.processInorder(value);
     }
 
+    void operator()(const LikeExpressionData & data)
+    {
+      mTreeVisitor.processInorder(data);
+    }
 
     private:
 
@@ -209,6 +217,10 @@ namespace AbstractExpressionTreeVisitorImpl{
       mTreeVisitor.processPostorder(value);
     }
 
+    void operator()(const LikeExpressionData & data)
+    {
+      mTreeVisitor.processPostorder(data);
+    }
 
     private:
 

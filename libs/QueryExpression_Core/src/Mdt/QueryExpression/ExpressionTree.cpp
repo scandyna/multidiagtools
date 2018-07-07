@@ -28,19 +28,19 @@ ExpressionTreeVertex ExpressionTree::addNode(const SelectField & left, Compariso
   return addNode( boost::proto::value(left), op, right );
 }
 
-ExpressionTreeVertex ExpressionTree::addNode(const SelectFieldVariant & left, ComparisonOperator op, const QVariant & right)
-{
-  const auto lv = addVertex(left);
-  const auto rv = addVertex(right);
-  const auto v = addVertex(op);
-
-  mRootVertex = v;
-
-  addEdge(v, lv);
-  addEdge(v, rv);
-
-  return v;
-}
+// ExpressionTreeVertex ExpressionTree::addNode(const SelectFieldVariant & left, ComparisonOperator op, const QVariant & right)
+// {
+//   const auto lv = addVertex(left);
+//   const auto rv = addVertex(right);
+//   const auto v = addVertex(op);
+// 
+//   mRootVertex = v;
+// 
+//   addEdge(v, lv);
+//   addEdge(v, rv);
+// 
+//   return v;
+// }
 
 ExpressionTreeVertex ExpressionTree::addNode(ExpressionTreeVertex leftChild, LogicalOperator op, ExpressionTreeVertex rightChild)
 {
@@ -57,6 +57,12 @@ ExpressionTreeVertex ExpressionTree::addNode(ExpressionTreeVertex leftChild, Log
 void ExpressionTree::clear()
 {
   mGraph.clear();
+  mRootVertex = 0;
+}
+
+bool ExpressionTree::isNull() const noexcept
+{
+  return boost::num_vertices(mGraph) == 0;
 }
 
 ExpressionTreeVertex ExpressionTree::addVertex(ComparisonOperator op)
@@ -77,6 +83,11 @@ ExpressionTreeVertex ExpressionTree::addVertex(const SelectFieldVariant & field)
 ExpressionTreeVertex ExpressionTree::addVertex(const QVariant & value)
 {
   return boost::add_vertex(ExpressionTreeVertexData(value), mGraph);
+}
+
+ExpressionTreeVertex ExpressionTree::addVertex(const LikeExpressionData& data)
+{
+  return boost::add_vertex(ExpressionTreeVertexData(data), mGraph);
 }
 
 void ExpressionTree::addEdge(ExpressionTreeVertex left, ExpressionTreeVertex right)

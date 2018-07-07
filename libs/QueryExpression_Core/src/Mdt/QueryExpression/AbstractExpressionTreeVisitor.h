@@ -26,6 +26,7 @@
 #include "LogicalOperator.h"
 #include "SelectField.h"
 #include "EntityAndField.h"
+#include "LikeExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QVariant>
 
@@ -186,6 +187,15 @@ namespace Mdt{ namespace QueryExpression{
       Q_UNUSED(value);
     }
 
+    /*! \brief Called by preorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processPreorder(const LikeExpressionData & data)
+    {
+      Q_UNUSED(data);
+    }
+
     /*! \brief Called by inorder()
      *
      * This default implementation does nothing
@@ -222,6 +232,15 @@ namespace Mdt{ namespace QueryExpression{
       Q_UNUSED(value);
     }
 
+    /*! \brief Called by preorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processInorder(const LikeExpressionData & data)
+    {
+      Q_UNUSED(data);
+    }
+
     /*! \brief Called by postorder()
      *
      * This default implementation does nothing
@@ -256,6 +275,15 @@ namespace Mdt{ namespace QueryExpression{
     virtual void processPostorder(const QVariant & value)
     {
       Q_UNUSED(value);
+    }
+
+    /*! \brief Called by preorder()
+     *
+     * This default implementation does nothing
+     */
+    virtual void processPostorder(const LikeExpressionData & data)
+    {
+      Q_UNUSED(data);
     }
 
   };

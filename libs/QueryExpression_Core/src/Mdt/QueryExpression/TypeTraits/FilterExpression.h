@@ -18,23 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_QUERY_EXPRESSION_COMPARISON_OPERATOR_H
-#define MDT_QUERY_EXPRESSION_COMPARISON_OPERATOR_H
+#ifndef MDT_QUERY_EXPRESSION_TYPE_TRAITS_FILTER_EXPRESSION_H
+#define MDT_QUERY_EXPRESSION_TYPE_TRAITS_FILTER_EXPRESSION_H
 
-namespace Mdt{ namespace QueryExpression{
+#include "../ExpressionGrammar.h"
+#include <boost/proto/matches.hpp>
 
-  /*! \brief Represents a comparison operator in a expression tree
+namespace Mdt{ namespace QueryExpression{ namespace TypeTraits{
+
+  /*! \brief Check if type \a Expr is a filter expression
    */
-  enum class ComparisonOperator
+  template<typename Expr>
+  constexpr bool isFilterExpression()
   {
-    Equal,        /*!< Binary == */
-    NotEqual,     /*!< Binary != */
-    Less,         /*!< Binary < */
-    LessEqual,    /*!< Binary <= */
-    Greater,      /*!< Binary > */
-    GreaterEqual  /*!< Binary >= */
-  };
+    return boost::proto::matches< Expr, ExpressionGrammar >::value;
+  }
 
-}} // namespace Mdt{ namespace QueryExpression{
+}}} // namespace Mdt{ namespace QueryExpression{ namespace TypeTraits{
 
-#endif // #ifndef MDT_QUERY_EXPRESSION_COMPARISON_OPERATOR_H
+#endif // #ifndef MDT_QUERY_EXPRESSION_TYPE_TRAITS_FILTER_EXPRESSION_H

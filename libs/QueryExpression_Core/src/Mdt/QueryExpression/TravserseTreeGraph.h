@@ -25,6 +25,7 @@
 #include "AbstractExpressionTreeVisitor.h"
 #include "TypeTraits/Graph.h"
 #include "MdtQueryExpression_CoreExport.h"
+#include <QtGlobal>
 
 namespace Mdt{ namespace QueryExpression{
 
@@ -33,12 +34,14 @@ namespace Mdt{ namespace QueryExpression{
    * This function takes the proposal discussed here:
    *  http://boost-users.boost.narkive.com/sN4cBmiE/bgl-traversal-algorithm-for-tree
    *
+   * \pre \a v must refer to a existing vertex in \a g
    * \sa traverseExpressionTree()
    */
   template<typename TreeGraph, typename TreeGraphVisitor>
   void traverseTreeGraph(const TreeGraph & g, typename boost::graph_traits<TreeGraph>::vertex_descriptor v, TreeGraphVisitor & visitor)
   {
     static_assert( TypeTraits::isDirectedGraph<TreeGraph>()  , "traverseTreeGraph() requires a directed graph (else it will run to infinite loop)" );
+    Q_ASSERT(v < boost::num_vertices(g));
 
     visitor.preorder(v, g);
 
@@ -63,9 +66,13 @@ namespace Mdt{ namespace QueryExpression{
   }
 
   /*! \brief Traverse a expression tree with a visitor
+   *
+   * \pre \a tree must not be null
    */
   void MDT_QUERYEXPRESSION_CORE_EXPORT traverseExpressionTree(const ExpressionTree & tree, AbstractExpressionTreeVisitor & visitor)
   {
+    Q_ASSERT(!tree.isNull());
+
     traverseTreeGraph(tree.internalGraph(), tree.internalRootVertex(), visitor);
   }
 

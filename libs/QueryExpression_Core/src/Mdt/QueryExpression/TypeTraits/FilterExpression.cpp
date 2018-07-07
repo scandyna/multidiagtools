@@ -18,23 +18,4 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_QUERY_EXPRESSION_COMPARISON_OPERATOR_H
-#define MDT_QUERY_EXPRESSION_COMPARISON_OPERATOR_H
-
-namespace Mdt{ namespace QueryExpression{
-
-  /*! \brief Represents a comparison operator in a expression tree
-   */
-  enum class ComparisonOperator
-  {
-    Equal,        /*!< Binary == */
-    NotEqual,     /*!< Binary != */
-    Less,         /*!< Binary < */
-    LessEqual,    /*!< Binary <= */
-    Greater,      /*!< Binary > */
-    GreaterEqual  /*!< Binary >= */
-  };
-
-}} // namespace Mdt{ namespace QueryExpression{
-
-#endif // #ifndef MDT_QUERY_EXPRESSION_COMPARISON_OPERATOR_H
+#include "FilterExpression.h"

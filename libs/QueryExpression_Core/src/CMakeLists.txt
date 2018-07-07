@@ -21,6 +21,10 @@ set(SOURCE_FILES
   Mdt/QueryExpression/AbstractExpressionTreeVisitor.cpp
   Mdt/QueryExpression/TravserseTreeGraph.cpp
   Mdt/QueryExpression/TypeTraits/Graph.cpp
+  Mdt/QueryExpression/TypeTraits/FilterExpression.cpp
+  Mdt/QueryExpression/BuildExpressionTree/AddExpressionToTree.cpp
+  Mdt/QueryExpression/BuildExpressionTree/Transform.cpp
+  Mdt/QueryExpression/FilterExpression.cpp
   Mdt/QueryExpression/SelectQuery.cpp
 )
 

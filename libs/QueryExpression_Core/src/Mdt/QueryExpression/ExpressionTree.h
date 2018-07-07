@@ -24,6 +24,7 @@
 #include "ComparisonOperator.h"
 #include "LogicalOperator.h"
 #include "ExpressionTreeGraph.h"
+#include "LikeExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 
 namespace Mdt{ namespace QueryExpression{
@@ -65,7 +66,17 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Add a node for \a left select field, \a op operation and \a right value
      */
-    ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const QVariant & right);
+    ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const QVariant & right)
+    {
+      return addComparisonNode(left, op, right);
+    }
+
+    /*! \brief Add a node for \a left select field, \a op operation and \a right like expression
+     */
+    ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const LikeExpressionData & right)
+    {
+      return addComparisonNode(left, op, right);
+    }
 
     /*! \brief Add a \a op operation node with \a leftChild and \a rightChild
      */
@@ -74,6 +85,10 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Clear this expression
      */
     void clear();
+
+    /*! \brief Check if this expression tree is null
+     */
+    bool isNull() const noexcept;
 
     /*! \internal Access the internal graph of this expression tree
      *
@@ -95,10 +110,26 @@ namespace Mdt{ namespace QueryExpression{
 
    private:
 
+    template<typename L, typename R>
+    ExpressionTreeVertex addComparisonNode(const L & left, ComparisonOperator op, const R & right)
+    {
+      const auto lv = addVertex(left);
+      const auto rv = addVertex(right);
+      const auto v = addVertex(op);
+
+      mRootVertex = v;
+
+      addEdge(v, lv);
+      addEdge(v, rv);
+
+      return v;
+    }
+
     ExpressionTreeVertex addVertex(ComparisonOperator op);
     ExpressionTreeVertex addVertex(LogicalOperator op);
     ExpressionTreeVertex addVertex(const SelectFieldVariant & field);
     ExpressionTreeVertex addVertex(const QVariant & value);
+    ExpressionTreeVertex addVertex(const LikeExpressionData & data);
     void addEdge(ExpressionTreeVertex left, ExpressionTreeVertex right);
 
     ExpressionTreeVertex mRootVertex;
