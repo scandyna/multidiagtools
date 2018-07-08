@@ -24,6 +24,7 @@
 #include "FieldName.h"
 #include "SelectEntity.h"
 #include "EntityAndField.h"
+#include "SelectAllField.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
 #include <boost/variant.hpp>
@@ -32,12 +33,6 @@
 #include <boost/proto/operators.hpp>
 
 namespace Mdt{ namespace QueryExpression{
-
-  /*! \internal Tag for SelectField
-   */
-  struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectAllField
-  {
-  };
 
   /*! \internal Tag for SelectField
    */
@@ -73,7 +68,7 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Construct a select all field
      */
-    SelectField(SelectAllField);
+    SelectField(const SelectAllField & field);
 
     /*! \brief Construct a select field with a field name and a optional field alias
      *

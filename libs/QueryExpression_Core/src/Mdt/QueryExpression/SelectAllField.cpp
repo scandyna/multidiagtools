@@ -18,26 +18,4 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "SelectField.h"
-
-namespace Mdt{ namespace QueryExpression{
-
-SelectField::SelectField(const SelectAllField & field)
- : ParentClass( Expression::make(field) )
-{
-}
-
-SelectField::SelectField(const FieldName& fieldName, const QString& fieldAlias)
- : ParentClass( Expression::make( EntityAndField(fieldName, fieldAlias) ) )
-{
-  Q_ASSERT(!fieldName.isNull());
-}
-
-SelectField::SelectField(const SelectEntity& entity, const FieldName& fieldName, const QString& fieldAlias)
- : ParentClass( Expression::make( EntityAndField(entity, fieldName, fieldAlias) ) )
-{
-  Q_ASSERT(!entity.isNull());
-  Q_ASSERT(!fieldName.isNull());
-}
-
-}} // namespace Mdt{ namespace QueryExpression{
+#include "SelectAllField.h"

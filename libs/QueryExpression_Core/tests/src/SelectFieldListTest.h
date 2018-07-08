@@ -29,7 +29,7 @@ class SelectFieldListTest : public QObject
 
  private slots:
 
-  
+  void addFieldTest();
 };
 
 #endif // #ifndef TEST_MAIN_H

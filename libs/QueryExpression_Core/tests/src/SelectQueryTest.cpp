@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "SelectQueryTest.h"
 #include "Mdt/QueryExpression/SelectQuery.h"
-#include "Mdt/QueryExpression/SelectEntity.h"
 
 using namespace Mdt::QueryExpression;
 
@@ -28,15 +27,41 @@ using namespace Mdt::QueryExpression;
  * Tests
  */
 
-void SelectQueryTest::simpleSetGetTest()
+void SelectQueryTest::setEntityTest()
 {
   SelectQuery query;
 
-  query.setEntityName( EntityName("Person") );
-  QCOMPARE(query.entityName(), QString("Person"));
+  query.setEntityName("Person");
+  QCOMPARE(query.entity().aliasOrName(), QString("Person"));
 
-  query.setEntityName(EntityName("A"));
-  QCOMPARE(query.entityName(), QString("A"));
+  query.setEntityName(EntityName("Person"), "P");
+  QCOMPARE(query.entity().aliasOrName(), QString("P"));
+
+  SelectEntity address( EntityName("Address"), "ADR");
+  query.setEntity(address);
+  QCOMPARE(query.entity().aliasOrName(), QString("ADR"));
+}
+
+void SelectQueryTest::addFieldTest()
+{
+  SelectEntity person( EntityName("Person") );
+  SelectEntity address( EntityName("Address"), "ADR");
+
+  SelectField personId( person, FieldName("id") );
+  SelectField personName( person, FieldName("name") );
+  SelectField addressId( address, FieldName("id") );
+  SelectField addressStreet( address, FieldName("street"), "AddressStreet" );
+
+  SelectQuery query;
+  query.setEntity(person);
+  query.addField(personName);
+  query.addField(person, FieldName("remarks"), "PersonRemarks");
+  query.addField("notices");
+  query.addField(FieldName("age"), "A");
+  query.addField(addressStreet);
+  query.addField(address, FieldName("remarks"), "AddressRemarks");
+
+  QFAIL("Not complete");
 }
 
 /*

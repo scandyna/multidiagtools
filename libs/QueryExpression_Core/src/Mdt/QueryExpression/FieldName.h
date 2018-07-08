@@ -35,7 +35,7 @@ namespace Mdt{ namespace QueryExpression{
     /*! \breif Construct explicitly from a field name
      */
     explicit FieldName(const QString & name)
-     : mFieldName(name) {}
+     : mFieldName(name.trimmed()) {}
 
     /*! \brief Check if this field name is null
      */

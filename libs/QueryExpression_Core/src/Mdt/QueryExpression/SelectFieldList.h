@@ -21,10 +21,14 @@
 #ifndef MDT_QUERY_EXPRESSION_SELECT_FIELD_LIST_H
 #define MDT_QUERY_EXPRESSION_SELECT_FIELD_LIST_H
 
+#include "SelectField.h"
+#include "SelectAllField.h"
 #include "FieldName.h"
 #include "EntityName.h"
+#include "SelectEntity.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
+#include <vector>
 
 namespace Mdt{ namespace QueryExpression{
 
@@ -34,19 +38,60 @@ namespace Mdt{ namespace QueryExpression{
   {
    public:
 
-    /*! \brief Add a field named \a fieldName to this list
+//     /*! \brief Add a field to this list
+//      */
+//     void addField(const SelectField & field);
+
+    /*! \brief Add a select all field to this list
+     */
+    void addField(const SelectAllField & field);
+
+    /*! \brief Add a field to this list
      *
      * \pre \a fieldName must not be null
      */
     void addField(const FieldName & fieldName, const QString & fieldAlias = QString());
 
-    /*! \brief Add a field composed by ...
+    /*! \brief Add a field to this list
+     *
+     * \pre \a entity must not be null
+     * \pre \a fieldName must not be null
      */
-    void addField(const EntityName & entityName, const FieldName & fieldName, const QString & fieldAlias = QString());
+    void addField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString());
+
+    /*! \brief Get count of fields in this list
+     */
+    int fieldCount() const noexcept
+    {
+      return mList.size();
+    }
+
+    /*! \brief Check if this list is empty
+     */
+    bool isEmpty() const noexcept
+    {
+      return mList.empty();
+    }
+
+    /*! \brief Get field at \a index
+     *
+     * \pre \a index must be in valid range ( 0 <= \a index < fieldCount() )
+     */
+    const SelectField & at(int index) const noexcept
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < fieldCount());
+
+      return mList[index];
+    }
+
+    /*! \brief Clear this field list
+     */
+    void clear();
 
    private:
 
-    
+    std::vector<SelectField> mList;
   };
 
 }} // namespace Mdt{ namespace QueryExpression{

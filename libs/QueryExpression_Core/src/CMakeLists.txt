@@ -6,6 +6,7 @@ set(SOURCE_FILES
   Mdt/QueryExpression/EntityName.cpp
   Mdt/QueryExpression/SelectEntity.cpp
   Mdt/QueryExpression/EntityAndField.cpp
+  Mdt/QueryExpression/SelectAllField.cpp
   Mdt/QueryExpression/SelectField.cpp
   Mdt/QueryExpression/SelectFieldList.cpp
   Mdt/QueryExpression/Terminal.cpp

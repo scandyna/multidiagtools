@@ -22,18 +22,50 @@
 
 namespace Mdt{ namespace QueryExpression{
 
-// void SelectQuery::setEntityName(const QString& name)
-// {
-//   mEntityName = name;
-// }
+void SelectQuery::setEntityName(const QString& name)
+{
+  Q_ASSERT(!EntityName(name).isNull());
+
+  mEntity.setNameAndAlias(EntityName(name));
+}
 
 void SelectQuery::setEntityName(const EntityName& name, const QString & alias)
 {
+  Q_ASSERT(!name.isNull());
+  Q_ASSERT(!alias.trimmed().isEmpty());
+
   mEntity.setNameAndAlias(name, alias);
+}
+
+void SelectQuery::setEntity(const SelectEntity & entity)
+{
+  Q_ASSERT(!entity.isNull());
+
+  mEntity = entity;
+}
+
+void SelectQuery::addField(const QString & fieldName)
+{
+  Q_ASSERT(!FieldName(fieldName).isNull());
+
 }
 
 void SelectQuery::addField(const FieldName& fieldName, const QString& fieldAlias)
 {
+  Q_ASSERT(!fieldName.isNull());
+  Q_ASSERT(!fieldAlias.trimmed().isEmpty());
+
+}
+
+void SelectQuery::addField(const SelectField & field)
+{
+
+}
+
+void SelectQuery::addField(const SelectEntity& entity, const FieldName& fieldName, const QString& fieldAlias)
+{
+  Q_ASSERT(!entity.isNull());
+  Q_ASSERT(!fieldName.isNull());
 
 }
 

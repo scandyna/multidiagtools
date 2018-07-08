@@ -21,4 +21,35 @@
 #include "SelectFieldList.h"
 
 namespace Mdt{ namespace QueryExpression{
+
+// void SelectFieldList::addField(const SelectField& field)
+// {
+//   mList.push_back(field);
+// }
+
+void SelectFieldList::addField(const SelectAllField& field)
+{
+  mList.emplace_back(field);
+}
+
+void SelectFieldList::addField(const FieldName& fieldName, const QString& fieldAlias)
+{
+  Q_ASSERT(!fieldName.isNull());
+
+  mList.emplace_back(fieldName, fieldAlias);
+}
+
+void SelectFieldList::addField(const SelectEntity& entity, const FieldName& fieldName, const QString& fieldAlias)
+{
+  Q_ASSERT(!entity.isNull());
+  Q_ASSERT(!fieldName.isNull());
+
+  mList.emplace_back(entity, fieldName, fieldAlias);
+}
+
+void SelectFieldList::clear()
+{
+  mList.clear();
+}
+
 }} // namespace Mdt{ namespace QueryExpression{

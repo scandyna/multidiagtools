@@ -29,7 +29,8 @@ class SelectQueryTest : public QObject
 
  private slots:
 
-  void simpleSetGetTest();
+  void setEntityTest();
+  void addFieldTest();
 };
 
 #endif // #ifndef SELECT_QUERY_TEST_H

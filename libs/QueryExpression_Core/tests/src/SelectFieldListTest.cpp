@@ -20,12 +20,60 @@
  ****************************************************************************/
 #include "SelectFieldListTest.h"
 #include "Mdt/QueryExpression/SelectFieldList.h"
+#include <boost/variant.hpp>
 
 using namespace Mdt::QueryExpression;
 
 /*
+ * Helper
+ */
+
+SelectAllField getSelectAllField(const SelectField & field)
+{
+  Q_ASSERT(boost::get<SelectAllField>(&field.internalVariant()) != nullptr);
+
+  return boost::get<SelectAllField>(field.internalVariant());
+}
+
+EntityAndField getEntityAndField(const SelectField & field)
+{
+  Q_ASSERT(boost::get<EntityAndField>(&field.internalVariant()) != nullptr);
+
+  return boost::get<EntityAndField>(field.internalVariant());
+}
+
+/*
  * Tests
  */
+
+void SelectFieldListTest::addFieldTest()
+{
+  SelectEntity person(EntityName("Person"), "P");
+
+  SelectFieldList list;
+  QCOMPARE(list.fieldCount(), 0);
+  QVERIFY(list.isEmpty());
+
+  list.addField( SelectAllField(person) );
+  list.addField(FieldName("id"));
+  list.addField(FieldName("age"), "A");
+  list.addField(person, FieldName("name"), "PersonName");
+  QCOMPARE(list.fieldCount(), 4);
+  QVERIFY(!list.isEmpty());
+  QCOMPARE( getSelectAllField(list.at(0)).entityAliasOrName(), QString("P") );
+  auto ef = getEntityAndField(list.at(1));
+  QVERIFY(ef.entityAliasOrName().isEmpty());
+  QCOMPARE(ef.fieldAliasOrName(), QString("id"));
+  ef = getEntityAndField(list.at(2));
+  QVERIFY(ef.entityAliasOrName().isEmpty());
+  QCOMPARE(ef.fieldAliasOrName(), QString("A"));
+  ef = getEntityAndField(list.at(3));
+  QCOMPARE(ef.entityAliasOrName(), QString("P"));
+  QCOMPARE(ef.fieldAliasOrName(), QString("PersonName"));
+
+  list.clear();
+  QVERIFY(list.isEmpty());
+}
 
 /*
  * Main

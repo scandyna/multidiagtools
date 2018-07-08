@@ -24,6 +24,7 @@
 #include "EntityName.h"
 #include "FieldName.h"
 #include "SelectEntity.h"
+#include "SelectField.h"
 #include "FilterExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
@@ -34,7 +35,7 @@ namespace Mdt{ namespace QueryExpression{
    *
    * \note SelectQuery was inspired from the SQL query API (SELECT statement).
    *   Its goal is to be independent of any backend,
-   *   but SQL is a interesting language for this purpose.
+   *   but SQL is a interesting language for query purpose.
    *   When designing queries, you should take care if the targeted backend
    *   can be implemented in a reasonable way.
    *   For example, implementing joins can be difficult for a CSV backend.
@@ -60,7 +61,7 @@ namespace Mdt{ namespace QueryExpression{
    * \code
    * SelectQuery query;
    * query.setEntityName("Person");
-   * query.addField( FieldName("name") );
+   * query.addField("name");
    * query.addField( FieldName("age"), "A" );
    * \endcode
    * notice the age field, to which a alias was passed, A.
@@ -89,7 +90,7 @@ namespace Mdt{ namespace QueryExpression{
    *
    * SelectField personId( person, FieldName("id") );
    * SelectField personName( person, FieldName("name") );
-   * SelectField addressId( address, FieldName("id") );
+   * SelectField addressPersonId( address, FieldName("personId") );
    * SelectField addressStreet( address, FieldName("street"), "AddressStreet" );
    *
    * SelectQuery query;
@@ -98,7 +99,7 @@ namespace Mdt{ namespace QueryExpression{
    * query.addField( person, FieldName("remarks"), "PersonRemarks" );
    * query.addField( addressStreet );
    * query.addField( address, FieldName("remarks"), "AddressRemarks" );
-   * query.joinEntity( address, addressId == personId );
+   * query.joinEntity( address, addressPersonId == personId );
    * query.setFilter( (personName == "A") || (addressStreet == "Street name B") );
    * \endcode
    */
@@ -106,30 +107,57 @@ namespace Mdt{ namespace QueryExpression{
   {
    public:
 
-//     /*! \brief Set the entity name
-//      */
-//     void setEntityName(const QString & name);
-
     /*! \brief Set the entity name
+     *
+     * \pre \a name must not be empty
      */
-    void setEntityName(const EntityName & name, const QString & alias = QString());
+    void setEntityName(const QString & name);
 
-    /*! \brief Get the entity name
+    /*! \brief Set the entity name and its alias
+     *
+     * \pre \a name must not be null
+     * \pre \a alias must not be empty
      */
-    QString entityName() const
+    void setEntityName(const EntityName & name, const QString & alias);
+
+    /*! \brief Set the entity name and its optional alias
+     *
+     * \pre \a entity must not be null
+     */
+    void setEntity(const SelectEntity & entity);
+
+    /*! \brief Get the entity
+     */
+    SelectEntity entity() const
     {
-      return mEntity.name();
+      return mEntity;
     }
 
-//     /*! \brief Get the entity alias
-//      */
-//     QString entityAlias() const
-//     {
-//     }
+    /*! \brief Add a field to this query
+     *
+     * \pre \a fieldName must not be empty
+     */
+    void addField(const QString & fieldName);
 
     /*! \brief Add a field to this query
+     *
+     * \pre \a fieldName must not be null
+     * \pre \a fieldAlias must not be empty
      */
-    void addField(const FieldName & fieldName, const QString & fieldAlias = QString());
+    void addField(const FieldName & fieldName, const QString & fieldAlias);
+
+    /*! \brief Add a field to this query
+     *
+     * \todo Preconditions ?
+     */
+    void addField(const SelectField & field);
+
+    /*! \brief Add a field to this query
+     *
+     * \pre \a entity must not be null
+     * \pre \a fieldName must not be null
+     */
+    void addField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString());
 
    private:
 

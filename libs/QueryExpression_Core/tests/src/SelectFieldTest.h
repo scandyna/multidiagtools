@@ -27,17 +27,13 @@ class SelectFieldTest : public QObject
 {
  Q_OBJECT
 
- private:
-
-  /*
-   * Compile time tests
-   */
-
-  void terminalGrammarTest();
-
  private slots:
 
+  void entityNameTest();
+  void fieldNameTest();
+
   void selectEntityTest();
+  void selectAllFieldTest();
   void entityAndFieldTest();
 
   void constructGetTest();

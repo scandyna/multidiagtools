@@ -20,31 +20,50 @@
  ****************************************************************************/
 #include "SelectFieldTest.h"
 #include "Mdt/QueryExpression/SelectField.h"
+#include "Mdt/QueryExpression/EntityName.h"
+#include "Mdt/QueryExpression/FieldName.h"
 #include <boost/variant/get.hpp>
 #include <boost/proto/matches.hpp>
-// #include <boost/proto/literal.hpp>
-// #include <boost/proto/transform/arg.hpp>
 
 using namespace Mdt::QueryExpression;
 
 /*
- * Compile time tests
- */
-
-template<typename Expr, typename Grammar>
-constexpr bool expressionMatchesGrammar()
-{
-  return boost::proto::matches< Expr, Grammar >::value;
-}
-
-void SelectFieldTest::terminalGrammarTest()
-{
-
-}
-
-/*
  * Runtime tests
  */
+
+void SelectFieldTest::entityNameTest()
+{
+  EntityName e0("");
+  QVERIFY(e0.isNull());
+
+  EntityName e1("A");
+  QVERIFY(!e1.isNull());
+  QCOMPARE(e1.toString(), QString("A"));
+
+  EntityName e2(" B ");
+  QVERIFY(!e2.isNull());
+  QCOMPARE(e2.toString(), QString("B"));
+
+  EntityName e3(" ");
+  QVERIFY(e3.isNull());
+}
+
+void SelectFieldTest::fieldNameTest()
+{
+  FieldName f0("");
+  QVERIFY(f0.isNull());
+
+  FieldName f1("A");
+  QVERIFY(!f1.isNull());
+  QCOMPARE(f1.toString(), QString("A"));
+
+  FieldName f2(" B ");
+  QVERIFY(!f2.isNull());
+  QCOMPARE(f2.toString(), QString("B"));
+
+  FieldName f3(" ");
+  QVERIFY(f3.isNull());
+}
 
 void SelectFieldTest::selectEntityTest()
 {
@@ -65,6 +84,16 @@ void SelectFieldTest::selectEntityTest()
   QCOMPARE(se.name(), QString("Entity"));
   QCOMPARE(se.alias(), QString("E"));
   QCOMPARE(se.aliasOrName(), QString("E"));
+}
+
+void SelectFieldTest::selectAllFieldTest()
+{
+  SelectAllField f1;
+  QVERIFY(f1.entityAliasOrName().isEmpty());
+
+  SelectEntity person(EntityName("Person"), "P");
+  SelectAllField f2(person);
+  QCOMPARE(f2.entityAliasOrName(), QString("P"));
 }
 
 void SelectFieldTest::entityAndFieldTest()
@@ -97,9 +126,17 @@ void SelectFieldTest::entityAndFieldTest()
 
 void SelectFieldTest::constructGetTest()
 {
-  SelectField selectAll(SelectAllField{});
-  QVERIFY( boost::get<SelectAllField>(&selectAll.internalVariant()) != nullptr );
-  QVERIFY( boost::get<EntityAndField>(&selectAll.internalVariant()) == nullptr );
+  SelectField selectAll1(SelectAllField{});
+  QVERIFY( boost::get<SelectAllField>(&selectAll1.internalVariant()) != nullptr );
+  QVERIFY( boost::get<EntityAndField>(&selectAll1.internalVariant()) == nullptr );
+  const auto selectAllField1 = boost::get<SelectAllField>(selectAll1.internalVariant());
+  QVERIFY(selectAllField1.entityAliasOrName().isEmpty());
+
+  SelectField selectAll2(SelectAllField(SelectEntity(EntityName("Person"))));
+  QVERIFY( boost::get<SelectAllField>(&selectAll2.internalVariant()) != nullptr );
+  QVERIFY( boost::get<EntityAndField>(&selectAll2.internalVariant()) == nullptr );
+  const auto selectAllField2 = boost::get<SelectAllField>(selectAll2.internalVariant());
+  QCOMPARE(selectAllField2.entityAliasOrName(), QString("Person"));
 
   SelectField name( FieldName("name") );
   QVERIFY( boost::get<SelectAllField>(&name.internalVariant()) == nullptr );
