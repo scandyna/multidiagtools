@@ -109,6 +109,16 @@ namespace Mdt{ namespace QueryExpression{ namespace BuildExpressionTree{
     }
   };
 
+  struct MDT_QUERYEXPRESSION_CORE_EXPORT AddLogicalAndExpressionToTree : boost::proto::callable
+  {
+    using result_type = ExpressionTreeVertex;
+
+    ExpressionTreeVertex operator()(ExpressionTreeVertex leftChild, ExpressionTreeVertex rightChild, ExpressionTree & tree) const
+    {
+      return tree.addNode(leftChild, LogicalOperator::And, rightChild);
+    }
+  };
+
 }}} // namespace Mdt{ namespace QueryExpression{ namespace BuildExpressionTree{
 
 #endif // #ifndef MDT_QUERY_EXPRESSION_BUILD_EXPRESSION_TREE_ADD_EXPRESSION_TO_TREE_H

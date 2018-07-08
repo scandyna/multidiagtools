@@ -24,6 +24,7 @@
 #include "EntityName.h"
 #include "FieldName.h"
 #include "SelectEntity.h"
+#include "FilterExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
 
@@ -133,6 +134,7 @@ namespace Mdt{ namespace QueryExpression{
    private:
 
     SelectEntity mEntity;
+    FilterExpression mFilter;
   };
 
 }} // namespace Mdt{ namespace QueryExpression{

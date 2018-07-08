@@ -26,168 +26,7 @@
 #include "Mdt/QueryExpression/FilterExpression.h"
 #include <QMetaType>
 
-#include "Mdt/QueryExpression/Terminal.h"
-
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/proto/proto_fwd.hpp>
-#include <boost/proto/traits.hpp>
-#include <boost/proto/matches.hpp>
-#include <boost/proto/transform/when.hpp>
-#include <boost/proto/transform.hpp>
-
-#include <boost/graph/breadth_first_search.hpp>
-#include <boost/graph/depth_first_search.hpp>
-// #include <boost/graph/tree_traits.hpp>
-// #include <boost/graph/graph_as_tree.hpp>
-#include <boost/graph/graph_traits.hpp>
-#include <tuple>
-
-#include <type_traits>
-
-#include <boost/variant.hpp>
-
-#include <boost/graph/graphviz.hpp>
-#include <QDebug>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-
-namespace Mdt{ namespace QueryExpression{
-
-  struct AddEqualExpressionToTree : boost::proto::callable
-  {
-    using result_type = ExpressionTreeVertex;
-
-    ExpressionTreeVertex operator()(const SelectFieldVariant & left, const QVariant & right, ExpressionTree & tree) const
-    {
-      return tree.addNode(left, ComparisonOperator::Equal, right);
-    }
-  };
-
-  struct AddLogicalOrExpressionToTree : boost::proto::callable
-  {
-    using result_type = ExpressionTreeVertex;
-
-    ExpressionTreeVertex operator()(ExpressionTreeVertex leftChild, ExpressionTreeVertex rightChild, ExpressionTree & tree) const
-    {
-      return tree.addNode(leftChild, LogicalOperator::Or, rightChild);
-    }
-  };
-
-  struct ComparisonTransform : boost::proto::or_<
-    boost::proto::when<
-      boost::proto::equal_to<LeftTerminal, RightTerminal>,
-      boost::proto::call<AddEqualExpressionToTree( boost::proto::_value(boost::proto::_left), boost::proto::_value(boost::proto::_right), boost::proto::_data )>
-    >
-  >
-  {
-  };
-
-  struct LogicalTransform : boost::proto::or_<
-    boost::proto::when<
-      boost::proto::logical_or<LogicalTransform, LogicalTransform>,
-      boost::proto::call<AddLogicalOrExpressionToTree( LogicalTransform(boost::proto::_left), LogicalTransform(boost::proto::_right), boost::proto::_data )>
-    >,
-    ComparisonTransform
-  >
-  {
-  };
-
-}} // namespace Mdt{ namespace QueryExpression{
-
 using namespace Mdt::QueryExpression;
-
-class VertexPropertyWriterVertexVisitor : public boost::static_visitor<>
-{
- public:
-
-  void operator()(ComparisonOperator op)
-  {
-    switch(op){
-      case ComparisonOperator::Equal:
-        str = "==";
-        break;
-    }
-  }
-
-  void operator()(LogicalOperator op)
-  {
-    switch(op){
-      case LogicalOperator::Or:
-        str = "OR";
-        break;
-    }
-  }
-
-  void operator()(const Mdt::QueryExpression::SelectFieldVariant & field)
-  {
-    str = "Field";
-  }
-
-  void operator()(const QVariant & value)
-  {
-    str = value.toString().toStdString();
-  }
-
-  std::string str;
-};
-
-class VertexPropertyWriter
-{
- public:
-
-  VertexPropertyWriter(const Mdt::QueryExpression::ExpressionTreeGraph & graph)
-   : mGraph(graph)
-  {
-  }
-
-  void operator()(std::ostream & out, ExpressionTreeVertex v) const
-  {
-    qDebug() << "Prop of v: " << v;
-    const auto vertexVariant = mGraph[v];
-    VertexPropertyWriterVertexVisitor visitor;
-//     boost::apply_visitor(visitor, vertexVariant);
-    out << " [label=\"" << v << "\n" << visitor.str << "\"]";
-  }
-
- private:
-
-  const Mdt::QueryExpression::ExpressionTreeGraph & mGraph;
-};
-
-std::string vertexVariantToString(Mdt::QueryExpression::ExpressionTreeVertex v, const Mdt::QueryExpression::ExpressionTreeGraph & g)
-{
-  const auto vertexVariant = g[v];
-  VertexPropertyWriterVertexVisitor visitor;
-//   boost::apply_visitor(visitor, vertexVariant);
-  return visitor.str;
-}
-
-void ExpressionTreeTest::sandbox()
-{
-  SelectEntity person(EntityName("Person"), "P");
-  SelectField clientId(person, FieldName("id"), "ID");
-  ExpressionTree tree;
-  //Vertex root;
-
-  LogicalTransform transform;
-  qDebug() << "***  clientId == 25  ***";
-  transform( clientId == 25, 0, tree);
-  
-  tree.clear();
-  qDebug() << "***  (clientId == 25) || (clientId == 44)  ***";
-  transform( (clientId == 25) || (clientId == 44), 0, tree);
-  
-  tree.clear();
-  qDebug() << "***  (clientId == 25) || (clientId == 44) || (clientId == 256)  ***";
-  transform( (clientId == 25) || (clientId == 44) || (clientId == 256), 0, tree);
-  
-//   std::ofstream graphVizFile("graphvizOut.dot");
-//   QVERIFY(graphVizFile.good());
-//   VertexPropertyWriter vp( tree.internalGraph() );
-//   boost::write_graphviz(graphVizFile, tree.internalGraph(), vp);
-}
 
 /*
  * Expression tree visitors for tests
@@ -235,17 +74,12 @@ class AbstractExpressionToStringVisitor : public Mdt::QueryExpression::AbstractE
 
 };
 
-/*
- * Test visitors
- */
-
 class ExpressionToPrefixStringVisitor : public AbstractExpressionToStringVisitor
 {
  public:
 
   void processPreorder(Mdt::QueryExpression::ComparisonOperator op) override
   {
-    qDebug() << "processPreorder: " << comparisonOperatorToString(op);
     mExpressionString += comparisonOperatorToString(op) + " ";
   }
 
@@ -283,38 +117,33 @@ class ExpressionToInfixStringVisitor : public AbstractExpressionToStringVisitor
 {
  public:
 
-  void processPreorder(Mdt::QueryExpression::LogicalOperator op) override
+  void processPreorder(Mdt::QueryExpression::LogicalOperator) override
   {
     mExpressionString += "(";
   }
 
-  void processPostorder(Mdt::QueryExpression::LogicalOperator op) override
+  void processPostorder(Mdt::QueryExpression::LogicalOperator) override
   {
     mExpressionString += ")";
   }
 
   void processInorder(Mdt::QueryExpression::ComparisonOperator op) override
   {
-    qDebug() << "processInorder: " << comparisonOperatorToString(op);
     mExpressionString += comparisonOperatorToString(op);
   }
 
   void processInorder(Mdt::QueryExpression::LogicalOperator op) override
   {
-    qDebug() << "processInorder: " << logicalOperatorToString(op);
-    qDebug() << "-> cur exp: " << mExpressionString;
     mExpressionString += ")" + logicalOperatorToString(op) + "(";
   }
 
   void processInorder(const Mdt::QueryExpression::EntityAndField & field) override
   {
-    qDebug() << "processInorder: " << field.fieldAliasOrName();
     mExpressionString += field.fieldAliasOrName();
   }
 
   void processInorder(const QVariant & value) override
   {
-    qDebug() << "processInorder: " << value;
     if(isTypeString(value)){
       mExpressionString += "\"" + value.toString() + "\"";
     }else{
@@ -348,7 +177,6 @@ class ExpressionToPostfixStringVisitor : public AbstractExpressionToStringVisito
 
   void processPostorder(Mdt::QueryExpression::ComparisonOperator op) override
   {
-    qDebug() << "processPostorder: " << comparisonOperatorToString(op);
     mExpressionString += comparisonOperatorToString(op) + " ";
   }
 
@@ -478,7 +306,6 @@ void ExpressionTreeTest::buildAndVisitTreeTest()
    *    /   \     /  \
    *  (id) (25) (id) (150)
    */
-  qDebug() << "Next...........";
   tree.clear();
   leftVertex = tree.addNode(clientId, ComparisonOperator::Equal, 25);
   rightVertex = tree.addNode(clientId, ComparisonOperator::Less, 150);
@@ -556,6 +383,30 @@ void ExpressionTreeTest::filterExpressionTest()
 
   filter.setFilter(clientId >= 20);
   expectedString = "id>=20";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId == 2 || clientId < 12);
+  expectedString = "(id==2)||(id<12)";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId > 0 && clientId < 100);
+  expectedString = "(id>0)&&(id<100)";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId == 2 || clientId < 12 || clientId == 22);
+  expectedString = "((id==2)||(id<12))||(id==22)";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
+  filter.setFilter(clientId == 1 || ((clientId > 2) && (clientId < 22)));
+  expectedString = "(id==1)||((id>2)&&(id<22))";
   traverseExpressionTree(filter.internalTree(), infixVisitor);
   QCOMPARE(infixVisitor.toString(), expectedString);
   infixVisitor.clear();

@@ -29,8 +29,6 @@ class ExpressionTreeTest : public QObject
 
  private slots:
 
-  void sandbox();
-
   void simpleBuildTreeTest();
   void buildAndVisitTreeTest();
   void filterExpressionTest();

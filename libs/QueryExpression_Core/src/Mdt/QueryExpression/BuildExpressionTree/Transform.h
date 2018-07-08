@@ -87,6 +87,10 @@ namespace Mdt{ namespace QueryExpression{ namespace BuildExpressionTree{
       boost::proto::logical_or<LogicalTransform, LogicalTransform>,
       boost::proto::call<AddLogicalOrExpressionToTree( LogicalTransform(boost::proto::_left), LogicalTransform(boost::proto::_right), boost::proto::_data )>
     >,
+    boost::proto::when<
+      boost::proto::logical_and<LogicalTransform, LogicalTransform>,
+      boost::proto::call<AddLogicalAndExpressionToTree( LogicalTransform(boost::proto::_left), LogicalTransform(boost::proto::_right), boost::proto::_data )>
+    >,
     ComparisonTransform
   >
   {
