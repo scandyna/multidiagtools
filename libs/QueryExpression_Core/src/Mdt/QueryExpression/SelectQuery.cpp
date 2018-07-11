@@ -44,10 +44,24 @@ void SelectQuery::setEntity(const SelectEntity & entity)
   mEntity = entity;
 }
 
+void SelectQuery::selectAllFields()
+{
+  mFieldList.clear();
+  mFieldList.addField(SelectAllField{});
+}
+
+void SelectQuery::addSelectAllFields(const SelectEntity& entity)
+{
+  Q_ASSERT(!entity.isNull());
+
+  mFieldList.addField( SelectAllField(entity) );
+}
+
 void SelectQuery::addField(const QString & fieldName)
 {
   Q_ASSERT(!FieldName(fieldName).isNull());
 
+  mFieldList.addField(FieldName(fieldName));
 }
 
 void SelectQuery::addField(const FieldName& fieldName, const QString& fieldAlias)
@@ -55,11 +69,12 @@ void SelectQuery::addField(const FieldName& fieldName, const QString& fieldAlias
   Q_ASSERT(!fieldName.isNull());
   Q_ASSERT(!fieldAlias.trimmed().isEmpty());
 
+  mFieldList.addField(fieldName, fieldAlias);
 }
 
 void SelectQuery::addField(const SelectField & field)
 {
-
+  mFieldList.addField(field);
 }
 
 void SelectQuery::addField(const SelectEntity& entity, const FieldName& fieldName, const QString& fieldAlias)
@@ -67,6 +82,23 @@ void SelectQuery::addField(const SelectEntity& entity, const FieldName& fieldNam
   Q_ASSERT(!entity.isNull());
   Q_ASSERT(!fieldName.isNull());
 
+  mFieldList.addField(entity, fieldName, fieldAlias);
+}
+
+void SelectQuery::clear()
+{
+  clearAttributesExceptEntity();
+  clearEntity();
+}
+
+void SelectQuery::clearAttributesExceptEntity()
+{
+  mFieldList.clear();
+}
+
+void SelectQuery::clearEntity()
+{
+  mEntity.clear();
 }
 
 }} // namespace Mdt{ namespace QueryExpression{

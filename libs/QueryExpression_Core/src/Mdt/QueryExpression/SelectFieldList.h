@@ -46,6 +46,12 @@ namespace Mdt{ namespace QueryExpression{
      */
     void addField(const SelectAllField & field);
 
+    /*! \brief Add a field to this query
+     *
+     * \todo Preconditions ?
+     */
+    void addField(const SelectField & field);
+
     /*! \brief Add a field to this list
      *
      * \pre \a fieldName must not be null

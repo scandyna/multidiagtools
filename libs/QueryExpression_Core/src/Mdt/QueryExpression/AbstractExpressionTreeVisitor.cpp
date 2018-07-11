@@ -36,7 +36,7 @@ namespace AbstractExpressionTreeVisitorImpl{
     {
     }
 
-    void operator()(const SelectAllField)
+    void operator()(const SelectAllField &)
     {
       Q_ASSERT_X(false, "processInorder", "SelectAllField is not allowed in a condition expression");
     }

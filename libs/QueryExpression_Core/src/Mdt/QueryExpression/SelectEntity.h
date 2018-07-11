@@ -96,6 +96,14 @@ namespace Mdt{ namespace QueryExpression{
       return mAlias;
     }
 
+    /*! \brief Clear this select entity
+     */
+    void clear()
+    {
+      mName.clear();
+      mAlias.clear();
+    }
+
   private:
 
     QString mName;

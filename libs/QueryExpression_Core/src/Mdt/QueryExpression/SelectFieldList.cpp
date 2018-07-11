@@ -32,6 +32,11 @@ void SelectFieldList::addField(const SelectAllField& field)
   mList.emplace_back(field);
 }
 
+void SelectFieldList::addField(const SelectField& field)
+{
+  mList.push_back(field);
+}
+
 void SelectFieldList::addField(const FieldName& fieldName, const QString& fieldAlias)
 {
   Q_ASSERT(!fieldName.isNull());

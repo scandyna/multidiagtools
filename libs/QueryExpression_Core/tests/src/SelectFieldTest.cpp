@@ -84,6 +84,11 @@ void SelectFieldTest::selectEntityTest()
   QCOMPARE(se.name(), QString("Entity"));
   QCOMPARE(se.alias(), QString("E"));
   QCOMPARE(se.aliasOrName(), QString("E"));
+  se.clear();
+  QVERIFY(se.isNull());
+  QVERIFY(se.name().isEmpty());
+  QVERIFY(se.alias().isEmpty());
+  QVERIFY(se.aliasOrName().isEmpty());
 }
 
 void SelectFieldTest::selectAllFieldTest()

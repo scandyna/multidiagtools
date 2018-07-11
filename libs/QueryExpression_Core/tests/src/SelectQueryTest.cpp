@@ -20,8 +20,60 @@
  ****************************************************************************/
 #include "SelectQueryTest.h"
 #include "Mdt/QueryExpression/SelectQuery.h"
+#include <boost/variant.hpp>
 
 using namespace Mdt::QueryExpression;
+
+/*
+ * Helper to get entity alias or name
+ */
+
+struct GetEntityAliasOrNameVisitor : public boost::static_visitor<>
+{
+  void operator()(const SelectAllField & field)
+  {
+    aliasOrName = field.entityAliasOrName();
+  }
+
+  void operator()(const EntityAndField & field)
+  {
+    aliasOrName = field.entityAliasOrName();
+  }
+
+  QString aliasOrName;
+};
+
+QString getEntityAliasOrName(const SelectField & field)
+{
+  GetEntityAliasOrNameVisitor visitor;
+  boost::apply_visitor(visitor, field.internalVariant());
+  return visitor.aliasOrName;
+}
+
+/*
+ * Helper to get field alias or name
+ */
+
+struct GetFieldAliasOrNameVisitor : public boost::static_visitor<>
+{
+  void operator()(const SelectAllField &)
+  {
+  }
+
+  void operator()(const EntityAndField & field)
+  {
+    aliasOrName = field.fieldAliasOrName();
+  }
+
+  QString aliasOrName;
+};
+
+QString getFieldAliasOrName(const SelectField & field)
+{
+  GetFieldAliasOrNameVisitor visitor;
+  boost::apply_visitor(visitor, field.internalVariant());
+  return visitor.aliasOrName;
+}
 
 /*
  * Tests
@@ -40,6 +92,9 @@ void SelectQueryTest::setEntityTest()
   SelectEntity address( EntityName("Address"), "ADR");
   query.setEntity(address);
   QCOMPARE(query.entity().aliasOrName(), QString("ADR"));
+
+  query.clear();
+  QVERIFY(query.entity().isNull());
 }
 
 void SelectQueryTest::addFieldTest()
@@ -60,8 +115,37 @@ void SelectQueryTest::addFieldTest()
   query.addField(FieldName("age"), "A");
   query.addField(addressStreet);
   query.addField(address, FieldName("remarks"), "AddressRemarks");
+  auto fieldList = query.fieldList();
+  QCOMPARE(fieldList.fieldCount(), 6);
+  QCOMPARE(getEntityAliasOrName(fieldList.at(0)), QString("Person"));
+  QCOMPARE(getFieldAliasOrName(fieldList.at(0)), QString("name"));
+  QCOMPARE(getEntityAliasOrName(fieldList.at(1)), QString("Person"));
+  QCOMPARE(getFieldAliasOrName(fieldList.at(1)), QString("PersonRemarks"));
+  QCOMPARE(getEntityAliasOrName(fieldList.at(2)), QString());
+  QCOMPARE(getFieldAliasOrName(fieldList.at(2)), QString("notices"));
+  QCOMPARE(getEntityAliasOrName(fieldList.at(3)), QString());
+  QCOMPARE(getFieldAliasOrName(fieldList.at(3)), QString("A"));
+  QCOMPARE(getEntityAliasOrName(fieldList.at(4)), QString("ADR"));
+  QCOMPARE(getFieldAliasOrName(fieldList.at(4)), QString("AddressStreet"));
+  QCOMPARE(getEntityAliasOrName(fieldList.at(5)), QString("ADR"));
+  QCOMPARE(getFieldAliasOrName(fieldList.at(5)), QString("AddressRemarks"));
 
-  QFAIL("Not complete");
+  query.selectAllFields();
+  fieldList = query.fieldList();
+  QCOMPARE(fieldList.fieldCount(), 1);
+  QVERIFY(getEntityAliasOrName(fieldList.at(0)).isEmpty());
+  QVERIFY(getFieldAliasOrName(fieldList.at(0)).isEmpty());
+
+  query.clear();
+  fieldList = query.fieldList();
+  QCOMPARE(fieldList.fieldCount(), 0);
+
+  query.setEntity(person);
+  query.addSelectAllFields(address);
+  fieldList = query.fieldList();
+  QCOMPARE(fieldList.fieldCount(), 1);
+  QCOMPARE(getEntityAliasOrName(fieldList.at(0)), QString("ADR"));
+  QVERIFY(getFieldAliasOrName(fieldList.at(0)).isEmpty());
 }
 
 /*

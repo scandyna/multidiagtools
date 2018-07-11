@@ -25,6 +25,7 @@
 #include "FieldName.h"
 #include "SelectEntity.h"
 #include "SelectField.h"
+#include "SelectFieldList.h"
 #include "FilterExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
@@ -133,6 +134,20 @@ namespace Mdt{ namespace QueryExpression{
       return mEntity;
     }
 
+    /*! \brief Select all the fields
+     *
+     * This would be equivalent to * in SQL.
+     */
+    void selectAllFields();
+
+    /*! \brief Select all fields from \a entity
+     *
+     * This would be equivalent to entity.* in SQL.
+     *
+     * \pre \a entity must not be null
+     */
+    void addSelectAllFields(const SelectEntity & entity);
+
     /*! \brief Add a field to this query
      *
      * \pre \a fieldName must not be empty
@@ -159,9 +174,31 @@ namespace Mdt{ namespace QueryExpression{
      */
     void addField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString());
 
+    /*! \brief Access the list of fields in this query
+     */
+    const SelectFieldList & fieldList() const
+    {
+      return mFieldList;
+    }
+
+    /*! \brief Clear this query
+     */
+    void clear();
+
+   protected:
+
+    /*! \brief Clear all attributes of this query except the entity
+     */
+    void clearAttributesExceptEntity();
+
+    /*! \brief Clear the entity
+     */
+    void clearEntity();
+
    private:
 
     SelectEntity mEntity;
+    SelectFieldList mFieldList;
     FilterExpression mFilter;
   };
 
