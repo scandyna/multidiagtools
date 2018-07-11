@@ -54,6 +54,7 @@ addEntity_CoreTest("StlTableProxyIteratorTest")
 addEntity_CoreTest("CachedRepositoryTableModelTest")
 addEntity_CoreTest("CachedEntityRepositoryTableModelTest")
 # addEntity_CoreTest("StlTableProxyTest")
+addEntity_CoreTest("EntitySelectQueryTest")
 
 # Clang warns about explicit move that prevents copy elision.
 # For this test case, we need explicit move to check our code

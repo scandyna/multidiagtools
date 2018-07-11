@@ -32,6 +32,14 @@ namespace Mdt{ namespace Entity{
   {
     using def_type = EntityDef;
     using data_struct_type = EntityDataStruct;
+
+    /*! \brief Get entity definition
+     */
+    static const def_type def()
+    {
+      return def_type{};
+    }
+
   };
 
 }} // namespace Mdt{ namespace Entity{
