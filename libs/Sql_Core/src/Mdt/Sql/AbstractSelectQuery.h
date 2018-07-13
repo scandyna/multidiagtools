@@ -18,67 +18,39 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_ABSTRACT_QUERY_H
-#define MDT_SQL_ABSTRACT_QUERY_H
+#ifndef MDT_SQL_ABSTRACT_SELECT_QUERY_H
+#define MDT_SQL_ABSTRACT_SELECT_QUERY_H
 
-#include "Mdt/Error.h"
+#include "AbstractQuery.h"
 #include "MdtSql_CoreExport.h"
-#include <QObject>
-#include <QSqlDatabase>
 
 namespace Mdt{ namespace Sql{
 
-  /*! \brief Base class for query
+  /*! \brief Base class for a select query
    */
-  class MDT_SQL_CORE_EXPORT AbstractQuery : public QObject
+  class MDT_SQL_CORE_EXPORT AbstractSelectQuery : public AbstractQuery
   {
+   Q_OBJECT
+
    public:
 
-    /*! \brief Construct a query that acts on db
+    /*! \brief Construct a select query that acts on db
      *
      * \pre \a db must be valid (must have a driver loaded)
      */
-    AbstractQuery(const QSqlDatabase & db);
+    AbstractSelectQuery(const QSqlDatabase & db);
 
-    /*! \brief Construct a query that acts on db
+    /*! \brief Construct a select query that acts on db
      *
      * \pre \a db must be valid (must have a driver loaded)
      */
-    AbstractQuery(QObject *parent, const QSqlDatabase & db);
-
-    /*! \brief Get last error
-     */
-    Mdt::Error lastError() const
-    {
-      return mLastError;
-    }
-
-   protected:
-
-    /*! \brief Access database
-     */
-    QSqlDatabase & database()
-    {
-      return mDatabase;
-    }
-
-    /*! \brief Access database
-     */
-    const QSqlDatabase & constDatabase() const
-    {
-      return mDatabase;
-    }
-
-    /*! \brief Set last error
-     */
-    void setLastError(const Mdt::Error & error);
+    AbstractSelectQuery(QObject *parent, const QSqlDatabase & db);
 
    private:
 
-    QSqlDatabase mDatabase;
-    Mdt::Error mLastError;
+    
   };
 
 }} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_ABSTRACT_QUERY_H
+#endif // #ifndef MDT_SQL_ABSTRACT_SELECT_QUERY_H

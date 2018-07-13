@@ -37,6 +37,8 @@ class TestBase : public QObject
   bool initDatabaseSqlite();
   QSqlDatabase database() const;
 
+  bool createTestSchema();
+
  private:
 
   QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically

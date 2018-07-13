@@ -18,67 +18,58 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_ABSTRACT_QUERY_H
-#define MDT_SQL_ABSTRACT_QUERY_H
+#ifndef MDT_SQL_SELECT_QUERY_H
+#define MDT_SQL_SELECT_QUERY_H
 
-#include "Mdt/Error.h"
+#include "AbstractSelectQuery.h"
 #include "MdtSql_CoreExport.h"
-#include <QObject>
-#include <QSqlDatabase>
+// #include "SelectStatement.h"
 
 namespace Mdt{ namespace Sql{
 
-  /*! \brief Base class for query
+  /*! \brief Select data from a database
+   *
+   * Example to execute a SelectStatement:
+   * \code
+   * using namespace Mdt::Sql;
+   *
+   * QSqlDatabase db;  // See Qt documentation to setup db
+   * SelectQuery query(db);
+   * SelectStatement stm;
+   * // To setup stm, see SelectStatement documentation.
+   *
+   * if(!query.exec(stm)){
+   *   // Error handling. query.lastError() constains a error description.
+   * }
+   * \endcode
+   *
+   * Note that SelectQuery uses QSqlQuery internally.
+   *  If SelectStatement can not handle some query, and a raw SQL string must be executed,
+   *  consider using QSqlQuery directly.
    */
-  class MDT_SQL_CORE_EXPORT AbstractQuery : public QObject
+  class MDT_SQL_CORE_EXPORT SelectQuery : public AbstractSelectQuery
   {
+   Q_OBJECT
+
    public:
 
-    /*! \brief Construct a query that acts on db
+    /*! \brief Construct a select query that acts on db
      *
      * \pre \a db must be valid (must have a driver loaded)
      */
-    AbstractQuery(const QSqlDatabase & db);
+    SelectQuery(const QSqlDatabase & db);
 
-    /*! \brief Construct a query that acts on db
+    /*! \brief Construct a select query that acts on db
      *
      * \pre \a db must be valid (must have a driver loaded)
      */
-    AbstractQuery(QObject *parent, const QSqlDatabase & db);
-
-    /*! \brief Get last error
-     */
-    Mdt::Error lastError() const
-    {
-      return mLastError;
-    }
-
-   protected:
-
-    /*! \brief Access database
-     */
-    QSqlDatabase & database()
-    {
-      return mDatabase;
-    }
-
-    /*! \brief Access database
-     */
-    const QSqlDatabase & constDatabase() const
-    {
-      return mDatabase;
-    }
-
-    /*! \brief Set last error
-     */
-    void setLastError(const Mdt::Error & error);
+    SelectQuery(QObject *parent, const QSqlDatabase & db);
 
    private:
 
-    QSqlDatabase mDatabase;
-    Mdt::Error mLastError;
+    
   };
 
 }} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_ABSTRACT_QUERY_H
+#endif // #ifndef MDT_SQL_SELECT_QUERY_H

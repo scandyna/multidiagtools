@@ -26,7 +26,7 @@
 #include "Mdt/Sql/UpdateQuery.h"
 #include "Mdt/Sql/DeleteStatement.h"
 #include "Mdt/Sql/DeleteQuery.h"
-// #include "Mdt/Sql/SelectQuery.h"
+#include "Mdt/Sql/SelectQuery.h"
 #include "Mdt/Error.h"
 #include "Schema/TestSchema.h"
 #include "Schema/Client.h"

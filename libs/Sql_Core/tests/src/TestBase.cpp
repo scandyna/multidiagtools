@@ -19,9 +19,10 @@
  **
  ****************************************************************************/
 #include "TestBase.h"
+#include "Schema/TestSchema.h"
+#include "Mdt/Sql/Schema/Driver.h"
 #include <QSqlQuery>
 #include <QSqlError>
-
 #include <QDebug>
 
 bool TestBase::initDatabaseSqlite()
@@ -50,4 +51,17 @@ bool TestBase::initDatabaseSqlite()
 QSqlDatabase TestBase::database() const
 {
   return mDatabase;
+}
+
+bool TestBase::createTestSchema()
+{
+  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Q_ASSERT(driver.isValid());
+
+  if(!driver.createSchema(Schema::TestSchema())){
+    qWarning() << "Could not create test schema, error: " << driver.lastError().text();
+    return false;
+  }
+
+  return true;
 }

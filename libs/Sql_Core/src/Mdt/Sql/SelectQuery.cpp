@@ -18,28 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractQuery.h"
+#include "SelectQuery.h"
 
 namespace Mdt{ namespace Sql{
 
-AbstractQuery::AbstractQuery(const QSqlDatabase& db)
- : QObject(nullptr),
-   mDatabase(db)
+SelectQuery::SelectQuery(const QSqlDatabase& db)
+ : AbstractSelectQuery(db)
 {
-  Q_ASSERT(mDatabase.isValid());
+  Q_ASSERT(db.isValid());
 }
 
-AbstractQuery::AbstractQuery(QObject* parent, const QSqlDatabase& db)
- : QObject(parent),
-   mDatabase(db)
+SelectQuery::SelectQuery(QObject* parent, const QSqlDatabase& db)
+ : AbstractSelectQuery(parent, db)
 {
-  Q_ASSERT(mDatabase.isValid());
-}
-
-void AbstractQuery::setLastError(const Error& error)
-{
-  mLastError = error;
-  mLastError.commit();
+  Q_ASSERT(db.isValid());
 }
 
 }} // namespace Mdt{ namespace Sql{

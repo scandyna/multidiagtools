@@ -20,7 +20,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtsqlcoretest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtsqlcoretest Sql_Core Application_Core Qt5::Test)
+target_link_libraries(mdtsqlcoretest Sql_Core Entity_Core Entity_Sql Application_Core Qt5::Test)
 
 #=============== Helper functions ===========
 
