@@ -109,6 +109,133 @@ namespace Mdt{ namespace Entity{
    *   }
    * };
    * \endcode
+   *
+   * ---------- Above SelectStatement  - Below EntitySelectQuery ------------------
+   *
+   * EntitySelectQuery can execute a SelectStatement
+   *
+   * EntitySelectQuery has value sementics, but it is a handle to a implementation instance
+   *  (internally implemented using std::shared_ptr).
+   *
+   * Example of a class that can execute a query:
+   * \code
+   * class Person
+   * {
+   *  public:
+   *
+   *   Person(const Mdt::Entity::EntitySelectQuery & query)
+   *    : mQuery(query)
+   *   {
+   *   }
+   *
+   *   Mdt::Expected<PersonList> getPersonAbove29() const;
+   *
+   *  private:
+   *
+   *   Mdt::Entity::EntitySelectQuery mQuery;
+   * };
+   * \endcode
+   *
+   * Note that %Person has no dependency to any backend, like SQL.
+   *
+   * Here is a possible implementation of the query method:
+   * \code
+   * using namespace Mdt::Entity;
+   *
+   * Mdt::Expected<PersonList> Person::getPersonAbove29() const
+   * {
+   *   Mdt::Expected<PersonList> personList;
+   *
+   *   EntitySelectStatement<PersonEntity> stm;
+   *   const auto age = stm.makeSelectField( stm.def().age(), "A" );
+   *   stm.addField( stm.def().name() );
+   *   stm.addField(age);
+   *   stm.addField( stm.def().remarks() );
+   *   stm.setFilter( age > 29 );
+   *   if(!mQuery.exec(stm)){
+   *     personList = mQuery.lastError();
+   *     return personList;
+   *   }
+   *   while(mQuery.next()){
+   *     // PersonList::append() takes name, age, remarks. It accpets QVariant and handles null values
+   *     personList.append( mQuery.value( stm.def().name() ), mQuery.value(age), mQuery.value( stm.def().remarks() ) );
+   *   }
+   *
+   *   return personList;
+   * }
+   * \endcode
+   *
+   * In the application, which uses a SQL database,
+   *  the concrete setup is done:
+   * \code
+   * using namespace Mdt::QueryExpression;
+   *
+   * QSqlDatabase db; // See Qt documentation and Mdt::Sql to setup db
+   * auto selectQuery = SelectQuery::make<SqlSelectQuery>();
+   * auto sqlSelectQuery = selectQuery.impl<SqlSelectQuery>();
+   * sqlSelectQuery.setDatabse(db);
+   *
+   * Person person(selectQuery);
+   * const auto personAbove29 = person.getPersonAbove29();
+   * if(!personAbove29){
+   *   // Error handling
+   * }
+   * doSomeStuff(*personAbove29);
+   * \endcode
+
+   * SelectQuery can execute a SelectStatement
+   *
+   * \code
+   * using namespace Mdt::Entity;
+   *
+   * QSqlDatabase db;
+   * auto query = EntitySelectQuery::make<SqlSelectQuery>;
+   * auto sqlQuery = query.impl<SqlSelectQuery>();
+   * sqlQuery.setDatabse(db);
+   * \endcode
+   *
+   * The created query could be used in a repository:
+   * \code
+   * class MyAbstractRepository
+   * {
+   *  public:
+   *
+   *   virtual bool execPersonQuery(const Mdt::QueryExpression::SelectStatement & stm) = 0;
+   *   virtual bool execQuery(const Mdt::QueryExpression::SelectStatement & stm) = 0;
+   * };
+   * \endcode
+   *
+   * A concrete repository implementation could look like:
+   * \code
+   * using namespace Mdt::Entity;
+   *
+   * class MySqlRepository
+   * {
+   *  public:
+   *
+   *   MySqlRepository(const QSqlDatabase & db)
+   *    : mSelectQuery( SelectQuery::make<SqlSelectQuery>() )
+   *   {
+   *     auto sqlQuery = query.impl<SqlSelectQuery>();
+   *     sqlQuery.setDatabse(db);
+   *   }
+   *
+   *   bool execPersonQuery(const Mdt::QueryExpression::SelectStatement & stm) override
+   *   {
+   *     return mPersonSelectQuery.exec(stm);
+   *   }
+   *
+   *   bool execQuery(const Mdt::QueryExpression::SelectStatement & stm) override
+   *   {
+   *     return mSelectQuery.exec(stm);
+   *   }
+   *
+   *  private:
+   *
+   *   EntitySelectQuery<Person> mPersonSelectQuery;
+   *   Mdt::QueryExpression::SelectQuery mSelectQuery;
+   * };
+   * \endcode
    */
   template<typename Entity>
   class EntitySelectQuery : public Mdt::QueryExpression::SelectQuery
