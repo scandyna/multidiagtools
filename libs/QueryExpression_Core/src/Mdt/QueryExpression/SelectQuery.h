@@ -34,6 +34,8 @@ namespace Mdt{ namespace QueryExpression{
 
   /*! \brief Creation of a query to select data
    *
+   * \todo Should be renamed SelectStatement
+   *
    * \note SelectQuery was inspired from the SQL query API (SELECT statement).
    *   Its goal is to be independent of any backend,
    *   but SQL is a interesting language for query purpose.
@@ -102,6 +104,121 @@ namespace Mdt{ namespace QueryExpression{
    * query.addField( address, FieldName("remarks"), "AddressRemarks" );
    * query.joinEntity( address, addressPersonId == personId );
    * query.setFilter( (personName == "A") || (addressStreet == "Street name B") );
+   * \endcode
+   *
+   *
+   * ---------- Above SelectStatement  - Below SelectQuery ------------------
+   *
+   * SelectQuery can execute a SelectStatement
+   *
+   * SelectQuery has value sementics, but it is a handle to a implementation instance
+   *  (internally implemented using std::shared_ptr).
+   *
+   * Example of a class that can execute a query:
+   * \code
+   * class Person
+   * {
+   *  public:
+   *
+   *   Person(const Mdt::QueryExpression::SelectQuery & query)
+   *    : mQuery(query)
+   *   {
+   *   }
+   *
+   *   Mdt::Expected<PersonList> getPersonAbove29() const;
+   *
+   *  private:
+   *
+   *   Mdt::QueryExpression::SelectQuery mQuery;
+   * };
+   * \endcode
+   *
+   * Note that %Person has no dependency to any backend, like SQL.
+   *
+   * Here is a possible implementation of the query method:
+   * \code
+   * using namespace Mdt::QueryExpression;
+   *
+   * Mdt::Expected<PersonList> Person::getPersonAbove29() const
+   * {
+   *   Mdt::Expected<PersonList> personList;
+   *
+   *   SelectField age( FieldName("age"), "A" );
+   *
+   *   SelectStatement stm;
+   *   stm.setEntityName("Person");
+   *   stm.addField( FieldName("name") );
+   *   stm.addField(age);
+   *   stm.addField( FieldName("remarks") );
+   *   stm.setFilter( age > 29 );
+   *   if(!mQuery.exec(stm)){
+   *     personList = mQuery.lastError();
+   *     return personList;
+   *   }
+   *   while(mQuery.next()){
+   *     // PersonList::append() takes name, age, remarks. It accpets QVariant and handles null values
+   *     personList.append( mQuery.value(0), mQuery.value(1), mQuery.value(2) );
+   *   }
+   *
+   *   return personList;
+   * }
+   * \endcode
+   *
+   * Notice that we get the value at column 0, 1 and 2 from the internal record in the query.
+   *  It could be better to specify those indexes by names.
+   *  fieldIndex() cane help to fetch them.
+   *  This method only accepts SelectField, so it can assume a unique index for each field
+   *  in a query that refers to multiple entities.
+   *  Here is the new implementation:
+   * \code
+   * using namespace Mdt::QueryExpression;
+   *
+   * Mdt::Expected<PersonList> Person::getPersonAbove29() const
+   * {
+   *   Mdt::Expected<PersonList> personList;
+   *
+   *   SelectField age( FieldName("age"), "A" );
+   *   SelectField name( FieldName("name") );
+   *   SelectField remarks( FieldName("remarks") );
+   *
+   *   SelectStatement stm;
+   *   stm.setEntityName("Person");
+   *   stm.addField(name);
+   *   stm.addField(age);
+   *   stm.addField(remarks);
+   *   stm.setFilter( age > 29 );
+   *   if(!mQuery.exec(stm)){
+   *     personList = mQuery.lastError();
+   *     return personList;
+   *   }
+   *   const auto nameIndex = mQuery.fieldIndex(name);
+   *   const auto ageIndex = mQuery.fieldIndex(age);
+   *   const auto remarksIndex = mQuery.fieldIndex(remarks);
+   *   while(mQuery.next()){
+   *     // PersonList::append() takes name, age, remarks. It accpets QVariant and handles null values
+   *     personList.append( mQuery.value(nameIndex), mQuery.value(ageIndex), mQuery.value(remarksIndex) );
+   *   }
+   *
+   *   return personList;
+   * }
+   * \endcode
+   *
+   * In the application, which uses a SQL database,
+   *  the concrete setup is done:
+   * \code
+   * using namespace Mdt::QueryExpression;
+   *
+   * QSqlDatabase db; // See Qt documentation and Mdt::Sql to setup db
+   * auto selectQuery = SelectQuery::make<SqlSelectQuery>();
+   * auto sqlSelectQuery = selectQuery.impl<SqlSelectQuery>();
+   * sqlSelectQuery.setDatabse(db);
+   *
+   * Person person(selectQuery);
+   * const auto personAbove29 = person.getPersonAbove29();
+   * if(!personAbove29){
+   *   // Error handling
+   * }
+   * doSomeStuff(*personAbove29);
    * \endcode
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT SelectQuery

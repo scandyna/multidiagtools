@@ -3,7 +3,7 @@ enable_testing()
 
 find_package(Qt5 COMPONENTS Test)
 
-#================= Entity_Core test library ====================
+#================= QueryExpression_Core test library ====================
 
 set(SOURCE_FILES
   src/TestBase.cpp
