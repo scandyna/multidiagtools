@@ -21,63 +21,104 @@
 #ifndef MDT_QUERY_EXPRESSION_SQL_SELECT_QUERY_H
 #define MDT_QUERY_EXPRESSION_SQL_SELECT_QUERY_H
 
-// #include "AbstractQuery.h"
-#include "Mdt/QueryExpression/SelectQuery.h"
-#include "Mdt/Sql/AbstractSelectQuery.h"
+#include "Mdt/QueryExpression/AbstractSelectQuery.h"
 #include "MdtQueryExpression_SqlExport.h"
 #include <QSqlDatabase>
+#include <QSqlQuery>
 
 namespace Mdt{ namespace QueryExpression{
 
-  /*! \brief Execute a query to fetch data from a SQL database
+  /*! \brief Execute a select statement to fetch data from a SQL database
    *
-   * It is also possible to execute a Mdt::QueryExpression::SelectQuery:
-   * Example to create a storage independent query and then execute it to fetch data from a SQL database:
+   * It is also possible to execute a Mdt::QueryExpression::SelectStatement:
+   * Example to create a storage independent statement and then execute it to fetch data from a SQL database:
    * \code
    * using namespace Mdt::QueryExpression;
    *
    * SelectField name( FieldName("name") );
    * SelectField age( FieldName("age"), "A" );
    *
-   * SelectQuery query;
-   * query.setEntityName("Person");
-   * query.addField(name);
-   * query.addField(age);
-   * query.addField( FieldName("remarks") );
-   * query.setFilter( (name == "A") && (age > 29) );
+   * SelectStatement stm;
+   * stm.setEntityName("Person");
+   * stm.addField(name);
+   * stm.addField(age);
+   * stm.addField( FieldName("remarks") );
+   * stm.setFilter( (name == "A") && (age > 29) );
    *
    * QSqlDatabase db; // To setup db, see Qt and Mdt::Sql documentation
-   * SqlSelectQuery sqlQuery(db);
-   * if(!sqlQuery.exec(query)){
-   *   // Error handling. sqlQuery.lastError() constains a error description.
+   * auto selectQuery = SelectQuery::make<SqlSelectQuery>();
+   * auto sqlSelectQuery = selectQuery.impl<SqlSelectQuery>();
+   * sqlSelectQuery.setDatabase(db);
+   * if(!selectQuery.exec(stm)){
+   *   // Error handling. selectQuery.lastError() constains a error description.
    * }
    * \endcode
    */
-  class MDT_QUERYEXPRESSION_SQL_EXPORT SqlSelectQuery : public Mdt::Sql::AbstractSelectQuery
+  class MDT_QUERYEXPRESSION_SQL_EXPORT SqlSelectQuery : public Mdt::QueryExpression::AbstractSelectQuery
   {
    Q_OBJECT
 
    public:
 
-    /*! \brief Construct a select query that acts on db
+//     /*! \brief Construct a select query that acts on db
+//      *
+//      * \pre \a db must be valid (must have a driver loaded)
+//      */
+//     SqlSelectQuery(const QSqlDatabase & db);
+
+//     /*! \brief Construct a select query that acts on db
+//      *
+//      * \pre \a db must be valid (must have a driver loaded)
+//      */
+//     SqlSelectQuery(QObject *parent, const QSqlDatabase & db);
+
+    /*! \brief Construct a select query
+     *
+     * The application default database connection will be used.
+     *  To use a specific database connection, use setDatabase().
+     *
+     * \sa QSqlDatabase
+     */
+    SqlSelectQuery(QObject *parent = nullptr);
+
+    /*! \brief Set the database connection to \a db
      *
      * \pre \a db must be valid (must have a driver loaded)
      */
-    SqlSelectQuery(const QSqlDatabase & db);
+    void setDatabase(const QSqlDatabase & db);
 
-    /*! \brief Construct a select query that acts on db
+    /*! \brief Execute a select statement
+     */
+    bool exec(const SelectStatement & statement) override;
+
+    /*! \brief Get the next record, if avaliable, and position this query to that record
+     */
+    bool next() override;
+
+    /*! \brief Get count of field for the last executed statement
+     */
+    int fieldCount() const override;
+
+    /*! \brief Get the field index of \a field
      *
-     * \pre \a db must be valid (must have a driver loaded)
+     * Returns the index of \a field if it exists,
+     *  otherwise -1
+     *  If more than 1 field matches, the first one is returned.
+     *
+     * \pre \a field must contain a EntityAndField
      */
-    SqlSelectQuery(QObject *parent, const QSqlDatabase & db);
+    int fieldIndex(const EntityAndField & field) const override;
 
-    /*! \brief Execute a Mdt::QueryExpression::SelectQuery
+    /*! \brief Get the value for \a fieldIndex from the current record
+     *
+     * \pre \a fieldIndex must be in a valid range ( 0 <= \a fieldIndex < fieldCount() ).
      */
-    bool exec(const SelectQuery & query);
+    QVariant value(int fieldIndex) const override;
 
    private:
 
-    
+    QSqlQuery mQuery;
+    QSqlDatabase mDb;
   };
 
 }} // namespace Mdt{ namespace QueryExpression{

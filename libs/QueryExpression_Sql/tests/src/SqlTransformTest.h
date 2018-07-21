@@ -24,33 +24,24 @@
 #include "TestBase.h"
 #include "Mdt/QueryExpression/SelectQuery.h"
 
-class SelectQueryTest : public TestBase
+class SqlTransformTest : public TestBase
 {
  Q_OBJECT
-
- public:
-
-  SelectQueryTest();
 
  private slots:
 
   void initTestCase();
   void cleanupTestCase();
 
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
-
- private:
-
-  bool createTestSchema();
-
-  bool insertPerson(int id, const QString & firstName, int age, const QString & remarks);
-  bool cleanupPersonTable();
-
-  Mdt::QueryExpression::SelectQuery mQuery;
+  void selectFieldDeclarationToSqlTest();
+  void selectFieldListDeclarationToSqlTest();
+  void selectFieldConditionUsageToSqlTest();
+  void selectFromEntityToSqlTest();
+  void operatorToSqlTest();
+  void likeExpressionToSqlTest();
+  void likeExpressionToSqlTest_data();
+  void filterExpressionToSqlTest();
+  void selectStatementToSqlTest();
 };
 
 #endif // #ifndef MDT_TEST_MAIN_H

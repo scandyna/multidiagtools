@@ -19,25 +19,76 @@
  **
  ****************************************************************************/
 #include "SqlSelectQuery.h"
+#include "SqlTransform.h"
+#include "Mdt/Sql/Error.h"
+#include <QSqlRecord>
+
+// #include <QDebug>
 
 namespace Mdt{ namespace QueryExpression{
 
-SqlSelectQuery::SqlSelectQuery(const QSqlDatabase& db)
- : AbstractSelectQuery(db)
+// SqlSelectQuery::SqlSelectQuery(const QSqlDatabase& db)
+//  : AbstractSelectQuery(db)
+// {
+//   Q_ASSERT(db.isValid());
+// }
+
+// SqlSelectQuery::SqlSelectQuery(QObject* parent, const QSqlDatabase& db)
+//  : AbstractSelectQuery(parent, db)
+// {
+//   Q_ASSERT(db.isValid());
+// }
+
+SqlSelectQuery::SqlSelectQuery(QObject* parent)
+ : AbstractSelectQuery(parent)
 {
-  Q_ASSERT(db.isValid());
 }
 
-SqlSelectQuery::SqlSelectQuery(QObject* parent, const QSqlDatabase& db)
- : AbstractSelectQuery(parent, db)
+void SqlSelectQuery::setDatabase(const QSqlDatabase& db)
 {
   Q_ASSERT(db.isValid());
+
+  mQuery = QSqlQuery(db);
+  mDb = db;
 }
 
-bool SqlSelectQuery::exec(const SelectQuery& query)
-{
 
-  return false;
+bool SqlSelectQuery::exec(const SelectStatement & statement)
+{
+  const auto sql = selectStatementToSql(statement, mDb);
+
+  if(!mQuery.exec(sql)){
+    const auto msg = tr("Failed to execute query, SQL: %1 .")
+                     .arg(sql);
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    error.stackError( mdtErrorFromQSqlQueryQ(mQuery, this) );
+    setLastError(error);
+    return false;
+  }
+
+  return true;
+}
+
+bool SqlSelectQuery::next()
+{
+  return mQuery.next();
+}
+
+int SqlSelectQuery::fieldCount() const
+{
+  return mQuery.record().count();
+}
+
+int SqlSelectQuery::fieldIndex(const EntityAndField & field) const
+{
+  const auto sqlFieldName = field.fieldAliasOrName();
+
+  return mQuery.record().indexOf(sqlFieldName);
+}
+
+QVariant SqlSelectQuery::value(int fieldIndex) const
+{
+  return mQuery.value(fieldIndex);
 }
 
 }} // namespace Mdt{ namespace QueryExpression{
