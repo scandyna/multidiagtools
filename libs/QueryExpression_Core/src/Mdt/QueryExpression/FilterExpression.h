@@ -79,6 +79,13 @@ namespace Mdt{ namespace QueryExpression{
       transform(expr, 0, mTree);
     }
 
+    /*! \brief Check if this filter expression is null
+     */
+    bool isNull() const noexcept
+    {
+      return mTree.isNull();
+    }
+
     /*! \brief Clear this filter expression
      */
     void clear();

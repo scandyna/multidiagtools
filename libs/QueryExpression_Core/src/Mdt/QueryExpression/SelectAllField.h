@@ -68,6 +68,13 @@ namespace Mdt{ namespace QueryExpression{
      */
     SelectAllField & operator=(SelectAllField && other) = default;
 
+    /*! \brief Check if a entity was defined
+     */
+    bool hasEntity() const noexcept
+    {
+      return !mEntity.isNull();
+    }
+
     /*! \brief Get the entity alias if set, otherwise the name
      */
     QString entityAliasOrName() const

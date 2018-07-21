@@ -54,6 +54,15 @@ namespace Mdt{ namespace QueryExpression{ namespace BuildExpressionTree{
     }
   };
 
+  struct MDT_QUERYEXPRESSION_CORE_EXPORT AddLikeExpressionToTree : AddComparisonExpressionToTreeBase
+  {
+    template<typename L, typename R>
+    ExpressionTreeVertex operator()(const L & left, const R & right, ExpressionTree & tree) const
+    {
+      return addNode(left, ComparisonOperator::Like, right, tree);
+    }
+  };
+
   struct MDT_QUERYEXPRESSION_CORE_EXPORT AddNotEqualExpressionToTree : AddComparisonExpressionToTreeBase
   {
     template<typename L, typename R>

@@ -38,7 +38,7 @@ namespace Mdt{ namespace QueryExpression{ namespace BuildExpressionTree{
     >,
     boost::proto::when<
       boost::proto::equal_to<LeftTerminal, LikeExpression>,
-      boost::proto::call<AddEqualExpressionToTree( boost::proto::_value(boost::proto::_left), boost::proto::_value(boost::proto::_right), boost::proto::_data )>
+      boost::proto::call<AddLikeExpressionToTree( boost::proto::_value(boost::proto::_left), boost::proto::_value(boost::proto::_right), boost::proto::_data )>
     >,
     boost::proto::when<
       boost::proto::not_equal_to<LeftTerminal, RightTerminal>,

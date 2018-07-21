@@ -21,95 +21,18 @@
 #ifndef MDT_QUERY_EXPRESSION_SELECT_QUERY_H
 #define MDT_QUERY_EXPRESSION_SELECT_QUERY_H
 
-#include "EntityName.h"
-#include "FieldName.h"
-#include "SelectEntity.h"
+#include "AbstractSelectQuery.h"
+#include "SelectStatement.h"
 #include "SelectField.h"
-#include "SelectFieldList.h"
-#include "FilterExpression.h"
+#include "Mdt/Error.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
+#include <QVariant>
+#include <memory>
 
 namespace Mdt{ namespace QueryExpression{
 
-  /*! \brief Creation of a query to select data
-   *
-   * \todo Should be renamed SelectStatement
-   *
-   * \note SelectQuery was inspired from the SQL query API (SELECT statement).
-   *   Its goal is to be independent of any backend,
-   *   but SQL is a interesting language for query purpose.
-   *   When designing queries, you should take care if the targeted backend
-   *   can be implemented in a reasonable way.
-   *   For example, implementing joins can be difficult for a CSV backend.
-   *
-   * The following examples assume using the QueryExpression namespace:
-   * \code
-   * using namespace Mdt::QueryExpression
-   * \endcode
-   *
-   * Here is a example to create a simple select query:
-   * \code
-   * SelectQuery query;
-   * query.setEntityName("Person");
-   * query.selectAllFields();
-   * \endcode
-   *
-   * It is also possible to specify a entity alias:
-   * \code
-   * query.setEntity( EntityName("Person"), "P" );
-   * \endcode
-   *
-   * To specify the fields that the query must report:
-   * \code
-   * SelectQuery query;
-   * query.setEntityName("Person");
-   * query.addField("name");
-   * query.addField( FieldName("age"), "A" );
-   * \endcode
-   * notice the age field, to which a alias was passed, A.
-   *
-   * It is also possible to specify a filter:
-   * \code
-   * SelectField name( FieldName("name") );
-   * SelectField age( FieldName("age"), "A" );
-   *
-   * SelectQuery query;
-   * query.setEntityName("Person");
-   * query.addField(name);
-   * query.addField(age);
-   * query.addField( FieldName("remarks") );
-   * query.setFilter( (name == "A") && (age > 29) );
-   * \endcode
-   *
-   * To create more complex queries that joins multiple entities,
-   *  passing only field names can be ambigious.
-   *  To solve this, it is recommended to specify also the entity name when adding fields.
-   *
-   * Example of a query that joins a other entity to the primary entity:
-   * \code
-   * SelectEntity person( EntityName("Person") );
-   * SelectEntity address( EntityName("Address"), "ADR");
-   *
-   * SelectField personId( person, FieldName("id") );
-   * SelectField personName( person, FieldName("name") );
-   * SelectField addressPersonId( address, FieldName("personId") );
-   * SelectField addressStreet( address, FieldName("street"), "AddressStreet" );
-   *
-   * SelectQuery query;
-   * query.setEntity( person );
-   * query.addField( personName );
-   * query.addField( person, FieldName("remarks"), "PersonRemarks" );
-   * query.addField( addressStreet );
-   * query.addField( address, FieldName("remarks"), "AddressRemarks" );
-   * query.joinEntity( address, addressPersonId == personId );
-   * query.setFilter( (personName == "A") || (addressStreet == "Street name B") );
-   * \endcode
-   *
-   *
-   * ---------- Above SelectStatement  - Below SelectQuery ------------------
-   *
-   * SelectQuery can execute a SelectStatement
+  /*! \brief SelectQuery can execute a SelectStatement
    *
    * SelectQuery has value sementics, but it is a handle to a implementation instance
    *  (internally implemented using std::shared_ptr).
@@ -125,7 +48,7 @@ namespace Mdt{ namespace QueryExpression{
    *   {
    *   }
    *
-   *   Mdt::Expected<PersonList> getPersonAbove29() const;
+   *   Mdt::Expected<PersonList> getPersonAbove29();
    *
    *  private:
    *
@@ -139,7 +62,7 @@ namespace Mdt{ namespace QueryExpression{
    * \code
    * using namespace Mdt::QueryExpression;
    *
-   * Mdt::Expected<PersonList> Person::getPersonAbove29() const
+   * Mdt::Expected<PersonList> Person::getPersonAbove29()
    * {
    *   Mdt::Expected<PersonList> personList;
    *
@@ -210,8 +133,8 @@ namespace Mdt{ namespace QueryExpression{
    *
    * QSqlDatabase db; // See Qt documentation and Mdt::Sql to setup db
    * auto selectQuery = SelectQuery::make<SqlSelectQuery>();
-   * auto sqlSelectQuery = selectQuery.impl<SqlSelectQuery>();
-   * sqlSelectQuery.setDatabse(db);
+   * auto & sqlSelectQuery = selectQuery.impl<SqlSelectQuery>();
+   * sqlSelectQuery.setDatabase(db);
    *
    * Person person(selectQuery);
    * const auto personAbove29 = person.getPersonAbove29();
@@ -225,98 +148,75 @@ namespace Mdt{ namespace QueryExpression{
   {
    public:
 
-    /*! \brief Set the entity name
-     *
-     * \pre \a name must not be empty
+    /*! \brief Execute \a statement
      */
-    void setEntityName(const QString & name);
+    bool exec(const SelectStatement & statement);
 
-    /*! \brief Set the entity name and its alias
-     *
-     * \pre \a name must not be null
-     * \pre \a alias must not be empty
+    /*! \brief Get the next record, if avaliable, and position this query to that record
      */
-    void setEntityName(const EntityName & name, const QString & alias);
+    bool next();
 
-    /*! \brief Set the entity name and its optional alias
-     *
-     * \pre \a entity must not be null
+    /*! \brief Get count of field for the last executed statement
      */
-    void setEntity(const SelectEntity & entity);
+    int fieldCount() const;
 
-    /*! \brief Get the entity
+    /*! \brief Get the field index of \a field
+     *
+     * Returns the index of \a field if it exists,
+     *  otherwise -1
+     *  If more than 1 field matches, the first one is returned.
+     *
+     * \pre \a field must contain a EntityAndField
      */
-    SelectEntity entity() const
+    int fieldIndex(const SelectField & field) const;
+
+    /*! \brief Get the value for \a fieldIndex from the current record
+     *
+     * \pre \a fieldIndex must be in a valid range ( 0 <= \a fieldIndex < fieldCount() ).
+     */
+    QVariant value(int fieldIndex) const;
+
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const;
+
+    /*! \brief Create a select query with a concrete implementation
+     */
+    template<typename QueryImpl>
+    static SelectQuery make()
     {
-      return mEntity;
+      return SelectQuery( std::make_shared<QueryImpl>() );
     }
 
-    /*! \brief Select all the fields
+    /*! \brief Access the hold query implementation
      *
-     * This would be equivalent to * in SQL.
-     */
-    void selectAllFields();
-
-    /*! \brief Select all fields from \a entity
+     * Returns a reference to the implementation.
      *
-     * This would be equivalent to entity.* in SQL.
-     *
-     * \pre \a entity must not be null
+     * \pre \a QueryImpl must be the real implementation
      */
-    void addSelectAllFields(const SelectEntity & entity);
-
-    /*! \brief Add a field to this query
-     *
-     * \pre \a fieldName must not be empty
-     */
-    void addField(const QString & fieldName);
-
-    /*! \brief Add a field to this query
-     *
-     * \pre \a fieldName must not be null
-     * \pre \a fieldAlias must not be empty
-     */
-    void addField(const FieldName & fieldName, const QString & fieldAlias);
-
-    /*! \brief Add a field to this query
-     *
-     * \todo Preconditions ?
-     */
-    void addField(const SelectField & field);
-
-    /*! \brief Add a field to this query
-     *
-     * \pre \a entity must not be null
-     * \pre \a fieldName must not be null
-     */
-    void addField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString());
-
-    /*! \brief Access the list of fields in this query
-     */
-    const SelectFieldList & fieldList() const
+    template<typename QueryImpl>
+    QueryImpl & impl()
     {
-      return mFieldList;
+//       Q_ASSERT(!isNull());
+      Q_ASSERT(dynamic_cast<QueryImpl*>( mImpl.get()) != nullptr);
+      return *( dynamic_cast<QueryImpl*>( mImpl.get()) );
     }
-
-    /*! \brief Clear this query
-     */
-    void clear();
-
-   protected:
-
-    /*! \brief Clear all attributes of this query except the entity
-     */
-    void clearAttributesExceptEntity();
-
-    /*! \brief Clear the entity
-     */
-    void clearEntity();
 
    private:
 
-    SelectEntity mEntity;
-    SelectFieldList mFieldList;
-    FilterExpression mFilter;
+    /*! \brief Check if this query is null
+     */
+    bool isNull() const
+    {
+      return mImpl.get() == nullptr;
+    }
+
+    SelectQuery(std::shared_ptr<AbstractSelectQuery> && queryImpl)
+     : mImpl(queryImpl)
+    {
+    }
+
+    std::shared_ptr<AbstractSelectQuery> mImpl;
   };
 
 }} // namespace Mdt{ namespace QueryExpression{

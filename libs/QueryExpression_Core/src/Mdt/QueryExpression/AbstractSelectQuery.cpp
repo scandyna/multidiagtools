@@ -18,18 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SELECT_QUERY_TEST_H
-#define SELECT_QUERY_TEST_H
+#include "AbstractSelectQuery.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace QueryExpression{
 
-class SelectQueryTest : public QObject
+void AbstractSelectQuery::setLastError(const Error& error)
 {
- Q_OBJECT
+  mLastError = error;
+}
 
- private slots:
-
-  void instanceTest();
-};
-
-#endif // #ifndef SELECT_QUERY_TEST_H
+}} // namespace Mdt{ namespace QueryExpression{

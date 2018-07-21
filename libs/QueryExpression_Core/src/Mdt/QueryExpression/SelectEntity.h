@@ -72,6 +72,13 @@ namespace Mdt{ namespace QueryExpression{
       return mName.isEmpty();
     }
 
+    /*! \brief Check if the alias was set
+     */
+    bool hasAlias() const noexcept
+    {
+      return !mAlias.isEmpty();
+    }
+
     /*! \brief Get the entity name
      */
     QString name() const

@@ -63,6 +63,13 @@ namespace Mdt{ namespace QueryExpression{
      */
     EntityAndField & operator=(EntityAndField && other) = default;
 
+    /*! \brief Check if a entity was defined
+     */
+    bool hasEntity() const noexcept
+    {
+      return !mEntity.isNull();
+    }
+
     /*! \brief Get the entity name
      */
     QString entityName() const
@@ -82,6 +89,13 @@ namespace Mdt{ namespace QueryExpression{
     QString entityAliasOrName() const
     {
       return mEntity.aliasOrName();
+    }
+
+    /*! \brief Check if a field alias was set
+     */
+    bool hasFieldAlias() const noexcept
+    {
+      return !mFieldAlias.isEmpty();
     }
 
     /*! \brief Get the field name

@@ -19,86 +19,80 @@
  **
  ****************************************************************************/
 #include "SelectQuery.h"
+#include <boost/variant.hpp>
 
 namespace Mdt{ namespace QueryExpression{
 
-void SelectQuery::setEntityName(const QString& name)
+class CallSelectQueryImplFieldIndex : public boost::static_visitor<int>
 {
-  Q_ASSERT(!EntityName(name).isNull());
+  using Impl = std::shared_ptr<AbstractSelectQuery>;
 
-  mEntity.setNameAndAlias(EntityName(name));
+ public:
+
+  CallSelectQueryImplFieldIndex(const Impl & impl)
+   : mImpl(impl)
+  {
+  }
+
+    int operator()(const SelectAllField &)
+    {
+      Q_ASSERT_X(false, "SelectQuery", "SelectAllField is not allowed in a condition expression");
+
+      return -1;
+    }
+
+    int operator()(const EntityAndField & field)
+    {
+      return mImpl->fieldIndex(field);
+    }
+
+ private:
+
+  const Impl & mImpl;
+};
+
+bool SelectQuery::exec(const SelectStatement& statement)
+{
+  Q_ASSERT(!isNull());
+
+  return mImpl->exec(statement);
 }
 
-void SelectQuery::setEntityName(const EntityName& name, const QString & alias)
+bool SelectQuery::next()
 {
-  Q_ASSERT(!name.isNull());
-  Q_ASSERT(!alias.trimmed().isEmpty());
+  Q_ASSERT(!isNull());
 
-  mEntity.setNameAndAlias(name, alias);
+  return mImpl->next();
 }
 
-void SelectQuery::setEntity(const SelectEntity & entity)
+int SelectQuery::fieldCount() const
 {
-  Q_ASSERT(!entity.isNull());
+  Q_ASSERT(!isNull());
 
-  mEntity = entity;
+  return mImpl->fieldCount();
 }
 
-void SelectQuery::selectAllFields()
+int SelectQuery::fieldIndex(const SelectField & field) const
 {
-  mFieldList.clear();
-  mFieldList.addField(SelectAllField{});
+  Q_ASSERT(!isNull());
+
+  CallSelectQueryImplFieldIndex visitor(mImpl);
+
+  return boost::apply_visitor(visitor, field.internalVariant());
 }
 
-void SelectQuery::addSelectAllFields(const SelectEntity& entity)
+QVariant SelectQuery::value(int fieldIndex) const
 {
-  Q_ASSERT(!entity.isNull());
+  Q_ASSERT(!isNull());
 
-  mFieldList.addField( SelectAllField(entity) );
+  return mImpl->value(fieldIndex);
 }
 
-void SelectQuery::addField(const QString & fieldName)
+Error SelectQuery::lastError() const
 {
-  Q_ASSERT(!FieldName(fieldName).isNull());
+  Q_ASSERT(!isNull());
 
-  mFieldList.addField(FieldName(fieldName));
-}
-
-void SelectQuery::addField(const FieldName& fieldName, const QString& fieldAlias)
-{
-  Q_ASSERT(!fieldName.isNull());
-  Q_ASSERT(!fieldAlias.trimmed().isEmpty());
-
-  mFieldList.addField(fieldName, fieldAlias);
-}
-
-void SelectQuery::addField(const SelectField & field)
-{
-  mFieldList.addField(field);
-}
-
-void SelectQuery::addField(const SelectEntity& entity, const FieldName& fieldName, const QString& fieldAlias)
-{
-  Q_ASSERT(!entity.isNull());
-  Q_ASSERT(!fieldName.isNull());
-
-  mFieldList.addField(entity, fieldName, fieldAlias);
-}
-
-void SelectQuery::clear()
-{
-  clearAttributesExceptEntity();
-  clearEntity();
-}
-
-void SelectQuery::clearAttributesExceptEntity()
-{
-  mFieldList.clear();
-}
-
-void SelectQuery::clearEntity()
-{
-  mEntity.clear();
+  return mImpl->lastError();
 }
 
 }} // namespace Mdt{ namespace QueryExpression{

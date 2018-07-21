@@ -75,6 +75,8 @@ void ExpressionGrammarTest::terminalTest()
 
 void ExpressionGrammarTest::comparisonTest()
 {
+  using Like = LikeExpression;
+
   SelectField A(EntityName("A"), FieldName("a"));
   SelectField B(EntityName("B"), FieldName("b"));
 
@@ -82,6 +84,10 @@ void ExpressionGrammarTest::comparisonTest()
   static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( 25 == A ) , Comparison >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( A == B ) , Comparison >() , "" );
+  // Like
+  static_assert(  expressionMatchesGrammar< decltype( A == Like("?k") ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( Like("?k") == A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( Like("?k") == Like("?k") ) , Comparison >() , "" );
   // !=
   static_assert(  expressionMatchesGrammar< decltype( A != 25 ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( 25 != A ) , Comparison >() , "" );

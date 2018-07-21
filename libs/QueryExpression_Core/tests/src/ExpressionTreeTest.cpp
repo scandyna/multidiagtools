@@ -42,6 +42,8 @@ class AbstractExpressionToStringVisitor : public Mdt::QueryExpression::AbstractE
     switch(op){
       case ComparisonOperator::Equal:
         return "==";
+      case ComparisonOperator::Like:
+        return " Like ";
       case ComparisonOperator::NotEqual:
         return "!=";
       case ComparisonOperator::Less:
@@ -57,13 +59,13 @@ class AbstractExpressionToStringVisitor : public Mdt::QueryExpression::AbstractE
 
   static QString logicalOperatorToString(LogicalOperator op)
   {
-    using Mdt::QueryExpression::ComparisonOperator;
     switch(op){
       case LogicalOperator::And:
         return "&&";
       case LogicalOperator::Or:
         return "||";
     }
+    return QString();
   }
 
   static bool isTypeString(const QVariant & v)
@@ -153,7 +155,7 @@ class ExpressionToInfixStringVisitor : public AbstractExpressionToStringVisitor
 
   void processInorder(const LikeExpressionData& data) override
   {
-    mExpressionString += data.toString();
+    mExpressionString += "'" + data.toString() + "'";
   }
 
   void clear()
@@ -352,7 +354,7 @@ void ExpressionTreeTest::filterExpressionTest()
   infixVisitor.clear();
 
   filter.setFilter(clientId == Like("?B*"));
-  expectedString = "id==?B*";
+  expectedString = "id Like '?B*'";
   traverseExpressionTree(filter.internalTree(), infixVisitor);
   QCOMPARE(infixVisitor.toString(), expectedString);
   infixVisitor.clear();

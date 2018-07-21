@@ -28,6 +28,7 @@ namespace Mdt{ namespace QueryExpression{
   enum class ComparisonOperator
   {
     Equal,        /*!< Binary == */
+    Like,         /*!< Left Like LikeExpression */
     NotEqual,     /*!< Binary != */
     Less,         /*!< Binary < */
     LessEqual,    /*!< Binary <= */

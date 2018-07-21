@@ -88,9 +88,9 @@ namespace Mdt{ namespace QueryExpression{
    *     }
    *   }
    *
-   *   static QString logicalOperatorToString(LogicalOperator op)
+   *   static QString logicalOperatorToString(Mdt::QueryExpression::LogicalOperator op)
    *   {
-   *     using Mdt::QueryExpression::ComparisonOperator;
+   *     using Mdt::QueryExpression::LogicalOperator;
    *
    *     switch(op){
    *       case LogicalOperator::And:
@@ -109,6 +109,8 @@ namespace Mdt{ namespace QueryExpression{
    *   QString mExpressionString;
    * };
    * \endcode
+   *
+   * \sa traverseExpressionTree()
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT AbstractExpressionTreeVisitor
   {
