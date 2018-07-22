@@ -22,30 +22,31 @@
 #define MDT_TEST_MAIN_H
 
 #include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/SelectQuery.h"
+#include "Mdt/QueryExpression/CachedSelectQuery.h"
 
-class SelectQueryTest : public SelectQueryTestBase
+class CachedSelectQueryTest : public SelectQueryTestBase
 {
  Q_OBJECT
 
  public:
 
-  SelectQueryTest();
+  CachedSelectQueryTest();
 
  private slots:
 
   void initTestCase();
   void cleanupTestCase();
 
+  void nullQueryTest();
   void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
+//   void fieldIndexTest();
+//   void fieldIndexEntityTest();
+//   void fieldIndexMultiEntityTest();
+//   void execQueryFilterTest();
 
  private:
 
-  Mdt::QueryExpression::SelectQuery mQuery;
+  Mdt::QueryExpression::CachedSelectQuery mQuery;
 };
 
 #endif // #ifndef MDT_TEST_MAIN_H

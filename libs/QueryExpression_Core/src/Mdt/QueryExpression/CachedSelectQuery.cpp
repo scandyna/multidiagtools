@@ -18,34 +18,46 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#include "CachedSelectQuery.h"
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/SelectQuery.h"
+// #include <QDebug>
 
-class SelectQueryTest : public SelectQueryTestBase
+namespace Mdt{ namespace QueryExpression{
+
+bool CachedSelectQuery::exec(const SelectStatement& statement)
 {
- Q_OBJECT
+  Q_ASSERT(!isNull());
 
- public:
+  mCache->clear();
+  if(!mImpl->exec(statement)){
+    return false;
+  }
+  while(mImpl->next()){
+    mCache->push_back(buildCurrentRecord());
+  }
 
-  SelectQueryTest();
+  return true;
+}
 
- private slots:
+Error CachedSelectQuery::lastError() const
+{
+  Q_ASSERT(!isNull());
 
-  void initTestCase();
-  void cleanupTestCase();
+  return mImpl->lastError();
+}
 
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
+CachedSelectQuery::Record CachedSelectQuery::buildCurrentRecord() const
+{
+  Q_ASSERT(!isNull());
 
- private:
+  Record record(columnCount());
 
-  Mdt::QueryExpression::SelectQuery mQuery;
-};
+  const int n = columnCount();
+  for(int col = 0; col < n; ++col){
+    record[col] = mImpl->value(col);
+  }
 
-#endif // #ifndef MDT_TEST_MAIN_H
+  return record;
+}
+
+}} // namespace Mdt{ namespace QueryExpression{

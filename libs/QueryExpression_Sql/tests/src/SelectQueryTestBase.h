@@ -18,34 +18,65 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#ifndef SELECT_QUERY_TEST_BASE_H
+#define SELECT_QUERY_TEST_BASE_H
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/SelectQuery.h"
+#include "TestBase.h"
+#include "Mdt/Entity/Def.h"
 
-class SelectQueryTest : public SelectQueryTestBase
+/*
+ * Entities
+ */
+
+struct PersonDataStruct
+{
+  qulonglong id;
+  QString firstName;
+  int age;
+  QString remarks;
+};
+
+MDT_ENTITY_DEF(
+  (PersonDataStruct),
+  Person,
+  (id, FieldFlag::IsPrimaryKey),
+  (firstName, FieldMaxLength(5)),
+  (age),
+  (remarks)
+)
+
+struct AddressDataStruct
+{
+  qulonglong id;
+  QString street;
+  qulonglong personId;
+  QString remarks;
+};
+
+MDT_ENTITY_DEF(
+  (AddressDataStruct),
+  Address,
+  (id, FieldFlag::IsPrimaryKey),
+  (street, FieldMaxLength(20)),
+  (personId),
+  (remarks)
+)
+
+/*
+ * Test base class
+ */
+
+class SelectQueryTestBase : public TestBase
 {
  Q_OBJECT
 
- public:
+ protected:
 
-  SelectQueryTest();
+  bool createTestSchema();
 
- private slots:
+  bool insertPerson(int id, const QString & firstName, int age, const QString & remarks);
+  bool cleanupPersonTable();
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
-
- private:
-
-  Mdt::QueryExpression::SelectQuery mQuery;
 };
 
-#endif // #ifndef MDT_TEST_MAIN_H
+#endif // #ifndef SELECT_QUERY_TEST_BASE_H

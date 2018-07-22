@@ -28,6 +28,7 @@ set(SOURCE_FILES
   Mdt/QueryExpression/SelectStatement.cpp
   Mdt/QueryExpression/AbstractSelectQuery.cpp
   Mdt/QueryExpression/SelectQuery.cpp
+  Mdt/QueryExpression/CachedSelectQuery.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
