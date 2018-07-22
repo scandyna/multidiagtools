@@ -9,10 +9,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(SOURCES_FILES
     src/TestBase.cpp
+    src/SqlTestBase.cpp
 )
 
 add_library(mdtitemmodeltest SHARED ${SOURCES_FILES})
-target_link_libraries(mdtitemmodeltest ItemModel Application_Widgets TestLib_Core Qt5::Test)
+target_link_libraries(mdtitemmodeltest ItemModel QueryExpression_Sql Entity_Sql Sql_Core Application_Widgets TestLib_Core Qt5::Test)
 
 #=============== Qt5 item model test library =====
 
@@ -65,3 +66,4 @@ addItemModelTest("StlListModelTest")
 addItemModelTest("StlListModelBenchmark")
 addItemModelTest("StlTableModelTest")
 addItemModelTest("StlTableModelBenchmark")
+addItemModelTest("SelectQueryTableModelTest")

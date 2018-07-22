@@ -58,6 +58,7 @@ set(SOURCE_FILES
     Mdt/ItemModel/EditableStlTableModel.cpp
     Mdt/ItemModel/RowResizableStlTableModelTemplate.cpp
     Mdt/ItemModel/RowResizableStlTableModel.cpp
+    Mdt/ItemModel/SelectQueryTableModel.cpp
 )
 
 find_package(Qt5 COMPONENTS Core Gui)
@@ -73,7 +74,7 @@ mdt_add_library(
   NAME ItemModel
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Error_Core IndexRange Container Algorithm FilterExpression Qt5::Core Qt5::Gui
+  LINK_DEPENDENCIES Error_Core IndexRange Container Algorithm QueryExpression_Core Qt5::Core Qt5::Gui FilterExpression  # TODO Remove FilterExpression + Qt5::Gui when possible
 )
 target_include_directories(ItemModel PUBLIC ${Boost_INCLUDE_DIRS})
 
