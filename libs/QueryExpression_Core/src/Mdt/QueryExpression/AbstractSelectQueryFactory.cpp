@@ -18,30 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#include "AbstractSelectQueryFactory.h"
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/SelectQueryFactory.h"
-
-class SelectQueryTest : public SelectQueryTestBase
-{
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
-
- private:
-
-  Mdt::QueryExpression::SelectQueryFactory mQueryFactory;
-};
-
-#endif // #ifndef MDT_TEST_MAIN_H
+namespace Mdt{ namespace QueryExpression{
+}} // namespace Mdt{ namespace QueryExpression{

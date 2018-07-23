@@ -18,30 +18,41 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#ifndef MDT_QUERY_EXPRESSION_SQL_SELECT_QUERY_FACTORY_H
+#define MDT_QUERY_EXPRESSION_SQL_SELECT_QUERY_FACTORY_H
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/SelectQueryFactory.h"
+#include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
+#include "MdtQueryExpression_SqlExport.h"
+#include <QSqlDatabase>
 
-class SelectQueryTest : public SelectQueryTestBase
-{
- Q_OBJECT
+namespace Mdt{ namespace QueryExpression{
 
- private slots:
+  /*! \brief SQL implementation of a select query factory
+   */
+  class MDT_QUERYEXPRESSION_SQL_EXPORT SqlSelectQueryFactory : public AbstractSelectQueryFactory
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    /*! \brief Set database connection
+     */
+    void setDatabase(const QSqlDatabase & db);
 
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
+    /*! \brief Check if this factory is valid
+     */
+    bool isValid() const noexcept override
+    {
+      return mDatabase.isValid();
+    }
 
- private:
+    /*! \brief Create a select query
+     */
+    SelectQuery createSelectQuery() const override;
 
-  Mdt::QueryExpression::SelectQueryFactory mQueryFactory;
-};
+   private:
 
-#endif // #ifndef MDT_TEST_MAIN_H
+    QSqlDatabase mDatabase;
+  };
+
+}} // namespace Mdt{ namespace QueryExpression{
+
+#endif // #ifndef MDT_QUERY_EXPRESSION_SQL_SELECT_QUERY_FACTORY_H

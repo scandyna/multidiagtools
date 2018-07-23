@@ -21,6 +21,7 @@
 #include "SelectQueryTest.h"
 #include "Mdt/QueryExpression/EntityAndField.h"
 #include "Mdt/QueryExpression/SqlSelectQuery.h"
+#include "Mdt/QueryExpression/SqlSelectQueryFactory.h"
 #include "Mdt/Entity/QueryEntity.h"
 #include "Mdt/Entity/EntitySelectStatement.h"
 
@@ -30,17 +31,12 @@ using namespace Mdt::Entity;
  * Init / cleanup
  */
 
-SelectQueryTest::SelectQueryTest()
- : mQuery(Mdt::QueryExpression::SelectQuery::make<Mdt::QueryExpression::SqlSelectQuery>())
-{
-}
-
 void SelectQueryTest::initTestCase()
 {
   QVERIFY(initDatabaseSqlite());
   QVERIFY(createTestSchema());
-  auto & sqlSelectQuery = mQuery.impl<Mdt::QueryExpression::SqlSelectQuery>();
-  sqlSelectQuery.setDatabase(database());
+  auto & sqlQueryFactory = mQueryFactory.makeImpl<Mdt::QueryExpression::SqlSelectQueryFactory>();
+  sqlQueryFactory.setDatabase(database());
 }
 
 void SelectQueryTest::cleanupTestCase()
@@ -59,22 +55,23 @@ void SelectQueryTest::execQueryTest()
   EntitySelectStatement<PersonEntity> stm;
   stm.selectAllFields();
 
-  QCOMPARE(mQuery.fieldCount(), 0);
-  QVERIFY(mQuery.exec(stm));
-  QCOMPARE(mQuery.fieldCount(), 4);
+  auto query = mQueryFactory.createQuery();
+  QCOMPARE(query.fieldCount(), 0);
+  QVERIFY(query.exec(stm));
+  QCOMPARE(query.fieldCount(), 4);
 
-  QVERIFY(mQuery.next());
-  QCOMPARE(mQuery.fieldCount(), 4);
-  QCOMPARE(mQuery.value(0), QVariant(1));
-  QCOMPARE(mQuery.value(1), QVariant("P1"));
-  QCOMPARE(mQuery.value(2), QVariant(10));
-  QCOMPARE(mQuery.value(3), QVariant("R1"));
-  QVERIFY(mQuery.next());
-  QCOMPARE(mQuery.value(0), QVariant(2));
-  QCOMPARE(mQuery.value(1), QVariant("P2"));
-  QCOMPARE(mQuery.value(2), QVariant(20));
-  QCOMPARE(mQuery.value(3), QVariant("R2"));
-  QVERIFY(!mQuery.next());
+  QVERIFY(query.next());
+  QCOMPARE(query.fieldCount(), 4);
+  QCOMPARE(query.value(0), QVariant(1));
+  QCOMPARE(query.value(1), QVariant("P1"));
+  QCOMPARE(query.value(2), QVariant(10));
+  QCOMPARE(query.value(3), QVariant("R1"));
+  QVERIFY(query.next());
+  QCOMPARE(query.value(0), QVariant(2));
+  QCOMPARE(query.value(1), QVariant("P2"));
+  QCOMPARE(query.value(2), QVariant(20));
+  QCOMPARE(query.value(3), QVariant("R2"));
+  QVERIFY(!query.next());
 
   QVERIFY(cleanupPersonTable());
 }
@@ -102,11 +99,12 @@ void SelectQueryTest::fieldIndexTest()
   stm.addField(firstName);
   stm.addField(age);
 
-  QVERIFY(mQuery.exec(stm));
-  QCOMPARE(mQuery.fieldCount(), 3);
-  QCOMPARE(mQuery.fieldIndex(remarks), 0);
-  QCOMPARE(mQuery.fieldIndex(firstName), 1);
-  QCOMPARE(mQuery.fieldIndex(age), 2);
+  auto query = mQueryFactory.createQuery();
+  QVERIFY(query.exec(stm));
+  QCOMPARE(query.fieldCount(), 3);
+  QCOMPARE(query.fieldIndex(remarks), 0);
+  QCOMPARE(query.fieldIndex(firstName), 1);
+  QCOMPARE(query.fieldIndex(age), 2);
 
   QVERIFY(cleanupPersonTable());
 }
@@ -124,11 +122,12 @@ void SelectQueryTest::fieldIndexEntityTest()
   stm.addField(remarks);
   stm.addField(firstName);
 
-  QVERIFY(mQuery.exec(stm));
-  QCOMPARE(mQuery.fieldCount(), 3);
-  QCOMPARE(mQuery.fieldIndex(age), 0);
-  QCOMPARE(mQuery.fieldIndex(remarks), 1);
-  QCOMPARE(mQuery.fieldIndex(firstName), 2);
+  auto query = mQueryFactory.createQuery();
+  QVERIFY(query.exec(stm));
+  QCOMPARE(query.fieldCount(), 3);
+  QCOMPARE(query.fieldIndex(age), 0);
+  QCOMPARE(query.fieldIndex(remarks), 1);
+  QCOMPARE(query.fieldIndex(firstName), 2);
 
   QVERIFY(cleanupPersonTable());
 }
@@ -150,14 +149,15 @@ void SelectQueryTest::execQueryFilterTest()
   stm.selectAllFields();
   stm.setFilter( (age > 10)&&(age < 30) );
 
-  QVERIFY(mQuery.exec(stm));
-  QCOMPARE(mQuery.fieldCount(), 4);
-  const auto firstNameIndex = mQuery.fieldIndex( stm.makeSelectField(stm.def().firstName()) );
-  const auto ageIndex = mQuery.fieldIndex(age);
-  QVERIFY(mQuery.next());
-  QCOMPARE(mQuery.value(firstNameIndex), QVariant("P2"));
-  QCOMPARE(mQuery.value(ageIndex), QVariant(20));
-  QVERIFY(!mQuery.next());
+  auto query = mQueryFactory.createQuery();
+  QVERIFY(query.exec(stm));
+  QCOMPARE(query.fieldCount(), 4);
+  const auto firstNameIndex = query.fieldIndex( stm.makeSelectField(stm.def().firstName()) );
+  const auto ageIndex = query.fieldIndex(age);
+  QVERIFY(query.next());
+  QCOMPARE(query.value(firstNameIndex), QVariant("P2"));
+  QCOMPARE(query.value(ageIndex), QVariant(20));
+  QVERIFY(!query.next());
 
   QVERIFY(cleanupPersonTable());
 }

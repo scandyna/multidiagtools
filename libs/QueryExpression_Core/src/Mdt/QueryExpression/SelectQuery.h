@@ -143,6 +143,15 @@ namespace Mdt{ namespace QueryExpression{
    * }
    * doSomeStuff(*personAbove29);
    * \endcode
+   *
+   * \code
+   * using namespace Mdt::QueryExpression;
+   *
+   * QSqlDatabase db; // See Qt documentation and Mdt::Sql to setup db
+   * SelectQueryFactory queryFactory;
+   * auto sqlQueryFactory = queryFactory.makeImpl<SqlSelectQuery>();
+   * sqlQueryFactory.setDatabase(db);
+   * \endcode
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT SelectQuery
   {

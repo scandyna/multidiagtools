@@ -3,6 +3,7 @@
 set(SOURCE_FILES
   Mdt/QueryExpression/SqlTransform.cpp
   Mdt/QueryExpression/SqlSelectQuery.cpp
+  Mdt/QueryExpression/SqlSelectQueryFactory.cpp
 )
 
 find_package(Qt5 COMPONENTS Core Sql)

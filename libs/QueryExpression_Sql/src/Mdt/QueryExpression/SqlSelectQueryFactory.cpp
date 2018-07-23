@@ -18,30 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#include "SqlSelectQueryFactory.h"
+#include "SqlSelectQuery.h"
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/SelectQueryFactory.h"
+namespace Mdt{ namespace QueryExpression{
 
-class SelectQueryTest : public SelectQueryTestBase
+void SqlSelectQueryFactory::setDatabase(const QSqlDatabase& db)
 {
- Q_OBJECT
+  Q_ASSERT(db.isValid());
 
- private slots:
+  mDatabase = db;
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+SelectQuery SqlSelectQueryFactory::createSelectQuery() const
+{
+  auto query = SelectQuery::make<SqlSelectQuery>();
+  auto & impl = query.impl<SqlSelectQuery>();
+  impl.setDatabase(mDatabase);
 
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
+  return query;
+}
 
- private:
-
-  Mdt::QueryExpression::SelectQueryFactory mQueryFactory;
-};
-
-#endif // #ifndef MDT_TEST_MAIN_H
+}} // namespace Mdt{ namespace QueryExpression{

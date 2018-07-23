@@ -29,6 +29,8 @@
 #include <QObject>
 #include <QVariant>
 
+// #include <QDebug>
+
 namespace Mdt{ namespace QueryExpression{
 
   /*! \brief Base class to implement a backend specific select query
