@@ -55,7 +55,7 @@ namespace Mdt{ namespace QueryExpression{
 
    private:
 
-    const QString mString;
+    QString mString;
   };
 
   /*! \brief Expression using wildcards
