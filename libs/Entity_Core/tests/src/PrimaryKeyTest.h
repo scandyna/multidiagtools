@@ -35,6 +35,12 @@ class PrimaryKeyTest : public TestBase
   void fieldTest();
 
   void primaryKeyFromEntityTest();
+
+  void primaryKeyRecordBasicTest();
+  void primaryKeyRecordFromEntityDataTest();
+
+  void selectFieldFromPrimaryKeyRecordFieldTest();
+  void filterExpressionFromPrimaryKeyRecordTest();
 };
 
 #endif // #ifndef PRIMARY_KEY_TEST_H

@@ -61,9 +61,16 @@ namespace Mdt{ namespace Entity{
 
     /*! \brief Get count of fields in this primary key
      */
-    int fieldCount() const
+    int fieldCount() const noexcept
     {
       return mFields.size();
+    }
+
+    /*! \brief Check if this primary key is null
+     */
+    bool isNull() const noexcept
+    {
+      return fieldCount() < 1;
     }
 
     /*! \brief Get primary key field at \a index
