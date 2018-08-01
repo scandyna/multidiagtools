@@ -26,6 +26,7 @@
 #include "Mdt/Entity/TypeTraits/IsEntityDef.h"
 #include "Mdt/Entity/TypeTraits/IsEntity.h"
 #include "Mdt/Entity/TypeTraits/IsRelation.h"
+#include "Mdt/Entity/TypeTraits/FieldDef.h"
 
 using namespace Mdt::Entity;
 using namespace Mdt::Entity::TypeTraits;
@@ -73,6 +74,19 @@ MDT_ENTITY_DEF(
 )
 
 using ArticleDetailRelation = Relation<ArticleEntity, ArticleDetailEntity, ArticleDetailDef::articleIdField>;
+
+struct ArticleTypeDataStruct
+{
+  QString code;
+  QString label;
+};
+
+MDT_ENTITY_DEF(
+  (ArticleTypeDataStruct),
+  ArticleType,
+  (code, FieldFlag::IsPrimaryKey),
+  (label)
+)
 
 /*
  * IsEntity compile time tests
@@ -124,6 +138,27 @@ static_assert(!IsRelation<ArticleEntity>::value, "" );
 static_assert( IsRelation<ArticleDetailRelation>::value, "" );
 static_assert(!IsRelation<int>::value , "" );
 static_assert(!IsRelation<QString>::value , "" );
+
+/*
+ * FieldDef compile time tests
+ */
+
+static_assert(isPrimaryKey<ArticleDef::idField>(),"");
+static_assert(!isPrimaryKey<ArticleDef::descriptionField>(),"");
+static_assert(isPrimaryKey<ArticleDetailDef::idField>(),"");
+static_assert(!isPrimaryKey<ArticleDetailDef::articleIdField>(),"");
+static_assert(isPrimaryKey<ArticleTypeDef::codeField>(),"");
+static_assert(!isPrimaryKey<ArticleTypeDef::labelField>(),"");
+
+static_assert(isIntegralType<ArticleDataStruct, ArticleDef::idField>(), "");
+static_assert(!isIntegralType<ArticleDataStruct, ArticleDef::descriptionField>(), "");
+
+static_assert(isIntegralPrimaryKey<ArticleDataStruct, ArticleDef::idField>(), "");
+static_assert(!isIntegralPrimaryKey<ArticleDataStruct, ArticleDef::descriptionField>(), "");
+static_assert(isIntegralPrimaryKey<ArticleDetailDataStruct, ArticleDetailDef::idField>(), "");
+static_assert(!isIntegralPrimaryKey<ArticleDetailDataStruct, ArticleDetailDef::articleIdField>(), "");
+static_assert(!isIntegralPrimaryKey<ArticleTypeDataStruct, ArticleTypeDef::codeField>(),"");
+static_assert(!isIntegralPrimaryKey<ArticleTypeDataStruct, ArticleTypeDef::labelField>(),"");
 
 /*
  * Main
