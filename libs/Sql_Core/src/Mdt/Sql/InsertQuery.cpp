@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -70,7 +70,8 @@ bool InsertQuery::exec()
   const QString sql = getPrepareStatement();
 
   if(!pvQuery.prepare(sql)){
-    QString msg = tr("Preparing query for insertion into '%1' failed.").arg(pvTableName);
+    QString msg = tr("Preparing query for insertion into '%1' failed.\nSQL: %2")
+                  .arg(pvTableName, pvQuery.executedQuery());
     pvLastError = mdtErrorNew(msg, Mdt::Error::Critical, "InsertQuery");
     pvLastError.stackError(mdtErrorFromQSqlQuery(pvQuery, "InsertQuery"));
     pvLastError.commit();
@@ -80,7 +81,8 @@ bool InsertQuery::exec()
     pvQuery.addBindValue(value);
   }
   if(!pvQuery.exec()){
-    QString msg = tr("Executing query for insertion into '%1' failed.").arg(pvTableName);
+    QString msg = tr("Executing query for insertion into '%1' failed.\nSQL: %2")
+                  .arg(pvTableName, pvQuery.executedQuery());
     pvLastError = mdtErrorNew(msg, Mdt::Error::Critical, "InsertQuery");
     pvLastError.stackError(mdtErrorFromQSqlQuery(pvQuery, "InsertQuery"));
     pvLastError.commit();
