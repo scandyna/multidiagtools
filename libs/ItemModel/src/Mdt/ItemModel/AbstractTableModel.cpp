@@ -56,6 +56,16 @@ Qt::ItemFlags AbstractTableModel::flags(const QModelIndex& index) const
   return QAbstractTableModel::flags(index);
 }
 
+QVariant AbstractTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+  if( (orientation == Qt::Horizontal)&&(role == Qt::DisplayRole) ){
+    Q_ASSERT(section >= 0);
+    Q_ASSERT(section < columnCount());
+    return horizontalHeaderDisplayRoleData(section);
+  }
+  return QAbstractTableModel::headerData(section, orientation, role);
+}
+
 QVariant AbstractTableModel::data(const QModelIndex& index, int role) const
 {
   if(!index.isValid()){
@@ -143,6 +153,11 @@ bool AbstractTableModel::removeFirstRow()
 bool AbstractTableModel::removeLastRow()
 {
   return removeRows(rowCount()-1, 1);
+}
+
+QVariant AbstractTableModel::horizontalHeaderDisplayRoleData(int column) const
+{
+  return QAbstractTableModel::headerData(column, Qt::Horizontal, Qt::DisplayRole);
 }
 
 bool AbstractTableModel::setEditRoleData(int, int, const QVariant&)

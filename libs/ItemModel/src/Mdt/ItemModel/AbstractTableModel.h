@@ -162,6 +162,19 @@ namespace Mdt{ namespace ItemModel{
      */
     Qt::ItemFlags flags(const QModelIndex & index) const override;
 
+    /*! \brief Get the header data at \a section for \a orientation and \a role
+     *
+     * If \a orientation is Qt::Horizontal and \a role is Qt::DisplayRole,
+     *  horizontalHeaderDisplayRoleData() is called.
+     *
+     * If \a orientation is Qt::Vertical and \a role is Qt::DisplayRole,
+     *  verticalHeaderDisplayRoleData() is called.
+     *
+     * For more complex models that supports other roles than Qt::DisplayRole,
+     *  this method should be re-implemented.
+     */
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+
     /*! \brief Get the data at \a index for \a role
      *
      * If \a index is valid, the following method will be called:
@@ -245,6 +258,16 @@ namespace Mdt{ namespace ItemModel{
      * This method is called by columnCount(const QModelIndex &).
      */
     virtual int columnCountImpl() const = 0;
+
+    /*! \brief Get the display role data for the horizontal header
+     *
+     * This method is called by headerData() if all preconditions ar satisfied.
+     *
+     * This default implementation returns the implementation from QAbstractTableModel .
+     *
+     * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
+     */
+    virtual QVariant horizontalHeaderDisplayRoleData(int column) const;
 
     /*! \brief Get display role data
      *

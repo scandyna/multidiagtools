@@ -117,6 +117,67 @@ class ReadOnlyTableModel : public Mdt::ItemModel::AbstractTableModel
 };
 
 /*
+ * A table model that defines no header
+ */
+
+class DefaultHeaderTableModel : public Mdt::ItemModel::AbstractTableModel
+{
+ public:
+
+  int rowCountImpl() const override
+  {
+    return 0;
+  }
+
+  int columnCountImpl() const override
+  {
+    return 3;
+  }
+
+  QVariant displayRoleData(int, int) const override
+  {
+    return QVariant();
+  }
+};
+
+/*
+ * A table model that custom header
+ */
+
+class CustomHeaderTableModel : public Mdt::ItemModel::AbstractTableModel
+{
+ public:
+
+  int rowCountImpl() const override
+  {
+    return 0;
+  }
+
+  int columnCountImpl() const override
+  {
+    return 3;
+  }
+
+  QVariant displayRoleData(int, int) const override
+  {
+    return QVariant();
+  }
+
+  QVariant horizontalHeaderDisplayRoleData(int column) const override
+  {
+    switch(column){
+      case 0:
+        return "A";
+      case 1:
+        return "B";
+      case 2:
+        return "C";
+    }
+    return QVariant();
+  }
+};
+
+/*
  * A editable table model
  */
 class EditableTableModel : public ReadOnlyTableModel
@@ -260,6 +321,32 @@ void AbstractTableModelTest::editableFlagsTest()
   QCOMPARE(getModelFlags(model, 0, 0), expectedFlags);
   QCOMPARE(getModelFlags(model, 0, 1), expectedFlags);
   QCOMPARE(model.flags(QModelIndex()), Qt::NoItemFlags);
+}
+
+void AbstractTableModelTest::defaultHeaderTest()
+{
+  DefaultHeaderTableModel model;
+  QCOMPARE(model.columnCount(), 3);
+  QCOMPARE(model.headerData(0, Qt::Horizontal), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Horizontal), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Horizontal), QVariant(3));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QCOMPARE(model.headerData(0, Qt::Horizontal, Qt::DecorationRole), QVariant());
+}
+
+void AbstractTableModelTest::customHeaderTest()
+{
+  CustomHeaderTableModel model;
+  QCOMPARE(model.columnCount(), 3);
+  QCOMPARE(model.headerData(0, Qt::Horizontal), QVariant("A"));
+  QCOMPARE(model.headerData(1, Qt::Horizontal), QVariant("B"));
+  QCOMPARE(model.headerData(2, Qt::Horizontal), QVariant("C"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QCOMPARE(model.headerData(0, Qt::Horizontal, Qt::DecorationRole), QVariant());
 }
 
 void AbstractTableModelTest::readOnlyDataTest()

@@ -43,6 +43,9 @@ class AbstractTableModelTest : public QObject
   void readOnlyFlagsTest();
   void editableFlagsTest();
 
+  void defaultHeaderTest();
+  void customHeaderTest();
+
   void readOnlyDataTest();
   void editableDataTest();
 
