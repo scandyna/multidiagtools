@@ -66,7 +66,7 @@ namespace Mdt{ namespace ItemModel{
      * If \a index is not valid, Qt::NoItemFlags is returned.
      *
      * If this model is read only, QAbstractTableModel::flags() is returned.
-     *  If this model is editable, Qt::ItemIsEditable is alos added to QAbstractTableModel::flags().
+     *  If this model is editable, Qt::ItemIsEditable is also added to QAbstractTableModel::flags().
      */
     Qt::ItemFlags flags(const QModelIndex & index) const override;
 
