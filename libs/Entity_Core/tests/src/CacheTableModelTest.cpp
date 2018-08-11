@@ -22,6 +22,8 @@
 #include "PersonCache.h"
 #include "Mdt/Entity/AbstractReadOnlyCache.h"
 #include "Mdt/Entity/AbstractReadOnlyCacheTableModel.h"
+#include "Mdt/Entity/AbstractEditableCache.h"
+#include "Mdt/Entity/AbstractEditableCacheTableModel.h"
 #include "Mdt/TestLib/ItemModel.h"
 #include <QSignalSpy>
 #include <QVariantList>
@@ -34,124 +36,103 @@ class ReadOnlyCacheTableModel : public Mdt::Entity::AbstractReadOnlyCacheTableMo
 {
 };
 
-/*
- * A table model that defines no header
- */
-
-// class DefaultHeaderTableModel : public Mdt::Entity::AbstractReadOnlyCacheTableModel
-// {
-//  public:
-// 
-//   int columnCount(const QModelIndex& parent = QModelIndex()) const override
-//   {
-//     Q_UNUSED(parent);
-// 
-//     return 3;
-//   }
-// };
-
-/*
- * A table model that custom header
- */
-
-// class CustomHeaderTableModel : public Mdt::Entity::AbstractReadOnlyCacheTableModel
-// {
-//  public:
-// 
-//   int columnCount(const QModelIndex& parent = QModelIndex()) const override
-//   {
-//     Q_UNUSED(parent);
-// 
-//     return 3;
-//   }
-// 
-//  private:
-// 
-//   QVariant horizontalHeaderDisplayRoleData(int column) const override
-//   {
-//     switch(column){
-//       case 0:
-//         return "A";
-//       case 1:
-//         return "B";
-//       case 2:
-//         return "C";
-//     }
-//     return QVariant();
-//   }
-// };
+class EditableCacheTableModel : public Mdt::Entity::AbstractEditableCacheTableModel
+{
+};
 
 using namespace Mdt::Entity;
 using namespace Mdt::TestLib;
+
+void CacheTableModelTest::initTestCase()
+{
+  qRegisterMetaType<Qt::Orientation>();
+}
 
 /*
  * Tests
  */
 
-// void CacheTableModelTest::defaultHeaderTest()
-// {
-//   DefaultHeaderTableModel model;
-//   QCOMPARE(model.columnCount(), 3);
-//   QCOMPARE(model.headerData(0, Qt::Horizontal), QVariant(1));
-//   QCOMPARE(model.headerData(1, Qt::Horizontal), QVariant(2));
-//   QCOMPARE(model.headerData(2, Qt::Horizontal), QVariant(3));
-//   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
-//   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
-//   QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
-//   QCOMPARE(model.headerData(0, Qt::Horizontal, Qt::DecorationRole), QVariant());
-// }
-// 
-// void CacheTableModelTest::customHeaderTest()
-// {
-//   CustomHeaderTableModel model;
-//   QCOMPARE(model.columnCount(), 3);
-//   QCOMPARE(model.headerData(0, Qt::Horizontal), QVariant("A"));
-//   QCOMPARE(model.headerData(1, Qt::Horizontal), QVariant("B"));
-//   QCOMPARE(model.headerData(2, Qt::Horizontal), QVariant("C"));
-//   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
-//   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
-//   QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
-//   QCOMPARE(model.headerData(0, Qt::Horizontal, Qt::DecorationRole), QVariant());
-// }
-
-void CacheTableModelTest::readOnlyHorizontalHeaderTest()
+template<typename Cache, typename Model>
+void horizontalHeaderTest()
 {
-  PersonCache cache;
-  ReadOnlyCacheTableModel model;
+  Cache cache;
+  Model model;
   model.setCache(&cache);
   QCOMPARE(model.headerData(0, Qt::Horizontal), QVariant("id"));
   QCOMPARE(model.headerData(1, Qt::Horizontal), QVariant("name"));
   QCOMPARE(model.headerData(0, Qt::Horizontal, Qt::DecorationRole), QVariant());
 }
 
-void CacheTableModelTest::readOnlyNoCacheGetTest()
+void CacheTableModelTest::readOnlyHorizontalHeaderTest()
 {
-  ReadOnlyCacheTableModel model;
+  horizontalHeaderTest<PersonCache, ReadOnlyCacheTableModel>();
+}
+
+void CacheTableModelTest::editableHorizontalHeaderTest()
+{
+  horizontalHeaderTest<EditPersonCache, EditableCacheTableModel>();
+}
+
+template<typename Model>
+void noCacheGetTest()
+{
+  Model model;
   QVERIFY(model.cache() == nullptr);
   QCOMPARE(model.rowCount(), 0);
   QCOMPARE(model.columnCount(), 0);
 }
 
-void CacheTableModelTest::readOnlyFlagsTest()
+void CacheTableModelTest::readOnlyNoCacheGetTest()
 {
-  PersonCache cache;
-  ReadOnlyCacheTableModel model;
-
-  QFAIL("Not complete");
+  noCacheGetTest<ReadOnlyCacheTableModel>();
 }
 
-void CacheTableModelTest::readOnlySetCacheTest()
+void CacheTableModelTest::editableNoCacheGetTest()
 {
+  noCacheGetTest<EditableCacheTableModel>();
+}
+
+void CacheTableModelTest::readOnlyFlagsTest()
+{
+  const auto defaultFlags = getDefaultQAbstractTableModelFlags();
+  PersonCache cache;
+  populatePersonStorage(cache, {"A"});
+  QVERIFY(cache.fetchAll());
   ReadOnlyCacheTableModel model;
+  model.setCache(&cache);
+
+  QCOMPARE(model.flags(QModelIndex()), Qt::NoItemFlags);
+  QCOMPARE(getModelFlags(model, 0, 0), defaultFlags);
+  QCOMPARE(getModelFlags(model, 0, 1), defaultFlags);
+}
+
+void CacheTableModelTest::editableFlagsTest()
+{
+  const auto expectedFlags = getDefaultQAbstractTableModelFlags() | Qt::ItemIsEditable;
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A"});
+  QVERIFY(cache.fetchAll());
+  EditableCacheTableModel model;
+  model.setCache(&cache);
+
+  QCOMPARE(model.flags(QModelIndex()), Qt::NoItemFlags);
+  QCOMPARE(getModelFlags(model, 0, 0), expectedFlags);
+  QCOMPARE(getModelFlags(model, 0, 1), expectedFlags);
+}
+
+template<typename Cache, typename Model>
+void setCacheTest()
+{
+  Model model;
   QCOMPARE(model.rowCount(), 0);
   QCOMPARE(model.columnCount(), 0);
 
-  PersonCache emptyCache;
+  Cache emptyCache;
   model.setCache(&emptyCache);
   QCOMPARE(model.rowCount(), 0);
   QCOMPARE(model.columnCount(), 2);
 
-  PersonCache cache;
+  Cache cache;
   populatePersonStorage(cache, {"A","B","C"});
   QVERIFY(cache.fetchAll());
   QCOMPARE(cache.rowCount(), 3);
@@ -163,14 +144,25 @@ void CacheTableModelTest::readOnlySetCacheTest()
   QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
 }
 
-void CacheTableModelTest::readOnlySetCacheSignalTest()
+void CacheTableModelTest::readOnlySetCacheTest()
 {
-  ReadOnlyCacheTableModel model;
-  QSignalSpy resetSpy(&model, &ReadOnlyCacheTableModel::modelReset);
+  setCacheTest<PersonCache, ReadOnlyCacheTableModel>();
+}
+
+void CacheTableModelTest::editableSetCacheTest()
+{
+  setCacheTest<EditPersonCache, EditableCacheTableModel>();
+}
+
+template<typename Cache, typename Model>
+void setCacheSignalTest()
+{
+  Model model;
+  QSignalSpy resetSpy(&model, &Model::modelReset);
   QVERIFY(resetSpy.isValid());
 
   QCOMPARE(resetSpy.count(), 0);
-  PersonCache cache;
+  Cache cache;
   model.setCache(&cache);
   QCOMPARE(resetSpy.count(), 1);
 
@@ -180,8 +172,161 @@ void CacheTableModelTest::readOnlySetCacheSignalTest()
   QCOMPARE(resetSpy.count(), 1);
 }
 
+void CacheTableModelTest::readOnlySetCacheSignalTest()
+{
+  setCacheSignalTest<PersonCache, ReadOnlyCacheTableModel>();
+}
+
+void CacheTableModelTest::editableSetCacheSignalTest()
+{
+  setCacheSignalTest<EditPersonCache, EditableCacheTableModel>();
+}
+
+void CacheTableModelTest::setDataTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+  EditableCacheTableModel model;
+  model.setCache(&cache);
+
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+
+  QVERIFY(!setModelData(model, 2, 1, "ToolTip", Qt::ToolTipRole));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+
+  QVERIFY(setModelData(model, 2, 1, "EC"));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("EC"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("e"));
+}
+
+void CacheTableModelTest::setDataSignalTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+  EditableCacheTableModel model;
+  model.setCache(&cache);
+  QVariantList arguments;
+  QModelIndex topLeft, bottomRight;
+  QVector<int> roles;
+  QSignalSpy dataChangedSpy(&model, &EditableCacheTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  QSignalSpy headerDataChangedSpy(&model, &EditableCacheTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  QVERIFY(setModelData(model, 2, 1, "EC"));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 2);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 2);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(2)); // first
+  QCOMPARE(arguments.at(2), QVariant(2)); // last
+}
+
+void CacheTableModelTest::setDataFromCacheTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+  EditableCacheTableModel model;
+  model.setCache(&cache);
+
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+
+  cache.setData(0, 1, "EA");
+  cache.setDataFromBackend(1, 1, "EB");
+  QCOMPARE(getModelData(model, 0, 1), QVariant("EA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("EB"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("e"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+}
+
+void CacheTableModelTest::setDataFromCacheSignalTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+  EditableCacheTableModel model;
+  model.setCache(&cache);
+  QVariantList arguments;
+  QModelIndex topLeft, bottomRight;
+  QVector<int> roles;
+  QSignalSpy dataChangedSpy(&model, &EditableCacheTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  QSignalSpy headerDataChangedSpy(&model, &EditableCacheTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  cache.setData(0, 1, "EA");
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 0);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 0);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(0)); // first
+  QCOMPARE(arguments.at(2), QVariant(0)); // last
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  cache.setDataFromBackend(1, 1, "EB");
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 1);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 1);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+}
 
 void CacheTableModelTest::readOnlyQtModelTest()
+{
+
+  QFAIL("Not complete");
+}
+
+void CacheTableModelTest::editableQtModelTest()
 {
 
   QFAIL("Not complete");

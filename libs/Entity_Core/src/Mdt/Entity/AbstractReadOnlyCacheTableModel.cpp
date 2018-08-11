@@ -35,13 +35,16 @@ void AbstractReadOnlyCacheTableModel::setCache(AbstractReadOnlyCache* cache)
 
   disconnect(mCacheAboutToBeResetConnection);
   disconnect(mCacheResetConnection);
+  disconnect(mDataChangedConnection);
 
   mCache = cache;
 
-  mCacheAboutToBeResetConnection = 
+  mCacheAboutToBeResetConnection =
     connect(mCache, &AbstractReadOnlyCache::cacheAboutToBeReset, this, &AbstractReadOnlyCacheTableModel::beginResetModel);
-  mCacheResetConnection = 
+  mCacheResetConnection =
     connect(mCache, &AbstractReadOnlyCache::cacheReset, this, &AbstractReadOnlyCacheTableModel::endResetModel);
+  mDataChangedConnection =
+    connect(mCache, &AbstractReadOnlyCache::dataAtRowsChanged, this, &AbstractReadOnlyCacheTableModel::onDataAtRowsChanged);
 
   endResetModel();
 }
@@ -102,5 +105,18 @@ QVariant AbstractReadOnlyCacheTableModel::data(const QModelIndex& index, int rol
 // {
 //   return QAbstractTableModel::headerData(column, Qt::Horizontal, Qt::DisplayRole);
 // }
+
+void AbstractReadOnlyCacheTableModel::onDataAtRowsChanged(int firstRow, int lastRow)
+{
+  Q_ASSERT(firstRow < rowCount());
+  Q_ASSERT(lastRow < rowCount());
+
+  const auto topLeft = index(firstRow, 0);
+  const auto bottomRight = index(lastRow, columnCount()-1);
+  Q_ASSERT(topLeft.isValid());
+  Q_ASSERT(bottomRight.isValid());
+
+  emit dataChanged(topLeft, bottomRight);
+}
 
 }} // namespace Mdt{ namespace Entity{

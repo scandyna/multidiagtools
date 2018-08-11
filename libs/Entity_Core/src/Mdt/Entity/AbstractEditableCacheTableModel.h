@@ -18,10 +18,10 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ENTITY_ABSTRACT_READ_ONLY_CACHE_TABLE_MODEL_H
-#define MDT_ENTITY_ABSTRACT_READ_ONLY_CACHE_TABLE_MODEL_H
+#ifndef MDT_ENTITY_ABSTRACT_EDITABLE_CACHE_TABLE_MODEL_H
+#define MDT_ENTITY_ABSTRACT_EDITABLE_CACHE_TABLE_MODEL_H
 
-#include "AbstractReadOnlyCache.h"
+#include "AbstractEditableCache.h"
 #include "MdtEntity_CoreExport.h"
 #include <QAbstractTableModel>
 #include <QPointer>
@@ -29,22 +29,24 @@
 
 namespace Mdt{ namespace Entity{
 
-  /*! \brief Base class to create table models using AbstractReadOnlyCache
+  /*! \brief Base class to create table models using AbstractEditableCache
    */
-  class MDT_ENTITY_CORE_EXPORT AbstractReadOnlyCacheTableModel : public QAbstractTableModel
+  class AbstractEditableCacheTableModel : public QAbstractTableModel
   {
    Q_OBJECT
+
+    using ParentClass = QAbstractTableModel;
 
    public:
 
     /*! \brief Constructor
      */
-    explicit AbstractReadOnlyCacheTableModel(QObject *parent = nullptr);
+    explicit AbstractEditableCacheTableModel(QObject *parent = nullptr);
 
-    AbstractReadOnlyCacheTableModel(const AbstractReadOnlyCacheTableModel &) = delete;
-    AbstractReadOnlyCacheTableModel & operator=(const AbstractReadOnlyCacheTableModel &) = delete;
-    AbstractReadOnlyCacheTableModel(AbstractReadOnlyCacheTableModel &&) = delete;
-    AbstractReadOnlyCacheTableModel & operator=(AbstractReadOnlyCacheTableModel &&) = delete;
+    AbstractEditableCacheTableModel(const AbstractEditableCacheTableModel &) = delete;
+    AbstractEditableCacheTableModel & operator=(const AbstractEditableCacheTableModel &) = delete;
+    AbstractEditableCacheTableModel(AbstractEditableCacheTableModel &&) = delete;
+    AbstractEditableCacheTableModel & operator=(AbstractEditableCacheTableModel &&) = delete;
 
     /*! \brief Set \a cache to this model
      *
@@ -53,7 +55,7 @@ namespace Mdt{ namespace Entity{
      *
      * \sa cache()
      */
-    void setCache(AbstractReadOnlyCache *cache);
+    void setCache(AbstractEditableCache *cache);
 
     /*! \brief Get cache
      *
@@ -61,10 +63,14 @@ namespace Mdt{ namespace Entity{
      *
      * \sa setCache()
      */
-    AbstractReadOnlyCache *cache() const
+    AbstractEditableCache *cache() const
     {
       return mCache;
     }
+
+    /*! \brief Get flags for \a index
+     */
+    Qt::ItemFlags flags(const QModelIndex & index) const override;
 
     /*! \brief Get count of rows
      */
@@ -82,30 +88,24 @@ namespace Mdt{ namespace Entity{
      */
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
-//    protected:
-
-//     /*! \brief Get the display role data for the horizontal header
-//      *
-//      * This method is called by headerData() if all preconditions ar satisfied.
-//      *
-//      * This default implementation returns the implementation from QAbstractTableModel .
-//      *
-//      * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
-//      */
-//     virtual QVariant horizontalHeaderDisplayRoleData(int column) const;
+    /*! \brief Set data for \a role at \a index to \a value
+     */
+    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
 
    private slots:
 
     void onDataAtRowsChanged(int firstRow, int lastRow);
+    void onOperationAtRowsChanged(int firstRow, int lastRow);
 
    private:
 
-    QPointer<AbstractReadOnlyCache> mCache;
+    QPointer<AbstractEditableCache> mCache;
     QMetaObject::Connection mCacheAboutToBeResetConnection;
     QMetaObject::Connection mCacheResetConnection;
     QMetaObject::Connection mDataChangedConnection;
+    QMetaObject::Connection mOperationAtRowsChangedConnection;
   };
 
 }} // namespace Mdt{ namespace Entity{
 
-#endif // #ifndef MDT_ENTITY_ABSTRACT_READ_ONLY_CACHE_TABLE_MODEL_H
+#endif // #ifndef MDT_ENTITY_ABSTRACT_EDITABLE_CACHE_TABLE_MODEL_H

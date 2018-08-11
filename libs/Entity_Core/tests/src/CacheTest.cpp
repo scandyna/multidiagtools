@@ -182,6 +182,86 @@ void CacheTest::editableAppendRecordFromBackendSignalTest()
   appendRecordFromBackendSignalTest<EditPersonCache>();
 }
 
+void CacheTest::readOnlySetDataFromBackendTest()
+{
+  PersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+
+  QCOMPARE(cache.rowCount(), 3);
+  QCOMPARE(cache.data(0, 1), QVariant("A"));
+  QCOMPARE(cache.data(1, 1), QVariant("B"));
+  QCOMPARE(cache.data(2, 1), QVariant("C"));
+
+  cache.setDataFromBackend(0, 1, "eA");
+  QCOMPARE(cache.rowCount(), 3);
+  QCOMPARE(cache.data(0, 1), QVariant("eA"));
+  QCOMPARE(cache.data(1, 1), QVariant("B"));
+  QCOMPARE(cache.data(2, 1), QVariant("C"));
+}
+
+void CacheTest::editableSetDataFromBackendTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+
+  QCOMPARE(cache.rowCount(), 3);
+  QCOMPARE(cache.data(0, 1), QVariant("A"));
+  QCOMPARE(cache.data(1, 1), QVariant("B"));
+  QCOMPARE(cache.data(2, 1), QVariant("C"));
+  QCOMPARE(cache.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(2), TableCacheOperation::None);
+
+  cache.setDataFromBackend(0, 1, "eA");
+  QCOMPARE(cache.rowCount(), 3);
+  QCOMPARE(cache.data(0, 1), QVariant("eA"));
+  QCOMPARE(cache.data(1, 1), QVariant("B"));
+  QCOMPARE(cache.data(2, 1), QVariant("C"));
+  QCOMPARE(cache.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(2), TableCacheOperation::None);
+}
+
+void CacheTest::readOnlySetDataFromBackendSignalTest()
+{
+  PersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+
+  QVariantList arguments;
+  QSignalSpy dataAtRowsChangedSpy(&cache, &PersonCache::dataAtRowsChanged);
+  QVERIFY(dataAtRowsChangedSpy.isValid());
+
+  QCOMPARE(dataAtRowsChangedSpy.count(), 0);
+  cache.setDataFromBackend(1, 1, "eB");
+  QCOMPARE(dataAtRowsChangedSpy.count(), 1);
+  arguments = dataAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+}
+
+void CacheTest::editableSetDataFromBackendSignalTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+
+  QVariantList arguments;
+  QSignalSpy dataAtRowsChangedSpy(&cache, &EditPersonCache::dataAtRowsChanged);
+  QVERIFY(dataAtRowsChangedSpy.isValid());
+
+  QCOMPARE(dataAtRowsChangedSpy.count(), 0);
+  cache.setDataFromBackend(1, 1, "eB");
+  QCOMPARE(dataAtRowsChangedSpy.count(), 1);
+  arguments = dataAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+}
+
 void CacheTest::setDataTest()
 {
   EditPersonCache epc;
@@ -215,11 +295,19 @@ void CacheTest::setDataSignalTest()
   QVariantList arguments;
   QSignalSpy dataAtRowsChangedSpy(&epc, &EditPersonCache::dataAtRowsChanged);
   QVERIFY(dataAtRowsChangedSpy.isValid());
+  QSignalSpy operationAtRowsChangedSpy(&epc, &EditPersonCache::operationAtRowsChanged);
+  QVERIFY(operationAtRowsChangedSpy.isValid());
 
   QCOMPARE(dataAtRowsChangedSpy.count(), 0);
+  QCOMPARE(operationAtRowsChangedSpy.count(), 0);
   epc.setData(1, 1, "eB");
   QCOMPARE(dataAtRowsChangedSpy.count(), 1);
   arguments = dataAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+  QCOMPARE(operationAtRowsChangedSpy.count(), 1);
+  arguments = operationAtRowsChangedSpy.takeFirst();
   QCOMPARE(arguments.count(), 2);
   QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
   QCOMPARE(arguments.at(1), QVariant(1)); // lastRow

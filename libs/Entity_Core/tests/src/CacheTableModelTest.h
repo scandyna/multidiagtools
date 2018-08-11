@@ -32,13 +32,31 @@ class CacheTableModelTest : public QObject
 //   void defaultHeaderTest();
 //   void customHeaderTest();
 
+  void initTestCase();
+
   void readOnlyHorizontalHeaderTest();
+  void editableHorizontalHeaderTest();
+
   void readOnlyNoCacheGetTest();
+  void editableNoCacheGetTest();
+
   void readOnlyFlagsTest();
+  void editableFlagsTest();
+
   void readOnlySetCacheTest();
+  void editableSetCacheTest();
+
   void readOnlySetCacheSignalTest();
+  void editableSetCacheSignalTest();
+
+  void setDataTest();
+  void setDataSignalTest();
+
+  void setDataFromCacheTest();
+  void setDataFromCacheSignalTest();
 
   void readOnlyQtModelTest();
+  void editableQtModelTest();
 };
 
 #endif // #ifndef TEST_MAIN_H

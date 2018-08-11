@@ -247,6 +247,10 @@ namespace Mdt{ namespace Entity{
      */
     void cacheReset();
 
+    /*! \brief This signal is emitted after some data has been set to some rows
+     */
+    void dataAtRowsChanged(int firstRow, int lastRow);
+
    protected:
 
     /*! \brief Set last error

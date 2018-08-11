@@ -57,6 +57,7 @@ void AbstractReadOnlyCache::setDataFromBackend(int row, int column, const QVaria
   Q_ASSERT(column < columnCount());
 
   mCache[row].setValue(column, data);
+  emit dataAtRowsChanged(row, row);
 }
 
 void AbstractReadOnlyCache::appendRecordFromBackend(const VariantRecord& record)
