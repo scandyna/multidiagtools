@@ -22,6 +22,7 @@
 #define MDT_ENTITY_ABSTRACT_READ_ONLY_CACHE_H
 
 #include "Mdt/Error.h"
+#include "Mdt/IndexRange/RowRange.h"
 #include "MdtEntity_CoreExport.h"
 #include <QObject>
 #include <QVariant>
@@ -221,6 +222,15 @@ namespace Mdt{ namespace Entity{
       return mLastError;
     }
 
+    /*! \brief Insert \a count copies of \a record before \a row to this cache
+     *
+     * \pre \a row must be >= 0 and <= rowCount()
+     * \pre \a count must be >= 1
+     * \pre rowCount() + \a count must be <= cachedRowCountLimit()
+     * \pre \a record 's columnt count must be the same as columnCount()
+     */
+    void insertRecordsFromBackend(int row, int count, const VariantRecord & record);
+
    public slots:
 
     /*! \brief Set data comming from backend at \a row and \a column to this cache
@@ -250,6 +260,14 @@ namespace Mdt{ namespace Entity{
     /*! \brief This signal is emitted after some data has been set to some rows
      */
     void dataAtRowsChanged(int firstRow, int lastRow);
+
+    /*! \brief This signal is emitted just before rows are inserted to this cache
+     */
+    void rowsAboutToBeInserted(int firstRow, int lastRow);
+
+    /*! \brief This signal is emitted after rows have been inserted to this cache
+     */
+    void rowsInserted();
 
    protected:
 
@@ -294,6 +312,8 @@ namespace Mdt{ namespace Entity{
      */
     virtual bool fetchRecords(int count) = 0;
 
+   private:
+
     /*! \brief Begin a cache reset
      */
     void beginResetCache();
@@ -302,11 +322,20 @@ namespace Mdt{ namespace Entity{
      */
     void endResetCache();
 
-   private:
+    /*! \brief Begins a row insertion operation
+     *
+     * \pre \a rows must be a valid range
+     */
+    void beginInsertRows(Mdt::IndexRange::RowRange rows);
+
+    /*! \brief End a row insertion operation
+     */
+    void endInsertRows();
 
     std::vector<VariantRecord> mCache;
     int mCachedRowCountLimit = 5000;
     Mdt::Error mLastError;
+    bool mResettingCache = false;
   };
 
 }} // namespace Mdt{ namespace Entity{

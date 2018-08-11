@@ -19,8 +19,10 @@
  **
  ****************************************************************************/
 #include "AbstractEditableCache.h"
+#include "Mdt/IndexRange/RowRange.h"
 
 using Mdt::Container::TableCacheOperation;
+using Mdt::IndexRange::RowRange;
 
 namespace Mdt{ namespace Entity{
 
@@ -34,6 +36,15 @@ void AbstractEditableCache::setData(int row, int column, const QVariant& data)
   mOperationMap.setOperationAtRow(row, TableCacheOperation::Update);
   setDataFromBackend(row, column, data);
   emit operationAtRowsChanged(row, row);
+}
+
+void AbstractEditableCache::insertRecords(int row, int count, const VariantRecord & record)
+{
+  insertRecordsFromBackend(row, count, record);
+  RowRange rows;
+  rows.setFirstRow(row);
+  rows.setRowCount(count);
+  emit operationAtRowsChanged(rows.firstRow(), rows.lastRow());
 }
 
 }} // namespace Mdt{ namespace Entity{

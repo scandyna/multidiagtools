@@ -38,12 +38,6 @@ class CacheTest : public QObject
   void readOnlyFetchAllSignalTest();
   void editableFetchAllSignalTest();
 
-  void readOnlyAppendRecordFromBackendTest();
-  void editableAppendRecordFromBackendTest();
-
-  void readOnlyAppendRecordFromBackendSignalTest();
-  void editableAppendRecordFromBackendSignalTest();
-
   void readOnlySetDataFromBackendTest();
   void editableSetDataFromBackendTest();
 
@@ -52,6 +46,21 @@ class CacheTest : public QObject
 
   void setDataTest();
   void setDataSignalTest();
+
+  void readOnlyInsertRecordsFromBackendTest();
+  void editableInsertRecordsFromBackendTest();
+
+  void readOnlyInsertRecordsFromBackendSignalTest();
+  void editableInsertRecordsFromBackendSignalTest();
+
+  void readOnlyAppendRecordFromBackendTest();
+  void editableAppendRecordFromBackendTest();
+
+  void readOnlyAppendRecordFromBackendSignalTest();
+  void editableAppendRecordFromBackendSignalTest();
+
+  void insertRecordsTest();
+  void insertRecordsSignalTest();
 };
 
 #endif // #ifndef TEST_MAIN_H

@@ -19,6 +19,10 @@
  **
  ****************************************************************************/
 #include "AbstractReadOnlyCache.h"
+#include "Mdt/Container/StlContainer.h"
+
+using namespace Mdt::Container;
+using Mdt::IndexRange::RowRange;
 
 namespace Mdt{ namespace Entity{
 
@@ -49,6 +53,22 @@ bool AbstractReadOnlyCache::fetchAll()
   return ok;
 }
 
+void AbstractReadOnlyCache::insertRecordsFromBackend(int row, int count, const VariantRecord& record)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row <= rowCount());
+  Q_ASSERT(count >= 1);
+  Q_ASSERT( (rowCount()+count) <= cachedRowCountLimit() );
+  Q_ASSERT(record.columnCount() == columnCount());
+
+  RowRange rows;
+  rows.setFirstRow(row);
+  rows.setRowCount(count);
+  beginInsertRows(rows);
+  insertToContainer(mCache, row, count, record);
+  endInsertRows();
+}
+
 void AbstractReadOnlyCache::setDataFromBackend(int row, int column, const QVariant& data)
 {
   Q_ASSERT(row >= 0);
@@ -65,7 +85,7 @@ void AbstractReadOnlyCache::appendRecordFromBackend(const VariantRecord& record)
   Q_ASSERT(rowCount() < cachedRowCountLimit());
   Q_ASSERT(record.columnCount() == columnCount());
 
-  mCache.push_back(record);
+  insertRecordsFromBackend(rowCount(), 1, record);
 }
 
 void AbstractReadOnlyCache::setLastError(const Error& error)
@@ -83,12 +103,32 @@ void AbstractReadOnlyCache::setLastError(const Error& error)
 
 void AbstractReadOnlyCache::beginResetCache()
 {
+  mResettingCache = true;
   emit cacheAboutToBeReset();
 }
 
 void AbstractReadOnlyCache::endResetCache()
 {
+  mResettingCache = false;
   emit cacheReset();
+}
+
+void AbstractReadOnlyCache::beginInsertRows(RowRange rows)
+{
+  Q_ASSERT(rows.isValid());
+
+  if(mResettingCache){
+    return;
+  }
+  emit rowsAboutToBeInserted(rows.firstRow(), rows.lastRow());
+}
+
+void AbstractReadOnlyCache::endInsertRows()
+{
+  if(mResettingCache){
+    return;
+  }
+  emit rowsInserted();
 }
 
 }} // namespace Mdt{ namespace Entity{

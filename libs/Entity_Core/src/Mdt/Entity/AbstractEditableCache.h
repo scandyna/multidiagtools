@@ -87,6 +87,17 @@ namespace Mdt{ namespace Entity{
      */
     void setData(int row, int column, const QVariant & data);
 
+    /*! \brief Insert \a count copies of \a record before \a row to this cache
+     *
+     * The inserted records will also be marked as inserted.
+     *
+     * \pre \a row must be >= 0 and <= rowCount()
+     * \pre \a count must be >= 1
+     * \pre rowCount() + \a count must be <= cachedRowCountLimit()
+     * \pre \a record 's columnt count must be the same as columnCount()
+     */
+    void insertRecords(int row, int count, const VariantRecord & record);
+
    signals:
 
     /*! \brief This signal is emitted after some operation changed in this cache for some rows
