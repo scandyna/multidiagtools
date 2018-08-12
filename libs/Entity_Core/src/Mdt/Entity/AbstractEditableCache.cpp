@@ -41,10 +41,16 @@ void AbstractEditableCache::setData(int row, int column, const QVariant& data)
 void AbstractEditableCache::insertRecords(int row, int count, const VariantRecord & record)
 {
   insertRecordsFromBackend(row, count, record);
+  mOperationMap.insertRecords(row, count);
   RowRange rows;
   rows.setFirstRow(row);
   rows.setRowCount(count);
   emit operationAtRowsChanged(rows.firstRow(), rows.lastRow());
+}
+
+void AbstractEditableCache::appendRow()
+{
+  insertRecords(rowCount(), 1, VariantRecord(columnCount()));
 }
 
 }} // namespace Mdt{ namespace Entity{

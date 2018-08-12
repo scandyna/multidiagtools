@@ -320,6 +320,59 @@ void CacheTableModelTest::setDataFromCacheSignalTest()
   QCOMPARE(headerDataChangedSpy.count(), 0);
 }
 
+void CacheTableModelTest::insertRowsTest()
+{
+  EditableCacheTableModel model;
+
+  QCOMPARE(model.rowCount(), 0);
+  QVERIFY(!model.insertRows(0, 2));
+  QCOMPARE(model.rowCount(), 0);
+
+  EditPersonCache cache;
+  model.setCache(&cache);
+  QVERIFY(model.insertRows(0, 2));
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("*"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("*"));
+}
+
+void CacheTableModelTest::insertRowsSignalTest()
+{
+  EditableCacheTableModel model;
+  EditPersonCache cache;
+  model.setCache(&cache);
+  QVariantList arguments;
+  QSignalSpy rowsAboutToBeInsertedSpy(&model, &EditableCacheTableModel::rowsAboutToBeInserted);
+  QVERIFY(rowsAboutToBeInsertedSpy.isValid());
+  QSignalSpy rowsInsertedSpy(&model, &EditableCacheTableModel::rowsInserted);
+  QVERIFY(rowsAboutToBeInsertedSpy.isValid());
+  QSignalSpy headerDataChangedSpy(&model, &EditableCacheTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 0);
+  QCOMPARE(rowsInsertedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  QVERIFY(model.insertRows(0, 2));
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 1);
+  arguments = rowsAboutToBeInsertedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0));             // first
+  QCOMPARE(arguments.at(2), QVariant(1));             // last
+  QCOMPARE(rowsInsertedSpy.count(), 1);
+  arguments = rowsInsertedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0));             // first
+  QCOMPARE(arguments.at(2), QVariant(1));             // last
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(0)); // first
+  QCOMPARE(arguments.at(2), QVariant(1)); // last
+}
+
 void CacheTableModelTest::readOnlyQtModelTest()
 {
 

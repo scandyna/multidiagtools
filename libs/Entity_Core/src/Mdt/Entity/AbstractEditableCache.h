@@ -98,6 +98,12 @@ namespace Mdt{ namespace Entity{
      */
     void insertRecords(int row, int count, const VariantRecord & record);
 
+    /*! \brief Add a row to the end of this cache
+     *
+     * Will add a empty record to the end of this cache
+     */
+    void appendRow();
+
    signals:
 
     /*! \brief This signal is emitted after some operation changed in this cache for some rows

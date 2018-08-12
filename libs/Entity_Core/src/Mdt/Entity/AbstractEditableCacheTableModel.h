@@ -92,10 +92,18 @@ namespace Mdt{ namespace Entity{
      */
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
 
+    /*! \brief Insert \a count rows before \a row into the model
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row <= rowCount() )
+     * \pre \a count muste be >= 1
+     */
+    bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
+
    private slots:
 
     void onDataAtRowsChanged(int firstRow, int lastRow);
     void onOperationAtRowsChanged(int firstRow, int lastRow);
+    void onRowsAboutToBeInserted(int firstRow, int lastRow);
 
    private:
 
@@ -104,6 +112,8 @@ namespace Mdt{ namespace Entity{
     QMetaObject::Connection mCacheResetConnection;
     QMetaObject::Connection mDataChangedConnection;
     QMetaObject::Connection mOperationAtRowsChangedConnection;
+    QMetaObject::Connection mRowsAboutToBeInsertedConnection;
+    QMetaObject::Connection mRowsInsertedConnection;
   };
 
 }} // namespace Mdt{ namespace Entity{

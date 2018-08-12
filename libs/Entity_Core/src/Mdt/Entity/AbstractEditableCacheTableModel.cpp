@@ -49,6 +49,8 @@ void AbstractEditableCacheTableModel::setCache(AbstractEditableCache* cache)
   disconnect(mCacheResetConnection);
   disconnect(mDataChangedConnection);
   disconnect(mOperationAtRowsChangedConnection);
+  disconnect(mRowsAboutToBeInsertedConnection);
+  disconnect(mRowsInsertedConnection);
 
   mCache = cache;
 
@@ -58,6 +60,10 @@ void AbstractEditableCacheTableModel::setCache(AbstractEditableCache* cache)
     connect(mCache, &AbstractEditableCache::cacheReset, this, &AbstractEditableCacheTableModel::endResetModel);
   mDataChangedConnection =
     connect(mCache, &AbstractEditableCache::dataAtRowsChanged, this, &AbstractEditableCacheTableModel::onDataAtRowsChanged);
+  mRowsAboutToBeInsertedConnection =
+    connect(mCache, &AbstractEditableCache::rowsAboutToBeInserted, this, &AbstractEditableCacheTableModel::onRowsAboutToBeInserted);
+  mRowsInsertedConnection =
+    connect(mCache, &AbstractEditableCache::rowsInserted, this, &AbstractEditableCacheTableModel::endInsertRows);
   mOperationAtRowsChangedConnection =
     connect(mCache, &AbstractEditableCache::operationAtRowsChanged, this, &AbstractEditableCacheTableModel::onOperationAtRowsChanged);
 
@@ -152,6 +158,20 @@ bool AbstractEditableCacheTableModel::setData(const QModelIndex& index, const QV
   return true;
 }
 
+bool AbstractEditableCacheTableModel::insertRows(int row, int count, const QModelIndex& parent)
+{
+  if(parent.isValid()){
+    return false;
+  }
+  if(mCache.isNull()){
+    return false;
+  }
+
+  mCache->insertRecords(row, count, VariantRecord(columnCount()));
+
+  return true;
+}
+
 void AbstractEditableCacheTableModel::onDataAtRowsChanged(int firstRow, int lastRow)
 {
   Q_ASSERT(firstRow < rowCount());
@@ -173,6 +193,15 @@ void AbstractEditableCacheTableModel::onOperationAtRowsChanged(int firstRow, int
   Q_ASSERT(lastRow < rowCount());
 
   emit headerDataChanged(Qt::Vertical, firstRow, lastRow);
+}
+
+void AbstractEditableCacheTableModel::onRowsAboutToBeInserted(int firstRow, int lastRow)
+{
+  Q_ASSERT(firstRow >= 0);
+  Q_ASSERT(firstRow <= rowCount());
+  Q_ASSERT(lastRow >= 0);
+
+  beginInsertRows(QModelIndex(), firstRow, lastRow);
 }
 
 }} // namespace Mdt{ namespace Entity{

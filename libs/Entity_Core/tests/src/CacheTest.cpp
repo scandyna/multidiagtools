@@ -413,6 +413,8 @@ void CacheTest::insertRecordsTest()
   QCOMPARE(cache.rowCount(), 2);
   QCOMPARE(cache.data(0, 1), QVariant("New"));
   QCOMPARE(cache.data(1, 1), QVariant("New"));
+  QCOMPARE(cache.operationAtRow(0), TableCacheOperation::Insert);
+  QCOMPARE(cache.operationAtRow(1), TableCacheOperation::Insert);
   /*
    * Near full cache
    */
@@ -423,6 +425,9 @@ void CacheTest::insertRecordsTest()
   QCOMPARE(cache.data(0, 1), QVariant("New"));
   QCOMPARE(cache.data(1, 1), QVariant("New"));
   QCOMPARE(cache.data(2, 1), QVariant("Last"));
+  QCOMPARE(cache.operationAtRow(0), TableCacheOperation::Insert);
+  QCOMPARE(cache.operationAtRow(1), TableCacheOperation::Insert);
+  QCOMPARE(cache.operationAtRow(2), TableCacheOperation::Insert);
 }
 
 void CacheTest::insertRecordsSignalTest()
