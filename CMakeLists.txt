@@ -21,9 +21,6 @@ set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-
 # Specify where to find Qt
 # If Qt5 is not installed on a system known location,
 # or you want to use a specific version,
@@ -38,6 +35,10 @@ message("CMAKE_HOST_SYSTEM_NAME: ${CMAKE_HOST_SYSTEM_NAME}")
 message("CMAKE_SYSTEM_NAME: ${CMAKE_SYSTEM_NAME}")
 message("CMAKE_HOST_SYSTEM_PROCESSOR: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 message("CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
+
+find_package(Qt5 COMPONENTS Core)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
 
 # On Windows, RPATH do not exist
 # To be able to run tests, we have to put all binaries in the same directory
@@ -64,7 +65,7 @@ set(CMAKE_CXX_FLAGS "${MDT_CXX_FLAGS_TO_PREPEND} ${CMAKE_CXX_FLAGS} ${MDT_CXX_FL
 
 # On UNIX, we allways add debug symbols (will be stripped and put into separate .dbg files)
 if(UNIX)
-  if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+  if("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     add_compile_options(-g)
   endif()
 endif(UNIX)
