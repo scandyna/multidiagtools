@@ -22,8 +22,8 @@
 #define MDT_ENTITY_ABSTRACT_EDITABLE_CACHE_TABLE_MODEL_H
 
 #include "AbstractEditableCache.h"
+#include "AbstractCacheTableModel.h"
 #include "MdtEntity_CoreExport.h"
-#include <QAbstractTableModel>
 #include <QPointer>
 #include <QMetaObject>
 
@@ -31,11 +31,11 @@ namespace Mdt{ namespace Entity{
 
   /*! \brief Base class to create table models using AbstractEditableCache
    */
-  class AbstractEditableCacheTableModel : public QAbstractTableModel
+  class MDT_ENTITY_CORE_EXPORT AbstractEditableCacheTableModel : public AbstractCacheTableModel
   {
    Q_OBJECT
 
-    using ParentClass = QAbstractTableModel;
+    using ParentClass = AbstractCacheTableModel;
 
    public:
 
@@ -101,19 +101,12 @@ namespace Mdt{ namespace Entity{
 
    private slots:
 
-    void onDataAtRowsChanged(int firstRow, int lastRow);
     void onOperationAtRowsChanged(int firstRow, int lastRow);
-    void onRowsAboutToBeInserted(int firstRow, int lastRow);
 
    private:
 
     QPointer<AbstractEditableCache> mCache;
-    QMetaObject::Connection mCacheAboutToBeResetConnection;
-    QMetaObject::Connection mCacheResetConnection;
-    QMetaObject::Connection mDataChangedConnection;
     QMetaObject::Connection mOperationAtRowsChangedConnection;
-    QMetaObject::Connection mRowsAboutToBeInsertedConnection;
-    QMetaObject::Connection mRowsInsertedConnection;
   };
 
 }} // namespace Mdt{ namespace Entity{

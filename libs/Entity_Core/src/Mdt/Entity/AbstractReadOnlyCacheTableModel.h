@@ -22,8 +22,8 @@
 #define MDT_ENTITY_ABSTRACT_READ_ONLY_CACHE_TABLE_MODEL_H
 
 #include "AbstractReadOnlyCache.h"
+#include "AbstractCacheTableModel.h"
 #include "MdtEntity_CoreExport.h"
-#include <QAbstractTableModel>
 #include <QPointer>
 #include <QMetaObject>
 
@@ -31,9 +31,11 @@ namespace Mdt{ namespace Entity{
 
   /*! \brief Base class to create table models using AbstractReadOnlyCache
    */
-  class MDT_ENTITY_CORE_EXPORT AbstractReadOnlyCacheTableModel : public QAbstractTableModel
+  class MDT_ENTITY_CORE_EXPORT AbstractReadOnlyCacheTableModel : public AbstractCacheTableModel
   {
    Q_OBJECT
+
+    using ParentClass = AbstractCacheTableModel;
 
    public:
 
@@ -82,28 +84,9 @@ namespace Mdt{ namespace Entity{
      */
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
-//    protected:
-
-//     /*! \brief Get the display role data for the horizontal header
-//      *
-//      * This method is called by headerData() if all preconditions ar satisfied.
-//      *
-//      * This default implementation returns the implementation from QAbstractTableModel .
-//      *
-//      * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
-//      */
-//     virtual QVariant horizontalHeaderDisplayRoleData(int column) const;
-
-   private slots:
-
-    void onDataAtRowsChanged(int firstRow, int lastRow);
-
    private:
 
     QPointer<AbstractReadOnlyCache> mCache;
-    QMetaObject::Connection mCacheAboutToBeResetConnection;
-    QMetaObject::Connection mCacheResetConnection;
-    QMetaObject::Connection mDataChangedConnection;
   };
 
 }} // namespace Mdt{ namespace Entity{

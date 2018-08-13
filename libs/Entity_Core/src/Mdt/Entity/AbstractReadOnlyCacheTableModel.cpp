@@ -23,7 +23,7 @@
 namespace Mdt{ namespace Entity{
 
 AbstractReadOnlyCacheTableModel::AbstractReadOnlyCacheTableModel(QObject* parent)
- : QAbstractTableModel(parent)
+ : ParentClass(parent)
 {
 }
 
@@ -33,18 +33,11 @@ void AbstractReadOnlyCacheTableModel::setCache(AbstractReadOnlyCache* cache)
 
   beginResetModel();
 
-  disconnect(mCacheAboutToBeResetConnection);
-  disconnect(mCacheResetConnection);
-  disconnect(mDataChangedConnection);
+  disconnectCommonSignalsAndSlots();
 
   mCache = cache;
 
-  mCacheAboutToBeResetConnection =
-    connect(mCache, &AbstractReadOnlyCache::cacheAboutToBeReset, this, &AbstractReadOnlyCacheTableModel::beginResetModel);
-  mCacheResetConnection =
-    connect(mCache, &AbstractReadOnlyCache::cacheReset, this, &AbstractReadOnlyCacheTableModel::endResetModel);
-  mDataChangedConnection =
-    connect(mCache, &AbstractReadOnlyCache::dataAtRowsChanged, this, &AbstractReadOnlyCacheTableModel::onDataAtRowsChanged);
+  connectCommonSignalsAndSlots(mCache, this);
 
   endResetModel();
 }
@@ -99,24 +92,6 @@ QVariant AbstractReadOnlyCacheTableModel::data(const QModelIndex& index, int rol
   }
 
   return QVariant();
-}
-
-// QVariant AbstractReadOnlyCacheTableModel::horizontalHeaderDisplayRoleData(int column) const
-// {
-//   return QAbstractTableModel::headerData(column, Qt::Horizontal, Qt::DisplayRole);
-// }
-
-void AbstractReadOnlyCacheTableModel::onDataAtRowsChanged(int firstRow, int lastRow)
-{
-  Q_ASSERT(firstRow < rowCount());
-  Q_ASSERT(lastRow < rowCount());
-
-  const auto topLeft = index(firstRow, 0);
-  const auto bottomRight = index(lastRow, columnCount()-1);
-  Q_ASSERT(topLeft.isValid());
-  Q_ASSERT(bottomRight.isValid());
-
-  emit dataChanged(topLeft, bottomRight);
 }
 
 }} // namespace Mdt{ namespace Entity{

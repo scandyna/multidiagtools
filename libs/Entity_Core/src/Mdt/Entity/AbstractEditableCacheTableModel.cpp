@@ -45,25 +45,12 @@ void AbstractEditableCacheTableModel::setCache(AbstractEditableCache* cache)
 
   beginResetModel();
 
-  disconnect(mCacheAboutToBeResetConnection);
-  disconnect(mCacheResetConnection);
-  disconnect(mDataChangedConnection);
+  disconnectCommonSignalsAndSlots();
   disconnect(mOperationAtRowsChangedConnection);
-  disconnect(mRowsAboutToBeInsertedConnection);
-  disconnect(mRowsInsertedConnection);
 
   mCache = cache;
 
-  mCacheAboutToBeResetConnection =
-    connect(mCache, &AbstractEditableCache::cacheAboutToBeReset, this, &AbstractEditableCacheTableModel::beginResetModel);
-  mCacheResetConnection =
-    connect(mCache, &AbstractEditableCache::cacheReset, this, &AbstractEditableCacheTableModel::endResetModel);
-  mDataChangedConnection =
-    connect(mCache, &AbstractEditableCache::dataAtRowsChanged, this, &AbstractEditableCacheTableModel::onDataAtRowsChanged);
-  mRowsAboutToBeInsertedConnection =
-    connect(mCache, &AbstractEditableCache::rowsAboutToBeInserted, this, &AbstractEditableCacheTableModel::onRowsAboutToBeInserted);
-  mRowsInsertedConnection =
-    connect(mCache, &AbstractEditableCache::rowsInserted, this, &AbstractEditableCacheTableModel::endInsertRows);
+  connectCommonSignalsAndSlots(mCache, this);
   mOperationAtRowsChangedConnection =
     connect(mCache, &AbstractEditableCache::operationAtRowsChanged, this, &AbstractEditableCacheTableModel::onOperationAtRowsChanged);
 
@@ -172,19 +159,6 @@ bool AbstractEditableCacheTableModel::insertRows(int row, int count, const QMode
   return true;
 }
 
-void AbstractEditableCacheTableModel::onDataAtRowsChanged(int firstRow, int lastRow)
-{
-  Q_ASSERT(firstRow < rowCount());
-  Q_ASSERT(lastRow < rowCount());
-
-  const auto topLeft = index(firstRow, 0);
-  const auto bottomRight = index(lastRow, columnCount()-1);
-  Q_ASSERT(topLeft.isValid());
-  Q_ASSERT(bottomRight.isValid());
-
-  emit dataChanged(topLeft, bottomRight);
-}
-
 void AbstractEditableCacheTableModel::onOperationAtRowsChanged(int firstRow, int lastRow)
 {
   Q_ASSERT(firstRow >= 0);
@@ -193,15 +167,6 @@ void AbstractEditableCacheTableModel::onOperationAtRowsChanged(int firstRow, int
   Q_ASSERT(lastRow < rowCount());
 
   emit headerDataChanged(Qt::Vertical, firstRow, lastRow);
-}
-
-void AbstractEditableCacheTableModel::onRowsAboutToBeInserted(int firstRow, int lastRow)
-{
-  Q_ASSERT(firstRow >= 0);
-  Q_ASSERT(firstRow <= rowCount());
-  Q_ASSERT(lastRow >= 0);
-
-  beginInsertRows(QModelIndex(), firstRow, lastRow);
 }
 
 }} // namespace Mdt{ namespace Entity{

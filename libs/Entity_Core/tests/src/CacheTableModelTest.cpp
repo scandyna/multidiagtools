@@ -320,6 +320,69 @@ void CacheTableModelTest::setDataFromCacheSignalTest()
   QCOMPARE(headerDataChangedSpy.count(), 0);
 }
 
+template<typename Cache, typename Model>
+void insertRowsFromCacheTest()
+{
+  Cache cache;
+  Model model;
+  model.setCache(&cache);
+
+  QCOMPARE(model.rowCount(), 0);
+  cache.insertRecordsFromBackend(0, 2, VariantRecord(2));
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+}
+
+void CacheTableModelTest::readOnlyInsertRowsFromCacheTest()
+{
+  insertRowsFromCacheTest<PersonCache, ReadOnlyCacheTableModel>();
+}
+
+void CacheTableModelTest::editableInsertRowsFromCacheTest()
+{
+  insertRowsFromCacheTest<EditPersonCache, EditableCacheTableModel>();
+}
+
+template<typename Cache, typename Model>
+void insertRowsFromCacheSignalTest()
+{
+  Model model;
+  Cache cache;
+  model.setCache(&cache);
+  QVariantList arguments;
+  QSignalSpy rowsAboutToBeInsertedSpy(&model, &EditableCacheTableModel::rowsAboutToBeInserted);
+  QVERIFY(rowsAboutToBeInsertedSpy.isValid());
+  QSignalSpy rowsInsertedSpy(&model, &EditableCacheTableModel::rowsInserted);
+  QVERIFY(rowsAboutToBeInsertedSpy.isValid());
+
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 0);
+  QCOMPARE(rowsInsertedSpy.count(), 0);
+  cache.insertRecordsFromBackend(0, 2, VariantRecord(2));
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 1);
+  arguments = rowsAboutToBeInsertedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0));             // first
+  QCOMPARE(arguments.at(2), QVariant(1));             // last
+  QCOMPARE(rowsInsertedSpy.count(), 1);
+  arguments = rowsInsertedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0));             // first
+  QCOMPARE(arguments.at(2), QVariant(1));             // last
+}
+
+void CacheTableModelTest::readOnlyInsertRowsFromCacheSignalTest()
+{
+  insertRowsFromCacheSignalTest<PersonCache, ReadOnlyCacheTableModel>();
+}
+
+void CacheTableModelTest::editableInsertRowsFromCacheSignalTest()
+{
+  insertRowsFromCacheSignalTest<EditPersonCache, EditableCacheTableModel>();
+}
+
 void CacheTableModelTest::insertRowsTest()
 {
   EditableCacheTableModel model;
