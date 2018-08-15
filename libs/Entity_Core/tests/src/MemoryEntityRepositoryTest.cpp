@@ -99,6 +99,7 @@ using namespace Mdt::Entity;
 void MemoryEntityRepositoryTest::genericUsageTest()
 {
   auto repository = std::make_shared<GenericTestPersonRepository>();
+  QCOMPARE(repository->storageCount(), 0);
 
   PersonId personId(1);
   PersonData personData;
@@ -114,6 +115,7 @@ void MemoryEntityRepositoryTest::genericUsageTest()
   QVERIFY(personIdExp);
   personId = *personIdExp;
   QCOMPARE(personId.value(), 1);
+  QCOMPARE(repository->storageCount(), 1);
 
   personDataExp = repository->getById(personId);
   QVERIFY(personDataExp);
@@ -127,6 +129,7 @@ void MemoryEntityRepositoryTest::entityImplClassTest()
   auto testRepository = std::make_shared<TestPersonRepository>();
   // We have to check check polymorphic calls
   std::shared_ptr<PersonRepository> repository = testRepository;
+  QCOMPARE(testRepository->storageCount(), 0);
 
   PersonId personId(1);
   PersonData personData;
@@ -142,6 +145,7 @@ void MemoryEntityRepositoryTest::entityImplClassTest()
   QVERIFY(personIdExp);
   personId = *personIdExp;
   QCOMPARE(personId.value(), 1);
+  QCOMPARE(testRepository->storageCount(), 1);
 
   personDataExp = repository->getById(personId);
   QVERIFY(personDataExp);

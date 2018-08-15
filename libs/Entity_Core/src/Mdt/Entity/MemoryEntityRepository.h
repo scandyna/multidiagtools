@@ -85,7 +85,8 @@ namespace Mdt{ namespace Entity{
         mTable.insert( id.value(), recordCpy );
       }else{
         if(mTable.contains(id.value())){
-          const auto msg = tr("ljdjlkdfj");
+          const auto msg = tr("A record with id '%1' allready exists.")
+                           .arg(id.value());
           auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
           return error;
         }
@@ -121,6 +122,13 @@ namespace Mdt{ namespace Entity{
     Mdt::Expected<EntityData> getByPrimaryKey(const PrimaryKeyRecord & pk) const override
     {
       Q_ASSERT(!pk.isNull());
+    }
+
+    /*! \brief Get count of items in the memory storage
+     */
+    int storageCount() const
+    {
+      return mTable.count();
     }
 
    private:
