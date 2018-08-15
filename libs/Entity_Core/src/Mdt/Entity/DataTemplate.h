@@ -98,7 +98,7 @@ namespace Mdt{ namespace Entity{
      */
     static const entity_def_type def()
     {
-      return entity_def_type{};
+      return Entity::def();
     }
 
     /*! \brief Get the field index of \a FieldDef

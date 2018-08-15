@@ -33,6 +33,15 @@ namespace Mdt{ namespace Entity{
     using def_type = EntityDef;
     using data_struct_type = EntityDataStruct;
 
+    constexpr EntityTemplate() noexcept
+    {
+    }
+
+    constexpr EntityTemplate(const EntityTemplate &) noexcept = default;
+    constexpr EntityTemplate & operator=(const EntityTemplate &) noexcept = default;
+    constexpr EntityTemplate(EntityTemplate &&) noexcept = default;
+    constexpr EntityTemplate & operator=(EntityTemplate &&) noexcept = default;
+
     /*! \brief Get entity definition
      */
     static const def_type def()
