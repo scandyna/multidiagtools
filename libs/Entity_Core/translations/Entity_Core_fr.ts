@@ -12,4 +12,11 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>Mdt::Entity::MemoryEntityRepository</name>
+    <message>
+        <source>ljdjlkdfj</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
