@@ -30,6 +30,8 @@ class ValueTest : public TestBase
  private slots:
 
   void valueTest();
+  void setValueTest();
+  void uniqueIdValueTest();
   void isNullUniqueIdTest();
 };
 

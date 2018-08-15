@@ -22,6 +22,7 @@
 #include "Mdt/Entity/Value.h"
 #include "Mdt/Entity/Def.h"
 #include "Mdt/Entity/IntegralUniqueIdTemplate.h"
+#include "Mdt/Entity/DataTemplate.h"
 
 using namespace Mdt::Entity;
 
@@ -50,6 +51,10 @@ MDT_ENTITY_DEF(
   (description, FieldFlag::IsRequired, FieldMaxLength(250)),
   (qty)
 )
+
+class ArticleData : public DataTemplate<ArticleEntity>
+{
+};
 
 struct ArticleTypeDataStruct
 {
@@ -80,6 +85,47 @@ void ValueTest::valueTest()
   QCOMPARE(id, 15);
   description = value<ArticleDataStruct, ArticleDef::descriptionField>(ads);
   QCOMPARE(description, QString("DES 15"));
+}
+
+void ValueTest::setValueTest()
+{
+  ArticleDataStruct ads;
+
+  ads.id = 3;
+  ads.description = "DES 3";
+  ads.qty = 15;
+
+  setValue<ArticleDataStruct, ArticleDef::idField>(ads, 7);
+  QCOMPARE(ads.id, 7);
+  QCOMPARE(ads.description, QString("DES 3"));
+  QCOMPARE(ads.qty, 15);
+
+  setValue<ArticleDataStruct, ArticleDef::descriptionField>(ads, "DES 7");
+  QCOMPARE(ads.id, 7);
+  QCOMPARE(ads.description, QString("DES 7"));
+  QCOMPARE(ads.qty, 15);
+
+  setValue<ArticleDataStruct, ArticleDef::qtyField>(ads, 25);
+  QCOMPARE(ads.id, 7);
+  QCOMPARE(ads.description, QString("DES 7"));
+  QCOMPARE(ads.qty, 25);
+}
+
+void ValueTest::uniqueIdValueTest()
+{
+  ArticleData article;
+
+  article.dataStruct().id = 2;
+  article.dataStruct().description = "DESC 2";
+  article.dataStruct().qty = 11;
+
+  const auto id = uniqueIdValue<ArticleData, ArticleId>(article);
+  QCOMPARE(id.value(), 2);
+
+  setUniqueIdValue<ArticleData, ArticleId>(article, ArticleId(5));
+  QCOMPARE(article.constDataStruct().id, 5);
+  QCOMPARE(article.constDataStruct().description, QString("DESC 2"));
+  QCOMPARE(article.constDataStruct().qty, 11);
 }
 
 void ValueTest::isNullUniqueIdTest()
