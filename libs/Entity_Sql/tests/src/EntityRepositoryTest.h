@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,40 +18,29 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ENTITY_CORE_TEST_BASE_H
-#define MDT_ENTITY_CORE_TEST_BASE_H
+#ifndef TEST_MAIN_H
+#define TEST_MAIN_H
 
-#include "Mdt/CoreApplication.h"
-#include <QObject>
-#include <QByteArray>
-#include <QString>
-#include <QStringList>
-#include <QVariant>
-#include <QTemporaryFile>
-#include <QTemporaryDir>
-#include <QSqlDatabase>
-#include <QtTest/QtTest>
-#include <Qt>
-#include <initializer_list>
+#include "TestBase.h"
 
-
-class TestBase : public QObject
+class EntityRepositoryTest : public TestBase
 {
  Q_OBJECT
 
- protected:
+ private slots:
 
-  bool initDatabaseSqlite();
+  void initTestCase();
+  void cleanupTestCase();
 
-  QSqlDatabase database() const
-  {
-    return mDatabase;
-  }
+  void genericUsageTest();
+  void entityImplClassTest();
+
+  void addWithNullIdTest();
 
  private:
 
-  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase mDatabase;
+  bool createDatabaseSchema();
+  bool cleanupPersonTable();
 };
 
-#endif // #ifndef MDT_ENTITY_CORE_TEST_BASE_H
+#endif // #ifnef TEST_MAIN_H

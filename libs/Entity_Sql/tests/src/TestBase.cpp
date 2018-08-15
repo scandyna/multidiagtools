@@ -24,4 +24,29 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
+#include <QSqlQuery>
+#include <QSqlError>
 #include <QDebug>
+
+bool TestBase::initDatabaseSqlite()
+{
+  // Get database instance
+  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  if(!mDatabase.isValid()){
+    qWarning() << "QSQLITE driver is not available";
+    return false;
+  }
+  // Create a database
+  if(!mTempFile.open()){
+    qWarning() << "Could not open file " << mTempFile.fileName();
+    return false;
+  }
+  mTempFile.close();
+  mDatabase.setDatabaseName(mTempFile.fileName());
+  if(!mDatabase.open()){
+    qWarning() << "Could not open database, error: " << mDatabase.lastError();
+    return false;
+  }
+
+  return true;
+}

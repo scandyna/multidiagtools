@@ -8,6 +8,8 @@ set(SOURCE_FILES
   Mdt/Entity/SqlTable.cpp
   Mdt/Entity/SqlSelectStatement.cpp
   Mdt/Entity/SqlData.cpp
+  Mdt/Entity/SqlEntityRepositoryImpl.cpp
+  Mdt/Entity/SqlEntityRepository.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
@@ -26,7 +28,7 @@ mdt_add_library(
   NAME Entity_Sql
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Entity_Core Sql_Core Qt5::Core
+  LINK_DEPENDENCIES Entity_Core QueryExpression_Sql Sql_Core Qt5::Core
 )
 target_compile_definitions(Entity_Sql PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 
