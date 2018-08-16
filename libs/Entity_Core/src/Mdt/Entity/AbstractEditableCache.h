@@ -24,6 +24,7 @@
 #include "AbstractReadOnlyCache.h"
 #include "Mdt/Container/TableCacheOperation.h"
 #include "Mdt/Container/TableCacheOperationMap.h"
+#include "Mdt/Container/RowList.h"
 #include "MdtEntity_CoreExport.h"
 
 namespace Mdt{ namespace Entity{
@@ -56,12 +57,15 @@ namespace Mdt{ namespace Entity{
    *  private:
    *
    *   bool fetchRecords(int count) override;
+   *   bool addRecordToBackend(const VariantRecord & record) override;
    * };
    * \endcode
    */
   class MDT_ENTITY_CORE_EXPORT AbstractEditableCache : public AbstractReadOnlyCache
   {
    Q_OBJECT
+
+    using ParentClass = AbstractReadOnlyCache;
 
    public:
 
@@ -87,6 +91,13 @@ namespace Mdt{ namespace Entity{
      */
     void setData(int row, int column, const QVariant & data);
 
+    /*! \brief Set record comming from backend at \a row to this cache
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     * \pre \a record 's columnt count must be the same as columnCount()
+     */
+    void setRecordFromBackend(int row, const VariantRecord & record) override;
+
     /*! \brief Insert \a count copies of \a record before \a row to this cache
      *
      * The inserted records will also be marked as inserted.
@@ -104,6 +115,12 @@ namespace Mdt{ namespace Entity{
      */
     void appendRow();
 
+    /*! \brief Submit changes
+     *
+     * Will submit changes done in the cache to the backend.
+     */
+    bool submitChanges();
+
    signals:
 
     /*! \brief This signal is emitted after some operation changed in this cache for some rows
@@ -112,7 +129,47 @@ namespace Mdt{ namespace Entity{
      */
     void operationAtRowsChanged(int firstRow, int lastRow);
 
+   protected:
+
+//     /*! \brief Add \a record to the backend
+//      *
+//      * \pre \a record 's columnt count must be the same as columnCount()
+//      */
+//     virtual bool addRecordToBackend(const VariantRecord & record) = 0;
+
+    /*! \brief Add the record at \a row to the backend
+     *
+     * This method must be implemented in the concrete class.
+     *
+     * Once the record has been successfully processed from the backend,
+     *  setRecordFromBackend() should be called to update the corresponding
+     *  record to the new values.
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    virtual bool addRecordToBackend(int row) = 0;
+
+    /*! \brief Add records for \a rows to the backend
+     *
+     * This method can be implemented to add all records
+     *  for \a rows .
+     *
+     * The default implementation will call addRecordToBackend()
+     *  for each row.
+     *
+     * \pre each row in \a rows must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    virtual bool addRecordsToBackend(const Mdt::Container::RowList & rows);
+
+    /*! \brief Add a list of records to the backend
+     *
+     * Re-implement this method if ....
+     */
+    ///virtual bool addRecordsToBackend(const VariantRecordList & records);
+
    private:
+
+    bool addNewRecordsToBackend();
 
     Mdt::Container::TableCacheOperationMap mOperationMap;
   };

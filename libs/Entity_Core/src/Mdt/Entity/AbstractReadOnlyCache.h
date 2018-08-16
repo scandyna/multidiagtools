@@ -222,6 +222,13 @@ namespace Mdt{ namespace Entity{
       return mLastError;
     }
 
+    /*! \brief Set record comming from backend at \a row to this cache
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     * \pre \a record 's columnt count must be the same as columnCount()
+     */
+    virtual void setRecordFromBackend(int row, const VariantRecord & record);
+
     /*! \brief Insert \a count copies of \a record before \a row to this cache
      *
      * \pre \a row must be >= 0 and <= rowCount()

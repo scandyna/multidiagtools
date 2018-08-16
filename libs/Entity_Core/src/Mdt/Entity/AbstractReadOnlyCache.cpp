@@ -53,6 +53,16 @@ bool AbstractReadOnlyCache::fetchAll()
   return ok;
 }
 
+void AbstractReadOnlyCache::setRecordFromBackend(int row, const VariantRecord& record)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+  Q_ASSERT(record.columnCount() == columnCount());
+
+  mCache[row] = record;
+  emit dataAtRowsChanged(row, row);
+}
+
 void AbstractReadOnlyCache::insertRecordsFromBackend(int row, int count, const VariantRecord& record)
 {
   Q_ASSERT(row >= 0);

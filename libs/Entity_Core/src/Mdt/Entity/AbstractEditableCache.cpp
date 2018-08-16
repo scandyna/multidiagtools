@@ -38,8 +38,25 @@ void AbstractEditableCache::setData(int row, int column, const QVariant& data)
   emit operationAtRowsChanged(row, row);
 }
 
+void AbstractEditableCache::setRecordFromBackend(int row, const VariantRecord& record)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+  Q_ASSERT(record.columnCount() == columnCount());
+
+  ParentClass::setRecordFromBackend(row, record);
+  mOperationMap.removeOperationAtRow(row);
+  emit operationAtRowsChanged(row, row);
+}
+
 void AbstractEditableCache::insertRecords(int row, int count, const VariantRecord & record)
 {
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row <= rowCount());
+  Q_ASSERT(count >= 1);
+  Q_ASSERT( (rowCount()+count) <= cachedRowCountLimit() );
+  Q_ASSERT(record.columnCount() == columnCount());
+
   insertRecordsFromBackend(row, count, record);
   mOperationMap.insertRecords(row, count);
   RowRange rows;
@@ -51,6 +68,31 @@ void AbstractEditableCache::insertRecords(int row, int count, const VariantRecor
 void AbstractEditableCache::appendRow()
 {
   insertRecords(rowCount(), 1, VariantRecord(columnCount()));
+}
+
+bool AbstractEditableCache::submitChanges()
+{
+  if(!addNewRecordsToBackend()){
+    return false;
+  }
+  return true;
+}
+
+bool AbstractEditableCache::addRecordsToBackend(const Mdt::Container::RowList& rows)
+{
+  for(auto row : rows){
+    if(!addRecordToBackend(row)){
+      return false;
+    }
+  }
+  return true;
+}
+
+bool AbstractEditableCache::addNewRecordsToBackend()
+{
+  const auto rows = mOperationMap.getRowsToInsertIntoStorage();
+
+  return addRecordsToBackend(rows);
 }
 
 }} // namespace Mdt{ namespace Entity{
