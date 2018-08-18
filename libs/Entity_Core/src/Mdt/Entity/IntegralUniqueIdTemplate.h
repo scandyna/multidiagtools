@@ -32,7 +32,7 @@ namespace Mdt{ namespace Entity{
    * \code
    * #include "Mdt/Entity/IntegralUniqueIdTemplate.h"
    *
-   * class ArticleId : public Mdt::Entity::IntegralUniqueIdTemplate<>
+   * class ArticleId : public Mdt::Entity::IntegralUniqueIdTemplate<ArticleId>
    * {
    * public:
    *
@@ -40,7 +40,7 @@ namespace Mdt{ namespace Entity{
    * };
    * \endcode
    */
-  template<typename IntegralType = qulonglong>
+  template<typename Derived, typename IntegralType = qulonglong>
   class IntegralUniqueIdTemplate
   {
     static_assert( std::is_integral<IntegralType>::value, "IntegralType must be a integral type" );
@@ -76,6 +76,7 @@ namespace Mdt{ namespace Entity{
     constexpr IntegralUniqueIdTemplate(IntegralType id) noexcept
      : mId(id)
     {
+      static_assert( std::is_base_of< IntegralUniqueIdTemplate, Derived >::value, "Derived must derive from IntegralUniqueIdTemplate" );
     }
 
     /*! \brief Check if this id is null
@@ -97,7 +98,7 @@ namespace Mdt{ namespace Entity{
     /*! \brief Compare id a and b
      */
     friend
-    constexpr bool operator==(const IntegralUniqueIdTemplate & a, const IntegralUniqueIdTemplate & b) noexcept
+    constexpr bool operator==(const Derived & a, const Derived & b) noexcept
     {
       return a.value() == b.value();
     }
@@ -105,7 +106,7 @@ namespace Mdt{ namespace Entity{
     /*! \brief Compare id a and b
      */
     friend
-    constexpr bool operator!=(IntegralUniqueIdTemplate a, IntegralUniqueIdTemplate b) noexcept
+    constexpr bool operator!=(Derived a, Derived b) noexcept
     {
       return a.value() != b.value();
     }
@@ -113,7 +114,7 @@ namespace Mdt{ namespace Entity{
     /*! \brief Compare id a and b
      */
     friend
-    constexpr bool operator<(IntegralUniqueIdTemplate a, IntegralUniqueIdTemplate b) noexcept
+    constexpr bool operator<(Derived a, Derived b) noexcept
     {
       return a.value() < b.value();
     }
@@ -121,7 +122,7 @@ namespace Mdt{ namespace Entity{
     /*! \brief Compare id a and b
      */
     friend
-    constexpr bool operator<=(IntegralUniqueIdTemplate a, IntegralUniqueIdTemplate b) noexcept
+    constexpr bool operator<=(Derived a, Derived b) noexcept
     {
       return a.value() <= b.value();
     }
@@ -129,7 +130,7 @@ namespace Mdt{ namespace Entity{
     /*! \brief Compare id a and b
      */
     friend
-    constexpr bool operator>(IntegralUniqueIdTemplate a, IntegralUniqueIdTemplate b) noexcept
+    constexpr bool operator>(Derived a, Derived b) noexcept
     {
       return a.value() > b.value();
     }
@@ -137,18 +138,20 @@ namespace Mdt{ namespace Entity{
     /*! \brief Compare id a and b
      */
     friend
-    constexpr bool operator>=(IntegralUniqueIdTemplate a, IntegralUniqueIdTemplate b) noexcept
+    constexpr bool operator>=(Derived a, Derived b) noexcept
     {
       return a.value() >= b.value();
     }
 
     /*! \brief Construct a id from \a value
+     *
+     * \todo Must use CRTP..
      */
-    static IntegralUniqueIdTemplate fromQVariant(const QVariant & value)
+    static Derived fromQVariant(const QVariant & value)
     {
       Q_ASSERT(value.canConvert<value_type>());
 
-      return IntegralUniqueIdTemplate( value.value<value_type>() );
+      return Derived( value.value<value_type>() );
     }
 
    private:

@@ -30,6 +30,7 @@ class UniqueIdTest : public TestBase
  private slots:
 
   void articleIdTest();
+  void runtimeComparisonTest();
   void QVariantTest();
   void fromQVariantTest();
 };

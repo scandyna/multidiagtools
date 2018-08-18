@@ -25,18 +25,18 @@
 
 // #include <QDebug>
 
-class ArticleId : public Mdt::Entity::IntegralUniqueIdTemplate<>
+class ArticleId : public Mdt::Entity::IntegralUniqueIdTemplate<ArticleId>
 {
  public:
 
-  using IntegralUniqueIdTemplate<>::IntegralUniqueIdTemplate;
+  using IntegralUniqueIdTemplate::IntegralUniqueIdTemplate;
 };
 
-class MetaTypeKnownId : public Mdt::Entity::IntegralUniqueIdTemplate<>
+class MetaTypeKnownId : public Mdt::Entity::IntegralUniqueIdTemplate<MetaTypeKnownId>
 {
  public:
 
-  using IntegralUniqueIdTemplate<>::IntegralUniqueIdTemplate;
+  using IntegralUniqueIdTemplate::IntegralUniqueIdTemplate;
 };
 Q_DECLARE_METATYPE(MetaTypeKnownId)
 
@@ -62,6 +62,16 @@ void UniqueIdTest::articleIdTest()
   QVERIFY(!id1.isNull());
 }
 
+void UniqueIdTest::runtimeComparisonTest()
+{
+  QVERIFY( ArticleId(1) == ArticleId(1) );
+  QVERIFY( ArticleId(1) != ArticleId(2) );
+  QVERIFY( ArticleId(1) < ArticleId(2) );
+  QVERIFY( ArticleId(1) <= ArticleId(2) );
+  QVERIFY( ArticleId(2) > ArticleId(1) );
+  QVERIFY( ArticleId(2) >= ArticleId(1) );
+}
+
 void UniqueIdTest::QVariantTest()
 {
   MetaTypeKnownId id1(1);
@@ -73,7 +83,7 @@ void UniqueIdTest::fromQVariantTest()
 {
   QVariant vId25(25);
 
-  const auto id = ArticleId::fromQVariant(vId25);
+  ArticleId id = ArticleId::fromQVariant(vId25);
   QVERIFY(!id.isNull());
   QCOMPARE(id.value(), 25u);
 }

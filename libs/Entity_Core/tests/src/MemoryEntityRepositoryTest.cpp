@@ -41,7 +41,7 @@ MDT_ENTITY_DEF(
   (firstName, FieldMaxLength(250))
 )
 
-class PersonId : public Mdt::Entity::IntegralUniqueIdTemplate<int>
+class PersonId : public Mdt::Entity::IntegralUniqueIdTemplate<PersonId, int>
 {
  public:
 
