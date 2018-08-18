@@ -27,4 +27,9 @@ AbstractEntityRepositoryBase::AbstractEntityRepositoryBase(QObject* parent)
 {
 }
 
+void AbstractEntityRepositoryBase::setLastError(const Error& error)
+{
+  mLastError = error;
+}
+
 }} // namespace Mdt{ namespace Entity{

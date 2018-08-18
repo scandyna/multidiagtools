@@ -162,6 +162,13 @@ namespace Mdt{ namespace Entity{
      */
     virtual Mdt::Expected<EntityData> getByPrimaryKey(const PrimaryKeyRecord & pk) const = 0;
 
+    /*! \brief Update \a record in the storage
+     *
+     * \note Currently only works for entities that have a single Id,
+     *   not a composed PK
+     * \pre \a record must have a non null unique id
+     */
+    virtual bool update(const EntityData & record) = 0;
   };
 
 }} // namespace Mdt{ namespace Entity{

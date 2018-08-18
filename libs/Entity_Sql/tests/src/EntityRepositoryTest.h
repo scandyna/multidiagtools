@@ -37,6 +37,8 @@ class EntityRepositoryTest : public TestBase
 
   void addWithNullIdTest();
 
+  void updateTest();
+
  private:
 
   bool createDatabaseSchema();

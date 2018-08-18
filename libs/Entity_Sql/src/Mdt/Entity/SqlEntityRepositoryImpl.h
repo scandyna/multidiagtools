@@ -33,9 +33,11 @@
 #include "Mdt/Entity/TypeTraits/IsEntityDef.h"
 #include "Mdt/Entity/TypeTraits/IsEntityFieldDef.h"
 #include "Mdt/Entity/TypeTraits/FieldDef.h"
+#include "Mdt/Entity/SqlPrimaryKeyRecord.h"
 #include "Mdt/QueryExpression/SelectStatement.h"
 #include "Mdt/QueryExpression/SqlSelectQuery.h"
 #include "Mdt/Sql/InsertQuery.h"
+#include "Mdt/Sql/UpdateQuery.h"
 #include "Mdt/Expected.h"
 #include "Mdt/Error.h"
 #include "MdtEntity_SqlExport.h"
@@ -110,6 +112,44 @@ namespace Mdt{ namespace Entity{
       }
 
       Mdt::Sql::InsertQuery & mQuery;
+      const EntityDataStruct & mDataStruct;
+    };
+
+    template<typename EntityDataStruct>
+    class AddEntityFieldsToUpdateQuery
+    {
+     public:
+
+      AddEntityFieldsToUpdateQuery(Mdt::Sql::UpdateQuery & query, const EntityDataStruct & dataStruct)
+       : mQuery(query),
+         mDataStruct(dataStruct)
+      {
+      }
+
+      template<typename EntityFieldDef>
+      void operator()(const EntityFieldDef & fieldDef) const
+      {
+        static_assert( TypeTraits::IsEntityFieldDef<EntityFieldDef>::value, "EntityFieldDef must be a entity field definition type" );
+
+        using Mdt::Sql::FieldName;
+
+        if(mustAddField(fieldDef)){
+          mQuery.addValue( FieldName(fieldDef.fieldName()), value<EntityDataStruct, EntityFieldDef>(mDataStruct) );
+        }
+      }
+
+     private:
+
+      template<typename EntityFieldDef>
+      bool mustAddField(const EntityFieldDef & fieldDef) const noexcept
+      {
+        if(fieldDef.fieldAttributes().isPrimaryKey()){
+          return false;
+        }
+        return true;
+      }
+
+      Mdt::Sql::UpdateQuery & mQuery;
       const EntityDataStruct & mDataStruct;
     };
 
@@ -216,6 +256,31 @@ namespace Mdt{ namespace Entity{
       record = data;
 
       return record;
+    }
+
+    template<typename EntityData>
+    Mdt::Error update(const EntityData & record)
+    {
+      using EntityDef = typename EntityData::entity_def_type;
+      using EntityDataStruct = typename EntityData::data_struct_type;
+
+      Mdt::Error error;
+      const auto pkRecord = SqlPrimaryKeyRecord::fromEntityData(record);
+      Mdt::Sql::UpdateQuery query(mDatabase);
+      constexpr EntityDef entityDef;
+
+      query.setTableName(EntityDef::entityName());
+
+      Impl::AddEntityFieldsToUpdateQuery<EntityDataStruct> op(query, record.constDataStruct());
+      boost::fusion::for_each(entityDef, op);
+      query.setConditions(pkRecord);
+
+      if(!query.exec()){
+        error = query.lastError();
+        return error;
+      }
+
+      return error;
     }
 
    private:

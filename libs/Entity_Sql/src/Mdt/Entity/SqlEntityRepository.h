@@ -24,6 +24,7 @@
 #include "SqlEntityRepositoryImpl.h"
 #include "Mdt/Entity/AbstractEntityRepository.h"
 #include "Mdt/Entity/PrimaryKeyRecord.h"
+#include "Mdt/Entity/Value.h"
 #include <QSqlDatabase>
 
 namespace Mdt{ namespace Entity{
@@ -33,6 +34,9 @@ namespace Mdt{ namespace Entity{
   template<typename EntityData, typename UniqueId>
   class SqlEntityRepository : public virtual AbstractEntityRepository<EntityData, UniqueId>
   {
+    using ParentClass = AbstractEntityRepository<EntityData, UniqueId>;
+    using ParentClass::setLastError;
+
    public:
 
     /*! \brief Constructor
@@ -98,6 +102,26 @@ namespace Mdt{ namespace Entity{
       Q_ASSERT(!pk.isNull());
 
       return mImpl.getByPrimaryKey<EntityData>(pk);
+    }
+
+    /*! \brief Update \a record in the storage
+     *
+     * \note Currently only works for entities that have a single Id,
+     *   not a composed PK
+     * \pre \a record must have a non null unique id
+     */
+    bool update(const EntityData & record) override
+    {
+      const auto id = uniqueIdValue<EntityData, UniqueId>(record);
+      Q_ASSERT(!id.isNull());
+
+      const auto error = mImpl.update<EntityData>(record);
+      if(!error.isNull()){
+        setLastError(error);
+        return false;
+      }
+
+      return true;
     }
 
    private:

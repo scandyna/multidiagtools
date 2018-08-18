@@ -110,6 +110,27 @@ class SqlPersonRepository : public PersonRepository, public SqlEntityRepository<
 };
 
 /*
+ * Helpers (plain)
+ */
+
+/*
+ * Helpers
+ */
+
+bool addPersonToRepository(const PersonData & person, PersonRepository & repository)
+{
+  Q_ASSERT(!person.id().isNull());
+
+  const auto id = repository.add(person);
+  if(!id){
+    return false;
+  }
+  Q_ASSERT(*id == person.id());
+
+  return true;
+}
+
+/*
  * Tests
  */
 
@@ -203,6 +224,27 @@ void EntityRepositoryTest::addWithNullIdTest()
   QVERIFY(personIdExp);
   personId = *personIdExp;
   QVERIFY(!personId.isNull());
+}
+
+void EntityRepositoryTest::updateTest()
+{
+  QVERIFY(cleanupPersonTable());
+
+  SqlPersonRepository repository;
+  repository.setDatabase(database());
+  PersonData person;
+
+  person.setPersonId(PersonId(2));
+  person.setFirstName("A");
+  QVERIFY(addPersonToRepository(person, repository));
+
+  person.setFirstName("EA");
+  QVERIFY(repository.update(person));
+  auto personExp = repository.getById(person.id());
+  QVERIFY(personExp);
+  person = *personExp;
+  QCOMPARE(person.id().value(), 2);
+  QCOMPARE(person.firstName(), QString("EA"));
 }
 
 /*

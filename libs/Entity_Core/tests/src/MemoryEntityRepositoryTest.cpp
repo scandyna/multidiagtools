@@ -93,6 +93,24 @@ class TestPersonRepository : public PersonRepository, public Mdt::Entity::Memory
 using namespace Mdt::Entity;
 
 /*
+ * Helpers
+ */
+
+bool addPersonToRepository(const PersonData & person, const std::shared_ptr<PersonRepository> & repository)
+{
+  Q_ASSERT(!person.id().isNull());
+  Q_ASSERT(repository.get() != nullptr);
+
+  const auto id = repository->add(person);
+  if(!id){
+    return false;
+  }
+  Q_ASSERT(*id == person.id());
+
+  return true;
+}
+
+/*
  * Tests
  */
 
@@ -230,8 +248,28 @@ void MemoryEntityRepositoryTest::addIdUniqueConstraintTest()
   QVERIFY(personIdExp);
   personId = *personIdExp;
   QCOMPARE(personId.value(), 5);
+  QVERIFY(repository->lastError().isNull());
   personIdExp = repository->add(person);
   QVERIFY(!personIdExp);
+  QVERIFY(!repository->lastError().isNull());
+}
+
+void MemoryEntityRepositoryTest::updateTest()
+{
+  auto repository = std::make_shared<TestPersonRepository>();
+  PersonData person;
+
+  person.setPersonId(PersonId(2));
+  person.setFirstName("A");
+  QVERIFY(addPersonToRepository(person, repository));
+
+  person.setFirstName("EA");
+  QVERIFY(repository->update(person));
+  auto personExp = repository->getById(person.id());
+  QVERIFY(personExp);
+  person = *personExp;
+  QCOMPARE(person.id().value(), 2);
+  QCOMPARE(person.firstName(), QString("EA"));
 }
 
 /*

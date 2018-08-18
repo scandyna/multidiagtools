@@ -35,6 +35,8 @@ class MemoryEntityRepositoryTest : public QObject
   void addWithNullIdTest();
   void addWithIdTest();
   void addIdUniqueConstraintTest();
+
+  void updateTest();
 };
 
 #endif // #ifndef TEST_MAIN_H

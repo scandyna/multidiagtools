@@ -21,6 +21,7 @@
 #ifndef MDT_ENTITY_ABSTRACT_ENTITY_REPOSITORY_BASE_H
 #define MDT_ENTITY_ABSTRACT_ENTITY_REPOSITORY_BASE_H
 
+#include "Mdt/Error.h"
 #include "MdtEntity_CoreExport.h"
 #include <QObject>
 
@@ -37,6 +38,23 @@ namespace Mdt{ namespace Entity{
     /*! \brief Constructor
      */
     explicit AbstractEntityRepositoryBase(QObject *parent = nullptr);
+
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
+
+   protected:
+
+    /*! \brief Set last error
+     */
+    void setLastError(const Mdt::Error & error);
+
+   private:
+
+    Mdt::Error mLastError;
   };
 
 }} // namespace Mdt{ namespace Entity{
