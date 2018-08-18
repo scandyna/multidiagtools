@@ -69,6 +69,15 @@ void UniqueIdTest::QVariantTest()
   QCOMPARE(vId1.value<MetaTypeKnownId>().value(), 1ull);
 }
 
+void UniqueIdTest::fromQVariantTest()
+{
+  QVariant vId25(25);
+
+  const auto id = ArticleId::fromQVariant(vId25);
+  QVERIFY(!id.isNull());
+  QCOMPARE(id.value(), 25u);
+}
+
 /*
  * Main
  */

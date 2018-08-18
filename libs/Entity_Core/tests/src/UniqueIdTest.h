@@ -31,6 +31,7 @@ class UniqueIdTest : public TestBase
 
   void articleIdTest();
   void QVariantTest();
+  void fromQVariantTest();
 };
 
 #endif // #ifndef UNIQUE_ID_TEST_H

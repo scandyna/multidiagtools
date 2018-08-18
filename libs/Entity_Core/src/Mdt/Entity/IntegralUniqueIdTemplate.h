@@ -22,6 +22,7 @@
 #define MDT_ENTITY_INTEGRAL_UNIQUE_ID_TEMPLATE_H
 
 #include <QtGlobal>
+#include <QVariant>
 #include <type_traits>
 
 namespace Mdt{ namespace Entity{
@@ -35,7 +36,7 @@ namespace Mdt{ namespace Entity{
    * {
    * public:
    *
-   *   using IntegralUniqueIdTemplate<>::IntegralUniqueIdTemplate;
+   *   using IntegralUniqueIdTemplate::IntegralUniqueIdTemplate;
    * };
    * \endcode
    */
@@ -45,6 +46,10 @@ namespace Mdt{ namespace Entity{
     static_assert( std::is_integral<IntegralType>::value, "IntegralType must be a integral type" );
 
    public:
+
+    /*! \brief STL compatible value type this unique id holds
+     */
+    using value_type = IntegralType;
 
     /*! \brief Construct a null id
      */
@@ -92,7 +97,7 @@ namespace Mdt{ namespace Entity{
     /*! \brief Compare id a and b
      */
     friend
-    constexpr bool operator==(IntegralUniqueIdTemplate a, IntegralUniqueIdTemplate b) noexcept
+    constexpr bool operator==(const IntegralUniqueIdTemplate & a, const IntegralUniqueIdTemplate & b) noexcept
     {
       return a.value() == b.value();
     }
@@ -135,6 +140,15 @@ namespace Mdt{ namespace Entity{
     constexpr bool operator>=(IntegralUniqueIdTemplate a, IntegralUniqueIdTemplate b) noexcept
     {
       return a.value() >= b.value();
+    }
+
+    /*! \brief Construct a id from \a value
+     */
+    static IntegralUniqueIdTemplate fromQVariant(const QVariant & value)
+    {
+      Q_ASSERT(value.canConvert<value_type>());
+
+      return IntegralUniqueIdTemplate( value.value<value_type>() );
     }
 
    private:
