@@ -53,7 +53,7 @@ bool AbstractReadOnlyCache::fetchAll()
   return ok;
 }
 
-void AbstractReadOnlyCache::setRecordFromBackend(int row, const VariantRecord& record)
+void AbstractReadOnlyCache::fromBackendSetRecord(int row, const VariantRecord& record)
 {
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < rowCount());
@@ -63,7 +63,7 @@ void AbstractReadOnlyCache::setRecordFromBackend(int row, const VariantRecord& r
   emit dataAtRowsChanged(row, row);
 }
 
-void AbstractReadOnlyCache::insertRecordsFromBackend(int row, int count, const VariantRecord& record)
+void AbstractReadOnlyCache::fromBackendInsertRecords(int row, int count, const VariantRecord& record)
 {
   Q_ASSERT(row >= 0);
   Q_ASSERT(row <= rowCount());
@@ -79,7 +79,21 @@ void AbstractReadOnlyCache::insertRecordsFromBackend(int row, int count, const V
   endInsertRows();
 }
 
-void AbstractReadOnlyCache::setDataFromBackend(int row, int column, const QVariant& data)
+void AbstractReadOnlyCache::fromBackendRemoveRows(int row, int count)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 0);
+  Q_ASSERT( (row + count) <= rowCount() );
+
+  RowRange rows;
+  rows.setFirstRow(row);
+  rows.setRowCount(count);
+  beginRemoveRows(rows);
+  removeFromContainer(mCache, row, count);
+  endRemoveRows();
+}
+
+void AbstractReadOnlyCache::fromBackendSetData(int row, int column, const QVariant& data)
 {
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < rowCount());
@@ -90,26 +104,18 @@ void AbstractReadOnlyCache::setDataFromBackend(int row, int column, const QVaria
   emit dataAtRowsChanged(row, row);
 }
 
-void AbstractReadOnlyCache::appendRecordFromBackend(const VariantRecord& record)
+void AbstractReadOnlyCache::fromBackendAppendRecord(const VariantRecord& record)
 {
   Q_ASSERT(rowCount() < cachedRowCountLimit());
   Q_ASSERT(record.columnCount() == columnCount());
 
-  insertRecordsFromBackend(rowCount(), 1, record);
+  fromBackendInsertRecords(rowCount(), 1, record);
 }
 
 void AbstractReadOnlyCache::setLastError(const Error& error)
 {
   mLastError = error;
 }
-
-// void AbstractReadOnlyCache::appendRecordToCache(const VariantRecord& record)
-// {
-//   Q_ASSERT(rowCount() < cachedRowCountLimit());
-//   Q_ASSERT(record.columnCount() == columnCount());
-// 
-//   mCache.push_back(record);
-// }
 
 void AbstractReadOnlyCache::beginResetCache()
 {
@@ -139,6 +145,18 @@ void AbstractReadOnlyCache::endInsertRows()
     return;
   }
   emit rowsInserted();
+}
+
+void AbstractReadOnlyCache::beginRemoveRows(RowRange rows)
+{
+  Q_ASSERT(rows.isValid());
+
+  emit rowsAboutToBeRemoved(rows.firstRow(), rows.lastRow());
+}
+
+void AbstractReadOnlyCache::endRemoveRows()
+{
+  emit rowsRemoved();
 }
 
 }} // namespace Mdt{ namespace Entity{

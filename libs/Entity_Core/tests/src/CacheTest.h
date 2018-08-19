@@ -47,6 +47,9 @@ class CacheTest : public QObject
   void setDataTest();
   void setDataSignalTest();
 
+  void setDataAndSubmitTest();
+  void setDataAndSubmitSignalTest();
+
   void readOnlySetRecordFromBackendTest();
   void editableSetRecordFromBackendTest();
   void readOnlySetRecordFromBackendSignalTest();
@@ -70,6 +73,19 @@ class CacheTest : public QObject
   void insertRecordsAndSubmitTest();
   void insertRecordsAndSubmitSignalTest();
 
+  void readOnlyRemoveRowsFromBackendTest();
+  void editableRemoveRowsFromBackendTest();
+  void readOnlyRemoveRowsFromBackendSignalTest();
+  void editableRemoveRowsFromBackendSignalTest();
+
+  void removeRowsAndSubmitTest();
+  void removeRowsAndSubmitSignalTest();
+
+  void insertRemoveRecordsAndSubmitTest();
+  void insertRemoveRecordsAndSubmitSignalTest();
+
+  void setDataRemoveRecordsAnsSubmitTest();
+  void setDataRemoveRecordsAnsSubmitSignalTest();
 };
 
 #endif // #ifndef TEST_MAIN_H

@@ -227,7 +227,7 @@ namespace Mdt{ namespace Entity{
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \pre \a record 's columnt count must be the same as columnCount()
      */
-    virtual void setRecordFromBackend(int row, const VariantRecord & record);
+    virtual void fromBackendSetRecord(int row, const VariantRecord & record);
 
     /*! \brief Insert \a count copies of \a record before \a row to this cache
      *
@@ -236,7 +236,15 @@ namespace Mdt{ namespace Entity{
      * \pre rowCount() + \a count must be <= cachedRowCountLimit()
      * \pre \a record 's columnt count must be the same as columnCount()
      */
-    void insertRecordsFromBackend(int row, int count, const VariantRecord & record);
+    void fromBackendInsertRecords(int row, int count, const VariantRecord & record);
+
+    /*! \brief Remove \a count rows starting from \a row
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() )
+     */
+    void fromBackendRemoveRows(int row, int count);
 
    public slots:
 
@@ -245,14 +253,14 @@ namespace Mdt{ namespace Entity{
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
      */
-    void setDataFromBackend(int row, int column, const QVariant & data);
+    void fromBackendSetData(int row, int column, const QVariant & data);
 
     /*! \brief Append a record comming from backend to this cache
      *
      * \pre rowCount() must be < cachedRowCountLimit()
      * \pre \a record 's columnt count must be the same as columnCount()
      */
-    void appendRecordFromBackend(const VariantRecord & record);
+    void fromBackendAppendRecord(const VariantRecord & record);
 
    signals:
 
@@ -275,6 +283,14 @@ namespace Mdt{ namespace Entity{
     /*! \brief This signal is emitted after rows have been inserted to this cache
      */
     void rowsInserted();
+
+    /*! \brief This signal is emitted just before rows are removed from this cache
+     */
+    void rowsAboutToBeRemoved(int firstRow, int lastRow);
+
+    /*! \brief This signal is emitted after rows have been removed from this cache
+     */
+    void rowsRemoved();
 
    protected:
 
@@ -338,6 +354,16 @@ namespace Mdt{ namespace Entity{
     /*! \brief End a row insertion operation
      */
     void endInsertRows();
+
+    /*! \brief Begins a row removal operation
+     *
+     * \pre \a rows must be a valid range
+     */
+    void beginRemoveRows(Mdt::IndexRange::RowRange rows);
+
+    /*! \brief End a row removal operation
+     */
+    void endRemoveRows();
 
     std::vector<VariantRecord> mCache;
     int mCachedRowCountLimit = 5000;

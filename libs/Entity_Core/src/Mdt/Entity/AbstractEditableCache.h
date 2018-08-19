@@ -96,7 +96,7 @@ namespace Mdt{ namespace Entity{
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \pre \a record 's columnt count must be the same as columnCount()
      */
-    void setRecordFromBackend(int row, const VariantRecord & record) override;
+    void fromBackendSetRecord(int row, const VariantRecord & record) override;
 
     /*! \brief Insert \a count copies of \a record before \a row to this cache
      *
@@ -114,6 +114,16 @@ namespace Mdt{ namespace Entity{
      * Will add a empty record to the end of this cache
      */
     void appendRow();
+
+    /*! \brief Remove \a count rows starting from \a row
+     *
+     * Rows will be marked as deleted in the cache.
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() )
+     */
+    void removeRows(int row, int count);
 
     /*! \brief Submit changes
      *
@@ -161,15 +171,45 @@ namespace Mdt{ namespace Entity{
      */
     virtual bool addRecordsToBackend(const Mdt::Container::RowList & rows);
 
-    /*! \brief Add a list of records to the backend
+    /*! \brief Update the record at \a row in the backend
      *
-     * Re-implement this method if ....
+     * Once the record has been successfully processed from the backend,
+     *  setRecordFromBackend() should be called to update the corresponding
+     *  record to the new values.
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      */
-    ///virtual bool addRecordsToBackend(const VariantRecordList & records);
+    virtual bool updateRecordInBackend(int row) = 0;
+
+    /*! \brief Update records for \a rows in the backend
+     *
+     * The default implementation will call updateRecordInBackend()
+     *  for each row.
+     */
+    virtual bool updateRecordsInBackend(const Mdt::Container::RowList & rows);
+
+    /*! \brief Remove the record at \a row from the backend
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    virtual bool removeRecordFromBackend(int row) = 0;
+
+    /*! \brief Remove the records for \a rows from the backend
+     *
+     * The default implementation will call removeRecordFromBackend()
+     *  for each row.
+     *
+     * \note \a rows is sorted from highest to lowest row,
+     *    making it easy to deal with common Containers.
+     */
+    virtual bool removeRecordsFromBackend(const Mdt::Container::RowList & rows);
 
    private:
 
     bool addNewRecordsToBackend();
+    bool updateModifiedRowsInBackend();
+    void removeRowsToDeleteFromCacheOnly();
+    bool removeRowsToDeleteFromBackend();
 
     Mdt::Container::TableCacheOperationMap mOperationMap;
   };

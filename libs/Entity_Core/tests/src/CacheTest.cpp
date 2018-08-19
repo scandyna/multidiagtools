@@ -159,7 +159,7 @@ void CacheTest::readOnlySetDataFromBackendTest()
   QCOMPARE(cache.data(1, 1), QVariant("B"));
   QCOMPARE(cache.data(2, 1), QVariant("C"));
 
-  cache.setDataFromBackend(0, 1, "eA");
+  cache.fromBackendSetData(0, 1, "eA");
   QCOMPARE(cache.rowCount(), 3);
   QCOMPARE(cache.data(0, 1), QVariant("eA"));
   QCOMPARE(cache.data(1, 1), QVariant("B"));
@@ -180,7 +180,7 @@ void CacheTest::editableSetDataFromBackendTest()
   QCOMPARE(cache.operationAtRow(1), TableCacheOperation::None);
   QCOMPARE(cache.operationAtRow(2), TableCacheOperation::None);
 
-  cache.setDataFromBackend(0, 1, "eA");
+  cache.fromBackendSetData(0, 1, "eA");
   QCOMPARE(cache.rowCount(), 3);
   QCOMPARE(cache.data(0, 1), QVariant("eA"));
   QCOMPARE(cache.data(1, 1), QVariant("B"));
@@ -201,7 +201,7 @@ void CacheTest::readOnlySetDataFromBackendSignalTest()
   QVERIFY(dataAtRowsChangedSpy.isValid());
 
   QCOMPARE(dataAtRowsChangedSpy.count(), 0);
-  cache.setDataFromBackend(1, 1, "eB");
+  cache.fromBackendSetData(1, 1, "eB");
   QCOMPARE(dataAtRowsChangedSpy.count(), 1);
   arguments = dataAtRowsChangedSpy.takeFirst();
   QCOMPARE(arguments.count(), 2);
@@ -220,7 +220,7 @@ void CacheTest::editableSetDataFromBackendSignalTest()
   QVERIFY(dataAtRowsChangedSpy.isValid());
 
   QCOMPARE(dataAtRowsChangedSpy.count(), 0);
-  cache.setDataFromBackend(1, 1, "eB");
+  cache.fromBackendSetData(1, 1, "eB");
   QCOMPARE(dataAtRowsChangedSpy.count(), 1);
   arguments = dataAtRowsChangedSpy.takeFirst();
   QCOMPARE(arguments.count(), 2);
@@ -279,6 +279,93 @@ void CacheTest::setDataSignalTest()
   QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
 }
 
+void CacheTest::setDataAndSubmitTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+
+  QCOMPARE(cache.rowCount(), 3);
+  QCOMPARE(cache.data(0, 1), QVariant("A"));
+  QCOMPARE(cache.data(1, 1), QVariant("B"));
+  QCOMPARE(cache.data(2, 1), QVariant("C"));
+  QCOMPARE(cache.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(cache.storageRowCount(), 3);
+  QCOMPARE(cache.recordFromStorage(0).name, QString("A"));
+  QCOMPARE(cache.recordFromStorage(1).name, QString("B"));
+  QCOMPARE(cache.recordFromStorage(2).name, QString("C"));
+
+  cache.setData(0, 1, "eA");
+  cache.setData(2, 1, "eC");
+  QCOMPARE(cache.rowCount(), 3);
+  QCOMPARE(cache.data(0, 1), QVariant("eA"));
+  QCOMPARE(cache.data(1, 1), QVariant("B"));
+  QCOMPARE(cache.data(2, 1), QVariant("eC"));
+  QCOMPARE(cache.operationAtRow(0), TableCacheOperation::Update);
+  QCOMPARE(cache.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(2), TableCacheOperation::Update);
+  QCOMPARE(cache.storageRowCount(), 3);
+  QCOMPARE(cache.recordFromStorage(0).name, QString("A"));
+  QCOMPARE(cache.recordFromStorage(1).name, QString("B"));
+  QCOMPARE(cache.recordFromStorage(2).name, QString("C"));
+
+  QVERIFY(cache.submitChanges());
+  QCOMPARE(cache.rowCount(), 3);
+  QCOMPARE(cache.data(0, 1), QVariant("eA"));
+  QCOMPARE(cache.data(1, 1), QVariant("B"));
+  QCOMPARE(cache.data(2, 1), QVariant("eC"));
+  QCOMPARE(cache.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(cache.storageRowCount(), 3);
+  QCOMPARE(cache.recordFromStorage(0).name, QString("eA"));
+  QCOMPARE(cache.recordFromStorage(1).name, QString("B"));
+  QCOMPARE(cache.recordFromStorage(2).name, QString("eC"));
+}
+
+void CacheTest::setDataAndSubmitSignalTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+
+  QVariantList arguments;
+  QSignalSpy dataAtRowsChangedSpy(&cache, &EditPersonCache::dataAtRowsChanged);
+  QVERIFY(dataAtRowsChangedSpy.isValid());
+  QSignalSpy operationAtRowsChangedSpy(&cache, &EditPersonCache::operationAtRowsChanged);
+  QVERIFY(operationAtRowsChangedSpy.isValid());
+
+  QCOMPARE(dataAtRowsChangedSpy.count(), 0);
+  QCOMPARE(operationAtRowsChangedSpy.count(), 0);
+  cache.setData(1, 1, "eB");
+  QCOMPARE(dataAtRowsChangedSpy.count(), 1);
+  arguments = dataAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+  QCOMPARE(operationAtRowsChangedSpy.count(), 1);
+  arguments = operationAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+
+  QCOMPARE(dataAtRowsChangedSpy.count(), 0);
+  QCOMPARE(operationAtRowsChangedSpy.count(), 0);
+  QVERIFY(cache.submitChanges());
+  QCOMPARE(dataAtRowsChangedSpy.count(), 1);
+  arguments = dataAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+  QCOMPARE(operationAtRowsChangedSpy.count(), 1);
+  arguments = operationAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(1)); // lastRow
+}
+
 void CacheTest::readOnlySetRecordFromBackendTest()
 {
   VariantRecord record(2);
@@ -286,14 +373,14 @@ void CacheTest::readOnlySetRecordFromBackendTest()
 
   QCOMPARE(cache.rowCount(), 0);
   record.setValue(1, "New");
-  cache.insertRecordsFromBackend(0, 2, record);
+  cache.fromBackendInsertRecords(0, 2, record);
   QCOMPARE(cache.rowCount(), 2);
   QCOMPARE(cache.data(0, 1), QVariant("New"));
   QCOMPARE(cache.data(1, 1), QVariant("New"));
 
   record.setValue(0, 1);
   record.setValue(1, "A");
-  cache.setRecordFromBackend(0, record);
+  cache.fromBackendSetRecord(0, record);
   QCOMPARE(cache.data(0, 0), QVariant(1));
   QCOMPARE(cache.data(0, 1), QVariant("A"));
   QCOMPARE(cache.data(1, 1), QVariant("New"));
@@ -315,7 +402,7 @@ void CacheTest::editableSetRecordFromBackendTest()
 
   record.setValue(0, 1);
   record.setValue(1, "A");
-  cache.setRecordFromBackend(0, record);
+  cache.fromBackendSetRecord(0, record);
   QCOMPARE(cache.data(0, 0), QVariant(1));
   QCOMPARE(cache.data(0, 1), QVariant("A"));
   QCOMPARE(cache.data(1, 1), QVariant("New"));
@@ -335,7 +422,7 @@ void CacheTest::readOnlySetRecordFromBackendSignalTest()
   QVERIFY(dataAtRowsChangedSpy.isValid());
 
   QCOMPARE(dataAtRowsChangedSpy.count(), 0);
-  cache.setRecordFromBackend(0, record);
+  cache.fromBackendSetRecord(0, record);
   QCOMPARE(dataAtRowsChangedSpy.count(), 1);
   arguments = dataAtRowsChangedSpy.takeFirst();
   QCOMPARE(arguments.count(), 2);
@@ -357,7 +444,7 @@ void CacheTest::editableSetRecordFromBackendSignalTest()
 
   QCOMPARE(dataAtRowsChangedSpy.count(), 0);
   QCOMPARE(operationAtRowsChangedSpy.count(), 0);
-  cache.setRecordFromBackend(1, VariantRecord(2));
+  cache.fromBackendSetRecord(1, VariantRecord(2));
   QCOMPARE(dataAtRowsChangedSpy.count(), 1);
   arguments = dataAtRowsChangedSpy.takeFirst();
   QCOMPARE(arguments.count(), 2);
@@ -378,7 +465,7 @@ void insertRecordsFromBackendTest()
 
   QCOMPARE(cache.rowCount(), 0);
   record.setValue(1, "New");
-  cache.insertRecordsFromBackend(0, 2, record);
+  cache.fromBackendInsertRecords(0, 2, record);
   QCOMPARE(cache.rowCount(), 2);
   QCOMPARE(cache.data(0, 1), QVariant("New"));
   QCOMPARE(cache.data(1, 1), QVariant("New"));
@@ -387,7 +474,7 @@ void insertRecordsFromBackendTest()
    */
   record.setValue(1, "Last");
   cache.setCachedRowCountLimit(3);
-  cache.insertRecordsFromBackend(2, 1, record);
+  cache.fromBackendInsertRecords(2, 1, record);
   QCOMPARE(cache.rowCount(), 3);
   QCOMPARE(cache.data(0, 1), QVariant("New"));
   QCOMPARE(cache.data(1, 1), QVariant("New"));
@@ -417,7 +504,7 @@ void insertRecordsFromBackendSignalTest()
 
   QCOMPARE(rowsAboutToBeInsertedSpy.count(), 0);
   QCOMPARE(rowsInsertedSpy.count(), 0);
-  cache.insertRecordsFromBackend(0, 2, record);
+  cache.fromBackendInsertRecords(0, 2, record);
   QCOMPARE(rowsAboutToBeInsertedSpy.count(), 1);
   arguments = rowsAboutToBeInsertedSpy.takeFirst();
   QCOMPARE(arguments.count(), 2);
@@ -445,7 +532,7 @@ void appendRecordFromBackendTest()
 
   record.setValue(0, 1);
   record.setValue(1, "A");
-  pc.appendRecordFromBackend(record);
+  pc.fromBackendAppendRecord(record);
   QCOMPARE(pc.rowCount(), 1);
   QCOMPARE(pc.data(0, 0), QVariant(1));
   QCOMPARE(pc.data(0, 1), QVariant("A"));
@@ -474,7 +561,7 @@ void appendRecordFromBackendSignalTest()
 
   QCOMPARE(rowsAboutToBeInsertedSpy.count(), 0);
   QCOMPARE(rowsInsertedSpy.count(), 0);
-  cache.appendRecordFromBackend(record);
+  cache.fromBackendAppendRecord(record);
   QCOMPARE(rowsAboutToBeInsertedSpy.count(), 1);
   arguments = rowsAboutToBeInsertedSpy.takeFirst();
   QCOMPARE(arguments.count(), 2);
@@ -619,6 +706,167 @@ void CacheTest::insertRecordsAndSubmitSignalTest()
   QCOMPARE(arguments.count(), 2);
   QCOMPARE(arguments.at(0), QVariant(0)); // firstRow
   QCOMPARE(arguments.at(1), QVariant(0)); // lastRow
+}
+
+template<typename Cache>
+void removeRowsFromBackendTest()
+{
+  Cache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+
+  QCOMPARE(cache.rowCount(), 3);
+  QCOMPARE(cache.data(0, 1), QVariant("A"));
+  QCOMPARE(cache.data(1, 1), QVariant("B"));
+  QCOMPARE(cache.data(2, 1), QVariant("C"));
+
+  cache.fromBackendRemoveRows(0, 2);
+  QCOMPARE(cache.rowCount(), 1);
+  QCOMPARE(cache.data(0, 1), QVariant("C"));
+
+  cache.fromBackendRemoveRows(0, 1);
+  QCOMPARE(cache.rowCount(), 0);
+}
+
+void CacheTest::readOnlyRemoveRowsFromBackendTest()
+{
+  removeRowsFromBackendTest<PersonCache>();
+}
+
+void CacheTest::editableRemoveRowsFromBackendTest()
+{
+  removeRowsFromBackendTest<EditPersonCache>();
+}
+
+template<typename Cache>
+void removeRowsFromBackendSignalTest()
+{
+  Cache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+  QVariantList arguments;
+  QSignalSpy rowsAboutToBeRemovedSpy(&cache, &Cache::rowsAboutToBeRemoved);
+  QVERIFY(rowsAboutToBeRemovedSpy.isValid());
+  QSignalSpy rowsRemovedSpy(&cache, &Cache::rowsRemoved);
+  QVERIFY(rowsRemovedSpy.isValid());
+
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+  cache.fromBackendRemoveRows(1, 2);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 1);
+  arguments = rowsAboutToBeRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(2)); // lastRow
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+}
+
+void CacheTest::readOnlyRemoveRowsFromBackendSignalTest()
+{
+  removeRowsFromBackendSignalTest<PersonCache>();
+}
+
+void CacheTest::editableRemoveRowsFromBackendSignalTest()
+{
+  removeRowsFromBackendSignalTest<EditPersonCache>();
+}
+
+void CacheTest::removeRowsAndSubmitTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+
+  QCOMPARE(cache.rowCount(), 3);
+  QCOMPARE(cache.data(0, 1), QVariant("A"));
+  QCOMPARE(cache.data(1, 1), QVariant("B"));
+  QCOMPARE(cache.data(2, 1), QVariant("C"));
+  QCOMPARE(cache.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(1), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(2), TableCacheOperation::None);
+  QCOMPARE(cache.storageRowCount(), 3);
+  QCOMPARE(cache.recordFromStorage(0).name, QString("A"));
+  QCOMPARE(cache.recordFromStorage(1).name, QString("B"));
+  QCOMPARE(cache.recordFromStorage(2).name, QString("C"));
+
+  cache.removeRows(1, 2);
+  QCOMPARE(cache.rowCount(), 3);
+  QCOMPARE(cache.data(0, 1), QVariant("A"));
+  QCOMPARE(cache.data(1, 1), QVariant("B"));
+  QCOMPARE(cache.data(2, 1), QVariant("C"));
+  QCOMPARE(cache.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(cache.operationAtRow(1), TableCacheOperation::Delete);
+  QCOMPARE(cache.operationAtRow(2), TableCacheOperation::Delete);
+  QCOMPARE(cache.storageRowCount(), 3);
+  QCOMPARE(cache.recordFromStorage(0).name, QString("A"));
+  QCOMPARE(cache.recordFromStorage(1).name, QString("B"));
+  QCOMPARE(cache.recordFromStorage(2).name, QString("C"));
+
+  QVERIFY(cache.submitChanges());
+  QCOMPARE(cache.rowCount(), 1);
+  QCOMPARE(cache.data(0, 1), QVariant("A"));
+  QCOMPARE(cache.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(cache.storageRowCount(), 1);
+  QCOMPARE(cache.recordFromStorage(0).name, QString("A"));
+}
+
+void CacheTest::removeRowsAndSubmitSignalTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+  QVariantList arguments;
+  QSignalSpy rowsAboutToBeRemovedSpy(&cache, &EditPersonCache::rowsAboutToBeRemoved);
+  QVERIFY(rowsAboutToBeRemovedSpy.isValid());
+  QSignalSpy rowsRemovedSpy(&cache, &EditPersonCache::rowsRemoved);
+  QVERIFY(rowsRemovedSpy.isValid());
+  QSignalSpy operationAtRowsChangedSpy(&cache, &EditPersonCache::operationAtRowsChanged);
+  QVERIFY(operationAtRowsChangedSpy.isValid());
+
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+  QCOMPARE(operationAtRowsChangedSpy.count(), 0);
+  cache.removeRows(1, 2);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+  QCOMPARE(operationAtRowsChangedSpy.count(), 1);
+  arguments = operationAtRowsChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(2)); // lastRow
+
+  QVERIFY(cache.submitChanges());
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 1);
+  arguments = rowsAboutToBeRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 2);
+  QCOMPARE(arguments.at(0), QVariant(1)); // firstRow
+  QCOMPARE(arguments.at(1), QVariant(2)); // lastRow
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+  QCOMPARE(operationAtRowsChangedSpy.count(), 0);
+}
+
+void CacheTest::insertRemoveRecordsAndSubmitTest()
+{
+
+  QFAIL("Not complete");
+}
+
+void CacheTest::insertRemoveRecordsAndSubmitSignalTest()
+{
+
+  QFAIL("Not complete");
+}
+
+void CacheTest::setDataRemoveRecordsAnsSubmitTest()
+{
+
+  QFAIL("Not complete");
+}
+
+void CacheTest::setDataRemoveRecordsAnsSubmitSignalTest()
+{
+
+  QFAIL("Not complete");
 }
 
 /*

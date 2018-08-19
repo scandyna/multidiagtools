@@ -258,7 +258,7 @@ void CacheTableModelTest::setDataFromCacheTest()
   QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
 
   cache.setData(0, 1, "EA");
-  cache.setDataFromBackend(1, 1, "EB");
+  cache.fromBackendSetData(1, 1, "EB");
   QCOMPARE(getModelData(model, 0, 1), QVariant("EA"));
   QCOMPARE(getModelData(model, 1, 1), QVariant("EB"));
   QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
@@ -305,7 +305,7 @@ void CacheTableModelTest::setDataFromCacheSignalTest()
 
   QCOMPARE(dataChangedSpy.count(), 0);
   QCOMPARE(headerDataChangedSpy.count(), 0);
-  cache.setDataFromBackend(1, 1, "EB");
+  cache.fromBackendSetData(1, 1, "EB");
   QCOMPARE(dataChangedSpy.count(), 1);
   arguments = dataChangedSpy.takeFirst();
   QCOMPARE(arguments.count(), 3);
@@ -320,6 +320,91 @@ void CacheTableModelTest::setDataFromCacheSignalTest()
   QCOMPARE(headerDataChangedSpy.count(), 0);
 }
 
+void CacheTableModelTest::setDataAndSubmitTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+  EditableCacheTableModel model;
+  model.setCache(&cache);
+
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+
+  QVERIFY(setModelData(model, 2, 1, "EC"));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("EC"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("e"));
+
+  QVERIFY(cache.submitChanges());
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("EC"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+}
+
+void CacheTableModelTest::setDataAndSubmitSignalTest()
+{
+  EditPersonCache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+  EditableCacheTableModel model;
+  model.setCache(&cache);
+  QVariantList arguments;
+  QModelIndex topLeft, bottomRight;
+  QVector<int> roles;
+  QSignalSpy dataChangedSpy(&model, &EditableCacheTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  QSignalSpy headerDataChangedSpy(&model, &EditableCacheTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  QVERIFY(setModelData(model, 2, 1, "EC"));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 2);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 2);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(2)); // first
+  QCOMPARE(arguments.at(2), QVariant(2)); // last
+
+  QVERIFY(cache.submitChanges());
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 2);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 2);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(2)); // first
+  QCOMPARE(arguments.at(2), QVariant(2)); // last
+}
+
 template<typename Cache, typename Model>
 void insertRowsFromCacheTest()
 {
@@ -328,7 +413,7 @@ void insertRowsFromCacheTest()
   model.setCache(&cache);
 
   QCOMPARE(model.rowCount(), 0);
-  cache.insertRecordsFromBackend(0, 2, VariantRecord(2));
+  cache.fromBackendInsertRecords(0, 2, VariantRecord(2));
   QCOMPARE(model.rowCount(), 2);
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
@@ -358,7 +443,7 @@ void insertRowsFromCacheSignalTest()
 
   QCOMPARE(rowsAboutToBeInsertedSpy.count(), 0);
   QCOMPARE(rowsInsertedSpy.count(), 0);
-  cache.insertRecordsFromBackend(0, 2, VariantRecord(2));
+  cache.fromBackendInsertRecords(0, 2, VariantRecord(2));
   QCOMPARE(rowsAboutToBeInsertedSpy.count(), 1);
   arguments = rowsAboutToBeInsertedSpy.takeFirst();
   QCOMPARE(arguments.count(), 3);

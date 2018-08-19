@@ -55,6 +55,9 @@ class CacheTableModelTest : public QObject
   void setDataFromCacheTest();
   void setDataFromCacheSignalTest();
 
+  void setDataAndSubmitTest();
+  void setDataAndSubmitSignalTest();
+
   void readOnlyInsertRowsFromCacheTest();
   void editableInsertRowsFromCacheTest();
   void readOnlyInsertRowsFromCacheSignalTest();
