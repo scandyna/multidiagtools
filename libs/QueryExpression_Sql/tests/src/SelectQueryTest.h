@@ -22,11 +22,17 @@
 #define MDT_TEST_MAIN_H
 
 #include "SelectQueryTestBase.h"
+
 #include "Mdt/QueryExpression/SelectQueryFactory.h"
+
+#include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
+#include <memory>
 
 class SelectQueryTest : public SelectQueryTestBase
 {
  Q_OBJECT
+
+  using SelectQueryFacotory = Mdt::QueryExpression::AbstractSelectQueryFactory;
 
  private slots:
 
@@ -41,7 +47,7 @@ class SelectQueryTest : public SelectQueryTestBase
 
  private:
 
-  Mdt::QueryExpression::SelectQueryFactory mQueryFactory;
+  std::shared_ptr<SelectQueryFacotory> mQueryFactory;
 };
 
 #endif // #ifndef MDT_TEST_MAIN_H

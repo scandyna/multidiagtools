@@ -35,8 +35,9 @@ void SelectQueryTest::initTestCase()
 {
   QVERIFY(initDatabaseSqlite());
   QVERIFY(createTestSchema());
-  auto & sqlQueryFactory = mQueryFactory.makeImpl<Mdt::QueryExpression::SqlSelectQueryFactory>();
-  sqlQueryFactory.setDatabase(database());
+  auto queryFactory = std::make_shared<Mdt::QueryExpression::SqlSelectQueryFactory>();
+  queryFactory->setDatabase(database());
+  mQueryFactory = queryFactory;
 }
 
 void SelectQueryTest::cleanupTestCase()
@@ -55,7 +56,7 @@ void SelectQueryTest::execQueryTest()
   EntitySelectStatement<PersonEntity> stm;
   stm.selectAllFields();
 
-  auto query = mQueryFactory.createQuery();
+  auto query = mQueryFactory->createSelectQuery();
   QCOMPARE(query.fieldCount(), 0);
   QVERIFY(query.exec(stm));
   QCOMPARE(query.fieldCount(), 4);
@@ -99,7 +100,7 @@ void SelectQueryTest::fieldIndexTest()
   stm.addField(firstName);
   stm.addField(age);
 
-  auto query = mQueryFactory.createQuery();
+  auto query = mQueryFactory->createSelectQuery();
   QVERIFY(query.exec(stm));
   QCOMPARE(query.fieldCount(), 3);
   QCOMPARE(query.fieldIndex(remarks), 0);
@@ -122,7 +123,7 @@ void SelectQueryTest::fieldIndexEntityTest()
   stm.addField(remarks);
   stm.addField(firstName);
 
-  auto query = mQueryFactory.createQuery();
+  auto query = mQueryFactory->createSelectQuery();
   QVERIFY(query.exec(stm));
   QCOMPARE(query.fieldCount(), 3);
   QCOMPARE(query.fieldIndex(age), 0);
@@ -149,7 +150,7 @@ void SelectQueryTest::execQueryFilterTest()
   stm.selectAllFields();
   stm.setFilter( (age > 10)&&(age < 30) );
 
-  auto query = mQueryFactory.createQuery();
+  auto query = mQueryFactory->createSelectQuery();
   QVERIFY(query.exec(stm));
   QCOMPARE(query.fieldCount(), 4);
   const auto firstNameIndex = query.fieldIndex( stm.makeSelectField(stm.def().firstName()) );

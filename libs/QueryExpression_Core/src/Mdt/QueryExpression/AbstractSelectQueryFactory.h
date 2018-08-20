@@ -22,11 +22,63 @@
 #define MDT_QUERY_EXPRESSION_ABSTRACT_SELECT_QUERY_FACTORY_H
 
 #include "SelectQuery.h"
+#include "CachedSelectQuery.h"
 #include "MdtQueryExpression_CoreExport.h"
 
 namespace Mdt{ namespace QueryExpression{
 
   /*! \brief Base class to create query factory implementations
+   *
+   * A select query factory can be used in business logic in a implementation independent way.
+   *
+   * Example of a class that can execute a query:
+   * \code
+   * class SomeUseCase
+   * {
+   *   using SelectQueryFacotory = Mdt::QueryExpression::AbstractSelectQueryFactory;
+   *
+   *  public:
+   *
+   *   SomeUseCase(const std::shared_ptr<SelectQueryFacotory> & selectQueryFacotory)
+   *    : mSelectQueryFactory(selectQueryFacotory)
+   *   {
+   *   }
+   *
+   *   Mdt::Expected<PersonList> getPersonAbove29()
+   *   {
+   *     Mdt::Expected<PersonList> personList;
+   *     auto query = mSelectQueryFactory->createSelectQuery();
+   *
+   *     if( !query.exec( PersonAbove29Statement() ) ){
+   *       personList = query.lastError();
+   *       return personList;
+   *     }
+   *     // See AbstractSelectQuery to see how to fill the list
+   *
+   *     return personList;
+   *   }
+   *
+   *  private:
+   *
+   *   std::shared_ptr<SelectQueryFacotory> mSelectQueryFactory;
+   * };
+   * \endcode
+   *
+   * In some place, for example in main, the query factory is set up and passed to the use case:
+   * \code
+   * using namespace Mdt::QueryExpression;
+   *
+   * QSqlDatabase db; // See Qt documentation and Mdt::Sql to setup db
+   * auto selectQueryFactory = std::make_shared<SqlSelectQueryFactory>();
+   * selectQueryFactory->setDatabase(db);
+   *
+   * SomeUseCase someUseCase(selectQueryFacotory);
+   * const auto personList = someUseCase.getPersonAbove29();
+   * if(!personList){
+   *   // Error handling
+   * }
+   * doSomething(*personList);
+   * \endcode
    */
   class AbstractSelectQueryFactory
   {
@@ -53,6 +105,11 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Create a select query
      */
     virtual SelectQuery createSelectQuery() const = 0;
+
+    /*! \brief Create a cached select query
+     */
+    virtual CachedSelectQuery createCachedSelectQuery() const = 0;
+
   };
 
 }} // namespace Mdt{ namespace QueryExpression{
