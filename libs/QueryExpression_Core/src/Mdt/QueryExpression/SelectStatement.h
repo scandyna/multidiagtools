@@ -191,6 +191,12 @@ namespace Mdt{ namespace QueryExpression{
       mFilter.setFilter(filter);
     }
 
+    /*! \brief Set \a filter to this statement
+     *
+     * \pre \a filter must not be null
+     */
+    void setFilterExpression(const FilterExpression & filter);
+
     /*! \brief Check if a filter was set
      */
     bool hasFilter() const noexcept

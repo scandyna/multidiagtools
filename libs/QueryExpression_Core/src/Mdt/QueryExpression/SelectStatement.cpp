@@ -85,6 +85,13 @@ void SelectStatement::addField(const SelectEntity& entity, const FieldName& fiel
   mFieldList.addField(entity, fieldName, fieldAlias);
 }
 
+void SelectStatement::setFilterExpression(const FilterExpression & filter)
+{
+  Q_ASSERT(!filter.isNull());
+
+  mFilter = filter;
+}
+
 void SelectStatement::clear()
 {
   clearAttributesExceptEntity();

@@ -79,6 +79,17 @@ namespace Mdt{ namespace QueryExpression{
       transform(expr, 0, mTree);
     }
 
+    /*! \brief Set \a exprTree to this filter expression
+     *
+     * \pre \a exprTree must not be null
+     */
+    void setFilterExpressionTree(const ExpressionTree & exprTree)
+    {
+      Q_ASSERT(!exprTree.isNull());
+
+      mTree = exprTree;
+    }
+
     /*! \brief Check if this filter expression is null
      */
     bool isNull() const noexcept
