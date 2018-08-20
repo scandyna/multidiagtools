@@ -22,9 +22,6 @@
 #define MDT_TEST_MAIN_H
 
 #include "SelectQueryTestBase.h"
-
-#include "Mdt/QueryExpression/SelectQueryFactory.h"
-
 #include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
 #include <memory>
 
@@ -44,10 +41,7 @@ class SelectQueryTest : public SelectQueryTestBase
   void fieldIndexEntityTest();
   void fieldIndexMultiEntityTest();
   void execQueryFilterTest();
-
- private:
-
-  std::shared_ptr<SelectQueryFacotory> mQueryFactory;
+  void useCaseFactoryTest();
 };
 
 #endif // #ifndef MDT_TEST_MAIN_H

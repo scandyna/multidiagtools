@@ -21,9 +21,10 @@
 #ifndef MDT_QUERY_EXPRESSION_ABSTRACT_SELECT_QUERY_FACTORY_H
 #define MDT_QUERY_EXPRESSION_ABSTRACT_SELECT_QUERY_FACTORY_H
 
-#include "SelectQuery.h"
+#include "AbstractSelectQuery.h"
 #include "CachedSelectQuery.h"
 #include "MdtQueryExpression_CoreExport.h"
+#include <memory>
 
 namespace Mdt{ namespace QueryExpression{
 
@@ -49,8 +50,8 @@ namespace Mdt{ namespace QueryExpression{
    *     Mdt::Expected<PersonList> personList;
    *     auto query = mSelectQueryFactory->createSelectQuery();
    *
-   *     if( !query.exec( PersonAbove29Statement() ) ){
-   *       personList = query.lastError();
+   *     if( !query->exec( PersonAbove29Statement() ) ){
+   *       personList = query->lastError();
    *       return personList;
    *     }
    *     // See AbstractSelectQuery to see how to fill the list
@@ -72,7 +73,7 @@ namespace Mdt{ namespace QueryExpression{
    * auto selectQueryFactory = std::make_shared<SqlSelectQueryFactory>();
    * selectQueryFactory->setDatabase(db);
    *
-   * SomeUseCase someUseCase(selectQueryFacotory);
+   * SomeUseCase someUseCase(selectQueryFactory);
    * const auto personList = someUseCase.getPersonAbove29();
    * if(!personList){
    *   // Error handling
@@ -104,7 +105,7 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Create a select query
      */
-    virtual SelectQuery createSelectQuery() const = 0;
+    virtual std::unique_ptr<AbstractSelectQuery> createSelectQuery() const = 0;
 
     /*! \brief Create a cached select query
      */

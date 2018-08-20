@@ -21,6 +21,7 @@
 #ifndef MDT_QUERY_EXPRESSION_SQL_SELECT_QUERY_FACTORY_H
 #define MDT_QUERY_EXPRESSION_SQL_SELECT_QUERY_FACTORY_H
 
+#include "SqlSelectQuery.h"
 #include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
 #include "MdtQueryExpression_SqlExport.h"
 #include <QSqlDatabase>
@@ -46,9 +47,15 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Create a select query
      */
-    SelectQuery createSelectQuery() const override;
+    std::unique_ptr<AbstractSelectQuery> createSelectQuery() const override;
+
+    /*! \brief Create a cached select query
+     */
+    CachedSelectQuery createCachedSelectQuery() const override;
 
    private:
+
+    void setupQueryImpl(SqlSelectQuery & queryImpl) const;
 
     QSqlDatabase mDatabase;
   };

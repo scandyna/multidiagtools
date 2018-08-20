@@ -22,7 +22,6 @@
 #define MDT_TEST_MAIN_H
 
 #include "TestBase.h"
-#include "Mdt/QueryExpression/SelectQuery.h"
 
 class SqlTransformTest : public TestBase
 {

@@ -19,8 +19,42 @@
  **
  ****************************************************************************/
 #include "AbstractSelectQuery.h"
+#include <boost/variant.hpp>
 
 namespace Mdt{ namespace QueryExpression{
+
+class CallSelectQueryImplFieldIndex : public boost::static_visitor<int>
+{
+ public:
+
+  CallSelectQueryImplFieldIndex(const AbstractSelectQuery & query)
+   : mQuery(query)
+  {
+  }
+
+    int operator()(const SelectAllField &)
+    {
+      Q_ASSERT_X(false, "AbstractSelectQuery", "SelectAllField is not allowed in a condition expression");
+
+      return -1;
+    }
+
+    int operator()(const EntityAndField & field)
+    {
+      return mQuery.fieldIndexImpl(field);
+    }
+
+ private:
+
+  const AbstractSelectQuery & mQuery;
+};
+
+int AbstractSelectQuery::fieldIndex(const SelectField& field) const
+{
+  CallSelectQueryImplFieldIndex visitor(*this);
+
+  return boost::apply_visitor(visitor, field.internalVariant());
+}
 
 void AbstractSelectQuery::setLastError(const Error& error)
 {

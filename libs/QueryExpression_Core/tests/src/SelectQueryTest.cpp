@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "SelectQueryTest.h"
-#include "Mdt/QueryExpression/SelectQuery.h"
 #include "Mdt/QueryExpression/AbstractSelectQuery.h"
 #include <boost/variant.hpp>
 
@@ -48,17 +47,16 @@ class MemorySelectQuery : public Mdt::QueryExpression::AbstractSelectQuery
   {
   }
 
-//   int fieldIndex(const Mdt::QueryExpression::FieldName & field) const override
-//   {
-//   }
-
-  int fieldIndex(const Mdt::QueryExpression::EntityAndField & field) const override
-  {
-  }
-
   QVariant value(int fieldIndex) const override
   {
   }
+
+ private:
+
+  int fieldIndexImpl(const Mdt::QueryExpression::EntityAndField & field) const override
+  {
+  }
+
 };
 
 using namespace Mdt::QueryExpression;
@@ -69,9 +67,8 @@ using namespace Mdt::QueryExpression;
 
 void SelectQueryTest::instanceTest()
 {
-  auto query = SelectQuery::make<MemorySelectQuery>();
-  auto & memoryQuery = query.impl<MemorySelectQuery>();
-  
+//   auto query = SelectQuery::make<MemorySelectQuery>();
+//   auto & memoryQuery = query.impl<MemorySelectQuery>();
 
   QFAIL("Not complete");
 }

@@ -20,26 +20,24 @@
  ****************************************************************************/
 #include "CachedSelectQueryTest.h"
 #include "Mdt/QueryExpression/SqlSelectQuery.h"
+#include "Mdt/QueryExpression/CachedSelectQuery.h"
 #include "Mdt/Entity/QueryEntity.h"
 #include "Mdt/Entity/EntitySelectStatement.h"
+#include "Mdt/QueryExpression/SqlSelectQueryFactory.h"
+#include <memory>
 
 using namespace Mdt::Entity;
+using Mdt::QueryExpression::SqlSelectQuery;
+using Mdt::QueryExpression::CachedSelectQuery;
 
 /*
  * Init / cleanup
  */
 
-CachedSelectQueryTest::CachedSelectQueryTest()
- : mQuery(Mdt::QueryExpression::CachedSelectQuery::make<Mdt::QueryExpression::SqlSelectQuery>())
-{
-}
-
 void CachedSelectQueryTest::initTestCase()
 {
   QVERIFY(initDatabaseSqlite());
   QVERIFY(createTestSchema());
-  auto & sqlSelectQuery = mQuery.impl<Mdt::QueryExpression::SqlSelectQuery>();
-  sqlSelectQuery.setDatabase(database());
 }
 
 void CachedSelectQueryTest::cleanupTestCase()
@@ -60,29 +58,31 @@ void CachedSelectQueryTest::nullQueryTest()
 
 void CachedSelectQueryTest::execQueryTest()
 {
+  QVERIFY(cleanupPersonTable());
   QVERIFY(insertPerson(1, "P1", 10, "R1"));
   QVERIFY(insertPerson(2, "P2", 20, "R2"));
 
   EntitySelectStatement<PersonEntity> stm;
   stm.selectAllFields();
 
-  QVERIFY(!mQuery.isNull());
-  QCOMPARE(mQuery.rowCount(), 0);
-  QCOMPARE(mQuery.columnCount(), 0);
+  auto query = CachedSelectQuery::make<SqlSelectQuery>();
+  query.impl<SqlSelectQuery>().setDatabase(database());
 
-  QVERIFY(mQuery.exec(stm));
-  QCOMPARE(mQuery.rowCount(), 2);
-  QCOMPARE(mQuery.columnCount(), 4);
-  QCOMPARE(mQuery.value(0, 0), QVariant(1));
-  QCOMPARE(mQuery.value(0, 1), QVariant("P1"));
-  QCOMPARE(mQuery.value(0, 2), QVariant(10));
-  QCOMPARE(mQuery.value(0, 3), QVariant("R1"));
-  QCOMPARE(mQuery.value(1, 0), QVariant(2));
-  QCOMPARE(mQuery.value(1, 1), QVariant("P2"));
-  QCOMPARE(mQuery.value(1, 2), QVariant(20));
-  QCOMPARE(mQuery.value(1, 3), QVariant("R2"));
+  QVERIFY(!query.isNull());
+  QCOMPARE(query.rowCount(), 0);
+  QCOMPARE(query.columnCount(), 0);
 
-  QVERIFY(cleanupPersonTable());
+  QVERIFY(query.exec(stm));
+  QCOMPARE(query.rowCount(), 2);
+  QCOMPARE(query.columnCount(), 4);
+  QCOMPARE(query.value(0, 0), QVariant(1));
+  QCOMPARE(query.value(0, 1), QVariant("P1"));
+  QCOMPARE(query.value(0, 2), QVariant(10));
+  QCOMPARE(query.value(0, 3), QVariant("R1"));
+  QCOMPARE(query.value(1, 0), QVariant(2));
+  QCOMPARE(query.value(1, 1), QVariant("P2"));
+  QCOMPARE(query.value(1, 2), QVariant(20));
+  QCOMPARE(query.value(1, 3), QVariant("R2"));
 }
 
 /*

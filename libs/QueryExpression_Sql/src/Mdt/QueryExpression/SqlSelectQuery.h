@@ -99,6 +99,14 @@ namespace Mdt{ namespace QueryExpression{
      */
     int fieldCount() const override;
 
+    /*! \brief Get the value for \a fieldIndex from the current record
+     *
+     * \pre \a fieldIndex must be in a valid range ( 0 <= \a fieldIndex < fieldCount() ).
+     */
+    QVariant value(int fieldIndex) const override;
+
+   private:
+
     /*! \brief Get the field index of \a field
      *
      * Returns the index of \a field if it exists,
@@ -107,15 +115,7 @@ namespace Mdt{ namespace QueryExpression{
      *
      * \pre \a field must contain a EntityAndField
      */
-    int fieldIndex(const EntityAndField & field) const override;
-
-    /*! \brief Get the value for \a fieldIndex from the current record
-     *
-     * \pre \a fieldIndex must be in a valid range ( 0 <= \a fieldIndex < fieldCount() ).
-     */
-    QVariant value(int fieldIndex) const override;
-
-   private:
+    int fieldIndexImpl(const EntityAndField & field) const override;
 
     QSqlQuery mQuery;
     QSqlDatabase mDb;

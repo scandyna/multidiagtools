@@ -1,0 +1,240 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+
+/*! \page libs_QueryExpression QueryExpression
+ *
+ * \section introduction Introduction
+ *
+ * QueryExpression provide a interface to create query expressions.
+ *  It is divided in several parts:
+ *  - Compile time expression creation and checking
+ *  - Runtime expression creation
+ *  - Creation of select statements
+ *  - Execution of a statement in a select query
+ *  - Using select queries in a backend independ way, using a select query factory
+ *
+ * \section create_select_statement Create select statements
+ *
+ * Here is a example to create a simple select statement:
+ * \code
+ * using namespace Mdt::QueryExpression;
+ *
+ * SelectStatement stm;
+ * stm.setEntityName("Person");
+ * stm.selectAllFields();
+ * \endcode
+ *
+ * If a entity was defined using the \ref libs_Entity library,
+ *  the statement could be created this way:
+ * \code
+ * using namespace Mdt::Entity;
+ *
+ * EntitySelectStatement<PersonEntity> stm;
+ * stm.selectAllFields();
+ * \endcode
+ *
+ * It is possible to specify a alias for the entity,
+ *  the fields to select and maybe their field aliases,
+ *  and a filter:
+ * \code
+ * using namespace Mdt::QueryExpression;
+ *
+ * SelectField name( FieldName("name") );
+ * SelectField age( FieldName("age"), "A" );
+ *
+ * SelectStatement stm;
+ * stm.setEntityName("Person", "P");
+ * stm.addField("id");
+ * stm.addField(name);
+ * stm.addField(age);
+ * stm.addField( FieldName("remarks"), "R" );
+ * stm.setFilter( (name == "A") && (age > 29) );
+ * \endcode
+ *
+ * The same using the \ref libs_Entity library:
+ * \code
+ * using namespace Mdt::Entity;
+ *
+ * EntitySelectStatement<PersonEntity> stm;
+ * const auto name = stm.makeSelectField( stm.def().name() );
+ * const auto age = stm.makeSelectField( stm.def().age(), "A" );
+ *
+ * stm.addField( stm.def().id() );
+ * stm.addField(name);
+ * stm.addField(age);
+ * stm.addField( stm.def().remarks(), "R" );
+ * stm.setFilter( (name == "A") && (age > 29) );
+ * \endcode
+ *
+ * It is also possible to create more complex queries that links entities:
+ * \code
+ * using namespace Mdt::QueryExpression;
+ *
+ * SelectEntity person( EntityName("Person") );
+ * SelectEntity address( EntityName("Address"), "ADR");
+ *
+ * SelectField personId( person, FieldName("id") );
+ * SelectField personName( person, FieldName("name") );
+ * SelectField addressPersonId( address, FieldName("personId") );
+ * SelectField addressStreet( address, FieldName("street") );
+ *
+ * SelectStatement stm;
+ * stm.setEntity(person);
+ * stm.addField(personName);
+ * stm.addField(person, FieldName("remarks"), "PersonRemarks");
+ * stm.addField(addressStreet);
+ * stm.addField(address, FieldName("remarks"), "AddressRemarks");
+ * stm.joinEntity( address, addressPersonId == personId );
+ * stm.setFilter( (personName == "A") || (addressStreet == "Street name B") );
+ * \endcode
+ *
+ * If the \ref libs_Entity library is used, and a Mdt::Entity::Relation is defined
+ *  between the 2 entities to join, the statement can be simplified:
+ * \code
+ * using namespace Mdt::Entity;
+ *
+ * EntitySelectStatement<PersonEntity> stm;
+ * AddressEntity address;
+ *
+ * stm.selectAllFields();
+ * stm.joinEntity( address );
+ * stm.setFilter( (stm.def().name() == "A") || (address.def().street() == "B") );
+ * \endcode
+ *
+ * \section query_object Create a query object
+ *
+ * Example to create a query object, which is a statement:
+ * \code
+ * class PersonAbove29Statement : public Mdt::QueryExpression::SelectStatement
+ * {
+ *  public:
+ *
+ *   PersonAbove29Statement()
+ *   {
+ *     setEntityName("Person");
+ *     selectAllFields();
+ *     setFilter( Field("age") > 29 );
+ *   }
+ * };
+ * \endcode
+ *
+ * When using the \ref libs_Entity library, the query object could look like:
+ * \code
+ * class PersonAbove29Statement : public Mdt::Entity::EntitySelectStatement<PersonEntity>
+ * {
+ *  public:
+ *
+ *   PersonAbove29Statement()
+ *   {
+ *     addField( def().name() );
+ *     addField( def().age() );
+ *     setFilter( def().age() > 29 );
+ *   }
+ * };
+ * \endcode
+ *
+ * \sa Mdt::QueryExpression::SelectStatement
+ * \sa Mdt::Entity::EntitySelectStatement
+ *
+ * \section execute_query Execute statements in a query
+ *
+ *  A simple way is to directly use a concrete implementation:
+ *  \code
+ *  using namespace Mdt::QueryExpression;
+ *
+ *  QSqlDatabase db; // See Qt documentation and Mdt::Sql to setup db
+ *  SqlSelectQuery query;
+ *  query.setDatabase(db);
+ *  if(!query.exec( PersonAbove29Statement() )){
+ *    // Error handling
+ *  }
+ *  \endcode
+ *
+ * \sa Mdt::QueryExpression::SqlSelectQuery
+ *
+ * As said before, the concrete backend that will be used in the application
+ *  must not become a dependency in all the business logic.
+ *
+ * In the domain code, we must be able to create queries that are correctly
+ *  setup with a concrete backend, without knowing anything about this backend.
+ *
+ * To achieve this, Mdt::QueryExpression::AbstractSelectQueryFactory can be used:
+ * \code
+ * using namespace Mdt::QueryExpression;
+ *
+ * QSqlDatabase db; // See Qt documentation and Mdt::Sql to setup db
+ * auto selectQueryFactory = std::make_shared<SqlSelectQueryFactory>();
+ * selectQueryFactory->setDatabase(db);
+ *
+ * auto selectQuery = selectQueryFactory->createSelectQuery();
+ * if(!selectQuery->exec( PersonAbove29Statement() )){
+ *   // Error handling
+ * }
+ * while(selectQuery->next()){
+ *   qDebug() << "Name: " << selectQuery.value(0) << ", age: " << selectQuery.value(1);
+ * }
+ * \endcode
+ *
+ * \sa Mdt::QueryExpression::AbstractSelectQueryFactory
+ *
+ * \section creating_repository Create a query repository
+ *
+ * \deprecated This section is not up to date
+ *
+ * The repository pattern is interesting to abstract the storage layer in a application.
+ *  For entity specific repositories, a interface can be created for each one.
+ *  To execute queries, a single repository should be good.
+ *
+ * To create a storage independent repository interface:
+ * \code
+ * class CachedQueryRepository : public Mdt::Entity::CachedQueryRepository
+ * {
+ *  public:
+ *
+ *   virtual bool exec(const Mdt::QueryExpression::SelectQuery & expression) = 0;
+ * };
+ * \endcode
+ *
+ * Here is a example of a SQL implementation of this query repository:
+ * \code
+ * class CachedSqlQueryRepository : public CachedQueryRepository
+ * {
+ *  public:
+ *
+ *   bool exec(const Mdt::QueryExpression::SelectQuery & expression) override
+ *   {
+ *     Mdt::Sql::SelectQuery query(mDbConnection);
+ *
+ *     if(!query.exec(expression){
+ *       setLastError( query.lastError() );
+ *       return false;
+ *     }
+ *
+ *     NOTE : how to fill the cache
+ *
+ *     return true;
+ *   }
+ * };
+ * \endcode
+ *
+ * \todo Seems so generic that it could be provided
+ * \todo How to fill the cache ?
+ */

@@ -79,16 +79,16 @@ int SqlSelectQuery::fieldCount() const
   return mQuery.record().count();
 }
 
-int SqlSelectQuery::fieldIndex(const EntityAndField & field) const
+QVariant SqlSelectQuery::value(int fieldIndex) const
+{
+  return mQuery.value(fieldIndex);
+}
+
+int SqlSelectQuery::fieldIndexImpl(const EntityAndField & field) const
 {
   const auto sqlFieldName = field.fieldAliasOrName();
 
   return mQuery.record().indexOf(sqlFieldName);
-}
-
-QVariant SqlSelectQuery::value(int fieldIndex) const
-{
-  return mQuery.value(fieldIndex);
 }
 
 }} // namespace Mdt{ namespace QueryExpression{

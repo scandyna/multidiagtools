@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "SqlSelectQueryFactory.h"
-#include "SqlSelectQuery.h"
 
 namespace Mdt{ namespace QueryExpression{
 
@@ -30,13 +29,26 @@ void SqlSelectQueryFactory::setDatabase(const QSqlDatabase& db)
   mDatabase = db;
 }
 
-SelectQuery SqlSelectQueryFactory::createSelectQuery() const
+std::unique_ptr<AbstractSelectQuery> SqlSelectQueryFactory::createSelectQuery() const
 {
-  auto query = SelectQuery::make<SqlSelectQuery>();
-  auto & impl = query.impl<SqlSelectQuery>();
-  impl.setDatabase(mDatabase);
+  auto query = std::make_unique<SqlSelectQuery>();
+
+  query->setDatabase(mDatabase);
+
+  return std::move(query);
+}
+
+CachedSelectQuery SqlSelectQueryFactory::createCachedSelectQuery() const
+{
+  auto query = CachedSelectQuery::make<SqlSelectQuery>();
+  setupQueryImpl(query.impl<SqlSelectQuery>());
 
   return query;
+}
+
+void SqlSelectQueryFactory::setupQueryImpl(SqlSelectQuery& queryImpl) const
+{
+  queryImpl.setDatabase(mDatabase);
 }
 
 }} // namespace Mdt{ namespace QueryExpression{
