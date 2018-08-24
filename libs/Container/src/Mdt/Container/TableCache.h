@@ -222,6 +222,16 @@ namespace Mdt{ namespace Container{
       return mOperationMap.getRowsToUpdateInStorage();
     }
 
+    /*! \brief Get a list of rows for records that have been updated in the cache
+     *
+     * The returned list constain rows that have been inserted
+     *  or updated in this cache.
+     */
+    RowList getRowsForUpdatedRecords() const
+    {
+      return mOperationMap.getRowsForUpdatedRecords();
+    }
+
     /*! \brief Get a list of rows that have to be deleted in the storage
      *
      * \note The returned list is sorted in descending way,

@@ -116,6 +116,11 @@ RowList TableCacheOperationMap::getRowsToUpdateInStorage() const
   return getRowsForOperation(TableCacheOperation::Update);
 }
 
+RowList TableCacheOperationMap::getRowsForUpdatedRecords() const
+{
+  return getRowsForOperation(TableCacheOperation::Insert, TableCacheOperation::Update);
+}
+
 RowList TableCacheOperationMap::getRowsToDeleteInStorage() const
 {
   auto rowList = getRowsForOperation(TableCacheOperation::Delete);
