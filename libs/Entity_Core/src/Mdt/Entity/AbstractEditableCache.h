@@ -96,7 +96,7 @@ namespace Mdt{ namespace Entity{
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \pre \a record 's columnt count must be the same as columnCount()
      */
-    void fromBackendSetRecord(int row, const VariantRecord & record) override;
+    void fromBackendSetRecord(int row, const Mdt::Container::VariantRecord & record) override;
 
     /*! \brief Insert \a count copies of \a record before \a row to this cache
      *
@@ -107,7 +107,7 @@ namespace Mdt{ namespace Entity{
      * \pre rowCount() + \a count must be <= cachedRowCountLimit()
      * \pre \a record 's columnt count must be the same as columnCount()
      */
-    void insertRecords(int row, int count, const VariantRecord & record);
+    void insertRecords(int row, int count, const Mdt::Container::VariantRecord & record);
 
     /*! \brief Add a row to the end of this cache
      *

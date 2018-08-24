@@ -22,6 +22,7 @@
 #include "Mdt/IndexRange/RowRange.h"
 
 using Mdt::Container::TableCacheOperation;
+using Mdt::Container::VariantRecord;
 using Mdt::IndexRange::RowRange;
 
 namespace Mdt{ namespace Entity{

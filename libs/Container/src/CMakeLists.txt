@@ -9,6 +9,7 @@ set(SOURCE_FILES
   Mdt/Container/TableCacheOperationIndex.cpp
   Mdt/Container/TableCacheOperationMap.cpp
   Mdt/Container/TableCache.cpp
+  Mdt/Container/VariantRecord.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

@@ -21,80 +21,15 @@
 #ifndef MDT_ENTITY_ABSTRACT_READ_ONLY_CACHE_H
 #define MDT_ENTITY_ABSTRACT_READ_ONLY_CACHE_H
 
+#include "Mdt/Container/VariantRecord.h"
 #include "Mdt/Error.h"
 #include "Mdt/IndexRange/RowRange.h"
 #include "MdtEntity_CoreExport.h"
 #include <QObject>
 #include <QVariant>
-// #include <QAbstractItemModel>
 #include <vector>
 
 namespace Mdt{ namespace Entity{
-
-  /*! \brief Record using QVariant as column data
-   */
-  class MDT_ENTITY_CORE_EXPORT VariantRecord
-  {
-   public:
-
-    /*! \brief Construct a record with \a count columns
-     */
-    explicit VariantRecord(int count)
-     : mRecord(count)
-    {
-    }
-
-    /*! \brief Copy construct a record from \a other
-     */
-    VariantRecord(const VariantRecord & other) = default;
-
-    /*! \brief Copy assign \a other to this record
-     */
-    VariantRecord & operator=(const VariantRecord & other) = default;
-
-    /*! \brief Move construct a record from \a other
-     */
-    VariantRecord(VariantRecord && other) = default;
-
-    /*! \brief Move assign \a other to this record
-     */
-    VariantRecord & operator=(VariantRecord && other) = default;
-
-    /*! \brief Get count of columns
-     */
-    int columnCount() const noexcept
-    {
-      return mRecord.size();
-    }
-
-    /*! \brief Get \a value at \a column
-     *
-     * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
-     */
-    QVariant value(int column) const
-    {
-      Q_ASSERT(column >= 0);
-      Q_ASSERT(column < columnCount());
-
-      return mRecord[column];
-    }
-
-    /*! \brief Set \a value at \a column
-     *
-     * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
-     */
-    void setValue(int column, const QVariant & value)
-    {
-      Q_ASSERT(column >= 0);
-      Q_ASSERT(column < columnCount());
-
-      mRecord[column] = value;
-    }
-
-   private:
-
-    std::vector<QVariant> mRecord;
-  };
 
   /*! \brief Cache between a storage and a view
    *
@@ -227,7 +162,7 @@ namespace Mdt{ namespace Entity{
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \pre \a record 's columnt count must be the same as columnCount()
      */
-    virtual void fromBackendSetRecord(int row, const VariantRecord & record);
+    virtual void fromBackendSetRecord(int row, const Mdt::Container::VariantRecord & record);
 
     /*! \brief Insert \a count copies of \a record before \a row to this cache
      *
@@ -236,7 +171,7 @@ namespace Mdt{ namespace Entity{
      * \pre rowCount() + \a count must be <= cachedRowCountLimit()
      * \pre \a record 's columnt count must be the same as columnCount()
      */
-    void fromBackendInsertRecords(int row, int count, const VariantRecord & record);
+    void fromBackendInsertRecords(int row, int count, const Mdt::Container::VariantRecord & record);
 
     /*! \brief Remove \a count rows starting from \a row
      *
@@ -260,7 +195,7 @@ namespace Mdt{ namespace Entity{
      * \pre rowCount() must be < cachedRowCountLimit()
      * \pre \a record 's columnt count must be the same as columnCount()
      */
-    void fromBackendAppendRecord(const VariantRecord & record);
+    void fromBackendAppendRecord(const Mdt::Container::VariantRecord & record);
 
    signals:
 
@@ -365,7 +300,7 @@ namespace Mdt{ namespace Entity{
      */
     void endRemoveRows();
 
-    std::vector<VariantRecord> mCache;
+    std::vector<Mdt::Container::VariantRecord> mCache;
     int mCachedRowCountLimit = 5000;
     Mdt::Error mLastError;
     bool mResettingCache = false;

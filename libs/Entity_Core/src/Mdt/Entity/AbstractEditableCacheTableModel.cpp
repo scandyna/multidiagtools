@@ -23,6 +23,7 @@
 #include <QLatin1String>
 
 using Mdt::Container::TableCacheOperation;
+using Mdt::Container::VariantRecord;
 
 namespace Mdt{ namespace Entity{
 

@@ -21,7 +21,7 @@
 #ifndef MDT_ENTITY_ABSTRACT_ASYNC_READ_ONLY_CACHE_H
 #define MDT_ENTITY_ABSTRACT_ASYNC_READ_ONLY_CACHE_H
 
-#include "VariantRecord.h"
+#include "Mdt/Container/VariantRecord.h"
 #include "AbstractReadOnlyCache.h"
 #include "MdtEntity_CoreExport.h"
 #include <QObject>

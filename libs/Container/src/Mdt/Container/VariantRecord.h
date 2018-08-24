@@ -18,19 +18,19 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ENTITY_VARIANT_RECORD_H
-#define MDT_ENTITY_VARIANT_RECORD_H
+#ifndef MDT_CONTAINER_VARIANT_RECORD_H
+#define MDT_CONTAINER_VARIANT_RECORD_H
 
-#include "MdtEntity_CoreExport.h"
+#include "MdtContainerExport.h"
 #include <QVariant>
 #include <QMetaType>
 #include <vector>
 
-namespace Mdt{ namespace Entity{
+namespace Mdt{ namespace Container{
 
   /*! \brief Record using QVariant as column data
    */
-  class MDT_ENTITY_CORE_EXPORT VariantRecord
+  class MDT_CONTAINER_EXPORT VariantRecord
   {
    public:
 
@@ -97,7 +97,7 @@ namespace Mdt{ namespace Entity{
     std::vector<QVariant> mRecord;
   };
 
-}} // namespace Mdt{ namespace Entity{
-Q_DECLARE_METATYPE(Mdt::Entity::VariantRecord)
+}} // namespace Mdt{ namespace Container{
+Q_DECLARE_METATYPE(Mdt::Container::VariantRecord)
 
-#endif // #ifndef MDT_ENTITY_VARIANT_RECORD_H
+#endif // #ifndef MDT_CONTAINER_VARIANT_RECORD_H
