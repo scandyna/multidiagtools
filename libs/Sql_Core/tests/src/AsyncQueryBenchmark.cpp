@@ -79,8 +79,6 @@ void AsyncQueryBenchmark::selectQuery()
 
 void AsyncQueryBenchmark::asyncSelectQuery()
 {
-  const int timeout = 1000;
-
   QVERIFY(cleanupClientTable());
   QVERIFY(insertClient(1, "A"));
   QVERIFY(insertClient(2, "B"));
