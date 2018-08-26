@@ -18,29 +18,52 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_ASYNC_QUERY_TEST_H
-#define MDT_SQL_ASYNC_QUERY_TEST_H
+#ifndef MDT_SQL_ASYNC_TEST_QUERY_RECEIVER_H
+#define MDT_SQL_ASYNC_TEST_QUERY_RECEIVER_H
 
-#include "TestBase.h"
-#include "AsyncTestQueryReceiver.h"
+#include "Mdt/Container/VariantRecord.h"
+#include <QObject>
+#include <vector>
 
-class AsyncQueryTest : public TestBase
+/*
+ * Helper class to receive events from a async query
+ */
+class AsyncTestQueryReceiver : public QObject
 {
  Q_OBJECT
 
- private slots:
+ public:
 
-  void initTestCase();
-  void cleanupTestCase();
+  bool hasResult() const
+  {
+    return recordCount() > 0;
+  }
 
-  void generateConnectionNameTest();
-  void generateConnectionNameTest_data();
+  int recordCount() const
+  {
+    return mRecordList.size();
+  }
 
-  void connectionSetupTest();
+  Mdt::Container::VariantRecord recordAt(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < recordCount());
 
-  void createQueryTest();
-  void simpleSelectTest();
-  void twoQueriesSelectTest();
+    return mRecordList[index];
+  }
+
+  void clear()
+  {
+    mRecordList.clear();
+  }
+
+ public slots:
+
+  void storeNewRecord(const Mdt::Container::VariantRecord & record);
+
+ private:
+
+  std::vector<Mdt::Container::VariantRecord> mRecordList;
 };
 
-#endif // #ifndef MDT_SQL_ASYNC_QUERY_TEST_H
+#endif // #ifndef MDT_SQL_ASYNC_TEST_QUERY_RECEIVER_H

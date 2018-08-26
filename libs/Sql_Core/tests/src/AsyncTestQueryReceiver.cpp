@@ -18,29 +18,9 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_ASYNC_QUERY_TEST_H
-#define MDT_SQL_ASYNC_QUERY_TEST_H
-
-#include "TestBase.h"
 #include "AsyncTestQueryReceiver.h"
 
-class AsyncQueryTest : public TestBase
+void AsyncTestQueryReceiver::storeNewRecord(const Mdt::Container::VariantRecord& record)
 {
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void generateConnectionNameTest();
-  void generateConnectionNameTest_data();
-
-  void connectionSetupTest();
-
-  void createQueryTest();
-  void simpleSelectTest();
-  void twoQueriesSelectTest();
-};
-
-#endif // #ifndef MDT_SQL_ASYNC_QUERY_TEST_H
+  mRecordList.push_back(record);
+}

@@ -8,6 +8,7 @@ find_package(Qt5 COMPONENTS Test)
 
 set(SOURCE_FILES
     src/TestBase.cpp
+    src/AsyncTestQueryReceiver.cpp
     src/Schema/Client.cpp
     src/Schema/Client2.cpp
     src/Schema/Address.cpp
@@ -55,6 +56,7 @@ addSqlCoreTest("ExpressionTest")
 addSqlCoreTest("SelectStatementTest")
 addSqlCoreTest("QueryTest")
 addSqlCoreTest("AsyncQueryTest")
+addSqlCoreTest("AsyncQueryBenchmark")
 addSqlCoreTest("SQLiteDatabaseTest")
 addSqlCoreTest("SchemaFieldTypeMapTest")
 addSqlCoreTest("SchemaFieldTest")

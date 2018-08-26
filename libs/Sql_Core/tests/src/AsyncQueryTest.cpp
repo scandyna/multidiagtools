@@ -38,13 +38,8 @@ void AsyncQueryTest::cleanupTestCase()
 }
 
 /*
- * AsyncTestQueryReceiver
+ * Helpers
  */
-
-void AsyncTestQueryReceiver::storeNewRecord(const Mdt::Container::VariantRecord& record)
-{
-  mRecordList.push_back(record);
-}
 
 void setupReceiver(AsyncTestQueryReceiver & receiver, const std::unique_ptr<AsyncQuery> & query)
 {
