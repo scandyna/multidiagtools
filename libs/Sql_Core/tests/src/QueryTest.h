@@ -23,10 +23,8 @@
 
 #include "TestBase.h"
 #include "Mdt/Sql/PrimaryKeyRecord.h"
-#include <QTemporaryFile>
-#include <QSqlDatabase>
 
-class QueryTest : public QObject
+class QueryTest : public TestBase
 {
  Q_OBJECT
 
@@ -49,17 +47,8 @@ class QueryTest : public QObject
 
  private:
 
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
   Mdt::Sql::PrimaryKeyRecord buildPrimaryKeyRecord(int id);
   Mdt::Sql::PrimaryKeyRecord buildPrimaryKeyRecord(int idA, int idB);
-
-  bool insertClient(int id, const QString & name);
-  bool cleanupClientTable();
-
-  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase mDatabase;
 };
 
 #endif // #ifndef MDT_SQL_QUERY_TEST_H

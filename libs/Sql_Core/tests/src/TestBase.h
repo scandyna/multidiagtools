@@ -37,6 +37,10 @@ class TestBase : public QObject
   bool initDatabaseSqlite();
   QSqlDatabase database() const;
 
+  bool createClientTable();
+  bool insertClient(int id, const QString & name);
+  bool cleanupClientTable();
+
   bool createTestSchema();
 
  private:

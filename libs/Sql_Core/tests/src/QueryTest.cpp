@@ -60,26 +60,12 @@ class InsertQueryTest : public Mdt::Sql::InsertQuery
 
 void QueryTest::initTestCase()
 {
-  /*
-   * Init and open database
-   */
-  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
-  QVERIFY(mDatabase.isValid());
-  QVERIFY(mTempFile.open());
-  mTempFile.close();
-  mDatabase.setDatabaseName(mTempFile.fileName());
-  QVERIFY(mDatabase.open());
-  /*
-   * Create schema
-   */
-  Mdt::Sql::Schema::Driver driver(mDatabase);
-  QVERIFY(driver.isValid());
-  QVERIFY(driver.createSchema(Schema::TestSchema()));
+  QVERIFY(initDatabaseSqlite());
+  QVERIFY(createClientTable());
 }
 
 void QueryTest::cleanupTestCase()
 {
-  mDatabase.close();
 }
 
 /*
@@ -88,7 +74,7 @@ void QueryTest::cleanupTestCase()
 
 void QueryTest::insertQueryTest()
 {
-  InsertQueryTest query(mDatabase);
+  InsertQueryTest query(database());
   Schema::Client client;
   QString expectedSql;
 
@@ -130,7 +116,7 @@ void QueryTest::insertQueryTest()
   // Insert and check
   QVERIFY(query.exec());
   {
-    QSqlQuery q(mDatabase);
+    QSqlQuery q(database());
     QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
     QVERIFY(q.next());
     QCOMPARE(q.value(0), QVariant(1));
@@ -145,7 +131,7 @@ void QueryTest::updateStatementTest()
   Mdt::Sql::UpdateStatement statement;
   Mdt::Sql::PrimaryKeyRecord pkr;
   QString expectedSql;
-  const auto db = mDatabase;
+  const auto db = database();
 
   /*
    * Check basic API - 1 field/value
@@ -185,7 +171,7 @@ void QueryTest::updateStatementPrimaryKeyConditionsTest()
 {
   Mdt::Sql::UpdateStatement statement;
   QString expectedSql;
-  const auto db = mDatabase;
+  const auto db = database();
 
   /*
    * 1 field PK
@@ -232,7 +218,7 @@ void QueryTest::updateStatementToConditionsValueListTest()
 
 void QueryTest::updateQueryTest()
 {
-  Mdt::Sql::UpdateQuery query(mDatabase);
+  Mdt::Sql::UpdateQuery query(database());
 
   QVERIFY(cleanupClientTable());
   QVERIFY(insertClient(1, "Name 1"));
@@ -242,7 +228,7 @@ void QueryTest::updateQueryTest()
   query.setConditions( buildPrimaryKeyRecord(1) );
   QVERIFY(query.exec());
   {
-    QSqlQuery q(mDatabase);
+    QSqlQuery q(database());
     QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
     QVERIFY(q.next());
     QCOMPARE(q.value(0), QVariant(1));
@@ -257,7 +243,7 @@ void QueryTest::deleteStatementTest()
   Mdt::Sql::DeleteStatement statement;
   Mdt::Sql::PrimaryKeyRecord pkr;
   QString expectedSql;
-  const auto db = mDatabase;
+  const auto db = database();
 
   /*
    * Check basic API - 1 field condition
@@ -281,7 +267,7 @@ void QueryTest::deleteStatementPrimaryKeyConditionsTest()
 {
   Mdt::Sql::DeleteStatement statement;
   QString expectedSql;
-  const auto db = mDatabase;
+  const auto db = database();
 
   /*
    * 1 field PK
@@ -323,7 +309,7 @@ void QueryTest::deleteStatementToConditionsValueListTest()
 
 void QueryTest::deleteQueryTest()
 {
-  Mdt::Sql::DeleteQuery query(mDatabase);
+  Mdt::Sql::DeleteQuery query(database());
 
   QVERIFY(cleanupClientTable());
   QVERIFY(insertClient(1, "Name 1"));
@@ -334,7 +320,7 @@ void QueryTest::deleteQueryTest()
   query.setConditions( buildPrimaryKeyRecord(2) );
   QVERIFY(query.exec());
   {
-    QSqlQuery q(mDatabase);
+    QSqlQuery q(database());
     QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
     QVERIFY(q.next());
     QCOMPARE(q.value(0), QVariant(1));
@@ -348,7 +334,7 @@ void QueryTest::deleteQueryTest()
   query.setTableName("Client_tbl");
   QVERIFY(query.exec());
   {
-    QSqlQuery q(mDatabase);
+    QSqlQuery q(database());
     QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
     QVERIFY(!q.next());
   }
@@ -373,30 +359,6 @@ Mdt::Sql::PrimaryKeyRecord QueryTest::buildPrimaryKeyRecord(int idA, int idB)
   pkr.addValue(FieldName("IdB_PK"), idB);
 
   return pkr;
-}
-
-bool QueryTest::insertClient(int id, const QString& name)
-{
-  Schema::Client client;
-  Mdt::Sql::InsertQuery query(mDatabase);
-  query.setTable(client);
-  query.addValue(client.Id_PK(), id);
-  query.addValue(client.Name(), name);
-  if(!query.exec()){
-    qWarning() << "Insert client failed: " << query.lastError().text();
-    return false;
-  }
-  return true;
-}
-
-bool QueryTest::cleanupClientTable()
-{
-  QSqlQuery query(mDatabase);
-  if(!query.exec("DELETE FROM Client_tbl")){
-    qWarning() << "Cleanup Client_tbl failed: " << query.lastError().text();
-    return false;
-  }
-  return true;
 }
 
 /*

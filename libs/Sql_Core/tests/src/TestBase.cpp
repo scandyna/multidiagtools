@@ -20,7 +20,9 @@
  ****************************************************************************/
 #include "TestBase.h"
 #include "Schema/TestSchema.h"
+#include "Schema/Client.h"
 #include "Mdt/Sql/Schema/Driver.h"
+#include "Mdt/Sql/InsertQuery.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
@@ -51,6 +53,43 @@ bool TestBase::initDatabaseSqlite()
 QSqlDatabase TestBase::database() const
 {
   return mDatabase;
+}
+
+bool TestBase::createClientTable()
+{
+  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Q_ASSERT(driver.isValid());
+
+  if(!driver.createTable( Schema::Client() )){
+    qWarning() << "Could not create client table, error: " << driver.lastError().text();
+    return false;
+  }
+
+  return true;
+}
+
+bool TestBase::insertClient(int id, const QString& name)
+{
+  Schema::Client client;
+  Mdt::Sql::InsertQuery query(mDatabase);
+  query.setTable(client);
+  query.addValue(client.Id_PK(), id);
+  query.addValue(client.Name(), name);
+  if(!query.exec()){
+    qWarning() << "Insert client failed: " << query.lastError().text();
+    return false;
+  }
+  return true;
+}
+
+bool TestBase::cleanupClientTable()
+{
+  QSqlQuery query(mDatabase);
+  if(!query.exec("DELETE FROM Client_tbl")){
+    qWarning() << "Cleanup Client_tbl failed: " << query.lastError().text();
+    return false;
+  }
+  return true;
 }
 
 bool TestBase::createTestSchema()
