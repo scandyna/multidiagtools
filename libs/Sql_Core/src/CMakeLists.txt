@@ -34,6 +34,8 @@ set(SOURCE_FILES
     Mdt/Sql/WhereExpression.cpp
     Mdt/Sql/SelectStatement.cpp
     Mdt/Sql/SelectStatementSqlTransform.cpp
+    Mdt/Sql/ConnectionParameters.cpp
+    Mdt/Sql/SQLiteConnectionParameters.cpp
     Mdt/Sql/AbstractSelectQuery.cpp
     Mdt/Sql/SelectQuery.cpp
     Mdt/Sql/AsyncQuery.cpp
