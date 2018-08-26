@@ -49,13 +49,6 @@ bool TestBase::initDatabaseSqlite()
     qWarning() << "QSQLITE driver is not available";
     return false;
   }
-//   // Create a database
-//   if(!mTempFile.open()){
-//     qWarning() << "Could not open file " << mTempFile.fileName();
-//     return false;
-//   }
-//   mTempFile.close();
-//   mDatabase.setDatabaseName(mTempFile.fileName());
   mConnectionParameters.setupDatabase(mDatabase);
   if(!mDatabase.open()){
     qWarning() << "Could not open database, error: " << mDatabase.lastError();
