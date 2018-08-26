@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_TEST_BASE_H
 #define MDT_SQL_TEST_BASE_H
 
+#include "Mdt/Sql/ConnectionParameters.h"
 #include "Mdt/CoreApplication.h"
 #include <QTemporaryFile>
 #include <QSqlDatabase>
@@ -36,6 +37,7 @@ class TestBase : public QObject
 
   bool initDatabaseSqlite();
   QSqlDatabase database() const;
+  Mdt::Sql::ConnectionParameters connectionParameters() const;
 
   bool createClientTable();
   bool insertClient(int id, const QString & name);
@@ -47,6 +49,7 @@ class TestBase : public QObject
 
   QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
   QSqlDatabase mDatabase;
+  Mdt::Sql::ConnectionParameters mConnectionParameters;
 };
 
 #endif // #ifndef MDT_SQL_TEST_BASE_H

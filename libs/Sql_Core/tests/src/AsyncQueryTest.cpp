@@ -83,18 +83,18 @@ void AsyncQueryTest::connectionSetupTest()
   QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_3"));
 
   AsyncQueryConnection cnn1;
-  QVERIFY(cnn1.setup(database().databaseName()));
+  QVERIFY(cnn1.setup(connectionParameters()));
   QVERIFY(QSqlDatabase::contains("MdtAsyncQueryConnection_1"));
   QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_2"));
   QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_3"));
 
   AsyncQueryConnection cnn2;
-  QVERIFY(cnn2.setup(database().databaseName()));
+  QVERIFY(cnn2.setup(connectionParameters()));
   QVERIFY(QSqlDatabase::contains("MdtAsyncQueryConnection_1"));
   QVERIFY(QSqlDatabase::contains("MdtAsyncQueryConnection_2"));
   QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_3"));
 
-  QVERIFY(cnn2.setup(database().databaseName()));
+  QVERIFY(cnn2.setup(connectionParameters()));
   QVERIFY(QSqlDatabase::contains("MdtAsyncQueryConnection_1"));
   QVERIFY(QSqlDatabase::contains("MdtAsyncQueryConnection_2"));
   QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_3"));
@@ -103,7 +103,7 @@ void AsyncQueryTest::connectionSetupTest()
 void AsyncQueryTest::createQueryTest()
 {
   AsyncQueryConnection cnn;
-  QVERIFY(cnn.setup(database().databaseName()));
+  QVERIFY(cnn.setup(connectionParameters()));
 
   auto query1 = cnn.createQuery();
   QCOMPARE(query1->instanceId(), 1);
@@ -117,7 +117,7 @@ void AsyncQueryTest::simpleSelectTest()
   const int timeout = 1000;
 
   AsyncQueryConnection cnn;
-  QVERIFY(cnn.setup(database().databaseName()));
+  QVERIFY(cnn.setup(connectionParameters()));
   auto query = cnn.createQuery();
   AsyncTestQueryReceiver receiver;
   setupReceiver(receiver, query);
@@ -151,7 +151,7 @@ void AsyncQueryTest::twoQueriesSelectTest()
   const int timeout = 1000;
 
   AsyncQueryConnection cnn;
-  QVERIFY(cnn.setup(database().databaseName()));
+  QVERIFY(cnn.setup(connectionParameters()));
   auto query1 = cnn.createQuery();
   AsyncTestQueryReceiver receiver1;
   setupReceiver(receiver1, query1);

@@ -32,4 +32,11 @@ void ConnectionParameters::setDatabaseName(const QString & name)
   mDatabaseName = name;
 }
 
+void ConnectionParameters::setupDatabase(QSqlDatabase & db) const
+{
+  Q_ASSERT(db.driverName() == mDriverName);
+
+  db.setDatabaseName(mDatabaseName);
+}
+
 }} // namespace Mdt{ namespace Sql{

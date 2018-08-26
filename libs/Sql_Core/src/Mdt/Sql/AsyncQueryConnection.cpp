@@ -38,7 +38,7 @@ AsyncQueryConnection::~AsyncQueryConnection()
   mThread.wait();
 }
 
-bool AsyncQueryConnection::setup(const QString & sqliteDbPath)
+bool AsyncQueryConnection::setup(const ConnectionParameters & parameters)
 {
   mThread.quit();
   mThread.wait();
@@ -47,7 +47,7 @@ bool AsyncQueryConnection::setup(const QString & sqliteDbPath)
   mLastConnectionName = worker->connectionName();
   worker->moveToThread(&mThread);
   connect(&mThread, &QThread::finished, worker, &QObject::deleteLater);
-  if(!worker->setup(sqliteDbPath)){
+  if(!worker->setup(parameters)){
     mSetupError = worker->setupError();
     return false;
   }

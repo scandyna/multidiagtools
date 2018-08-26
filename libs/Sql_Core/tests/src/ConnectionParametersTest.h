@@ -30,6 +30,7 @@ class ConnectionParametersTest : public QObject
  private slots:
 
   void constructTest();
+  void setupQSqlDatabaseTest();
   void sqliteParametersTest();
 };
 

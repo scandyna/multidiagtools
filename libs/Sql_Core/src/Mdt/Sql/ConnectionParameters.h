@@ -22,6 +22,7 @@
 #define MDT_SQL_CONNECTION_PARAMETERS_H
 
 #include "MdtSql_CoreExport.h"
+#include <QSqlDatabase>
 #include <QString>
 
 namespace Mdt{ namespace Sql{
@@ -38,7 +39,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Construct parameters
      */
-    ConnectionParameters(const QString & driverName);
+    explicit ConnectionParameters(const QString & driverName);
 
     /*! \brief Copy construct parametrs from \a other
      */
@@ -73,6 +74,14 @@ namespace Mdt{ namespace Sql{
     {
       return mDatabaseName;
     }
+
+    /*! \brief Setup \a db with this parameters
+     *
+     * Will setup all attributes of \a db except the driver.
+     *
+     * \pre \a db must have the same driver name than driverName()
+     */
+    void setupDatabase(QSqlDatabase & db) const;
 
    private:
 

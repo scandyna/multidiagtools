@@ -45,23 +45,23 @@ AsyncQueryThreadWorker::~AsyncQueryThreadWorker()
   QSqlDatabase::removeDatabase(connectionName);
 }
 
-bool AsyncQueryThreadWorker::setup(const QString & sqliteDbPath)
+bool AsyncQueryThreadWorker::setup(const ConnectionParameters & parameters)
 {
   const auto connectionName = generateConnectionName( QSqlDatabase::connectionNames() );
 
-  *mDatabase = QSqlDatabase::addDatabase( QLatin1String("QSQLITE"), connectionName );
+  *mDatabase = QSqlDatabase::addDatabase( parameters.driverName(), connectionName );
   if(!mDatabase->isValid()){
     const auto msg = tr("Could not add a database connection with a driver of type %1")
-                     .arg( QLatin1String("QSQLITE") );
+                     .arg( parameters.driverName() );
     mSetupError = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     mSetupError.stackError( mdtErrorFromQSqlDatabaseQ(*mDatabase, this) );
     return false;
   }
 
-  mDatabase->setDatabaseName(sqliteDbPath);
+  parameters.setupDatabase(*mDatabase);
   if(!mDatabase->open()){
     const auto msg = tr("Could not open database '%1'")
-                     .arg(sqliteDbPath);
+                     .arg(parameters.databaseName());
     mSetupError = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     mSetupError.stackError( mdtErrorFromQSqlDatabaseQ(*mDatabase, this) );
     return false;

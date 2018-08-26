@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_ASYNC_QUERY_THREAD_H
 #define MDT_SQL_ASYNC_QUERY_THREAD_H
 
+#include "ConnectionParameters.h"
 #include "Mdt/Container/VariantRecord.h"
 #include "Mdt/Error.h"
 #include "MdtSql_CoreExport.h"
@@ -57,10 +58,8 @@ namespace Mdt{ namespace Sql{
     AsyncQueryThreadWorker & operator=(AsyncQueryThreadWorker &&) = delete;
 
     /*! \brief Setup database
-     *
-     * \todo Use ConnectionParameters
      */
-    bool setup(const QString & sqliteDbPath);
+    bool setup(const ConnectionParameters & parameters);
 
     /*! \brief Get setup error
      */

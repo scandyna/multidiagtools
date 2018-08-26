@@ -21,27 +21,42 @@
 #include "TestBase.h"
 #include "Schema/TestSchema.h"
 #include "Schema/Client.h"
+#include "Mdt/Sql/SQLiteConnectionParameters.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/InsertQuery.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
 
+using Mdt::Sql::SQLiteConnectionParameters;
+
 bool TestBase::initDatabaseSqlite()
 {
-  // Get database instance
-  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
-  if(!mDatabase.isValid()){
-    qWarning() << "QSQLITE driver is not available";
-    return false;
-  }
+  SQLiteConnectionParameters parameters;
+
   // Create a database
   if(!mTempFile.open()){
     qWarning() << "Could not open file " << mTempFile.fileName();
     return false;
   }
   mTempFile.close();
-  mDatabase.setDatabaseName(mTempFile.fileName());
+  parameters.setDatabaseFile(mTempFile.fileName());
+  mConnectionParameters = parameters.toConnectionParameters();
+
+  // Get database instance
+  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  if(!mDatabase.isValid()){
+    qWarning() << "QSQLITE driver is not available";
+    return false;
+  }
+//   // Create a database
+//   if(!mTempFile.open()){
+//     qWarning() << "Could not open file " << mTempFile.fileName();
+//     return false;
+//   }
+//   mTempFile.close();
+//   mDatabase.setDatabaseName(mTempFile.fileName());
+  mConnectionParameters.setupDatabase(mDatabase);
   if(!mDatabase.open()){
     qWarning() << "Could not open database, error: " << mDatabase.lastError();
     return false;
@@ -53,6 +68,11 @@ bool TestBase::initDatabaseSqlite()
 QSqlDatabase TestBase::database() const
 {
   return mDatabase;
+}
+
+Mdt::Sql::ConnectionParameters TestBase::connectionParameters() const
+{
+  return mConnectionParameters;
 }
 
 bool TestBase::createClientTable()

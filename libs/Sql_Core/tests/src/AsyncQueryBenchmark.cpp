@@ -84,7 +84,7 @@ void AsyncQueryBenchmark::asyncSelectQuery()
   QVERIFY(insertClient(2, "B"));
 
   AsyncQueryConnection cnn;
-  QVERIFY(cnn.setup(database().databaseName()));
+  QVERIFY(cnn.setup(connectionParameters()));
 
   AsyncTestQueryReceiver receiver;
   auto query = cnn.createQuery();

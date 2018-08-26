@@ -22,6 +22,7 @@
 #define MDT_SQL_ASYNC_QUERY_CONNECTION_H
 
 #include "AsyncQuery.h"
+#include "ConnectionParameters.h"
 #include "Mdt/Error.h"
 #include "MdtSql_CoreExport.h"
 #include <QObject>
@@ -93,10 +94,8 @@ namespace Mdt{ namespace Sql{
      *
      * \note If setup was previously done,
      *   the thread will be stopped, without waiting that running queries are all processed.
-     *
-     * \todo Use ConnectionParameters
      */
-    bool setup(const QString & sqliteDbPath);
+    bool setup(const ConnectionParameters & parameters);
 
     /*! \brief Get setup error
      */
