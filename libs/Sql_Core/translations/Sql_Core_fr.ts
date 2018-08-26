@@ -2,6 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
+    <name>Mdt::Sql::AsyncQueryThreadWorker</name>
+    <message>
+        <location filename="../src/Mdt/Sql/AsyncQueryThread.cpp" line="54"/>
+        <source>Could not add a database connection with a driver of type %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/AsyncQueryThread.cpp" line="63"/>
+        <source>Could not open database &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/AsyncQueryThread.cpp" line="92"/>
+        <source>Could not execute query: &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::Sql::DeleteQuery</name>
     <message>
         <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="52"/>
@@ -37,12 +55,14 @@
     <name>Mdt::Sql::InsertQuery</name>
     <message>
         <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="73"/>
-        <source>Preparing query for insertion into &apos;%1&apos; failed.</source>
+        <source>Preparing query for insertion into &apos;%1&apos; failed.
+SQL: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="83"/>
-        <source>Executing query for insertion into &apos;%1&apos; failed.</source>
+        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="84"/>
+        <source>Executing query for insertion into &apos;%1&apos; failed.
+SQL: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
