@@ -126,7 +126,6 @@ namespace Mdt{ namespace Sql{
 
     int mQueryInstanceId = 0;
     QThread mThread;
-    QString mLastConnectionName;
     Mdt::Error mSetupError;
   };
 

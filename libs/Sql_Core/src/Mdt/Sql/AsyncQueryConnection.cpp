@@ -44,7 +44,6 @@ bool AsyncQueryConnection::setup(const ConnectionParameters & parameters)
   mThread.wait();
 
   auto *worker = new AsyncQueryThreadWorker;
-  mLastConnectionName = worker->connectionName();
   worker->moveToThread(&mThread);
   connect(&mThread, &QThread::finished, worker, &QObject::deleteLater);
   if(!worker->setup(parameters)){
