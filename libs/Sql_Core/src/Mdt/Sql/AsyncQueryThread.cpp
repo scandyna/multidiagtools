@@ -19,10 +19,11 @@
  **
  ****************************************************************************/
 #include "AsyncQueryThread.h"
-#include "Mdt/Container/VariantRecord.h"
 #include "Error.h"
+#include "Mdt/Container/VariantRecord.h"
 #include <boost/graph/buffer_concepts.hpp>
 #include <QLatin1String>
+#include <QMetaType>
 #include <QSqlQuery>
 #include <QSqlRecord>
 
@@ -83,9 +84,38 @@ QString AsyncQueryThreadWorker::generateConnectionName(const QStringList & exist
   return name;
 }
 
-void AsyncQueryThreadWorker::processQuery(const QString & sql, int instanceId)
+void AsyncQueryThreadWorker::processQuery(const QVariant & query, int instanceId)
 {
-  QSqlQuery query(*mDatabase);
+  const auto type =  static_cast<QMetaType::Type>(query.type());
+
+  if(type == QMetaType::QString){
+    processSqlSelectStatement(query.toString(), instanceId);
+  }else if(type == qMetaTypeId<UpdateStatement>()){
+    processUpdateStatement( query.value<UpdateStatement>(), instanceId );
+  }else{
+    const auto msg = tr("Requested a query of unknown type '%1'")
+                    .arg( QMetaType::typeName(query.type()) );
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    emit errorOccured(error, instanceId);
+  }
+}
+
+VariantRecord AsyncQueryThreadWorker::variantRecordFromQuery(const QSqlQuery& query, int columnCount)
+{
+  Q_ASSERT(columnCount == query.record().count());
+
+  VariantRecord record(columnCount);
+
+  for(int col = 0; col < columnCount; ++col){
+    record.setValue( col, query.value(col) );
+  }
+
+  return record;
+}
+
+void AsyncQueryThreadWorker::processSqlSelectStatement(const QString & sql, int instanceId)
+{
+  QSqlQuery query( database() );
   query.setForwardOnly(true);
 
   if(!query.exec(sql)){
@@ -101,19 +131,12 @@ void AsyncQueryThreadWorker::processQuery(const QString & sql, int instanceId)
   while(query.next()){
     emit newRecordAvailable( variantRecordFromQuery(query, columnCount), instanceId );
   }
+  /// \todo emit done() ?
 }
 
-VariantRecord AsyncQueryThreadWorker::variantRecordFromQuery(const QSqlQuery& query, int columnCount)
+void AsyncQueryThreadWorker::processUpdateStatement(const UpdateStatement & statement, int instanceId)
 {
-  Q_ASSERT(columnCount >= 0);
 
-  VariantRecord record(columnCount);
-
-  for(int col = 0; col < columnCount; ++col){
-    record.setValue( col, query.value(col) );
-  }
-
-  return record;
 }
 
 }} // namespace Mdt{ namespace Sql{

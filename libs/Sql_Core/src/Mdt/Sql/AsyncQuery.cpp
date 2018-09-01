@@ -30,7 +30,7 @@ AsyncQuery::AsyncQuery(int instanceId, QObject* parent)
 {
 }
 
-void AsyncQuery::submitQuery(const QString& query)
+void AsyncQuery::submitQuery(const QVariant & query)
 {
   emit queryRequested(query, mInstanceId);
 }

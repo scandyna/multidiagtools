@@ -22,6 +22,7 @@
 #define MDT_SQL_ASYNC_QUERY_THREAD_H
 
 #include "ConnectionParameters.h"
+#include "UpdateStatement.h"
 #include "Mdt/Container/VariantRecord.h"
 #include "Mdt/Error.h"
 #include "MdtSql_CoreExport.h"
@@ -30,6 +31,7 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <QVariant>
 #include <memory>
 
 class QSqlQuery;
@@ -82,8 +84,16 @@ namespace Mdt{ namespace Sql{
    public slots:
 
     /*! \brief Process a new query
+     *
+     * Will call the process method depending of the content of \a query :
+     *  - QString: call processSqlSelectStatement()
+     *  - UpdateStatement: call processUpdateStatement()
+     *
+     * If \a query contains a unknown type, errorOccured() will be emitted.
+     *
+     * To support custom queries, this method can be re-implemented in a subclass.
      */
-    void processQuery(const QString & sql, int instanceId);
+    virtual void processQuery(const QVariant & query, int instanceId);
 
    signals:
 
@@ -95,12 +105,41 @@ namespace Mdt{ namespace Sql{
      *
      * If \a instanceId is 0, the error does not concern a specific query,
      *  but it is a global error (sort of broadcast).
+     *  \todo Should not be true anymore
      */
     void errorOccured(const Mdt::Error & error, int instanceId);
 
+   protected:
+
+    /*! \brief Access this database instance
+     */
+    const QSqlDatabase & database() const
+    {
+      return *mDatabase;
+    }
+
+    /*! \brief Create a variant record from \a query
+     *
+     * \code
+     * const int columnCount = query.record().count();
+     * while(query.next()){
+     *   emit newRecordAvailable( variantRecordFromQuery(query, columnCount), instanceId );
+     * }
+     * \endcode
+     *
+     * \pre \a columnCount must be equal to query.record().count()
+     */
+    static Mdt::Container::VariantRecord variantRecordFromQuery(const QSqlQuery & query, int columnCount);
+
+    /*! \brief Process a SQL SELECT statement
+     *
+     * Will emit newRecordAvailable() each time a new record was fetched from SQL result.
+     */
+    void processSqlSelectStatement(const QString & sql, int instanceId);
+
    private:
 
-    static Mdt::Container::VariantRecord variantRecordFromQuery(const QSqlQuery & query, int columnCount);
+    void processUpdateStatement(const UpdateStatement & statement, int instanceId);
 
     std::unique_ptr<QSqlDatabase> mDatabase;
     Mdt::Error mSetupError;

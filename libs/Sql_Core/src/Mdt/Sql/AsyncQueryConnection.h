@@ -28,9 +28,12 @@
 #include <QObject>
 #include <QThread>
 #include <QString>
+#include <QVariant>
 #include <memory>
 
 namespace Mdt{ namespace Sql{
+
+  class AsyncQueryThreadWorker;
 
   /*! \brief Connection to a database for async queries
    *
@@ -97,6 +100,14 @@ namespace Mdt{ namespace Sql{
      */
     bool setup(const ConnectionParameters & parameters);
 
+    /*! \brief Setup this connection
+     *
+     * This overload permit to pass a custom worker.
+     *  This connection will take ownership of \a worker and delete it at apropriate time.
+     * \note \a worker will be moved to a separate thread, so it should not be accessed anymore.
+     */
+    bool setup(const ConnectionParameters & parameters, AsyncQueryThreadWorker *worker);
+
     /*! \brief Get setup error
      */
     Mdt::Error setupError() const
@@ -110,9 +121,9 @@ namespace Mdt{ namespace Sql{
 
   signals:
 
-    /*! \brief
+    /*! \internal Forwards the request comming from AsyncQuery to the thread worker
      */
-    void queryRequested(const QString & query, int instanceId);
+    void queryRequested(const QVariant & query, int instanceId);
 
     /*! \brief Emitted whenever a new record is available
      */

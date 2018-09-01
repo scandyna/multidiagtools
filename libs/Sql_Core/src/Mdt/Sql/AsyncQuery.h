@@ -27,6 +27,8 @@
 #include <QObject>
 #include <QString>
 
+#include <QVariant>
+
 namespace Mdt{ namespace Sql{
 
   /*! \brief Execute SQL queries asynchronously
@@ -88,8 +90,34 @@ namespace Mdt{ namespace Sql{
     AsyncQuery & operator=(AsyncQuery &&) = delete;
 
     /*! \brief Submit a query
+     *
+     * The query will be submitted to the worker thread,
+     *  and processed regarding the content of \a query .
+     *
+     * If \a query contains a string (QString), it will be processed as is.
+     * \code
+     * query.submitQuery("SELECT * FROM Person");
+     * \endcode
+     *  Each time a record was fetched, newRecordAvailable() will be emitted.
+     *  Once all records have been fetched, done() wil also be emitted.
+     *
+     * If \a query contains a UpdateStatement, a update will be processed:
+     * \code
+     * using namespace Mdt::Sql;
+     *
+     * UpdateStatement stm;
+     * stm.setTableName("Person");
+     * stm.addValue( FieldName("FirstName"), "SomeName" );
+     *
+     * query.submitQuery(stm);
+     * \endcode
+     *  Once the statement was successfully processed, done() will be emitted.
+     *
+     * Independing of the type of \a query , if a error occurs, errorOccured() is emitted.
+     *
+     * \sa AsyncQueryConnection
      */
-    void submitQuery(const QString & query);
+    void submitQuery(const QVariant & query);
 
     /*! \internal Get instance ID
      */
@@ -120,7 +148,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \internal
      */
-    void queryRequested(const QString & query, int instanceId);
+    void queryRequested(const QVariant & query, int instanceId);
 
    private:
 

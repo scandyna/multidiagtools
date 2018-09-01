@@ -40,10 +40,16 @@ AsyncQueryConnection::~AsyncQueryConnection()
 
 bool AsyncQueryConnection::setup(const ConnectionParameters & parameters)
 {
+  return setup( parameters, new AsyncQueryThreadWorker );
+}
+
+bool AsyncQueryConnection::setup(const ConnectionParameters& parameters, AsyncQueryThreadWorker* worker)
+{
+  Q_ASSERT(worker != nullptr);
+
   mThread.quit();
   mThread.wait();
 
-  auto *worker = new AsyncQueryThreadWorker;
   worker->moveToThread(&mThread);
   connect(&mThread, &QThread::finished, worker, &QObject::deleteLater);
   if(!worker->setup(parameters)){
