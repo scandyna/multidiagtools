@@ -27,6 +27,7 @@
 #include "MdtSql_CoreExport.h"
 #include <QString>
 #include <QVariant>
+#include <QMetaType>
 #include <QSqlDatabase>
 
 namespace Mdt{ namespace Sql{
@@ -113,5 +114,6 @@ namespace Mdt{ namespace Sql{
   };
 
 }} // namespace Mdt{ namespace Sql{
+Q_DECLARE_METATYPE(Mdt::Sql::UpdateStatement)
 
 #endif // #ifndef MDT_SQL_UPDATE_STATEMENT_H
