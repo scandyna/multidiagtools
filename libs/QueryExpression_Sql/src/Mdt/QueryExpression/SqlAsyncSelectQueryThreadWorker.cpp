@@ -40,7 +40,7 @@ void SqlAsyncSelectQueryThreadWorker::processQuery(const QVariant& query, int in
 
 void SqlAsyncSelectQueryThreadWorker::processSelectStatement(const QuerySelectStatement& statement, int instanceId)
 {
-  const auto sql = selectStatementToSql(statement.statement(), database());
+  const auto sql = selectStatementToSql(statement.statement(), statement.maxRows(), database());
 
   processSqlSelectStatement(sql , instanceId);
 }

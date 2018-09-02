@@ -235,6 +235,62 @@ void SqlTransformTest::filterExpressionToSqlTest()
   QCOMPARE(filterExpressionToSql(filter, db), expectedSql);
 }
 
+void SqlTransformTest::selectStatementToSqlLimitSyntaxTest()
+{
+  QString expectedSql;
+  const auto db = database();
+
+  SelectEntity person( EntityName("Person") );
+  SelectField personId(person, FieldName("id"));
+
+  SelectStatement stm;
+  stm.setEntityName("Person");
+  stm.selectAllFields();
+  expectedSql = "SELECT\n"\
+                " *\n"\
+                "FROM \"Person\"\n"\
+                "LIMIT 150";
+  QCOMPARE(selectStatementToSqlLimitSyntax(stm, 150, db), expectedSql);
+
+  stm.clear();
+  stm.setEntity(person);
+  stm.selectAllFields();
+  stm.setFilter(personId > 29);
+  expectedSql = "SELECT\n"\
+                " *\n"\
+                "FROM \"Person\"\n"
+                "WHERE \"Person\".\"id\">29\n"\
+                "LIMIT 1234";
+  QCOMPARE(selectStatementToSqlLimitSyntax(stm, 1234, db), expectedSql);
+}
+
+void SqlTransformTest::selectStatementToSqlTopSyntaxTest()
+{
+  QString expectedSql;
+  const auto db = database();
+
+  SelectEntity person( EntityName("Person") );
+  SelectField personId(person, FieldName("id"));
+
+  SelectStatement stm;
+  stm.setEntityName("Person");
+  stm.selectAllFields();
+  expectedSql = "SELECT TOP 150\n"\
+                " *\n"\
+                "FROM \"Person\"";
+  QCOMPARE(selectStatementToSqlTopSyntax(stm, 150, db), expectedSql);
+
+  stm.clear();
+  stm.setEntity(person);
+  stm.selectAllFields();
+  stm.setFilter(personId > 29);
+  expectedSql = "SELECT TOP 1234\n"\
+                " *\n"\
+                "FROM \"Person\"\n"
+                "WHERE \"Person\".\"id\">29";
+  QCOMPARE(selectStatementToSqlTopSyntax(stm, 1234, db), expectedSql);
+}
+
 void SqlTransformTest::selectStatementToSqlTest()
 {
   QString expectedSql;
@@ -249,7 +305,7 @@ void SqlTransformTest::selectStatementToSqlTest()
   expectedSql = "SELECT\n"\
                 " *\n"\
                 "FROM \"Person\"";
-  QCOMPARE(selectStatementToSql(stm, db), expectedSql);
+  QCOMPARE(selectStatementToSql(stm, 0, db), expectedSql);
 
   stm.clear();
   stm.setEntity(person);
@@ -259,7 +315,14 @@ void SqlTransformTest::selectStatementToSqlTest()
                 " *\n"\
                 "FROM \"Person\"\n"
                 "WHERE \"Person\".\"id\">29";
-  QCOMPARE(selectStatementToSql(stm, db), expectedSql);
+  QCOMPARE(selectStatementToSql(stm, 0, db), expectedSql);
+
+  expectedSql = "SELECT\n"\
+                " *\n"\
+                "FROM \"Person\"\n"
+                "WHERE \"Person\".\"id\">29\n"\
+                "LIMIT 1200";
+  QCOMPARE(selectStatementToSql(stm, 1200, db), expectedSql);
 }
 
 /*

@@ -37,6 +37,7 @@ class SelectQueryTest : public SelectQueryTestBase
   void cleanupTestCase();
 
   void execQueryTest();
+  void execQueryMaxRowsTest();
   void fieldIndexTest();
   void fieldIndexEntityTest();
   void fieldIndexMultiEntityTest();

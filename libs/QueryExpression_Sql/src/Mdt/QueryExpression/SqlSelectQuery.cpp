@@ -55,7 +55,8 @@ void SqlSelectQuery::setDatabase(const QSqlDatabase& db)
 
 bool SqlSelectQuery::exec(const SelectStatement & statement)
 {
-  const auto sql = selectStatementToSql(statement, mDb);
+  /// \todo use maxRows
+  const auto sql = selectStatementToSql(statement, 0, mDb);
 
   if(!mQuery.exec(sql)){
     const auto msg = tr("Failed to execute query, SQL: %1 .")

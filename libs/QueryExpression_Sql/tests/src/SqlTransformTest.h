@@ -40,6 +40,8 @@ class SqlTransformTest : public TestBase
   void likeExpressionToSqlTest();
   void likeExpressionToSqlTest_data();
   void filterExpressionToSqlTest();
+  void selectStatementToSqlLimitSyntaxTest();
+  void selectStatementToSqlTopSyntaxTest();
   void selectStatementToSqlTest();
 };
 

@@ -91,7 +91,15 @@ namespace Mdt{ namespace QueryExpression{
 
   /*! \internal
    */
-  QString MDT_QUERYEXPRESSION_SQL_EXPORT selectStatementToSql(const SelectStatement & stm, const QSqlDatabase & db);
+  QString MDT_QUERYEXPRESSION_SQL_EXPORT selectStatementToSqlLimitSyntax(const SelectStatement & stm, int maxRows, const QSqlDatabase & db);
+
+  /*! \internal
+   */
+  QString MDT_QUERYEXPRESSION_SQL_EXPORT selectStatementToSqlTopSyntax(const SelectStatement & stm, int maxRows, const QSqlDatabase & db);
+
+  /*! \internal
+   */
+  QString MDT_QUERYEXPRESSION_SQL_EXPORT selectStatementToSql(const SelectStatement & stm, int maxRows, const QSqlDatabase & db);
 
 }} // namespace Mdt{ namespace QueryExpression{
 

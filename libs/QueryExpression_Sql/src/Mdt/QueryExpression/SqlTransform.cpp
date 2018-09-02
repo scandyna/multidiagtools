@@ -259,9 +259,10 @@ QString filterExpressionToSql(const FilterExpression & expression, const QSqlDat
   return visitor.toSql();
 }
 
-QString selectStatementToSql(const SelectStatement & stm, const QSqlDatabase & db)
+QString selectStatementToSqlLimitSyntax(const SelectStatement& stm, int maxRows, const QSqlDatabase& db)
 {
   Q_ASSERT(!stm.fieldList().isEmpty());
+  Q_ASSERT(maxRows >= 0);
   Q_ASSERT(db.isValid());
 
   QString sql;
@@ -274,8 +275,48 @@ QString selectStatementToSql(const SelectStatement & stm, const QSqlDatabase & d
   if(stm.hasFilter()){
     sql += QLatin1String("\nWHERE ") % filterExpressionToSql(stm.filter(), db);
   }
+  if(maxRows > 0){
+    sql += QLatin1String("\nLIMIT ") % QString::number(maxRows);
+  }
 
   return sql;
+}
+
+QString selectStatementToSqlTopSyntax(const SelectStatement& stm, int maxRows, const QSqlDatabase& db)
+{
+  Q_ASSERT(!stm.fieldList().isEmpty());
+  Q_ASSERT(maxRows >= 0);
+  Q_ASSERT(db.isValid());
+
+  QString sql;
+
+  if(maxRows > 0){
+    sql = QLatin1String("SELECT TOP ") % QString::number(maxRows);
+  }else{
+    sql = QLatin1String("SELECT");
+  }
+  sql += QLatin1Char('\n') \
+      % selectFieldListDeclarationToSql(stm.fieldList(), db) \
+      % QLatin1Char('\n') \
+      % QLatin1String("FROM ") % selectFromEntityToSql(stm.entity(), db);
+  if(stm.hasFilter()){
+    sql += QLatin1String("\nWHERE ") % filterExpressionToSql(stm.filter(), db);
+  }
+
+  return sql;
+}
+
+QString selectStatementToSql(const SelectStatement & stm, int maxRows, const QSqlDatabase & db)
+{
+  Q_ASSERT(!stm.fieldList().isEmpty());
+  Q_ASSERT(db.isValid());
+  Q_ASSERT(db.driver() != nullptr);
+
+  if(db.driver()->dbmsType() == QSqlDriver::MSSqlServer){
+    return selectStatementToSqlTopSyntax(stm, maxRows, db);
+  }
+
+  return selectStatementToSqlLimitSyntax(stm, maxRows, db);
 }
 
 }} // namespace Mdt{ namespace QueryExpression{

@@ -138,6 +138,12 @@ void SelectQueryTest::execQueryTest()
   QVERIFY(!query.next());
 }
 
+void SelectQueryTest::execQueryMaxRowsTest()
+{
+
+  QFAIL("Not complete");
+}
+
 void SelectQueryTest::fieldIndexTest()
 {
   using Mdt::QueryExpression::SelectField;
