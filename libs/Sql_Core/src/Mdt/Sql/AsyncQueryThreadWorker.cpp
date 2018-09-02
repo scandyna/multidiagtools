@@ -94,8 +94,9 @@ void AsyncQueryThreadWorker::processQuery(const QVariant & query, int instanceId
     processUpdateStatement( query.value<UpdateStatement>(), instanceId );
   }else{
     const auto msg = tr("Requested a query of unknown type '%1'")
-                    .arg( QMetaType::typeName(query.type()) );
+                    .arg( query.typeName() );
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    error.commit();
     emit errorOccured(error, instanceId);
   }
 }

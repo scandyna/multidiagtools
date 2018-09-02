@@ -19,7 +19,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/AsyncQueryThreadWorker.cpp" line="122"/>
+        <location filename="../src/Mdt/Sql/AsyncQueryThreadWorker.cpp" line="123"/>
         <source>Could not execute query: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
