@@ -18,30 +18,31 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#include "SqlAsyncSelectQueryThreadWorker.h"
+#include "SqlTransform.h"
+#include <QVariant>
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
-// #include <memory>
+namespace Mdt{ namespace QueryExpression{
 
-class SelectQueryTest : public SelectQueryTestBase
+SqlAsyncSelectQueryThreadWorker::SqlAsyncSelectQueryThreadWorker(QObject* parent)
+ : BaseClass(parent)
 {
- Q_OBJECT
+}
 
-  using SelectQueryFacotory = Mdt::QueryExpression::AbstractSelectQueryFactory;
+void SqlAsyncSelectQueryThreadWorker::processQuery(const QVariant& query, int instanceId)
+{
+  if(query.canConvert<QuerySelectStatement>()){
+    processSelectStatement( query.value<QuerySelectStatement>(), instanceId );
+  }else{
+    BaseClass::processQuery(query, instanceId);
+  }
+}
 
- private slots:
+void SqlAsyncSelectQueryThreadWorker::processSelectStatement(const QuerySelectStatement& statement, int instanceId)
+{
+  const auto sql = selectStatementToSql(statement.statement(), database());
 
-  void initTestCase();
-  void cleanupTestCase();
+  processSqlSelectStatement(sql , instanceId);
+}
 
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
-  void useCaseFactoryTest();
-};
-
-#endif // #ifndef MDT_TEST_MAIN_H
+}} // namespace Mdt{ namespace QueryExpression{

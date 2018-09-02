@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,25 +19,33 @@
  **
  ****************************************************************************/
 #include "TestBase.h"
+#include "Mdt/Sql/SQLiteConnectionParameters.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
 
+using Mdt::Sql::SQLiteConnectionParameters;
+
 bool TestBase::initDatabaseSqlite()
 {
-  // Get database instance
-  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
-  if(!mDatabase.isValid()){
-    qWarning() << "QSQLITE driver is not available";
-    return false;
-  }
+  SQLiteConnectionParameters parameters;
+
   // Create a database
   if(!mTempFile.open()){
     qWarning() << "Could not open file " << mTempFile.fileName();
     return false;
   }
   mTempFile.close();
-  mDatabase.setDatabaseName(mTempFile.fileName());
+  parameters.setDatabaseFile(mTempFile.fileName());
+  mConnectionParameters = parameters.toConnectionParameters();
+
+  // Get database instance
+  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  if(!mDatabase.isValid()){
+    qWarning() << "QSQLITE driver is not available";
+    return false;
+  }
+  mConnectionParameters.setupDatabase(mDatabase);
   if(!mDatabase.open()){
     qWarning() << "Could not open database, error: " << mDatabase.lastError();
     return false;

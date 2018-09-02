@@ -48,6 +48,10 @@ bool SelectQueryTestBase::createTestSchema()
   return true;
 }
 
+bool SelectQueryTestBase::createPersonTable()
+{
+}
+
 bool SelectQueryTestBase::insertPerson(int id, const QString & firstName, int age, const QString & remarks)
 {
   constexpr PersonEntity person;

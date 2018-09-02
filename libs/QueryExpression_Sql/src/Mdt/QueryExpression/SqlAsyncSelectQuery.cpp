@@ -18,30 +18,28 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#include "SqlAsyncSelectQuery.h"
+#include "SqlTransform.h"
+#include "Mdt/QueryExpression/QuerySelectStatement.h"
+#include <QVariant>
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
-// #include <memory>
+using Mdt::Sql::AsyncQuery;
 
-class SelectQueryTest : public SelectQueryTestBase
+namespace Mdt{ namespace QueryExpression{
+
+SqlAsyncSelectQuery::SqlAsyncSelectQuery(std::unique_ptr<AsyncQuery> && query, QObject* parent)
+ : BaseClass(parent),
+   mQuery( std::move(query) )
 {
- Q_OBJECT
+  connect(mQuery.get(), &AsyncQuery::newRecordAvailable, this, &SqlAsyncSelectQuery::newRecordAvailable);
+  connect(mQuery.get(), &AsyncQuery::errorOccured, this, &SqlAsyncSelectQuery::errorOccured);
+}
 
-  using SelectQueryFacotory = Mdt::QueryExpression::AbstractSelectQueryFactory;
+void SqlAsyncSelectQuery::submitStatement(const SelectStatement& statement, int maxRows)
+{
+  Q_ASSERT(maxRows >= 0);
 
- private slots:
+  mQuery->submitQuery( QVariant::fromValue( QuerySelectStatement(statement, maxRows) ) );
+}
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
-  void useCaseFactoryTest();
-};
-
-#endif // #ifndef MDT_TEST_MAIN_H
+}} // namespace Mdt{ namespace QueryExpression{

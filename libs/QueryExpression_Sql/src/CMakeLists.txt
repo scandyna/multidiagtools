@@ -4,6 +4,9 @@ set(SOURCE_FILES
   Mdt/QueryExpression/SqlTransform.cpp
   Mdt/QueryExpression/SqlSelectQuery.cpp
   Mdt/QueryExpression/SqlSelectQueryFactory.cpp
+  Mdt/QueryExpression/SqlAsyncSelectQueryThreadWorker.cpp
+  Mdt/QueryExpression/SqlAsyncSelectQuery.cpp
+  Mdt/QueryExpression/SqlAsyncSelectQueryFactory.cpp
 )
 
 find_package(Qt5 COMPONENTS Core Sql)

@@ -8,6 +8,7 @@ find_package(Qt5 COMPONENTS Test)
 set(SOURCE_FILES
   src/TestBase.cpp
   src/SelectQueryTestBase.cpp
+  src/AsyncTestQueryReceiver.cpp
 )
 
 add_library(mdtQueryExpression_SqlTest SHARED ${SOURCE_FILES})
@@ -30,3 +31,4 @@ endfunction()
 addQueryExpression_SqlTest("SqlTransformTest")
 addQueryExpression_SqlTest("SelectQueryTest")
 addQueryExpression_SqlTest("CachedSelectQueryTest")
+addQueryExpression_SqlTest("AsyncSelectQueryTest")

@@ -26,9 +26,12 @@ set(SOURCE_FILES
   Mdt/QueryExpression/BuildExpressionTree/Transform.cpp
   Mdt/QueryExpression/FilterExpression.cpp
   Mdt/QueryExpression/SelectStatement.cpp
+  Mdt/QueryExpression/QuerySelectStatement.cpp
   Mdt/QueryExpression/AbstractSelectQuery.cpp
   Mdt/QueryExpression/AbstractSelectQueryFactory.cpp
   Mdt/QueryExpression/CachedSelectQuery.cpp
+  Mdt/QueryExpression/AbstractAsyncSelectQuery.cpp
+  Mdt/QueryExpression/AbstractAsyncSelectQueryFactory.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
@@ -47,7 +50,7 @@ mdt_add_library(
   NAME QueryExpression_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Algorithm Error_Core Qt5::Core;
+  LINK_DEPENDENCIES Algorithm Container Error_Core Qt5::Core;
 )
 target_compile_definitions(QueryExpression_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

@@ -22,6 +22,7 @@
 #define MDT_QUERY_EXPRESSION_SQL_TEST_BASE_H
 
 #include "Mdt/CoreApplication.h"
+#include "Mdt/Sql/ConnectionParameters.h"
 #include <QObject>
 #include <QByteArray>
 #include <QString>
@@ -48,10 +49,16 @@ class TestBase : public QObject
     return mDatabase;
   }
 
+  Mdt::Sql::ConnectionParameters connectionParameters() const
+  {
+    return mConnectionParameters;
+  }
+
  private:
 
   QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
   QSqlDatabase mDatabase;
+  Mdt::Sql::ConnectionParameters mConnectionParameters;
 };
 
 #endif // #ifndef MDT_QUERY_EXPRESSION_SQL_TEST_BASE_H

@@ -18,30 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#include "AbstractAsyncSelectQuery.h"
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
-// #include <memory>
+namespace Mdt{ namespace QueryExpression{
 
-class SelectQueryTest : public SelectQueryTestBase
+AbstractAsyncSelectQuery::AbstractAsyncSelectQuery(QObject* parent)
+ : BaseClass(parent)
 {
- Q_OBJECT
+}
 
-  using SelectQueryFacotory = Mdt::QueryExpression::AbstractSelectQueryFactory;
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
-  void useCaseFactoryTest();
-};
-
-#endif // #ifndef MDT_TEST_MAIN_H
+}} // namespace Mdt{ namespace QueryExpression{

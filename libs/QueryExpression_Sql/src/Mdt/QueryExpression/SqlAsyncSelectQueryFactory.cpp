@@ -18,30 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#include "SqlAsyncSelectQueryFactory.h"
+#include "SqlAsyncSelectQuery.h"
+#include "SqlAsyncSelectQueryThreadWorker.h"
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
-// #include <memory>
+namespace Mdt{ namespace QueryExpression{
 
-class SelectQueryTest : public SelectQueryTestBase
+bool SqlAsyncSelectQueryFactory::setup(const Sql::ConnectionParameters & parameters)
 {
- Q_OBJECT
+  return mConnection.setup(parameters, new SqlAsyncSelectQueryThreadWorker);
+}
 
-  using SelectQueryFacotory = Mdt::QueryExpression::AbstractSelectQueryFactory;
+std::unique_ptr<AbstractAsyncSelectQuery> SqlAsyncSelectQueryFactory::createSelectQuery()
+{
+  auto query = std::make_unique<SqlAsyncSelectQuery>( std::move(mConnection.createQuery()) );
 
- private slots:
+  return std::move(query);
+}
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
-  void useCaseFactoryTest();
-};
-
-#endif // #ifndef MDT_TEST_MAIN_H
+}} // namespace Mdt{ namespace QueryExpression{

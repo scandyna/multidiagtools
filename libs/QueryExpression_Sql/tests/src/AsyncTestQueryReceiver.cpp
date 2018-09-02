@@ -18,30 +18,9 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#include "AsyncTestQueryReceiver.h"
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
-// #include <memory>
-
-class SelectQueryTest : public SelectQueryTestBase
+void AsyncTestQueryReceiver::storeNewRecord(const Mdt::Container::VariantRecord& record)
 {
- Q_OBJECT
-
-  using SelectQueryFacotory = Mdt::QueryExpression::AbstractSelectQueryFactory;
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
-  void useCaseFactoryTest();
-};
-
-#endif // #ifndef MDT_TEST_MAIN_H
+  mRecordList.push_back(record);
+}

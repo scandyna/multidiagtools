@@ -74,6 +74,7 @@ class SelectQueryTestBase : public TestBase
 
   bool createTestSchema();
 
+  bool createPersonTable();
   bool insertPerson(int id, const QString & firstName, int age, const QString & remarks);
   bool cleanupPersonTable();
 

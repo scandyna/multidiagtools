@@ -18,30 +18,52 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#ifndef MDT_QUERY_EXPRESSION_ASYNC_TEST_QUERY_RECEIVER_H
+#define MDT_QUERY_EXPRESSION_ASYNC_TEST_QUERY_RECEIVER_H
 
-#include "SelectQueryTestBase.h"
-#include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
-// #include <memory>
+#include "Mdt/Container/VariantRecord.h"
+#include <QObject>
+#include <vector>
 
-class SelectQueryTest : public SelectQueryTestBase
+/*
+ * Helper class to receive events from a async query
+ */
+class AsyncTestQueryReceiver : public QObject
 {
  Q_OBJECT
 
-  using SelectQueryFacotory = Mdt::QueryExpression::AbstractSelectQueryFactory;
+ public:
 
- private slots:
+  bool hasResult() const
+  {
+    return recordCount() > 0;
+  }
 
-  void initTestCase();
-  void cleanupTestCase();
+  int recordCount() const
+  {
+    return mRecordList.size();
+  }
 
-  void execQueryTest();
-  void fieldIndexTest();
-  void fieldIndexEntityTest();
-  void fieldIndexMultiEntityTest();
-  void execQueryFilterTest();
-  void useCaseFactoryTest();
+  Mdt::Container::VariantRecord recordAt(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < recordCount());
+
+    return mRecordList[index];
+  }
+
+  void clear()
+  {
+    mRecordList.clear();
+  }
+
+ public slots:
+
+  void storeNewRecord(const Mdt::Container::VariantRecord & record);
+
+ private:
+
+  std::vector<Mdt::Container::VariantRecord> mRecordList;
 };
 
-#endif // #ifndef MDT_TEST_MAIN_H
+#endif // #ifndef MDT_QUERY_EXPRESSION_ASYNC_TEST_QUERY_RECEIVER_H
