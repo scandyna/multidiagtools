@@ -23,7 +23,6 @@
 #include "Mdt/Container/VariantRecord.h"
 #include <boost/graph/buffer_concepts.hpp>
 #include <QLatin1String>
-#include <QMetaType>
 #include <QSqlQuery>
 #include <QSqlRecord>
 
@@ -86,17 +85,14 @@ QString AsyncQueryThreadWorker::generateConnectionName(const QStringList & exist
 
 void AsyncQueryThreadWorker::processQuery(const QVariant & query, int instanceId)
 {
-  const auto type =  static_cast<QMetaType::Type>(query.type());
-
-  if(type == QMetaType::QString){
-    processSqlSelectStatement(query.toString(), instanceId);
-  }else if(type == qMetaTypeId<UpdateStatement>()){
+  if(query.canConvert<UpdateStatement>()){
     processUpdateStatement( query.value<UpdateStatement>(), instanceId );
+  }else if(query.canConvert<QString>()){
+    processSqlSelectStatement(query.toString(), instanceId);
   }else{
     const auto msg = tr("Requested a query of unknown type '%1'")
                     .arg( query.typeName() );
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    error.commit();
     emit errorOccured(error, instanceId);
   }
 }
