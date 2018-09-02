@@ -21,7 +21,7 @@
 #include "AsyncQueryTest.h"
 #include "Mdt/Sql/AsyncQuery.h"
 #include "Mdt/Sql/AsyncQueryConnection.h"
-#include "Mdt/Sql/AsyncQueryThread.h"
+#include "Mdt/Sql/AsyncQueryThreadWorker.h"
 
 // #include <QDebug>
 

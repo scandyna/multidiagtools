@@ -4,22 +4,22 @@
 <context>
     <name>Mdt::Sql::AsyncQueryThreadWorker</name>
     <message>
-        <location filename="../src/Mdt/Sql/AsyncQueryThread.cpp" line="55"/>
+        <location filename="../src/Mdt/Sql/AsyncQueryThreadWorker.cpp" line="55"/>
         <source>Could not add a database connection with a driver of type %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/AsyncQueryThread.cpp" line="64"/>
+        <location filename="../src/Mdt/Sql/AsyncQueryThreadWorker.cpp" line="64"/>
         <source>Could not open database &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/AsyncQueryThread.cpp" line="117"/>
+        <location filename="../src/Mdt/Sql/AsyncQueryThreadWorker.cpp" line="96"/>
         <source>Requested a query of unknown type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/AsyncQueryThread.cpp" line="143"/>
+        <location filename="../src/Mdt/Sql/AsyncQueryThreadWorker.cpp" line="122"/>
         <source>Could not execute query: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>

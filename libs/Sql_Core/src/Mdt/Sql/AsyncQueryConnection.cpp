@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "AsyncQueryConnection.h"
-#include "AsyncQueryThread.h"
+#include "AsyncQueryThreadWorker.h"
 #include "Mdt/Container/VariantRecord.h"
 #include <QMetaType>
 

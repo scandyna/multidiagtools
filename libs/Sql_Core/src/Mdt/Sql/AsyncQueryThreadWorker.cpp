@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AsyncQueryThread.h"
+#include "AsyncQueryThreadWorker.h"
 #include "Error.h"
 #include "Mdt/Container/VariantRecord.h"
 #include <boost/graph/buffer_concepts.hpp>

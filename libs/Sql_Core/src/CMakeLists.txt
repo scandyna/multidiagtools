@@ -40,7 +40,7 @@ set(SOURCE_FILES
     Mdt/Sql/SelectQuery.cpp
     Mdt/Sql/AsyncQuery.cpp
     Mdt/Sql/AsyncQueryConnection.cpp
-    Mdt/Sql/AsyncQueryThread.cpp
+    Mdt/Sql/AsyncQueryThreadWorker.cpp
     Mdt/Sql/SQLiteDatabase.cpp
     Mdt/Sql/Schema/Driver.cpp
     Mdt/Sql/Schema/DriverImplementationInterface.cpp

@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_ASYNC_QUERY_THREAD_H
-#define MDT_SQL_ASYNC_QUERY_THREAD_H
+#ifndef MDT_SQL_ASYNC_QUERY_THREAD_WORKER_H
+#define MDT_SQL_ASYNC_QUERY_THREAD_WORKER_H
 
 #include "ConnectionParameters.h"
 #include "UpdateStatement.h"
@@ -147,4 +147,4 @@ namespace Mdt{ namespace Sql{
 
 }} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_ASYNC_QUERY_THREAD_H
+#endif // #ifndef MDT_SQL_ASYNC_QUERY_THREAD_WORKER_H
