@@ -88,20 +88,20 @@ namespace Mdt{ namespace QueryExpression{
    * SomeUseCaseView view(&someUseCase);
    * \endcode
    */
-  class MDT_QUERYEXPRESSION_CORE_EXPORT AbstractAsyncSelectQueryFacory
+  class MDT_QUERYEXPRESSION_CORE_EXPORT AbstractAsyncSelectQueryFactory
   {
    public:
 
     /*! \brief Constructor
      */
-    explicit AbstractAsyncSelectQueryFacory() = default;
+    explicit AbstractAsyncSelectQueryFactory() = default;
 
-    virtual ~AbstractAsyncSelectQueryFacory() = default;
+    virtual ~AbstractAsyncSelectQueryFactory() = default;
 
-    AbstractAsyncSelectQueryFacory(const AbstractAsyncSelectQueryFacory &) = delete;
-    AbstractAsyncSelectQueryFacory & operator=(const AbstractAsyncSelectQueryFacory &) = delete;
-    AbstractAsyncSelectQueryFacory(AbstractAsyncSelectQueryFacory &&) = delete;
-    AbstractAsyncSelectQueryFacory & operator=(AbstractAsyncSelectQueryFacory &&) = delete;
+    AbstractAsyncSelectQueryFactory(const AbstractAsyncSelectQueryFactory &) = delete;
+    AbstractAsyncSelectQueryFactory & operator=(const AbstractAsyncSelectQueryFactory &) = delete;
+    AbstractAsyncSelectQueryFactory(AbstractAsyncSelectQueryFactory &&) = delete;
+    AbstractAsyncSelectQueryFactory & operator=(AbstractAsyncSelectQueryFactory &&) = delete;
 
     /*! \brief Create a asynchronous select query
      */

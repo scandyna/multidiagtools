@@ -30,7 +30,7 @@ namespace Mdt{ namespace QueryExpression{
 
   /*! \brief SQL implementation of a asynchronous select query factory
    */
-  class MDT_QUERYEXPRESSION_SQL_EXPORT SqlAsyncSelectQueryFactory : public AbstractAsyncSelectQueryFacory
+  class MDT_QUERYEXPRESSION_SQL_EXPORT SqlAsyncSelectQueryFactory : public AbstractAsyncSelectQueryFactory
   {
    public:
 
