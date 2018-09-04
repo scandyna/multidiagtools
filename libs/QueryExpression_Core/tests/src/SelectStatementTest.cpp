@@ -108,6 +108,7 @@ void SelectStatementTest::addFieldTest()
   SelectField addressStreet( address, FieldName("street"), "AddressStreet" );
 
   SelectStatement stm;
+  QCOMPARE(stm.fieldCount(), 0);
   stm.setEntity(person);
   stm.addField(personName);
   stm.addField(person, FieldName("remarks"), "PersonRemarks");
@@ -115,6 +116,7 @@ void SelectStatementTest::addFieldTest()
   stm.addField(FieldName("age"), "A");
   stm.addField(addressStreet);
   stm.addField(address, FieldName("remarks"), "AddressRemarks");
+  QCOMPARE(stm.fieldCount(), 6);
   auto fieldList = stm.fieldList();
   QCOMPARE(fieldList.fieldCount(), 6);
   QCOMPARE(getEntityAliasOrName(fieldList.at(0)), QString("Person"));

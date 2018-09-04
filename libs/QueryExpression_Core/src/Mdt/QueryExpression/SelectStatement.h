@@ -43,7 +43,7 @@ namespace Mdt{ namespace QueryExpression{
    *
    * The following examples assume using the QueryExpression namespace:
    * \code
-   * using namespace Mdt::QueryExpression
+   * using namespace Mdt::QueryExpression;
    * \endcode
    *
    * Here is a example to create a simple select statement:
@@ -175,6 +175,13 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a fieldName must not be null
      */
     void addField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString());
+
+    /*! \brief Get the count of fields this statement contains
+     */
+    int fieldCount() const noexcept
+    {
+      return mFieldList.fieldCount();
+    }
 
     /*! \brief Access the list of fields in this statement
      */
