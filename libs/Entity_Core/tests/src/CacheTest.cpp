@@ -30,6 +30,7 @@
 
 using namespace Mdt::Entity;
 using Mdt::Container::TableCacheOperation;
+using Mdt::Container::VariantRecord;
 
 /*
  * Tests
@@ -133,8 +134,8 @@ void fetchAllSignalTest()
   QVERIFY(pc.fetchAll());
   QCOMPARE(cacheAboutToBeResetSpy.count(), 1);
   QCOMPARE(cacheResetSpy.count(), 1);
-  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 0);
-  QCOMPARE(rowsInsertedSpy.count(), 0);
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 3);
+  QCOMPARE(rowsInsertedSpy.count(), 3);
   QCOMPARE(pc.rowCount(), 3);
 }
 

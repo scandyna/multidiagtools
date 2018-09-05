@@ -63,18 +63,6 @@ namespace Mdt{ namespace Entity{
    * };
    * \endcode
    *
-   * Here is a example of using a cache in a table model:
-   * \code
-   * class PersonTableModel : public Mdt::ItemModel::AbstractCachedTableModel
-   * {
-   *  Q_OBJECT
-   *
-   *  public:
-   *
-   *   PersonTableModel(QObject *parent = nullptr);
-   * };
-   * \endcode
-   *
    * \sa AbstractEditableCache
    * \sa AbstractReadOnlyCacheTableModel
    */
@@ -169,6 +157,8 @@ namespace Mdt{ namespace Entity{
      * \pre \a row must be >= 0 and <= rowCount()
      * \pre \a count must be >= 1
      * \pre rowCount() + \a count must be <= cachedRowCountLimit()
+     *   \todo Full cache must no longer be a precondition.
+     *         If the cache is full, the record will simply not be stored
      * \pre \a record 's columnt count must be the same as columnCount()
      */
     void fromBackendInsertRecords(int row, int count, const Mdt::Container::VariantRecord & record);
@@ -193,9 +183,15 @@ namespace Mdt{ namespace Entity{
     /*! \brief Append a record comming from backend to this cache
      *
      * \pre rowCount() must be < cachedRowCountLimit()
+     *   \todo Full cache must no longer be a precondition.
+     *         If the cache is full, the record will simply not be stored
      * \pre \a record 's columnt count must be the same as columnCount()
      */
     void fromBackendAppendRecord(const Mdt::Container::VariantRecord & record);
+
+    /*! \brief Set last error
+     */
+    void setLastError(const Mdt::Error & error);
 
    signals:
 
@@ -228,17 +224,6 @@ namespace Mdt{ namespace Entity{
     void rowsRemoved();
 
    protected:
-
-    /*! \brief Set last error
-     */
-    void setLastError(const Mdt::Error & error);
-
-//     /*! \brief Append a record that come from storage to the cache
-//      *
-//      * \pre rowCount() must be < cachedRowCountLimit()
-//      * \pre \a record 's columnt count must be the same as columnCount()
-//      */
-//     void appendRecordToCache(const VariantRecord & record);
 
     /*! \brief Fetch \a count records from the underlaying storage
      *
@@ -303,7 +288,6 @@ namespace Mdt{ namespace Entity{
     std::vector<Mdt::Container::VariantRecord> mCache;
     int mCachedRowCountLimit = 5000;
     Mdt::Error mLastError;
-    bool mResettingCache = false;
   };
 
 }} // namespace Mdt{ namespace Entity{

@@ -42,6 +42,7 @@ class EditableCacheTableModel : public Mdt::Entity::AbstractEditableCacheTableMo
 
 using namespace Mdt::Entity;
 using namespace Mdt::TestLib;
+using Mdt::Container::VariantRecord;
 
 void CacheTableModelTest::initTestCase()
 {
@@ -160,16 +161,26 @@ void setCacheSignalTest()
   Model model;
   QSignalSpy resetSpy(&model, &Model::modelReset);
   QVERIFY(resetSpy.isValid());
+  QSignalSpy rowsAboutToBeInsertedSpy(&model, &Model::rowsAboutToBeInserted);
+  QVERIFY(rowsAboutToBeInsertedSpy.isValid());
+  QSignalSpy rowsInsertedSpy(&model, &Model::rowsInserted);
+  QVERIFY(rowsAboutToBeInsertedSpy.isValid());
 
   QCOMPARE(resetSpy.count(), 0);
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 0);
+  QCOMPARE(rowsInsertedSpy.count(), 0);
   Cache cache;
   model.setCache(&cache);
   QCOMPARE(resetSpy.count(), 1);
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 0);
+  QCOMPARE(rowsInsertedSpy.count(), 0);
 
   resetSpy.clear();
   populatePersonStorage(cache, {"A","B","C"});
   QVERIFY(cache.fetchAll());
   QCOMPARE(resetSpy.count(), 1);
+  QCOMPARE(rowsAboutToBeInsertedSpy.count(), 3);
+  QCOMPARE(rowsInsertedSpy.count(), 3);
 }
 
 void CacheTableModelTest::readOnlySetCacheSignalTest()

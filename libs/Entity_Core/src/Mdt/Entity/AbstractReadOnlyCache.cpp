@@ -45,12 +45,16 @@ QString AbstractReadOnlyCache::horizontalHeaderName(int) const
 
 bool AbstractReadOnlyCache::fetchAll()
 {
+  /*
+   * We signal cache was reset while clearing the cache,
+   * then, fromBackendAppendRecord() will signal new incomming rows.
+   * This has the adventage to also work with async fetching.
+   */
   beginResetCache();
   mCache.clear();
-  const bool ok = fetchRecords( cachedRowCountLimit() );
   endResetCache();
 
-  return ok;
+  return fetchRecords( cachedRowCountLimit() );
 }
 
 void AbstractReadOnlyCache::fromBackendSetRecord(int row, const VariantRecord& record)
@@ -119,13 +123,11 @@ void AbstractReadOnlyCache::setLastError(const Error& error)
 
 void AbstractReadOnlyCache::beginResetCache()
 {
-  mResettingCache = true;
   emit cacheAboutToBeReset();
 }
 
 void AbstractReadOnlyCache::endResetCache()
 {
-  mResettingCache = false;
   emit cacheReset();
 }
 
@@ -133,17 +135,11 @@ void AbstractReadOnlyCache::beginInsertRows(RowRange rows)
 {
   Q_ASSERT(rows.isValid());
 
-  if(mResettingCache){
-    return;
-  }
   emit rowsAboutToBeInserted(rows.firstRow(), rows.lastRow());
 }
 
 void AbstractReadOnlyCache::endInsertRows()
 {
-  if(mResettingCache){
-    return;
-  }
   emit rowsInserted();
 }
 
