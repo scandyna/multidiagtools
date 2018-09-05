@@ -24,7 +24,94 @@
 #include "PersonCache.h"
 
 #include "Mdt/Entity/AbstractAsyncReadOnlyCache.h"
+
+#include "Mdt/Entity/AbstractEditableCache.h"
+
+#include <QObject>
 #include <QStringList>
+
+class AsyncPersonCacheCommonImpl : public QObject
+{
+ Q_OBJECT
+
+ public:
+
+  int columnCount() const noexcept
+  {
+    return mImpl.columnCount();
+  }
+
+  QString horizontalHeaderName(int column) const
+  {
+    return mImpl.horizontalHeaderName(column);
+  }
+
+  void setBackendLatency(int ms)
+  {
+    Q_ASSERT(ms >= 0);
+
+    mBackendLatency = ms;
+  }
+
+  int storageRowCount() const
+  {
+    return mImpl.storageRowCount();
+  }
+
+  const Person & recordFromStorage(int row) const
+  {
+    Q_ASSERT(row >= 0);
+    Q_ASSERT(row < storageRowCount());
+
+    return mImpl.recordFromStorage(row);
+  }
+
+  void appendRecordToStorage(Person record)
+  {
+    mImpl.appendRecordToStorage(record);
+  }
+
+  void updateRecordInStorage(int row, const Person & record)
+  {
+    mImpl.updateRecordInStorage(row, record);
+  }
+
+  void removeRecordFromStorage(int row)
+  {
+    mImpl.removeRecordFromStorage(row);
+  }
+
+  void clearStorage()
+  {
+    mImpl.clearStorage();
+  }
+
+  std::vector<Mdt::Container::VariantRecord> getRecordsFromStorage(int count)
+  {
+    return mImpl.getRecordsFromStorage(count);
+  }
+
+  int getNextId() const
+  {
+    return mImpl.getNextId();
+  }
+
+  bool fetchRecords(int count);
+
+ signals:
+
+  void newRecordAvailable(const Mdt::Container::VariantRecord & record);
+
+ private slots:
+
+  void sendNewRecordToCache();
+
+ private:
+
+  PersonCacheCommonImpl mImpl;
+  std::vector<Mdt::Container::VariantRecord> mRecordsToSend;
+  int mBackendLatency = 25;
+};
 
 class AsyncPersonCache : public Mdt::Entity::AbstractAsyncReadOnlyCache
 {
@@ -35,6 +122,59 @@ class AsyncPersonCache : public Mdt::Entity::AbstractAsyncReadOnlyCache
  public:
 
   explicit AsyncPersonCache(QObject *parent = nullptr);
+
+  int columnCount() const noexcept override
+  {
+    return mImpl.columnCount();
+  }
+
+  QString horizontalHeaderName(int column) const override
+  {
+    return mImpl.horizontalHeaderName(column);
+  }
+
+  void setBackendLatency(int ms)
+  {
+    Q_ASSERT(ms >= 0);
+
+    mImpl.setBackendLatency(ms);
+  }
+
+  int storageRowCount() const
+  {
+    return mImpl.storageRowCount();
+  }
+
+  const Person & recordFromStorage(int row) const
+  {
+    Q_ASSERT(row >= 0);
+    Q_ASSERT(row < storageRowCount());
+
+    return mImpl.recordFromStorage(row);
+  }
+
+  void appendRecordToStorage(Person record)
+  {
+    mImpl.appendRecordToStorage(record);
+  }
+
+  void clearStorage()
+  {
+    mImpl.clearStorage();
+  }
+
+ private:
+
+  bool fetchRecords(int count) override;
+
+  AsyncPersonCacheCommonImpl mImpl;
+};
+
+class AsyncEditPersonCache : public Mdt::Entity::AbstractEditableCache
+{
+ Q_OBJECT
+
+ public:
 
   int columnCount() const noexcept override
   {
@@ -69,20 +209,14 @@ class AsyncPersonCache : public Mdt::Entity::AbstractAsyncReadOnlyCache
     mImpl.clearStorage();
   }
 
- signals:
-
-  void newRecordAvailable(const Mdt::Entity::VariantRecord & record);
-
- private slots:
-
-  void sendNewRecordToCache();
-
  private:
 
   bool fetchRecords(int count) override;
+  bool addRecordToBackend(int row) override;
+  bool updateRecordInBackend(int row) override;
+  bool removeRecordFromBackend(int row) override;
 
-  PersonCacheCommonImpl mImpl;
-  std::vector<Mdt::Entity::VariantRecord> mRecordsToSend;
+  AsyncPersonCacheCommonImpl mImpl;
 };
 
 void populatePersonStorage(AsyncPersonCache & pc, const QStringList & names);

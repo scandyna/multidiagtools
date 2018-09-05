@@ -22,31 +22,63 @@
 #include <QTimer>
 #include <algorithm>
 
+#include <QDebug>
+
 using namespace Mdt::Entity;
 
-AsyncPersonCache::AsyncPersonCache(QObject* parent)
- : BaseClass(parent)
-{
-  connect(this, &AsyncPersonCache::newRecordAvailable, this, &AsyncPersonCache::fromBackendAppendRecord);
-}
-
-bool AsyncPersonCache::fetchRecords(int count)
+bool AsyncPersonCacheCommonImpl::fetchRecords(int count)
 {
   mRecordsToSend = mImpl.getRecordsFromStorage(count);
   std::reverse(mRecordsToSend.begin(), mRecordsToSend.end());
 
-  for(const auto & record : mRecordsToSend){
-    QTimer::singleShot(25, this, &AsyncPersonCache::sendNewRecordToCache);
-  }
+  QTimer::singleShot(mBackendLatency, this, &AsyncPersonCacheCommonImpl::sendNewRecordToCache);
+
   return true;
 }
 
-void AsyncPersonCache::sendNewRecordToCache()
+void AsyncPersonCacheCommonImpl::sendNewRecordToCache()
 {
   Q_ASSERT(!mRecordsToSend.empty());
 
+  qDebug() << "emit newRecordAvailable..";
   emit newRecordAvailable( mRecordsToSend.back() );
   mRecordsToSend.pop_back();
+
+  if(!mRecordsToSend.empty()){
+    QTimer::singleShot(mBackendLatency, this, &AsyncPersonCacheCommonImpl::sendNewRecordToCache);
+  }
+}
+
+
+AsyncPersonCache::AsyncPersonCache(QObject* parent)
+ : BaseClass(parent)
+{
+  connect(&mImpl, &AsyncPersonCacheCommonImpl::newRecordAvailable, this, &AsyncPersonCache::fromBackendAppendRecord);
+}
+
+bool AsyncPersonCache::fetchRecords(int count)
+{
+  return mImpl.fetchRecords(count);
+}
+
+bool AsyncEditPersonCache::fetchRecords(int count)
+{
+  return mImpl.fetchRecords(count);
+}
+
+bool AsyncEditPersonCache::addRecordToBackend(int row)
+{
+
+}
+
+bool AsyncEditPersonCache::updateRecordInBackend(int row)
+{
+
+}
+
+bool AsyncEditPersonCache::removeRecordFromBackend(int row)
+{
+
 }
 
 

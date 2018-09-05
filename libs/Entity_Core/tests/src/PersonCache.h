@@ -57,11 +57,21 @@ class PersonCacheCommonImpl
     return mStorage.size();
   }
 
+  const Person & recordFromStorage(int row) const
+  {
+    Q_ASSERT(row >= 0);
+    Q_ASSERT(row < storageRowCount());
+
+    return mStorage[row];
+  }
+
   void appendRecordToStorage(Person record);
+  void updateRecordInStorage(int row, const Person & record);
+  void removeRecordFromStorage(int row);
 
   void clearStorage();
 
-  std::vector<Mdt::Entity::VariantRecord> getRecordsFromStorage(int count);
+  std::vector<Mdt::Container::VariantRecord> getRecordsFromStorage(int count);
   int getNextId() const;
 
  private:
@@ -123,6 +133,19 @@ class EditPersonCache : public Mdt::Entity::AbstractEditableCache
     return mImpl.horizontalHeaderName(column);
   }
 
+  int storageRowCount() const
+  {
+    return mImpl.storageRowCount();
+  }
+
+  const Person & recordFromStorage(int row) const
+  {
+    Q_ASSERT(row >= 0);
+    Q_ASSERT(row < storageRowCount());
+
+    return mImpl.recordFromStorage(row);
+  }
+
   void appendRecordToStorage(Person record)
   {
     mImpl.appendRecordToStorage(record);
@@ -136,10 +159,23 @@ class EditPersonCache : public Mdt::Entity::AbstractEditableCache
  private:
 
   bool fetchRecords(int count) override;
-  bool addRecordToBackend(const Mdt::Entity::VariantRecord& record) override;
+  bool addRecordToBackend(int row) override;
+  bool updateRecordInBackend(int row) override;
+  bool removeRecordFromBackend(int row) override;
 
   PersonCacheCommonImpl mImpl;
 };
+
+template<typename Cache>
+void populatePersonStorageImpl(Cache & cache, const QStringList & names)
+{
+  cache.clearStorage();
+  for(const auto & name : names){
+    Person record;
+    record.name = name;
+    cache.appendRecordToStorage(record);
+  }
+}
 
 void populatePersonStorage(PersonCache & pc, const QStringList & names);
 void populatePersonStorage(EditPersonCache & pc, const QStringList & names);

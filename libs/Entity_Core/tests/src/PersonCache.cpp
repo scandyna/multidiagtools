@@ -22,11 +22,28 @@
 #include <algorithm>
 
 using namespace Mdt::Entity;
+using Mdt::Container::VariantRecord;
 
 void PersonCacheCommonImpl::appendRecordToStorage(Person record)
 {
   record.id = getNextId();
   mStorage.push_back(record);
+}
+
+void PersonCacheCommonImpl::updateRecordInStorage(int row, const Person& record)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < storageRowCount());
+
+  mStorage[row] = record;
+}
+
+void PersonCacheCommonImpl::removeRecordFromStorage(int row)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < storageRowCount());
+
+  mStorage.erase( mStorage.begin() + row );
 }
 
 void PersonCacheCommonImpl::clearStorage()
@@ -65,7 +82,7 @@ bool PersonCache::fetchRecords(int count)
 {
   const auto records = mImpl.getRecordsFromStorage(count);
   for(const auto & record : records){
-    appendRecordFromBackend(record);
+    fromBackendAppendRecord(record);
   }
   return true;
 }
@@ -74,32 +91,49 @@ bool EditPersonCache::fetchRecords(int count)
 {
   const auto records = mImpl.getRecordsFromStorage(count);
   for(const auto & record : records){
-    appendRecordFromBackend(record);
+    fromBackendAppendRecord(record);
   }
   return true;
 }
 
-bool EditPersonCache::addRecordToBackend(const VariantRecord& record)
+bool EditPersonCache::addRecordToBackend(int row)
 {
-  Q_ASSERT(record.columnCount() == columnCount());
-
   Person person;
-  person.name = record.value(1).toString();
+  person.name = data(row, 1).toString();
   appendRecordToStorage(person);
 
+  person = mImpl.recordFromStorage(row);
+  VariantRecord record(2);
+  record.setValue(0, person.id);
+  record.setValue(1, person.name);
+  fromBackendSetRecord(row, record);
+
   return true;
 }
 
-template<typename Cache>
-void populatePersonStorageImpl(Cache & cache, const QStringList & names)
+bool EditPersonCache::updateRecordInBackend(int row)
 {
-  cache.clearStorage();
-  for(const auto & name : names){
-    Person record;
-    record.name = name;
-    cache.appendRecordToStorage(record);
-  }
+  Person person;
+
+  person.id = data(row, 0).toInt();
+  person.name = data(row, 1).toString();
+
+  mImpl.updateRecordInStorage(row, person);
+  VariantRecord record(2);
+  record.setValue(0, person.id);
+  record.setValue(1, person.name);
+  fromBackendSetRecord(row, record);
+
+  return true;
 }
+
+bool EditPersonCache::removeRecordFromBackend(int row)
+{
+  mImpl.removeRecordFromStorage(row);
+
+  return true;
+}
+
 
 void populatePersonStorage(PersonCache & pc, const QStringList & names)
 {
