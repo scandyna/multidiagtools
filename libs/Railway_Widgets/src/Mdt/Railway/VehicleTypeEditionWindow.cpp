@@ -20,24 +20,12 @@
  ****************************************************************************/
 #include "VehicleTypeEditionWindow.h"
 #include "ui_VehicleTypeEditionWindow.h"
-
-// #include "Mdt/Railway/VehicleTypeClassTableModel.h"
-#include "Mdt/Railway/VehicleTypeData.h"
 #include "Mdt/Railway/VehicleTypeDataValidator.h"
-#include "Mdt/Railway/Entity/VehicleTypeClass.h"
-
-#include "Mdt/ItemModel/SelectQueryTableModel.h"
 #include "Mdt/ItemModel/ProxyModelContainer.h"
 #include "Mdt/ItemModel/SortProxyModel.h"
-
-#include "Mdt/Entity/EntitySelectStatement.h"
-
 #include "Mdt/Entity/AbstractReadOnlyCacheTableModel.h"
-
 #include "Mdt/Entity/SetupWidget.h"
 #include "Mdt/ErrorDialog.h"
-
-#include "Mdt/Entity/FieldAttributes.h"
 
 using namespace Mdt::Entity;
 using namespace Mdt::ItemModel;
@@ -60,6 +48,8 @@ VehicleTypeEditionWindow::VehicleTypeEditionWindow(QWidget* parent)
 //   setupWidget(mUi->leManufacturerSerie, mEditor.manufacturerSerieFieldAttributes());
 
   connect(mUi->action_Save, &QAction::triggered, this, &VehicleTypeEditionWindow::save);
+
+  setupChooseVehicleTypeClass();
 }
 
 VehicleTypeEditionWindow::~VehicleTypeEditionWindow()
@@ -71,9 +61,8 @@ void VehicleTypeEditionWindow::setQueryFactory(const std::shared_ptr<SelectQuery
   Q_ASSERT(factory.get() != nullptr);
 //   Q_ASSERT(factory->isValid());
 
-  mQueryFactory = factory;
-  setupChooseVehicleTypeClass();
-//   setupVehicleTypeNameModel();
+  mChooseVehicleTypeClassCache.setQueryFactory(factory);
+  mChooseVehicleTypeClassCache.fetchAll();
 }
 
 void VehicleTypeEditionWindow::displayCreatedVehicleType(const CreateVehicleTypeResponse& response)
@@ -94,25 +83,8 @@ void VehicleTypeEditionWindow::save()
   if(!validateRequest(request)){
     return;
   }
-//   CreateVehicleTypeRequest request;
-//
-//   request.className = mUi->vehicleTypeName->currentText();
-//   request.alias = QLatin1String("Fake");
-//   request.manufacturerSerie = mUi->leManufacturerSerie->text();
 
   emit createVehicleTypeRequested(request);
-
-//   if( !mEditor.setVehicleTypeName(mUi->vehicleTypeName->currentText()) ){
-//     displayError(mEditor.lastError());
-//     return;
-//   }
-//   mUi->vehicleTypeName->setCurrentText( mEditor.vehicleTypeName() );
-//
-//   if( !mEditor.setManufacturerSerie(mUi->leManufacturerSerie->text()) ){
-//     displayError(mEditor.lastError());
-//     return;
-//   }
-//   mUi->leManufacturerSerie->setText( mEditor.manufacturerSerie() );
 }
 
 CreateVehicleTypeRequest VehicleTypeEditionWindow::makeCreateVehicleTypeRequest() const
@@ -139,7 +111,6 @@ bool VehicleTypeEditionWindow::validateRequest(const CreateVehicleTypeRequest& r
   return true;
 }
 
-/// \todo Put allocation in a init method
 void VehicleTypeEditionWindow::setupChooseVehicleTypeClass()
 {
 //   connect(&mChooseVehicleTypeClassCache, &ChooseVehicleTypeClassCache::errorOccured, this, &VehicleTypeEditionWindow::handleError);
@@ -158,36 +129,6 @@ void VehicleTypeEditionWindow::setupChooseVehicleTypeClass()
 
   cb->setModel(modelContainer.modelForView());
   cb->setModelColumn( mChooseVehicleTypeClassCache.nameColumn() );
-
-  mChooseVehicleTypeClassCache.setQueryFactory(mQueryFactory);
-  mChooseVehicleTypeClassCache.fetchAll();
-}
-
-void VehicleTypeEditionWindow::setupVehicleTypeNameModel()
-{
-  EntitySelectStatement<Entity::VehicleTypeClassEntity> stm;
-  stm.addField( stm.def().id() );
-  stm.addField( stm.def().name() );
-
-//   auto query = mQueryFactory->createCachedSelectQuery();
-//   if(!query.exec(stm)){
-//     displayError(query.lastError());
-//     return;
-//   }
-
-  auto *cb = mUi->vehicleTypeName;
-  auto *model = new SelectQueryTableModel(cb);
-
-//   model->setQuery(query);
-  ProxyModelContainer modelContainer;
-  modelContainer.setSourceModel(model);
-  auto *sortModel = new SortProxyModel(cb);
-  sortModel->setSortLocaleAware(true);
-  sortModel->addColumnToSortOrder(1, StringNumericMode::Natural, Qt::AscendingOrder);
-  modelContainer.appendProxyModel(sortModel);
-
-  cb->setModel(modelContainer.modelForView());
-  cb->setModelColumn(1);
 }
 
 void VehicleTypeEditionWindow::displayError(const Error& error)
