@@ -30,7 +30,7 @@ using namespace Mdt::Entity;
  * Entities
  */
 
-class ArticleId : public IntegralUniqueIdTemplate<int>
+class ArticleId : public IntegralUniqueIdTemplate<ArticleId, int>
 {
  public:
 
