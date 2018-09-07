@@ -193,6 +193,37 @@ void CacheTableModelTest::editableSetCacheSignalTest()
   setCacheSignalTest<EditPersonCache, EditableCacheTableModel>();
 }
 
+template<typename Cache, typename Model>
+void dataTest()
+{
+  Cache cache;
+  populatePersonStorage(cache, {"A","B","C"});
+  QVERIFY(cache.fetchAll());
+  Model model;
+  model.setCache(&cache);
+
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QCOMPARE(getModelData(model, 0, 1, Qt::EditRole), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1, Qt::EditRole), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1, Qt::EditRole), QVariant("C"));
+  QCOMPARE(getModelData(model, 0, 1, Qt::FontRole), QVariant());
+  QCOMPARE(getModelData(model, 1, 1, Qt::FontRole), QVariant());
+  QCOMPARE(getModelData(model, 2, 1, Qt::FontRole), QVariant());
+}
+
+void CacheTableModelTest::readOnlyDataTest()
+{
+  dataTest<PersonCache, ReadOnlyCacheTableModel>();
+}
+
+void CacheTableModelTest::editableDataTest()
+{
+  dataTest<EditPersonCache, EditableCacheTableModel>();
+}
+
 void CacheTableModelTest::setDataTest()
 {
   EditPersonCache cache;

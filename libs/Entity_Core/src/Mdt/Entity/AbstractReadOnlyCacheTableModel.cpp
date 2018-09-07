@@ -87,7 +87,7 @@ QVariant AbstractReadOnlyCacheTableModel::data(const QModelIndex& index, int rol
   Q_ASSERT(index.row() < rowCount());
   Q_ASSERT(index.column() < columnCount());
 
-  if(role == Qt::DisplayRole){
+  if( (role == Qt::DisplayRole)||(role == Qt::EditRole) ){
     return mCache->data(index.row(), index.column());
   }
 

@@ -49,6 +49,9 @@ class CacheTableModelTest : public QObject
   void readOnlySetCacheSignalTest();
   void editableSetCacheSignalTest();
 
+  void readOnlyDataTest();
+  void editableDataTest();
+
   void setDataTest();
   void setDataSignalTest();
 
