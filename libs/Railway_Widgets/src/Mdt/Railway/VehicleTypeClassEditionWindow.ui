@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>789</width>
-    <height>395</height>
+    <width>1236</width>
+    <height>405</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,6 +40,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="pbUnremove">
+        <property name="text">
+         <string>Unremove</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -57,6 +64,15 @@
     <item>
      <widget class="QTableView" name="tableView"/>
     </item>
+    <item>
+     <widget class="QTableView" name="tvEditVehicleTypeClass"/>
+    </item>
+    <item>
+     <widget class="QTableView" name="tvEditVehicleTypeClassAsync"/>
+    </item>
+    <item>
+     <widget class="QUndoView" name="undoView"/>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -64,15 +80,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>789</width>
-     <height>30</height>
+     <width>1236</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="action_Save"/>
+    <addaction name="actionSave"/>
    </widget>
    <addaction name="menu_File"/>
   </widget>
@@ -87,17 +103,25 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_Save"/>
+   <addaction name="actionSave"/>
   </widget>
-  <action name="action_Save">
+  <action name="actionSave">
    <property name="icon">
-    <iconset theme="document-save"/>
+    <iconset theme="document-save">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QUndoView</class>
+   <extends>QListView</extends>
+   <header>QUndoView</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

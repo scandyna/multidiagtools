@@ -24,20 +24,29 @@
 #include "Mdt/Railway/VehicleTypeEditionWindow.h"
 #include "Mdt/Railway/VehicleTypeClassSqlRepository.h"
 
+#include "Mdt/Railway/CreateVehicleType.h"
+#include "Mdt/Railway/SqlVehicleTypeRepository.h"
+#include "Mdt/Railway/SqlVehicleTypeClassRepository.h"
+
 #include "Mdt/Railway/VehicleTypeClassRepository.h"
 #include "Mdt/Railway/SqlSchema.h"
 #include "Mdt/Sql/SQLiteDatabase.h"
+#include "Mdt/QueryExpression/SqlSelectQueryFactory.h"
+#include "Mdt/QueryExpression/SqlAsyncSelectQueryFactory.h"
+#include "Mdt/Sql/SQLiteConnectionParameters.h"
 // #include "Mdt/Sql/SQLiteDatabaseFileDialog.h"
 #include <QSqlDatabase>
 #include <QFile>
 #include <QTemporaryFile>
 #include <vector>
 #include <algorithm>
+#include <memory>
 
 #include <QDebug>
 
 using namespace Mdt::Railway;
 using namespace Mdt::Sql;
+using namespace Mdt::QueryExpression;
 
 void VehicleTypeTest::initTestCase()
 {
@@ -76,10 +85,6 @@ void VehicleTypeTest::sandbox()
 //   w.show();
 //   VehicleTypeEditionWindow window;
 
-//   QTemporaryFile dbFile;
-//   QFile dbFile("railway.sqlite");
-//   QVERIFY(dbFile.open(QFile::ReadWrite));
-//   qDebug() << "DB file: " << dbFile.fileName();
   SqlSchema schema;
   SQLiteDatabase sqliteDb;
   const QString dbFile = "railway.sqlite";
@@ -88,25 +93,55 @@ void VehicleTypeTest::sandbox()
     QVERIFY(schema.createSchema(sqliteDb.database()));
   }
   auto dbConnection = sqliteDb.database();
-//   auto dbConnection = QSqlDatabase::addDatabase("QSQLITE");
   QVERIFY(dbConnection.isValid());
-//   dbConnection.setDatabaseName("railway.sqlite");
-//   qDebug() << "DB file: " << dbConnection.databaseName();
-//   QVERIFY(dbConnection.open());
-// 
-//   SqlSchema schema;
-//   QVERIFY(schema.createSchema(dbConnection));
 
-  auto vehicleTypeClassRepository = VehicleTypeClassRepository::make<VehicleTypeClassSqlRepository>();
+  auto vehicleTypeClassRepository = VehicleTypeClassRepositoryHandle::make<VehicleTypeClassSqlRepository>();
   vehicleTypeClassRepository.repositoryImpl<VehicleTypeClassSqlRepository>().setDbConnection(dbConnection);
-  QVERIFY(vehicleTypeClassRepository.repository().fetchAll());
+
+  auto vehicleTypeClassRepository2 = std::make_shared<SqlVehicleTypeClassRepository>();
+  vehicleTypeClassRepository2->setDatabase(dbConnection);
+
+  auto queryFactory = std::make_shared<SqlSelectQueryFactory>();
+  queryFactory->setDatabase(dbConnection);
+//   SelectQueryFactory queryFactory;
+//   auto & sqlQueryFactory = queryFactory.makeImpl<SqlSelectQueryFactory>();
+//   sqlQueryFactory.setDatabase(dbConnection);
+
+  SQLiteConnectionParameters parameters;
+  parameters.setDatabaseFile( dbConnection.databaseName() );
+  auto asyncQueryFactory = std::make_shared<SqlAsyncSelectQueryFactory>();
+  asyncQueryFactory->setup(parameters.toConnectionParameters());
 
   VehicleTypeClassEditionWindow window;
   window.setVehicleTypeClassRepository(vehicleTypeClassRepository);
+  window.setVehicleTypeClassRepository(vehicleTypeClassRepository2);
+  window.setSelectQueryFactory(queryFactory);
+  window.setAsyncSelectQueryFactory(asyncQueryFactory);
   window.show();
-  while(window.isVisible()){
+//   while(window.isVisible()){
+//     QTest::qWait(500);
+//   }
+
+  auto vehicleTypeRepository = std::make_shared<SqlVehicleTypeRepository>();
+  vehicleTypeRepository->setDatabase(dbConnection);
+
+  CreateVehicleType cvt(vehicleTypeRepository);
+
+  VehicleTypeEditionWindow vtWindow;
+  QObject::connect(&vtWindow, &VehicleTypeEditionWindow::createVehicleTypeRequested, &cvt, &CreateVehicleType::execute);
+  QObject::connect(&cvt, &CreateVehicleType::succeed, &vtWindow, &VehicleTypeEditionWindow::displayCreatedVehicleType);
+  QObject::connect(&cvt, &CreateVehicleType::failed, &vtWindow, &VehicleTypeEditionWindow::handleError);
+  vtWindow.show();
+
+  QTest::qWait(1000);
+
+  vtWindow.setQueryFactory(asyncQueryFactory);
+  QVERIFY(vehicleTypeClassRepository.repository().fetchAll());
+
+  while(vtWindow.isVisible()){
     QTest::qWait(500);
   }
+
 }
 
 /*

@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>AddVehicleTypeClassCommand</name>
+    <message>
+        <source>Add vehicle type class</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::Railway::VehicleTypeClassEditionWindow</name>
     <message>
         <source>Vehicle type class</source>
@@ -25,6 +32,18 @@
     </message>
     <message>
         <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Redo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unremove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -55,10 +74,6 @@
     </message>
     <message>
         <source>Manufacturer serie:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Complete name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

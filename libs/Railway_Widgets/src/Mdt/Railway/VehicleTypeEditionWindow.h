@@ -22,7 +22,14 @@
 #define MDT_RAILWAY_VEHICLE_TYPE_EDITION_WINDOW_H
 
 #include "Mdt/Railway/VehicleTypeEdition.h"
+
+#include "Mdt/Railway/ChooseVehicleTypeClassCache.h"
 #include "MdtRailway_WidgetsExport.h"
+#include "Mdt/QueryExpression/AbstractAsyncSelectQueryFactory.h"
+
+#include "Mdt/Railway/CreateVehicleType.h"
+#include "Mdt/Railway/Error.h"
+
 #include "Mdt/Error.h"
 #include <QWidget>
 #include <QMainWindow>
@@ -40,6 +47,8 @@ namespace Mdt{ namespace Railway{
   {
    Q_OBJECT
 
+    using SelectQueryFactory = Mdt::QueryExpression::AbstractAsyncSelectQueryFactory;
+
    public:
 
     /*! \brief Constructor
@@ -50,15 +59,39 @@ namespace Mdt{ namespace Railway{
      */
     ~VehicleTypeEditionWindow();
 
+    /*! \brief Set the query factory
+     *
+     * \pre \a factory must be valid
+     */
+    void setQueryFactory(const std::shared_ptr<SelectQueryFactory> & factory);
+
+   public slots:
+
+    void displayCreatedVehicleType(const CreateVehicleTypeResponse & response);
+
+    void handleError(const Error & error);
+
+   signals:
+
+    void createVehicleTypeRequested(const CreateVehicleTypeRequest & request);
+
    private slots:
 
     void save();
 
    private:
 
+    CreateVehicleTypeRequest makeCreateVehicleTypeRequest() const;
+    bool validateRequest(const CreateVehicleTypeRequest & request);
+
+    void setupChooseVehicleTypeClass();
+    void setupVehicleTypeNameModel();
+
     void displayError(const Mdt::Error & error);
 
     VehicleTypeEdition mEditor;
+    ChooseVehicleTypeClassCache mChooseVehicleTypeClassCache;
+    std::shared_ptr<SelectQueryFactory> mQueryFactory;
     std::unique_ptr<Ui::VehicleTypeEditionWindow> mUi;
   };
 
