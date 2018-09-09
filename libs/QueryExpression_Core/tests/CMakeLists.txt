@@ -27,6 +27,7 @@ endfunction()
 #================= Tests ====================
 
 addQueryExpression_CoreTest("ExpressionGrammarTest")
+addQueryExpression_CoreTest("JoinClauseTest")
 addQueryExpression_CoreTest("SelectStatementTest")
 addQueryExpression_CoreTest("SelectQueryTest")
 addQueryExpression_CoreTest("SelectFieldTest")

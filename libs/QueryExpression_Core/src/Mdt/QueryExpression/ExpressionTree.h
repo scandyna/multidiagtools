@@ -78,6 +78,13 @@ namespace Mdt{ namespace QueryExpression{
       return addComparisonNode(left, op, right);
     }
 
+    /*! \brief Add a node for \a left select field, \a op operation and \a right select field
+     */
+    ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const SelectFieldVariant & right)
+    {
+      return addComparisonNode(left, op, right);
+    }
+
     /*! \brief Add a \a op operation node with \a leftChild and \a rightChild
      */
     ExpressionTreeVertex addNode(ExpressionTreeVertex leftChild, LogicalOperator op, ExpressionTreeVertex rightChild);

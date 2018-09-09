@@ -43,6 +43,11 @@ namespace Mdt{ namespace QueryExpression{ namespace BuildExpressionTree{
     {
       return tree.addNode(left, op, right);
     }
+
+    ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const SelectFieldVariant & right, ExpressionTree & tree) const
+    {
+      return tree.addNode(left, op, right);
+    }
   };
 
   struct MDT_QUERYEXPRESSION_CORE_EXPORT AddEqualExpressionToTree : AddComparisonExpressionToTreeBase

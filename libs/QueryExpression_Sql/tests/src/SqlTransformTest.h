@@ -39,10 +39,15 @@ class SqlTransformTest : public TestBase
   void operatorToSqlTest();
   void likeExpressionToSqlTest();
   void likeExpressionToSqlTest_data();
+  void joinConstraintExpressionToSqlTest();
+  void joinOperatorToSqlTest();
+  void joinClauseToSqlTest();
+  void joinClauseListToSqlTest();
   void filterExpressionToSqlTest();
   void selectStatementToSqlLimitSyntaxTest();
   void selectStatementToSqlTopSyntaxTest();
   void selectStatementToSqlTest();
+  void selectStatementWithJoinToSqlTest();
 };
 
 #endif // #ifndef MDT_TEST_MAIN_H

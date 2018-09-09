@@ -26,6 +26,8 @@
 #include "SelectEntity.h"
 #include "SelectField.h"
 #include "SelectFieldList.h"
+#include "JoinConstraintExpression.h"
+#include "JoinClauseList.h"
 #include "FilterExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
@@ -190,6 +192,35 @@ namespace Mdt{ namespace QueryExpression{
       return mFieldList;
     }
 
+    /*! \brief Join \a entity to this statement
+     *
+     * \pre \a entity must not be null
+     */
+    template<typename JoinExpr>
+    void joinEntity(const SelectEntity & entity, const JoinExpr & join)
+    {
+      Q_ASSERT(!entity.isNull());
+
+      JoinConstraintExpression joinConstraint;
+      joinConstraint.setJoin(join);
+      Q_ASSERT(!joinConstraint.isNull());
+      mJoinClauseList.addClause(JoinOperator::Join, entity, joinConstraint);
+    }
+
+    /*! \brief Check if this statement has at least 1 join clause
+     */
+    bool hasJoin() const noexcept
+    {
+      return !mJoinClauseList.isEmpty();
+    }
+
+    /*! \brief Access the list of join clauses of this statement
+     */
+    const JoinClauseList & joinClauseList() const
+    {
+      return mJoinClauseList;
+    }
+
     /*! \brief Set \a filter to this statement
      */
     template<typename Expr>
@@ -236,6 +267,7 @@ namespace Mdt{ namespace QueryExpression{
 
     SelectEntity mEntity;
     SelectFieldList mFieldList;
+    JoinClauseList mJoinClauseList;
     FilterExpression mFilter;
   };
 

@@ -18,21 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef TEST_MAIN_H
-#define TEST_MAIN_H
+#ifndef MDT_QUERY_EXPRESSION_TYPE_TRAITS_JOIN_CONSTRAINT_EXPRESSION_H
+#define MDT_QUERY_EXPRESSION_TYPE_TRAITS_JOIN_CONSTRAINT_EXPRESSION_H
 
-#include "TestBase.h"
+#include "../ExpressionGrammar.h"
+#include <boost/proto/matches.hpp>
 
-class ExpressionTreeTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace QueryExpression{ namespace TypeTraits{
 
- private slots:
+  /*! \brief Check if type \a Expr is a join constraint expression
+   */
+  template<typename Expr>
+  constexpr bool isJoinConstraintExpression()
+  {
+    return boost::proto::matches< Expr, ExpressionGrammar >::value;
+  }
 
-  void simpleBuildTreeTest();
-  void buildAndVisitTreeTest();
-  void filterExpressionTest();
-  void joinConstraintExpressionTest();
-};
+}}} // namespace Mdt{ namespace QueryExpression{ namespace TypeTraits{
 
-#endif // #ifndef TEST_MAIN_H
+#endif // #ifndef MDT_QUERY_EXPRESSION_TYPE_TRAITS_JOIN_CONSTRAINT_EXPRESSION_H

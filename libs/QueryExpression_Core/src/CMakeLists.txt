@@ -7,6 +7,7 @@ set(SOURCE_FILES
   Mdt/QueryExpression/SelectEntity.cpp
   Mdt/QueryExpression/EntityAndField.cpp
   Mdt/QueryExpression/SelectAllField.cpp
+  Mdt/QueryExpression/SelectFieldVariant.cpp
   Mdt/QueryExpression/SelectField.cpp
   Mdt/QueryExpression/SelectFieldList.cpp
   Mdt/QueryExpression/Terminal.cpp
@@ -22,8 +23,13 @@ set(SOURCE_FILES
   Mdt/QueryExpression/TravserseTreeGraph.cpp
   Mdt/QueryExpression/TypeTraits/Graph.cpp
   Mdt/QueryExpression/TypeTraits/FilterExpression.cpp
+  Mdt/QueryExpression/TypeTraits/JoinConstraintExpression.cpp
   Mdt/QueryExpression/BuildExpressionTree/AddExpressionToTree.cpp
   Mdt/QueryExpression/BuildExpressionTree/Transform.cpp
+  Mdt/QueryExpression/JoinOperator.cpp
+  Mdt/QueryExpression/JoinConstraintExpression.cpp
+  Mdt/QueryExpression/JoinClause.cpp
+  Mdt/QueryExpression/JoinClauseList.cpp
   Mdt/QueryExpression/FilterExpression.cpp
   Mdt/QueryExpression/SelectStatement.cpp
   Mdt/QueryExpression/QuerySelectStatement.cpp

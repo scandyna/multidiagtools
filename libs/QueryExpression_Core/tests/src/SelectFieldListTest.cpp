@@ -30,16 +30,16 @@ using namespace Mdt::QueryExpression;
 
 SelectAllField getSelectAllField(const SelectField & field)
 {
-  Q_ASSERT(boost::get<SelectAllField>(&field.internalVariant()) != nullptr);
+  Q_ASSERT(boost::get<SelectAllField>(&field.internalVariant().internalVariant()) != nullptr);
 
-  return boost::get<SelectAllField>(field.internalVariant());
+  return boost::get<SelectAllField>(field.internalVariant().internalVariant());
 }
 
 EntityAndField getEntityAndField(const SelectField & field)
 {
-  Q_ASSERT(boost::get<EntityAndField>(&field.internalVariant()) != nullptr);
+  Q_ASSERT(boost::get<EntityAndField>(&field.internalVariant().internalVariant()) != nullptr);
 
-  return boost::get<EntityAndField>(field.internalVariant());
+  return boost::get<EntityAndField>(field.internalVariant().internalVariant());
 }
 
 /*

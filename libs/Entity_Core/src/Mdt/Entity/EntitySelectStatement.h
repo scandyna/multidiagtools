@@ -201,6 +201,14 @@ namespace Mdt{ namespace Entity{
       ParentClass::addField( queryEntity.toSelectEntity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()), fieldAlias );
     }
 
+    /*! \brief Join a entity to this statement
+     */
+    template<typename FEntity, typename JoinConstrainExpr>
+    void joinEntity(const QueryEntity<FEntity> & queryEntity, const JoinConstrainExpr & joinConstraint)
+    {
+      ParentClass::joinEntity(queryEntity.toSelectEntity(), joinConstraint);
+    }
+
     /*! \brief Create a select field
      */
     template<typename FieldDef>

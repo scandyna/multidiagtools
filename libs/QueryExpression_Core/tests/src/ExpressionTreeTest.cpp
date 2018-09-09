@@ -24,6 +24,7 @@
 #include "Mdt/QueryExpression/AbstractExpressionTreeVisitor.h"
 #include "Mdt/QueryExpression/TravserseTreeGraph.h"
 #include "Mdt/QueryExpression/FilterExpression.h"
+#include "Mdt/QueryExpression/JoinConstraintExpression.h"
 #include <QMetaType>
 
 using namespace Mdt::QueryExpression;
@@ -410,6 +411,28 @@ void ExpressionTreeTest::filterExpressionTest()
   filter.setFilter(clientId == 1 || ((clientId > 2) && (clientId < 22)));
   expectedString = "(id==1)||((id>2)&&(id<22))";
   traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+}
+
+void ExpressionTreeTest::joinConstraintExpressionTest()
+{
+  SelectEntity person(EntityName("Person"), "P");
+  SelectEntity address(EntityName("Address"), "ADR");
+
+  SelectField personId(person, FieldName("id"));
+  SelectField addressPersonId(address, FieldName("personId"));
+
+  ExpressionToInfixStringVisitor infixVisitor;
+  QString expectedString;
+
+  JoinConstraintExpression join;
+  QVERIFY(join.isNull());
+
+  join.setJoin(addressPersonId == personId);
+  QVERIFY(!join.isNull());
+  expectedString = "personId==id";
+  traverseExpressionTree(join.internalTree(), infixVisitor);
   QCOMPARE(infixVisitor.toString(), expectedString);
   infixVisitor.clear();
 }

@@ -27,6 +27,9 @@
 #include "Mdt/QueryExpression/EntityAndField.h"
 #include "Mdt/QueryExpression/ComparisonOperator.h"
 #include "Mdt/QueryExpression/LogicalOperator.h"
+#include "Mdt/QueryExpression/JoinConstraintExpression.h"
+#include "Mdt/QueryExpression/JoinClause.h"
+#include "Mdt/QueryExpression/JoinClauseList.h"
 #include "Mdt/QueryExpression/LikeExpression.h"
 #include "Mdt/QueryExpression/FilterExpression.h"
 #include "Mdt/QueryExpression/SelectStatement.h"
@@ -84,6 +87,22 @@ namespace Mdt{ namespace QueryExpression{
   /*! \internal
    */
   QString MDT_QUERYEXPRESSION_SQL_EXPORT operatorToSql(LogicalOperator op);
+
+  /*! \internal
+   */
+  QString MDT_QUERYEXPRESSION_SQL_EXPORT joinConstraintExpressionToSql(const JoinConstraintExpression & expression, const QSqlDatabase & db);
+
+  /*! \internal
+   */
+  QString MDT_QUERYEXPRESSION_SQL_EXPORT joinOperatorToSql(JoinOperator op);
+
+  /*! \internal
+   */
+  QString MDT_QUERYEXPRESSION_SQL_EXPORT joinClauseToSql(const JoinClause & joinClause, const QSqlDatabase & db);
+
+  /*! \internal
+   */
+  QString MDT_QUERYEXPRESSION_SQL_EXPORT joinClauseListToSql(const JoinClauseList & joinClauseList, const QSqlDatabase & db);
 
   /*! \internal
    */

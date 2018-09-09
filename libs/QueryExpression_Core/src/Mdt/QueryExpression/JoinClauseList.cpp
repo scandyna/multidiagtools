@@ -18,21 +18,21 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef TEST_MAIN_H
-#define TEST_MAIN_H
+#include "JoinClauseList.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace QueryExpression{
 
-class ExpressionTreeTest : public QObject
+void JoinClauseList::addClause(JoinOperator joinOperator, const SelectEntity& entity, const JoinConstraintExpression& join)
 {
- Q_OBJECT
+  Q_ASSERT(!entity.isNull());
+  Q_ASSERT(!join.isNull());
 
- private slots:
+  mList.emplace_back(joinOperator, entity, join);
+}
 
-  void simpleBuildTreeTest();
-  void buildAndVisitTreeTest();
-  void filterExpressionTest();
-  void joinConstraintExpressionTest();
-};
+void JoinClauseList::clear()
+{
+  mList.clear();
+}
 
-#endif // #ifndef TEST_MAIN_H
+}} // namespace Mdt{ namespace QueryExpression{

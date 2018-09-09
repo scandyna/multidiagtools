@@ -18,21 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef TEST_MAIN_H
-#define TEST_MAIN_H
+#ifndef MDT_TEST_MAIN_H
+#define MDT_TEST_MAIN_H
 
 #include "TestBase.h"
 
-class ExpressionTreeTest : public QObject
+class JoinClauseTest : public QObject
 {
  Q_OBJECT
 
  private slots:
 
-  void simpleBuildTreeTest();
-  void buildAndVisitTreeTest();
-  void filterExpressionTest();
-  void joinConstraintExpressionTest();
+  void joinClauseTest();
+  void joinClauseListTest();
+
 };
 
-#endif // #ifndef TEST_MAIN_H
+#endif // #ifndef MDT_TEST_MAIN_H

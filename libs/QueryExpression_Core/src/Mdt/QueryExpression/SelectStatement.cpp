@@ -96,6 +96,7 @@ void SelectStatement::clear()
 {
   clearAttributesExceptEntity();
   clearEntity();
+  mJoinClauseList.clear();
 }
 
 void SelectStatement::clearAttributesExceptEntity()

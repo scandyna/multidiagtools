@@ -46,7 +46,7 @@ struct GetEntityAliasOrNameVisitor : public boost::static_visitor<>
 QString getEntityAliasOrName(const SelectField & field)
 {
   GetEntityAliasOrNameVisitor visitor;
-  boost::apply_visitor(visitor, field.internalVariant());
+  boost::apply_visitor(visitor, field.internalVariant().internalVariant());
   return visitor.aliasOrName;
 }
 
@@ -71,7 +71,7 @@ struct GetFieldAliasOrNameVisitor : public boost::static_visitor<>
 QString getFieldAliasOrName(const SelectField & field)
 {
   GetFieldAliasOrNameVisitor visitor;
-  boost::apply_visitor(visitor, field.internalVariant());
+  boost::apply_visitor(visitor, field.internalVariant().internalVariant());
   return visitor.aliasOrName;
 }
 
@@ -148,6 +148,22 @@ void SelectStatementTest::addFieldTest()
   QCOMPARE(fieldList.fieldCount(), 1);
   QCOMPARE(getEntityAliasOrName(fieldList.at(0)), QString("ADR"));
   QVERIFY(getFieldAliasOrName(fieldList.at(0)).isEmpty());
+}
+
+void SelectStatementTest::joinEntityTest()
+{
+  SelectEntity person( EntityName("Person") );
+  SelectEntity address( EntityName("Address"), "ADR");
+
+  SelectField personId( person, FieldName("id") );
+  SelectField addressPersonId( address, FieldName("personId") );
+
+  SelectStatement stm;
+  stm.joinEntity(address, addressPersonId == personId);
+  QCOMPARE(stm.joinClauseList().clauseCount(), 1);
+
+  stm.clear();
+  QCOMPARE(stm.joinClauseList().clauseCount(), 0);
 }
 
 /*
