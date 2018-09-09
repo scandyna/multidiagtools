@@ -25,6 +25,7 @@
 #include "SelectEntity.h"
 #include "EntityAndField.h"
 #include "SelectAllField.h"
+#include "SelectFieldVariant.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
 #include <boost/variant.hpp>
@@ -39,10 +40,6 @@ namespace Mdt{ namespace QueryExpression{
   struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectFieldTag
   {
   };
-
-  /*! \internal Data variant for SelectField
-   */
-  using SelectFieldVariant = boost::variant<SelectAllField, EntityAndField>;
 
   /*! \brief Represents a field and the optional field alias and maybe a SelectEntity
    */

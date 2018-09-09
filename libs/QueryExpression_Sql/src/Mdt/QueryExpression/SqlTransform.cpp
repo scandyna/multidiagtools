@@ -120,7 +120,7 @@ QString selectFieldDeclarationToSql(const SelectField & field, const QSqlDatabas
 {
   Q_ASSERT(db.isValid());
 
-  return boost::apply_visitor( SelectFieldDeclarationSqlTransformVisitor(db) , field.internalVariant() );
+  return boost::apply_visitor( SelectFieldDeclarationSqlTransformVisitor(db) , field.internalVariant().internalVariant() );
 }
 
 QString selectFieldListDeclarationToSql(const SelectFieldList & fieldList, const QSqlDatabase & db)

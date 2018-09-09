@@ -132,37 +132,37 @@ void SelectFieldTest::entityAndFieldTest()
 void SelectFieldTest::constructGetTest()
 {
   SelectField selectAll1(SelectAllField{});
-  QVERIFY( boost::get<SelectAllField>(&selectAll1.internalVariant()) != nullptr );
-  QVERIFY( boost::get<EntityAndField>(&selectAll1.internalVariant()) == nullptr );
-  const auto selectAllField1 = boost::get<SelectAllField>(selectAll1.internalVariant());
+  QVERIFY( boost::get<SelectAllField>(&selectAll1.internalVariant().internalVariant()) != nullptr );
+  QVERIFY( boost::get<EntityAndField>(&selectAll1.internalVariant().internalVariant()) == nullptr );
+  const auto selectAllField1 = boost::get<SelectAllField>(selectAll1.internalVariant().internalVariant());
   QVERIFY(selectAllField1.entityAliasOrName().isEmpty());
 
   SelectField selectAll2(SelectAllField(SelectEntity(EntityName("Person"))));
-  QVERIFY( boost::get<SelectAllField>(&selectAll2.internalVariant()) != nullptr );
-  QVERIFY( boost::get<EntityAndField>(&selectAll2.internalVariant()) == nullptr );
-  const auto selectAllField2 = boost::get<SelectAllField>(selectAll2.internalVariant());
+  QVERIFY( boost::get<SelectAllField>(&selectAll2.internalVariant().internalVariant()) != nullptr );
+  QVERIFY( boost::get<EntityAndField>(&selectAll2.internalVariant().internalVariant()) == nullptr );
+  const auto selectAllField2 = boost::get<SelectAllField>(selectAll2.internalVariant().internalVariant());
   QCOMPARE(selectAllField2.entityAliasOrName(), QString("Person"));
 
   SelectField name( FieldName("name") );
-  QVERIFY( boost::get<SelectAllField>(&name.internalVariant()) == nullptr );
-  QVERIFY( boost::get<EntityAndField>(&name.internalVariant()) != nullptr );
-  const auto nameEaF = boost::get<EntityAndField>(name.internalVariant());
+  QVERIFY( boost::get<SelectAllField>(&name.internalVariant().internalVariant()) == nullptr );
+  QVERIFY( boost::get<EntityAndField>(&name.internalVariant().internalVariant()) != nullptr );
+  const auto nameEaF = boost::get<EntityAndField>(name.internalVariant().internalVariant());
   QCOMPARE(nameEaF.fieldName(), QString("name"));
   QCOMPARE(nameEaF.fieldAliasOrName(), QString("name"));
 
   SelectField age( FieldName("age"), "A" );
-  QVERIFY( boost::get<SelectAllField>(&age.internalVariant()) == nullptr );
-  QVERIFY( boost::get<EntityAndField>(&age.internalVariant()) != nullptr );
-  const auto ageEaF = boost::get<EntityAndField>(age.internalVariant());
+  QVERIFY( boost::get<SelectAllField>(&age.internalVariant().internalVariant()) == nullptr );
+  QVERIFY( boost::get<EntityAndField>(&age.internalVariant().internalVariant()) != nullptr );
+  const auto ageEaF = boost::get<EntityAndField>(age.internalVariant().internalVariant());
   QCOMPARE(ageEaF.fieldName(), QString("age"));
   QCOMPARE(ageEaF.fieldAlias(), QString("A"));
   QCOMPARE(ageEaF.fieldAliasOrName(), QString("A"));
 
   SelectEntity person( EntityName("Person") );
   SelectField personName( person, FieldName("name") );
-  QVERIFY( boost::get<SelectAllField>(&personName.internalVariant()) == nullptr );
-  QVERIFY( boost::get<EntityAndField>(&personName.internalVariant()) != nullptr );
-  const auto personNameEaF = boost::get<EntityAndField>(personName.internalVariant());
+  QVERIFY( boost::get<SelectAllField>(&personName.internalVariant().internalVariant()) == nullptr );
+  QVERIFY( boost::get<EntityAndField>(&personName.internalVariant().internalVariant()) != nullptr );
+  const auto personNameEaF = boost::get<EntityAndField>(personName.internalVariant().internalVariant());
   QCOMPARE(personNameEaF.entityName(), QString("Person"));
   QCOMPARE(personNameEaF.entityAliasOrName(), QString("Person"));
   QCOMPARE(personNameEaF.fieldName(), QString("name"));
@@ -170,9 +170,9 @@ void SelectFieldTest::constructGetTest()
 
   SelectEntity address( EntityName("Address"), "ADR");
   SelectField addressStreet( address, FieldName("street"), "AddressStreet" );
-  QVERIFY( boost::get<SelectAllField>(&addressStreet.internalVariant()) == nullptr );
-  QVERIFY( boost::get<EntityAndField>(&addressStreet.internalVariant()) != nullptr );
-  const auto addressStreetEaF = boost::get<EntityAndField>(addressStreet.internalVariant());
+  QVERIFY( boost::get<SelectAllField>(&addressStreet.internalVariant().internalVariant()) == nullptr );
+  QVERIFY( boost::get<EntityAndField>(&addressStreet.internalVariant().internalVariant()) != nullptr );
+  const auto addressStreetEaF = boost::get<EntityAndField>(addressStreet.internalVariant().internalVariant());
   QCOMPARE(addressStreetEaF.entityName(), QString("Address"));
   QCOMPARE(addressStreetEaF.entityAlias(), QString("ADR"));
   QCOMPARE(addressStreetEaF.entityAliasOrName(), QString("ADR"));
