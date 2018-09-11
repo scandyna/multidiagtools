@@ -91,7 +91,7 @@ struct GetEntityAliasOrNameVisitor : public boost::static_visitor<>
 QString getEntityAliasOrName(const Mdt::QueryExpression::SelectField & field)
 {
   GetEntityAliasOrNameVisitor visitor;
-  boost::apply_visitor(visitor, field.internalVariant());
+  boost::apply_visitor(visitor, field.internalVariant().internalVariant());
   return visitor.aliasOrName;
 }
 
@@ -116,7 +116,7 @@ struct GetFieldAliasOrNameVisitor : public boost::static_visitor<>
 QString getFieldAliasOrName(const Mdt::QueryExpression::SelectField & field)
 {
   GetFieldAliasOrNameVisitor visitor;
-  boost::apply_visitor(visitor, field.internalVariant());
+  boost::apply_visitor(visitor, field.internalVariant().internalVariant());
   return visitor.aliasOrName;
 }
 

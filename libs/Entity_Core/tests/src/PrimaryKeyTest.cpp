@@ -423,19 +423,19 @@ void PrimaryKeyTest::selectFieldFromPrimaryKeyRecordFieldTest()
 
   PrimaryKeyRecordField articleIdPkrf(0, 8);
   const auto articleIdSf = selectFieldFromPrimaryKeyRecordField<ArticleEntity>(articleIdPkrf);
-  const auto articleIdEaf = boost::get<EntityAndField>(articleIdSf.internalVariant());
+  const auto articleIdEaf = boost::get<EntityAndField>(articleIdSf.internalVariant().internalVariant());
   QCOMPARE(articleIdEaf.entityAliasOrName(), QString("Article"));
   QCOMPARE(articleIdEaf.fieldAliasOrName(), QString("id"));
 
   PrimaryKeyRecordField linkStartIdPkrf(1, 21);
   const auto linkStartIdSf = selectFieldFromPrimaryKeyRecordField<LinkEntity>(linkStartIdPkrf);
-  const auto linkStartIdEaf = boost::get<EntityAndField>(linkStartIdSf.internalVariant());
+  const auto linkStartIdEaf = boost::get<EntityAndField>(linkStartIdSf.internalVariant().internalVariant());
   QCOMPARE(linkStartIdEaf.entityAliasOrName(), QString("Link"));
   QCOMPARE(linkStartIdEaf.fieldAliasOrName(), QString("startId"));
 
   PrimaryKeyRecordField linkEndIdPkrf(2, 21);
   const auto linkEndIdSf = selectFieldFromPrimaryKeyRecordField<LinkEntity>(linkEndIdPkrf);
-  const auto linkEndIdEaf = boost::get<EntityAndField>(linkEndIdSf.internalVariant());
+  const auto linkEndIdEaf = boost::get<EntityAndField>(linkEndIdSf.internalVariant().internalVariant());
   QCOMPARE(linkEndIdEaf.entityAliasOrName(), QString("Link"));
   QCOMPARE(linkEndIdEaf.fieldAliasOrName(), QString("endId"));
 }
