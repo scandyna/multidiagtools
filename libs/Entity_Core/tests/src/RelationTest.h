@@ -32,7 +32,7 @@ class RelationTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  
+  void forEachForeignFieldTest();
 };
 
 #endif // #ifndef RELATIONY_TEST_H

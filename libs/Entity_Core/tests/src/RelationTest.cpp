@@ -21,6 +21,7 @@
 #include "RelationTest.h"
 #include "Mdt/Entity/Relation.h"
 #include "Mdt/Entity/Def.h"
+#include <QStringList>
 
 using namespace Mdt::Entity;
 
@@ -66,9 +67,63 @@ MDT_ENTITY_DEF(
 
 using TeamEmployeeRelation = Relation<TeamEntity, EmployeeEntity, EmployeeDef::teamIdField>;
 
+struct TwoFieldPkDataStruct
+{
+  int pk1;
+  QString pk2;
+};
+
+MDT_ENTITY_DEF(
+  (TwoFieldPkDataStruct),
+  TwoFieldPk,
+  (pk1, FieldFlag::IsPrimaryKey),
+  (pk2, FieldFlag::IsPrimaryKey)
+)
+
+struct TwoFieldFkDataStruct
+{
+  int fk1;
+  QString fk2;
+};
+
+MDT_ENTITY_DEF(
+  (TwoFieldFkDataStruct),
+  TwoFieldFk,
+  (fk1),
+  (fk2)
+)
+
+using TwoFieldRelation = Relation<TwoFieldPkEntity, TwoFieldFkEntity, TwoFieldFkDef::fk1Field, TwoFieldFkDef::fk2Field>;
+
 /*
  * Tests
  */
+
+struct ToStringList
+{
+  template<typename Field>
+  void operator()(const Field &)
+  {
+    fieldNameList.append( Field::fieldName() );
+  }
+
+  QStringList fieldNameList;
+};
+
+void RelationTest::forEachForeignFieldTest()
+{
+  ToStringList f;
+  forEachRelationForeignField<TeamEmployeeRelation>(f);
+  QCOMPARE(f.fieldNameList.size(), 1);
+  QCOMPARE(f.fieldNameList.at(0), QString("teamId"));
+
+  f.fieldNameList.clear();
+  forEachRelationForeignField<TwoFieldRelation>(f);
+  QCOMPARE(f.fieldNameList.size(), 2);
+  QCOMPARE(f.fieldNameList.at(0), QString("fk1"));
+  QCOMPARE(f.fieldNameList.at(1), QString("fk2"));
+}
+
 
 /*
  * Main
