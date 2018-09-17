@@ -21,12 +21,10 @@
 #ifndef MDT_ENTITY_RELATION_H
 #define MDT_ENTITY_RELATION_H
 
-#include "ForeignKey.h"
 #include "TypeTraits/IsEntity.h"
 #include "TypeTraits/IsEntityDef.h"
 #include "TypeTraits/IsEntityFieldDef.h"
 #include "TypeTraits/RelationTag.h"
-#include <initializer_list>
 
 namespace Mdt{ namespace Entity{
 
@@ -183,36 +181,6 @@ namespace Mdt{ namespace Entity{
     using primary_entity = PrimaryEntity;
     using foreign_entity = ForeignEntity;
   };
-
-  namespace Impl{
-
-    template<typename UnaryFunction,typename ForeignEntityField , typename ...ForeignEntityFields>
-    void applyFunctorToField(UnaryFunction & f)
-    {
-      f(ForeignEntityField());
-    }
-
-    template<typename PrimaryEntity, typename ForeignEntity, typename ...ForeignEntityFields, typename UnaryFunction>
-    void forEachRelationForeignField(const Relation<PrimaryEntity, ForeignEntity, ForeignEntityFields...> &, UnaryFunction & f)
-    {
-      (void)std::initializer_list<int>{ (applyFunctorToField<UnaryFunction, ForeignEntityFields>(f) ,0)... };
-    }
-
-  } // namespace Impl{
-
-  /*! \brief Apply a function object for each foreign field in a relation
-   *
-   * \param f a function object with a signature equivalent to:
-   *    \code
-   *    template<typename Field>
-   *    void f(const Field & field);
-   *    \endcode
-   */
-  template<typename Relation, typename UnaryFunction>
-  void forEachRelationForeignField(UnaryFunction & f)
-  {
-    Impl::forEachRelationForeignField(Relation(), f);
-  }
 
 }} // namespace Mdt{ namespace Entity{
 

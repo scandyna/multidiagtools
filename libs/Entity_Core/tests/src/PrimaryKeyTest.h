@@ -36,6 +36,8 @@ class PrimaryKeyTest : public TestBase
 
   void primaryKeyFromEntityTest();
 
+  void forEachPrimaryKeyFieldTest();
+
   void primaryKeyRecordBasicTest();
   void primaryKeyRecordFromEntityDataTest();
 

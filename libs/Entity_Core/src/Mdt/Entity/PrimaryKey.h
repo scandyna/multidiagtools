@@ -46,6 +46,54 @@ namespace Mdt{ namespace Entity{
 
   } // namespace Impl{
 
+  namespace Impl{
+
+    /*! \internal
+     */
+    template<typename UnaryFunction>
+    class ApplyUnaryFunctionToPrimaryKeyField
+    {
+     public:
+
+      ApplyUnaryFunctionToPrimaryKeyField(UnaryFunction & f)
+       : mFunction(f)
+      {
+      }
+
+      template<typename EntityFieldDef>
+      void operator()(const EntityFieldDef & entityFieldDef) const
+      {
+        if( entityFieldDef.fieldAttributes().isPrimaryKey() ){
+          mFunction(entityFieldDef);
+        }
+      }
+
+     private:
+
+      UnaryFunction & mFunction;
+    };
+
+  } // namespace Impl{
+
+  /*! \brief Apply a function object for each field in a primary key
+   *
+   * \param f a function object with a signature equivalent to:
+   *    \code
+   *    template<typename Field>
+   *    void f(const Field & field);
+   *    \endcode
+   */
+  template<typename Entity, typename UnaryFunction>
+  void forEachPrimaryKeyField(UnaryFunction & f)
+  {
+    static_assert( TypeTraits::IsEntity<Entity>::value, "Entity must be a entity type" );
+
+    Impl::ApplyUnaryFunctionToPrimaryKeyField<UnaryFunction> op(f);
+    constexpr typename Entity::def_type def;
+
+    boost::fusion::for_each(def, op);
+  }
+
   /*! \brief Helper class to get the primary key of a entity
    */
   class MDT_ENTITY_CORE_EXPORT PrimaryKey

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "RelationTest.h"
 #include "Mdt/Entity/Relation.h"
+#include "Mdt/Entity/RelationAlgorithm.h"
 #include "Mdt/Entity/Def.h"
 #include <QStringList>
 
@@ -122,6 +123,30 @@ void RelationTest::forEachForeignFieldTest()
   QCOMPARE(f.fieldNameList.size(), 2);
   QCOMPARE(f.fieldNameList.at(0), QString("fk1"));
   QCOMPARE(f.fieldNameList.at(1), QString("fk2"));
+}
+
+void RelationTest::getPrimaryKeyFieldNameListTest()
+{
+  const auto teamPk = getPrimaryKeyFieldNameList<TeamEmployeeRelation>();
+  QCOMPARE(teamPk.size(), 1);
+  QCOMPARE(teamPk.at(0), QString("id"));
+
+  const auto twoFieldPk = getPrimaryKeyFieldNameList<TwoFieldRelation>();
+  QCOMPARE(twoFieldPk.size(), 2);
+  QCOMPARE(twoFieldPk.at(0), QString("pk1"));
+  QCOMPARE(twoFieldPk.at(1), QString("pk2"));
+}
+
+void RelationTest::getForeignKeyFieldNameListTest()
+{
+  const auto employeeFk = getForeignKeyFieldNameList<TeamEmployeeRelation>();
+  QCOMPARE(employeeFk.size(), 1);
+  QCOMPARE(employeeFk.at(0), QString("teamId"));
+
+  const auto twoFieldFk = getForeignKeyFieldNameList<TwoFieldRelation>();
+  QCOMPARE(twoFieldFk.size(), 2);
+  QCOMPARE(twoFieldFk.at(0), QString("fk1"));
+  QCOMPARE(twoFieldFk.at(1), QString("fk2"));
 }
 
 

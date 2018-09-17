@@ -355,6 +355,48 @@ void PrimaryKeyTest::primaryKeyFromEntityTest()
   QCOMPARE(fourPk.fieldAt(3).fieldName<FourPkDef>(), QString("pk4"));
 }
 
+template<typename Entity>
+struct ToEntityFieldNameList
+{
+  template<typename Field>
+  void  operator()(const Field &)
+  {
+    const auto str = Entity::def().entityName() + "." + Field::fieldName();
+    entityFieldNameList.append(str);
+  }
+
+  QStringList entityFieldNameList;
+};
+
+void PrimaryKeyTest::forEachPrimaryKeyFieldTest()
+{
+  ToEntityFieldNameList<ArticleEntity> articleFunctor;
+  forEachPrimaryKeyField<ArticleEntity>(articleFunctor);
+  QCOMPARE(articleFunctor.entityFieldNameList.count(), 1);
+  QCOMPARE(articleFunctor.entityFieldNameList.at(0), QString("Article.id"));
+
+  ToEntityFieldNameList<LinkEntity> linkFunctor;
+  forEachPrimaryKeyField<LinkEntity>(linkFunctor);
+  QCOMPARE(linkFunctor.entityFieldNameList.count(), 2);
+  QCOMPARE(linkFunctor.entityFieldNameList.at(0), QString("Link.startId"));
+  QCOMPARE(linkFunctor.entityFieldNameList.at(1), QString("Link.endId"));
+
+  ToEntityFieldNameList<ThreePkEntity> threePkFunctor;
+  forEachPrimaryKeyField<ThreePkEntity>(threePkFunctor);
+  QCOMPARE(threePkFunctor.entityFieldNameList.count(), 3);
+  QCOMPARE(threePkFunctor.entityFieldNameList.at(0), QString("ThreePk.pk1"));
+  QCOMPARE(threePkFunctor.entityFieldNameList.at(1), QString("ThreePk.pk2"));
+  QCOMPARE(threePkFunctor.entityFieldNameList.at(2), QString("ThreePk.pk3"));
+
+  ToEntityFieldNameList<FourPkEntity> fourPkFunctor;
+  forEachPrimaryKeyField<FourPkEntity>(fourPkFunctor);
+  QCOMPARE(fourPkFunctor.entityFieldNameList.count(), 4);
+  QCOMPARE(fourPkFunctor.entityFieldNameList.at(0), QString("FourPk.pk1"));
+  QCOMPARE(fourPkFunctor.entityFieldNameList.at(1), QString("FourPk.pk2"));
+  QCOMPARE(fourPkFunctor.entityFieldNameList.at(2), QString("FourPk.pk3"));
+  QCOMPARE(fourPkFunctor.entityFieldNameList.at(3), QString("FourPk.pk4"));
+}
+
 void PrimaryKeyTest::primaryKeyRecordBasicTest()
 {
   PrimaryKeyRecord pkr;
