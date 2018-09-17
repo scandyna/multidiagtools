@@ -204,8 +204,15 @@ namespace Mdt{ namespace QueryExpression{
       JoinConstraintExpression joinConstraint;
       joinConstraint.setJoin(join);
       Q_ASSERT(!joinConstraint.isNull());
-      mJoinClauseList.addClause(JoinOperator::Join, entity, joinConstraint);
+      joinEntity(entity, joinConstraint);
     }
+
+    /*! \brief Join \a entity to this statement
+     *
+     * \pre \a entity must not be null
+     * \pre \a joinConstraintExpression must not be null
+     */
+    void joinEntity(const SelectEntity & entity, const JoinConstraintExpression & joinConstraintExpression);
 
     /*! \brief Check if this statement has at least 1 join clause
      */

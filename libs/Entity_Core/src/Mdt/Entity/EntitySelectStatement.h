@@ -23,6 +23,8 @@
 
 #include "TypeTraits/IsEntity.h"
 #include "TypeTraits/IsEntityFieldDef.h"
+#include "TypeTraits/IsRelation.h"
+#include "EntitySelectStatementRelation.h"
 #include "QueryEntity.h"
 #include "Mdt/QueryExpression/SelectStatement.h"
 #include "Mdt/QueryExpression/EntityName.h"
@@ -30,6 +32,7 @@
 #include "Mdt/QueryExpression/SelectEntity.h"
 #include "Mdt/QueryExpression/SelectField.h"
 #include <QString>
+#include <type_traits>
 
 namespace Mdt{ namespace Entity{
 
@@ -93,6 +96,30 @@ namespace Mdt{ namespace Entity{
    * stm.addField( addressStreet );
    * stm.addField( address, address.def().remarks(), "AddressRemarks" );
    * stm.joinEntity( address, addressPersonId == personId );
+   * stm.setFilter( (personName == "A") || (addressStreet == "Street name B") );
+   * \endcode
+   *
+   * If a relation was defined using Relation, the join can be more simple and less error prone.
+   *
+   * The relation could befined as this:
+   * \code
+   * using PersonAddressRelation = Mdt::Entity::Relation<PersonEntity, AddressEntity, AddressDef::personIdField>;
+   * \endcode
+   *
+   * The select statement will become:
+   * \code
+   * QueryEntity<PersonEntity> person;
+   * QueryEntity<AddressEntity> address("ADR");
+   *
+   * const auto personName = person.makeSelectField( person.def().name() );
+   * const auto addressStreet = address.makeSelectField( address.def().street(), "AddressStreet" );
+   *
+   * EntitySelectStatement<PersonEntity> stm;
+   * stm.addField( personName );
+   * stm.addField( person, person.def().remarks(), "PersonRemarks" );
+   * stm.addField( addressStreet );
+   * stm.addField( address, address.def().remarks(), "AddressRemarks" );
+   * stm.joinEntity<PersonAddressRelation>();
    * stm.setFilter( (personName == "A") || (addressStreet == "Street name B") );
    * \endcode
    *
@@ -207,6 +234,36 @@ namespace Mdt{ namespace Entity{
     void joinEntity(const QueryEntity<FEntity> & queryEntity, const JoinConstrainExpr & joinConstraint)
     {
       ParentClass::joinEntity(queryEntity.toSelectEntity(), joinConstraint);
+    }
+
+    /*! \brief Join a entity to this statement
+     *
+     * \pre \a EntityRelation must have been defined using Relation
+     * \pre either the primary entity, or the foreign entity, defined in \a EntityRelation , must be the entity of this statement
+     */
+    template<typename EntityRelation>
+    void joinEntity()
+    {
+      static_assert(TypeTraits::IsRelation<EntityRelation>::value, "EntityRelation must be a entity relation");
+
+      using RelationPrimaryEntity = typename EntityRelation::primary_entity;
+      using RelationForeignEntity = typename EntityRelation::foreign_entity;
+
+      static_assert( std::is_same<RelationPrimaryEntity, Entity>::value | std::is_same<RelationForeignEntity, Entity>::value ,\
+                     "Either the primary entity, or the foreign entity, defined in EntityRelation , must be the entity of this statement");
+
+      // Find which entity is foreign entity of this statement
+      using ForeignEntity = typename Impl::SelectOppositeType<Entity, RelationPrimaryEntity, RelationForeignEntity>::type;
+      Mdt::QueryExpression::SelectEntity foreignEntity( Mdt::QueryExpression::EntityName(ForeignEntity::def().entityName()) );
+
+      /*
+       * Create the join constraint expression
+       * Because each item of the constraint is a equality, we can use the original relation:
+       * EntityA::pk == EntityB::fk is the same as EntityB::fk == EntityA::pk
+       */
+      const auto joinConstraintExpression = Impl::buildJoinConstraintExpression<EntityRelation>();
+
+      ParentClass::joinEntity(foreignEntity, joinConstraintExpression);
     }
 
     /*! \brief Create a select field

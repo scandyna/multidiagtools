@@ -22,10 +22,20 @@
 #include "Mdt/Entity/EntitySelectStatement.h"
 #include "Mdt/Entity/QueryEntity.h"
 #include "Mdt/Entity/Def.h"
+#include "Mdt/Entity/Relation.h"
 #include "Mdt/QueryExpression/SelectField.h"
+#include "Mdt/QueryExpression/AbstractExpressionTreeVisitor.h"
+#include "Mdt/QueryExpression/ExpressionTree.h"
+#include "Mdt/QueryExpression/LogicalOperator.h"
+#include "Mdt/QueryExpression/TravserseTreeGraph.h"
+#include "Mdt/QueryExpression/EntityAndField.h"
 #include <boost/variant.hpp>
 
 using namespace Mdt::Entity;
+using Mdt::QueryExpression::JoinOperator;
+using Mdt::QueryExpression::JoinConstraintExpression;
+using Mdt::QueryExpression::ExpressionTree;
+using Mdt::QueryExpression::EntityAndField;
 
 /*
  * Entities
@@ -65,9 +75,31 @@ MDT_ENTITY_DEF(
   (remarks)
 )
 
-/*
- * Query objects
- */
+struct TwoFieldPkDataStruct
+{
+  int pk1;
+  QString pk2;
+};
+
+MDT_ENTITY_DEF(
+  (TwoFieldPkDataStruct),
+  TwoFieldPk,
+  (pk1, FieldFlag::IsPrimaryKey),
+  (pk2, FieldFlag::IsPrimaryKey)
+)
+
+struct TwoFieldFkDataStruct
+{
+  int fk1;
+  QString fk2;
+};
+
+MDT_ENTITY_DEF(
+  (TwoFieldFkDataStruct),
+  TwoFieldFk,
+  (fk1),
+  (fk2)
+)
 
 /*
  * Helper to get entity alias or name
@@ -119,6 +151,119 @@ QString getFieldAliasOrName(const Mdt::QueryExpression::SelectField & field)
   boost::apply_visitor(visitor, field.internalVariant().internalVariant());
   return visitor.aliasOrName;
 }
+
+/*
+ * Helpers to transform a expression tree to a string
+ */
+
+class ExpressionTreeToStringVisitor : public Mdt::QueryExpression::AbstractExpressionTreeVisitor
+{
+ public:
+
+  void processPreorder(Mdt::QueryExpression::LogicalOperator) override
+  {
+    mExpressionString += "(";
+  }
+
+  void processPostorder(Mdt::QueryExpression::LogicalOperator) override
+  {
+    mExpressionString += ")";
+  }
+
+  void processInorder(Mdt::QueryExpression::ComparisonOperator op) override
+  {
+    mExpressionString += comparisonOperatorToString(op);
+  }
+
+  void processInorder(Mdt::QueryExpression::LogicalOperator op) override
+  {
+    mExpressionString += ")" + logicalOperatorToString(op) + "(";
+  }
+
+  void processInorder(const Mdt::QueryExpression::EntityAndField & field) override
+  {
+    mExpressionString += field.entityAliasOrName() + "." + field.fieldAliasOrName();
+  }
+
+  void processInorder(const QVariant & value) override
+  {
+    mExpressionString += value.toString();
+  }
+
+  void clear()
+  {
+    mExpressionString.clear();
+  }
+
+  QString toString() const
+  {
+    return mExpressionString;
+  }
+
+ private:
+
+  static QString comparisonOperatorToString(Mdt::QueryExpression::ComparisonOperator op)
+  {
+    using Mdt::QueryExpression::ComparisonOperator;
+    switch(op){
+      case ComparisonOperator::Equal:
+        return "==";
+      case ComparisonOperator::Like:
+        return " Like ";
+      case ComparisonOperator::NotEqual:
+        return "!=";
+      case ComparisonOperator::Less:
+        return "<";
+      case ComparisonOperator::LessEqual:
+        return "<=";
+      case ComparisonOperator::Greater:
+        return ">";
+      case ComparisonOperator::GreaterEqual:
+        return ">=";
+    }
+  }
+
+  static QString logicalOperatorToString(Mdt::QueryExpression::LogicalOperator op)
+  {
+    using Mdt::QueryExpression::LogicalOperator;
+
+    switch(op){
+      case LogicalOperator::And:
+        return "&&";
+      case LogicalOperator::Or:
+        return "||";
+    }
+    return QString();
+  }
+
+  QString mExpressionString;
+};
+
+QString expressionTreeToString(const Mdt::QueryExpression::ExpressionTree & expresionTree)
+{
+  Q_ASSERT(!expresionTree.isNull());
+
+  ExpressionTreeToStringVisitor visitor;
+  Mdt::QueryExpression::traverseExpressionTree(expresionTree, visitor);
+
+  return visitor.toString();
+}
+
+/*
+ * Compile time tests
+ */
+
+void EntitySelectStatementTest::selectOppositeTypeTest()
+{
+  using Address = Impl::SelectOppositeType<PersonEntity, PersonEntity, AddressEntity>::type;
+  static_assert( std::is_same<Address, AddressEntity>::value, "" );
+  static_assert(!std::is_same<Address, PersonEntity>::value, "" );
+
+  using Person = Impl::SelectOppositeType<AddressEntity, PersonEntity, AddressEntity>::type;
+  static_assert( std::is_same<Person, PersonEntity>::value, "" );
+  static_assert(!std::is_same<Person, AddressEntity>::value, "" );
+}
+
 
 /*
  * Tests
@@ -222,6 +367,99 @@ void EntitySelectStatementTest::addFieldMultiEntityTest()
   QCOMPARE(getFieldAliasOrName(fieldList.at(2)), QString("AddressStreet"));
   QCOMPARE(getEntityAliasOrName(fieldList.at(3)), QString("ADR"));
   QCOMPARE(getFieldAliasOrName(fieldList.at(3)), QString("AddressRemarks"));
+}
+
+void EntitySelectStatementTest::buildJoinConstraintExpressionTreeTest()
+{
+  ExpressionTree tree;
+
+  /*
+   *                  (==)
+   *                 /    \
+   * (Address.personId)  (Person.id)
+   */
+  tree = Impl::buildJoinConstraintExpressionTree("Person", {"id"}, "Address", {"personId"});
+  QCOMPARE(expressionTreeToString(tree), QString("Address.personId==Person.id"));
+
+  /*
+   *       (==)
+   *      /    \
+   * (F.fk1)  (P.pk1)
+   */
+  tree = Impl::buildJoinConstraintExpressionTree("P", {"pk1"}, "F", {"fk1"});
+  QCOMPARE(expressionTreeToString(tree), QString("F.fk1==P.pk1"));
+
+  /*
+   *            ____(&&)____
+   *           /            \
+   *       (==)              (==)
+   *      /    \            /    \
+   * (F.fk1)  (P.pk1)  (F.fk2)  (P.pk2)
+   */
+  tree = Impl::buildJoinConstraintExpressionTree("P", {"pk1","pk2"}, "F", {"fk1","fk2"});
+  QCOMPARE(expressionTreeToString(tree), QString("(F.fk1==P.pk1)&&(F.fk2==P.pk2)"));
+
+  /*
+   *                     _______(&&)_______
+   *                    /                  \
+   *            ____(&&)____               (==)
+   *           /            \             /    \
+   *       (==)              (==)    (F.fk3)  (P.pk3)
+   *      /    \            /    \
+   * (F.fk1)  (P.pk1)  (F.fk2)  (P.pk2)
+   */
+  tree = Impl::buildJoinConstraintExpressionTree("P", {"pk1","pk2","pk3"}, "F", {"fk1","fk2","fk3"});
+  QCOMPARE(expressionTreeToString(tree), QString("((F.fk1==P.pk1)&&(F.fk2==P.pk2))&&(F.fk3==P.pk3)"));
+
+  /*
+   *                                __________(&&)________
+   *                               /                      \
+   *                     _______(&&)_______               (==)
+   *                    /                  \             /    \
+   *            ____(&&)____               (==)     (F.fk4)  (P.pk4)
+   *           /            \             /    \
+   *       (==)              (==)    (F.fk3)  (P.pk3)
+   *      /    \            /    \
+   * (F.fk1)  (P.pk1)  (F.fk2)  (P.pk2)
+   */
+  tree = Impl::buildJoinConstraintExpressionTree("P", {"pk1","pk2","pk3","pk4"}, "F", {"fk1","fk2","fk3","fk4"});
+  QCOMPARE(expressionTreeToString(tree), QString("(((F.fk1==P.pk1)&&(F.fk2==P.pk2))&&(F.fk3==P.pk3))&&(F.fk4==P.pk4)"));
+}
+
+void EntitySelectStatementTest::buildJoinConstraintExpressionTest()
+{
+  using PersonAddressRelation = Relation<PersonEntity, AddressEntity, AddressDef::personIdField>;
+  using TwoFieldRelation = Relation<TwoFieldPkEntity, TwoFieldFkEntity, TwoFieldFkDef::fk1Field, TwoFieldFkDef::fk2Field>;
+
+  JoinConstraintExpression join;
+
+  join = Impl::buildJoinConstraintExpression<PersonAddressRelation>();
+  QCOMPARE(expressionTreeToString(join.internalTree()), QString("Address.personId==Person.id"));
+
+  join = Impl::buildJoinConstraintExpression<TwoFieldRelation>();
+  QCOMPARE(expressionTreeToString(join.internalTree()), QString("(TwoFieldFk.fk1==TwoFieldPk.pk1)&&(TwoFieldFk.fk2==TwoFieldPk.pk2)"));
+}
+
+void EntitySelectStatementTest::joinEntityByRelationTest()
+{
+  using PersonAddressRelation = Relation<PersonEntity, AddressEntity, AddressDef::personIdField>;
+
+  QString expectedJoinConstraint;
+
+  EntitySelectStatement<PersonEntity> stm;
+  stm.joinEntity<PersonAddressRelation>();
+  QCOMPARE(stm.joinClauseList().clauseCount(), 1);
+  QCOMPARE(stm.joinClauseList().clauseAt(0).entity().name(), QString("Address"));
+  QCOMPARE(stm.joinClauseList().clauseAt(0).joinOperator(), JoinOperator::Join);
+  expectedJoinConstraint = "Address.personId==Person.id";
+  QCOMPARE(expressionTreeToString(stm.joinClauseList().clauseAt(0).joinConstraintExpression().internalTree()), expectedJoinConstraint);
+
+  EntitySelectStatement<AddressEntity> rstm;
+  rstm.joinEntity<PersonAddressRelation>();
+  QCOMPARE(rstm.joinClauseList().clauseCount(), 1);
+  QCOMPARE(rstm.joinClauseList().clauseAt(0).entity().name(), QString("Person"));
+  expectedJoinConstraint = "Address.personId==Person.id";
+  QCOMPARE(expressionTreeToString(rstm.joinClauseList().clauseAt(0).joinConstraintExpression().internalTree()), expectedJoinConstraint);
 }
 
 /*

@@ -81,6 +81,17 @@ namespace Mdt{ namespace QueryExpression{
      */
     void clear();
 
+    /*! \brief
+     *
+     * \pre \a exprTree must not be null
+     */
+    void setJoinConstraintExpressionTree(const ExpressionTree & exprTree)
+    {
+      Q_ASSERT(!exprTree.isNull());
+
+      mTree = exprTree;
+    }
+
     /*! \brief Access the internal tree of this join constraint expression
      *
      * This is typically used to transform this expression

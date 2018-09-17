@@ -85,6 +85,14 @@ void SelectStatement::addField(const SelectEntity& entity, const FieldName& fiel
   mFieldList.addField(entity, fieldName, fieldAlias);
 }
 
+void SelectStatement::joinEntity(const SelectEntity& entity, const JoinConstraintExpression& joinConstraintExpression)
+{
+  Q_ASSERT(!entity.isNull());
+  Q_ASSERT(!joinConstraintExpression.isNull());
+
+  mJoinClauseList.addClause(JoinOperator::Join, entity, joinConstraintExpression);
+}
+
 void SelectStatement::setFilterExpression(const FilterExpression & filter)
 {
   Q_ASSERT(!filter.isNull());

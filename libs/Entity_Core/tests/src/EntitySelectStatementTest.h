@@ -27,12 +27,20 @@ class EntitySelectStatementTest : public QObject
 {
  Q_OBJECT
 
+ private:
+
+  void selectOppositeTypeTest();
+
  private slots:
 
   void queryInstanceTest();
   void addFieldTest();
   void queryEntityTest();
   void addFieldMultiEntityTest();
+
+  void buildJoinConstraintExpressionTreeTest();
+  void buildJoinConstraintExpressionTest();
+  void joinEntityByRelationTest();
 };
 
 #endif // #ifndef ENTITY_SELECT_STATEMENT_TEST_H
