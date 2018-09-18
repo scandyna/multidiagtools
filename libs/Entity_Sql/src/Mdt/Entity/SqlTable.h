@@ -25,15 +25,18 @@
 #include "SqlPrimaryKey.h"
 #include "SqlForeignKey.h"
 #include "Mdt/Entity/FieldAttributes.h"
+#include "Mdt/Entity/UniqueConstraintAlgorithm.h"
 #include "Mdt/Entity/TypeTraits/IsEntity.h"
 #include "Mdt/Entity/TypeTraits/IsEntityDef.h"
 #include "Mdt/Entity/TypeTraits/IsEntityFieldDef.h"
 #include "Mdt/Entity/TypeTraits/IsRelation.h"
+#include "Mdt/Entity/TypeTraits/IsUniqueConstraint.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/FieldLength.h"
 #include "Mdt/Sql/Schema/FieldTypeMap.h"
 #include "Mdt/Sql/Schema/ForeignKeySettings.h"
+#include "Mdt/Sql/Schema/Index.h"
 #include "MdtEntity_SqlExport.h"
 #include <QVariant>
 #include <boost/fusion/include/for_each.hpp>
@@ -107,6 +110,24 @@ namespace Mdt{ namespace Entity{
       static_assert(TypeTraits::IsRelation<EntityRelation>::value, "EntityRelation must be a entity relation type");
 
       table.addForeignKey( Mdt::Entity::SqlForeignKey::fromEntityRelation<EntityRelation>(foreignKeySettings) );
+    }
+
+    /*! \brief Add a unique constraint to \a table
+     *
+     * \pre \a UniqueConstraint must be based on UniqueConstraint
+     */
+    template<typename UniqueConstraint>
+    static void addUniqueConstraintToTable(Mdt::Sql::Schema::Table & table)
+    {
+      static_assert( TypeTraits::IsUniqueConstraint<UniqueConstraint>::value, "UniqueConstraint must be based on UniqueConstraint" );
+
+      Mdt::Sql::Schema::Index index;
+
+      index.setUnique(true);
+      index.setTableName( table.tableName() );
+      index.setFieldNameList( getUniqueConstraintFieldNameList<UniqueConstraint>() );
+      index.generateName();
+      table.addIndex(index);
     }
   };
 

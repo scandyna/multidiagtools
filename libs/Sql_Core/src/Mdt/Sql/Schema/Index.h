@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -110,6 +110,16 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void addFieldName(const QString & fieldName)
     {
       pvFieldNameList.append(fieldName);
+    }
+
+    /*! \brief Set the list of field names
+     *
+     * \pre \a fieldNames must not be empty
+     */
+    void setFieldNameList(const QStringList & fieldNames)
+    {
+      Q_ASSERT(!fieldNames.isEmpty());
+      pvFieldNameList = fieldNames;
     }
 
     /*! \brief Get field count

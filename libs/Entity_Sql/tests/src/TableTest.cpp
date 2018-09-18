@@ -21,6 +21,7 @@
 #include "TableTest.h"
 #include "Mdt/Entity/Def.h"
 #include "Mdt/Entity/Relation.h"
+#include "Mdt/Entity/UniqueConstraint.h"
 #include "Mdt/Entity/SqlTable.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include <QString>
@@ -55,6 +56,8 @@ MDT_ENTITY_DEF(
   (id, FieldFlag::IsPrimaryKey),
   (articleId)
 )
+
+using ArticleVendorUniqueConstraint = UniqueConstraint<ArticleVendorEntity, ArticleVendorDef::idField, ArticleVendorDef::articleIdField>;
 
 using ArticleVendorRelation = Relation<ArticleEntity, ArticleVendorEntity, ArticleVendorDef::articleIdField>;
 
@@ -100,7 +103,7 @@ void TableTest::fromEntityTest()
   QVERIFY(table.fieldLength(2) < 1);
 }
 
-void TableTest::addPrimaryKeyToTableTest()
+void TableTest::addForeignKeyToTableTest()
 {
   using Sql::Schema::ForeignKeyAction;
 
@@ -123,6 +126,20 @@ void TableTest::addPrimaryKeyToTableTest()
   QCOMPARE(fk.onDeleteAction(), ForeignKeyAction::Restrict);
   QCOMPARE(fk.onUpdateAction(), ForeignKeyAction::Cascade);
   QVERIFY(fk.isIndexed());
+}
+
+void TableTest::addUniqueConstraintToTableTest()
+{
+  auto articleVendorTable = SqlTable::fromEntity<ArticleVendorEntity>();
+  QCOMPARE(articleVendorTable.indexList().size(), 0);
+  SqlTable::addUniqueConstraintToTable<ArticleVendorUniqueConstraint>(articleVendorTable);
+  QCOMPARE(articleVendorTable.indexList().size(), 1);
+  const auto index = articleVendorTable.indexList().at(0);
+  QVERIFY(index.isUnique());
+  QCOMPARE(index.fieldCount(), 2);
+  QCOMPARE(index.fieldName(0), QString("id"));
+  QCOMPARE(index.fieldName(1), QString("articleId"));
+  QVERIFY(!index.name().isEmpty());
 }
 
 /*

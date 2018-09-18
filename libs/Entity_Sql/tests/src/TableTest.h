@@ -33,7 +33,8 @@ class TableTest : public TestBase
   void cleanupTestCase();
 
   void fromEntityTest();
-  void addPrimaryKeyToTableTest();
+  void addForeignKeyToTableTest();
+  void addUniqueConstraintToTableTest();
 };
 
 #endif // #ifndef TABLE_TEST_H
