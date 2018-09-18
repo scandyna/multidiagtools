@@ -36,6 +36,8 @@ SQLiteDatabase::SQLiteDatabase(const QString & connectionName)
   }
 }
 
+/// \todo missing enabling FK support
+
 bool SQLiteDatabase::createNew(const QString& dbFilePath)
 {
   QFileInfo fi(dbFilePath);
@@ -63,6 +65,9 @@ bool SQLiteDatabase::createNew(const QString& dbFilePath)
     auto error = mdtErrorNew(msg, Mdt::Error::Critical, "SQLiteDatabase");
     error.stackError( mdtErrorFromQSqlDatabase(mDatabase, "SQLiteDatabase") );
     setLastError(error);
+    return false;
+  }
+  if(!enableForeignKeySupport()){
     return false;
   }
 
@@ -111,6 +116,9 @@ bool SQLiteDatabase::openExisting(const QString & dbFilePath, SQLiteDatabase::Op
     setLastError(error);
     return false;
   }
+  if(!enableForeignKeySupport()){
+    return false;
+  }
 
   return true;
 }
@@ -136,6 +144,22 @@ Expected<qlonglong> SQLiteDatabase::getSchemaVersion()
   Q_ASSERT(query.record().count() > 0);
 
   return query.value(0).toLongLong();
+}
+
+bool SQLiteDatabase::enableForeignKeySupport()
+{
+  Q_ASSERT(mDatabase.isOpen());
+
+  QSqlQuery query(mDatabase);
+  if(!query.exec(QLatin1String("PRAGMA foreign_keys = ON"))){
+    const auto msg = tr("Enabling foreign keys support failed.");
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "SQLiteDatabase");
+    error.stackError( mdtErrorFromQSqlQuery(query, "SQLiteDatabase") );
+    setLastError(error);
+    return false;
+  }
+
+  return true;
 }
 
 void SQLiteDatabase::setLastError(const Mdt::Error & error)

@@ -21,6 +21,7 @@
 #include "SQLiteDatabaseTest.h"
 #include "Mdt/Sql/SQLiteDatabase.h"
 #include <QTemporaryDir>
+#include <QTemporaryFile>
 #include <QDir>
 #include <QFileInfo>
 #include <QFile>
@@ -141,6 +142,51 @@ void SQLiteDatabaseTest::openExistingTest()
   QVERIFY(!dbConnection.isOpen());
   // Check that the file was not touched
   QCOMPARE(readTextFile(filePath), QString("ABCD"));
+}
+
+void SQLiteDatabaseTest::checkForeignKeySupportEnabled()
+{
+  QTemporaryDir dir;
+  QVERIFY(dir.isValid());
+  const QString dbPath = QDir::cleanPath(dir.path() + "/test.sqlite");
+
+  {
+    SQLiteDatabase sqliteDb;
+    QVERIFY(sqliteDb.createNew(dbPath));
+    const auto dbConnection = sqliteDb.database();
+    QVERIFY(dbConnection.isOpen());
+    QSqlQuery query(dbConnection);
+
+    const QString createPersonTableSql
+      = "CREATE TABLE Person(\n"\
+        " Id_PK INTEGER PRIMARY KEY\n"\
+        ")";
+    QVERIFY(query.exec(createPersonTableSql));
+
+    const QString createAddressTableSql
+      = "CREATE TABLE Address(\n"\
+        " Id_PK INTEGER PRIMARY KEY,\n"\
+        " Person_Id_FK INTEGER,\n"\
+        "FOREIGN KEY(Person_Id_FK) REFERENCES Person(Id_PK)"
+        ")";
+    QVERIFY(query.exec(createAddressTableSql));
+
+    QVERIFY(query.exec("INSERT INTO Person (Id_PK) VALUES (1)"));
+    QVERIFY(query.exec("INSERT INTO Address (Id_PK, Person_Id_FK) VALUES (11,1)"));
+    QVERIFY(!query.exec("INSERT INTO Address (Id_PK, Person_Id_FK) VALUES (12,2)"));
+  }
+
+  {
+    SQLiteDatabase sqliteDb;
+    QVERIFY(sqliteDb.openExisting(dbPath));
+    const auto dbConnection = sqliteDb.database();
+    QVERIFY(dbConnection.isOpen());
+    QSqlQuery query(dbConnection);
+
+    QVERIFY(query.exec("INSERT INTO Person (Id_PK) VALUES (5)"));
+    QVERIFY(query.exec("INSERT INTO Address (Id_PK, Person_Id_FK) VALUES (15,5)"));
+    QVERIFY(!query.exec("INSERT INTO Address (Id_PK, Person_Id_FK) VALUES (16,6)"));
+  }
 }
 
 /*

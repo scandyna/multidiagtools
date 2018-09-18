@@ -84,7 +84,7 @@ namespace Mdt{ namespace Sql{
    private:
 
     Mdt::Expected<qlonglong> getSchemaVersion();
-
+    bool enableForeignKeySupport();
     void setLastError(const Mdt::Error & error);
 
     QSqlDatabase mDatabase;

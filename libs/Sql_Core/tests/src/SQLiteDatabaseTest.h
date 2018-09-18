@@ -36,6 +36,7 @@ class SQLiteDatabaseTest : public QObject
   void constructTest();
   void createNewTest();
   void openExistingTest();
+  void checkForeignKeySupportEnabled();
 
  private:
 
