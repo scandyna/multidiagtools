@@ -24,6 +24,7 @@
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include "MdtSql_CoreExport.h"
+#include <QObject>
 #include <QSqlDatabase>
 #include <QString>
 #include <QLatin1String>
@@ -41,9 +42,9 @@ namespace Mdt{ namespace Sql{
    * QSqlDatabase dbConnection = sqliteDb.database();
    * \endcode
    */
-  class MDT_SQL_CORE_EXPORT SQLiteDatabase
+  class MDT_SQL_CORE_EXPORT SQLiteDatabase : public QObject
   {
-   Q_DECLARE_TR_FUNCTIONS(SQLiteDatabase)
+   Q_OBJECT
 
    public:
 
@@ -57,7 +58,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Construct a SQLite database connection
      */
-    SQLiteDatabase(const QString & connectionName = QLatin1String("qt_sql_default_connection"));
+    SQLiteDatabase(const QString & connectionName = QLatin1String("qt_sql_default_connection"), QObject *parent = nullptr);
 
     /*! \brief Open a existing database file
      */
