@@ -21,9 +21,11 @@
 #ifndef MDT_ENTITY_TYPE_TRAITS_RELATION_TAG_H
 #define MDT_ENTITY_TYPE_TRAITS_RELATION_TAG_H
 
+#include "MdtEntity_CoreExport.h"
+
 namespace Mdt{ namespace Entity{ namespace TypeTraits{
 
-  struct RelationTag
+  struct MDT_ENTITY_CORE_EXPORT RelationTag
   {
   };
 
