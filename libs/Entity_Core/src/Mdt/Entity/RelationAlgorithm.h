@@ -35,7 +35,7 @@ namespace Mdt{ namespace Entity{
   namespace Impl{
 
     template<typename UnaryFunction,typename ForeignEntityField , typename ...ForeignEntityFields>
-    void applyFunctorToField(UnaryFunction & f)
+    void applyFunctorToRelationForeignField(UnaryFunction & f)
     {
       f(ForeignEntityField());
     }
@@ -43,7 +43,7 @@ namespace Mdt{ namespace Entity{
     template<typename PrimaryEntity, typename ForeignEntity, typename ...ForeignEntityFields, typename UnaryFunction>
     void forEachRelationForeignField(const Relation<PrimaryEntity, ForeignEntity, ForeignEntityFields...> &, UnaryFunction & f)
     {
-      (void)std::initializer_list<int>{ (applyFunctorToField<UnaryFunction, ForeignEntityFields>(f) ,0)... };
+      (void)std::initializer_list<int>{ (applyFunctorToRelationForeignField<UnaryFunction, ForeignEntityFields>(f) ,0)... };
     }
 
   } // namespace Impl{
