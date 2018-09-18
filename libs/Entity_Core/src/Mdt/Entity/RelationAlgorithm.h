@@ -27,6 +27,7 @@
 #include "TypeTraits/IsEntity.h"
 #include "TypeTraits/IsEntityDef.h"
 #include "TypeTraits/IsEntityFieldDef.h"
+#include "Impl/AddFieldNameToFieldNameList.h"
 #include <QStringList>
 #include <initializer_list>
 
@@ -61,32 +62,6 @@ namespace Mdt{ namespace Entity{
   {
     Impl::forEachRelationForeignField(Relation(), f);
   }
-
-  namespace Impl{
-
-    /*! \internal Add a field name to a field name list
-     */
-    class AddFieldNameToFieldNameList
-    {
-    public:
-
-      template<typename Field>
-      void operator()(const Field &)
-      {
-        mFieldNameList.append( Field::fieldName() );
-      }
-
-      QStringList fieldNameList() const
-      {
-        return mFieldNameList;
-      }
-
-    private:
-
-      QStringList mFieldNameList;
-    };
-
-  } // namespace Impl{
 
   /*! \brief Get the list of field names part of the primary key in a relation
    */
