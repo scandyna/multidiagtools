@@ -21,6 +21,8 @@
 #include "LibraryInfo.h"
 #include "LibraryInfoImpl.h"
 #include <QFileInfo>
+#include <QDir>
+#include <QLatin1String>
 
 namespace Mdt{
 
@@ -31,13 +33,22 @@ Mdt::Expected<QString> LibraryInfo::getPrefixPath()
   if(!path){
     return path;
   }
+  QFileInfo fileInfo(*path);
+  path = fileInfo.canonicalPath();
 
   return path;
 }
 
 Mdt::Expected<QString> LibraryInfo::getPluginsPath()
 {
+  auto path = getPrefixPath();
 
+  if(!path){
+    return path;
+  }
+  path = QDir::cleanPath( *path + QLatin1String("/plugins") );
+
+  return path;
 }
 
 Mdt::Expected<QString> LibraryInfo::getInstalledLibrariesPath()

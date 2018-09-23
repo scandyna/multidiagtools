@@ -22,8 +22,9 @@
 #include "Mdt/LibraryInfo.h"
 #include <QString>
 #include <QFileInfo>
+#include <QDir>
 
-#include <QDebug>
+// #include <QDebug>
 
 using Mdt::LibraryInfo;
 
@@ -39,6 +40,11 @@ QString libraryInfoBinDir()
 QString prefixPath()
 {
   return QString::fromLocal8Bit(CMAKE_BINARY_DIR);
+}
+
+QString pluginsPath()
+{
+  return QDir::cleanPath( prefixPath() + "/plugins" );
 }
 
 /*
@@ -67,9 +73,6 @@ void LibraryInfoTest::pathTest()
 {
   Mdt::Expected<QString> path;
 
-  qDebug() << libraryInfoBinDir();
-  qDebug() << prefixPath();
-
   path = LibraryInfo::getInstalledLibrariesPath();
   QVERIFY(path);
   removeDriveLetter(path);
@@ -80,7 +83,10 @@ void LibraryInfoTest::pathTest()
   removeDriveLetter(path);
   QCOMPARE(*path, prefixPath());
 
-  QFAIL("Not complete");
+  path = LibraryInfo::getPluginsPath();
+  QVERIFY(path);
+  removeDriveLetter(path);
+  QCOMPARE(*path, pluginsPath());
 }
 
 /*

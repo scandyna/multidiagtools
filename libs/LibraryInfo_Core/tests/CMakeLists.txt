@@ -16,11 +16,11 @@ target_link_libraries(mdtLibraryInfo_CoreTest LibraryInfo_Core Application_Core 
 if(CMAKE_RUNTIME_OUTPUT_DIRECTORY)
   get_target_property(LibraryInfoBinaryDir LibraryInfo_Core RUNTIME_OUTPUT_DIRECTORY)
 else()
-  get_target_property(LibraryInfoBinaryDir LibraryInfo_Core BINARY_DIR)
+  get_target_property(LibraryInfoBinaryDir LibraryInfo_Core LIBRARY_OUTPUT_DIRECTORY)
 endif()
 target_compile_definitions(mdtLibraryInfo_CoreTest PUBLIC MDT_LIBRARY_INFO_BIN_DIR="${LibraryInfoBinaryDir}" CMAKE_BINARY_DIR="${CMAKE_BINARY_DIR}")
 
-message("LibraryInfoBinaryDir: ${LibraryInfoBinaryDir}")
+# message("LibraryInfoBinaryDir: ${LibraryInfoBinaryDir}")
 
 #=============== Helper functions ===========
 
@@ -38,4 +38,3 @@ endfunction()
 #================= Tests ====================
 
 addLibraryInfoCoreTest("LibraryInfoTest")
-
