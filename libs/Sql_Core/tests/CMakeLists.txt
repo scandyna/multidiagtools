@@ -2,7 +2,7 @@
 
 enable_testing()
 
-find_package(Qt5 COMPONENTS Test)
+find_package(Qt5 COMPONENTS Test Sql)
 
 #================= SQL test library ====================
 
@@ -23,6 +23,41 @@ set(SOURCE_FILES
 add_library(mdtsqlcoretest SHARED ${SOURCE_FILES})
 target_link_libraries(mdtsqlcoretest Sql_Core Entity_Core Entity_Sql Application_Core Qt5::Test)
 
+#================= SQL test plugins ====================
+
+function(mdt_add_sql_test_plugin)
+  # Parse arguments
+  set(oneValueArgs NAME)
+  set(multiValueArgs SOURCE_FILES DEPENDENCIES)
+  cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  # Check that all argumenst are passed
+  if(NOT VAR_NAME)
+    message(FATAL_ERROR "mdt_add_sql_test_plugin(): NAME argument is missing.")
+  endif()
+  if(NOT VAR_SOURCE_FILES)
+    message(FATAL_ERROR "mdt_add_sql_test_plugin(): No source file provided.")
+  endif()
+  # Local variables
+  set(target_name ${VAR_NAME})
+  set(source_files ${VAR_SOURCE_FILES})
+  set(dependencies ${VAR_DEPENDENCIES})
+
+  add_library(${target_name} MODULE ${source_files})
+  target_link_libraries(${target_name} Sql_Core Qt5::Sql ${dependencies})
+  set(library_name ${PROJECT_NAME}${target_name})
+  set_target_properties(${target_name} PROPERTIES
+    OUTPUT_NAME ${library_name}
+  )
+  set_target_properties(${target_name} PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/Mdt/Sql"
+  )
+endfunction()
+
+mdt_add_sql_test_plugin(
+  NAME ErrorDriverTestPlugin
+  SOURCE_FILES src/ErrorDriverTestPlugin.cpp
+)
+
 #=============== Helper functions ===========
 
 # Add a test for this Sql lib
@@ -38,6 +73,9 @@ endfunction()
 
 #================= Tests ====================
 
+addSqlCoreTest("LibraryInfoTest")
+addSqlCoreTest("PluginLoaderTest")
+addSqlCoreTest("ErrorDriverTest")
 addSqlCoreTest("SimpleTypesTest")
 addSqlCoreTest("FieldNameTest")
 addSqlCoreTest("FieldNameValueMapTest")

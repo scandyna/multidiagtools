@@ -1,6 +1,11 @@
 
 # List of source files
-set(SOURCE_FILES 
+set(SOURCE_FILES
+    Mdt/Sql/LibraryInfo.cpp
+    Mdt/Sql/PluginInfo.cpp
+    Mdt/Sql/PluginLoader.cpp
+    Mdt/Sql/AbstractErrorDriver.cpp
+    Mdt/Sql/ErrorDriver.cpp
     Mdt/Sql/Error.cpp
     Mdt/Sql/FieldNameValueMap.cpp
     Mdt/Sql/PrimaryKeyRecord.cpp
@@ -76,7 +81,7 @@ mdt_add_library(
   NAME Sql_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Expected Error_Core Algorithm Container Qt5::Sql FilterExpression # TODO remove FilterExpression once possible
+  LINK_DEPENDENCIES Expected LibraryInfo_Core Error_Core Algorithm Container Qt5::Sql FilterExpression # TODO remove FilterExpression once possible
 )
 mdt_set_library_description(
   NAME Sql_Core
