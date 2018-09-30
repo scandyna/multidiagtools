@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -116,6 +116,7 @@ namespace Mdt{
 
     void initErrorSystem();
     void initCacheDirectory();
+    void addPluginPathToLibrariesPath();
 
     QString mLogFilePath;
   };

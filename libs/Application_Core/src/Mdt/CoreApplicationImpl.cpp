@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,6 +24,7 @@
 #include "Mdt/ErrorLogger/Logger.h"
 #include "Mdt/ErrorLogger/ConsoleBackend.h"
 #include "Mdt/ErrorLogger/FileBackend.h"
+#include "Mdt/LibraryInfo.h"
 #include <QDir>
 #include <QStringBuilder>
 #include <QLatin1String>
@@ -31,6 +32,7 @@
 #include <QDebug>
 #include <QMetaType>
 #include <QtGlobal>
+#include <QCoreApplication>
 #include <memory>
 
 namespace Mdt{
@@ -39,6 +41,7 @@ CoreApplicationImpl::CoreApplicationImpl()
 {
   initErrorSystem();
   initCacheDirectory();
+  addPluginPathToLibrariesPath();
 }
 
 CoreApplicationImpl::~CoreApplicationImpl()
@@ -137,6 +140,16 @@ void CoreApplicationImpl::initCacheDirectory()
       return;
     }
   }
+}
+
+void CoreApplicationImpl::addPluginPathToLibrariesPath()
+{
+  const auto path = Mdt::LibraryInfo::getPluginsPath();
+  if(!path){
+    qWarning() << tr("Mdt::CoreApplication: no plugin path found, maybe some functionnalities will missing.\n Error: %1").arg(path.error().text());
+    return;
+  }
+  QCoreApplication::addLibraryPath(*path);
 }
 
 } // namespace Mdt{

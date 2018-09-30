@@ -51,5 +51,10 @@
         <source>Cache directory: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mdt::CoreApplication: no plugin path found, maybe some functionnalities will missing.
+ Error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,6 +31,9 @@ namespace Mdt{
   class CoreApplicationImpl;
 
   /*! \brief CoreApplication adds some helper to QCoreApplication for application initialization
+   *
+   * The path to the plugins root, if it exists, will be added to the library path
+   *  (See QCoreApplication::addLibraryPath() and Mdt::LibraryInfo for more details)
    *
    * \sa QCoreApplication
    */
