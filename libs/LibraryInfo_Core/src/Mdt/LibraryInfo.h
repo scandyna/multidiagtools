@@ -41,7 +41,14 @@ namespace Mdt{
      *  - Developping a application that uses a installed distribution of Mdt libraries
      *  - A installed application, as long as it respect the common model
      *
-     * \todo describe the common model
+     * What is called the common above, is a structure that is commonly seen in portable applications:
+     * \code
+     * AppRoot
+     *  |
+     *  --bin/
+     *  --lib/
+     *  --plugins/
+     * \endcode
      * 
      */
     static Mdt::Expected<QString> getPrefixPath();
