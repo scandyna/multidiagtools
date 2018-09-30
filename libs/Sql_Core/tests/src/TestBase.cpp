@@ -22,6 +22,7 @@
 #include "Schema/TestSchema.h"
 #include "Schema/Client.h"
 #include "Mdt/Sql/SQLiteConnectionParameters.h"
+#include "Mdt/Sql/SQLiteDatabase.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/InsertQuery.h"
 #include <QSqlQuery>
@@ -29,6 +30,7 @@
 #include <QDebug>
 
 using Mdt::Sql::SQLiteConnectionParameters;
+using Mdt::Sql::SQLiteDatabase;
 
 bool TestBase::initDatabaseSqlite()
 {
@@ -43,17 +45,12 @@ bool TestBase::initDatabaseSqlite()
   parameters.setDatabaseFile(mTempFile.fileName());
   mConnectionParameters = parameters.toConnectionParameters();
 
-  // Get database instance
-  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
-  if(!mDatabase.isValid()){
-    qWarning() << "QSQLITE driver is not available";
+  SQLiteDatabase sqliteDb;
+  if( !sqliteDb.openExisting(mConnectionParameters.databaseName()) ){
+    qWarning() << "Could not open database, error: " << sqliteDb.lastError().text();
     return false;
   }
-  mConnectionParameters.setupDatabase(mDatabase);
-  if(!mDatabase.open()){
-    qWarning() << "Could not open database, error: " << mDatabase.lastError();
-    return false;
-  }
+  mDatabase = sqliteDb.database();
 
   return true;
 }
