@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -84,8 +84,8 @@ QString Error::text() const
 
 void Error::stackError(const Error & error)
 {
-  Q_ASSERT(pvShared);
-  Q_ASSERT(error.pvShared);
+  Q_ASSERT(!isNull());
+  Q_ASSERT(!error.isNull());
 
   pvShared.detach();
   /*
