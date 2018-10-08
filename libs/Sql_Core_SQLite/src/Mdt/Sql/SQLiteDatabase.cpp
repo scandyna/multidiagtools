@@ -20,11 +20,14 @@
  ****************************************************************************/
 #include "SQLiteDatabase.h"
 #include "Mdt/Sql/Error.h"
+#include <QLatin1String>
 #include <QFileInfo>
 #include <QDir>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QVariant>
+
+// #include <QDebug>
 
 namespace Mdt{ namespace Sql{
 
@@ -32,12 +35,15 @@ SQLiteDatabase::SQLiteDatabase(const QString & connectionName, QObject *parent)
  : QObject(parent)
 {
   mDatabase = QSqlDatabase::database(connectionName, false);
-  if( !mDatabase.isValid() || (mDatabase.driverName() != QLatin1String("QSQLITE")) ){
-    mDatabase = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), connectionName);
+  if( !hasSQLiteDriverLoaded(mDatabase) ){
+    if( QSqlDatabase::isDriverAvailable(QLatin1String("MDTQSQLITE")) ){
+      mDatabase = QSqlDatabase::addDatabase(QLatin1String("MDTQSQLITE"), connectionName);
+      mDatabase.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES"));
+    }else{
+      mDatabase = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), connectionName);
+    }
   }
 }
-
-/// \todo missing enabling FK support
 
 bool SQLiteDatabase::createNew(const QString& dbFilePath)
 {
@@ -122,6 +128,16 @@ bool SQLiteDatabase::openExisting(const QString & dbFilePath, SQLiteDatabase::Op
   }
 
   return true;
+}
+
+bool SQLiteDatabase::isSQLiteDriver(const QString & driverName) noexcept
+{
+  return (driverName == QLatin1String("QSQLITE")) || (driverName == QLatin1String("MDTQSQLITE"));
+}
+
+bool SQLiteDatabase::hasSQLiteDriverLoaded(const QSqlDatabase& db) noexcept
+{
+  return db.isValid() && isSQLiteDriver(db.driverName());
 }
 
 Expected<qlonglong> SQLiteDatabase::getSchemaVersion()

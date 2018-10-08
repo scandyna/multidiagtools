@@ -43,18 +43,25 @@ void SQLiteDatabaseTest::cleanupTestCase()
  * Tests
  */
 
+void SQLiteDatabaseTest::isSQLIteDriverTest()
+{
+  QVERIFY(SQLiteDatabase::isSQLiteDriver("QSQLITE"));
+  QVERIFY(SQLiteDatabase::isSQLiteDriver("MDTQSQLITE"));
+  QVERIFY(!SQLiteDatabase::isSQLiteDriver("QMYSQL"));
+}
+
 void SQLiteDatabaseTest::constructTest()
 {
   SQLiteDatabase sqliteDb;
   auto dbConnection = sqliteDb.database();
   QVERIFY(dbConnection.isValid());
-  QCOMPARE(dbConnection.driverName(), QString("QSQLITE"));
+  QVERIFY(SQLiteDatabase::isSQLiteDriver(dbConnection.driverName()));
   QVERIFY(!dbConnection.isOpen());
 
   SQLiteDatabase sqliteDbA("connection-A");
   dbConnection = sqliteDbA.database();
   QVERIFY(dbConnection.isValid());
-  QCOMPARE(dbConnection.driverName(), QString("QSQLITE"));
+  QVERIFY(SQLiteDatabase::isSQLiteDriver(dbConnection.driverName()));
   QCOMPARE(dbConnection.connectionName(), QString("connection-A"));
   QVERIFY(!dbConnection.isOpen());
 }

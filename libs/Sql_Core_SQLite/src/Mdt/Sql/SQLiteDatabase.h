@@ -23,7 +23,7 @@
 
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
-#include "MdtSql_CoreExport.h"
+#include "MdtSql_Core_SQLiteExport.h"
 #include <QObject>
 #include <QSqlDatabase>
 #include <QString>
@@ -42,7 +42,7 @@ namespace Mdt{ namespace Sql{
    * QSqlDatabase dbConnection = sqliteDb.database();
    * \endcode
    */
-  class MDT_SQL_CORE_EXPORT SQLiteDatabase : public QObject
+  class MDT_SQL_CORE_SQLITE_EXPORT SQLiteDatabase : public QObject
   {
    Q_OBJECT
 
@@ -82,8 +82,13 @@ namespace Mdt{ namespace Sql{
       return mLastError;
     }
 
+    /*! \brief Check if \a driverName is the name of a SQLite driver
+     */
+    static bool isSQLiteDriver(const QString & driverName) noexcept;
+
    private:
 
+    static bool hasSQLiteDriverLoaded(const QSqlDatabase & db) noexcept;
     Mdt::Expected<qlonglong> getSchemaVersion();
     bool enableForeignKeySupport();
     void setLastError(const Mdt::Error & error);

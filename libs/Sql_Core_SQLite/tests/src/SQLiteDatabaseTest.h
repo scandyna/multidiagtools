@@ -33,6 +33,7 @@ class SQLiteDatabaseTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
+  void isSQLIteDriverTest();
   void constructTest();
   void createNewTest();
   void openExistingTest();
