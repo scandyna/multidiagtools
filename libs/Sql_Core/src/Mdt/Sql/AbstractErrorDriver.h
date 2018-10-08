@@ -24,10 +24,8 @@
 #include "Mdt/Error.h"
 #include "Mdt/ErrorCode.h"
 #include "MdtSql_CoreExport.h"
+#include <QObject>
 #include <QSqlError>
-#include <QtPlugin>
-
-#define MdtSqlAbstractErrorDriver_iid "Mdt.Sql.AbstractErrorDriver"
 
 namespace Mdt{ namespace Sql{
 
@@ -40,8 +38,10 @@ namespace Mdt{ namespace Sql{
    *
    * \sa ErrorDriver
    */
-  class MDT_SQL_CORE_EXPORT AbstractErrorDriver
+  class MDT_SQL_CORE_EXPORT AbstractErrorDriver : public QObject
   {
+   Q_OBJECT
+
    public:
 
     /*! \brief Get error code from \a sqlError
@@ -54,6 +54,5 @@ namespace Mdt{ namespace Sql{
   };
 
 }} // namespace Mdt{ namespace Sql{
-Q_DECLARE_INTERFACE(Mdt::Sql::AbstractErrorDriver, MdtSqlAbstractErrorDriver_iid)
 
 #endif // #ifndef MDT_SQL_ABSTRACT_ERROR_DRIVER_H

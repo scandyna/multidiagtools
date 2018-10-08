@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractErrorDriver.h"
+#include "AbstractErrorDriverPlugin.h"
 
 namespace Mdt{ namespace Sql{
 }} // namespace Mdt{ namespace Sql{

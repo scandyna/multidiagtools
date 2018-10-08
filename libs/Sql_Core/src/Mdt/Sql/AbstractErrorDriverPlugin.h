@@ -18,7 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#ifndef MDT_SQL_ABSTRACT_ERROR_DRIVER_PLUGIN_H
+#define MDT_SQL_ABSTRACT_ERROR_DRIVER_PLUGIN_H
+
 #include "AbstractErrorDriver.h"
+#include "MdtSql_CoreExport.h"
+#include <QtPlugin>
+#include <QString>
+
+#define MdtSqlAbstractErrorDriver_iid "Mdt.Sql.AbstractErrorDriver"
 
 namespace Mdt{ namespace Sql{
+
+  /*! \brief Base class to implement a error driver plugin
+   *
+   * When implementing a error driver for a specific SQL driver,
+   *  the driver name used in QSqlDatabase::addDatabase() must be known by PluginLoader .
+   *
+   * See the ErrorDriverSQLitePlugin for more details.
+   *
+   * \sa ErrorDriver
+   */
+  class MDT_SQL_CORE_EXPORT AbstractErrorDriverPlugin
+  {
+   public:
+
+    /*! \brief Create a instance of error driver
+     */
+    virtual AbstractErrorDriver *create() = 0;
+  };
+
 }} // namespace Mdt{ namespace Sql{
+Q_DECLARE_INTERFACE(Mdt::Sql::AbstractErrorDriverPlugin, MdtSqlAbstractErrorDriver_iid)
+
+#endif // #ifndef MDT_SQL_ABSTRACT_ERROR_DRIVER_PLUGIN_H
