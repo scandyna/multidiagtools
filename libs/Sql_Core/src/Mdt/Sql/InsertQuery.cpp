@@ -27,65 +27,66 @@
 #include <QSqlDriver>
 #include <QStringBuilder>
 #include <QChar>
-#include <QObject>
 
 namespace Mdt{ namespace Sql{
 
 InsertQuery::InsertQuery(const QSqlDatabase & db)
- : pvDatabase(db)
+ : AbstractQuery(db),
+   mQuery(db)
 {
-  Q_ASSERT(pvDatabase.isValid());
 }
 
 void InsertQuery::setTableName(const QString & name)
 {
-  pvTableName = name;
+  mTableName = name;
 }
 
 void InsertQuery::setTable(const Schema::Table & table)
 {
-  pvTableName = table.tableName();
+  mTableName = table.tableName();
 }
 
 void InsertQuery::addValue(const FieldName & fieldName, const QVariant & value)
 {
-  pvFieldNameList << escapeFieldName(fieldName.toString());
-  pvValueList.append(value);
+  mFieldNameList << escapeFieldName(fieldName.toString());
+  mValueList.append(value);
 }
 
 void InsertQuery::addValue(const Schema::Field & field, const QVariant & value)
 {
-  pvFieldNameList << escapeFieldName(field.name());
-  pvValueList.append(value);
+  mFieldNameList << escapeFieldName(field.name());
+  mValueList.append(value);
 }
 
 void InsertQuery::addValue(const Schema::AutoIncrementPrimaryKey& field, const QVariant& value)
 {
-  pvFieldNameList << escapeFieldName(field.fieldName());
-  pvValueList.append(value);
+  mFieldNameList << escapeFieldName(field.fieldName());
+  mValueList.append(value);
 }
 
 bool InsertQuery::exec()
 {
   const QString sql = getPrepareStatement();
 
-  if(!pvQuery.prepare(sql)){
+  if(!mQuery.prepare(sql)){
     QString msg = tr("Preparing query for insertion into '%1' failed.\nSQL: %2")
-                  .arg(pvTableName, pvQuery.executedQuery());
-    pvLastError = mdtErrorNew(msg, Mdt::Error::Critical, "InsertQuery");
-    pvLastError.stackError(mdtErrorFromQSqlQuery(pvQuery, "InsertQuery"));
-    pvLastError.commit();
+                  .arg(mTableName, mQuery.executedQuery());
+    const Mdt::ErrorCode code = Mdt::Sql::Error::errorCodeFromQSqlError(mQuery.lastError(), mQuery.driver());
+    auto error = mdtErrorNewTQ(code, msg, Mdt::Error::Critical, this);
+    error.stackError(mdtErrorFromQSqlQueryQ(mQuery, this));
+    setLastError(error);
     return false;
   }
-  for(const auto & value : pvValueList){
-    pvQuery.addBindValue(value);
+  for(const auto & value : mValueList){
+    mQuery.addBindValue(value);
   }
-  if(!pvQuery.exec()){
+  if(!mQuery.exec()){
     QString msg = tr("Executing query for insertion into '%1' failed.\nSQL: %2")
-                  .arg(pvTableName, pvQuery.executedQuery());
-    pvLastError = mdtErrorNew(msg, Mdt::Error::Critical, "InsertQuery");
-    pvLastError.stackError(mdtErrorFromQSqlQuery(pvQuery, "InsertQuery"));
-    pvLastError.commit();
+                  .arg(mTableName, mQuery.executedQuery());
+    const Mdt::ErrorCode code = Mdt::Sql::Error::errorCodeFromQSqlError(mQuery.lastError(), mQuery.driver());
+    auto error = mdtErrorNewTQ(code, msg, Mdt::Error::Critical, this);
+    error.stackError(mdtErrorFromQSqlQueryQ(mQuery, this));
+    setLastError(error);
     return false;
   }
 
@@ -94,17 +95,17 @@ bool InsertQuery::exec()
 
 void InsertQuery::clear()
 {
-  pvTableName.clear();
-  pvFieldNameList.clear();
-  pvValueList.clear();
+  mTableName.clear();
+  mFieldNameList.clear();
+  mValueList.clear();
 }
 
 QString InsertQuery::getPrepareStatement() const
 {
-  Q_ASSERT(pvFieldNameList.size() == pvValueList.size());
+  Q_ASSERT(mFieldNameList.size() == mValueList.size());
 
   QString sql;
-  const int n = pvValueList.size();
+  const int n = mValueList.size();
   QStringList placeHolders;
 
   placeHolders.reserve(n);
@@ -112,8 +113,8 @@ QString InsertQuery::getPrepareStatement() const
     placeHolders.append(QChar('?'));
   }
   // Build SQL
-  sql = QStringLiteral("INSERT INTO ") % escapeTableName(pvTableName) \
-      % QStringLiteral(" (") % pvFieldNameList.join(QChar(',')) \
+  sql = QStringLiteral("INSERT INTO ") % escapeTableName(mTableName) \
+      % QStringLiteral(" (") % mFieldNameList.join(QChar(',')) \
       % QStringLiteral(") VALUES (") \
       % placeHolders.join(QChar(',')) \
       % QStringLiteral(")");
@@ -123,19 +124,14 @@ QString InsertQuery::getPrepareStatement() const
 
 QString InsertQuery::escapeFieldName(const QString& fieldName) const
 {
-  Q_ASSERT(pvDatabase.driver() != nullptr);
-  return pvDatabase.driver()->escapeIdentifier(fieldName, QSqlDriver::FieldName);
+  Q_ASSERT(constDatabase().driver() != nullptr);
+  return constDatabase().driver()->escapeIdentifier(fieldName, QSqlDriver::FieldName);
 }
 
 QString InsertQuery::escapeTableName(const QString& tableName) const
 {
-  Q_ASSERT(pvDatabase.driver() != nullptr);
-  return pvDatabase.driver()->escapeIdentifier(tableName, QSqlDriver::TableName);
-}
-
-QString InsertQuery::tr(const char* sourceText)
-{
-  return QObject::tr(sourceText);
+  Q_ASSERT(constDatabase().driver() != nullptr);
+  return constDatabase().driver()->escapeIdentifier(tableName, QSqlDriver::TableName);
 }
 
 }} // namespace Mdt{ namespace Sql{

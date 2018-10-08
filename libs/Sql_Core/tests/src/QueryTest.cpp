@@ -28,13 +28,14 @@
 #include "Mdt/Sql/DeleteQuery.h"
 #include "Mdt/Sql/SelectQuery.h"
 #include "Mdt/Error.h"
+#include "Mdt/ErrorCode.h"
 #include "Schema/TestSchema.h"
 #include "Schema/Client.h"
 #include "Schema/Address.h"
 #include <QSqlQuery>
 #include <QSqlError>
 
-#include <QDebug>
+// #include <QDebug>
 
 using Mdt::Sql::FieldName;
 
@@ -123,6 +124,22 @@ void QueryTest::insertQueryTest()
     QCOMPARE(q.value(1), QVariant("Name 1"));
   }
   // Cleanup
+  QVERIFY(cleanupClientTable());
+}
+
+void QueryTest::insertQueryErrorTest()
+{
+  QVERIFY(cleanupClientTable());
+
+  InsertQueryTest query(database());
+
+  query.setTableName("Client_tbl");
+  query.addValue(FieldName("Id_PK"), 1);
+  query.addValue(FieldName("Name"), "Name 1");
+  QVERIFY(query.exec());
+  QVERIFY(!query.exec());
+  QCOMPARE(query.lastError().error<Mdt::ErrorCode>(), Mdt::ErrorCode::UniqueConstraintError);
+
   QVERIFY(cleanupClientTable());
 }
 

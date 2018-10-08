@@ -77,13 +77,13 @@
 <context>
     <name>Mdt::Sql::InsertQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="75"/>
+        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="72"/>
         <source>Preparing query for insertion into &apos;%1&apos; failed.
 SQL: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="86"/>
+        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="84"/>
         <source>Executing query for insertion into &apos;%1&apos; failed.
 SQL: %2</source>
         <translation type="unfinished"></translation>

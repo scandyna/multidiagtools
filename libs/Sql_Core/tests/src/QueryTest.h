@@ -34,6 +34,7 @@ class QueryTest : public TestBase
   void cleanupTestCase();
 
   void insertQueryTest();
+  void insertQueryErrorTest();
 
   void updateStatementTest();
   void updateStatementPrimaryKeyConditionsTest();

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,8 +21,9 @@
 #ifndef MDT_SQL_INSERT_QUERY_H
 #define MDT_SQL_INSERT_QUERY_H
 
-#include "Mdt/Error.h"
+#include "AbstractQuery.h"
 #include "FieldName.h"
+#include "Mdt/Error.h"
 #include <QString>
 #include <QStringList>
 #include <QVector>
@@ -77,8 +78,10 @@ namespace Mdt{ namespace Sql{
    * }
    * \endcode
    */
-  class InsertQuery
+  class InsertQuery : public AbstractQuery
   {
+   Q_OBJECT
+
    public:
 
     /*! \brief Construct a insert query that acts on db
@@ -129,14 +132,7 @@ namespace Mdt{ namespace Sql{
      */
     QVariant lastInsertId() const
     {
-      return pvQuery.lastInsertId();
-    }
-
-    /*! \brief Get last error
-     */
-    Mdt::Error lastError() const
-    {
-      return pvLastError;
+      return mQuery.lastInsertId();
     }
 
    protected:
@@ -157,16 +153,10 @@ namespace Mdt{ namespace Sql{
      */
     QString escapeTableName(const QString & tableName) const;
 
-    /*! \brief Call QObject::tr()
-     */
-    static QString tr(const char *sourceText);
-
-    QString pvTableName;
-    QStringList pvFieldNameList;
-    QVector<QVariant> pvValueList;
-    QSqlQuery pvQuery;
-    QSqlDatabase pvDatabase;
-    Mdt::Error pvLastError;
+    QString mTableName;
+    QStringList mFieldNameList;
+    QVector<QVariant> mValueList;
+    QSqlQuery mQuery;
   };
 
 }} // namespace Mdt{ namespace Sql{
