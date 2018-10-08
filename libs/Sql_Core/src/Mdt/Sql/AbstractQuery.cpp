@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "AbstractQuery.h"
+#include "Mdt/ErrorCode.h"
 
 namespace Mdt{ namespace Sql{
 
@@ -36,10 +37,13 @@ AbstractQuery::AbstractQuery(QObject* parent, const QSqlDatabase& db)
   Q_ASSERT(mDatabase.isValid());
 }
 
-void AbstractQuery::setLastError(const Error& error)
+void AbstractQuery::setLastError(const Error & error)
 {
+  Q_ASSERT(!error.isNull());
+  Q_ASSERT(error.isErrorType<Mdt::ErrorCode>());
+
   mLastError = error;
-  mLastError.commit();
+//   mLastError.commit();
 }
 
 }} // namespace Mdt{ namespace Sql{

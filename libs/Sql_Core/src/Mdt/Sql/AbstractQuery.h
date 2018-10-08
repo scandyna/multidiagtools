@@ -47,6 +47,9 @@ namespace Mdt{ namespace Sql{
     AbstractQuery(QObject *parent, const QSqlDatabase & db);
 
     /*! \brief Get last error
+     *
+     * The returned error's user defined error
+     *  is Mdt::ErrorCode.
      */
     Mdt::Error lastError() const
     {
@@ -70,6 +73,9 @@ namespace Mdt{ namespace Sql{
     }
 
     /*! \brief Set last error
+     *
+     * \pre \a error must not be null
+     * \pre the user defined error in \a error must be of type Mdt::ErrorCode
      */
     void setLastError(const Mdt::Error & error);
 
