@@ -79,16 +79,6 @@ void PluginLoaderBenchmark::pluginInstanceCreateBenchmark()
   }
 }
 
-// void PluginLoaderBenchmark::loadErrorDriverTestPluginBenchmark()
-// {
-//   PluginLoader loader;
-// 
-//   QBENCHMARK{
-//     AbstractErrorDriver *errorDriver = loader.loadErrorDriver("TEST");
-//     QVERIFY(errorDriver != nullptr);
-//   }
-// }
-
 /*
  * Main
  */

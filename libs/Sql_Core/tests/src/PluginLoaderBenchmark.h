@@ -32,7 +32,6 @@ class PluginLoaderBenchmark : public QObject
   void findPluginBenchmark();
   void loadPluginBenchmark();
   void pluginInstanceCreateBenchmark();
-//   void loadErrorDriverTestPluginBenchmark();
 };
 
 #endif // #ifndef MDT_SQL_TEST_MAIN_H
