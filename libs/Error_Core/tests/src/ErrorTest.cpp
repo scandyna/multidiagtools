@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -396,9 +396,9 @@ void ErrorTest::setSourceTest()
    */
   const int firstLine = __LINE__;
   Mdt::Error error1 = mdtErrorNew("error1", Mdt::Error::Critical, "ErrorTest");
-  Mdt::Error error2 = mdtErrorNewT(int, 2, "error2", Mdt::Error::Critical, "ErrorTest");
+  Mdt::Error error2 = mdtErrorNewT(2, "error2", Mdt::Error::Critical, "ErrorTest");
   Mdt::Error error3 = mdtErrorNewQ("error3", Mdt::Error::Info, this);
-  Mdt::Error error4 = mdtErrorNewTQ(float, 4.0, "error4", Mdt::Error::Info, this);
+  Mdt::Error error4 = mdtErrorNewTQ(4.0f, "error4", Mdt::Error::Info, this);
   // Check error1
   QCOMPARE(error1.text(), QString("error1"));
   QVERIFY(error1.level() == Mdt::Error::Critical);
@@ -491,7 +491,7 @@ void ErrorTest::macrosTest()
   QCOMPARE(error1.level(), Mdt::Error::Info);
   QCOMPARE(error1.functionName(), QString("Class1::macrosTest()"));
 
-  auto error2 = mdtErrorNewT(int, 2, "error2", Mdt::Error::Critical, "Class2");
+  auto error2 = mdtErrorNewT(2, "error2", Mdt::Error::Critical, "Class2");
   QCOMPARE(error2.error<int>(), 2);
   QCOMPARE(error2.text(), QString("error2"));
   QCOMPARE(error2.level(), Mdt::Error::Critical);
@@ -502,7 +502,7 @@ void ErrorTest::macrosTest()
   QCOMPARE(error3.level(), Mdt::Error::Info);
   QCOMPARE(error3.functionName(), QString("ErrorTest::macrosTest()"));
 
-  auto error4 = mdtErrorNewTQ(int, 4, "error4", Mdt::Error::Critical, this);
+  auto error4 = mdtErrorNewTQ(4, "error4", Mdt::Error::Critical, this);
   QCOMPARE(error4.error<int>(), 4);
   QCOMPARE(error4.text(), QString("error4"));
   QCOMPARE(error4.level(), Mdt::Error::Critical);
@@ -550,7 +550,7 @@ void ErrorTest::errorLoggerConsoleBackendTest()
 {
   Mdt::ErrorLogger::ConsoleBackend backend;
 
-  Mdt::Error error = mdtErrorNewTQ(int, 25, "error", Mdt::Error::Critical, this);
+  Mdt::Error error = mdtErrorNewTQ(25, "error", Mdt::Error::Critical, this);
   error.stackError(mdtErrorNewQ("system error 2", Mdt::Error::Critical, this));
   error.stackError(mdtErrorNewQ("system error 1", Mdt::Error::Critical, this));
 

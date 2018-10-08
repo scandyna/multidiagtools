@@ -137,12 +137,13 @@ class QFileDevice;
  *
  * Typical usage:
  * \code
- * auto error = mdtErrorNewT(int, -1, "Some error occured", Mdt::Error::Critical, "MyClass");
+ * auto error = mdtErrorNewT(-1, "Some error occured", Mdt::Error::Critical, "MyClass");
  * \endcode
  *
  * \note If you create a error for a QObject subclass, you should use mdtErrorNewTQ()
  */
-#define mdtErrorNewT(T, error, text, level, className) Mdt::Error(static_cast<T>(error), text, level, QString::fromLocal8Bit(__FILE__), __LINE__, QString::fromLatin1(className), QString::fromLatin1(__FUNCTION__))
+#define mdtErrorNewT(error, text, level, className) Mdt::Error(error, text, level, QString::fromLocal8Bit(__FILE__), __LINE__, QString::fromLatin1(className), QString::fromLatin1(__FUNCTION__))
+// #define mdtErrorNewT(T, error, text, level, className) Mdt::Error(static_cast<T>(error), text, level, QString::fromLocal8Bit(__FILE__), __LINE__, QString::fromLatin1(className), QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Helper macro to build a Error with source file informations
  *
@@ -165,10 +166,11 @@ class QFileDevice;
  *
  * Typical usage:
  * \code
- * auto error = mdtErrorNewTQ(int, -1, "Some error occured", Mdt::Error::Critical, this);
+ * auto error = mdtErrorNewTQ(-1, "Some error occured", Mdt::Error::Critical, this);
  * \endcode
  */
-#define mdtErrorNewTQ(T, error, text, level, obj) Mdt::Error(static_cast<T>(error), text, level, QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
+#define mdtErrorNewTQ(error, text, level, obj) Mdt::Error(error, text, level, QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
+// #define mdtErrorNewTQ(T, error, text, level, obj) Mdt::Error(static_cast<T>(error), text, level, QString::fromLocal8Bit(__FILE__), __LINE__, obj, QString::fromLatin1(__FUNCTION__))
 
 /*! \brief Helper macro to set source file informations to a existing error
  *
