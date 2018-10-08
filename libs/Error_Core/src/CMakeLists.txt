@@ -5,6 +5,7 @@ find_package(Qt5 COMPONENTS Core)
 
 set(SOURCE_FILES
     Mdt/Error.cpp
+    Mdt/ErrorCode.cpp
     Mdt/ErrorQProcess.cpp
     Mdt/ErrorLogger/Logger.cpp
     Mdt/ErrorLogger/Backend.cpp
