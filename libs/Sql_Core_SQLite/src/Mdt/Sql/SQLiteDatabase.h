@@ -91,6 +91,7 @@ namespace Mdt{ namespace Sql{
     static bool hasSQLiteDriverLoaded(const QSqlDatabase & db) noexcept;
     Mdt::Expected<qlonglong> getSchemaVersion();
     bool enableForeignKeySupport();
+    void setConnectOptions(OpenMode openMode);
     void setLastError(const Mdt::Error & error);
 
     QSqlDatabase mDatabase;

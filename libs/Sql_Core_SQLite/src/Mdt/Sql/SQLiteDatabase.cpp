@@ -27,8 +27,6 @@
 #include <QSqlRecord>
 #include <QVariant>
 
-// #include <QDebug>
-
 namespace Mdt{ namespace Sql{
 
 SQLiteDatabase::SQLiteDatabase(const QString & connectionName, QObject *parent)
@@ -38,7 +36,6 @@ SQLiteDatabase::SQLiteDatabase(const QString & connectionName, QObject *parent)
   if( !hasSQLiteDriverLoaded(mDatabase) ){
     if( QSqlDatabase::isDriverAvailable(QLatin1String("MDTQSQLITE")) ){
       mDatabase = QSqlDatabase::addDatabase(QLatin1String("MDTQSQLITE"), connectionName);
-      mDatabase.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES"));
     }else{
       mDatabase = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), connectionName);
     }
@@ -65,7 +62,7 @@ bool SQLiteDatabase::createNew(const QString& dbFilePath)
     return false;
   }
   mDatabase.setDatabaseName(fi.absoluteFilePath());
-  mDatabase.setConnectOptions();
+  setConnectOptions(ReadWrite);
   if(!mDatabase.open()){
     const auto msg = tr("Create a new SQLite database file named '%1' failed.\nDirectory: '%2'")
                      .arg( fi.fileName(), fi.absoluteDir().path() );
@@ -101,11 +98,7 @@ bool SQLiteDatabase::openExisting(const QString & dbFilePath, SQLiteDatabase::Op
     return false;
   }
   mDatabase.setDatabaseName(fi.absoluteFilePath());
-  if(openMode == ReadOnly){
-    mDatabase.setConnectOptions(QLatin1String("QSQLITE_OPEN_READONLY"));
-  }else{
-    mDatabase.setConnectOptions();
-  }
+  setConnectOptions(openMode);
   if(!mDatabase.open()){
     const auto msg = tr("Open SQLite database file named '%1' failed.\nDirectory: '%2'")
                      .arg( fi.fileName(), fi.absoluteDir().path() );
@@ -179,10 +172,22 @@ bool SQLiteDatabase::enableForeignKeySupport()
   return true;
 }
 
+void SQLiteDatabase::setConnectOptions(SQLiteDatabase::OpenMode openMode)
+{
+  Q_ASSERT(mDatabase.isValid());
+
+  if(openMode == ReadOnly){
+    mDatabase.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES;QSQLITE_OPEN_READONLY"));
+  }else{
+    mDatabase.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES"));
+  }
+}
+
 void SQLiteDatabase::setLastError(const Mdt::Error & error)
 {
+  Q_ASSERT(!error.isNull());
+
   mLastError = error;
-//   mLastError.commit();
 }
 
 }} // namespace Mdt{ namespace Sql{

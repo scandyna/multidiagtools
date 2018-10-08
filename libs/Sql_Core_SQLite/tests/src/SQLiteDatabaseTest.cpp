@@ -40,6 +40,15 @@ void SQLiteDatabaseTest::cleanupTestCase()
 }
 
 /*
+ * Helpers
+ */
+
+bool databaseUsesExtendedErrorCodes(const QSqlDatabase & db)
+{
+  return db.connectOptions().contains("QSQLITE_USE_EXTENDED_RESULT_CODES");
+}
+
+/*
  * Tests
  */
 
@@ -82,6 +91,7 @@ void SQLiteDatabaseTest::createNewTest()
   auto dbConnection = sqliteDb.database();
   QVERIFY(dbConnection.isOpen());
   QVERIFY(!dbConnection.isOpenError());
+  QVERIFY(databaseUsesExtendedErrorCodes(dbConnection));
   QVERIFY(createSimpleTable(dbConnection));
   /*
    * Path is a directory
@@ -101,6 +111,18 @@ void SQLiteDatabaseTest::createNewTest()
   QVERIFY(!dbConnection.isOpen());
   // Check that the file was not touched
   QCOMPARE(readTextFile(filePath), QString("ABCD"));
+  /*
+   * Create a new database again
+   */
+  filePath = dir.path() + "/dbB.sqlite";
+  QVERIFY(!QFileInfo::exists(filePath));
+  QVERIFY(sqliteDb.createNew(filePath));
+  QVERIFY(QFileInfo::exists(filePath));
+  dbConnection = sqliteDb.database();
+  QVERIFY(dbConnection.isOpen());
+  QVERIFY(!dbConnection.isOpenError());
+  QVERIFY(databaseUsesExtendedErrorCodes(dbConnection));
+  QVERIFY(createSimpleTable(dbConnection));
 }
 
 void SQLiteDatabaseTest::openExistingTest()
@@ -118,6 +140,7 @@ void SQLiteDatabaseTest::openExistingTest()
   auto dbConnection = sqliteDb.database();
   QVERIFY(dbConnection.isOpen());
   QVERIFY(!dbConnection.isOpenError());
+  QVERIFY(databaseUsesExtendedErrorCodes(dbConnection));
   QVERIFY(!createSimpleTable(dbConnection));
   /*
    * Open a valid existing SQLite database
@@ -128,6 +151,7 @@ void SQLiteDatabaseTest::openExistingTest()
   dbConnection = sqliteDb.database();
   QVERIFY(dbConnection.isOpen());
   QVERIFY(!dbConnection.isOpenError());
+  QVERIFY(databaseUsesExtendedErrorCodes(dbConnection));
   QVERIFY(createSimpleTable(dbConnection));
   /*
    * Try to open a non existing file
