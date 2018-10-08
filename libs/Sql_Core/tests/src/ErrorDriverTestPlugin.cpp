@@ -22,14 +22,26 @@
 
 namespace Mdt{ namespace Sql{
 
-Mdt::ErrorCode ErrorDriverTestPlugin::errorCode(const QSqlError&) const
+Mdt::ErrorCode ErrorDriverTestDriver::errorCode(const QSqlError & sqlError) const
 {
+  if(!sqlError.isValid()){
+    return Mdt::ErrorCode::UnknownError;
+  }
+  const int code = sqlError.nativeErrorCode().toInt();
+  if( (code >= 0) && (code <= 3) ){
+    return static_cast<Mdt::ErrorCode>(code);
+  }
   return Mdt::ErrorCode::UnknownError;
 }
 
-Mdt::Error::Level ErrorDriverTestPlugin::errorLevel(const QSqlError&) const
+Mdt::Error::Level ErrorDriverTestDriver::errorLevel(const QSqlError&) const
 {
-  return Mdt::Error::Warning;
+  return Mdt::Error::Critical;
+}
+
+AbstractErrorDriver *ErrorDriverTestDriverPlugin::create()
+{
+  return new ErrorDriverTestDriver;
 }
 
 }} // namespace Mdt{ namespace Sql{

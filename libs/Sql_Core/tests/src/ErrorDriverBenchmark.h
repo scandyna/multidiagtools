@@ -18,37 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_H
-#define MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_H
+#ifndef MDT_SQL_TEST_MAIN_H
+#define MDT_SQL_TEST_MAIN_H
 
-#include "Mdt/Sql/AbstractErrorDriver.h"
-#include "Mdt/Sql/AbstractErrorDriverPlugin.h"
-#include <QSqlDatabase>
-#include <QObject>
-#include <QtPlugin>
+#include "TestBase.h"
 
-namespace Mdt{ namespace Sql{
+class ErrorDriverBenchmark : public QObject
+{
+ Q_OBJECT
 
-  class ErrorDriverTestDriver : public AbstractErrorDriver
-  {
-   Q_OBJECT
+ private slots:
 
-   public:
+  void instantiateAndGetErrorBenchmark();
+};
 
-    Mdt::ErrorCode errorCode(const QSqlError& sqlError) const override;
-    Mdt::Error::Level errorLevel(const QSqlError& sqlError) const override;
-  };
-
-  class ErrorDriverTestDriverPlugin : public QObject, public AbstractErrorDriverPlugin
-  {
-   Q_OBJECT
-   Q_PLUGIN_METADATA(IID MdtSqlAbstractErrorDriver_iid FILE "ErrorDriverTestPlugin.json")
-   Q_INTERFACES(Mdt::Sql::AbstractErrorDriverPlugin)
-
-   public:
-
-    AbstractErrorDriver *create() override;
-  };
-}} // namespace Mdt{ namespace Sql{
-
-#endif // #ifndef MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_H
+#endif // #ifndef MDT_SQL_TEST_MAIN_H

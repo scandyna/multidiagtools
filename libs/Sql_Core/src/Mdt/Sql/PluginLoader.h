@@ -29,15 +29,14 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
-#include <vector>
+#include <QSqlDriver>
 
 namespace Mdt{ namespace Sql{
 
   /*! \brief Load a Mdt Sql plugin at runtime
    *
    * PluginLoader can load a plugin that matches a interface
-   *  (defined in the Mdt Sql library),
-   *  and a SQL driver.
+   *  (defined in the Mdt Sql library).
    *
    * The SQL driver name is the same than the one passed to QSqlDatabase::addDatabase() .
    *  This name is used to load the plugin that has a implementation that correspond
@@ -47,27 +46,32 @@ namespace Mdt{ namespace Sql{
    */
   class MDT_SQL_CORE_EXPORT PluginLoader : public QObject
   {
+   Q_OBJECT
+
    public:
 
-    /*! \brief Load a error driver plugin
+    /*! \brief Find a plugin that implements a interface and that is compatible with a SQL driver
      *
-     * Will load the error driver that is implemented
-     *  on the base of the SQL driver that \a db uses.
+     * The first time this method is called, it will be fetched about available plugins
+     *  in $root/plugins/Mdt/Sql (where $root is the root of the application or the mdt library).
+     *  Later calls will no longer need file I/O, and searchin will be fast.
      *
-     * If no appropriate plugin could be loaded,
-     *  a nullptr is returned.
-     *  Use lastError() to get more informations.
-     *
-     * \pre \a db must be valid (must have a driver loaded)
+     * \pre \a interface must not be empty
+     * \pre \a driverName must not be empty
      */
-    AbstractErrorDriver *loadErrorDriver(const QSqlDatabase & db);
+    PluginInfo findPlugin(const QString & interface, const QString & driverName);
 
-    /*! \brief Load a error driver plugin
+    /*! \brief Load a plugin
      *
-     * \pre \a sqlDriverName must not be empty
-     * \sa loadErrorDriver(const QSqlDatabase &)
+     * Returns a valid pointer to the root component of the plugin on success,
+     *  otherwise a nullptr.
+     *
+     * Internally, QPluginLoader is used.
+     *
+     * \pre \a pluginInfo must not be null
+     * \sa QPluginLoader
      */
-    AbstractErrorDriver *loadErrorDriver(const QString & sqlDriverName);
+    QObject *loadPlugin(const PluginInfo & pluginInfo);
 
     /*! \brief Get last error
      */
@@ -80,9 +84,8 @@ namespace Mdt{ namespace Sql{
 
     bool fetchAvailablePlugins();
     bool fetchAvailablePluginsIfNot();
-    PluginInfo findPlugin(const QString & interface, const QString & driverName);
+
     void setLastError(const Mdt::Error & error);
-    std::vector<PluginInfo> mAvaliablePlugins;
     Mdt::Error mLastError;
   };
 

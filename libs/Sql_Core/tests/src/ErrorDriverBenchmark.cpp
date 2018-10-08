@@ -18,21 +18,53 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_TEST_MAIN_H
-#define MDT_SQL_TEST_MAIN_H
+#include "ErrorDriverBenchmark.h"
+#include "Mdt/Sql/ErrorDriver.h"
+#include "Mdt/Error.h"
+#include "Mdt/ErrorCode.h"
+#include <QSqlError>
 
-#include "TestBase.h"
+using Mdt::Sql::ErrorDriver;
+using Mdt::ErrorCode;
 
-class PluginLoaderTest : public QObject
+/*
+ * Helpers
+ */
+
+QSqlError createSqlError(Mdt::ErrorCode errorCode)
 {
- Q_OBJECT
+  int code = static_cast<int>(errorCode);
+  QString codeStr = QString::number(code);
 
- private slots:
+  return QSqlError("Driver text", "DB text", QSqlError::ConnectionError, codeStr);
+}
 
-  void pluginInfoTest();
-  void findPluginTest();
-  void loadPluginTest();
-  void pluginInstanceCreateTest();
-};
+/*
+ * Benchmarks
+ */
 
-#endif // #ifndef MDT_SQL_TEST_MAIN_H
+void ErrorDriverBenchmark::instantiateAndGetErrorBenchmark()
+{
+  QSqlError sqlError = createSqlError(Mdt::ErrorCode::UniqueConstraintError);
+  Mdt::ErrorCode result;
+
+  QBENCHMARK{
+    ErrorDriver driver("TEST");
+    Q_ASSERT(driver.isValid());
+    result = driver.errorCode(sqlError);
+  }
+
+  QCOMPARE(result, ErrorCode::UniqueConstraintError);
+}
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  QCoreApplication app(argc, argv);
+  ErrorDriverBenchmark test;
+
+  return QTest::qExec(&test, argc, argv);
+}

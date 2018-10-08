@@ -21,7 +21,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtsqlcoretest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtsqlcoretest Sql_Core Entity_Core Entity_Sql Application_Core Qt5::Test)
+target_link_libraries(mdtsqlcoretest Sql_Core Sql_Core_SQLite Entity_Core Entity_Sql Application_Core Qt5::Test)
 
 #================= SQL test plugins ====================
 
@@ -57,6 +57,10 @@ mdt_add_sql_test_plugin(
   NAME ErrorDriverTestPlugin
   SOURCE_FILES src/ErrorDriverTestPlugin.cpp
 )
+mdt_add_sql_test_plugin(
+  NAME ErrorDriverTestPlugin2
+  SOURCE_FILES src/ErrorDriverTestPlugin2.cpp
+)
 
 #=============== Helper functions ===========
 
@@ -75,7 +79,9 @@ endfunction()
 
 addSqlCoreTest("LibraryInfoTest")
 addSqlCoreTest("PluginLoaderTest")
+addSqlCoreTest("PluginLoaderBenchmark")
 addSqlCoreTest("ErrorDriverTest")
+addSqlCoreTest("ErrorDriverBenchmark")
 addSqlCoreTest("SimpleTypesTest")
 addSqlCoreTest("FieldNameTest")
 addSqlCoreTest("FieldNameValueMapTest")
@@ -96,7 +102,6 @@ addSqlCoreTest("ConnectionParametersTest")
 addSqlCoreTest("QueryTest")
 addSqlCoreTest("AsyncQueryTest")
 addSqlCoreTest("AsyncQueryBenchmark")
-addSqlCoreTest("SQLiteDatabaseTest")
 addSqlCoreTest("SchemaFieldTypeMapTest")
 addSqlCoreTest("SchemaFieldTest")
 addSqlCoreTest("SchemaFieldBenchmark")

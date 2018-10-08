@@ -40,34 +40,78 @@
 <context>
     <name>Mdt::Sql::Error</name>
     <message>
-        <location filename="../src/Mdt/Sql/Error.cpp" line="39"/>
+        <location filename="../src/Mdt/Sql/Error.cpp" line="41"/>
         <source>Reported from QSqlQuery: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Error.cpp" line="41"/>
-        <location filename="../src/Mdt/Sql/Error.cpp" line="65"/>
+        <location filename="../src/Mdt/Sql/Error.cpp" line="43"/>
+        <location filename="../src/Mdt/Sql/Error.cpp" line="68"/>
         <source> , SQL: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Error.cpp" line="63"/>
+        <location filename="../src/Mdt/Sql/Error.cpp" line="66"/>
         <source>Reported from QSqlQueryModel: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Mdt::Sql::ErrorDriver</name>
+    <message>
+        <location filename="../src/Mdt/Sql/ErrorDriver.cpp" line="82"/>
+        <source>No SQL driver provided, all errors will be unknown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/ErrorDriver.cpp" line="91"/>
+        <source>Could not find a error driver for SQL driver &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/ErrorDriver.cpp" line="101"/>
+        <source>Could find a error driver for SQL driver &apos;%1&apos;, but it is not a real subclass of Mdt::Sql::AbstractErrorDriver.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Mdt::Sql::InsertQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="73"/>
+        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="75"/>
         <source>Preparing query for insertion into &apos;%1&apos; failed.
 SQL: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="84"/>
+        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="86"/>
         <source>Executing query for insertion into &apos;%1&apos; failed.
 SQL: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Mdt::Sql::PluginInstance</name>
+    <message>
+        <location filename="../src/Mdt/Sql/PluginInstance.cpp" line="61"/>
+        <source>Could load a plugin that matches IID &apos;%1&apos; and supports driver &apos;%2&apos;, but casting to the given plugin interface failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Mdt::Sql::PluginLoader</name>
+    <message>
+        <location filename="../src/Mdt/Sql/PluginLoader.cpp" line="55"/>
+        <source>Could not find a plugin that matches IID &apos;%1&apos; and supporting driver &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/PluginLoader.cpp" line="101"/>
+        <source>Could not find any valid plugin in &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/PluginLoader.cpp" line="73"/>
+        <source>Loading the plugin &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -181,64 +225,9 @@ SQL: %2</source>
     </message>
 </context>
 <context>
-    <name>SQLiteDatabase</name>
-    <message>
-        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="45"/>
-        <source>Create a new SQLite database failed because file path refers to a directory.
-File path: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="52"/>
-        <source>Create a new SQLite database failed because file named &apos;%1&apos; allready exists.
-Directory: &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="61"/>
-        <source>Create a new SQLite database file named &apos;%1&apos; failed.
-Directory: &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="78"/>
-        <source>Open SQLite database failed because file named &apos;%1&apos; does not exist.
-Directory: &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="85"/>
-        <source>Open SQLite database failed because file path refers to a directory.
-File path: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="98"/>
-        <source>Open SQLite database file named &apos;%1&apos; failed.
-Directory: &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="108"/>
-        <source>Open SQLite database failed because file named &apos;%1&apos; is not a SQLite database (or it is encrypted).
-Directory: &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="124"/>
-        <source>Get schema version failed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/Sql/SQLiteDatabase.cpp" line="131"/>
-        <source>Get schema version failed: query returned no result.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Sql::Error</name>
     <message>
-        <location filename="../src/Mdt/Sql/Error.cpp" line="101"/>
+        <location filename="../src/Mdt/Sql/Error.cpp" line="105"/>
         <source>Reported from QSqlDatabase: %1</source>
         <translation type="unfinished"></translation>
     </message>

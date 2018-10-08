@@ -4,7 +4,9 @@ set(SOURCE_FILES
     Mdt/Sql/LibraryInfo.cpp
     Mdt/Sql/PluginInfo.cpp
     Mdt/Sql/PluginLoader.cpp
+    Mdt/Sql/PluginInstance.cpp
     Mdt/Sql/AbstractErrorDriver.cpp
+    Mdt/Sql/AbstractErrorDriverPlugin.cpp
     Mdt/Sql/ErrorDriver.cpp
     Mdt/Sql/Error.cpp
     Mdt/Sql/FieldNameValueMap.cpp
@@ -40,13 +42,11 @@ set(SOURCE_FILES
     Mdt/Sql/SelectStatement.cpp
     Mdt/Sql/SelectStatementSqlTransform.cpp
     Mdt/Sql/ConnectionParameters.cpp
-    Mdt/Sql/SQLiteConnectionParameters.cpp
     Mdt/Sql/AbstractSelectQuery.cpp
     Mdt/Sql/SelectQuery.cpp
     Mdt/Sql/AsyncQuery.cpp
     Mdt/Sql/AsyncQueryConnection.cpp
     Mdt/Sql/AsyncQueryThreadWorker.cpp
-    Mdt/Sql/SQLiteDatabase.cpp
     Mdt/Sql/Schema/Driver.cpp
     Mdt/Sql/Schema/DriverImplementationInterface.cpp
     Mdt/Sql/Schema/DriverSQLite.cpp

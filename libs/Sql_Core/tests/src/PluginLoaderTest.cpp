@@ -21,13 +21,19 @@
 #include "PluginLoaderTest.h"
 #include "Mdt/Sql/PluginInfo.h"
 #include "Mdt/Sql/PluginLoader.h"
+#include "Mdt/Sql/PluginInstance.h"
+#include "Mdt/Sql/AbstractErrorDriver.h"
+#include "Mdt/Sql/AbstractErrorDriverPlugin.h"
 #include <QJsonDocument>
 #include <QByteArray>
 #include <QSqlError>
+#include <memory>
 
 using Mdt::Sql::PluginInfo;
 using Mdt::Sql::PluginLoader;
+using Mdt::Sql::PluginInstance;
 using Mdt::Sql::AbstractErrorDriver;
+using Mdt::Sql::AbstractErrorDriverPlugin;
 
 /*
  * Tests
@@ -84,14 +90,63 @@ void PluginLoaderTest::pluginInfoTest()
   QVERIFY(pi.isNull());
 }
 
-void PluginLoaderTest::loadErrorDriverTestPluginTest()
+void PluginLoaderTest::findPluginTest()
 {
+  PluginInfo plugin;
   PluginLoader loader;
 
-  AbstractErrorDriver *errorDriver = loader.loadErrorDriver("TEST");
-  QVERIFY(errorDriver != nullptr);
-  QCOMPARE(errorDriver->errorCode(QSqlError()), Mdt::ErrorCode::UnknownError);
-  QCOMPARE(errorDriver->errorLevel(QSqlError()), Mdt::Error::Warning);
+  plugin = loader.findPlugin("Mdt.Sql.AbstractErrorDriver", "TEST");
+  QVERIFY(!plugin.isNull());
+  QCOMPARE(plugin.interface(), QString("Mdt.Sql.AbstractErrorDriver"));
+  QVERIFY(plugin.supportsDriver("TEST"));
+
+  plugin = loader.findPlugin("Not.Supported.Interface", "TEST");
+  QVERIFY(plugin.isNull());
+
+  plugin = loader.findPlugin("Mdt.Sql.AbstractErrorDriver", "NotSupportedDriver");
+  QVERIFY(plugin.isNull());
+}
+
+void PluginLoaderTest::loadPluginTest()
+{
+  PluginInfo pluginInfo;
+  PluginLoader loader;
+
+  pluginInfo = loader.findPlugin("Mdt.Sql.AbstractErrorDriver", "TEST");
+  QVERIFY(!pluginInfo.isNull());
+  QObject *pluginObject = loader.loadPlugin(pluginInfo);
+  QVERIFY(pluginObject != nullptr);
+  AbstractErrorDriverPlugin *plugin = qobject_cast<Mdt::Sql::AbstractErrorDriverPlugin*>(pluginObject);
+  QVERIFY(plugin != nullptr);
+
+  std::unique_ptr<AbstractErrorDriver> driver;
+  driver.reset( plugin->create() );
+  QVERIFY(driver.get() != nullptr);
+}
+
+void PluginLoaderTest::pluginInstanceCreateTest()
+{
+  PluginInstance plugin;
+  QObject *driver;
+  std::unique_ptr<AbstractErrorDriver> errorDriver;
+
+  driver = plugin.create<AbstractErrorDriverPlugin>("Mdt.Sql.AbstractErrorDriver", "TEST");
+  QVERIFY(driver != nullptr);
+  errorDriver.reset( qobject_cast<AbstractErrorDriver*>(driver) );
+  QVERIFY(errorDriver.get() != nullptr);
+
+  driver = plugin.create<AbstractErrorDriverPlugin>("Mdt.Sql.AbstractErrorDriver", "TEST");
+  QVERIFY(driver != nullptr);
+  errorDriver.reset( qobject_cast<AbstractErrorDriver*>(driver) );
+  QVERIFY(errorDriver.get() != nullptr);
+
+  driver = plugin.create<AbstractErrorDriverPlugin>("Mdt.Sql.AbstractErrorDriver", "TEST2");
+  QVERIFY(driver != nullptr);
+  errorDriver.reset( qobject_cast<AbstractErrorDriver*>(driver) );
+  QVERIFY(errorDriver.get() != nullptr);
+
+  driver = plugin.create<AbstractErrorDriverPlugin>("Mdt.Sql.AbstractErrorDriver", "UnknownDriver");
+  QVERIFY(driver == nullptr);
 }
 
 /*

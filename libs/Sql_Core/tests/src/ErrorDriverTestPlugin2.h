@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_H
-#define MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_H
+#ifndef MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_2_H
+#define MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_2_H
 
 #include "Mdt/Sql/AbstractErrorDriver.h"
 #include "Mdt/Sql/AbstractErrorDriverPlugin.h"
@@ -29,7 +29,7 @@
 
 namespace Mdt{ namespace Sql{
 
-  class ErrorDriverTestDriver : public AbstractErrorDriver
+  class ErrorDriverTestDriver2 : public AbstractErrorDriver
   {
    Q_OBJECT
 
@@ -39,10 +39,10 @@ namespace Mdt{ namespace Sql{
     Mdt::Error::Level errorLevel(const QSqlError& sqlError) const override;
   };
 
-  class ErrorDriverTestDriverPlugin : public QObject, public AbstractErrorDriverPlugin
+  class ErrorDriverTestDriverPlugin2 : public QObject, public AbstractErrorDriverPlugin
   {
    Q_OBJECT
-   Q_PLUGIN_METADATA(IID MdtSqlAbstractErrorDriver_iid FILE "ErrorDriverTestPlugin.json")
+   Q_PLUGIN_METADATA(IID MdtSqlAbstractErrorDriver_iid FILE "ErrorDriverTestPlugin2.json")
    Q_INTERFACES(Mdt::Sql::AbstractErrorDriverPlugin)
 
    public:
@@ -51,4 +51,4 @@ namespace Mdt{ namespace Sql{
   };
 }} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_H
+#endif // #ifndef MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_2_H

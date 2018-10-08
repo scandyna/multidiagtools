@@ -18,37 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_H
-#define MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_H
-
-#include "Mdt/Sql/AbstractErrorDriver.h"
-#include "Mdt/Sql/AbstractErrorDriverPlugin.h"
-#include <QSqlDatabase>
-#include <QObject>
-#include <QtPlugin>
+#include "ErrorDriverTestPlugin2.h"
 
 namespace Mdt{ namespace Sql{
 
-  class ErrorDriverTestDriver : public AbstractErrorDriver
-  {
-   Q_OBJECT
+Mdt::ErrorCode ErrorDriverTestDriver2::errorCode(const QSqlError & sqlError) const
+{
+  if(!sqlError.isValid()){
+    return Mdt::ErrorCode::UnknownError;
+  }
+  const int code = sqlError.nativeErrorCode().toInt();
+  if( (code >= 0) && (code <= 3) ){
+    return static_cast<Mdt::ErrorCode>(code);
+  }
+  return Mdt::ErrorCode::UnknownError;
+}
 
-   public:
+Mdt::Error::Level ErrorDriverTestDriver2::errorLevel(const QSqlError&) const
+{
+  return Mdt::Error::Critical;
+}
 
-    Mdt::ErrorCode errorCode(const QSqlError& sqlError) const override;
-    Mdt::Error::Level errorLevel(const QSqlError& sqlError) const override;
-  };
+AbstractErrorDriver *ErrorDriverTestDriverPlugin2::create()
+{
+  return new ErrorDriverTestDriver2;
+}
 
-  class ErrorDriverTestDriverPlugin : public QObject, public AbstractErrorDriverPlugin
-  {
-   Q_OBJECT
-   Q_PLUGIN_METADATA(IID MdtSqlAbstractErrorDriver_iid FILE "ErrorDriverTestPlugin.json")
-   Q_INTERFACES(Mdt::Sql::AbstractErrorDriverPlugin)
-
-   public:
-
-    AbstractErrorDriver *create() override;
-  };
 }} // namespace Mdt{ namespace Sql{
-
-#endif // #ifndef MDT_SQL_ERROR_DRIVER_TEST_PLUGIN_H
