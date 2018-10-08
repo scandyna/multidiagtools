@@ -219,7 +219,7 @@ SQL: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="74"/>
+        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="75"/>
         <source>Executing query to update &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -57,7 +57,8 @@ bool UpdateQuery::exec()
 
   if(!query.prepare( mStatement.toPrepareStatementSql(constDatabase()) )){
     QString msg = tr("Preparing query to update '%1' failed.").arg(mStatement.tableName());
-    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    const Mdt::ErrorCode code = Mdt::Sql::Error::errorCodeFromQSqlError(query.lastError(), query.driver());
+    auto error = mdtErrorNewTQ(code, msg, Mdt::Error::Critical, this);
     error.stackError(mdtErrorFromQSqlQueryQ(query, this));
     setLastError(error);
     return false;
@@ -72,7 +73,8 @@ bool UpdateQuery::exec()
   }
   if(!query.exec()){
     QString msg = tr("Executing query to update '%1' failed.").arg(mStatement.tableName());
-    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    const Mdt::ErrorCode code = Mdt::Sql::Error::errorCodeFromQSqlError(query.lastError(), query.driver());
+    auto error = mdtErrorNewTQ(code, msg, Mdt::Error::Critical, this);
     error.stackError(mdtErrorFromQSqlQueryQ(query, this));
     setLastError(error);
     return false;

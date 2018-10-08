@@ -40,6 +40,7 @@ class QueryTest : public TestBase
   void updateStatementPrimaryKeyConditionsTest();
   void updateStatementToConditionsValueListTest();
   void updateQueryTest();
+  void updateQueryErrorTest();
 
   void deleteStatementTest();
   void deleteStatementPrimaryKeyConditionsTest();

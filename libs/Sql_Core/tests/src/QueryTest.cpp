@@ -255,6 +255,21 @@ void QueryTest::updateQueryTest()
   QVERIFY(cleanupClientTable());
 }
 
+void QueryTest::updateQueryErrorTest()
+{
+  QVERIFY(cleanupClientTable());
+  QVERIFY(insertClient(1, "Name 1"));
+  QVERIFY(insertClient(2, "Name 2"));
+
+  Mdt::Sql::UpdateQuery query(database());
+  query.setTableName("Client_tbl");
+  query.addValue(FieldName("Id_PK"), 1);
+  query.addValue(FieldName("Name"), "Name 1");
+  query.setConditions( buildPrimaryKeyRecord(2) );
+  QVERIFY(!query.exec());
+  QCOMPARE(query.lastError().error<Mdt::ErrorCode>(), Mdt::ErrorCode::UniqueConstraintError);
+}
+
 void QueryTest::deleteStatementTest()
 {
   Mdt::Sql::DeleteStatement statement;
