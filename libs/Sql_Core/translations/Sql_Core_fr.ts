@@ -40,18 +40,18 @@
 <context>
     <name>Mdt::Sql::Error</name>
     <message>
-        <location filename="../src/Mdt/Sql/Error.cpp" line="41"/>
+        <location filename="../src/Mdt/Sql/Error.cpp" line="39"/>
         <source>Reported from QSqlQuery: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Error.cpp" line="43"/>
-        <location filename="../src/Mdt/Sql/Error.cpp" line="68"/>
+        <location filename="../src/Mdt/Sql/Error.cpp" line="41"/>
+        <location filename="../src/Mdt/Sql/Error.cpp" line="64"/>
         <source> , SQL: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Error.cpp" line="66"/>
+        <location filename="../src/Mdt/Sql/Error.cpp" line="62"/>
         <source>Reported from QSqlQueryModel: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,7 +227,7 @@ SQL: %2</source>
 <context>
     <name>Sql::Error</name>
     <message>
-        <location filename="../src/Mdt/Sql/Error.cpp" line="105"/>
+        <location filename="../src/Mdt/Sql/Error.cpp" line="99"/>
         <source>Reported from QSqlDatabase: %1</source>
         <translation type="unfinished"></translation>
     </message>

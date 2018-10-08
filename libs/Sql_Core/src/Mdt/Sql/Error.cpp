@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,14 +19,14 @@
  **
  ****************************************************************************/
 #include "Error.h"
+#include "ErrorDriver.h"
 #include <QSqlQuery>
 #include <QSqlDatabase>
+#include <QSqlDriver>
 #include <QSqlQueryModel>
 #include <QString>
 #include <QObject>
 #include <QMetaObject>
-
-#include <QDebug>
 
 namespace Mdt{ namespace Sql{
 
@@ -40,8 +40,7 @@ Mdt::Error Error::fromQSqlQuery(const QSqlQuery & query, const QString & file, i
   if(sqlError.type() == QSqlError::StatementError){
     msg += tr(" , SQL: %1").arg(query.lastQuery());
   }
-  error.setError<QSqlError::ErrorType>(sqlError.type(), msg, levelFromQSqlErrorType(sqlError.type()));
-  error.setSource(file, line, className, functionName);
+  fillError(error, sqlError, msg, query.driver(), file, line, className, functionName);
 
   return error;
 }
@@ -64,8 +63,7 @@ Mdt::Error Error::fromQSqlQueryModel(const QSqlQueryModel & queryModel, const QS
   if(sqlError.type() == QSqlError::StatementError){
     msg += tr(" , SQL: %1").arg(queryModel.query().lastQuery());
   }
-  error.setError<QSqlError::ErrorType>(sqlError.type(), msg, levelFromQSqlErrorType(sqlError.type()));
-  error.setSource(file, line, className, functionName);
+  fillError(error, sqlError, msg, queryModel.query().driver(), file, line, className, functionName);
 
   return error;
 }
@@ -99,8 +97,7 @@ Mdt::Error Sql::Error::fromQSqlDatabase(const QSqlDatabase & db, const QString& 
   QString msg;
 
   msg = tr("Reported from QSqlDatabase: %1").arg(sqlError.text());
-  error.setError<QSqlError::ErrorType>(sqlError.type(), msg, levelFromQSqlErrorType(sqlError.type()));
-  error.setSource(file, line, className, functionName);
+  fillError(error, sqlError, msg, db.driver(), file, line, className, functionName);
 
   return error;
 }
@@ -111,6 +108,13 @@ Mdt::Error Sql::Error::fromQSqlDatabase(const QSqlDatabase & db, const QString& 
   Q_ASSERT(obj->metaObject() != nullptr);
 
   return fromQSqlDatabase(db, file, line, obj->metaObject()->className(), functionName);
+}
+
+Mdt::ErrorCode Sql::Error::errorCodeFromQSqlError(const QSqlError& sqlError, const QSqlDriver * const sqlDriver)
+{
+  ErrorDriver driver(sqlDriver);
+
+  return driver.errorCode(sqlError);
 }
 
 Mdt::Error::Level Sql::Error::levelFromQSqlErrorType(QSqlError::ErrorType type)
@@ -127,9 +131,16 @@ Mdt::Error::Level Sql::Error::levelFromQSqlErrorType(QSqlError::ErrorType type)
   return Mdt::Error::Critical;
 }
 
-QString Sql::Error::tr(const char* sourceText)
+void Sql::Error::fillError(Mdt::Error & error, const QSqlError & sqlError, const QString & msg, const QSqlDriver * const sqlDriver,
+                           const QString & file, int line, const QString & className, const QString & functionName)
 {
-  return QObject::tr(sourceText);
+  ErrorDriver driver(sqlDriver);
+
+  error.setError<Mdt::ErrorCode>(driver.errorCode(sqlError), msg, driver.errorLevel(sqlError));
+  error.setSource(file, line, className, functionName);
+  if(!driver.isValid()){
+    error.stackError(driver.initError());
+  }
 }
 
 }} // namespace Mdt{ namespace Sql{

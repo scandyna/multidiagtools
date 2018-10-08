@@ -22,6 +22,9 @@
 #define MDT_SQL_ERROR_H
 
 #include "Mdt/Error.h"
+#include "Mdt/ErrorCode.h"
+#include "MdtSql_CoreExport.h"
+#include <QObject>
 #include <QSqlError>
 #include <QString>
 
@@ -72,12 +75,16 @@
 
 class QSqlQuery;
 class QSqlDatabase;
+class QSqlDriver;
 class QSqlQueryModel;
 class QObject;
 
 namespace Mdt{ namespace Sql{
 
   /*! \brief Translate Sql errors to Mdt::Error
+   *
+   * Each method will return a Mdt::Error
+   *  which will constain a Mdt::ErrorCode
    *
    * \sa mdtErrorFromQSqlQuery()
    * \sa mdtErrorFromQSqlQueryQ()
@@ -86,8 +93,10 @@ namespace Mdt{ namespace Sql{
    * \sa mdtErrorFromQSqlDatabase()
    * \sa mdtErrorFromQSqlDatabaseQ()
    */
-  class Error
+  class MDT_SQL_CORE_EXPORT Error : public QObject
   {
+   Q_OBJECT
+
    public:
 
     /*! \brief Get a Mdt::Error from last error in \a query
@@ -138,15 +147,18 @@ namespace Mdt{ namespace Sql{
      */
     static Mdt::Error fromQSqlDatabase(const QSqlDatabase & db, const QString & file, int line, const QObject * const obj, const QString & functionName);
 
+    /*! \brief Get a Mdt::ErrorCode from a SQL error
+     */
+    static Mdt::ErrorCode errorCodeFromQSqlError(const QSqlError & sqlError, const QSqlDriver * const sqlDriver);
+
     /*! \brief Get error level from QSqlError type
      */
     static Mdt::Error::Level levelFromQSqlErrorType(QSqlError::ErrorType typte);
 
    private:
 
-    /*! \brief Call QObject::tr()
-     */
-    static QString tr(const char *sourceText);
+    static void fillError(Mdt::Error & error, const QSqlError & sqlError, const QString & msg, const QSqlDriver * const sqlDriver,
+                          const QString & file, int line, const QString & className, const QString & functionName);
   };
 
 }} // namespace Mdt{ namespace Sql{
