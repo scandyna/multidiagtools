@@ -39,12 +39,6 @@ class TestBase : public QObject
   QSqlDatabase database() const;
   Mdt::Sql::ConnectionParameters connectionParameters() const;
 
-//   bool createClientTable();
-//   bool insertClient(int id, const QString & name);
-//   bool cleanupClientTable();
-
-//   bool createTestSchema();
-
  private:
 
   QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
