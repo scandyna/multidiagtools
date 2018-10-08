@@ -33,6 +33,8 @@ namespace Mdt{ namespace Sql{
    */
   class PluginInstance : public QObject
   {
+   Q_OBJECT
+
    public:
 
     /*! \brief Create a instance of a implementation that matches a interface IID and a driver
