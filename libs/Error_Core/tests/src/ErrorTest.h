@@ -34,6 +34,7 @@ class ErrorTest : public QObject
   void errorStackTest();
   void setSourceTest();
   void macrosTest();
+  void userDefinedErrorTest();
 
   void errorLoggerConsoleBackendTest();
 };

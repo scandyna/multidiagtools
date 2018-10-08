@@ -359,6 +359,17 @@ namespace Mdt{
       pvShared->level = level;
     }
 
+    /*! \brief Check if the user defined error is of type T
+     */
+    template<typename T>
+    bool isErrorType() const
+    {
+      if(!pvShared){
+        return false;
+      }
+      return std::type_index(typeid(T)) == pvShared->userErrorType;
+    }
+
     /*! \brief Get user defined error
     *
     * If no error was set,
@@ -384,7 +395,7 @@ namespace Mdt{
       *       which we really not want here.
       */
       QString msg;
-      if(std::type_index(typeid(T)) != pvShared->userErrorType){
+      if( !isErrorType<T>() ){
         // If we have caller informations, put it into failure message
         const QString functionName = pvShared->functionName;
         QString caller;
@@ -395,7 +406,7 @@ namespace Mdt{
         }
         msg = QLatin1String("Requested type T is not the same as stored error type.") + caller;
       }
-      Q_ASSERT_X(std::type_index(typeid(T)) == pvShared->userErrorType, "T Error::error() const", msg.toStdString().c_str());
+      Q_ASSERT_X(isErrorType<T>(), "T Error::error() const", msg.toStdString().c_str());
       Q_ASSERT(dynamic_cast<const ErrorPrivate<T>*>(pvShared.constData()) != nullptr);
   #endif // #ifndef QT_NO_DEBUG
 

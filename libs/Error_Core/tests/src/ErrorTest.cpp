@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "ErrorTest.h"
 #include "Mdt/Error.h"
+#include "Mdt/ErrorCode.h"
 #include "Mdt/ErrorLogger/Logger.h"
 #include "Mdt/ErrorLogger/Backend.h"
 #include "Mdt/ErrorLogger/ConsoleBackend.h"
@@ -544,6 +545,28 @@ void ErrorTest::macrosTest()
   QVERIFY(!error10.text().isEmpty());
   QVERIFY(error10.level() != Mdt::Error::NoError);
   QCOMPARE(error10.functionName(), QString("ErrorTest::macrosTest()"));
+}
+
+void ErrorTest::userDefinedErrorTest()
+{
+  auto error = mdtErrorNewT(2, "", Mdt::Error::Critical, "");
+  QVERIFY(error.isErrorType<int>());
+  QVERIFY(!error.isErrorType<float>());
+  QVERIFY(!error.isErrorType<QString>());
+  QCOMPARE(error.error<int>(), 2);
+
+  error = mdtErrorNewT(Mdt::ErrorCode::ConstraintError, "", Mdt::Error::Critical, "");
+  QVERIFY(error.isErrorType<Mdt::ErrorCode>());
+  QVERIFY(!error.isErrorType<int>());
+  QVERIFY(!error.isErrorType<float>());
+  QVERIFY(!error.isErrorType<QString>());
+  QCOMPARE(error.error<Mdt::ErrorCode>(), Mdt::ErrorCode::ConstraintError);
+
+  Mdt::Error nullError;
+  QVERIFY(!nullError.isErrorType<Mdt::ErrorCode>());
+  QVERIFY(!nullError.isErrorType<int>());
+  QVERIFY(!nullError.isErrorType<float>());
+  QVERIFY(!nullError.isErrorType<QString>());
 }
 
 void ErrorTest::errorLoggerConsoleBackendTest()
