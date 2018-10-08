@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "ConnectionParametersTest.h"
 #include "Mdt/Sql/ConnectionParameters.h"
+#include "Mdt/Sql/SQLiteConnectionParameters.h"
 #include <QSqlDatabase>
 
 using namespace Mdt::Sql;
@@ -28,21 +29,14 @@ using namespace Mdt::Sql;
  * Tests
  */
 
-void ConnectionParametersTest::constructTest()
+void ConnectionParametersTest::sqliteParametersTest()
 {
-  ConnectionParameters emptyParameters;
-  QVERIFY(emptyParameters.driverName().isEmpty());
-}
+  SQLiteConnectionParameters sqliteParameters;
 
-void ConnectionParametersTest::setupQSqlDatabaseTest()
-{
-  ConnectionParameters parameters("QSQLITE");
-  auto db = QSqlDatabase::addDatabase(parameters.driverName());
-  QCOMPARE(db.driverName(), QString("QSQLITE"));
-
-  parameters.setDatabaseName("DbName");
-  parameters.setupDatabase(db);
-  QCOMPARE(db.databaseName(), QString("DbName"));
+  sqliteParameters.setDatabaseFile("/some/path/to/db.sql");
+  const auto parameters = sqliteParameters.toConnectionParameters();
+  QCOMPARE(parameters.driverName(), QString("MDTQSQLITE"));
+  QCOMPARE(parameters.databaseName(), QString("/some/path/to/db.sql"));
 }
 
 /*

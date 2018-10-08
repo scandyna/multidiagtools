@@ -31,7 +31,6 @@ class ConnectionParametersTest : public QObject
 
   void constructTest();
   void setupQSqlDatabaseTest();
-  void sqliteParametersTest();
 };
 
 #endif // #ifndef MDT_SQL_TEST_MAIN_H

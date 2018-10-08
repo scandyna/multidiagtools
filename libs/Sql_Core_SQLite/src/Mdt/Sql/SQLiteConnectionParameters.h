@@ -21,15 +21,15 @@
 #ifndef MDT_SQL_SQLITE_CONNECTION_PARAMETERS_H
 #define MDT_SQL_SQLITE_CONNECTION_PARAMETERS_H
 
-#include "ConnectionParameters.h"
-#include "MdtSql_CoreExport.h"
+#include "Mdt/Sql/ConnectionParameters.h"
+#include "MdtSql_Core_SQLiteExport.h"
 #include <QString>
 
 namespace Mdt{ namespace Sql{
 
   /*! \brief Parameters for a SQLite database connection
    */
-  class MDT_SQL_CORE_EXPORT SQLiteConnectionParameters
+  class MDT_SQL_CORE_SQLITE_EXPORT SQLiteConnectionParameters
   {
    public:
 

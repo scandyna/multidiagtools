@@ -18,41 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ConnectionParametersTest.h"
-#include "Mdt/Sql/ConnectionParameters.h"
-#include <QSqlDatabase>
+#include "SQLiteConnectionParameters.h"
+#include <QLatin1String>
 
-using namespace Mdt::Sql;
+namespace Mdt{ namespace Sql{
 
-/*
- * Tests
- */
-
-void ConnectionParametersTest::constructTest()
+void SQLiteConnectionParameters::setDatabaseFile(const QString& path)
 {
-  ConnectionParameters emptyParameters;
-  QVERIFY(emptyParameters.driverName().isEmpty());
+  mFilePath = path;
 }
 
-void ConnectionParametersTest::setupQSqlDatabaseTest()
+ConnectionParameters SQLiteConnectionParameters::toConnectionParameters() const
 {
-  ConnectionParameters parameters("QSQLITE");
-  auto db = QSqlDatabase::addDatabase(parameters.driverName());
-  QCOMPARE(db.driverName(), QString("QSQLITE"));
+  ConnectionParameters parameters( QLatin1String("MDTQSQLITE") );
 
-  parameters.setDatabaseName("DbName");
-  parameters.setupDatabase(db);
-  QCOMPARE(db.databaseName(), QString("DbName"));
+  parameters.setDatabaseName(mFilePath);
+
+  return parameters;
 }
 
-/*
- * Main
- */
-
-int main(int argc, char **argv)
-{
-  Mdt::CoreApplication app(argc, argv);
-  ConnectionParametersTest test;
-
-  return QTest::qExec(&test, argc, argv);
-}
+}} // namespace Mdt{ namespace Sql{

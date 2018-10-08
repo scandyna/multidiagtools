@@ -18,22 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "SQLiteConnectionParameters.h"
+#ifndef MDT_SQL_TEST_MAIN_H
+#define MDT_SQL_TEST_MAIN_H
 
-namespace Mdt{ namespace Sql{
+#include "TestBase.h"
 
-void SQLiteConnectionParameters::setDatabaseFile(const QString& path)
+class ConnectionParametersTest : public QObject
 {
-  mFilePath = path;
-}
+ Q_OBJECT
 
-ConnectionParameters SQLiteConnectionParameters::toConnectionParameters() const
-{
-  ConnectionParameters parameters("QSQLITE");
+ private slots:
 
-  parameters.setDatabaseName(mFilePath);
+  void sqliteParametersTest();
+};
 
-  return parameters;
-}
-
-}} // namespace Mdt{ namespace Sql{
+#endif // #ifndef MDT_SQL_TEST_MAIN_H
