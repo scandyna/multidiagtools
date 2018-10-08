@@ -1,3 +1,3 @@
 
-add_subdirectory(ErrorDriverSQLite)
+add_subdirectory(SQLiteErrorDriver)
 add_subdirectory(sqldrivers)
