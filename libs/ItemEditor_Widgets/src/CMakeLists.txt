@@ -61,7 +61,7 @@ mdt_add_library(
   HEADERS_DIRECTORY .
   LINK_DEPENDENCIES Error_Core Error_Widgets FilterExpression ItemModel Qt5::Widgets
 )
-# target_compile_definitions(ItemEditor_Widgets PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
+target_compile_definitions(ItemEditor_Widgets PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 
 mdt_set_library_description(
   NAME ItemEditor

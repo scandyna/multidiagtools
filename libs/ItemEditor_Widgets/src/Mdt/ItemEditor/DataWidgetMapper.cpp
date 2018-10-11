@@ -31,6 +31,7 @@
 #include <QMetaMethod>
 #include <QMetaProperty>
 #include <QScopedValueRollback>
+#include <QLatin1String>
 
 // #include "Debug.h"
 
@@ -254,7 +255,8 @@ void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, Dat
   // Find widget's user property notify signal
   QMetaProperty userProperty = widget->metaObject()->userProperty();
   if(!userProperty.hasNotifySignal()){
-    const auto message = tr("Class %1 has no user property notify signal. Data edition started will not be detected on it.").arg(widget->metaObject()->className());
+    const auto message = tr("Class %1 has no user property notify signal. Data edition started will not be detected on it.")
+    .arg( QString::fromLatin1(widget->metaObject()->className()) );
     auto error = mdtErrorNewQ( message , Mdt::Error::Warning, this );
     error.commit();
     return;

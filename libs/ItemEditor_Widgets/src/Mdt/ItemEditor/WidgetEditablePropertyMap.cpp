@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -190,7 +190,7 @@ bool WidgetEditablePropertyMap::setWidgetEditable(QWidget*const widget, bool edi
     editable = !editable;
   }
 
-  return widget->setProperty(property.editablePropertyName(), editable);
+  return widget->setProperty(property.editablePropertyName().constData(), editable);
 }
 
 void WidgetEditablePropertyMap::setEditableProperty(const char*const className, const char*const editablePropertyName, bool reversed)

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,6 +21,7 @@
 #include "WidgetStyleSheet.h"
 #include <QStringBuilder>
 #include <QLatin1String>
+#include <QLatin1Char>
 #include <QFont>
 #include <QBrush>
 #include <QColor>
@@ -90,13 +91,13 @@ QString WidgetStyleSheet::toCssString() const
 
   css = QLatin1String("*{") % textFont;
   if(!foreground.isEmpty()){
-    if( (css.length() > 2) && !css.endsWith(';') ){
+    if( (css.length() > 2) && !css.endsWith(QLatin1Char(';')) ){
       css += QLatin1String(";");
     }
     css += foreground;
   }
   if(!background.isEmpty()){
-    if( (css.length() > 2) && !css.endsWith(';') ){
+    if( (css.length() > 2) && !css.endsWith(QLatin1Char(';')) ){
       css += QLatin1String(";");
     }
     css += background;

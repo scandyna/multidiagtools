@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -44,7 +44,7 @@ void DataWidgetMapperItemDelegate::setModelData(QWidget* editor, QAbstractItemMo
   if(propertyName.isEmpty()){
     QStyledItemDelegate::setModelData(editor, model, index);
   }else{
-    model->setData(index, convertData( editor->property(propertyName) ), Qt::EditRole);
+    model->setData(index, convertData( editor->property(propertyName.constData()) ), Qt::EditRole);
   }
 }
 
@@ -63,9 +63,9 @@ void DataWidgetMapperItemDelegate::setEditorData(QWidget* editor, const QModelIn
    * We have to provide a default value to display in this case.
    */
   if(value.isNull()){
-    value = displayValueForNullVariant( editor->property(propertyName).userType() );
+    value = displayValueForNullVariant( editor->property(propertyName.constData()).userType() );
   }
-  editor->setProperty(propertyName, value);
+  editor->setProperty(propertyName.constData(), value);
 }
 
 QVariant DataWidgetMapperItemDelegate::convertData(const QVariant & data)
