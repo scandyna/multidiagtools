@@ -46,9 +46,11 @@ void SelectStatementBenchmark::fieldIndexBenchmark()
   stm.addField(addressStreet);
   stm.addField(address, FieldName("remarks"), "AddressRemarks");
 
+  int index;
   QBENCHMARK{
-    QCOMPARE(stm.fieldIndex(addressStreet), 4);
+    index = stm.fieldIndex(addressStreet);
   }
+  QCOMPARE(index, 4);
 }
 
 /*
