@@ -25,6 +25,7 @@
 #include <QVariant>
 #include <QMetaType>
 #include <vector>
+#include <initializer_list>
 
 namespace Mdt{ namespace Container{
 
@@ -42,6 +43,13 @@ namespace Mdt{ namespace Container{
      */
     explicit VariantRecord(int count)
      : mRecord(count)
+    {
+    }
+
+    /*! \brief Construct a record from \a list
+     */
+    explicit VariantRecord(std::initializer_list<QVariant> list)
+     : mRecord(list)
     {
     }
 

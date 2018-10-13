@@ -21,13 +21,24 @@
 #include "VariantRecordTest.h"
 #include "Mdt/Container/VariantRecord.h"
 
+using Mdt::Container::VariantRecord;
 /*
  * Tests
  */
 
-void VariantRecordTest::noTest()
+void VariantRecordTest::constructTest()
 {
-  QFAIL("No test made");
+  VariantRecord record0;
+  QCOMPARE(record0.columnCount(), 0);
+
+  VariantRecord record1(1);
+  QCOMPARE(record1.columnCount(), 1);
+  QVERIFY(record1.value(0).isNull());
+
+  VariantRecord record2{1, "A"};
+  QCOMPARE(record2.columnCount(), 2);
+  QCOMPARE(record2.value(0), QVariant(1));
+  QCOMPARE(record2.value(1), QVariant("A"));
 }
 
 /*

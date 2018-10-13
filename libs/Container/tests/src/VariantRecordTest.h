@@ -29,7 +29,7 @@ class VariantRecordTest : public QObject
 
  private slots:
 
-  void noTest();
+  void constructTest();
 };
 
 #endif // #ifndef MDT_TEST_MAIN_H
