@@ -150,6 +150,30 @@ void SelectStatementTest::addFieldTest()
   QVERIFY(getFieldAliasOrName(fieldList.at(0)).isEmpty());
 }
 
+void SelectStatementTest::fieldIndexTest()
+{
+  SelectEntity person( EntityName("Person") );
+  SelectEntity address( EntityName("Address"), "ADR");
+
+  SelectField personId( person, FieldName("id") );
+  SelectField personName( person, FieldName("name") );
+  SelectField addressId( address, FieldName("id") );
+  SelectField addressStreet( address, FieldName("street"), "AddressStreet" );
+
+  SelectStatement stm;
+  stm.setEntity(person);
+  stm.addField(personName);
+  stm.addField(person, FieldName("remarks"), "PersonRemarks");
+  stm.addField("notices");
+  stm.addField(FieldName("age"), "A");
+  stm.addField(addressStreet);
+  stm.addField(address, FieldName("remarks"), "AddressRemarks");
+  QCOMPARE(stm.fieldIndex(personId), -1);
+  QCOMPARE(stm.fieldIndex(personName), 0);
+  QCOMPARE(stm.fieldIndex( SelectField(FieldName("PersonRemarks")) ), -1);
+  QCOMPARE(stm.fieldIndex( SelectField(person, FieldName("remarks")) ), 1);
+}
+
 void SelectStatementTest::joinEntityTest()
 {
   SelectEntity person( EntityName("Person") );

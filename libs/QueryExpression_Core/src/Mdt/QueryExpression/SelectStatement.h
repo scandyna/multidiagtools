@@ -185,6 +185,15 @@ namespace Mdt{ namespace QueryExpression{
       return mFieldList.fieldCount();
     }
 
+    /*! \brief Get the index of a field
+     *
+     * If the requested field was found, -1 is returned.
+     */
+    int fieldIndex(const SelectField & field) const
+    {
+      return mFieldList.fieldIndex(field);
+    }
+
     /*! \brief Access the list of fields in this statement
      */
     const SelectFieldList & fieldList() const

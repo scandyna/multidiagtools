@@ -65,6 +65,12 @@ namespace Mdt{ namespace QueryExpression{
      */
     void addField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString());
 
+    /*! \brief Get the index of a field
+     *
+     * If the requested field was found, -1 is returned.
+     */
+    int fieldIndex(const SelectField & field) const;
+
     /*! \brief Get count of fields in this list
      */
     int fieldCount() const noexcept

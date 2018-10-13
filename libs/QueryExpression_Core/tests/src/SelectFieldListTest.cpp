@@ -75,6 +75,21 @@ void SelectFieldListTest::addFieldTest()
   QVERIFY(list.isEmpty());
 }
 
+void SelectFieldListTest::fieldIndexTest()
+{
+  SelectEntity person(EntityName("Person"), "P");
+  SelectEntity address(EntityName("Address"), "ADR");
+
+  SelectFieldList list;
+  list.addField(FieldName("id"));
+  list.addField(person, FieldName("id"));
+  list.addField(address, FieldName("id"));
+  QCOMPARE(list.fieldIndex( SelectField(FieldName("None")) ), -1);
+  QCOMPARE(list.fieldIndex( SelectField(FieldName("id")) ), 0);
+  QCOMPARE(list.fieldIndex( SelectField(person, FieldName("id")) ), 1);
+  QCOMPARE(list.fieldIndex( SelectField(address, FieldName("id")) ), 2);
+}
+
 /*
  * Main
  */

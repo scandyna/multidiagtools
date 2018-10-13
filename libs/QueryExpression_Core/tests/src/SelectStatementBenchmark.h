@@ -18,19 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef TEST_MAIN_H
-#define TEST_MAIN_H
+#ifndef SELECT_STATEMENT_BENCHMARK_H
+#define SELECT_STATEMENT_BENCHMARK_H
 
 #include "TestBase.h"
 
-class SelectFieldListTest : public QObject
+class SelectStatementBenchmark : public QObject
 {
  Q_OBJECT
 
  private slots:
 
-  void addFieldTest();
-  void fieldIndexTest();
+  void fieldIndexBenchmark();
 };
 
-#endif // #ifndef TEST_MAIN_H
+#endif // #ifndef SELECT_STATEMENT_BENCHMARK_H

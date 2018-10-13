@@ -31,6 +31,7 @@ class SelectStatementTest : public QObject
 
   void setEntityTest();
   void addFieldTest();
+  void fieldIndexTest();
   void joinEntityTest();
 };
 

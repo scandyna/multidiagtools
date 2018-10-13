@@ -19,13 +19,30 @@
  **
  ****************************************************************************/
 #include "SelectFieldList.h"
+#include "EntityAndField.h"
+#include <QString>
+#include <QStringBuilder>
+#include <QLatin1Char>
+#include <boost/variant.hpp>
+#include <algorithm>
+#include <iterator>
 
 namespace Mdt{ namespace QueryExpression{
 
-// void SelectFieldList::addField(const SelectField& field)
-// {
-//   mList.push_back(field);
-// }
+class ExtractEntityAndFieldVisitor : public boost::static_visitor<QString>
+{
+ public:
+
+  QString operator()(const SelectAllField &) const
+  {
+    return QString();
+  }
+
+  QString operator()(const EntityAndField & field) const
+  {
+    return field.entityName() % QLatin1Char('.') % field.fieldName();
+  }
+};
 
 void SelectFieldList::addField(const SelectAllField& field)
 {
@@ -50,6 +67,23 @@ void SelectFieldList::addField(const SelectEntity& entity, const FieldName& fiel
   Q_ASSERT(!fieldName.isNull());
 
   mList.emplace_back(entity, fieldName, fieldAlias);
+}
+
+int SelectFieldList::fieldIndex(const SelectField & field) const
+{
+  const ExtractEntityAndFieldVisitor visitor;
+  const QString entityAndField = boost::apply_visitor(visitor, field.internalVariant().internalVariant());
+
+  const auto pred = [&entityAndField, &visitor](const SelectField & candidateField){
+    const QString candidateEntityAndField = boost::apply_visitor(visitor, candidateField.internalVariant().internalVariant());
+    return candidateEntityAndField == entityAndField;
+  };
+  const auto it = std::find_if( mList.cbegin(), mList.cend(), pred );
+  if(it == mList.cend()){
+    return -1;
+  }
+
+  return std::distance(mList.cbegin(), it);
 }
 
 void SelectFieldList::clear()
