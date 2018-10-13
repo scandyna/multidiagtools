@@ -369,6 +369,27 @@ void EntitySelectStatementTest::addFieldMultiEntityTest()
   QCOMPARE(getFieldAliasOrName(fieldList.at(3)), QString("AddressRemarks"));
 }
 
+void EntitySelectStatementTest::fieldIndexTest()
+{
+  QueryEntity<PersonEntity> person;
+  QueryEntity<AddressEntity> address("ADR");
+
+  const auto personId = person.makeSelectField( person.def().id() );
+  const auto personName = person.makeSelectField( person.def().firstName() );
+  const auto addressPersonId = address.makeSelectField( address.def().personId() );
+  const auto addressStreet = address.makeSelectField( address.def().street(), "AddressStreet" );
+
+  EntitySelectStatement<PersonEntity> stm;
+  stm.addField( personName );
+  stm.addField( person, person.def().remarks() );
+  stm.addField( addressStreet );
+  stm.addField( address, address.def().remarks(), "AddressRemarks" );
+  QCOMPARE(stm.fieldIndex( stm.def().firstName() ), 0);
+  QCOMPARE(stm.fieldIndex( stm.def().remarks() ), 1);
+  QCOMPARE(stm.fieldIndex( address, address.def().street() ), 2);
+  QCOMPARE(stm.fieldIndex( addressStreet ), 2);
+}
+
 void EntitySelectStatementTest::buildJoinConstraintExpressionTreeTest()
 {
   ExpressionTree tree;
@@ -442,7 +463,7 @@ void EntitySelectStatementTest::buildJoinConstraintExpressionTest()
 
 void EntitySelectStatementTest::joinEntityByRelationTest()
 {
-  using PersonAddressRelation = Relation<PersonEntity, AddressEntity, AddressDef::personIdField>;
+  using PersonAddressRelation = Mdt::Entity::Relation<PersonEntity, AddressEntity, AddressDef::personIdField>;
 
   QString expectedJoinConstraint;
 

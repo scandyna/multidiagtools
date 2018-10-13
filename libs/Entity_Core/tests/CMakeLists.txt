@@ -7,10 +7,16 @@ find_package(Qt5 COMPONENTS Test)
 
 set(SOURCE_FILES
   src/TestBase.cpp
+  src/PersonCache.cpp
+  src/AsyncPersonCache.cpp
 )
 
 add_library(mdtEntity_CoreTest SHARED ${SOURCE_FILES})
 target_link_libraries(mdtEntity_CoreTest Entity_Core Application_Core TestLib_Core TestLib_Container Qt5::Test)
+
+# Widgets: remove once AsyncCacheTest sandbox removed
+find_package(Qt5 COMPONENTS Widgets)
+target_link_libraries(mdtEntity_CoreTest Qt5::Widgets)
 
 #=============== Helper functions ===========
 
@@ -30,6 +36,7 @@ addEntity_CoreTest("FieldAttributesTest")
 addEntity_CoreTest("FieldDefTest")
 addEntity_CoreTest("TypeTraitsTest")
 addEntity_CoreTest("DefTest")
+addEntity_CoreTest("ValueTest")
 addEntity_CoreTest("ValueAtTest")
 addEntity_CoreTest("FieldAtTest")
 addEntity_CoreTest("UniqueIdTest")
@@ -42,10 +49,12 @@ addEntity_CoreTest("ItemModelPrimaryKeyTest")
 addEntity_CoreTest("ForeignKeyTest")
 addEntity_CoreTest("ItemModelForeignKeyTest")
 addEntity_CoreTest("RelationTest")
+addEntity_CoreTest("UniqueConstraintTest")
 addEntity_CoreTest("ItemModelRelationTest")
 addEntity_CoreTest("TableModelRecordAdapterTest")
 addEntity_CoreTest("TableModelTest")
 addEntity_CoreTest("AbstractRepositoryTest")
+addEntity_CoreTest("MemoryEntityRepositoryTest")
 addEntity_CoreTest("AbstractCachedRepositoryTest")
 addEntity_CoreTest("AbstractCachedEntityRepositoryTest")
 addEntity_CoreTest("RepositoryHandleTest")
@@ -54,7 +63,11 @@ addEntity_CoreTest("StlTableProxyIteratorTest")
 addEntity_CoreTest("CachedRepositoryTableModelTest")
 addEntity_CoreTest("CachedEntityRepositoryTableModelTest")
 # addEntity_CoreTest("StlTableProxyTest")
-addEntity_CoreTest("EntitySelectQueryTest")
+addEntity_CoreTest("EntitySelectStatementTest")
+addEntity_CoreTest("EntitySelectStatementBenchmark")
+addEntity_CoreTest("CacheTest")
+addEntity_CoreTest("AsyncCacheTest")
+addEntity_CoreTest("CacheTableModelTest")
 
 # Clang warns about explicit move that prevents copy elision.
 # For this test case, we need explicit move to check our code

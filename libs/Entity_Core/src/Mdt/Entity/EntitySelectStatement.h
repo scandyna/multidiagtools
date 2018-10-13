@@ -123,6 +123,23 @@ namespace Mdt{ namespace Entity{
    * stm.setFilter( (personName == "A") || (addressStreet == "Street name B") );
    * \endcode
    *
+   * The index of a field can also be queried:
+   * \code
+   * stm.fieldIndex( stm.def().id() );
+   * \endcode
+   * The above expression will return the id field of %PersonEntity.
+   *
+   * To get the field index of a foreign entity of the statement,
+   *  the earlier defined address query entity can be used:
+   * \code
+   * stm.fieldIndex( address, address.def().street() );
+   * \endcode
+   *
+   * The above predefined fields can also be used:
+   * \code
+   * stm.fieldIndex(addressStreet);
+   * \endcode
+   *
    * If a select statement is used at many places in the application,
    *  a query object could be created:
    * \code
@@ -226,6 +243,41 @@ namespace Mdt{ namespace Entity{
       static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
 
       ParentClass::addField( queryEntity.toSelectEntity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()), fieldAlias );
+    }
+
+    /*! \brief Get the index of a field
+     *
+     * If the requested field was found, -1 is returned.
+     */
+    int fieldIndex(const Mdt::QueryExpression::SelectField & field) const
+    {
+      return ParentClass::fieldIndex(field);
+    }
+
+    /*! \brief Get the index of a field
+     *
+     * Will return the index of the field that
+     *  belongs to the entity of this statement.
+     */
+    template<typename FEntity, typename FieldDef>
+    int fieldIndex(const QueryEntity<FEntity> & queryEntity, const FieldDef & fieldDef) const noexcept
+    {
+      static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
+
+      return fieldIndex( queryEntity.makeSelectField(fieldDef) );
+    }
+
+    /*! \brief Get the index of a field
+     *
+     * Will return the index of the field that
+     *  belongs to the entity of this statement.
+     */
+    template<typename FieldDef>
+    int fieldIndex(const FieldDef & fieldDef) const noexcept
+    {
+      static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
+
+      return fieldIndex( QueryEntity<Entity>(), fieldDef );
     }
 
     /*! \brief Join a entity to this statement

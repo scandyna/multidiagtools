@@ -18,30 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef ENTITY_SELECT_STATEMENT_TEST_H
-#define ENTITY_SELECT_STATEMENT_TEST_H
+#ifndef ENTITY_SELECT_STATEMENT_BENCHMARK_H
+#define ENTITY_SELECT_STATEMENT_BENCHMARK_H
 
 #include "TestBase.h"
 
-class EntitySelectStatementTest : public QObject
+class EntitySelectStatementBenchmark : public QObject
 {
  Q_OBJECT
 
- private:
-
-  void selectOppositeTypeTest();
-
  private slots:
 
-  void queryInstanceTest();
-  void addFieldTest();
-  void queryEntityTest();
-  void addFieldMultiEntityTest();
-  void fieldIndexTest();
-
-  void buildJoinConstraintExpressionTreeTest();
-  void buildJoinConstraintExpressionTest();
-  void joinEntityByRelationTest();
+  void fieldIndexBenchmark();
 };
 
-#endif // #ifndef ENTITY_SELECT_STATEMENT_TEST_H
+#endif // #ifndef ENTITY_SELECT_STATEMENT_BENCHMARK_H
