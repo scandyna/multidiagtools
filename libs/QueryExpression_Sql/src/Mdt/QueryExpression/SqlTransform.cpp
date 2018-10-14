@@ -88,6 +88,12 @@ class SelectFieldDeclarationSqlTransformVisitor : public boost::static_visitor<Q
     Q_ASSERT(mDatabase.isValid());
   }
 
+  QString operator()(const NullSelectField &) const
+  {
+    Q_ASSERT_X(false, "SqlTransform", "A null SelectField is not allowed");
+    return QString();
+  }
+
   QString operator()(const SelectAllField & field) const
   {
     if(field.hasEntity()){

@@ -36,6 +36,11 @@ namespace AbstractExpressionTreeVisitorImpl{
     {
     }
 
+    void operator()(const NullSelectField &)
+    {
+      Q_ASSERT_X(false, "processInorder", "A null SelectField is not allowed in a condition expression");
+    }
+
     void operator()(const SelectAllField &)
     {
       Q_ASSERT_X(false, "processInorder", "SelectAllField is not allowed in a condition expression");
@@ -125,7 +130,7 @@ namespace AbstractExpressionTreeVisitorImpl{
     void operator()(const SelectFieldVariant & field)
     {
       CallProcessPreorderForSelectFieldVariant visitor(mTreeVisitor);
-      boost::apply_visitor(visitor, field);
+      boost::apply_visitor(visitor, field.internalVariant());
     }
 
     void operator()(const QVariant & value)
@@ -167,7 +172,7 @@ namespace AbstractExpressionTreeVisitorImpl{
     void operator()(const SelectFieldVariant & field)
     {
       CallProcessInorderForSelectFieldVariant visitor(mTreeVisitor);
-      boost::apply_visitor(visitor, field);
+      boost::apply_visitor(visitor, field.internalVariant());
     }
 
     void operator()(const QVariant & value)
@@ -209,7 +214,7 @@ namespace AbstractExpressionTreeVisitorImpl{
     void operator()(const SelectFieldVariant & field)
     {
       CallProcessPostorderForSelectFieldVariant visitor(mTreeVisitor);
-      boost::apply_visitor(visitor, field);
+      boost::apply_visitor(visitor, field.internalVariant());
     }
 
     void operator()(const QVariant & value)

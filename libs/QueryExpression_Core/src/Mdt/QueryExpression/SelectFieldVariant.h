@@ -28,6 +28,12 @@
 
 namespace Mdt{ namespace QueryExpression{
 
+  /*! \internal Null field tag for SelectFieldVariant
+   */
+  struct NullSelectField
+  {
+  };
+
   /*! \internal Data variant for SelectField
    *
    * \note First version was a simple alias:
@@ -42,7 +48,7 @@ namespace Mdt{ namespace QueryExpression{
    */
   class SelectFieldVariant
   {
-    using Variant = boost::variant<SelectAllField, EntityAndField>;
+    using Variant = boost::variant<NullSelectField, SelectAllField, EntityAndField>;
 
    public:
 
@@ -72,6 +78,11 @@ namespace Mdt{ namespace QueryExpression{
     SelectFieldVariant(EntityAndField && field)
      : mVariant(field)
     {
+    }
+
+    bool isNull() const
+    {
+      return (boost::get<NullSelectField>(&mVariant) != nullptr);
     }
 
     const Variant & internalVariant() const

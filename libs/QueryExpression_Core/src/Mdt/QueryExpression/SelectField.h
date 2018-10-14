@@ -42,6 +42,9 @@ namespace Mdt{ namespace QueryExpression{
   };
 
   /*! \brief Represents a field and the optional field alias and maybe a SelectEntity
+   *
+   * \todo Should make default constructible, so we can make select statement classs in a intuitive way.
+   *       Will also require to have some NullField flag in the variant
    */
   struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectField : boost::proto::extends<
                                                         boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<SelectFieldVariant> >,
@@ -61,7 +64,9 @@ namespace Mdt{ namespace QueryExpression{
     using reference = value_type &;
     using const_reference = const value_type &;
 
-//     SelectField() = default;
+    /*! \brief Construct a null select field
+     */
+    SelectField() = default;
 
     /*! \brief Construct a select all field
      */
@@ -95,6 +100,13 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Move assign \a other to this select field
      */
     SelectField & operator=(SelectField && other) = default;
+
+    /*! \brief Check if this select field is null
+     */
+    bool isNull() const
+    {
+      return internalVariant().isNull();
+    }
 
     /*! \internal Access internal variant of this select field
      */

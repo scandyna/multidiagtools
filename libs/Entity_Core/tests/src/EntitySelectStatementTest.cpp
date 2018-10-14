@@ -107,6 +107,10 @@ MDT_ENTITY_DEF(
 
 struct GetEntityAliasOrNameVisitor : public boost::static_visitor<>
 {
+  void operator()(const Mdt::QueryExpression::NullSelectField &)
+  {
+  }
+
   void operator()(const Mdt::QueryExpression::SelectAllField & field)
   {
     aliasOrName = field.entityAliasOrName();
@@ -133,6 +137,10 @@ QString getEntityAliasOrName(const Mdt::QueryExpression::SelectField & field)
 
 struct GetFieldAliasOrNameVisitor : public boost::static_visitor<>
 {
+  void operator()(const Mdt::QueryExpression::NullSelectField &)
+  {
+  }
+
   void operator()(const Mdt::QueryExpression::SelectAllField &)
   {
   }

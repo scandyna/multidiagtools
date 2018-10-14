@@ -68,6 +68,8 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Get the index of a field
      *
      * If the requested field was found, -1 is returned.
+     *
+     * \pre \a field must not be null
      */
     int fieldIndex(const SelectField & field) const;
 

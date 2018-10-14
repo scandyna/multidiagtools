@@ -30,6 +30,10 @@ using namespace Mdt::QueryExpression;
 
 struct GetEntityAliasOrNameVisitor : public boost::static_visitor<>
 {
+  void operator()(const NullSelectField &)
+  {
+  }
+
   void operator()(const SelectAllField & field)
   {
     aliasOrName = field.entityAliasOrName();
@@ -56,6 +60,10 @@ QString getEntityAliasOrName(const SelectField & field)
 
 struct GetFieldAliasOrNameVisitor : public boost::static_visitor<>
 {
+  void operator()(const NullSelectField & )
+  {
+  }
+
   void operator()(const SelectAllField &)
   {
   }

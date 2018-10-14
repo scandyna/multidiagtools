@@ -33,6 +33,11 @@ class ExtractEntityAndFieldVisitor : public boost::static_visitor<QString>
 {
  public:
 
+  QString operator()(const NullSelectField &) const
+  {
+    return QString();
+  }
+
   QString operator()(const SelectAllField &) const
   {
     return QString();
@@ -71,6 +76,8 @@ void SelectFieldList::addField(const SelectEntity& entity, const FieldName& fiel
 
 int SelectFieldList::fieldIndex(const SelectField & field) const
 {
+  Q_ASSERT(!field.isNull());
+
   const ExtractEntityAndFieldVisitor visitor;
   const QString entityAndField = boost::apply_visitor(visitor, field.internalVariant().internalVariant());
 

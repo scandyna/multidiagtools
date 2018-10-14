@@ -131,19 +131,27 @@ void SelectFieldTest::entityAndFieldTest()
 
 void SelectFieldTest::constructGetTest()
 {
+  SelectField nullSelectField;
+  QVERIFY( nullSelectField.isNull() );
+  QVERIFY( boost::get<SelectAllField>(&nullSelectField.internalVariant().internalVariant()) == nullptr );
+  QVERIFY( boost::get<EntityAndField>(&nullSelectField.internalVariant().internalVariant()) == nullptr );
+
   SelectField selectAll1(SelectAllField{});
+  QVERIFY( !selectAll1.isNull() );
   QVERIFY( boost::get<SelectAllField>(&selectAll1.internalVariant().internalVariant()) != nullptr );
   QVERIFY( boost::get<EntityAndField>(&selectAll1.internalVariant().internalVariant()) == nullptr );
   const auto selectAllField1 = boost::get<SelectAllField>(selectAll1.internalVariant().internalVariant());
   QVERIFY(selectAllField1.entityAliasOrName().isEmpty());
 
   SelectField selectAll2(SelectAllField(SelectEntity(EntityName("Person"))));
+  QVERIFY( !selectAll2.isNull() );
   QVERIFY( boost::get<SelectAllField>(&selectAll2.internalVariant().internalVariant()) != nullptr );
   QVERIFY( boost::get<EntityAndField>(&selectAll2.internalVariant().internalVariant()) == nullptr );
   const auto selectAllField2 = boost::get<SelectAllField>(selectAll2.internalVariant().internalVariant());
   QCOMPARE(selectAllField2.entityAliasOrName(), QString("Person"));
 
   SelectField name( FieldName("name") );
+  QVERIFY( !name.isNull() );
   QVERIFY( boost::get<SelectAllField>(&name.internalVariant().internalVariant()) == nullptr );
   QVERIFY( boost::get<EntityAndField>(&name.internalVariant().internalVariant()) != nullptr );
   const auto nameEaF = boost::get<EntityAndField>(name.internalVariant().internalVariant());

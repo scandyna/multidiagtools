@@ -12,7 +12,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtQueryExpression_SqlTest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtQueryExpression_SqlTest QueryExpression_Sql Application_Core Entity_Core Entity_Sql TestLib_Core Qt5::Test)
+target_link_libraries(mdtQueryExpression_SqlTest QueryExpression_Sql Sql_Core_SQLite Application_Core Entity_Core Entity_Sql TestLib_Core Qt5::Test)
 
 #=============== Helper functions ===========
 
