@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -60,8 +60,6 @@ class DataWidgetMapperTest : public TestBase
   void setDataFromModelQLineEditTest();
   void submitDataQLineEditTest();
   void revertDataQLineEditTest();
-
-  void setCurrentRowBenchmark();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H

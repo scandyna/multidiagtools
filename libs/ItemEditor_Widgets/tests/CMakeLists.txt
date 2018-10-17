@@ -18,7 +18,7 @@ set(SOURCES_FILES
 )
 
 add_library(mdtitemeditortest SHARED ${SOURCES_FILES})
-target_link_libraries(mdtitemeditortest ItemEditor_Widgets Application_Widgets Qt5::Test)
+target_link_libraries(mdtitemeditortest ItemEditor_Widgets Application_Core Application_Widgets Qt5::Test)
 
 #=============== Helper functions ===========
 
@@ -46,6 +46,7 @@ addItemEditorWidgetsTest("WidgetEditablePropertyMapTest")
 addItemEditorWidgetsTest("WidgetStyleSheetTest")
 addItemEditorWidgetsTest("DataWidgetMapperItemDelegateTest")
 addItemEditorWidgetsTest("DataWidgetMapperTest")
+addItemEditorWidgetsTest("DataWidgetMapperBenchmark")
 # addItemEditorTest("ControllerTest")
 # addItemEditorTest("ItemViewPrivateContainerTest")
 # addItemEditorTest("ForeignKeyColumnVisibilityMapTest")

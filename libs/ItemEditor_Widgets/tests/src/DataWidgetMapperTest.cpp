@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -1756,24 +1756,6 @@ void DataWidgetMapperTest::revertDataQLineEditTest()
   index = model.index(0, 1);
   QVERIFY(index.isValid());
   QCOMPARE(index.data().toString(), originalText1);
-}
-
-void DataWidgetMapperTest::setCurrentRowBenchmark()
-{
-  DataWidgetMapper mapper;
-  VariantTableModel model;
-  QLineEdit editor0;
-
-  model.populate(10, 1);
-  mapper.setModel(&model);
-  mapper.addMapping(&editor0, 0);
-  editor0.show();
-  QBENCHMARK{
-    mapper.setCurrentRow(0);
-    QCOMPARE(mapper.currentRow(), 0);
-    mapper.setCurrentRow(1);
-    QCOMPARE(mapper.currentRow(), 1);
-  }
 }
 
 /*
