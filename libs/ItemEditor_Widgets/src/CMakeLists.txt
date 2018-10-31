@@ -27,8 +27,10 @@ set(SOURCE_FILES
 #   Mdt/ItemEditor/TableViewControllerStatePermission.cpp
 #   Mdt/ItemEditor/TableViewControllerStateTable.cpp
 #   Mdt/ItemEditor/TableViewController.cpp
-  Mdt/ItemEditor/WidgetEditionStartedSignal.cpp
+
+
   Mdt/ItemEditor/WidgetEditableProperty.cpp
+
   Mdt/ItemEditor/MappedWidget.cpp
   Mdt/ItemEditor/MappedWidgetGeneric.cpp
   Mdt/ItemEditor/MappedWidgetQLineEdit.cpp

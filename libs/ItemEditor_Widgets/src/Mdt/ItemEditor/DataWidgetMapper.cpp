@@ -503,7 +503,7 @@ void DataWidgetMapper::updateMappedWidgetForAppearance(QWidget*const widget, con
   WidgetStyleSheet ws;
   QVariant var;
 
-  qDebug() << "DWM: update for appearance: ";
+//   qDebug() << "DWM: update for appearance: ";
   // Text alignment
   var = mModel->data(index, Qt::TextAlignmentRole);
   if(variantIsOfType(var, QMetaType::Int)){

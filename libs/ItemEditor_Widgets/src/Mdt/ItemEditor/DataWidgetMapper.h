@@ -23,7 +23,6 @@
 
 #include "MappedWidgetList.h"
 #include "MappedWidget.h"
-// #include "WidgetEditionStartedSignal.h"
 // #include "WidgetEditablePropertyMap.h"
 #include "MdtItemEditor_WidgetsExport.h"
 // #include <QAbstractItemDelegate>
