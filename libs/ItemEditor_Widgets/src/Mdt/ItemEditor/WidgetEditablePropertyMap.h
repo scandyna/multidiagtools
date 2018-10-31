@@ -21,6 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_WIDGET_EDITABLE_PROPERTY_MAP_H
 #define MDT_ITEM_EDITOR_WIDGET_EDITABLE_PROPERTY_MAP_H
 
+#include "WidgetEditableProperty.h"
 #include <QWidget>
 #include <QByteArray>
 #include <QMetaType>
@@ -29,54 +30,6 @@
 namespace Mdt{ namespace ItemEditor{
 
   class WidgetEditablePropertyMapImpl;
-
-  /*! \brief Unified editable property of a widget
-   */
-  class WidgetEditableProperty
-  {
-   public:
-
-    /*! \brief Construct a null editable property
-     */
-    WidgetEditableProperty() = default;
-
-    /*! \brief Construct a widget editable property
-     *
-     * If the widget is enabled while its property name is false,
-     *  set \a reversed to true.
-     *  This is for example the case for QLineEdit,
-     *  which has readOnly property (which must be false so that editing is possible).
-     *
-     * \pre \a editablePropertyName must be a non empty null terminated string
-     */
-    WidgetEditableProperty(const char * const editablePropertyName, bool reversed);
-
-    /*! \brief Get editable property name
-     */
-    QByteArray editablePropertyName() const
-    {
-      return mPropertyName;
-    }
-
-    /*! \brief Check if editable property is reversed
-     */
-    bool isReversed() const
-    {
-      return mIsReversed;
-    }
-
-    /*! \brief Check if this editable property is null
-     */
-    bool isNull() const
-    {
-      return mPropertyName.isEmpty();
-    }
-
-   private:
-
-    QByteArray mPropertyName;
-    bool mIsReversed = false;
-  };
 
   /*! \brief Provides unified access to editable property of widgets
    */

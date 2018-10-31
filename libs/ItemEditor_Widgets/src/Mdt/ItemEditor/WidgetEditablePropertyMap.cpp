@@ -136,17 +136,6 @@ WidgetEditablePropertyMapImpl::iterator WidgetEditablePropertyMapImpl::iteratorF
 }
 
 /*
- * WidgetEditableProperty
- */
-
-WidgetEditableProperty::WidgetEditableProperty(const char*const editablePropertyName, bool reversed)
- : mPropertyName(editablePropertyName),
-   mIsReversed(reversed)
-{
-  Q_ASSERT(!mPropertyName.isEmpty());
-}
-
-/*
  * WidgetEditablePropertyMap
  */
 
