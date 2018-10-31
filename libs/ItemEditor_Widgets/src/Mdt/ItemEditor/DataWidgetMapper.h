@@ -23,9 +23,7 @@
 
 #include "MappedWidgetList.h"
 #include "MappedWidget.h"
-// #include "WidgetEditablePropertyMap.h"
 #include "MdtItemEditor_WidgetsExport.h"
-// #include <QAbstractItemDelegate>
 #include <QObject>
 #include <QPointer>
 #include <QMetaType>
@@ -106,18 +104,6 @@ namespace Mdt{ namespace ItemEditor{
      * \sa setModel()
      */
     QAbstractItemModel *model() const;
-
-//     /*! \brief Set item delegate
-//      *
-//      * \sa itemDelegate()
-//      */
-//     void setItemDelegate(QAbstractItemDelegate *delegate);
-
-//     /*! \brief Get item delegate
-//      *
-//      * \sa setItemDelegate()
-//      */
-//     QAbstractItemDelegate *itemDelegate() const;
 
     /*! \brief Adds a mapping between a widget and a column from the model
      *
@@ -238,31 +224,14 @@ namespace Mdt{ namespace ItemEditor{
     };
 
     void removeMappingForColumn(int column);
-//     void unmapWidget(QWidget *widget);
     void unmapWidget(MappedWidget * const mappedWidget);
-
-    /*! \brief Connect widget's user property notify signal to this onDataEditionStarted() slot
-     */
-//     void connectUserPropertyNotifySignal(QWidget * const widget, ConnectAction ca);
-
-//     QMetaMethod getWidgetEditionStartedMethod(const QWidget * const widget);
-//     QMetaMethod getOnDataEditionStartedMethod();
-
-//     void connectWidgetEditionStartedSignal(const QWidget * const widget);
-//     void disconnectWidgetEditionStartedSignal(const QWidget * const widget);
 
     /*! \brief Update editor
      */
-//     void updateMappedWidget(QWidget * const widget, int column);
     void updateMappedWidget(MappedWidget * const mappedWidget, int column);
 
-//     void updateMappedWidgetFromModelFlags(QWidget * const widget, int column);
     void updateMappedWidgetFromModelFlags(MappedWidget * const mappedWidget, int column);
-    
-//     void updateMappedWidgetForItemFlags(QWidget * const widget, Qt::ItemFlags flags);
     void updateMappedWidgetForItemFlags(MappedWidget * const mappedWidget, Qt::ItemFlags flags);
-    
-    
     void updateMappedWidgetForAppearance(QWidget * const widget, const QModelIndex & index);
 
     /** \todo Ideas
@@ -281,7 +250,6 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Commit widget's data to model
      */
     bool commitData(MappedWidget * const mappedWidget, int column);
-//     bool commitData(QWidget * const widget, int column);
 
     /*! \brief Commit data of all mapped widgets to model
      */
@@ -294,10 +262,7 @@ namespace Mdt{ namespace ItemEditor{
     bool mEditingState;
     bool mSubmittingFromMapper = false;
     QPointer<QAbstractItemModel> mModel;
-//     QPointer<QAbstractItemDelegate> mDelegate;
     MappedWidgetList mMappedWidgetList;
-//     WidgetEditionStartedSignal mWidgetEditionStartedSignal;
-//     WidgetEditablePropertyMap mEditablePropertyMap;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
