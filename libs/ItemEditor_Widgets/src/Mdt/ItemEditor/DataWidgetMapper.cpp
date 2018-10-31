@@ -19,11 +19,12 @@
  **
  ****************************************************************************/
 #include "DataWidgetMapper.h"
+#include "MappedWidget.h"
 #include "WidgetStyleSheet.h"
 #include "DataWidgetMapperItemDelegate.h"
 #include "Mdt/ItemModel/RowRange.h"
 #include "Mdt/ItemModel/ColumnRange.h"
-#include "Mdt/Error.h"
+// #include "Mdt/Error.h"
 #include <QAbstractItemModel>
 #include <QWidget>
 #include <QByteArray>
@@ -32,6 +33,7 @@
 #include <QMetaProperty>
 #include <QScopedValueRollback>
 #include <QLatin1String>
+#include <QDebug>
 
 // #include "Debug.h"
 
@@ -45,7 +47,8 @@ DataWidgetMapper::DataWidgetMapper(QObject* parent)
    mUpdatingMappedWidget(false),
    mEditingState(false)
 {
-  setItemDelegate(new DataWidgetMapperItemDelegate(this));
+//   setItemDelegate(new DataWidgetMapperItemDelegate(this));
+//   connect(&mWidgetEditionStartedSignal, &WidgetEditionStartedSignal::editionStarted, this, &DataWidgetMapper::onDataEditionStarted);
 }
 
 void DataWidgetMapper::setModel(QAbstractItemModel* model)
@@ -70,23 +73,23 @@ QAbstractItemModel* DataWidgetMapper::model() const
   return mModel;
 }
 
-void DataWidgetMapper::setItemDelegate(QAbstractItemDelegate* delegate)
-{
-  Q_ASSERT(delegate != nullptr);
+// void DataWidgetMapper::setItemDelegate(QAbstractItemDelegate* delegate)
+// {
+//   Q_ASSERT(delegate != nullptr);
+// 
+// //   if(!pvDelegate.isNull()){
+// //     disconnect(pvDelegate, &QAbstractItemDelegate::commitData, this, &DataWidgetMapper::onEditorCommitData);
+// //     disconnect(pvDelegate, &QAbstractItemDelegate::closeEditor, this, &DataWidgetMapper::onCloseEditor);
+// //   }
+//   mDelegate = delegate;
+// //   connect(pvDelegate, &QAbstractItemDelegate::commitData, this, &DataWidgetMapper::onEditorCommitData);
+// //   connect(pvDelegate, &QAbstractItemDelegate::closeEditor, this, &DataWidgetMapper::onCloseEditor);
+// }
 
-//   if(!pvDelegate.isNull()){
-//     disconnect(pvDelegate, &QAbstractItemDelegate::commitData, this, &DataWidgetMapper::onEditorCommitData);
-//     disconnect(pvDelegate, &QAbstractItemDelegate::closeEditor, this, &DataWidgetMapper::onCloseEditor);
-//   }
-  mDelegate = delegate;
-//   connect(pvDelegate, &QAbstractItemDelegate::commitData, this, &DataWidgetMapper::onEditorCommitData);
-//   connect(pvDelegate, &QAbstractItemDelegate::closeEditor, this, &DataWidgetMapper::onCloseEditor);
-}
-
-QAbstractItemDelegate* DataWidgetMapper::itemDelegate() const
-{
-  return mDelegate;
-}
+// QAbstractItemDelegate* DataWidgetMapper::itemDelegate() const
+// {
+//   return mDelegate;
+// }
 
 void DataWidgetMapper::addMapping(QWidget* widget, int column)
 {
@@ -96,10 +99,15 @@ void DataWidgetMapper::addMapping(QWidget* widget, int column)
 
   removeMapping(widget);
   removeMappingForColumn(column);
-  mMappedWidgetList.addMapping(widget, column);
-  connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
-  widget->installEventFilter(mDelegate);
-  updateMappedWidget(widget, column);
+  MappedWidget *mappedWidget = mMappedWidgetList.addMapping(widget, column);
+  Q_ASSERT(mappedWidget != nullptr);
+  connect(mappedWidget, &MappedWidget::editionStarted, this, &DataWidgetMapper::onDataEditionStarted);
+  updateMappedWidget(mappedWidget, column);
+//   mWidgetEditionStartedSignal.addWidget(widget);
+//   connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
+//   connectWidgetEditionStartedSignal(widget);
+//   widget->installEventFilter(mDelegate);
+//   updateMappedWidget(widget, column);
 }
 
 void DataWidgetMapper::removeMapping(QWidget* widget)
@@ -110,25 +118,32 @@ void DataWidgetMapper::removeMapping(QWidget* widget)
   if(index < 0){
     return;
   }
+  MappedWidget *mappedWidget = mMappedWidgetList.mappedWidgetAt(index);
+  Q_ASSERT(mappedWidget != nullptr);
+  disconnect(mappedWidget, &MappedWidget::editionStarted, this, &DataWidgetMapper::onDataEditionStarted);
+  unmapWidget(mappedWidget);
   mMappedWidgetList.removeMappingAt(index);
-  unmapWidget(widget);
+//   mWidgetEditionStartedSignal.removeWidget(widget);
+//   unmapWidget(widget);
 }
 
 void DataWidgetMapper::clearMapping()
 {
-  if(!mDelegate.isNull()){
+//   if(!mDelegate.isNull()){
     for(const auto & mw : mMappedWidgetList){
-      auto *widget = mw.widget();
+      auto *widget = mw->widget();
       if(widget != nullptr){
-        unmapWidget(widget);
+        unmapWidget(mw.get());
+//         unmapWidget(widget);
       }
     }
-  }
+//   }
   mMappedWidgetList.clear();
 }
 
 void DataWidgetMapper::setCurrentRow(int row)
 {
+//   qDebug() << "DWM::setCurrentRow(" << row << ")";
   if(mModel.isNull()){
     return;
   }
@@ -145,7 +160,7 @@ void DataWidgetMapper::setCurrentRow(int row)
 void DataWidgetMapper::updateFromModelFlags()
 {
   for(const auto & mw : mMappedWidgetList){
-    updateMappedWidgetFromModelFlags(mw.widget(), mw.column());
+    updateMappedWidgetFromModelFlags(mw.get(), mw->column());
   }
 }
 
@@ -176,9 +191,13 @@ void DataWidgetMapper::revertDataFromModel()
 
 void DataWidgetMapper::onDataEditionStarted()
 {
+//   qDebug() << "DWM::onDataEditionStarted()";
+//   qDebug() << "DWM: mCurrentRow: " << mCurrentRow << ", mUpdatingMappedWidget: " << mUpdatingMappedWidget << ", mEditingState: " << mEditingState << ", mSubmittingFromMapper: " << mSubmittingFromMapper;
+
   if(mEditingState || mUpdatingMappedWidget){
     return;
   }
+//   qDebug() << "DWM: go editing state";
   mEditingState = true;
   emit dataEditionStarted();
 }
@@ -199,9 +218,10 @@ void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QMo
   columnRange.setLastIndex(bottomRight);
   for(const auto & mw : mMappedWidgetList){
     // Update current widget if its column is in range topLeft, bottomRight
-    int column = mw.column();
+    int column = mw->column();
     if(columnRange.containsColumn(column)){
-      updateMappedWidget(mw.widget(), column);
+      updateMappedWidget(mw.get(), column);
+//       updateMappedWidget(mw->widget(), column);
     }
   }
   /*
@@ -232,78 +252,186 @@ void DataWidgetMapper::removeMappingForColumn(int column)
   if(index < 0){
     return;
   }
-  unmapWidget( mMappedWidgetList.widgetAt(index) );
+  unmapWidget( mMappedWidgetList.mappedWidgetAt(index) );
   mMappedWidgetList.removeMappingAt(index);
 }
 
-void DataWidgetMapper::unmapWidget(QWidget* widget)
-{
-  Q_ASSERT(widget != nullptr);
+// void DataWidgetMapper::unmapWidget(QWidget* widget)
+// {
+//   Q_ASSERT(widget != nullptr);
+// 
+// //   connectUserPropertyNotifySignal(widget, ConnectAction::Disctonnect);
+// //   disconnectWidgetEditionStartedSignal(widget);
+//   updateMappedWidget(widget, -1);
+//   widget->setEnabled(true);
+// //   widget->removeEventFilter(mDelegate);
+// }
 
-  connectUserPropertyNotifySignal(widget, ConnectAction::Disctonnect);
-  updateMappedWidget(widget, -1);
-  widget->setEnabled(true);
-  widget->removeEventFilter(mDelegate);
+void DataWidgetMapper::unmapWidget(MappedWidget * const mappedWidget)
+{
+  Q_ASSERT(mappedWidget != nullptr);
+
+  updateMappedWidget(mappedWidget, -1);
+  mappedWidget->setWidgetEnabled(true);
 }
 
-void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, DataWidgetMapper::ConnectAction ca)
+// void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, DataWidgetMapper::ConnectAction ca)
+// {
+//   Q_ASSERT(metaObject() != nullptr);
+//   Q_ASSERT(widget != nullptr);
+//   Q_ASSERT(widget->metaObject() != nullptr);
+// 
+//   // Find widget's user property notify signal
+//   QMetaProperty userProperty = widget->metaObject()->userProperty();
+//   if(!userProperty.hasNotifySignal()){
+//     const auto message = tr("Class %1 has no user property notify signal. Data edition started will not be detected on it.")
+//     .arg( QString::fromLatin1(widget->metaObject()->className()) );
+//     auto error = mdtErrorNewQ( message , Mdt::Error::Warning, this );
+//     error.commit();
+//     return;
+//   }
+//   QMetaMethod notifySignal = userProperty.notifySignal();
+//   qDebug() << "DWM notifySignal: " << notifySignal.name();
+//   
+//   // Get QMetaMethod of onDataEditionStarted()
+//   int slotIndex = metaObject()->indexOfSlot("onDataEditionStarted()");
+//   Q_ASSERT(slotIndex >= 0);
+//   QMetaMethod widgetMapperSlot = metaObject()->method(slotIndex);
+//   // (dis)connect
+//   if(ca == ConnectAction::Connect){
+//     connect(widget, notifySignal, this, widgetMapperSlot);
+//   }else{
+//     disconnect(widget, notifySignal, this, widgetMapperSlot);
+//   }
+// }
+
+// QMetaMethod DataWidgetMapper::getWidgetEditionStartedMethod(const QWidget * const widget)
+// {
+//   Q_ASSERT(widget != nullptr);
+//   Q_ASSERT(widget->metaObject() != nullptr);
+// 
+//   QMetaMethod signalMethod;
+// //   WidgetEditionStartedSignal es;
+// // 
+// //   signalMethod = es.getEditionStartedSignal(widget);
+//   if(!signalMethod.isValid()){
+//     const QString message = tr("Could not find a signal to tell edition started for widget '%1'.")
+//     .arg( QString::fromLatin1(widget->metaObject()->className()) );
+//     qWarning() << "DataWidgetMapper: " << message;
+//     return signalMethod;
+//   }
+// 
+//   return signalMethod;
+// }
+
+// QMetaMethod DataWidgetMapper::getOnDataEditionStartedMethod()
+// {
+//   Q_ASSERT(metaObject() != nullptr);
+// 
+//   const int slotIndex = metaObject()->indexOfSlot("onDataEditionStarted()");
+//   Q_ASSERT(slotIndex >= 0);
+// 
+//   return metaObject()->method(slotIndex);
+// }
+
+// void DataWidgetMapper::connectWidgetEditionStartedSignal(const QWidget * const widget)
+// {
+//   Q_ASSERT(widget != nullptr);
+//   Q_ASSERT(widget->metaObject() != nullptr);
+// 
+//   const QMetaMethod signalMethod = getWidgetEditionStartedMethod(widget);
+//   const QMetaMethod slotMethod = getOnDataEditionStartedMethod();
+//   Q_ASSERT(slotMethod.isValid());
+//   // signalMethod will be checked by connect()
+//   connect(widget, signalMethod, this, slotMethod);
+// }
+
+// void DataWidgetMapper::disconnectWidgetEditionStartedSignal(const QWidget * const widget)
+// {
+//   Q_ASSERT(widget != nullptr);
+//   Q_ASSERT(widget->metaObject() != nullptr);
+// 
+//   const QMetaMethod signalMethod = getWidgetEditionStartedMethod(widget);
+//   const QMetaMethod slotMethod = getOnDataEditionStartedMethod();
+//   Q_ASSERT(slotMethod.isValid());
+//   // signalMethod will be checked by connect()
+//   disconnect(widget, signalMethod, this, slotMethod);
+// }
+
+// void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column)
+// {
+// //   Q_ASSERT(!mDelegate.isNull());
+// 
+// //   qDebug() << "DWM::updateMappedWidget()";
+// //   qDebug() << "DWM: mCurrentRow: " << mCurrentRow << ", mUpdatingMappedWidget: " << mUpdatingMappedWidget << ", mEditingState: " << mEditingState << ", mSubmittingFromMapper: " << mSubmittingFromMapper;
+//   
+//   if(widget == nullptr){
+//     return;
+//   }
+//   mUpdatingMappedWidget = true;
+//   QModelIndex index;
+//   if(!mModel.isNull()){
+//     index = mModel->index(mCurrentRow, column);
+// //     mDelegate->setEditorData(widget, index);
+//   }
+//   /*
+//    * On invalid index, widget must allways be disabled.
+//    */
+//   if(index.isValid()){
+//     updateMappedWidgetForItemFlags(widget, mModel->flags(index));
+//     updateMappedWidgetForAppearance(widget, index);
+//   }else{
+//     widget->setEnabled(false);
+//   }
+//   mUpdatingMappedWidget = false;
+// }
+
+void DataWidgetMapper::updateMappedWidget(MappedWidget * const mappedWidget, int column)
 {
-  Q_ASSERT(metaObject() != nullptr);
-  Q_ASSERT(widget != nullptr);
-  Q_ASSERT(widget->metaObject() != nullptr);
+  Q_ASSERT(mappedWidget != nullptr);
 
-  // Find widget's user property notify signal
-  QMetaProperty userProperty = widget->metaObject()->userProperty();
-  if(!userProperty.hasNotifySignal()){
-    const auto message = tr("Class %1 has no user property notify signal. Data edition started will not be detected on it.")
-    .arg( QString::fromLatin1(widget->metaObject()->className()) );
-    auto error = mdtErrorNewQ( message , Mdt::Error::Warning, this );
-    error.commit();
-    return;
-  }
-  QMetaMethod notifySignal = userProperty.notifySignal();
-  // Get QMetaMethod of onDataEditionStarted()
-  int slotIndex = metaObject()->indexOfSlot("onDataEditionStarted()");
-  Q_ASSERT(slotIndex >= 0);
-  QMetaMethod widgetMapperSlot = metaObject()->method(slotIndex);
-  // (dis)connect
-  if(ca == ConnectAction::Connect){
-    connect(widget, notifySignal, this, widgetMapperSlot);
-  }else{
-    disconnect(widget, notifySignal, this, widgetMapperSlot);
-  }
-}
-
-void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column)
-{
-  Q_ASSERT(!mDelegate.isNull());
-
-  if(widget == nullptr){
-    return;
-  }
   mUpdatingMappedWidget = true;
   QModelIndex index;
   if(!mModel.isNull()){
     index = mModel->index(mCurrentRow, column);
-    mDelegate->setEditorData(widget, index);
+    mappedWidget->setWidgetValue(index.data());
   }
   /*
    * On invalid index, widget must allways be disabled.
    */
   if(index.isValid()){
-    updateMappedWidgetForItemFlags(widget, mModel->flags(index));
-    updateMappedWidgetForAppearance(widget, index);
+    updateMappedWidgetForItemFlags(mappedWidget, mModel->flags(index));
+    updateMappedWidgetForAppearance(mappedWidget->widget(), index);
   }else{
-    widget->setEnabled(false);
+    mappedWidget->setWidgetEnabled(false);
   }
   mUpdatingMappedWidget = false;
 }
 
-void DataWidgetMapper::updateMappedWidgetFromModelFlags(QWidget*const widget, int column)
+// void DataWidgetMapper::updateMappedWidgetFromModelFlags(QWidget*const widget, int column)
+// {
+//   if(widget == nullptr){
+//     return;
+//   }
+//   QModelIndex index;
+//   if(!mModel.isNull()){
+//     index = mModel->index(mCurrentRow, column);
+//   }
+//   /*
+//    * On invalid index, widget must allways be disabled.
+//    */
+//   if(index.isValid()){
+//     Q_ASSERT(!mModel.isNull());
+//     updateMappedWidgetForItemFlags(widget, mModel->flags(index));
+//   }else{
+//     widget->setEnabled(false);
+//   }
+// }
+
+void DataWidgetMapper::updateMappedWidgetFromModelFlags(MappedWidget * const mappedWidget, int column)
 {
-  if(widget == nullptr){
-    return;
-  }
+  Q_ASSERT(mappedWidget != nullptr);
+
   QModelIndex index;
   if(!mModel.isNull()){
     index = mModel->index(mCurrentRow, column);
@@ -313,31 +441,57 @@ void DataWidgetMapper::updateMappedWidgetFromModelFlags(QWidget*const widget, in
    */
   if(index.isValid()){
     Q_ASSERT(!mModel.isNull());
-    updateMappedWidgetForItemFlags(widget, mModel->flags(index));
+    updateMappedWidgetForItemFlags(mappedWidget, mModel->flags(index));
   }else{
-    widget->setEnabled(false);
+    mappedWidget->setWidgetEnabled(false);
   }
 }
 
-void DataWidgetMapper::updateMappedWidgetForItemFlags(QWidget*const widget, Qt::ItemFlags flags)
+// void DataWidgetMapper::updateMappedWidgetForItemFlags(QWidget*const widget, Qt::ItemFlags flags)
+// {
+//   Q_ASSERT(widget != nullptr);
+//   /*
+//    * If Qt::ItemIsEnabled is not set, widget must allways be disabled.
+//    * Else, follow Qt::ItemIsEditable if editable property exists for widget
+//    */
+// //   qDebug() << "DWM: update for flags: " << flags;
+//   const bool enabled = flags.testFlag(Qt::ItemIsEnabled);
+//   if(enabled){
+//     const bool editable = flags.testFlag(Qt::ItemIsEditable);
+//     if(mEditablePropertyMap.setWidgetEditable(widget, editable)){
+//       widget->setEnabled(true);
+//     }else{
+//       widget->setEnabled(editable);
+//     }
+//   }else{
+//     widget->setEnabled(false);
+//   }
+// }
+
+void DataWidgetMapper::updateMappedWidgetForItemFlags(MappedWidget * const mappedWidget, Qt::ItemFlags flags)
 {
-  Q_ASSERT(widget != nullptr);
+  Q_ASSERT(mappedWidget != nullptr);
+
   /*
    * If Qt::ItemIsEnabled is not set, widget must allways be disabled.
    * Else, follow Qt::ItemIsEditable if editable property exists for widget
    */
-//   qDebug() << "DWM: update for flags: " << flags;
+
   const bool enabled = flags.testFlag(Qt::ItemIsEnabled);
-  if(enabled){
-    const bool editable = flags.testFlag(Qt::ItemIsEditable);
-    if(mEditablePropertyMap.setWidgetEditable(widget, editable)){
-      widget->setEnabled(true);
-    }else{
-      widget->setEnabled(editable);
-    }
-  }else{
-    widget->setEnabled(false);
-  }
+  const bool editable = flags.testFlag(Qt::ItemIsEditable);
+
+  mappedWidget->setWidgetEnabled(enabled);
+  mappedWidget->setWidgetEditable(editable);
+//   if(enabled){
+//     const bool editable = flags.testFlag(Qt::ItemIsEditable);
+//     if(mEditablePropertyMap.setWidgetEditable(widget, editable)){
+//       widget->setEnabled(true);
+//     }else{
+//       widget->setEnabled(editable);
+//     }
+//   }else{
+//     widget->setEnabled(false);
+//   }
 }
 
 void DataWidgetMapper::updateMappedWidgetForAppearance(QWidget*const widget, const QModelIndex& index)
@@ -349,7 +503,7 @@ void DataWidgetMapper::updateMappedWidgetForAppearance(QWidget*const widget, con
   WidgetStyleSheet ws;
   QVariant var;
 
-//   qDebug() << "DWM: update for appearance: ";
+  qDebug() << "DWM: update for appearance: ";
   // Text alignment
   var = mModel->data(index, Qt::TextAlignmentRole);
   if(variantIsOfType(var, QMetaType::Int)){
@@ -381,31 +535,49 @@ void DataWidgetMapper::updateMappedWidgetForAppearance(QWidget*const widget, con
 
 void DataWidgetMapper::updateAllMappedWidgets()
 {
+//   qDebug() << "DWM::updateAllMappedWidgets()..";
   for(const auto & mw : mMappedWidgetList){
-    updateMappedWidget(mw.widget(), mw.column());
+    updateMappedWidget(mw.get(), mw->column());
+//     updateMappedWidget(mw->widget(), mw->column());
   }
 }
 
-bool DataWidgetMapper::commitData(QWidget*const widget, int column)
+bool DataWidgetMapper::commitData(MappedWidget * const mappedWidget, int column)
 {
+  Q_ASSERT(mappedWidget != nullptr);
   Q_ASSERT(!mModel.isNull());
-  Q_ASSERT(!mDelegate.isNull());
 
-  if(widget == nullptr){
-    return true;
-  }
   auto index = mModel->index(mCurrentRow, column);
   if(index.isValid()){
-    mDelegate->setModelData(widget, mModel, index);
+    const bool ok = mModel->setData(index, mappedWidget->widgetValue());
+    if(!ok){
+      return false;
+    }
   }
 
   return true;
 }
 
+// bool DataWidgetMapper::commitData(QWidget*const widget, int column)
+// {
+//   Q_ASSERT(!mModel.isNull());
+// //   Q_ASSERT(!mDelegate.isNull());
+// 
+//   if(widget == nullptr){
+//     return true;
+//   }
+//   auto index = mModel->index(mCurrentRow, column);
+//   if(index.isValid()){
+// //     mDelegate->setModelData(widget, mModel, index);
+//   }
+// 
+//   return true;
+// }
+
 bool DataWidgetMapper::commitAllMappedWidgetsData()
 {
   for(const auto & mw : mMappedWidgetList){
-    if( !commitData(mw.widget(), mw.column()) ){
+    if( !commitData(mw.get(), mw->column()) ){
       return false;
     }
   }

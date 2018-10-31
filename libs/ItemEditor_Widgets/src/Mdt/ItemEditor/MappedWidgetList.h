@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,35 +22,44 @@
 #define MDT_ITEM_EDITOR_MAPPED_WIDGET_LIST_H
 
 #include "MappedWidget.h"
+#include "MdtItemEditor_WidgetsExport.h"
 #include <QPointer>
 #include <vector>
+#include <memory>
 
 namespace Mdt{ namespace ItemEditor{
 
   /*! \brief MappedWidgetList is used by DataWidgetMapper
    */
-  class MappedWidgetList
+  class MDT_ITEMEDITOR_WIDGETS_EXPORT MappedWidgetList
   {
+    using List = std::vector< std::unique_ptr<MappedWidget> >;
+
    public:
 
     /*! \brief STL-style const iterator
      */
-    typedef std::vector<MappedWidget>::const_iterator const_iterator;
+    using const_iterator = List::const_iterator;
+//     typedef std::vector<MappedWidget>::const_iterator const_iterator;
 
     /*! \brief STL-style iterator
      */
-    typedef std::vector<MappedWidget>::iterator iterator;
+    using iterator = List::iterator;
+//     typedef std::vector<MappedWidget>::iterator iterator;
 
     /*! \brief Add widget
      *
      * \note widget will not be owned by MappedWidgetList
      *        (it will not be deleted)
+     * \note This method returns a pointer to the created mapped widget,
+     *   which can be used for setup. The lifetime of this mapped widget
+     *   is the lifetime of this list.
      * \pre \a column must be >= 0
      * \pre \a column must not allready exists in this mapping list
      * \pre \a widget must be a valid pointer
      * \pre \a widget must not allready exists in this mapping list
      */
-    void addMapping(QWidget *widget, int column);
+    MappedWidget *addMapping(QWidget *widget, int column);
 
     /*! \brief Get index for given widget
      *
@@ -69,6 +78,18 @@ namespace Mdt{ namespace ItemEditor{
      * \pre \a column must be >= 0
      */
     int getIndexForColumn(int column) const;
+
+    /*! \brief Get mapped widget at \a index
+     *
+     * \pre \a index must be in valid range ( 0 <= index < size() )
+     */
+    MappedWidget *mappedWidgetAt(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < size());
+
+      return mWidgetList[index].get();
+    }
 
     /*! \brief Get widget at given index
      *
@@ -119,7 +140,8 @@ namespace Mdt{ namespace ItemEditor{
     const_iterator iteratorForWidget(const QWidget * const widget) const;
     const_iterator iteratorForColumn(int column) const;
 
-    std::vector<MappedWidget> mWidgetList;
+    List mWidgetList;
+//     std::vector<MappedWidget> mWidgetList;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -24,8 +24,11 @@
 #include "Mdt/ItemEditor/DataWidgetMapper.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include "Mdt/ItemModel/FormatProxyModel.h"
+#include "Mdt/TestLib/ItemModel.h"
+#include "Mdt/TestLib/Widgets.h"
 #include <QSignalSpy>
 #include <QScopedPointer>
+#include <QStringListModel>
 #include <QModelIndex>
 #include <QLineEdit>
 #include <QSpinBox>
@@ -37,6 +40,7 @@
 
 using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
+using namespace Mdt::TestLib;
 
 void DataWidgetMapperTest::initTestCase()
 {
@@ -49,78 +53,6 @@ void DataWidgetMapperTest::cleanupTestCase()
 /*
  * Tests
  */
-
-void DataWidgetMapperTest::mappedWidgetTest()
-{
-  auto *w = new QWidget;
-
-  w->setObjectName("TestWidget");
-
-  auto *mw = new MappedWidget(w, 1);
-  QVERIFY(mw->widget() == w);
-  QCOMPARE(mw->column(), 1);
-
-  // MappedWidget must not own the widget
-  delete mw;
-  QCOMPARE(w->objectName(), QString("TestWidget"));
-
-  delete w;
-}
-
-void DataWidgetMapperTest::mappedWidgetListTest()
-{
-  auto *widget1 = new QWidget;
-  auto *widget2 = new QWidget;
-  QScopedPointer<QWidget> widget1Guard(widget1);
-  QScopedPointer<QWidget> widget2Guard(widget2);
-  /*
-   * Initial state
-   */
-  MappedWidgetList list;
-  QCOMPARE(list.size(), 0);
-  QVERIFY(list.isEmpty());
-  QCOMPARE(list.getIndexForWidget(widget1), -1);
-  QCOMPARE(list.getIndexForColumn(0), -1);
-  /*
-   * Map widget1 to column 1
-   */
-  list.addMapping(widget1, 1);
-  QCOMPARE(list.size(), 1);
-  QVERIFY(!list.isEmpty());
-  QCOMPARE(list.getIndexForWidget(widget1), 0);
-  QCOMPARE(list.getIndexForColumn(1), 0);
-  for(const auto & mw : list){
-    QVERIFY(mw.widget() == widget1);
-  }
-  /*
-   * Remove first mapping
-   */
-  list.removeMappingAt(0);
-  QCOMPARE(list.size(), 0);
-  /*
-   * Map widget1
-   */
-  list.addMapping(widget1, 2);
-  QCOMPARE(list.size(), 1);
-  QCOMPARE(list.begin()->widget(), widget1);
-  QCOMPARE(list.begin()->column(), 2);
-  QCOMPARE(list.getIndexForWidget(widget1), 0);
-  QCOMPARE(list.getIndexForColumn(2), 0);
-  /*
-   * Add another mapping
-   */
-  list.addMapping(widget2, 1);
-  QCOMPARE(list.size(), 2);
-  QCOMPARE(list.getIndexForWidget(widget2), 1);
-  QCOMPARE(list.getIndexForColumn(1), 1);
-  QCOMPARE(list.widgetAt(1), widget2);
-  /*
-   * Clear
-   */
-  list.clear();
-  QCOMPARE(list.size(), 0);
-  QVERIFY(list.isEmpty());
-}
 
 void DataWidgetMapperTest::setModelThenMapWidgetsTest()
 {
@@ -136,7 +68,7 @@ void DataWidgetMapperTest::setModelThenMapWidgetsTest()
    * Initial state
    */
   QVERIFY(mapper.model() == nullptr);
-  QVERIFY(mapper.itemDelegate() != nullptr);
+//   QVERIFY(mapper.itemDelegate() != nullptr);
   QCOMPARE(mapper.currentRow(), -1);
   QCOMPARE(rowChangedSpy.count(), 0);
   QCOMPARE(editStartedSpy.count(), 0);
@@ -191,7 +123,7 @@ void DataWidgetMapperTest::mapWidgetsThenSetModelTest()
    * Initial state
    */
   QVERIFY(mapper.model() == nullptr);
-  QVERIFY(mapper.itemDelegate() != nullptr);
+//   QVERIFY(mapper.itemDelegate() != nullptr);
   QCOMPARE(mapper.currentRow(), -1);
   QCOMPARE(rowChangedSpy.count(), 0);
   QCOMPARE(editStartedSpy.count(), 0);
@@ -245,7 +177,7 @@ void DataWidgetMapperTest::changeModelTest()
    * Initial state
    */
   QVERIFY(mapper.model() == nullptr);
-  QVERIFY(mapper.itemDelegate() != nullptr);
+//   QVERIFY(mapper.itemDelegate() != nullptr);
   QCOMPARE(mapper.currentRow(), -1);
   QCOMPARE(rowChangedSpy.count(), 0);
   QCOMPARE(editStartedSpy.count(), 0);
@@ -363,7 +295,7 @@ void DataWidgetMapperTest::modelResetTest()
    * Initial state
    */
   QVERIFY(mapper.model() == nullptr);
-  QVERIFY(mapper.itemDelegate() != nullptr);
+//   QVERIFY(mapper.itemDelegate() != nullptr);
   QCOMPARE(mapper.currentRow(), -1);
   QCOMPARE(rowChangedSpy.count(), 0);
   QCOMPARE(editStartedSpy.count(), 0);
@@ -576,7 +508,7 @@ void DataWidgetMapperTest::changeMappingTest()
    * Initial state
    */
   QVERIFY(mapper.model() == nullptr);
-  QVERIFY(mapper.itemDelegate() != nullptr);
+//   QVERIFY(mapper.itemDelegate() != nullptr);
   QCOMPARE(mapper.currentRow(), -1);
   QCOMPARE(rowChangedSpy.count(), 0);
   QCOMPARE(editStartedSpy.count(), 0);
@@ -758,7 +690,7 @@ void DataWidgetMapperTest::clearMappingTest()
 void DataWidgetMapperTest::itemEditableFlagTest()
 {
   /*
-   * DataWidgetMapper uses WidgetEditablePropertyMap,
+   * DataWidgetMapper uses MappedWidget,
    * so we don't have to check every widget types here
    */
   DataWidgetMapper mapper;
@@ -780,7 +712,7 @@ void DataWidgetMapperTest::itemEditableFlagTest()
    * Initial state
    */
   QVERIFY(!le.isReadOnly());
-  QVERIFY(cb.isEditable());
+//   QVERIFY(cb.isEditable());
   QVERIFY(le.isEnabled());
   QVERIFY(cb.isEnabled());
   QVERIFY(w.isEnabled());
@@ -793,7 +725,7 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   model.setItemEditable(index, false);
   mapper.updateFromModelFlags();
   QVERIFY(le.isReadOnly());
-  QVERIFY(cb.isEditable());
+//   QVERIFY(cb.isEditable());
   QVERIFY(le.isEnabled());
   QVERIFY(cb.isEnabled());
   // Combobox
@@ -802,9 +734,9 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   model.setItemEditable(index, false);
   mapper.updateFromModelFlags();
   QVERIFY(le.isReadOnly());
-  QVERIFY(!cb.isEditable());
+//   QVERIFY(!cb.isEditable());
   QVERIFY(le.isEnabled());
-  QVERIFY(cb.isEnabled());
+  QVERIFY(!cb.isEnabled());
   // Widget without any editable property
   index = model.index(0, 2);
   QVERIFY(index.isValid());
@@ -820,16 +752,16 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   model.setItemEditable(index, true);
   mapper.updateFromModelFlags();
   QVERIFY(!le.isReadOnly());
-  QVERIFY(!cb.isEditable());
+//   QVERIFY(!cb.isEditable());
   QVERIFY(le.isEnabled());
-  QVERIFY(cb.isEnabled());
+  QVERIFY(!cb.isEnabled());
   // Combobox
   index = model.index(0, 1);
   QVERIFY(index.isValid());
   model.setItemEditable(index, true);
   mapper.updateFromModelFlags();
   QVERIFY(!le.isReadOnly());
-  QVERIFY(cb.isEditable());
+//   QVERIFY(cb.isEditable());
   QVERIFY(le.isEnabled());
   QVERIFY(cb.isEnabled());
   // Widget without any editable property
@@ -857,7 +789,7 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   // Change current row and check
   mapper.setCurrentRow(1);
   QVERIFY(!le.isReadOnly());
-  QVERIFY(cb.isEditable());
+//   QVERIFY(cb.isEditable());
   QVERIFY(le.isEnabled());
   QVERIFY(cb.isEnabled());
   QVERIFY(w.isEnabled());
@@ -877,9 +809,9 @@ void DataWidgetMapperTest::itemEditableFlagTest()
   // Change current row and check
   mapper.setCurrentRow(0);
   QVERIFY(le.isReadOnly());
-  QVERIFY(!cb.isEditable());
+//   QVERIFY(!cb.isEditable());
   QVERIFY(le.isEnabled());
-  QVERIFY(cb.isEnabled());
+  QVERIFY(!cb.isEnabled());
   QVERIFY(!w.isEnabled());
 }
 
@@ -1067,8 +999,10 @@ void DataWidgetMapperTest::editionDoneTest()
    * Start editing then submit from data widget mapper
    */
   editDoneSpy.clear();
-  editor0.setText("A");
-  editor1.setText("1");
+  editor0.clear();
+  editor1.clear();
+  QTest::keyClick(&editor0, 'A');
+  QTest::keyClick(&editor1, '1');
   QVERIFY(mapper.setDataToModel());
   QCOMPARE(editDoneSpy.count(), 1);
   QCOMPARE(getModelData(model, 0, 0), QVariant("A"));
@@ -1081,7 +1015,8 @@ void DataWidgetMapperTest::editionDoneTest()
    * (Bug discovered 20170315)
    */
   editDoneSpy.clear();
-  editor0.setText("B");
+  editor0.clear();
+  QTest::keyClick(&editor0, 'B');
   QVERIFY(setModelData(model, 0, 0, "C"));
   QCOMPARE(editDoneSpy.count(), 1);
   QCOMPARE(getModelData(model, 0, 0), QVariant("C"));
@@ -1450,8 +1385,10 @@ void DataWidgetMapperTest::insertFromModelWidgetTest()
   /*
    * Begin editing
    */
-  edit0.setText("1");
-  edit1.setText("A");
+  edit0.clear();
+  edit1.clear();
+  QTest::keyClick(&edit0, Qt::Key_1);
+  QTest::keyClick(&edit1, 'A');
   /*
    * Insert a row before current row
    * Then, go to next row, which contains row that we are editing.
@@ -1473,16 +1410,13 @@ void DataWidgetMapperTest::insertFromModelWidgetTest()
   QCOMPARE(model.data(1, 1), QVariant("A"));
 }
 
-void DataWidgetMapperTest::editStartDoneSignalTest()
+template<typename Editor0, typename Editor1>
+void editStartDoneSignalTestImpl(Editor0 & editor0, Editor1 & editor1)
 {
   DataWidgetMapper mapper;
   VariantTableModel model;
   QModelIndex index;
-  QFETCH(QWidget*, editor0);
-  QFETCH(QWidget*, editor1);
 
-  QScopedPointer<QWidget> editor0Gard(editor0);
-  QScopedPointer<QWidget> editor1Gard(editor1);
   QSignalSpy editStartedSpy(&mapper, &DataWidgetMapper::dataEditionStarted);
   QVERIFY(editStartedSpy.isValid());
   QSignalSpy editDoneSpy(&mapper, &DataWidgetMapper::dataEditionDone);
@@ -1493,8 +1427,8 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
    */
   model.populate(3, 2);
   mapper.setModel(&model);
-  mapper.addMapping(editor0, 0);
-  mapper.addMapping(editor1, 1);
+  mapper.addMapping(&editor0, 0);
+  mapper.addMapping(&editor1, 1);
   mapper.setCurrentRow(0);
   editStartedSpy.clear();
   editDoneSpy.clear();
@@ -1502,16 +1436,20 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   /*
    * Start edit with key on editor 0
    */
-  QTest::keyClick(editor0, Qt::Key_1);
+  qDebug() << "TEST: edit 0 ..";
+//   editor0.show();
+//   QTest::qWait(20000);
+  
+  QTest::keyClick(&editor0, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 1);
   editStartedSpy.clear();
   QCOMPARE(editDoneSpy.count(), 0);
   // Continue typing must not emit signal again
-  QTest::keyClick(editor0, Qt::Key_1);
+  QTest::keyClick(&editor0, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 0);
   // Editing on other widget must also not signal anymore
-  QTest::keyClick(editor1, Qt::Key_1);
+  QTest::keyClick(&editor1, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 0);
   /*
@@ -1522,11 +1460,11 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   QCOMPARE(editDoneSpy.count(), 1);
   editDoneSpy.clear();
   // After a call of submit, start edit must be signaled again
-  QTest::keyClick(editor0, Qt::Key_1);
+  QTest::keyClick(&editor0, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 1);
   editStartedSpy.clear();
   QCOMPARE(editDoneSpy.count(), 0);
-  QTest::keyClick(editor0, Qt::Key_1);
+  QTest::keyClick(&editor0, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 0);
   /*
@@ -1537,15 +1475,15 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   QCOMPARE(editDoneSpy.count(), 1);
   editDoneSpy.clear();
   // After a call of revert, start edit must be signaled again
-  QTest::keyClick(editor0, Qt::Key_1);
+  QTest::keyClick(&editor0, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 1);
   editStartedSpy.clear();
   QCOMPARE(editDoneSpy.count(), 0);
-  QTest::keyClick(editor0, Qt::Key_1);
+  QTest::keyClick(&editor0, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 0);
   /*
-   * Submit (for nexte test)
+   * Submit (for next test)
    */
   QVERIFY(mapper.setDataToModel());
   QCOMPARE(editStartedSpy.count(), 0);
@@ -1554,63 +1492,215 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   /*
    * Start edit with key on editor 1
    */
-  QTest::keyClick(editor1, Qt::Key_1);
+  QTest::keyClick(&editor1, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 1);
   editStartedSpy.clear();
   QCOMPARE(editDoneSpy.count(), 0);
   // Continue typing must not emit signal again
-  QTest::keyClick(editor1, Qt::Key_1);
+  QTest::keyClick(&editor1, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 0);
   // Editing on other widget must also not signal anymore
-  QTest::keyClick(editor0, Qt::Key_1);
+  QTest::keyClick(&editor0, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 0);
 }
 
-void DataWidgetMapperTest::editStartDoneSignalTest_data()
+void DataWidgetMapperTest::editStartDoneSignalQLineEditTest()
 {
-  QTest::addColumn<QWidget*>("editor0");
-  QTest::addColumn<QWidget*>("editor1");
-
-  QWidget *widget0, *widget1;
-
-  widget0 = new QLineEdit;
-  widget1 = new QLineEdit;
-  QTest::newRow("QLineEdit") << widget0 << widget1;
-
-  QSpinBox *sb;
-  sb = new QSpinBox;
-  sb->setMaximum(10000);
-  widget0 = sb;
-  sb = new QSpinBox;
-  sb->setMaximum(10000);
-  widget1 = sb;
-  QTest::newRow("QSpinBox") << widget0 << widget1;
-
-  QComboBox *cb;
-  cb = new QComboBox;
-  cb->addItem("1");
-  cb->addItem("11");
-  cb->addItem("1111");
-  cb->addItem("11111");
-  widget0 = cb;
-  cb = new QComboBox;
-  cb->addItem("1");
-  cb->addItem("11");
-  cb->addItem("1111");
-  cb->addItem("11111");
-  widget1 = cb;
-  QTest::newRow("QComboBox") << widget0 << widget1;
-
-  widget0 = new QPlainTextEdit;
-  widget1 = new QPlainTextEdit;
-  QTest::newRow("QPlainTextEdit") << widget0 << widget1;
-
-  widget0 = new QTextEdit;
-  widget1 = new QTextEdit;
-  QTest::newRow("QTextEdit") << widget0 << widget1;
+  QLineEdit le0, le1;
+  editStartDoneSignalTestImpl(le0, le1);
 }
+
+void DataWidgetMapperTest::editStartDoneSignalQSpinBoxTest()
+{
+  QSpinBox sb0;
+  sb0.setMaximum(10000);
+  QSpinBox sb1;
+  sb1.setMaximum(10000);
+  editStartDoneSignalTestImpl(sb0, sb1);
+}
+
+void DataWidgetMapperTest::editStartDoneSignalQComboBoxTest()
+{
+  QComboBox cb0;
+
+  qDebug() << "cb0 editable (1): " << cb0.isEditable();
+  
+//   cb0.move(200, 200);
+//   cb0.resize(500, 200);
+//   cb0.setGeometry(0, 0, 100, 100);
+//   cb0.show();
+//   QTest::qWait(2000);
+  
+  cb0.addItem("1");
+  
+  cb0.addItem("11");
+  cb0.addItem("1111");
+  cb0.addItem("11111");
+  
+//   QTest::qWait(1000);
+  cb0.setEditable(false);
+//   cb0.setEditable(true);
+  qDebug() << "cb0 editable (2): " << cb0.isEditable();
+  QComboBox cb1;
+  cb1.addItem("1");
+  cb1.addItem("11");
+  cb1.addItem("1111");
+  cb1.addItem("11111");
+  editStartDoneSignalTestImpl(cb0, cb1);
+}
+
+void DataWidgetMapperTest::editStartDoneSignalQPlainTextEditTest()
+{
+  QPlainTextEdit pte0, pte1;
+  editStartDoneSignalTestImpl(pte0, pte1);
+}
+
+void DataWidgetMapperTest::editStartDoneSignalQTextEditTest()
+{
+  QTextEdit te0, te1;
+  editStartDoneSignalTestImpl(te0, te1);
+}
+
+// void DataWidgetMapperTest::editStartDoneSignalTest()
+// {
+//   DataWidgetMapper mapper;
+//   VariantTableModel model;
+//   QModelIndex index;
+//   QFETCH(QWidget*, editor0);
+//   QFETCH(QWidget*, editor1);
+// 
+//   QScopedPointer<QWidget> editor0Gard(editor0);
+//   QScopedPointer<QWidget> editor1Gard(editor1);
+//   QSignalSpy editStartedSpy(&mapper, &DataWidgetMapper::dataEditionStarted);
+//   QVERIFY(editStartedSpy.isValid());
+//   QSignalSpy editDoneSpy(&mapper, &DataWidgetMapper::dataEditionDone);
+//   QVERIFY(editDoneSpy.isValid());
+// 
+//   /*
+//    * Setup
+//    */
+//   model.populate(3, 2);
+//   mapper.setModel(&model);
+//   mapper.addMapping(editor0, 0);
+//   mapper.addMapping(editor1, 1);
+//   mapper.setCurrentRow(0);
+//   editStartedSpy.clear();
+//   editDoneSpy.clear();
+// 
+//   /*
+//    * Start edit with key on editor 0
+//    */
+//   QTest::keyClick(editor0, Qt::Key_1);
+//   QCOMPARE(editStartedSpy.count(), 1);
+//   editStartedSpy.clear();
+//   QCOMPARE(editDoneSpy.count(), 0);
+//   // Continue typing must not emit signal again
+//   QTest::keyClick(editor0, Qt::Key_1);
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   QCOMPARE(editDoneSpy.count(), 0);
+//   // Editing on other widget must also not signal anymore
+//   QTest::keyClick(editor1, Qt::Key_1);
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   QCOMPARE(editDoneSpy.count(), 0);
+//   /*
+//    * Submit
+//    */
+//   QVERIFY(mapper.setDataToModel());
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   QCOMPARE(editDoneSpy.count(), 1);
+//   editDoneSpy.clear();
+//   // After a call of submit, start edit must be signaled again
+//   QTest::keyClick(editor0, Qt::Key_1);
+//   QCOMPARE(editStartedSpy.count(), 1);
+//   editStartedSpy.clear();
+//   QCOMPARE(editDoneSpy.count(), 0);
+//   QTest::keyClick(editor0, Qt::Key_1);
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   QCOMPARE(editDoneSpy.count(), 0);
+//   /*
+//    * Revert
+//    */
+//   mapper.revertDataFromModel();
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   QCOMPARE(editDoneSpy.count(), 1);
+//   editDoneSpy.clear();
+//   // After a call of revert, start edit must be signaled again
+//   QTest::keyClick(editor0, Qt::Key_1);
+//   QCOMPARE(editStartedSpy.count(), 1);
+//   editStartedSpy.clear();
+//   QCOMPARE(editDoneSpy.count(), 0);
+//   QTest::keyClick(editor0, Qt::Key_1);
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   QCOMPARE(editDoneSpy.count(), 0);
+//   /*
+//    * Submit (for next test)
+//    */
+//   QVERIFY(mapper.setDataToModel());
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   QCOMPARE(editDoneSpy.count(), 1);
+//   editDoneSpy.clear();
+//   /*
+//    * Start edit with key on editor 1
+//    */
+//   QTest::keyClick(editor1, Qt::Key_1);
+//   QCOMPARE(editStartedSpy.count(), 1);
+//   editStartedSpy.clear();
+//   QCOMPARE(editDoneSpy.count(), 0);
+//   // Continue typing must not emit signal again
+//   QTest::keyClick(editor1, Qt::Key_1);
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   QCOMPARE(editDoneSpy.count(), 0);
+//   // Editing on other widget must also not signal anymore
+//   QTest::keyClick(editor0, Qt::Key_1);
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   QCOMPARE(editDoneSpy.count(), 0);
+// }
+
+// void DataWidgetMapperTest::editStartDoneSignalTest_data()
+// {
+//   QTest::addColumn<QWidget*>("editor0");
+//   QTest::addColumn<QWidget*>("editor1");
+// 
+//   QWidget *widget0, *widget1;
+// 
+//   widget0 = new QLineEdit;
+//   widget1 = new QLineEdit;
+//   QTest::newRow("QLineEdit") << widget0 << widget1;
+// 
+//   QSpinBox *sb;
+//   sb = new QSpinBox;
+//   sb->setMaximum(10000);
+//   widget0 = sb;
+//   sb = new QSpinBox;
+//   sb->setMaximum(10000);
+//   widget1 = sb;
+//   QTest::newRow("QSpinBox") << widget0 << widget1;
+// 
+//   QComboBox *cb;
+//   cb = new QComboBox;
+//   cb->addItem("1");
+//   cb->addItem("11");
+//   cb->addItem("1111");
+//   cb->addItem("11111");
+//   widget0 = cb;
+//   cb = new QComboBox;
+//   cb->addItem("1");
+//   cb->addItem("11");
+//   cb->addItem("1111");
+//   cb->addItem("11111");
+//   widget1 = cb;
+//   QTest::newRow("QComboBox") << widget0 << widget1;
+// 
+//   widget0 = new QPlainTextEdit;
+//   widget1 = new QPlainTextEdit;
+//   QTest::newRow("QPlainTextEdit") << widget0 << widget1;
+// 
+//   widget0 = new QTextEdit;
+//   widget1 = new QTextEdit;
+//   QTest::newRow("QTextEdit") << widget0 << widget1;
+// }
 
 void DataWidgetMapperTest::setDataFromModelQLineEditTest()
 {
@@ -1687,12 +1777,8 @@ void DataWidgetMapperTest::submitDataQLineEditTest()
    * Submit and check
    */
   QVERIFY(mapper.setDataToModel());
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(index.data().toString(), QString("ABCD"));
-  index = model.index(0, 1);
-  QVERIFY(index.isValid());
-  QCOMPARE(index.data().toString(), QString("1234"));
+  QCOMPARE(getModelData(model, 0, 0), QVariant("ABCD"));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("1234"));
   /*
    * Populate model with 1 column
    */
@@ -1707,9 +1793,7 @@ void DataWidgetMapperTest::submitDataQLineEditTest()
    * Submit and check
    */
   QVERIFY(mapper.setDataToModel());
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(index.data().toString(), QString("EFGH"));
+  QCOMPARE(getModelData(model, 0, 0), QVariant("EFGH"));
 }
 
 void DataWidgetMapperTest::revertDataQLineEditTest()
@@ -1757,6 +1841,89 @@ void DataWidgetMapperTest::revertDataQLineEditTest()
   QVERIFY(index.isValid());
   QCOMPARE(index.data().toString(), originalText1);
 }
+
+void DataWidgetMapperTest::editStartDoneSignalTestReadOnlyQComboBoxTest()
+{
+  QModelIndex index;
+
+  DataWidgetMapper mapper;
+  VariantTableModel model;
+  model.populate(3, 2);
+  mapper.setModel(&model);
+
+  QComboBox cb;
+  QStringListModel cbModel;
+  cb.setModel(&cbModel);
+  mapper.addMapping(&cb, 0);
+
+  QSignalSpy editStartedSpy(&mapper, &DataWidgetMapper::dataEditionStarted);
+  QVERIFY(editStartedSpy.isValid());
+  QSignalSpy editDoneSpy(&mapper, &DataWidgetMapper::dataEditionDone);
+  QVERIFY(editDoneSpy.isValid());
+
+  QCOMPARE(editStartedSpy.count(), 0);
+  QCOMPARE(editDoneSpy.count(), 0);
+
+  mapper.setCurrentRow(0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QCOMPARE(editDoneSpy.count(), 0);
+
+  appendRowToModel(cbModel);
+  setModelData(cbModel, 0, 0, "A");
+  QCOMPARE(editStartedSpy.count(), 0);
+  QCOMPARE(editDoneSpy.count(), 0);
+
+  cbModel.setStringList({"D","E"});
+  QCOMPARE(editStartedSpy.count(), 0);
+  QCOMPARE(editDoneSpy.count(), 0);
+
+  mouseSelectRow(cb, 1);
+  QCOMPARE(editStartedSpy.count(), 1);
+  QCOMPARE(editDoneSpy.count(), 0);
+
+  mapper.setDataToModel();
+  QCOMPARE(getModelData(model, 0, 0), QVariant("E"));
+  QCOMPARE(editStartedSpy.count(), 1);
+  QCOMPARE(editDoneSpy.count(), 1);
+
+  editStartedSpy.clear();
+  editDoneSpy.clear();
+}
+
+// void DataWidgetMapperTest::QComboBoxSandbox()
+// {
+// //   DataWidgetMapper mapper;
+//   
+//   QComboBox cb;
+//   
+//   cb.setEditable(true);
+// 
+//   const auto outTextActivated = [](const QString & text){
+//     qDebug() << "activated(): " << text;
+//   };
+//   connect( &cb, QOverload<const QString &>::of(&QComboBox::activated), outTextActivated );
+// 
+//   const auto outTextCurrentTextChanged = [](const QString & text){
+//     qDebug() << "currentTextChanged(): " << text;
+//   };
+//   connect( &cb, QOverload<const QString &>::of(&QComboBox::currentTextChanged), outTextCurrentTextChanged );
+// 
+//   qDebug() << "Test: set model to cb";
+//   QStringListModel model({"A","B","C"});
+//   cb.setModel(&model);
+//   
+//   
+//   qDebug() << "Test: set current text";
+//   cb.setCurrentText("B");
+//   
+// //   cb.show();
+// //   while(cb.isVisible()){
+// //     QTest::qWait(500);
+// //   }
+//   
+// 
+//   QFAIL("SB");
+// }
 
 /*
  * Main

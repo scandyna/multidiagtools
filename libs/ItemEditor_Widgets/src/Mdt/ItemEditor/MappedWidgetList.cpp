@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,19 +19,36 @@
  **
  ****************************************************************************/
 #include "MappedWidgetList.h"
+#include "MappedWidgetQLineEdit.h"
+#include "MappedWidgetQComboBox.h"
+#include "MappedWidgetGeneric.h"
+#include <QLineEdit>
+#include <QComboBox>
 #include <algorithm>
 #include <iterator>
 
 namespace Mdt{ namespace ItemEditor{
 
-void MappedWidgetList::addMapping(QWidget* widget, int column)
+MappedWidget *MappedWidgetList::addMapping(QWidget* widget, int column)
 {
   Q_ASSERT(widget != nullptr);
   Q_ASSERT(column >= 0);
   Q_ASSERT(getIndexForWidget(widget) == -1);
   Q_ASSERT(getIndexForColumn(column) == -1);
 
-  mWidgetList.emplace_back(widget, column);
+  auto *lineEdit = qobject_cast<QLineEdit*>(widget);
+  if(lineEdit != nullptr){
+    mWidgetList.emplace_back( std::make_unique<MappedWidgetQLineEdit>(lineEdit, column) );
+    return mWidgetList.back().get();
+  }
+  auto *comboBox = qobject_cast<QComboBox*>(widget);
+  if(comboBox != nullptr){
+    mWidgetList.emplace_back( std::make_unique<MappedWidgetQComboBox>(comboBox, column) );
+    return mWidgetList.back().get();
+  }
+  mWidgetList.emplace_back( std::make_unique<MappedWidgetGeneric>(widget, column) );
+
+  return mWidgetList.back().get();
 }
 
 int MappedWidgetList::getIndexForWidget(const QWidget*const widget) const
@@ -63,7 +80,7 @@ QWidget* MappedWidgetList::widgetAt(int index) const
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < size());
 
-  return mWidgetList[index].widget();
+  return mWidgetList[index]->widget();
 }
 
 void MappedWidgetList::removeMappingAt(int index)
@@ -81,16 +98,16 @@ void MappedWidgetList::clear()
 
 MappedWidgetList::const_iterator MappedWidgetList::iteratorForWidget(const QWidget*const widget) const
 {
-  const auto pred = [widget](const MappedWidget & mw){
-    return ( mw.widget() == widget );
+  const auto pred = [widget](const std::unique_ptr<MappedWidget> & mw){
+    return ( mw->widget() == widget );
   };
   return std::find_if(mWidgetList.begin(), mWidgetList.end(), pred);
 }
 
 MappedWidgetList::const_iterator MappedWidgetList::iteratorForColumn(int column) const
 {
-  const auto pred = [column](const MappedWidget & mw){
-    return ( mw.column() == column);
+  const auto pred = [column](const std::unique_ptr<MappedWidget> & mw){
+    return ( mw->column() == column);
   };
   return std::find_if(mWidgetList.begin(), mWidgetList.end(), pred);
 }

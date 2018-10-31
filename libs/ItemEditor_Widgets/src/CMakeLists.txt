@@ -27,6 +27,12 @@ set(SOURCE_FILES
 #   Mdt/ItemEditor/TableViewControllerStatePermission.cpp
 #   Mdt/ItemEditor/TableViewControllerStateTable.cpp
 #   Mdt/ItemEditor/TableViewController.cpp
+  Mdt/ItemEditor/WidgetEditionStartedSignal.cpp
+  Mdt/ItemEditor/WidgetEditableProperty.cpp
+  Mdt/ItemEditor/MappedWidget.cpp
+  Mdt/ItemEditor/MappedWidgetGeneric.cpp
+  Mdt/ItemEditor/MappedWidgetQLineEdit.cpp
+  Mdt/ItemEditor/MappedWidgetQComboBox.cpp
   Mdt/ItemEditor/MappedWidgetList.cpp
   Mdt/ItemEditor/WidgetEditablePropertyMap.cpp
   Mdt/ItemEditor/WidgetStyleSheet.cpp
@@ -53,7 +59,7 @@ set(SOURCE_FILES
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt5 COMPONENTS Widgets)
+find_package(Qt5 5.9 COMPONENTS Widgets)
 
 mdt_add_library(
   NAME ItemEditor_Widgets

@@ -32,9 +32,6 @@ class DataWidgetMapperTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void mappedWidgetTest();
-  void mappedWidgetListTest();
-
   void setModelThenMapWidgetsTest();
   void mapWidgetsThenSetModelTest();
   void changeModelTest();
@@ -55,11 +52,19 @@ class DataWidgetMapperTest : public TestBase
   void insertWidgetTest();
   void insertSignalTest();
   void insertFromModelWidgetTest();
-  void editStartDoneSignalTest();
-  void editStartDoneSignalTest_data();
+  void editStartDoneSignalQLineEditTest();
+  void editStartDoneSignalQSpinBoxTest();
+  void editStartDoneSignalQComboBoxTest();
+  void editStartDoneSignalQPlainTextEditTest();
+  void editStartDoneSignalQTextEditTest();
+  
+//   void editStartDoneSignalTest_data();
   void setDataFromModelQLineEditTest();
   void submitDataQLineEditTest();
   void revertDataQLineEditTest();
+  void editStartDoneSignalTestReadOnlyQComboBoxTest();
+
+//   void QComboBoxSandbox();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H

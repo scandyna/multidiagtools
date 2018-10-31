@@ -18,74 +18,51 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_MAPPED_WIDGET_H
-#define MDT_ITEM_EDITOR_MAPPED_WIDGET_H
+#ifndef MDT_ITEM_EDITOR_MAPPED_WIDGET_Q_COMBO_BOX_H
+#define MDT_ITEM_EDITOR_MAPPED_WIDGET_Q_COMBO_BOX_H
 
+#include "MappedWidget.h"
 #include "MdtItemEditor_WidgetsExport.h"
-#include <QObject>
-#include <QPointer>
-#include <QWidget>
-#include <QVariant>
+#include <QComboBox>
 
 namespace Mdt{ namespace ItemEditor{
 
-  /*! \brief Uniform interface for DataWidgetMapper
-   */
-  class MDT_ITEMEDITOR_WIDGETS_EXPORT MappedWidget : public QObject
+  class MDT_ITEMEDITOR_WIDGETS_EXPORT MappedWidgetQComboBox : public MappedWidget
   {
-   Q_OBJECT
-
    public:
 
     /*! \brief Contructor
      *
-     * \pre \a widget must be a valid pointer
+     * \pre \a comboBox must be a valid pointer
      * \pre \a column must be >= 0
      */
-    explicit MappedWidget(QWidget *widget, int column);
-
-    /*! \brief Get widget
-     */
-    QWidget *widget() const
-    {
-      return mWidget;
-    }
-
-    /*! \brief Get column
-     */
-    int column() const
-    {
-      return mColumn;
-    }
+    explicit MappedWidgetQComboBox(QComboBox *comboBox, int column);
 
     /*! \brief Set a value to the widget
      */
-    virtual void setWidgetValue(const QVariant & value) = 0;
+    void setWidgetValue(const QVariant & value) override;
 
     /*! \brief Get widget's value
      */
-    virtual QVariant widgetValue() const = 0;
+    QVariant widgetValue() const override;
 
     /*! \brief Set the widget editable
      */
-    virtual void setWidgetEditable(bool editable) = 0;
+    void setWidgetEditable(bool editable) override;
 
     /*! \brief Set the widget enabled
      */
-    virtual void setWidgetEnabled(bool enable);
-
-   signals:
-
-    /*! \brief Emitted when the widget notified edition started
-     */
-    void editionStarted();
+    void setWidgetEnabled(bool enable) override;
 
    private:
 
-    QPointer<QWidget> mWidget;
-    int mColumn;
+    QComboBox *comboBox() const;
+    bool canEnableWidget() const;
+
+    bool mEnabled;
+    bool mEditable = true;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_MAPPED_WIDGET_H
+#endif // #ifndef MDT_ITEM_EDITOR_MAPPED_WIDGET_Q_COMBO_BOX_H
