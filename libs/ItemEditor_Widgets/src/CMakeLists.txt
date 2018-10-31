@@ -27,16 +27,12 @@ set(SOURCE_FILES
 #   Mdt/ItemEditor/TableViewControllerStatePermission.cpp
 #   Mdt/ItemEditor/TableViewControllerStateTable.cpp
 #   Mdt/ItemEditor/TableViewController.cpp
-
-
   Mdt/ItemEditor/WidgetEditableProperty.cpp
-
   Mdt/ItemEditor/MappedWidget.cpp
   Mdt/ItemEditor/MappedWidgetGeneric.cpp
   Mdt/ItemEditor/MappedWidgetQLineEdit.cpp
   Mdt/ItemEditor/MappedWidgetQComboBox.cpp
   Mdt/ItemEditor/MappedWidgetList.cpp
-  Mdt/ItemEditor/WidgetEditablePropertyMap.cpp
   Mdt/ItemEditor/WidgetStyleSheet.cpp
   Mdt/ItemEditor/DataWidgetMapperItemDelegate.cpp
   Mdt/ItemEditor/DataWidgetMapper.cpp
