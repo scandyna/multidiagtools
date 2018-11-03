@@ -48,7 +48,7 @@ namespace Mdt{ namespace Container{
 
     /*! \brief Construct a record from \a list
      */
-    explicit VariantRecord(std::initializer_list<QVariant> list)
+    VariantRecord(std::initializer_list<QVariant> list)
      : mRecord(list)
     {
     }
