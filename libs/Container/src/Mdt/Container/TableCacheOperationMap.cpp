@@ -76,15 +76,21 @@ void TableCacheOperationMap::removeOperationAtRow(int row)
   }
 }
 
-void TableCacheOperationMap::shiftRowsInMap(int row, int count)
+RowList TableCacheOperationMap::shiftRowsInMap(int row, int count)
 {
   Q_ASSERT(row >= 0);
 
+  RowList rowList;
+
   for(auto & index : mMap){
     if(index.row() >= row){
-      index.setRow(index.row() + count);
+      const int shiftedRow = index.row() + count;
+      index.setRow(shiftedRow);
+      rowList.append(shiftedRow);
     }
   }
+
+  return rowList;
 }
 
 void TableCacheOperationMap::setOperationAtRow(int row, TableCacheOperation operation)

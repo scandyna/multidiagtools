@@ -135,8 +135,10 @@ namespace Mdt{ namespace Container{
      *
      * \pre \a row must be >= 0
      * \note \a count can also be < 0
+     * \return A list of rows that have been shifted,
+     *    with their new value.
      */
-    void shiftRowsInMap(int row, int count);
+    RowList shiftRowsInMap(int row, int count);
 
     /*! \brief Set the operation at \a row in the cache
      *

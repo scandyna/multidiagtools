@@ -258,6 +258,7 @@ void TableCacheOperationTest::removeOperationAtRowTest()
 void TableCacheOperationTest::shiftRowsInMapTest()
 {
   TableCacheOperationMap map;
+  RowList rowList;
 
   map.setOperationAtRow(0, TableCacheOperation::Update);
   map.setOperationAtRow(1, TableCacheOperation::Delete);
@@ -270,7 +271,8 @@ void TableCacheOperationTest::shiftRowsInMapTest()
   QCOMPARE(map.operationAtRow(1), TableCacheOperation::Delete);
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::Insert);
 
-  map.shiftRowsInMap(1, 2);
+  rowList = map.shiftRowsInMap(1, 2);
+  QCOMPARE(rowList, RowList({3,4}));
   QCOMPARE(map.indexCount(), 3);
   QCOMPARE(map.indexAt(0).row(), 0);
   QCOMPARE(map.indexAt(1).row(), 3);
@@ -281,7 +283,8 @@ void TableCacheOperationTest::shiftRowsInMapTest()
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::Delete);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::Insert);
 
-  map.shiftRowsInMap(3, -1);
+  rowList = map.shiftRowsInMap(3, -1);
+  QCOMPARE(rowList, RowList({2,3}));
   QCOMPARE(map.indexCount(), 3);
   QCOMPARE(map.indexAt(0).row(), 0);
   QCOMPARE(map.indexAt(1).row(), 2);
