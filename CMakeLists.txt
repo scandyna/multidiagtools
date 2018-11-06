@@ -21,9 +21,6 @@ set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-
 # Specify where to find Qt
 # If Qt5 is not installed on a system known location,
 # or you want to use a specific version,
@@ -31,6 +28,10 @@ set(CMAKE_AUTOUIC ON)
 if(QT_PREFIX_PATH)
   list(APPEND CMAKE_PREFIX_PATH "${QT_PREFIX_PATH}")
 endif()
+
+find_package(Qt5 COMPONENTS Core)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
 
 message("CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
@@ -56,6 +57,8 @@ enable_testing()
 #################################################################################################################################################
 # Compiler options
 #################################################################################################################################################
+
+# TODO Should look at PIE (Position Independ Code). Security and other..
 
 # C++ standard
 set(CMAKE_CXX_STANDARD 14)
@@ -123,6 +126,7 @@ endif()
 add_subdirectory(libs/QtSolutions)
 add_subdirectory(libs/Error_Core)
 add_subdirectory(libs/Error_Widgets)
+add_subdirectory(libs/LibraryInfo_Core)
 add_subdirectory(libs/Application_Core)
 add_subdirectory(libs/Application_Core_Single)
 add_subdirectory(libs/Application_Widgets)
@@ -136,10 +140,11 @@ add_subdirectory(libs/Numeric)
 add_subdirectory(libs/PlainText_Core)
 add_subdirectory(libs/ItemModel)
 # # add_subdirectory(libs/SerialPort)
-# add_subdirectory(libs/ItemEditor)
+add_subdirectory(libs/ItemEditor_Widgets)
 # add_subdirectory(libs/ItemEditor_Sql)
 add_subdirectory(libs/TestLib_Core)
 add_subdirectory(libs/TestLib_Container)
+add_subdirectory(libs/TestLib_Widgets)
 add_subdirectory(libs/FileSystem_Core)
 add_subdirectory(libs/DeployUtils_Core)
 add_subdirectory(libs/Translation_Core)
@@ -147,6 +152,7 @@ add_subdirectory(libs/Translation_Widgets)
 add_subdirectory(libs/QueryExpression_Core)
 add_subdirectory(libs/QueryExpression_Sql)
 add_subdirectory(libs/Sql_Core)
+add_subdirectory(libs/Sql_Core_SQLite)
 add_subdirectory(libs/Sql_Widgets)
 add_subdirectory(libs/Entity_Core)
 add_subdirectory(libs/Entity_Sql)
