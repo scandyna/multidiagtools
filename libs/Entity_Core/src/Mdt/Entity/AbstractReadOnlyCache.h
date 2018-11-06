@@ -195,6 +195,10 @@ namespace Mdt{ namespace Entity{
 
    signals:
 
+    /*! \brief This signal is emitted when e new error was set
+     */
+    void errorOccured(const Mdt::Error & error);
+
     /*! \brief This signal is emitted before the cache is cleared
      */
     void cacheAboutToBeReset();

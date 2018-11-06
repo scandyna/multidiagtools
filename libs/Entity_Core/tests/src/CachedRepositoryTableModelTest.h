@@ -46,6 +46,8 @@ class CachedRepositoryTableModelTest : public TestBase
   void removeRowsAndSubmitHeaderTest();
   void removeRowsAndSubmitResizeSignalsTest();
   void removeRowsFromRepositoryAndSubmitTest();
+  void cancelRemoveRowsAndSubmitTest();
+  void cancelRemoveRowsAndSubmitHeaderTest();
   void insertRecordsRemoveAndSubmitHeaderTest();
   void setDataAndSubmitTest();
   void setDataAndSubmitSignalTest();

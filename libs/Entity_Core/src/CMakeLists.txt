@@ -5,6 +5,8 @@ set(SOURCE_FILES
   Mdt/Entity/TypeTraits/IsEntityDef.cpp
   Mdt/Entity/TypeTraits/IsEntity.cpp
   Mdt/Entity/TypeTraits/IsRelation.cpp
+  Mdt/Entity/TypeTraits/IsUniqueConstraint.cpp
+  Mdt/Entity/TypeTraits/FieldDef.cpp
   Mdt/Entity/FieldFlags.cpp
   Mdt/Entity/FieldMaxLength.cpp
   Mdt/Entity/FieldAttributes.cpp
@@ -14,6 +16,7 @@ set(SOURCE_FILES
   Mdt/Entity/IntegralUniqueIdTemplate.cpp
   Mdt/Entity/DataTemplate.cpp
   Mdt/Entity/Debug.cpp
+  Mdt/Entity/Value.cpp
   Mdt/Entity/ValueAt.cpp
   Mdt/Entity/FieldAt.cpp
   Mdt/Entity/FieldDataValidatorState.cpp
@@ -22,16 +25,26 @@ set(SOURCE_FILES
   Mdt/Entity/DataList.cpp
   Mdt/Entity/PrimaryKeyField.cpp
   Mdt/Entity/PrimaryKey.cpp
+  Mdt/Entity/PrimaryKeyRecordField.cpp
+  Mdt/Entity/PrimaryKeyRecord.cpp
+  Mdt/Entity/PrimaryKeyRecordFilterExpression.cpp
   Mdt/Entity/ItemModelPrimaryKey.cpp
   Mdt/Entity/ForeignKey.cpp
   Mdt/Entity/ItemModelForeignKey.cpp
+  Mdt/Entity/Impl/AddFieldNameToFieldNameList.cpp
   Mdt/Entity/Relation.cpp
+  Mdt/Entity/RelationAlgorithm.cpp
+  Mdt/Entity/UniqueConstraint.cpp
+  Mdt/Entity/UniqueConstraintAlgorithm.cpp
   Mdt/Entity/ItemModelRelation.cpp
   Mdt/Entity/TableModelRecordAdapter.cpp
   Mdt/Entity/ReadOnlyTableModel.cpp
   Mdt/Entity/EditableTableModel.cpp
   Mdt/Entity/RowResizableTableModel.cpp
   Mdt/Entity/AbstractRepository.cpp
+  Mdt/Entity/AbstractEntityRepositoryBase.cpp
+  Mdt/Entity/AbstractEntityRepository.cpp
+  Mdt/Entity/MemoryEntityRepository.cpp
   Mdt/Entity/AbstractCachedRepository.cpp
   Mdt/Entity/AbstractCachedEntityRepository.cpp
   Mdt/Entity/RepositoryHandle.cpp
@@ -39,6 +52,15 @@ set(SOURCE_FILES
   Mdt/Entity/CachedRepositoryStlTableProxy.cpp
   Mdt/Entity/CachedRepositoryTableModel.cpp
   Mdt/Entity/CachedEntityRepositoryTableModel.cpp
+  Mdt/Entity/QueryEntity.cpp
+  Mdt/Entity/EntitySelectStatementRelation.cpp
+  Mdt/Entity/EntitySelectStatement.cpp
+  Mdt/Entity/AbstractReadOnlyCache.cpp
+  Mdt/Entity/AbstractEditableCache.cpp
+  Mdt/Entity/AbstractAsyncReadOnlyCache.cpp
+  Mdt/Entity/AbstractCacheTableModel.cpp
+  Mdt/Entity/AbstractReadOnlyCacheTableModel.cpp
+  Mdt/Entity/AbstractEditableCacheTableModel.cpp
 #   Mdt/Entity/StlTableProxyImplementationInterface.cpp
 #   Mdt/Entity/StlTableProxy.cpp
 )
@@ -59,7 +81,7 @@ mdt_add_library(
   NAME Entity_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Container IndexRange ItemModel Qt5::Core Error_Core; # Error_Core currently only for MDT_ASSERT()
+  LINK_DEPENDENCIES Container IndexRange ItemModel QueryExpression_Core Expected Qt5::Core Error_Core; # Error_Core currently only for MDT_ASSERT()
 )
 target_compile_definitions(Entity_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

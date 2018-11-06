@@ -197,6 +197,8 @@ namespace Mdt{ namespace ItemModel{
      * If setEditRoleData() returns true, this method will also emit the dataChanged() signal,
      *  and returns true.
      *
+     *  \todo FIX dataChanged() missmatch!
+     *
      * \note The dataChanged() signal is not emitted, preventing multimple emition.
      * \sa setEditRoleData()
      * \sa emitDataChanged()

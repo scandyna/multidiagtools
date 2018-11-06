@@ -27,3 +27,6 @@ endfunction()
 #================= Tests ====================
 
 addRailway_CoreTest("VehicleTypeTest")
+addRailway_CoreTest("CreateVehicleTypeClassTest")
+addRailway_CoreTest("UpdateVehicleTypeClassTest")
+addRailway_CoreTest("CreateVehicleTypeTest")

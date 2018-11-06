@@ -24,7 +24,7 @@ mdt_add_library(
   NAME Railway_Widgets
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES ItemModel Qt5::Widgets Railway_Core Railway_Sql Entity_Widgets Error_Widgets;
+  LINK_DEPENDENCIES ItemModel ItemEditor_Widgets Qt5::Widgets Railway_Core Railway_Sql Entity_Widgets Error_Widgets;
 )
 target_compile_definitions(Railway_Widgets PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

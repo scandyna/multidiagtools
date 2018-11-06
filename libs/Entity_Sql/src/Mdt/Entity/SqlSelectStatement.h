@@ -29,6 +29,8 @@
 namespace Mdt{ namespace Entity{
 
   /*! \brief Helper class to create SQL SELECT statements from a entity
+   *
+   * \todo Should use Mdt::QueryExpression ?
    */
   class MDT_ENTITY_SQL_EXPORT SqlSelectStatement
   {

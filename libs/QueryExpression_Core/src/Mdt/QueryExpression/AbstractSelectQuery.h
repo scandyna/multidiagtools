@@ -143,6 +143,8 @@ namespace Mdt{ namespace QueryExpression{
     AbstractSelectQuery & operator=(AbstractSelectQuery &&) = delete;
 
     /*! \brief Execute \a statement
+     *
+     * \todo should add maxRows argument
      */
     virtual bool exec(const SelectStatement & statement) = 0;
 

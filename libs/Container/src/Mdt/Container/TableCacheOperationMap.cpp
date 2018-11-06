@@ -112,6 +112,19 @@ TableCacheOperation TableCacheOperationMap::operationAtRow(int row) const
   return findRow(row).operation();
 }
 
+TableCacheTransaction TableCacheOperationMap::createTransaction()
+{
+}
+
+TableCacheRowTransactionList TableCacheOperationMap::getRowsToAddToBackend() const
+{
+  TableCacheRowTransactionList rowTransactions;
+  
+  
+
+  return rowTransactions;
+}
+
 RowList TableCacheOperationMap::getRowsToInsertIntoStorage() const
 {
   return getRowsForOperation(TableCacheOperation::Insert);

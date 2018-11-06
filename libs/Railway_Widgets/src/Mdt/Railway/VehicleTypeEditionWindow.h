@@ -23,8 +23,14 @@
 
 #include "Mdt/Railway/CreateVehicleType.h"
 #include "Mdt/Railway/Error.h"
+#include "Mdt/Railway/ChooseVehicleTypeCache.h"
 #include "Mdt/Railway/ChooseVehicleTypeClassCache.h"
+#include "Mdt/Railway/EditVehicleTypeTableModel.h"
+#include "Mdt/Railway/VehicleTypeClassId.h"
 #include "Mdt/QueryExpression/AbstractAsyncSelectQueryFactory.h"
+#include "Mdt/ItemModel/ProxyModelContainer.h"
+#include "Mdt/ItemModel/SelectionModelCurrentRowChanged.h"
+#include "Mdt/ItemEditor/DataWidgetMapper.h"
 #include "Mdt/Error.h"
 #include "MdtRailway_WidgetsExport.h"
 #include <QWidget>
@@ -77,12 +83,22 @@ namespace Mdt{ namespace Railway{
 
    private:
 
+    VehicleTypeClassId selectedVehicleTypeClassId() const;
     CreateVehicleTypeRequest makeCreateVehicleTypeRequest() const;
     bool validateRequest(const CreateVehicleTypeRequest & request);
     void setupChooseVehicleTypeClass();
+    void setupVehicleTypeModels();
+    void setupChooseVehicleType();
+    void setupEditVehicleType();
     void displayError(const Mdt::Error & error);
 
     ChooseVehicleTypeClassCache mChooseVehicleTypeClassCache;
+//     ChooseVehicleTypeCache mChooseVehicleTypeCache;
+    Mdt::ItemModel::ProxyModelContainer mEditVehicleTypeModelContainer;
+    Mdt::ItemModel::SelectionModelCurrentRowChanged mVehicleTypeCurrentRowChanged;
+    EditVehicleTypeTableModel mEditVehicleTypeTableModel;
+    Mdt::ItemEditor::DataWidgetMapper *mWidgetMapper = nullptr;
+    
     std::unique_ptr<Ui::VehicleTypeEditionWindow> mUi;
   };
 

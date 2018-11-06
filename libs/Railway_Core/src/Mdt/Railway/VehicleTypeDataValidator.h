@@ -23,6 +23,7 @@
 
 #include "FieldDataValidatorState.h"
 #include "Error.h"
+#include "VehicleTypeClassId.h"
 #include "Entity/VehicleType.h"
 #include "Mdt/Entity/FieldDataValidator.h"
 #include "MdtRailway_CoreExport.h"
@@ -36,6 +37,10 @@ namespace Mdt{ namespace Railway{
   class MDT_RAILWAY_CORE_EXPORT VehicleTypeDataValidator : public QObject
   {
    public:
+
+    /*! \brief Validate vehicle type class id
+     */
+    bool validateVehicleTypeClassId(VehicleTypeClassId id);
 
     /*! \brief Validate manufacturer serie
      */

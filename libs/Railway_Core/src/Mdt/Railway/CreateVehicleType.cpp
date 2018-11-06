@@ -21,6 +21,7 @@
 #include "CreateVehicleType.h"
 #include "VehicleTypeData.h"
 #include "VehicleTypeDataValidator.h"
+#include "Mdt/ErrorCode.h"
 
 namespace Mdt{ namespace Railway{
 
@@ -40,15 +41,16 @@ bool CreateVehicleType::execute(const CreateVehicleTypeRequest & request)
   }
   VehicleTypeData vehicleType;
   vehicleType.setManufacturerSerie(request.manufacturerSerie);
+  vehicleType.setVehicleTypeClassId(request.vehicleTypeClassId);
   const auto vehicleTypeId = mRepository->add(vehicleType);
   if(!vehicleTypeId){
-    emit failed(vehicleTypeId.error());
+    buildAndNotifyError(vehicleTypeId.error());
     return false;
   }
   
-  response.vehicleTypeId = QString::number(25);
+  response.vehicleTypeId = QString::number( vehicleTypeId.value().value() );
   response.className = request.className;
-  response.manufacturerSerie = QString::number(7);
+  response.manufacturerSerie = request.manufacturerSerie;
 
   emit succeed(response);
 
@@ -59,6 +61,10 @@ bool CreateVehicleType::checkRequest(const CreateVehicleTypeRequest & request) c
 {
   VehicleTypeDataValidator validator;
 
+  if(!validator.validateVehicleTypeClassId(request.vehicleTypeClassId)){
+    emit failed(validator.lastError());
+    return false;
+  }
   if(!validator.validateManufacturerSerie(request.manufacturerSerie)){
     emit failed(validator.lastError());
     return false;
@@ -71,6 +77,30 @@ bool CreateVehicleType::checkRequest(const CreateVehicleTypeRequest & request) c
 //   }
 
   return true;
+}
+
+void CreateVehicleType::buildAndNotifyError(const Error& error)
+{
+  if(error.isErrorType<Mdt::ErrorCode>()){
+    const auto errorCode = error.error<Mdt::ErrorCode>();
+    switch(errorCode){
+      case Mdt::ErrorCode::UniqueConstraintError:
+        notifyUniqueConstraintError(error);
+        return;
+      default:
+        break;
+    }
+  }
+
+  emit failed(error);
+}
+
+void CreateVehicleType::notifyUniqueConstraintError(const Error& inError)
+{
+  const auto msg = tr("A vehicle type with given data allready exists");
+  auto error = mdtErrorNewQ(msg, Mdt::Error::Warning, this);
+  error.stackError(inError);
+  emit failed(error);
 }
 
 }} // namespace Mdt{ namespace Railway{

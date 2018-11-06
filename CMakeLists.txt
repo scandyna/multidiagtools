@@ -57,6 +57,8 @@ enable_testing()
 # Compiler options
 #################################################################################################################################################
 
+# TODO Should look at PIE (Position Independ Code). Security and other..
+
 # C++ standard
 set(CMAKE_CXX_STANDARD 14)
 # Build C++ flags adding those set in cache file
@@ -123,6 +125,7 @@ endif()
 add_subdirectory(libs/QtSolutions)
 add_subdirectory(libs/Error_Core)
 add_subdirectory(libs/Error_Widgets)
+add_subdirectory(libs/LibraryInfo_Core)
 add_subdirectory(libs/Application_Core)
 add_subdirectory(libs/Application_Core_Single)
 add_subdirectory(libs/Application_Widgets)
@@ -136,10 +139,11 @@ add_subdirectory(libs/Numeric)
 add_subdirectory(libs/PlainText_Core)
 add_subdirectory(libs/ItemModel)
 # # add_subdirectory(libs/SerialPort)
-# add_subdirectory(libs/ItemEditor)
+add_subdirectory(libs/ItemEditor_Widgets)
 # add_subdirectory(libs/ItemEditor_Sql)
 add_subdirectory(libs/TestLib_Core)
 add_subdirectory(libs/TestLib_Container)
+add_subdirectory(libs/TestLib_Widgets)
 add_subdirectory(libs/FileSystem_Core)
 add_subdirectory(libs/DeployUtils_Core)
 add_subdirectory(libs/Translation_Core)
@@ -147,6 +151,7 @@ add_subdirectory(libs/Translation_Widgets)
 add_subdirectory(libs/QueryExpression_Core)
 add_subdirectory(libs/QueryExpression_Sql)
 add_subdirectory(libs/Sql_Core)
+add_subdirectory(libs/Sql_Core_SQLite)
 add_subdirectory(libs/Sql_Widgets)
 add_subdirectory(libs/Entity_Core)
 add_subdirectory(libs/Entity_Sql)

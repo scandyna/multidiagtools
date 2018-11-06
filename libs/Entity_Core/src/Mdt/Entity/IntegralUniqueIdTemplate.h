@@ -144,8 +144,6 @@ namespace Mdt{ namespace Entity{
     }
 
     /*! \brief Construct a id from \a value
-     *
-     * \todo Must use CRTP..
      */
     static Derived fromQVariant(const QVariant & value)
     {

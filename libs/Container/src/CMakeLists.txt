@@ -3,9 +3,13 @@
 set(SOURCE_FILES
   Mdt/Container/StlContainer.cpp
   Mdt/Container/StlContainerIteratorAdapter.cpp
+  Mdt/Container/Vector.cpp
   Mdt/Container/RowColumnListBase.cpp
   Mdt/Container/ColumnList.cpp
   Mdt/Container/RowList.cpp
+  Mdt/Container/TableCacheTransaction.cpp
+  Mdt/Container/TableCacheRowTransaction.cpp
+  Mdt/Container/TableCacheRowTransactionList.cpp
   Mdt/Container/TableCacheOperationIndex.cpp
   Mdt/Container/TableCacheOperationMap.cpp
   Mdt/Container/TableCache.cpp

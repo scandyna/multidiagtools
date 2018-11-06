@@ -21,7 +21,9 @@
 #ifndef MDT_RAILWAY_CREATE_VEHICLE_TYPE_H
 #define MDT_RAILWAY_CREATE_VEHICLE_TYPE_H
 
-#include "Error.h"
+#include "VehicleTypeClassId.h"
+// #include "Error.h"
+#include "Mdt/Error.h"
 #include "VehicleTypeRepository.h"
 #include "MdtRailway_CoreExport.h"
 #include <QObject>
@@ -41,9 +43,13 @@ namespace Mdt{ namespace Railway{
      */
     QString className;
 
+    /*! \brief Vehicle type class id
+     */
+    VehicleTypeClassId vehicleTypeClassId;
+
     /*! \brief Alias
      *
-     * The alias is, for example, a project name given to y vehicle type
+     * The alias is, for example, a project name given to a vehicle type
      *  (for example DOMINO).
      */
     QString alias;
@@ -122,6 +128,8 @@ namespace Mdt{ namespace Railway{
    private:
 
     bool checkRequest(const CreateVehicleTypeRequest & request) const;
+    void buildAndNotifyError(const Mdt::Error & error);
+    void notifyUniqueConstraintError(const Mdt::Error & inError);
 
     std::shared_ptr<VehicleTypeRepository> mRepository;
   };

@@ -10,6 +10,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(SOURCES_FILES
     src/TestBase.cpp
     src/SqlTestBase.cpp
+    src/PersonTableModel.cpp
 )
 
 add_library(mdtitemmodeltest SHARED ${SOURCES_FILES})
@@ -67,3 +68,4 @@ addItemModelTest("StlListModelBenchmark")
 addItemModelTest("StlTableModelTest")
 addItemModelTest("StlTableModelBenchmark")
 addItemModelTest("SelectQueryTableModelTest")
+addItemModelTest("SelectionModelCurrentRowChangedTest")

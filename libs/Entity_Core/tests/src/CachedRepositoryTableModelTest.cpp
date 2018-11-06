@@ -688,6 +688,95 @@ void CachedRepositoryTableModelTest::removeRowsFromRepositoryAndSubmitTest()
   QCOMPARE(headerDataChangedSpy.count(), 0);
 }
 
+void CachedRepositoryTableModelTest::cancelRemoveRowsAndSubmitTest()
+{
+  EditPersonTableModel model;
+  auto personRepositoryHandle = PersonRepositoryHandle::make<MemoryPersonRepository>();
+  model.setRepository(personRepositoryHandle);
+
+  populateRepository(personRepositoryHandle, {"A","B","C"});
+  QVERIFY(personRepositoryHandle.repository().fetchAll());
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("fA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("fB"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("fC"));
+  QCOMPARE(repositoryStorageRowCount(personRepositoryHandle), 3);
+  QCOMPARE(repositoryStorageToFirstNameList(personRepositoryHandle), QStringList({"fA","fB","fC"}));
+
+  QVERIFY(removeFirstRowFromModel(model));
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("fA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("fB"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("fC"));
+  QCOMPARE(repositoryStorageRowCount(personRepositoryHandle), 3);
+  QCOMPARE(repositoryStorageToFirstNameList(personRepositoryHandle), QStringList({"fA","fB","fC"}));
+
+  model.cancelRemoveRows(0, 1);
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("fA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("fB"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("fC"));
+  QCOMPARE(repositoryStorageRowCount(personRepositoryHandle), 3);
+  QCOMPARE(repositoryStorageToFirstNameList(personRepositoryHandle), QStringList({"fA","fB","fC"}));
+
+  QVERIFY(model.submitChanges());
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("fA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("fB"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("fC"));
+  QCOMPARE(repositoryStorageRowCount(personRepositoryHandle), 3);
+  QCOMPARE(repositoryStorageToFirstNameList(personRepositoryHandle), QStringList({"fA","fB","fC"}));
+}
+
+void CachedRepositoryTableModelTest::cancelRemoveRowsAndSubmitHeaderTest()
+{
+  EditPersonTableModel model;
+  auto personRepositoryHandle = PersonRepositoryHandle::make<MemoryPersonRepository>();
+  model.setRepository(personRepositoryHandle);
+  QSignalSpy headerDataChangedSpy(&model, &EditPersonTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+  QVariantList arguments;
+
+  populateRepository(personRepositoryHandle, {"A","B","C"});
+  QVERIFY(personRepositoryHandle.repository().fetchAll());
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("1"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("2"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("3"));
+
+  QVERIFY(removeFirstRowFromModel(model));
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(0)); // first
+  QCOMPARE(arguments.at(2), QVariant(0)); // last
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("2"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("3"));
+
+  model.cancelRemoveRows(0, 1);
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(0)); // first
+  QCOMPARE(arguments.at(2), QVariant(0)); // last
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("1"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("2"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("3"));
+
+  QVERIFY(model.submitChanges());
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("1"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("2"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("3"));
+}
+
 void CachedRepositoryTableModelTest::insertRecordsRemoveAndSubmitHeaderTest()
 {
 

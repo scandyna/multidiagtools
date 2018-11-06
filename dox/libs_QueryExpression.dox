@@ -169,12 +169,18 @@
  *  \endcode
  *
  * \sa Mdt::QueryExpression::SqlSelectQuery
+ * \sa Mdt::QueryExpression::AbstractAsyncReadOnlyCache
  *
  * As said before, the concrete backend that will be used in the application
  *  must not become a dependency in all the business logic.
  *
  * In the domain code, we must be able to create queries that are correctly
  *  setup with a concrete backend, without knowing anything about this backend.
+ *
+ * \todo Document this part
+ *
+ * \sa Mdt::QueryExpression::AbstractReadOnlyCache
+ * \sa Mdt::QueryExpression::AbstractAsyncReadOnlyCache
  *
  * To achieve this, Mdt::QueryExpression::AbstractSelectQueryFactory can be used:
  * \code

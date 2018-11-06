@@ -87,6 +87,9 @@ namespace Mdt{ namespace QueryExpression{
    * SomeUseCase someUseCase(selectQueryFactory);
    * SomeUseCaseView view(&someUseCase);
    * \endcode
+   *
+   * \note Depending on the backend implementation, a thread can be created for each instance of the factory.
+   *    For such example, see SqlAsyncSelectQueryFactory which uses Mdt::Sql::AsyncQueryConnection .
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT AbstractAsyncSelectQueryFactory
   {

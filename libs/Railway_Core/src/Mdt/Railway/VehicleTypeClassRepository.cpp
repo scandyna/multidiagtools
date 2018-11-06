@@ -21,4 +21,37 @@
 #include "VehicleTypeClassRepository.h"
 
 namespace Mdt{ namespace Railway{
+
+void AbstractVehicleTypeClassRepository::setName(int row, const QString & name)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  recordAt(row).setName(name);
+}
+
+QString AbstractVehicleTypeClassRepository::name(int row) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  return constRecordAt(row).name();
+}
+
+void AbstractVehicleTypeClassRepository::setAlias(int row, const QString & alias)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  recordAt(row).setAlias(alias);
+}
+
+QString AbstractVehicleTypeClassRepository::alias(int row) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  return constRecordAt(row).alias();
+}
+
 }} // namespace Mdt{ namespace Railway{

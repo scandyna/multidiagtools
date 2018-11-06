@@ -202,6 +202,35 @@ namespace Mdt{ namespace Entity{
       emitOperationAtRowsChanged(rowRange.firstRow(), rowRange.lastRow());
     }
 
+    /*! \brief Cancel the removal of \a count records starting from \a pos
+     *
+     * \pre \a pos must be >= 0
+     * \pre \a count muste be >= 1
+     * \pre \a pos + \a count must be in valid range ( 1 <= \a pos + \a count <= rowCount() )
+     */
+    void cancelRemoveRecords(int pos, int count)
+    {
+      Q_ASSERT(pos >= 0);
+      Q_ASSERT(count >= 0);
+      Q_ASSERT( (pos + count) <= rowCount() );
+
+      mCache.cancelRemoveRecords(pos, count);
+      Mdt::IndexRange::RowRange rowRange;
+      rowRange.setFirstRow(pos);
+      rowRange.setRowCount(count);
+      emitOperationAtRowsChanged(rowRange.firstRow(), rowRange.lastRow());
+    }
+
+    /*! \brief Get a list of rows for records that have been updated in the cache
+     *
+     * The returned list constain rows that have been inserted
+     *  or updated in this cache.
+     */
+    Mdt::Container::RowList getRowsForUpdatedRecords() const
+    {
+      return mCache.getRowsForUpdatedRecords();
+    }
+
     /*! \brief Submit changes
      *
      * Will submit changes done in the cache to the storage.
@@ -399,7 +428,7 @@ namespace Mdt{ namespace Entity{
     }
 
     Mdt::Container::TableCache<Record> mCache;
-    int mCachedRowCountLimit = 5000;
+    int mCachedRowCountLimit = 5000;  /// \todo This should be moved to Mdt::Container::TableCache .
   };
 
 }} // namespace Mdt{ namespace Entity{

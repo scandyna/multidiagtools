@@ -30,6 +30,8 @@ class TableCacheOperationTest : public TestBase
  private slots:
 
   void indexTest();
+  void transactionObjectTest();
+  void rowTransactionObjectTest();
 
   void operationFromExistingTest();
   void insertRecordsTest();

@@ -10,7 +10,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtRailway_WidgetsTest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtRailway_WidgetsTest Railway_Widgets Sql_Widgets Application_Widgets TestLib_Core Qt5::Test)
+target_link_libraries(mdtRailway_WidgetsTest Railway_Widgets Sql_Widgets Sql_Core_SQLite Application_Widgets TestLib_Core Qt5::Test)
 
 #=============== Helper functions ===========
 

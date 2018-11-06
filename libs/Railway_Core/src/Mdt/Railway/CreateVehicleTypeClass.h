@@ -108,57 +108,6 @@ namespace Mdt{ namespace Railway{
     Mdt::Error mLastError;
   };
 
-//   /*! \brief Recieve a response from CreateVehicleTypeClass
-//    */
-//   class CreateVehicleTypeClassResponseReciever : public QObject
-//   {
-//    Q_OBJECT
-// 
-//    public:
-// 
-//     /*! \brief Constructor
-//      */
-//     CreateVehicleTypeClassResponseReciever(CreateVehicleTypeClass *cvtc, QObject *parent = nullptr);
-// 
-//     /*! \brief Check a error was set
-//      */
-//     bool hasError() const
-//     {
-//       return !mError.isNull();
-//     }
-// 
-//     /*! \brief Get response
-//      */
-//     CreateVehicleTypeClassResponse response() const
-//     {
-//       return mResponse;
-//     }
-// 
-//     /*! \brief Get error
-//      */
-//     Mdt::Error error() const
-//     {
-//       return mError;
-//     }
-// 
-//    public slots:
-// 
-//     void setResponse(const CreateVehicleTypeClassResponse & response)
-//     {
-//       mResponse = response;
-//     }
-// 
-//     void setError(const Mdt::Error & error)
-//     {
-//       mError = error;
-//     }
-// 
-//    private:
-// 
-//     CreateVehicleTypeClassResponse mResponse;
-//     Mdt::Error mError;
-//   };
-
 }} // namespace Mdt{ namespace Railway{
 
 #endif // #ifndef MDT_RAILWAY_CREATE_VEHICLE_TYPE_CLASS_H

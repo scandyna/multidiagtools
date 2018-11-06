@@ -21,18 +21,42 @@
 #ifndef MDT_RAILWAY_VEHICLE_TYPE_CLASS_REPOSITORY_H
 #define MDT_RAILWAY_VEHICLE_TYPE_CLASS_REPOSITORY_H
 
+#include "VehicleTypeClassId.h"
 #include "VehicleTypeClassData.h"
+#include "AbstractEntityRepository.h"
+
 #include "Mdt/Entity/AbstractCachedEntityRepository.h"
 #include "Mdt/Entity/RepositoryHandle.h"
-// #include "Mdt/Entity/CachedRepositoryStlTableProxy.h"
 
 namespace Mdt{ namespace Railway{
+
+  /*! \brief Vehicle type class repository
+   */
+  class MDT_RAILWAY_CORE_EXPORT VehicleTypeClassRepository : public virtual AbstractEntityRepository<VehicleTypeClassData, VehicleTypeClassId>
+  {
+  };
 
   /*! \brief Vehicle type repository interface
    */
   class MDT_RAILWAY_CORE_EXPORT AbstractVehicleTypeClassRepository : public Mdt::Entity::AbstractCachedEntityRepository<VehicleTypeClassData>
   {
    public:
+
+    /*! \brief Set name at \a row
+     */
+    void setName(int row, const QString & name);
+
+    /*! \brief Get name at \a row
+     */
+    QString name(int row) const;
+
+    /*! \brief Set name at \a row
+     */
+    void setAlias(int row, const QString & alias);
+
+    /*! \brief Get alias at \a row
+     */
+    QString alias(int row) const;
 
 //     /*! \brief Submit changes
 //      */
@@ -43,11 +67,7 @@ namespace Mdt{ namespace Railway{
 
   /*! \brief Repsoitory for vehicle type class
    */
-  using VehicleTypeClassRepository = Mdt::Entity::RepositoryHandle<AbstractVehicleTypeClassRepository>;
-
-//   /*! \brief STL table proxy for vehicle type class
-//    */
-//   using VehicleTypeClassRepositoryStlTableProxy = Mdt::Entity::CachedRepositoryStlTableProxy<AbstractVehicleTypeClassRepository>;
+  using VehicleTypeClassRepositoryHandle = Mdt::Entity::RepositoryHandle<AbstractVehicleTypeClassRepository>;
 
 }} // namespace Mdt{ namespace Railway{
 

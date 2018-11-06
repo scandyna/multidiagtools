@@ -21,6 +21,8 @@
 #include "TableCacheOperationTest.h"
 #include "Mdt/Container/TableCacheOperationIndex.h"
 #include "Mdt/Container/TableCacheOperationMap.h"
+#include "Mdt/Container/TableCacheTransaction.h"
+#include "Mdt/Container/TableCacheRowTransaction.h"
 #include "Mdt/TestLib/CompareRowList.h"
 
 using namespace Mdt::Container;
@@ -48,6 +50,28 @@ void TableCacheOperationTest::indexTest()
   QCOMPARE(index10.column(), 0);
   QVERIFY(!index10.isNull());
   QCOMPARE(index10.operation(), TableCacheOperation::Insert);
+}
+
+void TableCacheOperationTest::transactionObjectTest()
+{
+  TableCacheTransaction t0;
+  QCOMPARE(t0.id(), 0);
+  QVERIFY(t0.isNull());
+
+  TableCacheTransaction t1(1);
+  QCOMPARE(t1.id(), 1);
+  QVERIFY(!t1.isNull());
+}
+
+void TableCacheOperationTest::rowTransactionObjectTest()
+{
+  TableCacheRowTransaction t0;
+  QCOMPARE(t0.row(), -1);
+  QCOMPARE(t0.transactionId(), 0);
+  QVERIFY(t0.isNull());
+  
+  
+  QFAIL("Not complete");
 }
 
 void TableCacheOperationTest::operationFromExistingTest()
@@ -83,6 +107,7 @@ void TableCacheOperationTest::operationFromExistingTest()
 
 void TableCacheOperationTest::insertRecordsTest()
 {
+  TableCacheRowTransactionList rowTransactions;
   TableCacheOperationMap map;
   QCOMPARE(map.indexCount(), 0);
   QVERIFY(map.isEmpty());
@@ -91,7 +116,9 @@ void TableCacheOperationTest::insertRecordsTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
-  QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({}));
+  rowTransactions = map.getRowsToAddToBackend();
+  QCOMPARE(rowTransactions.size(), 0);
+//   QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({}));
 
   map.insertRecords(0, 1);
   QCOMPARE(map.indexCount(), 1);
@@ -102,7 +129,10 @@ void TableCacheOperationTest::insertRecordsTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
-  QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({0}));
+  QCOMPARE(rowTransactions.size(), 1);
+  QCOMPARE(rowTransactions.at(0).row(), 0);
+  QCOMPARE(rowTransactions.at(0).transactionId(), 1);
+//   QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({0}));
 
   map.insertRecords(2, 2);
   QCOMPARE(map.indexCount(), 3);
@@ -114,7 +144,16 @@ void TableCacheOperationTest::insertRecordsTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::Insert);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::Insert);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
-  QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({0,2,3}));
+  QCOMPARE(rowTransactions.size(), 3);
+  QCOMPARE(rowTransactions.at(0).row(), 0);
+  QCOMPARE(rowTransactions.at(0).transactionId(), 1);
+  QCOMPARE(rowTransactions.at(1).row(), 2);
+  QCOMPARE(rowTransactions.at(1).transactionId(), 2);
+  QCOMPARE(rowTransactions.at(2).row(), 3);
+  QCOMPARE(rowTransactions.at(2).transactionId(), 3);
+//   QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({0,2,3}));
+
+  QFAIL("Not complete");
 
   map.insertRecords(0, 1);
   QCOMPARE(map.indexCount(), 4);

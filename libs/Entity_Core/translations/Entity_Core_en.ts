@@ -15,7 +15,11 @@
 <context>
     <name>Mdt::Entity::MemoryEntityRepository</name>
     <message>
-        <source>ljdjlkdfj</source>
+        <source>A record with id &apos;%1&apos; allready exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not find a record with id &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

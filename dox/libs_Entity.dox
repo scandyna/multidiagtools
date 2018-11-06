@@ -24,6 +24,11 @@
  * \todo Explain 2 approches:
  *   - Accept to depend on Entity library in business model and use validadtors, item delegates, ... that uses Entiy attributes (central eay to give some common constraints)
  *   - Depend on Entity in only some parts
+ *   - For repositories:
+ *    -> Inherit from AbstractCachedRepository or AbstractRepository
+ *    -> Create a base class that Inherits from AbstractCachedRepository or AbstractRepository
+ *       (which will be to implement once Mdt::[Entity|Repository] is no longer usable for the project)
+ *   - Note: Qt will allways remain a dependency (QString, QVariant, ItemModels, signals/slots)
  *
  * In this library, the concept of a entity is a thing of interest
  *  in the application, like a Article, a Person, etc..

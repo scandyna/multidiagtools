@@ -23,7 +23,12 @@
 
 #include "TableCacheOperation.h"
 #include "TableCacheOperationIndex.h"
+#include "TableCacheTransaction.h"
+#include "TableCacheRowTransaction.h"
+#include "TableCacheRowTransactionList.h"
+
 #include "RowList.h"
+
 #include "Mdt/IndexRange/RowRange.h"
 #include "MdtContainerExport.h"
 #include <QtGlobal>
@@ -125,7 +130,7 @@ namespace Mdt{ namespace Container{
      */
     void cancelRemoveRecords(int pos, int count);
 
-    /*! \brief Remove the operation at \a row from thi map
+    /*! \brief Remove the operation at \a row from this map
      *
      * \pre \a row must be >= 0
      */
@@ -155,6 +160,14 @@ namespace Mdt{ namespace Container{
      * \pre \a row must be >= 0
      */
     TableCacheOperation operationAtRow(int row) const;
+
+    /*! \brief Create a new transaction
+     */
+    TableCacheTransaction createTransaction();
+
+    /*! \brief Get a list of rows that have to be added to the backend
+     */
+    TableCacheRowTransactionList getRowsToAddToBackend() const;
 
     /*! \brief Get a list of rows that have to be inserted to the storage
      */

@@ -23,6 +23,8 @@
  *
  * Some additions to Qt models (model/view framework)
  *
+ * \sa Mdt::ItemModel
+ *
  * \section ItemModelAndSelections Item model and selections
  *
  *  A classical problem to deal with is to remove a set of rows regarding a selection.
@@ -46,6 +48,13 @@
  *
  * Mdt::ItemModel::removeRows(model, view->selectionModel());
  * \endcode
+ *
+ *
+ * \section select_query_table_model Select query table model
+ *
+ * \sa Mdt::ItemModel::SelectQueryTableModel
+ *
+ *
  */
 
 

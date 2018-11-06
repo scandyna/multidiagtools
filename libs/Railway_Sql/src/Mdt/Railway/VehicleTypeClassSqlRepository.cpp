@@ -22,8 +22,11 @@
 #include "Mdt/Railway/Entity/VehicleTypeClass.h"
 #include "Mdt/Entity/SqlSelectStatement.h"
 #include "Mdt/Entity/SqlData.h"
+#include "Mdt/Entity/SqlPrimaryKeyRecord.h"
 #include "Mdt/Sql/Error.h"
 #include "Mdt/Sql/InsertQuery.h"
+#include "Mdt/Sql/UpdateQuery.h"
+#include "Mdt/Sql/DeleteQuery.h"
 #include "Mdt/Sql/FieldName.h"
 #include <QString>
 #include <QSqlQuery>
@@ -71,7 +74,7 @@ bool VehicleTypeClassSqlRepository::fetchRecords(int count)
   return true;
 }
 
-bool VehicleTypeClassSqlRepository::insertRecordToStorage(const VehicleTypeClassData& record)
+bool VehicleTypeClassSqlRepository::insertRecordToStorage(const VehicleTypeClassData& record, QVariant& autoId)
 {
   using Mdt::Sql::FieldName;
 
@@ -84,7 +87,54 @@ bool VehicleTypeClassSqlRepository::insertRecordToStorage(const VehicleTypeClass
     setLastError(query.lastError());
     return false;
   }
-  
+  autoId = query.lastInsertId();
+
+  return true;
+}
+
+bool VehicleTypeClassSqlRepository::removeRecordFromStorage(int row)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  using Mdt::Sql::FieldName;
+
+  Mdt::Sql::DeleteQuery query(mDbConnection);
+  const auto record = constRecordAt(row);
+  const auto pkRecord = Mdt::Entity::SqlPrimaryKeyRecord::fromEntityData(record);
+
+  qDebug() << "Removing " << pkRecord.toValueList() << " ...";
+  query.setTableName(record.def().entityName());
+  query.setConditions(pkRecord);
+  if(!query.exec()){
+    setLastError(query.lastError());
+    return false;
+  }
+  qDebug() << "Remove DONE";
+
+  return true;
+}
+
+bool VehicleTypeClassSqlRepository::updateRecordInStorage(int row)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  using Mdt::Sql::FieldName;
+
+  Mdt::Sql::UpdateQuery query(mDbConnection);
+  const auto record = constRecordAt(row);
+  const auto pkRecord = Mdt::Entity::SqlPrimaryKeyRecord::fromEntityData(record);
+
+  query.setTableName(record.def().entityName());
+  query.addValue( FieldName(record.def().name().fieldName()), record.name() );
+  query.addValue( FieldName(record.def().alias().fieldName()), record.alias() );
+  query.setConditions(pkRecord);
+  if(!query.exec()){
+    setLastError(query.lastError());
+    return false;
+  }
+
   return true;
 }
 

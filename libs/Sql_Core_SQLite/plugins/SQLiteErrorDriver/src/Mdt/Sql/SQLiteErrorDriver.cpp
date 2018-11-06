@@ -26,7 +26,7 @@
 #include <QString>
 #include <QLatin1String>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace Sql{
 
@@ -72,6 +72,7 @@ Mdt::ErrorCode SQLiteErrorDriver::fromExtendedErrorCode(int errorCode)
 
   switch(errorCode){
     case SQLITE_CONSTRAINT_UNIQUE:
+    case SQLITE_CONSTRAINT_PRIMARYKEY:
       return ErrorCode::UniqueConstraintError;
   }
 

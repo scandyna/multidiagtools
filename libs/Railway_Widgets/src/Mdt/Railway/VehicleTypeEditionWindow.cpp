@@ -21,10 +21,11 @@
 #include "VehicleTypeEditionWindow.h"
 #include "ui_VehicleTypeEditionWindow.h"
 #include "Mdt/Railway/VehicleTypeDataValidator.h"
-#include "Mdt/ItemModel/ProxyModelContainer.h"
+#include "Mdt/Railway/EditVehicleTypeTableModel.h"
 #include "Mdt/ItemModel/SortProxyModel.h"
 #include "Mdt/Entity/AbstractReadOnlyCacheTableModel.h"
 #include "Mdt/Entity/SetupWidget.h"
+#include "Mdt/Error.h"
 #include "Mdt/ErrorDialog.h"
 
 using namespace Mdt::Entity;
@@ -50,6 +51,9 @@ VehicleTypeEditionWindow::VehicleTypeEditionWindow(QWidget* parent)
   connect(mUi->action_Save, &QAction::triggered, this, &VehicleTypeEditionWindow::save);
 
   setupChooseVehicleTypeClass();
+  setupVehicleTypeModels();
+  setupChooseVehicleType();
+  setupEditVehicleType();
 }
 
 VehicleTypeEditionWindow::~VehicleTypeEditionWindow()
@@ -63,6 +67,12 @@ void VehicleTypeEditionWindow::setQueryFactory(const std::shared_ptr<SelectQuery
 
   mChooseVehicleTypeClassCache.setQueryFactory(factory);
   mChooseVehicleTypeClassCache.fetchAll();
+
+//   mChooseVehicleTypeCache.setQueryFactory(factory);
+//   mChooseVehicleTypeCache.fetchAll();
+  
+  mEditVehicleTypeTableModel.setQueryFactory(factory);
+  mEditVehicleTypeTableModel.fetchAll();
 }
 
 void VehicleTypeEditionWindow::displayCreatedVehicleType(const CreateVehicleTypeResponse& response)
@@ -78,6 +88,8 @@ void VehicleTypeEditionWindow::handleError(const Railway::Error& error)
 
 void VehicleTypeEditionWindow::save()
 {
+  mWidgetMapper->setDataToModel();
+
   const auto request = makeCreateVehicleTypeRequest();
 
   if(!validateRequest(request)){
@@ -87,11 +99,24 @@ void VehicleTypeEditionWindow::save()
   emit createVehicleTypeRequested(request);
 }
 
+VehicleTypeClassId VehicleTypeEditionWindow::selectedVehicleTypeClassId() const
+{
+  auto *cb = mUi->vehicleTypeName;
+
+  const auto row = cb->currentIndex();
+  if(row < 0){
+    return VehicleTypeClassId();
+  }
+
+  return mChooseVehicleTypeClassCache.id(row);
+}
+
 CreateVehicleTypeRequest VehicleTypeEditionWindow::makeCreateVehicleTypeRequest() const
 {
   CreateVehicleTypeRequest request;
 
   request.className = mUi->vehicleTypeName->currentText();
+  request.vehicleTypeClassId = selectedVehicleTypeClassId();
   request.alias = QLatin1String("Fake");
   request.manufacturerSerie = mUi->leManufacturerSerie->text();
 
@@ -102,6 +127,12 @@ bool VehicleTypeEditionWindow::validateRequest(const CreateVehicleTypeRequest& r
 {
   VehicleTypeDataValidator validator;
 
+  if(request.vehicleTypeClassId.isNull()){
+    const auto msg = tr("Please choose a vehicle type class");
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Warning, this);
+    displayError(error);
+    return false;
+  }
   if(!validator.validateManufacturerSerie(request.manufacturerSerie)){
     /// \todo Here we should use last state, mark the field (red), generate good message
     displayError(validator.lastError());
@@ -113,7 +144,7 @@ bool VehicleTypeEditionWindow::validateRequest(const CreateVehicleTypeRequest& r
 
 void VehicleTypeEditionWindow::setupChooseVehicleTypeClass()
 {
-//   connect(&mChooseVehicleTypeClassCache, &ChooseVehicleTypeClassCache::errorOccured, this, &VehicleTypeEditionWindow::handleError);
+  connect(&mChooseVehicleTypeClassCache, &ChooseVehicleTypeClassCache::errorOccured, this, &VehicleTypeEditionWindow::handleError);
 
   auto *cb = mUi->vehicleTypeName;
   auto *model = new AbstractReadOnlyCacheTableModel(cb);
@@ -129,6 +160,52 @@ void VehicleTypeEditionWindow::setupChooseVehicleTypeClass()
 
   cb->setModel(modelContainer.modelForView());
   cb->setModelColumn( mChooseVehicleTypeClassCache.nameColumn() );
+}
+
+void VehicleTypeEditionWindow::setupVehicleTypeModels()
+{
+  mEditVehicleTypeModelContainer.setSourceModel(&mEditVehicleTypeTableModel);
+  auto *sortModel = new SortProxyModel(this);
+  sortModel->setSortLocaleAware(true);
+  sortModel->addColumnToSortOrder(1, StringNumericMode::Natural, Qt::AscendingOrder);
+  mEditVehicleTypeModelContainer.appendProxyModel(sortModel);
+}
+
+void VehicleTypeEditionWindow::setupChooseVehicleType()
+{
+//   connect(&mChooseVehicleTypeCache, &ChooseVehicleTypeCache::errorOccured, this, &VehicleTypeEditionWindow::handleError);
+
+  auto *view = mUi->availableVehicleTypeView;
+//   auto *model = new AbstractReadOnlyCacheTableModel(view);
+
+//   model->setCache(&mChooseVehicleTypeCache);
+
+//   ProxyModelContainer modelContainer;
+//   modelContainer.setSourceModel(&mEditVehicleTypeTableModel);
+//   auto *sortModel = new SortProxyModel(view);
+//   sortModel->setSortLocaleAware(true);
+//   sortModel->addColumnToSortOrder(1, StringNumericMode::Natural, Qt::AscendingOrder);
+//   modelContainer.appendProxyModel(sortModel);
+
+//   view->setModel(modelContainer.modelForView());
+
+  view->setModel(mEditVehicleTypeModelContainer.modelForView());
+}
+
+void VehicleTypeEditionWindow::setupEditVehicleType()
+{
+  using Mdt::ItemEditor::DataWidgetMapper;
+
+  Q_ASSERT(mWidgetMapper == nullptr);
+
+  mWidgetMapper = new DataWidgetMapper(this);
+  mWidgetMapper->setModel(mEditVehicleTypeModelContainer.modelForView());
+  mWidgetMapper->addMapping( mUi->vehicleTypeName, mEditVehicleTypeTableModel.vehicleTypeNameColumn() );
+  mWidgetMapper->addMapping( mUi->leManufacturerSerie, mEditVehicleTypeTableModel.manufacturerSerieColumn() );
+
+  auto *view = mUi->availableVehicleTypeView;
+  mVehicleTypeCurrentRowChanged.setSelectionModel( view->selectionModel() );
+  connect( &mVehicleTypeCurrentRowChanged, &SelectionModelCurrentRowChanged::currentRowChanged, mWidgetMapper, &DataWidgetMapper::setCurrentRow );
 }
 
 void VehicleTypeEditionWindow::displayError(const Error& error)

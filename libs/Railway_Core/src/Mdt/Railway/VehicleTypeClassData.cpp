@@ -33,7 +33,7 @@ void VehicleTypeClassData::setName(const QString& name)
 
 void VehicleTypeClassData::setAlias(const QString& alias)
 {
-  Q_ASSERT( !alias.trimmed().isEmpty() );
+//   Q_ASSERT( !alias.trimmed().isEmpty() );
   Q_ASSERT( alias.trimmed().length() <= def().alias().fieldAttributes().maxLength() );
 
   dataStruct().alias = alias.trimmed();

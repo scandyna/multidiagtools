@@ -3,6 +3,8 @@
 set(SOURCE_FILES
   Mdt/Railway/VehicleTypeClassSqlRepository.cpp
   Mdt/Railway/SqlSchema.cpp
+  Mdt/Railway/SqlVehicleTypeClassRepository.cpp
+  Mdt/Railway/SqlVehicleTypeRepository.cpp
 )
 
 find_package(Qt5 COMPONENTS Sql)
@@ -11,7 +13,7 @@ mdt_add_library(
   NAME Railway_Sql
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES ItemModel Sql_Core Entity_Sql Qt5::Sql Railway_Core;
+  LINK_DEPENDENCIES ItemModel Sql_Core Entity_Sql QueryExpression_Sql Qt5::Sql Railway_Core;
 )
 target_compile_definitions(Railway_Sql PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

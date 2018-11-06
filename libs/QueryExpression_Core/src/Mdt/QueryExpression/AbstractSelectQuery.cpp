@@ -32,17 +32,24 @@ class CallSelectQueryImplFieldIndex : public boost::static_visitor<int>
   {
   }
 
-    int operator()(const SelectAllField &)
-    {
-      Q_ASSERT_X(false, "AbstractSelectQuery", "SelectAllField is not allowed in a condition expression");
+  int operator()(const NullSelectField &)
+  {
+    Q_ASSERT_X(false, "AbstractSelectQuery", "A null SelectField is not allowed in a condition expression");
 
-      return -1;
-    }
+    return -1;
+  }
 
-    int operator()(const EntityAndField & field)
-    {
-      return mQuery.fieldIndexImpl(field);
-    }
+  int operator()(const SelectAllField &)
+  {
+    Q_ASSERT_X(false, "AbstractSelectQuery", "SelectAllField is not allowed in a condition expression");
+
+    return -1;
+  }
+
+  int operator()(const EntityAndField & field)
+  {
+    return mQuery.fieldIndexImpl(field);
+  }
 
  private:
 
@@ -53,7 +60,7 @@ int AbstractSelectQuery::fieldIndex(const SelectField& field) const
 {
   CallSelectQueryImplFieldIndex visitor(*this);
 
-  return boost::apply_visitor(visitor, field.internalVariant());
+  return boost::apply_visitor(visitor, field.internalVariant().internalVariant());
 }
 
 void AbstractSelectQuery::setLastError(const Error& error)

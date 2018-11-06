@@ -86,3 +86,8 @@ void populatePersonStorage(AsyncPersonCache & pc, const QStringList & names)
 {
   populatePersonStorageImpl(pc, names);
 }
+
+void populatePersonStorage(AsyncEditPersonCache& pc, const QStringList& names)
+{
+  populatePersonStorageImpl(pc, names);
+}

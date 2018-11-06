@@ -22,6 +22,7 @@
 #define MDT_RAILWAY_ENTITY_VEHICLE_TYPE_CLASS_H
 
 #include "Mdt/Entity/Def.h"
+#include "Mdt/Entity/UniqueConstraint.h"
 #include "MdtRailway_CoreExport.h"
 #include <QtGlobal>
 #include <QString>
@@ -30,7 +31,7 @@ namespace Mdt{ namespace Railway{ namespace Entity{
 
   struct MDT_RAILWAY_CORE_EXPORT VehicleTypeClassDataStruct
   {
-    qulonglong id;
+    qulonglong id = 0;
     QString name;
     QString alias;
   };
@@ -42,7 +43,13 @@ MDT_ENTITY_DEF(
   VehicleTypeClass,
   (id, FieldFlag::IsPrimaryKey),
   (name, FieldFlag::IsRequired, FieldFlag::IsUnique, FieldMaxLength(20)),
-  (alias, FieldMaxLength(20))
+  (alias, FieldFlag::IsRequired, FieldMaxLength(20))
 )
+
+namespace Mdt{ namespace Railway{ namespace Entity{
+
+  using VehicleTypeClassNameUniqueConstraint = Mdt::Entity::UniqueConstraint<VehicleTypeClassEntity, VehicleTypeClassDef::nameField>;
+
+}}} // namespace Mdt{ namespace Railway{ namespace Entity{
 
 #endif // #ifndef MDT_RAILWAY_ENTITY_VEHICLE_TYPE_CLASS_H

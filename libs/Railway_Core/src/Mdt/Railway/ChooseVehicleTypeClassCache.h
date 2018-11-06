@@ -21,6 +21,7 @@
 #ifndef MDT_RAILWAY_CHOOSE_VEHICLE_TYPE_CLASS_CACHE_H
 #define MDT_RAILWAY_CHOOSE_VEHICLE_TYPE_CLASS_CACHE_H
 
+#include "VehicleTypeClassId.h"
 #include "Entity/VehicleTypeClass.h"
 #include "Mdt/Entity/AbstractAsyncReadOnlyCache.h"
 #include "Mdt/Entity/EntitySelectStatement.h"
@@ -57,12 +58,25 @@ namespace Mdt{ namespace Railway{
       return mSelectStatement.fieldCount();
     }
 
+    /*! \brief Get the id column
+     */
+    int idColumn() const noexcept
+    {
+      return 0;
+    }
+
     /*! \brief Get the name column
      */
     int nameColumn() const noexcept
     {
       return 1;
     }
+
+    /*! \brief Get vehicle type class id for \a row
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     */
+    VehicleTypeClassId id(int row) const noexcept;
 
    private:
 

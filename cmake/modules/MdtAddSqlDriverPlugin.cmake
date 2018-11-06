@@ -1,21 +1,9 @@
 include(GenerateExportHeader)
 
-# Problemes to solve:
-# - Build the QSQLITE-mdt plugin:
-#  -- 
-# - Use/load the QSQLITE-mdt:
-#  -- A) when developping Mdt:
-#   --> Put all plugins in a common dir (${CMAKE_BINARY_DIR}/plugins/sqldrivers)
-#   --> Set QT_PLUGIN_PATH to ${CMAKE_BINARY_DIR}/plugins Nok
-#   --> note: build flags Nok
-#  -- B) when using Mdt to developp app:
-#   --> Install plugins in ${MDT_PREFIX_PATH}/plugins/sqldrivers
-#   --> Set QT_PLUGIN_PATH to ${MDT_PREFIX_PATH}/plugins
-#  -- C) for a distributed app:
-#   --> Install plugins in $App/plugins/sqldrivers
-#   --> Qt should also find them out of the box
-
-# Note: no headers to install
+# TODO This distributes to a Qt specific way
+#      The Qt MDTSQLITE module is a particular case to not generalise
+#      Here, adopt a Mdt specific standard
+#      Maybe rename mdt_add_sql_plugin() ?
 
 # Add a SQL driver plugin
 #
@@ -38,24 +26,41 @@ include(GenerateExportHeader)
 # }
 # QCoreApplication::addLibraryPath(*pluginsPath);
 #
-# The plugin will be placed ${CMAKE_BINARY_DIR}/plugins/sqldrivers
-# so that all components of the Mdt library can find it in a common way.
-# The tests that needs to load the plugin should built with a flag that tells where to find the plugins:
-# target_compile_definitions(MyTest PRIVATE MDT_PLUGIN_PATH="${CMAKE_BINARY_DIR}/plugins")
-# In the main of the test, this path should also be added:
-# QCoreApplication::addLibraryPath( QString::fromLocal8Bit(MDT_PLUGIN_PATH) );
-# TODO See if this can be unified with mdt_add_test(TARGET, ...)
+# Input arguments:
+# NAME:
+#  Name of the plugin, without any prefix (like project name) or suffix (like version).
+#  This plugin name is also what is named target in CMake.
+# SOURCE_FILES:
+#  List of relative path to source files to compile for the plugin.
+#  As mentionned by CMake, it is not recommanded to generate source_files using file(GLOB),
+#  because CMake will not be able to regenerate when a file was added.
+# DEPENDENCIES (optional):
+#  List of libraries to link to this plugin.
+#  If the plugin depends on a other library from Mdt project,
+#  its target name should be passed (For example Application, not MdtApplication)
+#  If the plugin depends on a other library that provides CMake Package config files, like Qt5,
+#  its target name should be passed (for example Qt5::Sql).
 #
-# When the Mdt library is installed, the plugin will be placed in ${MDT_PREFIX_PATH}/plugins/sqldrivers
-# While developping a application using the Mdt library,
-# Mdt::LibraryInfo can be used to query the location of the Mdt plugins path:
-# const auto mdtPluginsPath = Mdt::LibraryInfo::getMdtPluginsPath();
-#
-# While developping a application using the Mdt library, the above rule can be applied to unit tests.
-# ...............
-# For the finaly application (and libraries) that will be distributed, no build tree specific paths should be compiled in ....
-# TODO see how to solve...
+function(mdt_add_sql_driver_plugin)
+  # Parse arguments
+  set(oneValueArgs NAME)
+  set(multiValueArgs SOURCE_FILES DEPENDENCIES)
+  cmake_parse_arguments(VAR "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  # Check that all argumenst are passed
+  if(NOT VAR_NAME)
+    message(FATAL_ERROR "mdt_add_sql_driver_plugin(): NAME argument is missing.")
+  endif()
+  if(NOT VAR_SOURCE_FILES)
+    message(FATAL_ERROR "mdt_add_sql_driver_plugin(): No source file provided.")
+  endif()
+  # Local variables
+  set(target_name ${VAR_NAME})
+  set(source_files ${VAR_SOURCE_FILES})
+  set(dependencies ${VAR_DEPENDENCIES})
 
-# NOTE: how does Qt do to set the path to the installed library ??
+  add_library(${target_name} MODULE ${source_files})
+  # TODO Should use PRIVATE
+  target_link_libraries(${target_name} ${dependencies})
+  set_target_properties(${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/sqldrivers")
 
-# NOTE: Mdt::LibraryInfo::getPluginsPath(); could be used for each case
+endfunction()

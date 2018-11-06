@@ -39,6 +39,14 @@ void ChooseVehicleTypeClassCache::setQueryFactory(const std::shared_ptr< ChooseV
   connect( mSelectQuery.get(), &SelectQuery::errorOccured, this, &ChooseVehicleTypeClassCache::setLastError );
 }
 
+VehicleTypeClassId ChooseVehicleTypeClassCache::id(int row) const noexcept
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  return VehicleTypeClassId::fromQVariant( data(row, idColumn()) );
+}
+
 bool ChooseVehicleTypeClassCache::fetchRecords(int count)
 {
   mSelectQuery->submitStatement(mSelectStatement, count);

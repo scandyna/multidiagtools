@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "VehicleTypeClassTableModel.h"
-#include "VehicleTypeClassEdition.h"
+#include "EditVehicleTypeClass.h"
 
 namespace Mdt{ namespace Railway{
 
@@ -44,52 +44,47 @@ int VehicleTypeClassTableModel::nameColumn() const
   return fieldIndex(def().name());
 }
 
-bool VehicleTypeClassTableModel::setName(const QModelIndex & index, const QString& name)
-{
-  Q_ASSERT(index.column() == nameColumn());
-
-  VehicleTypeClassEdition edit;
-
-  if(!edit.setName(name)){
-    return false;
-  }
-
-  return ParentClass::setData(index, edit.name());
-}
-
 int VehicleTypeClassTableModel::aliasColumn() const
 {
   return fieldIndex(def().alias());
 }
 
-bool VehicleTypeClassTableModel::setAlias(const QModelIndex& index, const QString& alias)
-{
-  Q_ASSERT(index.column() == aliasColumn());
+// bool VehicleTypeClassTableModel::setEditRoleData(int row, int column, const QVariant& value)
+// {
+//   Q_ASSERT(row >= 0);
+//   Q_ASSERT(row <= rowCount());
+//   Q_ASSERT(column >= 0);
+//   Q_ASSERT(column <= columnCount());
+// 
+//   if(column == nameColumn()){
+//     return setName(row, value.toString());
+//   }else if(column == aliasColumn()){
+//     return setAlias(row, value.toString());
+//   }
+// 
+//   return false;
+// }
 
-  VehicleTypeClassEdition edit;
+bool VehicleTypeClassTableModel::setName(int row, const QString& name)
+{
+  EditVehicleTypeClass edit;
+
+  if(!edit.setName(name)){
+    return false;
+  }
+
+  return ParentClass::setEditRoleData(row, nameColumn(), edit.name());
+}
+
+bool VehicleTypeClassTableModel::setAlias(int row, const QString& alias)
+{
+  EditVehicleTypeClass edit;
 
   if(!edit.setAlias(alias)){
     return false;
   }
 
-  return ParentClass::setData(index, edit.alias());
-}
-
-bool VehicleTypeClassTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
-{
-  if( !index.isValid() || (role != Qt::EditRole) ){
-    return ParentClass::setData(index, value, role);
-  }
-
-  const int column = index.column();
-  if(column == nameColumn()){
-    return setName(index, value.toString());
-  }
-  if(column == aliasColumn()){
-    return setAlias(index, value.toString());
-  }
-
-  return false;
+  return ParentClass::setEditRoleData(row, aliasColumn(), edit.alias());
 }
 
 }} // namespace Mdt{ namespace Railway{
