@@ -88,11 +88,13 @@ void VectorTest::addTest()
   int i3 = 3;
   vi.push_back(i3);
   vi.push_back(4);
-  QCOMPARE(vi.size(), 4);
+  vi.emplace_back(5);
+  QCOMPARE(vi.size(), 5);
   QCOMPARE(vi.at(0), 1);
   QCOMPARE(vi.at(1), 2);
   QCOMPARE(vi.at(2), 3);
   QCOMPARE(vi.at(3), 4);
+  QCOMPARE(vi.at(4), 5);
 }
 
 /*

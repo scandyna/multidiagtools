@@ -180,6 +180,14 @@ namespace Mdt{ namespace Container{
       mVector.push_back(value);
     }
 
+    /*! \brief Add a element at the end of this vector
+     */
+    template<typename... Args>
+    void emplace_back(Args&&... args)
+    {
+      mVector.emplace_back(args...);
+    }
+
     /*! \brief Get a iterator to the first element of this container
      */
     iterator begin() noexcept
