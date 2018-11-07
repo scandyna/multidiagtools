@@ -152,6 +152,34 @@ namespace Mdt{ namespace Container{
       return mVector[index];
     }
 
+    /*! \brief Add a element at the end of this vector
+     */
+    void append(const T & value)
+    {
+      mVector.push_back(value);
+    }
+
+    /*! \brief Add a element at the end of this vector
+     */
+    void append(T && value)
+    {
+      mVector.push_back(value);
+    }
+
+    /*! \brief Add a element at the end of this vector
+     */
+    void push_back(const T & value)
+    {
+      mVector.push_back(value);
+    }
+
+    /*! \brief Add a element at the end of this vector
+     */
+    void push_back(T && value)
+    {
+      mVector.push_back(value);
+    }
+
     /*! \brief Get a iterator to the first element of this container
      */
     iterator begin() noexcept

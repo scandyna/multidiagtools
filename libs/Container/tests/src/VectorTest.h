@@ -32,6 +32,7 @@ class VectorTest : public QObject
   void constructAndGet();
   void initializerList();
   void findTest();
+  void addTest();
 };
 
 #endif // #ifndef MDT_TEST_MAIN

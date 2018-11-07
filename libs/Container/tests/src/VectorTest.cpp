@@ -78,6 +78,23 @@ void VectorTest::findTest()
   QCOMPARE(*vsIt, std::string("B"));
 }
 
+void VectorTest::addTest()
+{
+  Vector<int> vi;
+
+  int i1 = 1;
+  vi.append(i1);
+  vi.append(2);
+  int i3 = 3;
+  vi.push_back(i3);
+  vi.push_back(4);
+  QCOMPARE(vi.size(), 4);
+  QCOMPARE(vi.at(0), 1);
+  QCOMPARE(vi.at(1), 2);
+  QCOMPARE(vi.at(2), 3);
+  QCOMPARE(vi.at(3), 4);
+}
+
 /*
  * Main
  */
