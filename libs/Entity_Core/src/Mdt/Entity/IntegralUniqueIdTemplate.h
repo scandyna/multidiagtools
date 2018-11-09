@@ -144,11 +144,12 @@ namespace Mdt{ namespace Entity{
     }
 
     /*! \brief Construct a id from \a value
-     *
-     * \todo Must use CRTP..
      */
     static Derived fromQVariant(const QVariant & value)
     {
+      if(value.isNull()){
+        return Derived();
+      }
       Q_ASSERT(value.canConvert<value_type>());
 
       return Derived( value.value<value_type>() );

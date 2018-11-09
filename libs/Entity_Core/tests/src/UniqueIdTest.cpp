@@ -86,6 +86,9 @@ void UniqueIdTest::fromQVariantTest()
   ArticleId id = ArticleId::fromQVariant(vId25);
   QVERIFY(!id.isNull());
   QCOMPARE(id.value(), 25u);
+
+  id = ArticleId::fromQVariant(QVariant());
+  QVERIFY(id.isNull());
 }
 
 /*
