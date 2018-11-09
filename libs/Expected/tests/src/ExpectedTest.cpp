@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -324,6 +324,25 @@ void ExpectedTest::implicitQVariantUseTest()
   const auto cv = getValue<QVariant>(500);
   v2 = returnVariantAsIs(*cv);
   QCOMPARE(v2, QVariant(500));
+}
+
+void ExpectedTest::dereferenceQStringTest()
+{
+  QString s;
+
+  auto es = getValue<QString>("A");
+  QVERIFY(es);
+  QCOMPARE(*es, QString("A"));
+  QCOMPARE(es->length(), 1);
+  es->prepend("Z");
+  QCOMPARE(*es, QString("ZA"));
+  s = *es;
+  QCOMPARE(s, QString("ZA"));
+  // Check also with const expected
+  const auto ces = getValue<QString>("CA");
+  QVERIFY(ces);
+  QCOMPARE(*ces, QString("CA"));
+  QCOMPARE(ces->length(), 2);
 }
 
 /*

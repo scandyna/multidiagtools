@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -297,7 +297,7 @@ namespace Mdt{
      *
      * \pre this must contain a value
      */
-    T & operator *() &
+    T & operator*() &
     {
       Q_ASSERT(mHasValue);
       return mValue;
@@ -307,10 +307,30 @@ namespace Mdt{
      *
      * \pre this must contain a value
      */
-    const T & operator *() const &
+    const T & operator*() const &
     {
       Q_ASSERT(mHasValue);
       return mValue;
+    }
+
+    /*! \brief Access value
+     *
+     * \pre this must contain a value
+     */
+    T * operator->()
+    {
+      Q_ASSERT(mHasValue);
+      return &mValue;
+    }
+
+    /*! \brief Access value (read only)
+     *
+     * \pre this must contain a value
+     */
+    const T * operator->() const
+    {
+      Q_ASSERT(mHasValue);
+      return &mValue;
     }
 
   private:

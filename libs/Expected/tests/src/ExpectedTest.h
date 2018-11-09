@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -42,6 +42,8 @@ class ExpectedTest : public QObject
   void implicitIntUseTest();
   void implicitQStringUseTest();
   void implicitQVariantUseTest();
+
+  void dereferenceQStringTest();
 
  private:
 
