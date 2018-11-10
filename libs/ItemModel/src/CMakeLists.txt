@@ -9,6 +9,8 @@ set(SOURCE_FILES
     Mdt/ItemModel/ColumnRange.cpp
     Mdt/ItemModel/AbstractTableModel.cpp
     Mdt/ItemModel/AbstractCachedTableModel.cpp
+    Mdt/ItemModel/AbstractReadOnlyCachedTableModel.cpp
+    Mdt/ItemModel/AbstractEditableCachedTableModel.cpp
     Mdt/ItemModel/IndexFormatMapItem.cpp
     Mdt/ItemModel/IndexFormatMap.cpp
     Mdt/ItemModel/RowOrColumnFormatMapItem.cpp
@@ -59,6 +61,7 @@ set(SOURCE_FILES
     Mdt/ItemModel/RowResizableStlTableModelTemplate.cpp
     Mdt/ItemModel/RowResizableStlTableModel.cpp
     Mdt/ItemModel/SelectQueryTableModel.cpp
+    Mdt/ItemModel/SelectionModelCurrentRowChanged.cpp
 )
 
 find_package(Qt5 COMPONENTS Core Gui)

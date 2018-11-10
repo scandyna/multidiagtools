@@ -29,7 +29,62 @@ class CachedTableModelTest : public QObject
 
  private slots:
 
-  void constructTest();
+  void initTestCase();
+
+  void readOnlyRowCountLimitTest();
+  void editableRowCountLimitTest();
+  void readOnlyRowCountLimitSignalTest();
+  void editableRowCountLimitSignalTest();
+
+  void readOnlyHorizontalHeaderTest();
+  void editableHorizontalHeaderTest();
+
+  void readOnlyFlagsTest();
+  void editableFlagsTest();
+
+  void readOnlyDataTest();
+  void editableDataTest();
+
+  void readOnlyFromBackendInsertRecordsTest();
+  void editableFromBackendInsertRecordsTest();
+  void readOnlyFromBackendInsertRecordsSignalTest();
+  void editableFromBackendInsertRecordsSignalTest();
+
+  void readOnlyFetchAllTest();
+  void editableFetchAllTest();
+  void readOnlyFetchAllSignalTest();
+  void editableFetchAllSignalTest();
+
+  void readOnlyFromBackendSetDataTest();
+  void editableFromBackendSetDataTest();
+  void readOnlyFromBackendSetDataSignalTest();
+  void editableFromBackendSetDataSignalTest();
+
+  void readOnlyFromBackendSetRecordTest();
+  void editableFromBackendSetRecordTest();
+  void readOnlyFromBackendSetRecordSignalTest();
+  void editableFromBackendSetRecordSignalTest();
+
+  void setDataTest();
+  void setDataSignalTest();
+
+  void setDataThenFromBackendInsertRecordsTest();
+  void setDataThenFromBackendInsertRecordsSignalTest();
+
+  void setDataThenSubmitTest();
+  void setDataThenSubmitSignalTest();
+
+  void setDataThenSubmitAndFromBackendInsertRecordsTest();
+  void setDataThenSubmitAndFromBackendInsertRecordsSignalTest();
+
+  void insertRowsTest();
+  void insertRowsSignalTest();
+
+  void setDataThenInsertRowsTest();
+  void setDataThenInsertRowsSignalTest();
+
+  void insertRowsThenSetDataThenSubmitTest();
+  void insertRowsThenSetDataThenSubmitSignalTest();
 };
 
 #endif // #ifndef CACHED_TABLE_MODEL_TEST_H
