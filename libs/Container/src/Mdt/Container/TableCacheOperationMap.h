@@ -23,7 +23,12 @@
 
 #include "TableCacheOperation.h"
 #include "TableCacheOperationIndex.h"
+#include "TableCacheTransaction.h"
+#include "TableCacheRowTransaction.h"
+#include "TableCacheRowTransactionList.h"
+
 #include "RowList.h"
+
 #include "Mdt/IndexRange/RowRange.h"
 #include "MdtContainerExport.h"
 #include <QtGlobal>
@@ -32,6 +37,9 @@
 namespace Mdt{ namespace Container{
 
   /*! \brief Map of operations indexes in a table cache
+   *
+   * For a example that uses TableCacheOperationMap,
+   *  see Mdt::ItemModel::AbstractEditableCachedTableModel
    */
   class MDT_CONTAINER_EXPORT TableCacheOperationMap
   {
@@ -111,6 +119,12 @@ namespace Mdt{ namespace Container{
      */
     void insertRecords(int pos, int count);
 
+    /*! \brief Set the indexes for \a row as updated
+     *
+     * \pre \a row must be >= 0
+     */
+    void setRecordUpdated(int row);
+
     /*! \brief Add indexes to mark \a count records, starting from \a pos , as deleted records
      *
      * \pre \a pos must be >= 0
@@ -125,7 +139,7 @@ namespace Mdt{ namespace Container{
      */
     void cancelRemoveRecords(int pos, int count);
 
-    /*! \brief Remove the operation at \a row from thi map
+    /*! \brief Remove the operation at \a row from this map
      *
      * \pre \a row must be >= 0
      */
@@ -144,7 +158,7 @@ namespace Mdt{ namespace Container{
      *
      * If no operation exists for \a row , it will be added and set to \a operation .
      *
-     * If a operation allready exists at \a row , it will be updated regarding opertaionFromExisting() .
+     * If a operation allready exists at \a row , it will be updated regarding operationFromExisting() .
      *
      * \pre \a row must be >= 0
      */
@@ -155,6 +169,78 @@ namespace Mdt{ namespace Container{
      * \pre \a row must be >= 0
      */
     TableCacheOperation operationAtRow(int row) const;
+
+    /*! \brief Create a new transaction for \a row
+     *
+     * Returns a valid transaction if a operation exists for \a row,
+     *  otherwise a null transaction.
+     *
+     * \pre \a row must be >= 0
+     */
+    TableCacheTransaction createTransaction(int row);
+
+    /*! \brief Get the row that actually correspond to \a transaction
+     *
+     * The returned row can be different than when the transaction was created,
+     *  for example if some rows have been shifted in between
+     *  (this is also why this transaction concept exists).
+     *
+     * Returns a row in a valid range it exists for \a transaction ,
+     *  otherwise -1
+     *
+     * \pre \a transaction must not be null
+     */
+    int getRowForTransaction(const TableCacheTransaction & transaction) const;
+
+//     /*! \brief Check if a transaction exists at \a row
+//      *
+//      * \pre \a row must be >= 0
+//      */
+//     [[deprecated]]
+//     bool hasRowTransaction(int row) const;
+
+    /*! \brief Set transaction pending for \a row
+     *
+     * \pre \a row must be >= 0
+     * \pre there must exist a operation for \a row
+     */
+    void setTransactionPendingForRow(int row);
+
+    /*! \brief Set transactions pending for \a rowTransactions
+     *
+     * \pre each row in \a rowTransactions must be >= 0
+     * \pre there must exist a operation for each row in \a rowTransactions
+     */
+    void setTransactionsPending(const TableCacheRowTransactionList & rowTransactions);
+
+    /*! \brief Check if there is a pending transaction for \a row
+     *
+     * \pre \a row must be >= 0
+     */
+    bool isTransactionPendingForRow(int row) const;
+
+    /*! \brief This is similar to removeOperationAtRow()
+     *
+     * \pre \a row must be >= 0
+     */
+    void setTransatctionDoneForRow(int row);
+
+    /*! \brief Set transaction failed for \a row
+     *
+     * \pre \a row must be >= 0
+     * \pre there must exist a operation for \a row
+     */
+    void setTransatctionFailedForRow(int row);
+
+    /*! \brief Check if there is a failed transaction for \a row
+     *
+     * \pre \a row must be >= 0
+     */
+    bool isTransactionFailedForRow(int row) const;
+
+    /*! \brief Get a list of rows that have to be added to the backend
+     */
+    TableCacheRowTransactionList getRowsToAddToBackend();
 
     /*! \brief Get a list of rows that have to be inserted to the storage
      */
@@ -212,6 +298,14 @@ namespace Mdt{ namespace Container{
       return mCommittedRows;
     }
 
+    /*! \brief Get the remove operation starting from \a currentOperation
+     */
+    static TableCacheOperation removeOperationFromCurrent(TableCacheOperation currentOperation);
+
+    /*! \brief Get the update operation starting from \a currentOperation
+     */
+    static TableCacheOperation updateOperationFromCurrent(TableCacheOperation currentOperation);
+
     /*! \brief Get the operation regarding \a existingOperation
      *
      * |       Existing operation        |            Operation            |          Result           |
@@ -242,7 +336,21 @@ namespace Mdt{ namespace Container{
      * |TableCacheOperation::InsertDelete|TableCacheOperation::Delete      | ?? |
      * |TableCacheOperation::InsertDelete|TableCacheOperation::InsertDelete| ?? |
      */
-    static TableCacheOperation operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation);
+    static TableCacheOperation operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation) noexcept;
+
+//     /*! \brief Get the pending operation corresponding to a operation
+//      */
+//     static TableCacheOperation pendingOperationFromOperation(TableCacheOperation operation) noexcept;
+
+//     /*! \brief Get the failed operation corresponding to a operation
+//      *
+//      * \pre \a operation must be a pending operations
+//      */
+//     static TableCacheOperation failedOperationFromOperation(TableCacheOperation operation) noexcept;
+
+//     /*! \brief Check if \a operation is a pending transaction operation
+//      */
+//     static bool isPendingTransactionOperation(TableCacheOperation operation) noexcept;
 
    private:
 
@@ -258,7 +366,10 @@ namespace Mdt{ namespace Container{
     void setCommittedRows();
     RowList getRowsForOperation(TableCacheOperation operation) const;
     RowList getRowsForOperation(TableCacheOperation operation1, TableCacheOperation operation2) const;
+    int newTransactionId();
+    TableCacheRowTransactionList getRowTransactionsForOperation(TableCacheOperation operation);
 
+    int mLastTransactionId = 0;
     std::vector<TableCacheOperationIndex> mMap;
     Mdt::IndexRange::RowRange mCommittedRows;
   };

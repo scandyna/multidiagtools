@@ -18,24 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CONTAINER_TABLE_CACHE_OPERATION_H
-#define MDT_CONTAINER_TABLE_CACHE_OPERATION_H
+#ifndef MDT_CONTAINER_TABLE_CACHE_TRANSACTION_STATE_H
+#define MDT_CONTAINER_TABLE_CACHE_TRANSACTION_STATE_H
 
 namespace Mdt{ namespace Container{
 
-  /*! \brief Table cache operation
+  /*! \brief Table cache transaction state
    */
-  enum class TableCacheOperation
+  enum class TableCacheTransactionState
   {
-    None,           /*!< No operation on the element */
-    Insert,         /*!< The element was inserted to the cache */
-    Update,         /*!< The element was updated in the cache */
-    Delete,         /*!< The element was deleted from the cache */
-    InsertDelete,   /*!< The element has been inserted to the cache,
-                          then marked as to be deleted. */
-    UpdateDelete    /*!< The element has been inserted to the cache, then marked as to be deleted (used for cancel delete) */
+    None,     /*!< No state */
+    Pending,  /*!< The transaction was submitted to the backend */
+    Failed    /*!< The transaction failed */
   };
 
 }} // namespace Mdt{ namespace Container{
 
-#endif // #ifndef MDT_CONTAINER_TABLE_CACHE_OPERATION_H
+#endif // #ifndef MDT_CONTAINER_TABLE_CACHE_TRANSACTION_STATE_H

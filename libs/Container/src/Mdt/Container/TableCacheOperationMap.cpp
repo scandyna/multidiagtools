@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "TableCacheOperationMap.h"
+// #include "StlContainer.h"
 #include <algorithm>
 #include <iterator>
 #include <functional>
@@ -31,6 +32,7 @@ void TableCacheOperationMap::clear()
 {
   mMap.clear();
   mCommittedRows.clear();
+  mLastTransactionId = 0;
 }
 
 void TableCacheOperationMap::insertRecords(int pos, int count)
@@ -40,6 +42,13 @@ void TableCacheOperationMap::insertRecords(int pos, int count)
 
   shiftRowsInMap(pos, count);
   updateOrAddOperationsForRows(pos, count, TableCacheOperation::Insert);
+}
+
+void TableCacheOperationMap::setRecordUpdated(int row)
+{
+  Q_ASSERT(row >= 0);
+
+  setOperationAtRow(row, TableCacheOperation::Update);
 }
 
 void TableCacheOperationMap::removeRecords(int pos, int count)
@@ -58,10 +67,26 @@ void TableCacheOperationMap::cancelRemoveRecords(int pos, int count)
   Mdt::IndexRange::RowRange rowRange;
   rowRange.setFirstRow(pos);
   rowRange.setRowCount(count);
-  for(int row = rowRange.firstRow(); row <= rowRange.lastRow(); ++row){
-    const auto op = operationAtRow(row);
-    if( (op == TableCacheOperation::Delete) || (op == TableCacheOperation::InsertDelete) ){
-      removeOperationAtRow(row);
+
+  const auto indexToRemovePredicate = [rowRange](const TableCacheOperationIndex & index){
+    if( !rowRange.containsRow(index.row()) ){
+      return false;
+    }
+    if(index.operation() == TableCacheOperation::Delete){
+      return true;
+    }
+    if(index.operation() == TableCacheOperation::InsertDelete){
+      return true;
+    }
+    return false;
+  };
+  mMap.erase( std::remove_if(mMap.begin(), mMap.end(), indexToRemovePredicate), mMap.end() );
+
+  for(auto & index : mMap){
+    if( rowRange.containsRow(index.row()) ){
+      if(index.operation() == TableCacheOperation::UpdateDelete){
+        index.setOperation(TableCacheOperation::Update);
+      }
     }
   }
 }
@@ -112,6 +137,116 @@ TableCacheOperation TableCacheOperationMap::operationAtRow(int row) const
   return findRow(row).operation();
 }
 
+TableCacheTransaction TableCacheOperationMap::createTransaction(int row)
+{
+  Q_ASSERT(row >= 0);
+
+  auto it = findRowIterator(row);
+  if(it == mMap.end()){
+    return TableCacheTransaction();
+  }
+  const int transactionId = newTransactionId();
+  it->setTransactionId(transactionId);
+
+  return TableCacheTransaction(transactionId);
+}
+
+int TableCacheOperationMap::getRowForTransaction(const TableCacheTransaction & transaction) const
+{
+  Q_ASSERT(!transaction.isNull());
+
+  const auto pred = [transaction](const TableCacheOperationIndex & index){
+    return (index.transactionId() == transaction.id());
+  };
+  const auto it = std::find_if( mMap.cbegin(), mMap.cend(), pred );
+  if(it == mMap.cend()){
+    return -1;
+  }
+  if(!it->hasTransactionId()){
+    return -1;
+  }
+
+  return it->row();
+}
+
+// bool TableCacheOperationMap::hasRowTransaction(int row) const
+// {
+//   Q_ASSERT(row >= 0);
+// 
+//   return findRow(row).hasTransactionId();
+// }
+
+void TableCacheOperationMap::setTransactionPendingForRow(int row)
+{
+  Q_ASSERT(row >= 0);
+
+  auto it = findRowIterator(row);
+  Q_ASSERT(it != mMap.end());
+
+  it->setTransactionPending();
+//   it->setOperation( pendingOperationFromOperation(it->operation()) );
+}
+
+void TableCacheOperationMap::setTransactionsPending(const TableCacheRowTransactionList & rowTransactions)
+{
+  for(const auto & rowTransaction : rowTransactions){
+    setTransactionPendingForRow(rowTransaction.row());
+  }
+}
+
+bool TableCacheOperationMap::isTransactionPendingForRow(int row) const
+{
+  Q_ASSERT(row >= 0);
+
+  const auto index = findRow(row);
+
+  if(index.isNull()){
+    return false;
+  }
+
+  return index.isTransactionPending();
+//   return isPendingTransactionOperation(index.operation());
+}
+
+void TableCacheOperationMap::setTransatctionDoneForRow(int row)
+{
+  Q_ASSERT(row >= 0);
+
+  removeOperationAtRow(row);
+  if(isEmpty()){
+    mLastTransactionId = 0;
+  }
+}
+
+void TableCacheOperationMap::setTransatctionFailedForRow(int row)
+{
+  Q_ASSERT(row >= 0);
+
+  auto it = findRowIterator(row);
+  Q_ASSERT(it != mMap.end());
+
+  it->setTransactionFailed();
+//   it->setOperation( failedOperationFromOperation(it->operation()) );
+}
+
+bool TableCacheOperationMap::isTransactionFailedForRow(int row) const
+{
+  Q_ASSERT(row >= 0);
+
+  const auto index = findRow(row);
+
+  if(index.isNull()){
+    return false;
+  }
+
+  return index.isTransactionFailed();
+}
+
+TableCacheRowTransactionList TableCacheOperationMap::getRowsToAddToBackend()
+{
+  return getRowTransactionsForOperation(TableCacheOperation::Insert);
+}
+
 RowList TableCacheOperationMap::getRowsToInsertIntoStorage() const
 {
   return getRowsForOperation(TableCacheOperation::Insert);
@@ -157,8 +292,43 @@ void TableCacheOperationMap::commitChanges()
   mMap.clear();
 }
 
-TableCacheOperation TableCacheOperationMap::operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation)
+TableCacheOperation TableCacheOperationMap::removeOperationFromCurrent(TableCacheOperation currentOperation)
 {
+  switch(currentOperation){
+    case TableCacheOperation::Insert:
+      return TableCacheOperation::InsertDelete;
+    case TableCacheOperation::Update:
+      return TableCacheOperation::UpdateDelete;
+  }
+
+  return currentOperation;
+}
+
+TableCacheOperation TableCacheOperationMap::updateOperationFromCurrent(TableCacheOperation currentOperation)
+{
+  switch(currentOperation){
+    case TableCacheOperation::None:
+      return TableCacheOperation::Update;
+    case TableCacheOperation::Update:
+      return TableCacheOperation::Update;
+    case TableCacheOperation::Insert:
+      return TableCacheOperation::Insert;
+    case TableCacheOperation::Delete:
+      return TableCacheOperation::Update;
+  }
+
+  return currentOperation;
+}
+
+TableCacheOperation TableCacheOperationMap::operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation) noexcept
+{
+  switch(operation){
+    case TableCacheOperation::Delete:
+      return removeOperationFromCurrent(existingOperation);
+    case TableCacheOperation::Update:
+      return updateOperationFromCurrent(existingOperation);
+  }
+
   switch(existingOperation){
     case TableCacheOperation::None:
       return operation;
@@ -179,7 +349,7 @@ TableCacheOperation TableCacheOperationMap::operationFromExisting(TableCacheOper
         case TableCacheOperation::Update:
           return TableCacheOperation::Update;
         case TableCacheOperation::Delete:
-          return TableCacheOperation::Delete;
+          return TableCacheOperation::UpdateDelete;
       }
       break;
     case TableCacheOperation::Delete:
@@ -195,6 +365,51 @@ TableCacheOperation TableCacheOperationMap::operationFromExisting(TableCacheOper
       break;
   }
 }
+
+// TableCacheOperation TableCacheOperationMap::pendingOperationFromOperation(TableCacheOperation operation) noexcept
+// {
+//   switch(operation){
+//     case TableCacheOperation::Insert:
+//     case TableCacheOperation::InsertFailed:
+//       return TableCacheOperation::InsertPending;
+//     case TableCacheOperation::Update:
+//     case TableCacheOperation::UpdateFailed:
+//       return TableCacheOperation::UpdatePending;
+//     default:
+//       break;
+//   }
+// 
+//   return operation;
+// }
+// 
+// TableCacheOperation TableCacheOperationMap::failedOperationFromOperation(TableCacheOperation operation) noexcept
+// {
+//   Q_ASSERT(isPendingTransactionOperation(operation));
+// 
+//   switch(operation){
+//     case TableCacheOperation::InsertPending:
+//       return TableCacheOperation::InsertFailed;
+//     case TableCacheOperation::UpdatePending:
+//       return TableCacheOperation::UpdateFailed;
+//     default:
+//       break;
+//   }
+// 
+//   return operation;
+// }
+// 
+// bool TableCacheOperationMap::isPendingTransactionOperation(TableCacheOperation operation) noexcept
+// {
+//   switch(operation){
+//     case TableCacheOperation::InsertPending:
+//     case TableCacheOperation::UpdatePending:
+//       return true;
+//     default:
+//       break;
+//   }
+// 
+//   return false;
+// }
 
 TableCacheOperationIndex TableCacheOperationMap::findIndex(int row, int column) const
 {
@@ -325,6 +540,27 @@ RowList TableCacheOperationMap::getRowsForOperation(TableCacheOperation operatio
   }
 
   return rowList;
+}
+
+int TableCacheOperationMap::newTransactionId()
+{
+  ++mLastTransactionId;
+  return mLastTransactionId;
+}
+
+TableCacheRowTransactionList TableCacheOperationMap::getRowTransactionsForOperation(TableCacheOperation operation)
+{
+  TableCacheRowTransactionList rowTransactions;
+
+  for(auto & index : mMap){
+    if(index.operation() == operation){
+      const TableCacheTransaction transaction( newTransactionId() );
+      index.setTransactionId( transaction.id() );
+      rowTransactions.emplace_back(index.row(), transaction);
+    }
+  }
+
+  return rowTransactions;
 }
 
 }} // namespace Mdt{ namespace Container{

@@ -18,24 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CONTAINER_TABLE_CACHE_OPERATION_H
-#define MDT_CONTAINER_TABLE_CACHE_OPERATION_H
+#ifndef MDT_CONTAINER_TABLE_CACHE_ROW_TRANSACTION_LIST_H
+#define MDT_CONTAINER_TABLE_CACHE_ROW_TRANSACTION_LIST_H
+
+#include "TableCacheRowTransaction.h"
+#include "Vector.h"
 
 namespace Mdt{ namespace Container{
 
-  /*! \brief Table cache operation
+  /*! \brief A list of table cache row transactions
    */
-  enum class TableCacheOperation
-  {
-    None,           /*!< No operation on the element */
-    Insert,         /*!< The element was inserted to the cache */
-    Update,         /*!< The element was updated in the cache */
-    Delete,         /*!< The element was deleted from the cache */
-    InsertDelete,   /*!< The element has been inserted to the cache,
-                          then marked as to be deleted. */
-    UpdateDelete    /*!< The element has been inserted to the cache, then marked as to be deleted (used for cancel delete) */
-  };
+  using TableCacheRowTransactionList = Vector<TableCacheRowTransaction>;
 
 }} // namespace Mdt{ namespace Container{
 
-#endif // #ifndef MDT_CONTAINER_TABLE_CACHE_OPERATION_H
+#endif // #ifndef MDT_CONTAINER_TABLE_CACHE_ROW_TRANSACTION_LIST_H

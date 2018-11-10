@@ -18,24 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CONTAINER_TABLE_CACHE_OPERATION_H
-#define MDT_CONTAINER_TABLE_CACHE_OPERATION_H
+#include "TableCacheTransaction.h"
 
 namespace Mdt{ namespace Container{
-
-  /*! \brief Table cache operation
-   */
-  enum class TableCacheOperation
-  {
-    None,           /*!< No operation on the element */
-    Insert,         /*!< The element was inserted to the cache */
-    Update,         /*!< The element was updated in the cache */
-    Delete,         /*!< The element was deleted from the cache */
-    InsertDelete,   /*!< The element has been inserted to the cache,
-                          then marked as to be deleted. */
-    UpdateDelete    /*!< The element has been inserted to the cache, then marked as to be deleted (used for cancel delete) */
-  };
-
 }} // namespace Mdt{ namespace Container{
-
-#endif // #ifndef MDT_CONTAINER_TABLE_CACHE_OPERATION_H

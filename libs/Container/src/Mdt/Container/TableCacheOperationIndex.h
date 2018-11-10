@@ -22,7 +22,9 @@
 #define MDT_CONTAINER_TABLE_CACHE_OPERATION_INDEX_H
 
 #include "TableCacheOperation.h"
+#include "TableCacheTransactionState.h"
 #include "MdtContainerExport.h"
+#include "Mdt/Assert.h"
 #include <QtGlobal>
 
 namespace Mdt{ namespace Container{
@@ -121,11 +123,66 @@ namespace Mdt{ namespace Container{
       return (mRow < 0);
     }
 
+    /*! \brief Check if this index has a transaction id
+     */
+    constexpr bool hasTransactionId() const noexcept
+    {
+      return mTransactionId > 0;
+    }
+
+    /*! \brief Set transaction id
+     *
+     * \pre \a id must be >= 1
+     */
+    constexpr void setTransactionId(int id) noexcept
+    {
+      MDT_ASSERT(id >= 1);
+
+      mTransactionId = id;
+    }
+
+    /*! \brief Get transaction id
+     */
+    constexpr int transactionId() const noexcept
+    {
+      return mTransactionId;
+    }
+
+    /*! \brief Set transaction pending
+     */
+    constexpr void setTransactionPending() noexcept
+    {
+      mTransactionState = TableCacheTransactionState::Pending;
+    }
+
+    /*! \brief Check if the transaction for this index is pending
+     */
+    constexpr bool isTransactionPending() const noexcept
+    {
+      return mTransactionState == TableCacheTransactionState::Pending;
+    }
+
+    /*! \brief Set transaction failed
+     */
+    constexpr void setTransactionFailed() noexcept
+    {
+      mTransactionState = TableCacheTransactionState::Failed;
+    }
+
+    /*! \brief Check if the transaction for this index is failed
+     */
+    constexpr bool isTransactionFailed() const noexcept
+    {
+      return mTransactionState == TableCacheTransactionState::Failed;
+    }
+
    private:
 
     int mRow = -1;
     int mColumn = -1;
+    int mTransactionId = 0;
     TableCacheOperation mOperation = TableCacheOperation::None;
+    TableCacheTransactionState mTransactionState = TableCacheTransactionState::None;
   };
 
 }} // namespace Mdt{ namespace Container{

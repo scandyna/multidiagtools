@@ -3,9 +3,13 @@
 set(SOURCE_FILES
   Mdt/Container/StlContainer.cpp
   Mdt/Container/StlContainerIteratorAdapter.cpp
+  Mdt/Container/Vector.cpp
   Mdt/Container/RowColumnListBase.cpp
   Mdt/Container/ColumnList.cpp
   Mdt/Container/RowList.cpp
+  Mdt/Container/TableCacheTransaction.cpp
+  Mdt/Container/TableCacheRowTransaction.cpp
+  Mdt/Container/TableCacheRowTransactionList.cpp
   Mdt/Container/TableCacheOperationIndex.cpp
   Mdt/Container/TableCacheOperationMap.cpp
   Mdt/Container/TableCache.cpp
@@ -28,7 +32,7 @@ mdt_add_library(
   NAME Container
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES IndexRange Qt5::Core
+  LINK_DEPENDENCIES IndexRange Assert Qt5::Core
 )
 target_compile_definitions(Container PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 
