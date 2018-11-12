@@ -10,6 +10,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(SOURCES_FILES
     src/TestBase.cpp
     src/SqlTestBase.cpp
+    src/PersonStorage.cpp
     src/PersonTableModel.cpp
 )
 
@@ -48,6 +49,7 @@ addItemModelTest("SelectionTest")
 addItemModelTest("RemoveRowsTest")
 addItemModelTest("AbstractTableModelTest")
 addItemModelTest("AbstractCachedTableModelTest")
+addItemModelTest("PersonStorageTest")
 addItemModelTest("CachedTableModelTest")
 addItemModelTest("FormatMapTest")
 addItemModelTest("SortFilterProxyModelTest")
