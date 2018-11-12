@@ -24,17 +24,13 @@
 #include "Mdt/ItemModel/AbstractReadOnlyCachedTableModel.h"
 #include "Mdt/ItemModel/AbstractEditableCachedTableModel.h"
 #include "Mdt/Container/VariantRecord.h"
+#include "PersonStorage.h"
 #include <QString>
 #include <QStringList>
+#include <initializer_list>
 #include <vector>
 
 using namespace Mdt::Container;
-
-struct Person
-{
-  int id;
-  QString name;
-};
 
 class PersonTableModelCommonImpl
 {
@@ -56,44 +52,59 @@ class PersonTableModelCommonImpl
     return QString();
   }
 
-  int storageRowCount() const
+  void populatePersonStorage(std::initializer_list<Person> list)
   {
-    return mStorage.size();
+    mStorage.populate(list);
   }
 
-  QString storageNameAt(int row) const
+  void populatePersonStorageByNames(const QStringList & names)
   {
-    Q_ASSERT(row >= 0);
-    Q_ASSERT(row < storageRowCount());
-
-    return mStorage[row].name;
+    mStorage.populateByNames(names);
   }
 
-  const Person & recordFromStorage(int row) const
+  int addPersonToStorage(const Person & person)
   {
-    Q_ASSERT(row >= 0);
-    Q_ASSERT(row < storageRowCount());
-
-    return mStorage[row];
+    return mStorage.add(person);
   }
 
-  const Person & lastRecordFromStorage() const
+  int storageCount() const
   {
-    return mStorage.back();
+    return mStorage.count();
   }
 
-  void appendRecordToStorage(Person record);
-  void updateRecordInStorage(int row, const Person & record);
-  void removeRecordFromStorage(int row);
+  Person getPersonFromStorage(int id) const
+  {
+    Q_ASSERT(id > 0);
+    Q_ASSERT(mStorage.hasId(id));
+
+    return mStorage.getById(id);
+  }
+
+  QString storageNameForId(int id) const
+  {
+    Q_ASSERT(id > 0);
+    Q_ASSERT(mStorage.hasId(id));
+
+    return mStorage.nameById(id);
+  }
+
+  void updatePersonInStorage(const Person & person)
+  {
+    mStorage.update(person);
+  }
+
+  void removePersonFromStorage(int id)
+  {
+    mStorage.remove(id);
+  }
 
   void clearStorage();
 
   std::vector<Mdt::Container::VariantRecord> getRecordsFromStorage(int count);
-  int getNextId() const;
 
  private:
 
-  std::vector<Person> mStorage;
+  PersonStorage mStorage;
 };
 
 class ListPersonTableModel : public Mdt::ItemModel::AbstractReadOnlyCachedTableModel
@@ -134,12 +145,17 @@ class ListPersonTableModel : public Mdt::ItemModel::AbstractReadOnlyCachedTableM
 
   int storageRowCount() const
   {
-    return mImpl.storageRowCount();
+    return mImpl.storageCount();
   }
 
-  void appendRecordToStorage(Person record)
+  void populatePersonStorage(std::initializer_list<Person> list)
   {
-    mImpl.appendRecordToStorage(record);
+    mImpl.populatePersonStorage(list);
+  }
+
+  void populatePersonStorageByNames(const QStringList & names)
+  {
+    mImpl.populatePersonStorageByNames(names);
   }
 
   void clearStorage()
@@ -203,20 +219,24 @@ class EditPersonTableModel : public Mdt::ItemModel::AbstractEditableCachedTableM
 
   int storageRowCount() const
   {
-    return mImpl.storageRowCount();
+    return mImpl.storageCount();
   }
 
-  QString storageNameAt(int row) const
+  QString storageNameForId(int id) const
   {
-    Q_ASSERT(row >= 0);
-    Q_ASSERT(row < storageRowCount());
+    Q_ASSERT(id > 0);
 
-    return mImpl.storageNameAt(row);
+    return mImpl.storageNameForId(id);
   }
 
-  void appendRecordToStorage(Person record)
+  void populatePersonStorage(std::initializer_list<Person> list)
   {
-    mImpl.appendRecordToStorage(record);
+    mImpl.populatePersonStorage(list);
+  }
+
+  void populatePersonStorageByNames(const QStringList & names)
+  {
+    mImpl.populatePersonStorageByNames(names);
   }
 
   void clearStorage()
@@ -240,7 +260,9 @@ class EditPersonTableModel : public Mdt::ItemModel::AbstractEditableCachedTableM
   Person mPendingPerson;
 };
 
-void populatePersonStorage(ListPersonTableModel & model, const QStringList & names);
-void populatePersonStorage(EditPersonTableModel & model, const QStringList & names);
+void populatePersonStorage(ListPersonTableModel & model, const std::initializer_list<Person> & list);
+void populatePersonStorageByNames(ListPersonTableModel & model, const QStringList & names);
+void populatePersonStorageByNames(EditPersonTableModel & model, const QStringList & names);
+void populatePersonStorage(EditPersonTableModel & model, const std::initializer_list<Person> & list);
 
 #endif // #ifndef PERSON_TABLE_MODEL_H

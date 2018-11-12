@@ -22,7 +22,10 @@
 #define PERSON_STORAGE_H
 
 #include <QString>
+#include <QStringList>
 #include <QMap>
+#include <initializer_list>
+#include <vector>
 
 struct Person
 {
@@ -34,11 +37,17 @@ class PersonStorage
 {
  public:
 
-  void add(Person person);
+  int add(Person person);
+
+  void populate(std::initializer_list<Person> list);
+
+  void populateByNames(const QStringList & names);
 
   void update(const Person & person);
 
   void remove(int id);
+
+  void clear();
 
   int count() const
   {
@@ -58,6 +67,8 @@ class PersonStorage
 
     return mMap.value(id);
   }
+
+  std::vector<Person> getCountPersons(int count) const;
 
   QString nameById(int id) const
   {

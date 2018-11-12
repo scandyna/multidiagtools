@@ -30,6 +30,9 @@ class PersonStorageTest : public QObject
  private slots:
 
   void addGetTest();
+  void populateTest();
+  void populateByNamesTest();
+  void getCountPersonsTest();
   void updateTest();
   void removeTest();
 };

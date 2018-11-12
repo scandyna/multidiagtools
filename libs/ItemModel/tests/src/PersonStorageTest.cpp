@@ -27,6 +27,7 @@
 
 void PersonStorageTest::addGetTest()
 {
+  int id;
   Person person;
   PersonStorage storage;
 
@@ -35,7 +36,8 @@ void PersonStorageTest::addGetTest()
 
   person.name = "A";
   QCOMPARE(person.id, 0);
-  storage.add(person);
+  id = storage.add(person);
+  QCOMPARE(id, 1);
   QCOMPARE(storage.count(), 1);
   QVERIFY(storage.hasId(1));
   person = storage.getById(1);
@@ -44,7 +46,8 @@ void PersonStorageTest::addGetTest()
 
   person.name = "B";
   person.id = 0;
-  storage.add(person);
+  id = storage.add(person);
+  QCOMPARE(id, 2);
   QCOMPARE(storage.count(), 2);
   QVERIFY(storage.hasId(1));
   QVERIFY(storage.hasId(2));
@@ -54,7 +57,8 @@ void PersonStorageTest::addGetTest()
 
   person.name = "E";
   person.id = 5;
-  storage.add(person);
+  id = storage.add(person);
+  QCOMPARE(id, 5);
   QCOMPARE(storage.count(), 3);
   QVERIFY(storage.hasId(1));
   QVERIFY(storage.hasId(2));
@@ -67,11 +71,67 @@ void PersonStorageTest::addGetTest()
 
   person.name = "F";
   person.id = 0;
-  storage.add(person);
+  id = storage.add(person);
+  QCOMPARE(id, 6);
   QCOMPARE(storage.count(), 4);
   person = storage.getById(6);
   QCOMPARE(person.id, 6);
   QCOMPARE(person.name, QString("F"));
+}
+
+void PersonStorageTest::populateTest()
+{
+  PersonStorage storage;
+  QCOMPARE(storage.count(), 0);
+
+  storage.populate({{11,"A"},{12,"B"}});
+  QCOMPARE(storage.count(), 2);
+  QCOMPARE(storage.nameById(11), QString("A"));
+  QCOMPARE(storage.nameById(12), QString("B"));
+
+  storage.populate({{13,"C"}});
+  QCOMPARE(storage.count(), 1);
+  QCOMPARE(storage.nameById(13), QString("C"));
+}
+
+void PersonStorageTest::populateByNamesTest()
+{
+  PersonStorage storage;
+  QCOMPARE(storage.count(), 0);
+
+  storage.populateByNames({"A","B","C"});
+  QCOMPARE(storage.count(), 3);
+  QCOMPARE(storage.nameById(1), QString("A"));
+  QCOMPARE(storage.nameById(2), QString("B"));
+  QCOMPARE(storage.nameById(3), QString("C"));
+
+  storage.populateByNames({"D","E"});
+  QCOMPARE(storage.count(), 2);
+  QCOMPARE(storage.nameById(1), QString("D"));
+  QCOMPARE(storage.nameById(2), QString("E"));
+}
+
+void PersonStorageTest::getCountPersonsTest()
+{
+  PersonStorage storage;
+  std::vector<Person> list;
+
+  storage.populateByNames({"A","B","C"});
+
+  list = storage.getCountPersons(1);
+  QCOMPARE(list.size(), 1ul);
+  QCOMPARE(list.at(0).name, QString("A"));
+
+  list = storage.getCountPersons(2);
+  QCOMPARE(list.size(), 2ul);
+  QCOMPARE(list.at(0).name, QString("A"));
+  QCOMPARE(list.at(1).name, QString("B"));
+
+  list = storage.getCountPersons(3);
+  QCOMPARE(list.size(), 3ul);
+  QCOMPARE(list.at(0).name, QString("A"));
+  QCOMPARE(list.at(1).name, QString("B"));
+  QCOMPARE(list.at(2).name, QString("C"));
 }
 
 void PersonStorageTest::updateTest()

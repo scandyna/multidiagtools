@@ -44,28 +44,6 @@ Person makePerson(const VariantRecord & record)
  * PersonTableModelCommonImpl
  */
 
-void PersonTableModelCommonImpl::appendRecordToStorage(Person record)
-{
-  record.id = getNextId();
-  mStorage.push_back(record);
-}
-
-void PersonTableModelCommonImpl::updateRecordInStorage(int row, const Person& record)
-{
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < storageRowCount());
-
-  mStorage[row] = record;
-}
-
-void PersonTableModelCommonImpl::removeRecordFromStorage(int row)
-{
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < storageRowCount());
-
-  mStorage.erase( mStorage.begin() + row );
-}
-
 void PersonTableModelCommonImpl::clearStorage()
 {
   mStorage.clear();
@@ -73,27 +51,15 @@ void PersonTableModelCommonImpl::clearStorage()
 
 std::vector<VariantRecord> PersonTableModelCommonImpl::getRecordsFromStorage(int count)
 {
-  std::vector<VariantRecord> list;
+  std::vector<VariantRecord> recordList;
+  const auto personList = mStorage.getCountPersons(count);
 
-  const int n = std::min(count, storageRowCount());
-  for(int i = 0; i < n; ++i){
-    const auto & person = mStorage[i];
-    list.push_back( makeVariantRecord(person) );
+  for(const Person & person : personList){
+    VariantRecord record({person.id, person.name});
+    recordList.push_back(record);
   }
 
-  return list;
-}
-
-int PersonTableModelCommonImpl::getNextId() const
-{
-  const auto cmp = [](const Person & a, const Person & b){
-    return a.id < b.id;
-  };
-  const auto it = std::max_element(mStorage.cbegin(), mStorage.cend(), cmp);
-  if(it == mStorage.cend()){
-    return 1;
-  }
-  return it->id + 1;
+  return recordList;
 }
 
 /*
@@ -146,9 +112,8 @@ bool EditPersonTableModel::addRecordToBackend(const TableCacheRowTransaction & r
 
 void EditPersonTableModel::addRecordToBackendSucceeded()
 {
-  appendRecordToStorage(mPendingPerson);
-  const VariantRecord record = makeVariantRecord( mImpl.lastRecordFromStorage() );
-
+  const int id = mImpl.addPersonToStorage(mPendingPerson);
+  const VariantRecord record = makeVariantRecord( mImpl.getPersonFromStorage(id) );
   const TableCacheTransaction transaction(mPendingTransactionId);
 
   transactionSucceeded(transaction, record);
@@ -168,33 +133,43 @@ bool EditPersonTableModel::updateRecordInBackend(const TableCacheRowTransaction 
   Q_ASSERT(rowTransaction.row() < rowCount());
   Q_ASSERT(!rowTransaction.isNull());
 
+  mPendingTransactionId = rowTransaction.transactionId();
+  mPendingPerson = makePerson( record(rowTransaction.row()) );
+
+  return true;
 }
 
 void EditPersonTableModel::updateRecordInBackendSucceeded()
 {
+  mImpl.updatePersonInStorage(mPendingPerson);
+  const VariantRecord record = makeVariantRecord(mPendingPerson);
+  const TableCacheTransaction transaction(mPendingTransactionId);
+
+  transactionSucceeded(transaction, record);
 }
 
 /*
  * Population functions
  */
 
-template<typename Model>
-void populatePersonStorageImpl(Model & model, const QStringList & names)
+void populatePersonStorage(ListPersonTableModel & model, const std::initializer_list<Person> & list)
 {
-  model.clearStorage();
-  for(const auto & name : names){
-    Person record;
-    record.name = name;
-    model.appendRecordToStorage(record);
-  }
+  model.populatePersonStorage(list);
 }
 
-void populatePersonStorage(ListPersonTableModel & model, const QStringList& names)
+void populatePersonStorageByNames(ListPersonTableModel & model, const QStringList& names)
 {
-  populatePersonStorageImpl(model, names);
+  model.populatePersonStorageByNames(names);
+//   populatePersonStorageImpl(model, names);
 }
 
-void populatePersonStorage(EditPersonTableModel& model, const QStringList& names)
+void populatePersonStorage(EditPersonTableModel & model, const std::initializer_list<Person> & list)
 {
-  populatePersonStorageImpl(model, names);
+  model.populatePersonStorage(list);
+}
+
+void populatePersonStorageByNames(EditPersonTableModel& model, const QStringList& names)
+{
+  model.populatePersonStorageByNames(names);
+//   populatePersonStorageImpl(model, names);
 }

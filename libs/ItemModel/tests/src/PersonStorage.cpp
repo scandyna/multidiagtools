@@ -19,8 +19,10 @@
  **
  ****************************************************************************/
 #include "PersonStorage.h"
+#include <algorithm>
+#include <iterator>
 
-void PersonStorage::add(Person person)
+int PersonStorage::add(Person person)
 {
   if(person.id == 0){
     person.id = nextId();
@@ -28,6 +30,26 @@ void PersonStorage::add(Person person)
   Q_ASSERT(!hasId(person.id));
 
   mMap.insert(person.id, person);
+
+  return person.id;
+}
+
+void PersonStorage::populate(std::initializer_list<Person> list)
+{
+  clear();
+  for(const Person & person : list){
+    add(person);
+  }
+}
+
+void PersonStorage::populateByNames(const QStringList& names)
+{
+  clear();
+  for(const QString & name : names){
+    Person person;
+    person.name = name;
+    add(person);
+  }
 }
 
 void PersonStorage::update(const Person& person)
@@ -44,6 +66,21 @@ void PersonStorage::remove(int id)
   Q_ASSERT(hasId(id));
 
   mMap.remove(id);
+}
+
+void PersonStorage::clear()
+{
+  mMap.clear();
+}
+
+std::vector<Person> PersonStorage::getCountPersons(int num) const
+{
+  std::vector<Person> persons;
+
+  const int n = std::min(num, count());
+  std::copy_n(mMap.cbegin(), n, std::back_inserter(persons));
+
+  return persons;
 }
 
 int PersonStorage::nextId() const
