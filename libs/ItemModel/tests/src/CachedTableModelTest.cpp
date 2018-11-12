@@ -1048,7 +1048,7 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.storageRowCount(), 1);
-  QCOMPARE(model.storageNameForId(0), QString("A"));
+  QCOMPARE(model.storageNameForId(1), QString("A"));
   /*
    * Add to the end
    */
@@ -1116,8 +1116,8 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
   QCOMPARE(model.storageRowCount(), 2);
-  QCOMPARE(model.storageNameForId(0), QString("A"));
-  QCOMPARE(model.storageNameForId(1), QString("B"));
+  QCOMPARE(model.storageNameForId(1), QString("A"));
+  QCOMPARE(model.storageNameForId(2), QString("B"));
   /*
    * Add to the end
    */
@@ -1215,9 +1215,9 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
   QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
   QCOMPARE(model.storageRowCount(), 3);
-  QCOMPARE(model.storageNameForId(0), QString("A"));
-  QCOMPARE(model.storageNameForId(1), QString("B"));
-  QCOMPARE(model.storageNameForId(2), QString("C3"));
+  QCOMPARE(model.storageNameForId(1), QString("A"));
+  QCOMPARE(model.storageNameForId(2), QString("B"));
+  QCOMPARE(model.storageNameForId(3), QString("C3"));
 }
 
 void CachedTableModelTest::insertRowsThenSetDataThenSubmitSignalTest()
