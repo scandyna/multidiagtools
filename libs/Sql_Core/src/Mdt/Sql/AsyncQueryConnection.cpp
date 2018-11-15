@@ -54,6 +54,7 @@ bool AsyncQueryConnection::setup(const ConnectionParameters& parameters, AsyncQu
   connect(&mThread, &QThread::finished, worker, &QObject::deleteLater);
   if(!worker->setup(parameters)){
     mSetupError = worker->setupError();
+    delete worker;
     return false;
   }
   connect(this, &AsyncQueryConnection::queryRequested, worker, &AsyncQueryThreadWorker::processQuery);

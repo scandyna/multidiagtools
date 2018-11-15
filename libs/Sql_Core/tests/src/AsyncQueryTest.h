@@ -37,6 +37,7 @@ class AsyncQueryTest : public TestBase
   void generateConnectionNameTest_data();
 
   void connectionSetupTest();
+  void connectionSetupFailTest();
 
   void createQueryTest();
   void simpleSelectTest();

@@ -100,6 +100,16 @@ void AsyncQueryTest::connectionSetupTest()
   QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_3"));
 }
 
+void AsyncQueryTest::connectionSetupFailTest()
+{
+  ConnectionParameters wrongDriverParameters("SOME_NON_AVAILABLE_DRIVER");
+  AsyncQueryConnection cnn;
+
+  QVERIFY(cnn.setupError().isNull());
+  QVERIFY(!cnn.setup(wrongDriverParameters));
+  QVERIFY(!cnn.setupError().isNull());
+}
+
 void AsyncQueryTest::createQueryTest()
 {
   AsyncQueryConnection cnn;
