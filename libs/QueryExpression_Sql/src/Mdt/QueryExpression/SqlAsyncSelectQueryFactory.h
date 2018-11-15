@@ -24,6 +24,7 @@
 #include "Mdt/QueryExpression/AbstractAsyncSelectQueryFactory.h"
 #include "Mdt/Sql/AsyncQueryConnection.h"
 #include "Mdt/Sql/ConnectionParameters.h"
+#include "Mdt/Error.h"
 #include "MdtQueryExpression_SqlExport.h"
 
 namespace Mdt{ namespace QueryExpression{
@@ -40,6 +41,13 @@ namespace Mdt{ namespace QueryExpression{
      *   the queries that are currently running will be aborted.
      */
     bool setup(const Mdt::Sql::ConnectionParameters & parameters);
+
+    /*! \brief Get setup error
+     */
+    Mdt::Error setupError() const
+    {
+      return mConnection.setupError();
+    }
 
     /*! \brief Create a asynchronous select query
      */
