@@ -59,6 +59,7 @@ namespace Mdt{ namespace Entity{
   {
     using ParentClass = AbstractEntityRepository<EntityData, UniqueId>;
     using ParentClass::tr;
+    using ParentClass::setLastError;
 
    public:
 
@@ -88,6 +89,7 @@ namespace Mdt{ namespace Entity{
           const auto msg = tr("A record with id '%1' allready exists.")
                            .arg(id.value());
           auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+          setLastError(error);
           return error;
         }
         mTable.insert( id.value(), record );
@@ -122,6 +124,37 @@ namespace Mdt{ namespace Entity{
     Mdt::Expected<EntityData> getByPrimaryKey(const PrimaryKeyRecord & pk) const override
     {
       Q_ASSERT(!pk.isNull());
+    }
+
+    /*! \brief Update \a record in the storage
+     *
+     * \note Currently only works for entities that have a single Id,
+     *   not a composed PK
+     * \pre \a record must have a non null unique id
+     */
+    bool update(const EntityData & record) override
+    {
+      const auto id = uniqueIdValue<EntityData, UniqueId>(record);
+      Q_ASSERT(!id.isNull());
+
+      if( !mTable.contains(id.value()) ){
+        const auto msg = tr("Could not find a record with id '%1'.")
+                          .arg(id.value());
+        auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+        setLastError(error);
+        return false;
+      }
+      mTable[id.value()] = record;
+
+      return true;
+    }
+
+    /*! \brief Remove all records from the storage
+     */
+    bool removeAll() override
+    {
+      mTable.clear();
+      return true;
     }
 
     /*! \brief Get count of items in the memory storage

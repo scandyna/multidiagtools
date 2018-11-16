@@ -68,7 +68,7 @@ namespace Mdt{ namespace Entity{
    * createPerson.execute();
    * \endcode
    *
-   * To add functionalities that are not available in from the generic repository,
+   * To add functionalities that are not available from the generic repository,
    *  and avoid to re-implement the provided ones,
    *  2 classes are needed:
    *  - The repository interface (backend independent)
@@ -169,6 +169,10 @@ namespace Mdt{ namespace Entity{
      * \pre \a record must have a non null unique id
      */
     virtual bool update(const EntityData & record) = 0;
+
+    /*! \brief Remove all records from the storage
+     */
+    virtual bool removeAll() = 0;
   };
 
 }} // namespace Mdt{ namespace Entity{

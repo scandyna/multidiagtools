@@ -38,6 +38,7 @@
 #include "Mdt/QueryExpression/SqlSelectQuery.h"
 #include "Mdt/Sql/InsertQuery.h"
 #include "Mdt/Sql/UpdateQuery.h"
+#include "Mdt/Sql/DeleteQuery.h"
 #include "Mdt/Expected.h"
 #include "Mdt/Error.h"
 #include "MdtEntity_SqlExport.h"
@@ -274,6 +275,24 @@ namespace Mdt{ namespace Entity{
       Impl::AddEntityFieldsToUpdateQuery<EntityDataStruct> op(query, record.constDataStruct());
       boost::fusion::for_each(entityDef, op);
       query.setConditions(pkRecord);
+
+      if(!query.exec()){
+        error = query.lastError();
+        return error;
+      }
+
+      return error;
+    }
+
+    template<typename EntityData>
+    Mdt::Error removeAll()
+    {
+      using EntityDef = typename EntityData::entity_def_type;
+
+      Mdt::Error error;
+      Mdt::Sql::DeleteQuery query(mDatabase);
+
+      query.setTableName(EntityDef::entityName());
 
       if(!query.exec()){
         error = query.lastError();

@@ -26,6 +26,7 @@
 #include "Mdt/Entity/SqlTable.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/DeleteQuery.h"
+#include <QSqlQuery>
 #include <QString>
 #include <memory>
 
@@ -58,7 +59,7 @@ MDT_ENTITY_DEF(
   (firstName, FieldMaxLength(250))
 )
 
-class PersonId : public IntegralUniqueIdTemplate<int>
+class PersonId : public IntegralUniqueIdTemplate<PersonId, int>
 {
  public:
 
@@ -247,6 +248,24 @@ void EntityRepositoryTest::updateTest()
   QCOMPARE(person.firstName(), QString("EA"));
 }
 
+void EntityRepositoryTest::removeAllTest()
+{
+  QVERIFY(cleanupPersonTable());
+
+  SqlPersonRepository repository;
+  repository.setDatabase(database());
+  PersonData person;
+
+  person.setFirstName("P1");
+  QVERIFY(repository.add(person));
+  person.setFirstName("P2");
+  QVERIFY(repository.add(person));
+  QCOMPARE(getStorageCount(), 2);
+
+  QVERIFY(repository.removeAll());
+  QCOMPARE(getStorageCount(), 0);
+}
+
 /*
  * Helpers
  */
@@ -276,6 +295,18 @@ bool EntityRepositoryTest::cleanupPersonTable()
   return true;
 }
 
+int EntityRepositoryTest::getStorageCount()
+{
+  QSqlQuery query(database());
+  const QString sql = "SELECT COUNT(*) FROM " + PersonEntity::def().entityName();
+
+  if(!query.exec(sql)){
+    return -1;
+  }
+  query.next();
+
+  return query.value(0).toInt();
+}
 
 /*
  * Main

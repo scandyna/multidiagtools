@@ -124,6 +124,19 @@ namespace Mdt{ namespace Entity{
       return true;
     }
 
+    /*! \brief Remove all records from the storage
+     */
+    bool removeAll() override
+    {
+      const auto error = mImpl.removeAll<EntityData>();
+      if(!error.isNull()){
+        setLastError(error);
+        return false;
+      }
+
+      return true;
+    }
+
    private:
 
     SqlEntityRepositoryImpl mImpl;

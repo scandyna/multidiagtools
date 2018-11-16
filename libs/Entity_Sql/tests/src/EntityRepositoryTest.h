@@ -39,10 +39,13 @@ class EntityRepositoryTest : public TestBase
 
   void updateTest();
 
+  void removeAllTest();
+
  private:
 
   bool createDatabaseSchema();
   bool cleanupPersonTable();
+  int getStorageCount();
 };
 
 #endif // #ifnef TEST_MAIN_H

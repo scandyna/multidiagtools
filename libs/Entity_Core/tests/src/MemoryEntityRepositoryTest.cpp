@@ -272,6 +272,21 @@ void MemoryEntityRepositoryTest::updateTest()
   QCOMPARE(person.firstName(), QString("EA"));
 }
 
+void MemoryEntityRepositoryTest::removeAllTest()
+{
+  auto repository = std::make_shared<TestPersonRepository>();
+  PersonData person;
+
+  person.setFirstName("P1");
+  QVERIFY(repository->add(person));
+  person.setFirstName("P2");
+  QVERIFY(repository->add(person));
+  QCOMPARE(repository->storageCount(), 2);
+
+  QVERIFY(repository->removeAll());
+  QCOMPARE(repository->storageCount(), 0);
+}
+
 /*
  * Main
  */
