@@ -99,6 +99,8 @@ namespace Mdt{ namespace QueryExpression{
      */
     AbstractAsyncSelectQuery(QObject *parent = nullptr);
 
+   public slots:
+
     /*! \brief Submit a select statement
      *
      * If \a maxRows is > 0, the result of executing \a statement
