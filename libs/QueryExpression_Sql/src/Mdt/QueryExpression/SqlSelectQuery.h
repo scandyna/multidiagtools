@@ -89,7 +89,7 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Execute a select statement
      */
-    bool exec(const SelectStatement & statement) override;
+    bool exec(const SelectStatement & statement, int maxRows = 0) override;
 
     /*! \brief Get the next record, if avaliable, and position this query to that record
      */
