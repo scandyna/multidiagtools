@@ -102,7 +102,7 @@ namespace Mdt{ namespace QueryExpression{
    * \endcode
    *
    * In above examples, instances of the backend specific query was used.
-   *  It may be better to not depend, for example in SQL, in the business logic.
+   *  It may be better to not depend, for example on SQL, in the business logic.
    *  This can be done using a factory.
    *  See AbstractSelectQueryFactory documentation for that.
    *
@@ -142,9 +142,18 @@ namespace Mdt{ namespace QueryExpression{
     AbstractSelectQuery(AbstractSelectQuery &&) = delete;
     AbstractSelectQuery & operator=(AbstractSelectQuery &&) = delete;
 
+   public slots:
+
     /*! \brief Execute \a statement
+     *
+     * If \a maxRows is > 0, the result of executing \a statement should return a result limited to \a maxRows .
+     *
+     * \pre \a maxRows must be >= 0
+     * \todo should add maxRows argument
      */
-    virtual bool exec(const SelectStatement & statement) = 0;
+    virtual bool exec(const SelectStatement & statement, int maxRows = 0) = 0;
+
+   public:
 
     /*! \brief Get the next record, if avaliable, and position this query to that record
      */

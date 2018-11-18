@@ -140,8 +140,38 @@ void SelectQueryTest::execQueryTest()
 
 void SelectQueryTest::execQueryMaxRowsTest()
 {
+  QVERIFY(cleanupPersonTable());
+  QVERIFY(insertPerson(1, "P1", 10, "R1"));
+  QVERIFY(insertPerson(2, "P2", 20, "R2"));
 
-  QFAIL("Not complete");
+  EntitySelectStatement<PersonEntity> stm;
+  stm.selectAllFields();
+
+  SqlSelectQuery query;
+  query.setDatabase(database());
+
+  QVERIFY(query.exec(stm, 0));
+  QVERIFY(query.next());
+  QCOMPARE(query.fieldCount(), 4);
+  QCOMPARE(query.value(0), QVariant(1));
+  QCOMPARE(query.value(1), QVariant("P1"));
+  QCOMPARE(query.value(2), QVariant(10));
+  QCOMPARE(query.value(3), QVariant("R1"));
+  QVERIFY(query.next());
+  QCOMPARE(query.value(0), QVariant(2));
+  QCOMPARE(query.value(1), QVariant("P2"));
+  QCOMPARE(query.value(2), QVariant(20));
+  QCOMPARE(query.value(3), QVariant("R2"));
+  QVERIFY(!query.next());
+
+  QVERIFY(query.exec(stm, 1));
+  QVERIFY(query.next());
+  QCOMPARE(query.fieldCount(), 4);
+  QCOMPARE(query.value(0), QVariant(1));
+  QCOMPARE(query.value(1), QVariant("P1"));
+  QCOMPARE(query.value(2), QVariant(10));
+  QCOMPARE(query.value(3), QVariant("R1"));
+  QVERIFY(!query.next());
 }
 
 void SelectQueryTest::fieldIndexTest()
