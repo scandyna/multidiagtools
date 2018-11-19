@@ -21,6 +21,8 @@
 #include "AbstractSelectQuery.h"
 #include <boost/variant.hpp>
 
+using Mdt::Container::VariantRecord;
+
 namespace Mdt{ namespace QueryExpression{
 
 class CallSelectQueryImplFieldIndex : public boost::static_visitor<int>
@@ -56,6 +58,30 @@ class CallSelectQueryImplFieldIndex : public boost::static_visitor<int>
   const AbstractSelectQuery & mQuery;
 };
 
+bool AbstractSelectQuery::next()
+{
+  return fetchNext();
+}
+
+bool AbstractSelectQuery::execAndFetchAll(const SelectStatement & statement, int maxRows)
+{
+  Q_ASSERT(maxRows >= 0);
+
+  if(!exec(statement, maxRows)){
+    return false;
+  }
+  while(next()){
+    const int n = fieldCount();
+    VariantRecord record(n);
+    for(int i = 0; i < n; ++i){
+      record.setValue(i, value(i));
+    }
+    emit newRecordAvailable(record);
+  }
+
+  return true;
+}
+
 int AbstractSelectQuery::fieldIndex(const SelectField& field) const
 {
   CallSelectQueryImplFieldIndex visitor(*this);
@@ -66,6 +92,7 @@ int AbstractSelectQuery::fieldIndex(const SelectField& field) const
 void AbstractSelectQuery::setLastError(const Error& error)
 {
   mLastError = error;
+  emit errorOccured(mLastError);
 }
 
 }} // namespace Mdt{ namespace QueryExpression{

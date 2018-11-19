@@ -71,11 +71,6 @@ bool SqlSelectQuery::exec(const SelectStatement & statement, int maxRows)
   return true;
 }
 
-bool SqlSelectQuery::next()
-{
-  return mQuery.next();
-}
-
 int SqlSelectQuery::fieldCount() const
 {
   return mQuery.record().count();
@@ -91,6 +86,11 @@ int SqlSelectQuery::fieldIndexImpl(const EntityAndField & field) const
   const auto sqlFieldName = field.fieldAliasOrName();
 
   return mQuery.record().indexOf(sqlFieldName);
+}
+
+bool SqlSelectQuery::fetchNext()
+{
+  return mQuery.next();
 }
 
 }} // namespace Mdt{ namespace QueryExpression{

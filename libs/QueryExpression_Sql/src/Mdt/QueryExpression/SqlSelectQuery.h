@@ -91,10 +91,6 @@ namespace Mdt{ namespace QueryExpression{
      */
     bool exec(const SelectStatement & statement, int maxRows = 0) override;
 
-    /*! \brief Get the next record, if avaliable, and position this query to that record
-     */
-    bool next() override;
-
     /*! \brief Get count of field for the last executed statement
      */
     int fieldCount() const override;
@@ -116,6 +112,10 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a field must contain a EntityAndField
      */
     int fieldIndexImpl(const EntityAndField & field) const override;
+
+    /*! \brief Get the next record, if avaliable, and position this query to that record
+     */
+    bool fetchNext() override;
 
     QSqlQuery mQuery;
     QSqlDatabase mDb;

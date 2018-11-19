@@ -24,6 +24,7 @@
 #include "SelectStatement.h"
 #include "FieldName.h"
 #include "SelectField.h"
+#include "Mdt/Container/VariantRecord.h"
 #include "Mdt/Error.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QObject>
@@ -128,6 +129,8 @@ namespace Mdt{ namespace QueryExpression{
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT AbstractSelectQuery : public QObject
   {
+    Q_OBJECT
+
    public:
 
     /*! \brief Constructor
@@ -142,22 +145,17 @@ namespace Mdt{ namespace QueryExpression{
     AbstractSelectQuery(AbstractSelectQuery &&) = delete;
     AbstractSelectQuery & operator=(AbstractSelectQuery &&) = delete;
 
-   public slots:
-
     /*! \brief Execute \a statement
      *
      * If \a maxRows is > 0, the result of executing \a statement should return a result limited to \a maxRows .
      *
      * \pre \a maxRows must be >= 0
-     * \todo should add maxRows argument
      */
     virtual bool exec(const SelectStatement & statement, int maxRows = 0) = 0;
 
-   public:
-
     /*! \brief Get the next record, if avaliable, and position this query to that record
      */
-    virtual bool next() = 0;
+    bool next();
 
     /*! \brief Get count of field for the last executed statement
      */
@@ -185,6 +183,32 @@ namespace Mdt{ namespace QueryExpression{
     {
       return mLastError;
     }
+
+   public slots:
+
+    /*! \brief Execute \a statement and fetch all available records
+     *
+     * This method will also emit newRecordAvailable() for each new record.
+     *
+     * If \a maxRows is > 0, the result of executing \a statement should return a result limited to \a maxRows .
+     *
+     * \pre \a maxRows must be >= 0
+     */
+    bool execAndFetchAll(const SelectStatement & statement, int maxRows = 0);
+
+   signals:
+
+    /*! \brief Emitted whenever a new record is available when using execAndFetchAll()
+     */
+    void newRecordAvailable(const Mdt::Container::VariantRecord & record);
+
+    /*! \brief Get the next record, if avaliable, and position this query to that record
+     */
+    virtual bool fetchNext() = 0;
+
+    /*! \brief Emitted whenever a error occured
+     */
+    void errorOccured(const Mdt::Error & error);
 
    protected:
 
