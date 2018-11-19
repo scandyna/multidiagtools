@@ -24,13 +24,17 @@
 #include "Mdt/QueryExpression/SqlSelectQueryFactory.h"
 #include "Mdt/Entity/QueryEntity.h"
 #include "Mdt/Entity/EntitySelectStatement.h"
+#include "Mdt/Container/VariantRecord.h"
 #include "Mdt/Expected.h"
+#include <QSignalSpy>
+#include <QVariantList>
 #include <memory>
 #include <vector>
 
 using namespace Mdt::Entity;
 using Mdt::QueryExpression::SqlSelectQuery;
 using Mdt::QueryExpression::SqlSelectQueryFactory;
+using Mdt::Container::VariantRecord;
 
 /*
  * Init / cleanup
@@ -172,6 +176,47 @@ void SelectQueryTest::execQueryMaxRowsTest()
   QCOMPARE(query.value(2), QVariant(10));
   QCOMPARE(query.value(3), QVariant("R1"));
   QVERIFY(!query.next());
+}
+
+void SelectQueryTest::execAndFetchAllTest()
+{
+  QVERIFY(cleanupPersonTable());
+  QVERIFY(insertPerson(1, "P1", 10, "R1"));
+  QVERIFY(insertPerson(2, "P2", 20, "R2"));
+
+  EntitySelectStatement<PersonEntity> stm;
+  stm.selectAllFields();
+
+  SqlSelectQuery query;
+  query.setDatabase(database());
+
+  QVariantList arguments;
+  VariantRecord record;
+  QSignalSpy newRecordAvailableSpy(&query, &SqlSelectQuery::newRecordAvailable);
+  QVERIFY(newRecordAvailableSpy.isValid());
+
+  QCOMPARE(newRecordAvailableSpy.count(), 0);
+  QVERIFY(query.execAndFetchAll(stm));
+  QCOMPARE(newRecordAvailableSpy.count(), 2);
+  arguments = newRecordAvailableSpy.takeFirst();
+  QCOMPARE(arguments.count(), 1);
+  record = arguments.at(0).value<VariantRecord>();
+  QCOMPARE(record.columnCount(), 4);
+  QCOMPARE(record.value(0), QVariant(1));
+  QCOMPARE(record.value(1), QVariant("P1"));
+  QCOMPARE(record.value(2), QVariant(10));
+  QCOMPARE(record.value(3), QVariant("R1"));
+  arguments = newRecordAvailableSpy.takeFirst();
+  QCOMPARE(arguments.count(), 1);
+  record = arguments.at(0).value<VariantRecord>();
+  QCOMPARE(record.columnCount(), 4);
+  QCOMPARE(record.value(0), QVariant(2));
+  QCOMPARE(record.value(1), QVariant("P2"));
+  QCOMPARE(record.value(2), QVariant(20));
+  QCOMPARE(record.value(3), QVariant("R2"));
+
+  QVERIFY(!query.next());
+  QCOMPARE(newRecordAvailableSpy.count(), 0);
 }
 
 void SelectQueryTest::fieldIndexTest()
