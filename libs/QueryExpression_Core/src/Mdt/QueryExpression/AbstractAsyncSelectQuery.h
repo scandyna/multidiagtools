@@ -31,40 +31,28 @@ namespace Mdt{ namespace QueryExpression{
 
   /*! \brief Base class to implement a backend specific asynchronous select query
    *
-   * To display a list of persons without blocking the UI, we could use Mdt::Entity::AbstractAsyncReadOnlyCache.
-   *  In this part of the code, knowing about backend specific stuff, like SQL database, is not desirable.
+   * To display a list of persons without blocking the UI, we could use Mdt::ItemModel::AbstractReadOnlyCachedTableModel:
    * \code
-   * 
-   *
-   * class ViewPersonCache : public Mdt::Entity::AbstractAsyncReadOnlyCache
+   * class ListPersonTableModel : public Mdt::ItemModel::AbstractReadOnlyCachedTableModel
    * {
-   *   using AsyncSelectQuery = Mdt::QueryExpression::AbstractAsyncSelectQuery;
-   *
    *  Q_OBJECT
+   *
+   *   using SelectStatement = Mdt::QueryExpression::SelectStatement;
    *
    *  public:
    *
-   *   void setSelectQuery(std::unique_ptr<AsyncSelectQuery> && query);
+   *   ListPersonTableModel(QObject *parent = nullptr);
+   *
+   *  signals:
+   *
+   *   void fetchRecordsRequested(const SelectStatement & statement, int maxRows);
    *
    *  private:
    *
-   *   void fetchRecords(int count) override;
+   *   bool fetchRecords(int count) override;
    *
-   *   std::unique_ptr<AsyncSelectQuery> mSelectQuery;
+   *   SelectStatement mStatement;
    * };
-   * \endcode
-   *
-   * Notice that the query hold in the use case is not shared,
-   *  this is to avoid recieving events from the same instance that could
-   *  accidentally be shared across the application.
-   *  Using std::unique_ptr enforce this:
-   * \code
-   * ViewPersonCache::setSelectQuery(std::unique_ptr<AsyncSelectQuery> && query)
-   * {
-   *   mSelectQuery = std::move(query);
-   *   connect(query.get(), &AsyncSelectQuery::newRecordAvailable, this, &ViewPersonCache::fromBackendAppendRecord);
-   *   connect(query.get(), &AsyncSelectQuery::errorOccured, this, &ViewPersonCache::setLastError);
-   * }
    * \endcode
    *
    * The concrete backend will be instantiated and setup in one place,
@@ -81,8 +69,65 @@ namespace Mdt{ namespace QueryExpression{
    *   // Error handling. use setupError() to have mor informations
    * }
    *
-   * ViewPersonCache viewPersonCache;
-   * viewPersonCache.setSelectQuery( factory.createSelectQuery() );
+   * ListPersonTableModel model;
+   * auto query = factory.createSelectQuery();
+   * connect(query.get(), &AsyncSelectQuery::newRecordAvailable, &model, &ListPersonTableModel::fromBackendAppendRecord);
+   * connect(query.get(), &AsyncSelectQuery::errorOccured, &model, &ListPersonTableModel::setLastError);
+   * \endcode
+   *
+   * Above example used Qt signal/slots, which also reduces coupling.
+   *  It is also possible to hold the query in the model:
+   * \code
+   * class ListPersonTableModel : public Mdt::ItemModel::AbstractReadOnlyCachedTableModel
+   * {
+   *  Q_OBJECT
+   *
+   *   using SelectStatement = Mdt::QueryExpression::SelectStatement;
+   *   using AsyncSelectQuery = Mdt::QueryExpression::AbstractAsyncSelectQuery;
+   *
+   *  public:
+   *
+   *   ListPersonTableModel(QObject *parent = nullptr);
+   *
+   *   void setSelectQuery(std::unique_ptr<AsyncSelectQuery> && query);
+   *
+   *  private:
+   *
+   *   bool fetchRecords(int count) override;
+   *
+   *   SelectStatement mStatement;
+   *   std::unique_ptr<AsyncSelectQuery> mSelectQuery;
+   * };
+   * \endcode
+   *
+   * Notice that the query hold in the use case is not shared,
+   *  this is to avoid recieving events from the same instance that could
+   *  accidentally be shared across the application.
+   *  Using std::unique_ptr enforce this:
+   * \code
+   * ListPersonTableModel::setSelectQuery(std::unique_ptr<AsyncSelectQuery> && query)
+   * {
+   *   mSelectQuery = std::move(query);
+   *   connect(query.get(), &AsyncSelectQuery::newRecordAvailable, this, &ListPersonTableModel::fromBackendAppendRecord);
+   *   connect(query.get(), &AsyncSelectQuery::errorOccured, this, &ListPersonTableModel::setLastError);
+   * }
+   * \endcode
+   *
+   * Then, the above main becomes:
+   * \code
+   * using namespace Mdt::QueryExpression;
+   * using namespace Mdt::Sql;
+   *
+   * SQLiteConnectionParameters parameters;
+   * parameters.setDatabaseFile("/path/to/dbFile.sql");
+   *
+   * SqlAsyncSelectQueryFactory factory;
+   * if(!selectQueryFacotory->setup( parameters.toConnectionParameters() )){
+   *   // Error handling. use setupError() to have mor informations
+   * }
+   *
+   * ListPersonTableModel model;
+   * model.setSelectQuery( factory.createSelectQuery() );
    * \endcode
    *
    * \sa AbstractAsyncSelectQueryFacory
@@ -119,10 +164,6 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Emitted whenever a error occured
      */
     void errorOccured(const Mdt::Error & error);
-
-   private:
-
-    
   };
 
 }} // namespace Mdt{ namespace QueryExpression{
