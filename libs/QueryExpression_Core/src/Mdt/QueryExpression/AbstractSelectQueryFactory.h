@@ -81,7 +81,7 @@ namespace Mdt{ namespace QueryExpression{
    * doSomething(*personList);
    * \endcode
    */
-  class AbstractSelectQueryFactory
+  class MDT_QUERYEXPRESSION_CORE_EXPORT AbstractSelectQueryFactory
   {
    public:
 
