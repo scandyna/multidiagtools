@@ -36,7 +36,7 @@ namespace Mdt{ namespace Entity{
 
   }} // namespace Impl{ namespace FieldDataValidator{
 
-  /*! \brief Validate field data rebargding field attributes
+  /*! \brief Validate field data regarding field attributes
    *
    * Example with %PersonData defined using DataTemplate :
    * \code
@@ -105,7 +105,6 @@ namespace Mdt{ namespace Entity{
     {
       return ImplNs::FieldDataValidator::toGenericError(mState, mFieldName);
     }
-
 
    private:
 

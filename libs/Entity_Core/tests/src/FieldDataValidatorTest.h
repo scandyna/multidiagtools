@@ -32,6 +32,7 @@ class FieldDataValidatorTest : public TestBase
   void stateChangeTest();
   void customImplementationTest();
   void validateDataTest();
+  void validateItergralUniqueIdTest();
 };
 
 #endif // #ifndef FIELD_DATA_VALIDATOR_TEST_H

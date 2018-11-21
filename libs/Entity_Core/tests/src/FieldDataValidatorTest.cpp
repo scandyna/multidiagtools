@@ -21,6 +21,7 @@
 #include "FieldDataValidatorTest.h"
 #include "Mdt/Entity/FieldDataValidator.h"
 #include "Mdt/Entity/DataTemplate.h"
+#include "Mdt/Entity/IntegralUniqueIdTemplate.h"
 #include "Mdt/Entity/Def.h"
 
 // #include <QDebug>
@@ -100,6 +101,63 @@ class ArticleData : public Mdt::Entity::DataTemplate<ArticleEntity>
   MyCustomType custom() const
   {
     return constDataStruct().custom;
+  }
+};
+
+struct MultiIdDataStruct
+{
+  int pkId = 0;
+  int requiredId = 0;
+  int optionalId = 0;
+};
+
+MDT_ENTITY_DEF(
+  (MultiIdDataStruct),
+  MultiId,
+  (pkId, FieldFlag::IsPrimaryKey),
+  (requiredId, FieldFlag::IsRequired),
+  (optionalId)
+)
+
+class Id : public Mdt::Entity::IntegralUniqueIdTemplate<Id, int>
+{
+ public:
+
+  using IntegralUniqueIdTemplate::IntegralUniqueIdTemplate;
+};
+
+class MultiIdData : public Mdt::Entity::DataTemplate<MultiIdEntity>
+{
+ public:
+
+  void setPkId(Id id)
+  {
+    dataStruct().pkId = id.value();
+  }
+
+  Id pkId() const
+  {
+    return constDataStruct().pkId;
+  }
+
+  void setRequiredId(int id)
+  {
+    dataStruct().requiredId = id;
+  }
+
+  int requiredId() const
+  {
+    return constDataStruct().requiredId;
+  }
+
+  void setOptionalId(int id)
+  {
+    dataStruct().optionalId = id;
+  }
+
+  int optionalId() const
+  {
+    return constDataStruct().optionalId;
   }
 };
 
@@ -310,6 +368,36 @@ void FieldDataValidatorTest::validateDataTest()
   data.setRequiredStr3("ABCD");
   QVERIFY(!v.validateData( data.requiredStr3(), data.def().requiredStr3() ));
   QCOMPARE(v.state(), FieldDataValidatorState::MaxLengthExeeded);
+}
+
+void FieldDataValidatorTest::validateItergralUniqueIdTest()
+{
+  FieldDataValidator<> v;
+  MultiIdData data;
+
+  QVERIFY(data.pkId().isNull());
+  QVERIFY( !v.validateData(data.pkId(), data.def().pkId()) );
+  QCOMPARE(v.state(), FieldDataValidatorState::RequiredButNull);
+
+  data.setPkId(1);
+  QVERIFY( v.validateData(data.pkId(), data.def().pkId()) );
+  QCOMPARE(v.state(), FieldDataValidatorState::Ok);
+
+  QCOMPARE(data.requiredId(), 0);
+  QVERIFY( !v.validateData(data.requiredId(), data.def().requiredId()) );
+  QCOMPARE(v.state(), FieldDataValidatorState::RequiredButNull);
+
+  data.setRequiredId(2);
+  QVERIFY( v.validateData(data.requiredId(), data.def().requiredId()) );
+  QCOMPARE(v.state(), FieldDataValidatorState::Ok);
+
+  QCOMPARE(data.optionalId(), 0);
+  QVERIFY( v.validateData(data.optionalId(), data.def().optionalId()) );
+  QCOMPARE(v.state(), FieldDataValidatorState::Ok);
+
+  data.setOptionalId(3);
+  QVERIFY( v.validateData(data.optionalId(), data.def().optionalId()) );
+  QCOMPARE(v.state(), FieldDataValidatorState::Ok);
 }
 
 /*

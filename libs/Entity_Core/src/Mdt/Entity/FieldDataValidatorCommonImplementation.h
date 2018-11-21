@@ -23,6 +23,7 @@
 
 #include "FieldAttributes.h"
 #include "FieldDataValidatorState.h"
+#include "IntegralUniqueIdTemplate.h"
 #include "MdtEntity_CoreExport.h"
 #include <QString>
 #include <type_traits>
@@ -39,7 +40,16 @@ namespace Mdt{ namespace Entity{
     typename std::enable_if< std::is_integral<T>::value, FieldDataValidatorState >::type
     validateData(T data, const FieldAttributes & fieldAttributes) const
     {
-      if( (data == 0) && (fieldAttributes.isRequired()) ){
+      if( (data == 0) && isFieldRequired(fieldAttributes) ){
+        return FieldDataValidatorState::RequiredButNull;
+      }
+      return FieldDataValidatorState::Ok;
+    }
+
+    template<typename T, typename IntegralType>
+    FieldDataValidatorState validateData(const IntegralUniqueIdTemplate<T, IntegralType> & id, const FieldAttributes & fieldAttributes) const
+    {
+      if( id.isNull() && isFieldRequired(fieldAttributes) ){
         return FieldDataValidatorState::RequiredButNull;
       }
       return FieldDataValidatorState::Ok;
@@ -47,6 +57,12 @@ namespace Mdt{ namespace Entity{
 
     FieldDataValidatorState validateData(const QString & data, const FieldAttributes & fieldAttributes) const;
 
+   private:
+
+    static bool isFieldRequired(const FieldAttributes & fieldAttributes)
+    {
+      return fieldAttributes.isRequired() || fieldAttributes.isPrimaryKey();
+    }
   };
 
 }} // namespace Mdt{ namespace Entity{
