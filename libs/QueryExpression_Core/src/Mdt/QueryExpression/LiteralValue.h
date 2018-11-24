@@ -22,6 +22,7 @@
 #define MDT_QUERY_EXPRESSION_LITERAL_VALUE_H
 
 #include "MdtQueryExpression_CoreExport.h"
+#include <QString>
 #include <boost/proto/traits.hpp>
 #include <boost/proto/matches.hpp>
 
@@ -31,7 +32,8 @@ namespace Mdt{ namespace QueryExpression{
    */
   struct MDT_QUERYEXPRESSION_CORE_EXPORT LiteralValue : boost::proto::or_<
                                                           boost::proto::terminal< boost::proto::convertible_to<int> > ,
-                                                          boost::proto::terminal< const char * const >
+                                                          boost::proto::terminal< const char * const > ,
+                                                          boost::proto::terminal< QString >
                                                         >
   {
   };

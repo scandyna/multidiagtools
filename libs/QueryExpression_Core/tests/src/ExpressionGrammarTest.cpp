@@ -25,6 +25,7 @@
 #include "Mdt/QueryExpression/Terminal.h"
 #include "Mdt/QueryExpression/Comparison.h"
 #include "Mdt/QueryExpression/ExpressionGrammar.h"
+#include <QString>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/literal.hpp>
 
@@ -54,10 +55,12 @@ void ExpressionGrammarTest::literalValueTest()
 {
   struct MyType{};
   boost::proto::terminal<MyType>::type _x{{}};
+  boost::proto::terminal<QString>::type _qs;
 
   static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , LiteralValue >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit("ID44") ) , LiteralValue >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(u8"éèj") ) , LiteralValue >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype(_qs ) , LiteralValue >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( _x ) , LiteralValue >() , "" );
 }
 
@@ -79,11 +82,14 @@ void ExpressionGrammarTest::comparisonTest()
 
   SelectField A(EntityName("A"), FieldName("a"));
   SelectField B(EntityName("B"), FieldName("b"));
+  QString str("S");
 
   // ==
   static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( 25 == A ) , Comparison >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( A == B ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A == "A" ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A == str ) , Comparison >() , "" );
   // Like
   static_assert(  expressionMatchesGrammar< decltype( A == Like("?k") ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( Like("?k") == A ) , Comparison >() , "" );

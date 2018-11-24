@@ -354,6 +354,13 @@ void ExpressionTreeTest::filterExpressionTest()
   QCOMPARE(infixVisitor.toString(), expectedString);
   infixVisitor.clear();
 
+  QString matchinString = "M";
+  filter.setFilter(clientId == matchinString);
+  expectedString = "id==\"M\"";
+  traverseExpressionTree(filter.internalTree(), infixVisitor);
+  QCOMPARE(infixVisitor.toString(), expectedString);
+  infixVisitor.clear();
+
   filter.setFilter(clientId == Like("?B*"));
   expectedString = "id Like '?B*'";
   traverseExpressionTree(filter.internalTree(), infixVisitor);

@@ -299,6 +299,11 @@ void SqlTransformTest::filterExpressionToSqlTest()
   expectedSql = "\"Person\".\"name\"='A''BCD'";
   QCOMPARE(filterExpressionToSql(filter, db), expectedSql);
 
+  QString matchingName = "DEF";
+  filter.setFilter(personName == matchingName);
+  expectedSql = "\"Person\".\"name\"='DEF'";
+  QCOMPARE(filterExpressionToSql(filter, db), expectedSql);
+
   filter.setFilter(personName == Like("?B*"));
   expectedSql = "\"Person\".\"name\" LIKE '_B%' ESCAPE '\\'";
   QCOMPARE(filterExpressionToSql(filter, db), expectedSql);

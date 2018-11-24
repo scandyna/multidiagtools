@@ -25,6 +25,7 @@
 #include "../SelectField.h"
 #include "../LikeExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
+#include <QString>
 #include <QVariant>
 #include <boost/proto/traits.hpp>
 
@@ -33,6 +34,11 @@ namespace Mdt{ namespace QueryExpression{ namespace BuildExpressionTree{
   struct MDT_QUERYEXPRESSION_CORE_EXPORT AddComparisonExpressionToTreeBase : boost::proto::callable
   {
     using result_type = ExpressionTreeVertex;
+
+//     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const QString & right, ExpressionTree & tree) const
+//     {
+//       return tree.addNode(left, op, QVariant(right));
+//     }
 
     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const QVariant & right, ExpressionTree & tree) const
     {
@@ -57,6 +63,13 @@ namespace Mdt{ namespace QueryExpression{ namespace BuildExpressionTree{
     {
       return addNode(left, ComparisonOperator::Equal, right, tree);
     }
+
+    template<typename L>
+    ExpressionTreeVertex operator()(const L & left, const QString & right, ExpressionTree & tree) const
+    {
+      return addNode(left, ComparisonOperator::Equal, QVariant(right), tree);
+    }
+
   };
 
   struct MDT_QUERYEXPRESSION_CORE_EXPORT AddLikeExpressionToTree : AddComparisonExpressionToTreeBase
