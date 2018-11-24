@@ -58,6 +58,7 @@ class MappedWidgetTest : public QObject
   void widgetValueQLineEditTest();
   void widgetValueQLineEditGenericTest();
   void widgetValueQComboBoxTest();
+  void widgetValueRelationalQComboBoxTest();
   void widgetValueQSpinBoxTest();
   void widgetValueQDoubleSpinBoxTest();
   void widgetValueQPlainTextEditTest();

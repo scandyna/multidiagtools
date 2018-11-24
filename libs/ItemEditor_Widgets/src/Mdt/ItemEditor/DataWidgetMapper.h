@@ -34,6 +34,8 @@ class QWidget;
 class QAbstractItemModel;
 class QModelIndex;
 
+class QComboBox;
+
 namespace Mdt{ namespace ItemEditor{
 
   /*! \brief DataWidgetMapper provides mapping between a column of data model to widgets
@@ -111,9 +113,6 @@ namespace Mdt{ namespace ItemEditor{
      *  using this mapper's delegate.
      *  If this mapper refers to a invalid index, widget will be disabled.
      *
-     * If \a widget exists in WidgetEditablePropertyMap, it will follow Qt::ItemIsEditable flag from the model.
-     *  Most Qt edition widgets (such as QLineEdit) are allready known by WidgetEditablePropertyMap.
-     *
      * \note \a widget will not display model data until setCurrentRow() was called
      * \note If \a widget was allready mapped to a column, the old one will be replaced with ne new one
      * \note Only one-to-one mappings between column and widgets are allowed.
@@ -124,6 +123,50 @@ namespace Mdt{ namespace ItemEditor{
      * \sa clearMapping()
      */
     void addMapping(QWidget *widget, int column);
+
+    /*! \brief Add a mapping between \a comboBox and a column from the model
+     *
+     * As a example, lets take 2 models.
+     *  AddressTypeModel has 2 columns, id and name:
+     *  | id | name |
+     *  |:--:|:-----|
+     *  | 1  |Home  |
+     *  | 2  |Work  |
+     *  | 3  |Other |
+     *
+     * AddressModel has 3 columns:
+     *  | id | street    | typeId |
+     *  |:--:|:----------|:------:|
+     *  | 10 | Street 10 | 1      |
+     *  | 11 | Street 11 | 2      |
+     *
+     * The widget mapper will act on the address model.
+     *  A combobox will present the available address types,
+     *  provided by a instance of AddressTypeModel.
+     *
+     * \code
+     * using Mdt::ItemEditor::DataWidgetMapper;
+     *
+     * AddressModel model;
+     * DataWidgetMapper mapper;
+     *
+     * mapper.setModel(&model);
+     *
+     * AddressTypeModel typeModel;
+     * QComboBox comboBox;
+     *
+     * comboBox.setModel(&typeModel);
+     * comboBox.setModelColumn(1);
+     *
+     * mapper.addRelationalMapping(&comboBox, 2, 0);
+     * \endcode
+     *
+     * \pre \a comboBox must be a valid pointer
+     * \pre \a comboBox must have a model
+     * \pre \a column must be >= 0
+     * \pre \a comboBoxModelValueColumn must be in range of the comboBox model ( 0 <= \a comboBoxModelValueColumn < comboBox->model()->columnCount() )
+     */
+    void addRelationalMapping(QComboBox *comboBox, int column, int comboBoxModelValueColumn);
 
     /*! \brief Remove mapping for given widget
      *

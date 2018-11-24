@@ -2,32 +2,33 @@
  **
  ** Copyright (C) 2011-2018 Philippe Steinmann.
  **
- ** This file is part of multiDiagTools library.
+ ** This file is part of Mdt library.
  **
- ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** Mdt is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU Lesser General Public License as published by
  ** the Free Software Foundation, either version 3 of the License, or
  ** (at your option) any later version.
  **
- ** multiDiagTools is distributed in the hope that it will be useful,
+ ** Mdt is distributed in the hope that it will be useful,
  ** but WITHOUT ANY WARRANTY; without even the implied warranty of
  ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  ** GNU Lesser General Public License for more details.
  **
  ** You should have received a copy of the GNU Lesser General Public License
- ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_MAPPED_WIDGET_Q_COMBO_BOX_H
-#define MDT_ITEM_EDITOR_MAPPED_WIDGET_Q_COMBO_BOX_H
+#ifndef MDT_ITEMEDITOR_MAPPED_WIDGET_RELATIONAL_QCOMBOBOX_H
+#define MDT_ITEMEDITOR_MAPPED_WIDGET_RELATIONAL_QCOMBOBOX_H
 
-#include "MappedWidget.h"
+#include "MappedWidgetQComboBox.h"
 #include "MdtItemEditor_WidgetsExport.h"
-#include <QComboBox>
 
 namespace Mdt{ namespace ItemEditor{
 
-  class MDT_ITEMEDITOR_WIDGETS_EXPORT MappedWidgetQComboBox : public MappedWidget
+  /*!\brief
+    */
+  class MappedWidgetRelationalQComboBox : public MappedWidgetQComboBox
   {
    Q_OBJECT
 
@@ -36,9 +37,11 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Contructor
      *
      * \pre \a comboBox must be a valid pointer
+     * \pre \a comboBox must have a model
      * \pre \a column must be >= 0
+     * \pre \a comboBoxModelValueColumn must be in range of the comboBox model ( 0 <= \a comboBoxModelValueColumn < comboBox->model()->columnCount() )
      */
-    explicit MappedWidgetQComboBox(QComboBox *comboBox, int column);
+    explicit MappedWidgetRelationalQComboBox(QComboBox *comboBox, int column, int comboBoxModelValueColumn);
 
     /*! \brief Set a value to the widget
      */
@@ -48,26 +51,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     QVariant widgetValue() const override;
 
-    /*! \brief Set the widget editable
-     */
-    void setWidgetEditable(bool editable) override;
-
-    /*! \brief Set the widget enabled
-     */
-    void setWidgetEnabled(bool enable) override;
-
-   protected:
-
-    QComboBox *comboBox() const;
-
    private:
 
-    bool canEnableWidget() const;
+    int findRowForValue(const QVariant & value) const;
 
-    bool mEnabled;
-    bool mEditable = true;
+    int mComboBoxModelValueColumn;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_MAPPED_WIDGET_Q_COMBO_BOX_H
+#endif // MDT_ITEMEDITOR_MAPPED_WIDGET_RELATIONAL_QCOMBOBOX_H

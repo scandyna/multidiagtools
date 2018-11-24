@@ -32,6 +32,7 @@ set(SOURCE_FILES
   Mdt/ItemEditor/MappedWidgetGeneric.cpp
   Mdt/ItemEditor/MappedWidgetQLineEdit.cpp
   Mdt/ItemEditor/MappedWidgetQComboBox.cpp
+  Mdt/ItemEditor/MappedWidgetRelationalQComboBox.cpp
   Mdt/ItemEditor/MappedWidgetList.cpp
   Mdt/ItemEditor/WidgetStyleSheet.cpp
   Mdt/ItemEditor/DataWidgetMapperItemDelegate.cpp

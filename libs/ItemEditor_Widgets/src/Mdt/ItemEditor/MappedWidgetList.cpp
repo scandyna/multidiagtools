@@ -21,6 +21,7 @@
 #include "MappedWidgetList.h"
 #include "MappedWidgetQLineEdit.h"
 #include "MappedWidgetQComboBox.h"
+#include "MappedWidgetRelationalQComboBox.h"
 #include "MappedWidgetGeneric.h"
 #include <QLineEdit>
 #include <QComboBox>
@@ -47,6 +48,18 @@ MappedWidget *MappedWidgetList::addMapping(QWidget* widget, int column)
     return mWidgetList.back().get();
   }
   mWidgetList.emplace_back( std::make_unique<MappedWidgetGeneric>(widget, column) );
+
+  return mWidgetList.back().get();
+}
+
+MappedWidget *MappedWidgetList::addRelationalMapping(QComboBox *comboBox, int column, int comboBoxModelValueColumn)
+{
+  Q_ASSERT(comboBox != nullptr);
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(getIndexForWidget(comboBox) == -1);
+  Q_ASSERT(getIndexForColumn(column) == -1);
+
+  mWidgetList.emplace_back( std::make_unique<MappedWidgetRelationalQComboBox>(comboBox, column, comboBoxModelValueColumn) );
 
   return mWidgetList.back().get();
 }

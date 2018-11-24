@@ -23,8 +23,11 @@
 #include "Mdt/ItemEditor/MappedWidgetGeneric.h"
 #include "Mdt/ItemEditor/MappedWidgetQLineEdit.h"
 #include "Mdt/ItemEditor/MappedWidgetQComboBox.h"
+#include "Mdt/ItemEditor/MappedWidgetRelationalQComboBox.h"
 #include "Mdt/ItemEditor/MappedWidgetList.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
 #include "Mdt/TestLib/Widgets.h"
+#include "Mdt/TestLib/ItemModel.h"
 #include <QString>
 #include <QStringList>
 #include <QStringListModel>
@@ -39,6 +42,7 @@
 #include <memory>
 
 using namespace Mdt::ItemEditor;
+using namespace Mdt::ItemModel;
 using namespace Mdt::TestLib;
 
 /*
@@ -122,6 +126,31 @@ void MappedWidgetTest::widgetValueQComboBoxTest()
   w->setWidgetValue("B");
   QCOMPARE(cb.currentText(), QString("B"));
   QCOMPARE(w->widgetValue(), QVariant("B"));
+}
+
+void MappedWidgetTest::widgetValueRelationalQComboBoxTest()
+{
+  VariantTableModel typeModel;
+  typeModel.resize(2, 2);
+  QVERIFY(setModelData(typeModel, 0, 0, 1));
+  QVERIFY(setModelData(typeModel, 0, 1, "Home"));
+  QVERIFY(setModelData(typeModel, 1, 0, 2));
+  QVERIFY(setModelData(typeModel, 1, 1, "Work"));
+
+  QComboBox cb;
+  cb.setModel(&typeModel);
+  cb.setModelColumn(1);
+
+  std::unique_ptr<MappedWidget> w( new MappedWidgetRelationalQComboBox(&cb, 3, 0) );
+  QCOMPARE(cb.currentText(), QString("Home"));
+
+  w->setWidgetValue(2);
+  QCOMPARE(cb.currentText(), QString("Work"));
+  QCOMPARE(w->widgetValue(), QVariant(2));
+
+  w->setWidgetValue(1);
+  QCOMPARE(cb.currentText(), QString("Home"));
+  QCOMPARE(w->widgetValue(), QVariant(1));
 }
 
 void MappedWidgetTest::widgetValueQSpinBoxTest()
@@ -719,6 +748,29 @@ void MappedWidgetTest::listAddMappingKnownEditorWidgetsTest()
   QVERIFY(!textEdit.isReadOnly());
   list.mappedWidgetAt(5)->setWidgetEditable(false);
   QVERIFY(textEdit.isReadOnly());
+
+  VariantTableModel typeModel;
+  typeModel.resize(2, 2);
+  QVERIFY(setModelData(typeModel, 0, 0, 1));
+  QVERIFY(setModelData(typeModel, 0, 1, "Home"));
+  QVERIFY(setModelData(typeModel, 1, 0, 2));
+  QVERIFY(setModelData(typeModel, 1, 1, "Work"));
+
+  QComboBox typeComboBox;
+  typeComboBox.setModel(&typeModel);
+  typeComboBox.setModelColumn(1);
+  list.addRelationalMapping(&typeComboBox, 6, 0);
+  QCOMPARE(list.size(), 7);
+  list.mappedWidgetAt(6)->setWidgetValue(2);
+  QCOMPARE(typeComboBox.currentText(), QString("Work"));
+  QVERIFY(!typeComboBox.isEditable());
+  QVERIFY(typeComboBox.isEnabled());
+  list.mappedWidgetAt(6)->setWidgetEditable(false);
+  QVERIFY(!typeComboBox.isEditable());
+  QVERIFY(!typeComboBox.isEnabled());
+  list.mappedWidgetAt(6)->setWidgetEditable(true);
+  QVERIFY(!typeComboBox.isEditable());
+  QVERIFY(typeComboBox.isEnabled());
 }
 
 /*

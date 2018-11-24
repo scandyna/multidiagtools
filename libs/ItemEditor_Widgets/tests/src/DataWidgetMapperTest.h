@@ -64,6 +64,8 @@ class DataWidgetMapperTest : public TestBase
   void revertDataQLineEditTest();
   void editStartDoneSignalTestReadOnlyQComboBoxTest();
 
+  void relationalQComboBoxTest();
+
 //   void QComboBoxSandbox();
 };
 

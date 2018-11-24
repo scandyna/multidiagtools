@@ -27,6 +27,8 @@
 #include <vector>
 #include <memory>
 
+class QComboBox;
+
 namespace Mdt{ namespace ItemEditor{
 
   /*! \brief MappedWidgetList is used by DataWidgetMapper
@@ -60,6 +62,20 @@ namespace Mdt{ namespace ItemEditor{
      * \pre \a widget must not allready exists in this mapping list
      */
     MappedWidget *addMapping(QWidget *widget, int column);
+
+    /*! \brief Add widget
+     *
+     * \note \a comboBox will not be owned by MappedWidgetList
+     *        (it will not be deleted)
+     * \note This method returns a pointer to the created mapped combobox,
+     *   which can be used for setup. The lifetime of this mapped combobox
+     *   is the lifetime of this list.
+     * \pre \a column must be >= 0
+     * \pre \a column must not allready exists in this mapping list
+     * \pre \a comboBox must be a valid pointer
+     * \pre \a comboBox must not allready exists in this mapping list
+     */
+    MappedWidget *addRelationalMapping(QComboBox *comboBox, int column, int comboBoxModelValueColumn);
 
     /*! \brief Get index for given widget
      *

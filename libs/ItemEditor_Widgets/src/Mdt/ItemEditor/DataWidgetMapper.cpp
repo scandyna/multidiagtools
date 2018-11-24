@@ -26,6 +26,8 @@
 #include "Mdt/ItemModel/ColumnRange.h"
 #include <QAbstractItemModel>
 #include <QWidget>
+#include <QComboBox>
+#include <QAbstractItemModel>
 #include <QByteArray>
 #include <QMetaObject>
 #include <QMetaMethod>
@@ -79,6 +81,23 @@ void DataWidgetMapper::addMapping(QWidget* widget, int column)
   removeMapping(widget);
   removeMappingForColumn(column);
   MappedWidget *mappedWidget = mMappedWidgetList.addMapping(widget, column);
+  Q_ASSERT(mappedWidget != nullptr);
+  connect(mappedWidget, &MappedWidget::editionStarted, this, &DataWidgetMapper::onDataEditionStarted);
+  updateMappedWidget(mappedWidget, column);
+}
+
+void DataWidgetMapper::addRelationalMapping(QComboBox *comboBox, int column, int comboBoxModelValueColumn)
+{
+  Q_ASSERT(comboBox != nullptr);
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(comboBox->metaObject() != nullptr);
+  Q_ASSERT(comboBox->model() != nullptr);
+  Q_ASSERT(comboBoxModelValueColumn >= 0);
+  Q_ASSERT(comboBoxModelValueColumn < comboBox->model()->columnCount());
+
+  removeMapping(comboBox);
+  removeMappingForColumn(column);
+  MappedWidget *mappedWidget = mMappedWidgetList.addRelationalMapping(comboBox, column, comboBoxModelValueColumn);
   Q_ASSERT(mappedWidget != nullptr);
   connect(mappedWidget, &MappedWidget::editionStarted, this, &DataWidgetMapper::onDataEditionStarted);
   updateMappedWidget(mappedWidget, column);

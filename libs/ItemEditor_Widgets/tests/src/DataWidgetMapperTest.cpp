@@ -1890,6 +1890,42 @@ void DataWidgetMapperTest::editStartDoneSignalTestReadOnlyQComboBoxTest()
   editDoneSpy.clear();
 }
 
+void DataWidgetMapperTest::relationalQComboBoxTest()
+{
+  VariantTableModel typeModel;
+  typeModel.resize(2, 2);
+  QVERIFY(setModelData(typeModel, 0, 0, 1));
+  QVERIFY(setModelData(typeModel, 0, 1, "Home"));
+  QVERIFY(setModelData(typeModel, 1, 0, 2));
+  QVERIFY(setModelData(typeModel, 1, 1, "Work"));
+
+  QComboBox cb;
+  cb.setModel(&typeModel);
+  cb.setModelColumn(1);
+
+  VariantTableModel model;
+  model.resize(2, 3);
+  QVERIFY(setModelData(model, 0, 0, 10));
+  QVERIFY(setModelData(model, 0, 1, "Street 10"));
+  QVERIFY(setModelData(model, 1, 0, 11));
+  QVERIFY(setModelData(model, 1, 1, "Street 11"));
+
+  DataWidgetMapper mapper;
+  mapper.setModel(&model);
+  mapper.addRelationalMapping(&cb, 2, 0);
+  mapper.setCurrentRow(0);
+
+  QCOMPARE(getModelData(model, 0, 0), QVariant(10));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("Street 10"));
+  QCOMPARE(cb.currentIndex(), -1);
+
+  cb.setCurrentIndex(1);
+  mapper.setDataToModel();
+  QCOMPARE(getModelData(model, 0, 0), QVariant(10));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("Street 10"));
+  QCOMPARE(getModelData(model, 0, 2), QVariant(2));
+}
+
 // void DataWidgetMapperTest::QComboBoxSandbox()
 // {
 // //   DataWidgetMapper mapper;
