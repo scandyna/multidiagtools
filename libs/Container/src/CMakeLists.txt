@@ -12,6 +12,10 @@ set(SOURCE_FILES
   Mdt/Container/TableCacheRowTransactionList.cpp
   Mdt/Container/TableCacheOperationIndex.cpp
   Mdt/Container/TableCacheOperationMap.cpp
+  Mdt/Container/TableCacheTask.cpp
+  Mdt/Container/TableCacheRowTask.cpp
+  Mdt/Container/TableCacheRowTaskList.cpp
+  Mdt/Container/TableCacheTaskMap.cpp
   Mdt/Container/TableCache.cpp
   Mdt/Container/VariantRecord.cpp
 )
