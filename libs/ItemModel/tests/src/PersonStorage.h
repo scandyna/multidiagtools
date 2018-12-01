@@ -68,6 +68,19 @@ class PersonStorage
     return mMap.value(id);
   }
 
+//   void submitGetById(int taskId, int personId)
+//   {
+//     Q_ASSERT(taskId > 0);
+//     Q_ASSERT(personId > 0);
+// 
+//   }
+
+//   Person getByTaskId(int taskId) const
+//   {
+//     Q_ASSERT(taskId > 0);
+// 
+//   }
+
   std::vector<Person> getCountPersons(int count) const;
 
   QString nameById(int id) const
@@ -83,6 +96,31 @@ class PersonStorage
   int nextId() const;
 
   QMap<int, Person> mMap;
+};
+
+class PersonPendingTasks
+{
+ public:
+
+  void submitTask(int taskId, const Person & person);
+
+  bool hasTask(int taskId) const
+  {
+    Q_ASSERT(taskId > 0);
+    return mPendingTasks.contains(taskId);
+  }
+
+  Person takeByTaskId(int taskId)
+  {
+    Q_ASSERT(taskId > 0);
+    Q_ASSERT(hasTask(taskId));
+
+    return mPendingTasks.take(taskId);
+  }
+
+ private:
+
+  QMap<int, Person> mPendingTasks;
 };
 
 #endif // #ifndef PERSON_STORAGE_H

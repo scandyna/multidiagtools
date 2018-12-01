@@ -90,3 +90,15 @@ int PersonStorage::nextId() const
   }
   return mMap.lastKey() + 1;
 }
+
+/*
+ * PersonPendingTasks
+ */
+
+void PersonPendingTasks::submitTask(int taskId, const Person& person)
+{
+  Q_ASSERT(taskId > 0);
+  Q_ASSERT(!hasTask(taskId));
+
+  mPendingTasks.insert(taskId, person);
+}

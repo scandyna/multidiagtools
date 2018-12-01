@@ -184,6 +184,36 @@ void PersonStorageTest::removeTest()
   QVERIFY(!storage.hasId(2));
 }
 
+void PersonStorageTest::pendingTasksTest()
+{
+  Person person;
+  PersonPendingTasks tasks;
+
+  person.id = 10;
+  person.name = "A";
+  tasks.submitTask(1, person);
+  QVERIFY(tasks.hasTask(1));
+  QVERIFY(!tasks.hasTask(2));
+
+  person.id = 11;
+  person.name = "B";
+  tasks.submitTask(2, person);
+  QVERIFY(tasks.hasTask(1));
+  QVERIFY(tasks.hasTask(2));
+
+  person = tasks.takeByTaskId(1);
+  QCOMPARE(person.id, 10);
+  QCOMPARE(person.name, QString("A"));
+  QVERIFY(!tasks.hasTask(1));
+  QVERIFY(tasks.hasTask(2));
+
+  person = tasks.takeByTaskId(2);
+  QCOMPARE(person.id, 11);
+  QCOMPARE(person.name, QString("B"));
+  QVERIFY(!tasks.hasTask(1));
+  QVERIFY(!tasks.hasTask(2));
+}
+
 /*
  * Main
  */

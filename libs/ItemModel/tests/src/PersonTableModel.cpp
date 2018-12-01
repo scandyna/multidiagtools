@@ -23,6 +23,8 @@
 
 using namespace Mdt::ItemModel;
 using Mdt::Container::VariantRecord;
+using Mdt::Container::TableCacheRowTask;
+using Mdt::Container::TableCacheTask;
 
 /*
  * Helpers
@@ -43,6 +45,15 @@ Person makePerson(const VariantRecord & record)
 /*
  * PersonTableModelCommonImpl
  */
+
+// bool PersonTableModelCommonImpl::fetchRecordFromBackend(int taskId, const VariantRecord & record)
+// {
+//   mFetchingRecordTaskId = taskId;
+//   mStorage.submitGetById(taskId, record.value(0).toInt());
+//   
+// //   const auto person = makePerson(record);
+// //   mPendingTasks.submitTask(rowTask.taskId(), makePerson(rowTask.row()));
+// }
 
 void PersonTableModelCommonImpl::clearStorage()
 {
@@ -80,6 +91,40 @@ bool ListPersonTableModel::fetchRecords(int count)
   return true;
 }
 
+bool ListPersonTableModel::fetchRecordFromBackend(const Mdt::Container::TableCacheRowTask& rowTask)
+{
+  mFetchingPerson.taskId = rowTask.taskId();
+  mFetchingPerson.personId = index(rowTask.row(), 0).data().toInt();
+}
+
+void ListPersonTableModel::fetchRecordFromBackendSucceeded()
+{
+  TableCacheTask task(mFetchingPerson.taskId);
+  const auto person = mImpl.getPersonFromStorage(mFetchingPerson.personId);
+  const auto record = makeVariantRecord(person);
+
+  taskSucceeded(task, record);
+}
+
+void ListPersonTableModel::fetchRecordFromBackendFailed()
+{
+  TableCacheTask task(mFetchingPerson.taskId);
+  const auto error = mdtErrorNew("fetchRecordFromBackend failed", Mdt::Error::Critical, "Test");
+
+  taskFailed(task, error);
+}
+
+void ListPersonTableModel::updateStoragePersonNameAt(int row, const QString & name)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  Person person = makePerson(record(row));
+  Q_ASSERT(person.id > 0);
+  person.name = name;
+  mImpl.updatePersonInStorage(person);
+}
+
 /*
  * EditPersonTableModel
  */
@@ -96,6 +141,18 @@ bool EditPersonTableModel::fetchRecords(int count)
     fromBackendAppendRecord(record);
   }
   return true;
+}
+
+bool EditPersonTableModel::fetchRecordFromBackend(const Mdt::Container::TableCacheRowTask& rowTask)
+{
+}
+
+void EditPersonTableModel::fetchRecordFromBackendSucceeded()
+{
+}
+
+void EditPersonTableModel::fetchRecordFromBackendFailed()
+{
 }
 
 bool EditPersonTableModel::addRecordToBackend(const TableCacheRowTransaction & rowTransaction)
@@ -146,6 +203,17 @@ void EditPersonTableModel::updateRecordInBackendSucceeded()
   const TableCacheTransaction transaction(mPendingTransactionId);
 
   transactionSucceeded(transaction, record);
+}
+
+void EditPersonTableModel::updateStoragePersonNameAt(int row, const QString & name)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  Person person = makePerson(record(row));
+  Q_ASSERT(person.id > 0);
+  person.name = name;
+  mImpl.updatePersonInStorage(person);
 }
 
 /*
