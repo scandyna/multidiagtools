@@ -106,6 +106,12 @@ namespace Mdt{ namespace ItemModel{
      */
     bool submitChanges();
 
+//     /*! \brief Fetch the record at \a row from the backend
+//      *
+//      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+//      */
+//     bool fetchRow(int row);
+
    protected:
 
     /*! \brief Insert \a count copies of \a record before \a row to the cache of this model
@@ -169,81 +175,131 @@ namespace Mdt{ namespace ItemModel{
      */
     void transactionFailed(const Mdt::Container::TableCacheTransaction & transaction, const Mdt::Error & error);
 
+//     /*! \brief Fetch the record at row from the backend
+//      *
+//      * If the concrete model supports fetching a single row,
+//      *  this method should be implemented.
+//      *
+//      * This default implementation does nothing and returns false.
+//      *
+//      * Once the record has been successfully processed from the backend,
+//      *  transactionSucceeded() should be called to update the corresponding
+//      *  record to the new values,
+//      *  or transactionFailed() on error.
+//      *
+//      * This method can be implemented in a synchronous (blocking) way:
+//      * \code
+//      * bool MyTableModel::fetchRecordFromBackend(const Mdt::Container::TableCacheRowTransaction & rowTransaction) override
+//      * {
+//      *   const int personId = index(rowTransaction.row(), 0).data().toInt();
+//      *   const auto person = mRepository.getById(personId);
+//      *   if(!person){
+//      *     transactionFailed(rowTransaction.transaction(), mRepository.lastError());
+//      *     return false;
+//      *   }
+//      *   const VariantRecord record = makeRecord(person);
+//      *   transactionSucceeded(rowTransaction.transaction(), record);
+//      *
+//      *   return true;
+//      * }
+//      * \endcode
+//      *
+//      * It is also possible to implement this method in a asynchronous way.
+//      *  For this example, we will use Qt signal/slots, and a transaction id.
+//      *  We will have 2 slots: one that is called on success, the other on failure.
+//      *  A example of those slots is described in addRecordToBackend() .
+//      *
+//      * The asynchronous implementation could look like:
+//      * \code
+//      * bool MyTableModel::fetchRecordFromBackend(const Mdt::Container::TableCacheRowTransaction & rowTransaction) override
+//      * {
+//      *   const int personId = index(rowTransaction.row(), 0).data().toInt();
+//      *
+//      *   mRepository.submitGetById(rowTransaction.transactionId(), personId));
+//      *
+//      *   return true;
+//      * }
+//      * \endcode
+//      *
+//      * \pre the row given in \a rowTransaction must be in valid range ( 0 <= \a row < rowCount() ).
+//      */
+//     virtual bool fetchRecordFromBackend(const Mdt::Container::TableCacheRowTransaction & rowTransaction);
+
     /*! \brief Add the record at row to the backend
      *
      * This method must be implemented in the concrete class.
      *
      * Once the record has been successfully processed from the backend,
-     *  transactionSucceeded() should be called to update the corresponding
+     *  taskSucceeded() should be called to update the corresponding
      *  record to the new values,
-     *  or transactionFailed() on error.
+     *  or taskFailed() on error.
      *
      * This method can be implemented in a synchronous (blocking) way:
      * \code
-     * bool MyTableModel::addRecordToBackend(const Mdt::Container::TableCacheRowTransaction & rowTransaction) override
+     * bool MyTableModel::addRecordToBackend(const Mdt::Container::TableCacheRowTransaction & rowTask) override
      * {
      *   using namespace Mdt::Container;
      *
      *   // Create a person from the data at given row
-     *   const Person person = makePerson(rowTransaction.row());
+     *   const Person person = makePerson(rowTask.row());
      *
      *   if(!mRepository.addPerson(person)){
-     *     transactionFailed(rowTransaction.transaction(), mRepository.lastError());
+     *     taskFailed(rowTask.task(), mRepository.lastError());
      *     return false;
      *   }
      *   // The repository probably have assigned a id to person
      *   const VariantRecord record = makeRecord(person);
-     *   transactionSucceeded(rowTransaction.transaction(), record);
+     *   taskSucceeded(rowTask.task(), record);
      *
      *   return true;
      * }
      * \endcode
      *
      * It is also possible to implement this method in a asynchronous way.
-     *  For this example, we will use Qt signal/slots, and a transaction id.
+     *  For this example, we will use Qt signal/slots, and a task id.
      *  We will have 2 slots: one that is called on success, the other on failure.
      *
      * Here is a possible implementation of a slot that is called on success:
      * \code
-     * void MyTableModel::onRepositoryTransactionSucceeded(int transactionId, const Person & person)
+     * void MyTableModel::onRepositoryTaskSucceeded(int taskId, const Person & person)
      * {
      *   using namespace Mdt::Container;
      *
-     *   const TableCacheTransaction transaction(transactionId);
+     *   const TableCacheTask task(taskId);
      *   const VariantRecord record = makeRecord(person);
      *
-     *   transactionSucceeded(transaction, record);
+     *   taskSucceeded(task, record);
      * }
      * \endcode
      *
      * Here is a example of the slot that is called on failure:
      * \code
-     * void MyTableModel::onRepositoryTransactionFailed(int transactionId, const Mdt::Error & error)
+     * void MyTableModel::onRepositoryTaskFailed(int taskId, const Mdt::Error & error)
      * {
      *   using namespace Mdt::Container;
      *
-     *   const TableCacheTransaction transaction(transactionId);
+     *   const TableCacheTask task(taskId);
      *
-     *   transactionFailed(transaction, error);
+     *   taskFailed(task, error);
      * }
      * \endcode
      *
      * The asynchronous implementation could look like:
      * \code
-     * bool MyTableModel::addRecordToBackend(const Mdt::Container::TableCacheRowTransaction & rowTransaction) override
+     * bool MyTableModel::addRecordToBackend(const Mdt::Container::TableCacheRowTransaction & rowTask) override
      * {
      *   // Create a person from the data at given row
-     *   const Person person = makePerson(rowTransaction.row());
+     *   const Person person = makePerson(rowTask.row());
      *
-     *   mRepository.submitAddPerson(rowTransaction.transactionId(), person));
+     *   mRepository.submitAddPerson(rowTask.taskId(), person));
      *
      *   return true;
      * }
      * \endcode
      *
-     * \pre the row given in \a rowTransaction must be in valid range ( 0 <= \a row < rowCount() ).
+     * \pre the row given in \a rowTask must be in valid range ( 0 <= \a row < rowCount() ).
      */
-    virtual bool addRecordToBackend(const Mdt::Container::TableCacheRowTransaction & rowTransaction) = 0;
+    virtual bool addRecordToBackend(const Mdt::Container::TableCacheRowTransaction & rowTask) = 0;
 
     /*! \brief Add records for \a rowTransactions to the backend
      *

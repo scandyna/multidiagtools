@@ -55,6 +55,11 @@ class CachedTableModelTest : public QObject
   void readOnlyFetchAllSignalTest();
   void editableFetchAllSignalTest();
 
+  void readOnlyFetchRowTest();
+  void editableFetchRowTest();
+  void readOnlyFetchRowSignalTest();
+  void editableFetchRowSignalTest();
+
   void readOnlyFromBackendSetDataTest();
   void editableFromBackendSetDataTest();
   void readOnlyFromBackendSetDataSignalTest();
@@ -67,6 +72,9 @@ class CachedTableModelTest : public QObject
 
   void setDataTest();
   void setDataSignalTest();
+
+//   void setDataThenFetchRowTest();
+//   void setDataThenFetchRowSignalTest();
 
   void setDataThenFromBackendInsertRecordsTest();
   void setDataThenFromBackendInsertRecordsSignalTest();

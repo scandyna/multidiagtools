@@ -52,8 +52,6 @@ class PersonTableModelCommonImpl
     return QString();
   }
 
-//   bool fetchRecordFromBackend(int taskId, const VariantRecord & record);
-
   void populatePersonStorage(std::initializer_list<Person> list)
   {
     mStorage.populate(list);
@@ -82,21 +80,6 @@ class PersonTableModelCommonImpl
     return mStorage.getById(id);
   }
 
-//   void submitGetPersonFromStorage(int taskId, int personId)
-//   {
-//     Q_ASSERT(taskId > 0);
-//     Q_ASSERT(personId > 0);
-// 
-// //     mStorage.submitGetById(taskId, personId);
-//   }
-// 
-//   Person getPersonFromStorageByTaskId(int taskId) const
-//   {
-//     Q_ASSERT(taskId > 0);
-// 
-// //     return mStorage.getByTaskId(taskId);
-//   }
-
   QString storageNameForId(int id) const
   {
     Q_ASSERT(id > 0);
@@ -122,8 +105,6 @@ class PersonTableModelCommonImpl
  private:
 
   PersonStorage mStorage;
-  PersonPendingTasks mPendingTasks;
-//   int mFetchingRecordTaskId = 0;
 };
 
 struct TaskIdPersonId
@@ -206,7 +187,6 @@ class ListPersonTableModel : public Mdt::ItemModel::AbstractReadOnlyCachedTableM
 
   PersonTableModelCommonImpl mImpl;
   TaskIdPersonId mFetchingPerson;
-//   int mFetchingRecordTaskId = 0;
 };
 
 
@@ -298,6 +278,8 @@ class EditPersonTableModel : public Mdt::ItemModel::AbstractEditableCachedTableM
   bool updateRecordInBackend(const Mdt::Container::TableCacheRowTransaction & rowTransaction) override;
 
   PersonTableModelCommonImpl mImpl;
+  TaskIdPersonId mFetchingPerson;
+  
   int mPendingTransactionId = 0;
   Person mPendingPerson;
 };

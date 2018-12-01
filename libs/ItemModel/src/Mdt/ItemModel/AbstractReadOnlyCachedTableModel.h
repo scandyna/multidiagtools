@@ -23,6 +23,12 @@
 
 #include "Mdt/Container/VariantRecord.h"
 #include "Mdt/IndexRange/RowRange.h"
+#include "Mdt/Container/RowList.h"
+#include "Mdt/Container/TableCacheTask.h"
+#include "Mdt/Container/TableCacheRowTask.h"
+#include "Mdt/Container/TableCacheRowTaskList.h"
+#include "Mdt/Container/TableCacheTaskMap.h"
+#include "Mdt/Error.h"
 #include "MdtItemModelExport.h"
 #include <QAbstractTableModel>
 
@@ -96,6 +102,10 @@ namespace Mdt{ namespace ItemModel{
       return mCachedRowCountLimit;
     }
 
+    /*! \brief Get flags for \a index
+     */
+    Qt::ItemFlags flags(const QModelIndex & index) const override;
+
     /*! \brief Get count of rows
      */
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
@@ -120,11 +130,24 @@ namespace Mdt{ namespace ItemModel{
       return mCache[row];
     }
 
-    /*! \brief Fetch all data from the underlaying storage, until defined row count limit
+    /*! \brief Fetch all records from the backend, until defined row count limit
      */
     bool fetchAll();
 
-   protected slots:
+    /*! \brief Fetch the record at \a row from the backend
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     */
+    bool fetchRow(int row);
+
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
+
+   public slots:
 
     /*! \brief Append a record comming from backend to the cache of this model
      *
@@ -134,6 +157,12 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a record 's columnt count must be the same as columnCount()
      */
     void fromBackendAppendRecord(const Mdt::Container::VariantRecord & record);
+
+   signals:
+
+    /*! \brief Emitted whenever a error occured
+     */
+    void errorOccured(const Mdt::Error & error);
 
    protected:
 
@@ -225,6 +254,103 @@ namespace Mdt{ namespace ItemModel{
      */
     virtual bool fetchRecords(int count) = 0;
 
+    /*! \brief Fetch the record at row from the backend
+     *
+     * If the concrete model supports fetching a single row,
+     *  this method should be implemented.
+     *
+     * This default implementation does nothing and returns false.
+     *
+     * Once the record has been successfully processed from the backend,
+     *  taskSucceeded() should be called to update the corresponding
+     *  record to the new values,
+     *  or taskFailed() on error.
+     *
+     * This method can be implemented in a synchronous (blocking) way:
+     * \code
+     * bool MyTableModel::fetchRecordFromBackend(const Mdt::Container::TableCacheRowTask & rowTask) override
+     * {
+     *   const int personId = index(rowTask.row(), 0).data().toInt();
+     *   const auto person = mRepository.getById(personId);
+     *   if(!person){
+     *     taskFailed(rowTask.task(), mRepository.lastError());
+     *     return false;
+     *   }
+     *   const VariantRecord record = makeRecord(person);
+     *   taskSucceeded(rowTask.task(), record);
+     *
+     *   return true;
+     * }
+     * \endcode
+     *
+     * It is also possible to implement this method in a asynchronous way.
+     *  For this example, we will use Qt signal/slots, and a task id.
+     *  We will have 2 slots: one that is called on success, the other on failure.
+     *
+     * Here is a possible implementation of a slot that is called on success:
+     * \code
+     * void MyTableModel::onRepositoryTaskSucceeded(int taskId, const Person & person)
+     * {
+     *   using namespace Mdt::Container;
+     *
+     *   const TableCacheTask task(taskId);
+     *   const VariantRecord record = makeRecord(person);
+     *
+     *   taskSucceeded(task, record);
+     * }
+     * \endcode
+     *
+     * Here is a example of the slot that is called on failure:
+     * \code
+     * void MyTableModel::onRepositoryTaskFailed(int taskId, const Mdt::Error & error)
+     * {
+     *   using namespace Mdt::Container;
+     *
+     *   const TableCacheTask task(taskId);
+     *
+     *   taskFailed(task, error);
+     * }
+     * \endcode
+     *
+     * The asynchronous implementation could look like:
+     * \code
+     * bool MyTableModel::fetchRecordFromBackend(const Mdt::Container::TableCacheRowTask & rowTask) override
+     * {
+     *   const int personId = index(rowTask.row(), 0).data().toInt();
+     *
+     *   mRepository.submitGetById(rowTask.taskId(), personId));
+     *
+     *   return true;
+     * }
+     * \endcode
+     *
+     * \pre the row given in \a rowTask must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    virtual bool fetchRecordFromBackend(const Mdt::Container::TableCacheRowTask & rowTask);
+
+    /*! \brief Begin a row task
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    Mdt::Container::TableCacheRowTask beginRowTask(int row);
+
+    /*! \brief Begin a list of row tasks
+     */
+    Mdt::Container::TableCacheRowTaskList beginRowTasks(const Mdt::Container::RowList & rows);
+
+    /*! \brief Update the state of the row corresponding to \a task
+     *
+     * \pre \a task must not be null
+     * \pre \a rocord must have columnCount() columns
+     */
+    void taskSucceeded(const Mdt::Container::TableCacheTask & task, const Mdt::Container::VariantRecord record);
+
+    /*! \brief Update the state of the row corresponding to \a task
+     *
+     * \pre \a task must not be null
+     */
+    void taskFailed(const Mdt::Container::TableCacheTask & task, const Mdt::Error & error);
+
     /*! \brief Begins a row insertion operation
      *
      * This is a convenience version of QAbstractTableModel::beginInsertRows()
@@ -233,10 +359,16 @@ namespace Mdt{ namespace ItemModel{
      */
     void beginInsertRows(const Mdt::IndexRange::RowRange & rowRange);
 
+    /*! \brief Set last error
+     */
+    void setLastError(const Mdt::Error & error);
+
    private:
 
     int mCachedRowCountLimit = 5000;
     std::vector<Mdt::Container::VariantRecord> mCache;
+    Mdt::Container::TableCacheTaskMap mTaskMap;
+    Mdt::Error mLastError;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

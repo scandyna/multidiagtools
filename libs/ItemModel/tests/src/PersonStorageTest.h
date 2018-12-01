@@ -36,7 +36,7 @@ class PersonStorageTest : public QObject
   void updateTest();
   void removeTest();
 
-  void pendingTasksTest();
+//   void pendingTasksTest();
 };
 
 #endif // #ifndef PERSON_STORAGE_TEST_H

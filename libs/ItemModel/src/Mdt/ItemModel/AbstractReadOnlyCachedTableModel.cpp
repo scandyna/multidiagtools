@@ -23,6 +23,11 @@
 
 using Mdt::IndexRange::RowRange;
 using Mdt::Container::VariantRecord;
+using Mdt::Container::RowList;
+using Mdt::Container::TableCacheRowTask;
+using Mdt::Container::TableCacheRowTaskList;
+using Mdt::Container::TableCacheTask;
+
 
 namespace Mdt{ namespace ItemModel{
 
@@ -38,6 +43,17 @@ void AbstractReadOnlyCachedTableModel::setCachedRowCountLimit(int limit)
   mCachedRowCountLimit = limit;
 }
 
+Qt::ItemFlags AbstractReadOnlyCachedTableModel::flags(const QModelIndex & index) const
+{
+  if(!index.isValid()){
+    return Qt::NoItemFlags;
+  }
+  Q_ASSERT(index.row() < rowCount());
+  if( mTaskMap.isTaskPendingForRow(index.row()) ){
+    return Qt::NoItemFlags;
+  }
+  return BaseClass::flags(index);
+}
 
 int AbstractReadOnlyCachedTableModel::rowCount(const QModelIndex & parent) const
 {
@@ -89,8 +105,22 @@ bool AbstractReadOnlyCachedTableModel::fetchAll()
   beginResetModel();
   mCache.clear();
   endResetModel();
+  
+  /// \todo Have also to clear transactions + operations
 
   return fetchRecords( cachedRowCountLimit() );
+}
+
+bool AbstractReadOnlyCachedTableModel::fetchRow(int row)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row <= rowCount());
+
+  const TableCacheRowTask rowTask = beginRowTask(row);
+  Q_ASSERT(!rowTask.isNull());
+  Q_ASSERT(rowTask.row() == row);
+
+  return fetchRecordFromBackend(rowTask);
 }
 
 void AbstractReadOnlyCachedTableModel::fromBackendAppendRecord(const VariantRecord & record)
@@ -173,6 +203,56 @@ void AbstractReadOnlyCachedTableModel::fromBackendSetRecord(int row, const Varia
   emit dataChanged(leftIndex, rightIndex, {Qt::DisplayRole});
 }
 
+bool AbstractReadOnlyCachedTableModel::fetchRecordFromBackend(const TableCacheRowTask & rowTask)
+{
+  Q_ASSERT(rowTask.row() >= 0);
+  Q_ASSERT(rowTask.row() < rowCount());
+
+  return false;
+}
+
+TableCacheRowTask AbstractReadOnlyCachedTableModel::beginRowTask(int row)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  return mTaskMap.beginRowTask(row);
+}
+
+TableCacheRowTaskList AbstractReadOnlyCachedTableModel::beginRowTasks(const RowList & rows)
+{
+
+  
+}
+
+void AbstractReadOnlyCachedTableModel::taskSucceeded(const TableCacheTask & task, const VariantRecord record)
+{
+  Q_ASSERT(!task.isNull());
+  Q_ASSERT(record.columnCount() == columnCount());
+
+  const int row = mTaskMap.getRowForTask(task);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+  mTaskMap.setTaskDoneForRow(row);
+  fromBackendSetRecord(row, record);
+
+  emit headerDataChanged(Qt::Vertical, row, row);
+}
+
+void AbstractReadOnlyCachedTableModel::taskFailed(const TableCacheTask & task, const Mdt::Error & error)
+{
+  Q_ASSERT(!task.isNull());
+
+  const int row = mTaskMap.getRowForTask(task);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+  mTaskMap.setTaskFailedForRow(row);
+
+  emit headerDataChanged(Qt::Vertical, row, row);
+
+  setLastError(error);
+}
+
 void AbstractReadOnlyCachedTableModel::beginInsertRows(const RowRange& rowRange)
 {
   Q_ASSERT(rowRange.isValid());
@@ -180,5 +260,10 @@ void AbstractReadOnlyCachedTableModel::beginInsertRows(const RowRange& rowRange)
   BaseClass::beginInsertRows(QModelIndex(), rowRange.firstRow(), rowRange.lastRow());
 }
 
+void AbstractReadOnlyCachedTableModel::setLastError(const Mdt::Error & error)
+{
+  mLastError = error;
+  emit errorOccured(error);
+}
 
 }} // namespace Mdt{ namespace ItemModel{

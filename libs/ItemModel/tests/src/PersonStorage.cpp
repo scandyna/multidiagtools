@@ -95,10 +95,10 @@ int PersonStorage::nextId() const
  * PersonPendingTasks
  */
 
-void PersonPendingTasks::submitTask(int taskId, const Person& person)
-{
-  Q_ASSERT(taskId > 0);
-  Q_ASSERT(!hasTask(taskId));
-
-  mPendingTasks.insert(taskId, person);
-}
+// void PersonPendingTasks::submitTask(int taskId, const Person& person)
+// {
+//   Q_ASSERT(taskId > 0);
+//   Q_ASSERT(!hasTask(taskId));
+// 
+//   mPendingTasks.insert(taskId, person);
+// }

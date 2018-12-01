@@ -46,15 +46,6 @@ Person makePerson(const VariantRecord & record)
  * PersonTableModelCommonImpl
  */
 
-// bool PersonTableModelCommonImpl::fetchRecordFromBackend(int taskId, const VariantRecord & record)
-// {
-//   mFetchingRecordTaskId = taskId;
-//   mStorage.submitGetById(taskId, record.value(0).toInt());
-//   
-// //   const auto person = makePerson(record);
-// //   mPendingTasks.submitTask(rowTask.taskId(), makePerson(rowTask.row()));
-// }
-
 void PersonTableModelCommonImpl::clearStorage()
 {
   mStorage.clear();
@@ -95,6 +86,8 @@ bool ListPersonTableModel::fetchRecordFromBackend(const Mdt::Container::TableCac
 {
   mFetchingPerson.taskId = rowTask.taskId();
   mFetchingPerson.personId = index(rowTask.row(), 0).data().toInt();
+
+  return true;
 }
 
 void ListPersonTableModel::fetchRecordFromBackendSucceeded()
@@ -145,14 +138,27 @@ bool EditPersonTableModel::fetchRecords(int count)
 
 bool EditPersonTableModel::fetchRecordFromBackend(const Mdt::Container::TableCacheRowTask& rowTask)
 {
+  mFetchingPerson.taskId = rowTask.taskId();
+  mFetchingPerson.personId = index(rowTask.row(), 0).data().toInt();
+
+  return true;
 }
 
 void EditPersonTableModel::fetchRecordFromBackendSucceeded()
 {
+  TableCacheTask task(mFetchingPerson.taskId);
+  const auto person = mImpl.getPersonFromStorage(mFetchingPerson.personId);
+  const auto record = makeVariantRecord(person);
+
+  taskSucceeded(task, record);
 }
 
 void EditPersonTableModel::fetchRecordFromBackendFailed()
 {
+  TableCacheTask task(mFetchingPerson.taskId);
+  const auto error = mdtErrorNew("fetchRecordFromBackend failed", Mdt::Error::Critical, "Test");
+
+  taskFailed(task, error);
 }
 
 bool EditPersonTableModel::addRecordToBackend(const TableCacheRowTransaction & rowTransaction)

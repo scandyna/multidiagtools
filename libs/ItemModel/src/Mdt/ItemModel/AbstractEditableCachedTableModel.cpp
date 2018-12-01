@@ -98,9 +98,9 @@ bool AbstractEditableCachedTableModel::insertRows(int row, int count, const QMod
 
 bool AbstractEditableCachedTableModel::submitChanges()
 {
-//   if(!updateModifiedRowsInBackend()){
-//     return false;
-//   }
+  if(!updateModifiedRowsInBackend()){
+    return false;
+  }
   if(!addNewRecordsToBackend()){
     return false;
   }
@@ -110,6 +110,14 @@ bool AbstractEditableCachedTableModel::submitChanges()
 //   }
   return true;
 }
+
+// bool AbstractEditableCachedTableModel::fetchRow(int row)
+// {
+//   Q_ASSERT(row >= 0);
+//   Q_ASSERT(row < rowCount());
+// 
+//   
+// }
 
 void AbstractEditableCachedTableModel::fromBackendInsertRecords(int row, int count, const Mdt::Container::VariantRecord & record)
 {
@@ -182,7 +190,14 @@ void AbstractEditableCachedTableModel::transactionFailed(const TableCacheTransac
   mOperationMap.setTransatctionFailedForRow(row);
 
   emit headerDataChanged(Qt::Vertical, row, row);
+
+  setLastError(error);
 }
+
+// bool AbstractEditableCachedTableModel::fetchRecordFromBackend(const Mdt::Container::TableCacheRowTransaction &)
+// {
+//   return false;
+// }
 
 bool AbstractEditableCachedTableModel::addRecordsToBackend(const TableCacheRowTransactionList & rowTransactions)
 {
@@ -215,6 +230,11 @@ bool AbstractEditableCachedTableModel::addNewRecordsToBackend()
 
 bool AbstractEditableCachedTableModel::updateModifiedRowsInBackend()
 {
+  const TableCacheRowTransactionList rowTransactions = mOperationMap.getRowsToUpdateInBackend();
+
+  mOperationMap.setTransactionsPending(rowTransactions);
+
+  return updateRecordsInBackend(rowTransactions);
 }
 
 // Mdt::Container::TableCacheOperation AbstractEditableCachedTableModel::operationAtRow(int row) const
