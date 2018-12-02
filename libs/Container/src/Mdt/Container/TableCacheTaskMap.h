@@ -25,8 +25,9 @@
 #include "TableCacheTask.h"
 #include "TableCacheRowTask.h"
 #include "TableCacheRowTaskList.h"
+#include "RowList.h"
 #include "MdtContainerExport.h"
-#include <map>
+#include <vector>
 
 namespace Mdt{ namespace Container{
 
@@ -36,8 +37,9 @@ namespace Mdt{ namespace Container{
   {
    public:
 
-    constexpr TableCacheTaskMapItem(TableCacheTask task, TableCacheTaskState state) noexcept
-     : mTask(task),
+    constexpr TableCacheTaskMapItem(int row, TableCacheTask task, TableCacheTaskState state) noexcept
+     : mRow(row),
+       mTask(task),
        mState(state)
     {
     }
@@ -46,6 +48,16 @@ namespace Mdt{ namespace Container{
     constexpr TableCacheTaskMapItem & operator=(const TableCacheTaskMapItem & other) noexcept = default;
     constexpr TableCacheTaskMapItem(TableCacheTaskMapItem && other) noexcept = default;
     constexpr TableCacheTaskMapItem & operator=(TableCacheTaskMapItem && other) noexcept = default;
+
+    constexpr void shiftRow(int count) noexcept
+    {
+      mRow += count;
+    }
+
+    constexpr int row() const noexcept
+    {
+      return mRow;
+    }
 
     constexpr int taskId() const noexcept
     {
@@ -69,6 +81,7 @@ namespace Mdt{ namespace Container{
 
    private:
 
+    int mRow;
     TableCacheTask mTask;
     TableCacheTaskState mState;
   };
@@ -106,6 +119,18 @@ namespace Mdt{ namespace Container{
      * \pre no task must allready exists for \a row
      */
     TableCacheRowTask beginRowTask(int row);
+
+    /*! \brief Begin a list of row tasks
+     */
+    TableCacheRowTaskList beginRowTasks(const RowList & rows);
+
+    /*! \brief Shift the rows starting from \a row with a offset of \a count
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count must be <> 0
+     * \note \a count can also be < 0
+     */
+    void shiftRows(int row, int count);
 
     /*! \brief Get the row that actually correspond to \a task
      *
@@ -148,14 +173,20 @@ namespace Mdt{ namespace Container{
 
    private:
 
-    using Map = std::map<int, TableCacheTaskMapItem>;
-    using Row = Map::key_type;
+    using Map = std::vector<TableCacheTaskMapItem>;
+
+    using iterator = Map::iterator;
+    using const_iterator = Map::const_iterator;
 
     bool mapContainsRow(int row) const;
+
+    iterator findIteratorForRow(int row);
+    const_iterator findConstIteratorForRow(int row) const;
+
     TableCacheTask createTask();
 
     int mLastTaskId = 0;
-    Map mMap;  // Key: row
+    Map mMap;
   };
 
 }} // namespace Mdt{ namespace Container{

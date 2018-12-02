@@ -34,18 +34,42 @@ TableCacheRowTask TableCacheTaskMap::beginRowTask(int row)
   Q_ASSERT(row >= 0);
   Q_ASSERT(!mapContainsRow(row));
 
-  const TableCacheRowTask task( row, createTask() );
-  mMap.emplace( std::make_pair(row, TableCacheTaskMapItem(task.task(), TableCacheTaskState::Pending)) );
+  const TableCacheRowTask rowTask( row, createTask() );
+  mMap.emplace_back(row, rowTask.task(), TableCacheTaskState::Pending);
 
-  return task;
+  return rowTask;
+}
+
+TableCacheRowTaskList TableCacheTaskMap::beginRowTasks(const RowList & rows)
+{
+  TableCacheRowTaskList rowTaskList;
+
+  for(const int row : rows){
+    rowTaskList.emplace_back( beginRowTask(row) );
+  }
+
+  return rowTaskList;
+}
+
+void TableCacheTaskMap::shiftRows(int row, int count)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count != 0);
+
+  for(auto & item : mMap){
+    if(item.row() >= row){
+      item.shiftRow(count);
+      Q_ASSERT(item.row() >= 0);
+    }
+  }
 }
 
 int TableCacheTaskMap::getRowForTask(const TableCacheTask & task) const
 {
   Q_ASSERT(!task.isNull());
 
-  const auto pred = [task](const std::pair<Row, TableCacheTaskMapItem> & p){
-    return p.second.taskId() == task.id();
+  const auto pred = [task](const TableCacheTaskMapItem & item){
+    return item.taskId() == task.id();
   };
 
   const auto it = std::find_if(mMap.cbegin(), mMap.cend(), pred);
@@ -53,7 +77,7 @@ int TableCacheTaskMap::getRowForTask(const TableCacheTask & task) const
     return -1;
   }
 
-  return it->first;
+  return it->row();
 }
 
 void TableCacheTaskMap::setTaskDoneForRow(int row)
@@ -61,7 +85,7 @@ void TableCacheTaskMap::setTaskDoneForRow(int row)
   Q_ASSERT(row >= 0);
   Q_ASSERT(mapContainsRow(row));
 
-  mMap.erase(row);
+  mMap.erase( findConstIteratorForRow(row) );
 }
 
 void TableCacheTaskMap::setTaskFailedForRow(int row)
@@ -69,41 +93,62 @@ void TableCacheTaskMap::setTaskFailedForRow(int row)
   Q_ASSERT(row >= 0);
   Q_ASSERT(mapContainsRow(row));
 
-  // std::map::operator[] requires TableCacheTaskMapItem to be default constructible
-  auto it = mMap.find(row);
+  auto it = findIteratorForRow(row);
   Q_ASSERT(it != mMap.end());
-  it->second.setFailed();
+  it->setFailed();
 }
 
 bool TableCacheTaskMap::isTaskPendingForRow(int row) const
 {
   Q_ASSERT(row >= 0);
 
-  const auto it = mMap.find(row);
+  const auto it = findConstIteratorForRow(row);
   if(it == mMap.cend()){
     return false;
   }
 
-  return it->second.isPending();
+  return it->isPending();
 }
 
 bool TableCacheTaskMap::isTaskFailedForRow(int row) const
 {
   Q_ASSERT(row >= 0);
 
-  const auto it = mMap.find(row);
+  const auto it = findConstIteratorForRow(row);
   if(it == mMap.cend()){
     return false;
   }
 
-  return it->second.isFailed();
+  return it->isFailed();
 }
 
 bool TableCacheTaskMap::mapContainsRow(int row) const
 {
   Q_ASSERT(row >= 0);
 
-  return mMap.find(row) != mMap.cend();
+  return findConstIteratorForRow(row) != mMap.cend();
+}
+
+TableCacheTaskMap::iterator TableCacheTaskMap::findIteratorForRow(int row)
+{
+  Q_ASSERT(row >= 0);
+
+  const auto pred = [row](const TableCacheTaskMapItem & item){
+    return item.row() == row;
+  };
+
+  return std::find_if(mMap.begin(), mMap.end(), pred);
+}
+
+TableCacheTaskMap::const_iterator TableCacheTaskMap::findConstIteratorForRow(int row) const
+{
+  Q_ASSERT(row >= 0);
+
+  const auto pred = [row](const TableCacheTaskMapItem & item){
+    return item.row() == row;
+  };
+
+  return std::find_if(mMap.cbegin(), mMap.cend(), pred);
 }
 
 TableCacheTask TableCacheTaskMap::createTask()

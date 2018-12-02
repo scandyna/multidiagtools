@@ -34,8 +34,10 @@ class TableCacheTaskTest : public QObject
   void mapItemTest();
 
   void beginRowTaskTest();
+  void beginRowTaskListTest();
   void setTaskDoneFailedTest();
   void getRowForTaskTest();
+  void shiftRowsTest();
 };
 
 #endif // #ifndef MDT_TEST_MAIN

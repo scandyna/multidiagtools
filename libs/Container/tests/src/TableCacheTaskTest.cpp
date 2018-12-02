@@ -53,17 +53,26 @@ void TableCacheTaskTest::rowTaskTest()
 
 void TableCacheTaskTest::mapItemTest()
 {
-  TableCacheTaskMapItem i1(TableCacheTask(1), TableCacheTaskState::None);
+  TableCacheTaskMapItem i1(2, TableCacheTask(1), TableCacheTaskState::None);
+  QCOMPARE(i1.row(), 2);
   QCOMPARE(i1.taskId(), 1);
   QVERIFY(!i1.isPending());
   QVERIFY(!i1.isFailed());
 
-  TableCacheTaskMapItem i2(TableCacheTask(2), TableCacheTaskState::Pending);
+  QCOMPARE(i1.row(), 2);
+  i1.shiftRow(2);
+  QCOMPARE(i1.row(), 4);
+  i1.shiftRow(-1);
+  QCOMPARE(i1.row(), 3);
+
+  TableCacheTaskMapItem i2(5, TableCacheTask(2), TableCacheTaskState::Pending);
+  QCOMPARE(i2.row(), 5);
   QCOMPARE(i2.taskId(), 2);
   QVERIFY(i2.isPending());
   QVERIFY(!i2.isFailed());
 
-  TableCacheTaskMapItem i3(TableCacheTask(3), TableCacheTaskState::Failed);
+  TableCacheTaskMapItem i3(7, TableCacheTask(3), TableCacheTaskState::Failed);
+  QCOMPARE(i3.row(), 7);
   QCOMPARE(i3.taskId(), 3);
   QVERIFY(!i3.isPending());
   QVERIFY(i3.isFailed());
@@ -95,6 +104,22 @@ void TableCacheTaskTest::beginRowTaskTest()
   QCOMPARE(task.row(), 6);
   QCOMPARE(task.taskId(), 1);
   QCOMPARE(map.taskCount(), 1);
+}
+
+void TableCacheTaskTest::beginRowTaskListTest()
+{
+  TableCacheRowTaskList rowTaskList;
+
+  TableCacheTaskMap map;
+  QCOMPARE(map.taskCount(), 0);
+
+  rowTaskList = map.beginRowTasks(RowList{0,3});
+  QCOMPARE(rowTaskList.size(), 2);
+  QCOMPARE(rowTaskList.at(0).row(), 0);
+  QCOMPARE(rowTaskList.at(0).taskId(), 1);
+  QCOMPARE(rowTaskList.at(1).row(), 3);
+  QCOMPARE(rowTaskList.at(1).taskId(), 2);
+  QCOMPARE(map.taskCount(), 2);
 }
 
 void TableCacheTaskTest::setTaskDoneFailedTest()
@@ -159,6 +184,33 @@ void TableCacheTaskTest::getRowForTaskTest()
   QCOMPARE(map.getRowForTask(rowTask3.task()), 13);
 }
 
+void TableCacheTaskTest::shiftRowsTest()
+{
+  TableCacheTaskMap map;
+  QCOMPARE(map.taskCount(), 0);
+
+  const auto rowTask1 = map.beginRowTask(1);
+  const auto rowTask2 = map.beginRowTask(3);
+  const auto rowTask3 = map.beginRowTask(5);
+  const auto rowTask4 = map.beginRowTask(6);
+
+  QCOMPARE(map.getRowForTask(rowTask1.task()), 1);
+  QCOMPARE(map.getRowForTask(rowTask2.task()), 3);
+  QCOMPARE(map.getRowForTask(rowTask3.task()), 5);
+  QCOMPARE(map.getRowForTask(rowTask4.task()), 6);
+
+  map.shiftRows(3, 1);
+  QCOMPARE(map.getRowForTask(rowTask1.task()), 1);
+  QCOMPARE(map.getRowForTask(rowTask2.task()), 4);
+  QCOMPARE(map.getRowForTask(rowTask3.task()), 6);
+  QCOMPARE(map.getRowForTask(rowTask4.task()), 7);
+
+  map.shiftRows(3, -1);
+  QCOMPARE(map.getRowForTask(rowTask1.task()), 1);
+  QCOMPARE(map.getRowForTask(rowTask2.task()), 3);
+  QCOMPARE(map.getRowForTask(rowTask3.task()), 5);
+  QCOMPARE(map.getRowForTask(rowTask4.task()), 6);
+}
 
 /*
  * Main
