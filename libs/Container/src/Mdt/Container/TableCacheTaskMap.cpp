@@ -32,7 +32,12 @@ void TableCacheTaskMap::clear()
 TableCacheRowTask TableCacheTaskMap::beginRowTask(int row)
 {
   Q_ASSERT(row >= 0);
-  Q_ASSERT(!mapContainsRow(row));
+//   Q_ASSERT(!mapContainsRow(row));
+
+  const auto it = findConstIteratorForRow(row);
+  if(it != mMap.cend()){
+    return TableCacheRowTask( row, TableCacheTask(it->taskId()) );
+  }
 
   const TableCacheRowTask rowTask( row, createTask() );
   mMap.emplace_back(row, rowTask.task(), TableCacheTaskState::Pending);

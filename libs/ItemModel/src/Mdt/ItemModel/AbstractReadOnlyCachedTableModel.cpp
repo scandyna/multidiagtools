@@ -49,7 +49,7 @@ Qt::ItemFlags AbstractReadOnlyCachedTableModel::flags(const QModelIndex & index)
     return Qt::NoItemFlags;
   }
   Q_ASSERT(index.row() < rowCount());
-  if( mTaskMap.isTaskPendingForRow(index.row()) ){
+  if( isTaskPendingForRow(index.row()) ){
     return Qt::NoItemFlags;
   }
   return BaseClass::flags(index);
@@ -221,8 +221,7 @@ TableCacheRowTask AbstractReadOnlyCachedTableModel::beginRowTask(int row)
 
 TableCacheRowTaskList AbstractReadOnlyCachedTableModel::beginRowTasks(const RowList & rows)
 {
-
-  
+  return mTaskMap.beginRowTasks(rows);
 }
 
 void AbstractReadOnlyCachedTableModel::taskSucceeded(const TableCacheTask & task, const VariantRecord record)
@@ -234,6 +233,7 @@ void AbstractReadOnlyCachedTableModel::taskSucceeded(const TableCacheTask & task
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < rowCount());
   mTaskMap.setTaskDoneForRow(row);
+  taskSucceededForRow(row);
   fromBackendSetRecord(row, record);
 
   emit headerDataChanged(Qt::Vertical, row, row);
@@ -247,17 +247,32 @@ void AbstractReadOnlyCachedTableModel::taskFailed(const TableCacheTask & task, c
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < rowCount());
   mTaskMap.setTaskFailedForRow(row);
+  taskFailedForRow(row);
 
   emit headerDataChanged(Qt::Vertical, row, row);
 
   setLastError(error);
 }
 
+void AbstractReadOnlyCachedTableModel::beginInsertRows(const QModelIndex &parent, int first, int last)
+{
+  Q_ASSERT(first >= 0);
+  Q_ASSERT(first <= rowCount());
+  Q_ASSERT(last >= 0);
+
+  BaseClass::beginInsertRows(parent, first, last);
+
+  RowRange rowRange;
+  rowRange.setFirstRow(first);
+  rowRange.setLastRow(last);
+  mTaskMap.shiftRows(rowRange.firstRow(), rowRange.rowCount());
+}
+
 void AbstractReadOnlyCachedTableModel::beginInsertRows(const RowRange& rowRange)
 {
   Q_ASSERT(rowRange.isValid());
 
-  BaseClass::beginInsertRows(QModelIndex(), rowRange.firstRow(), rowRange.lastRow());
+  beginInsertRows(QModelIndex(), rowRange.firstRow(), rowRange.lastRow());
 }
 
 void AbstractReadOnlyCachedTableModel::setLastError(const Mdt::Error & error)

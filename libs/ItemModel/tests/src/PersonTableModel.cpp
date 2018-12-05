@@ -46,6 +46,28 @@ Person makePerson(const VariantRecord & record)
  * PersonTableModelCommonImpl
  */
 
+bool recordHasNoIdIfCountGreaterThanOne(int count, const VariantRecord & record)
+{
+  Q_ASSERT(count > 0);
+  Q_ASSERT(record.columnCount() == 2);
+
+  if(count == 1){
+    return true;
+  }
+  return record.value(0).isNull();
+}
+
+// void PersonTableModelCommonImpl::addPersonRecordsToStorage(int count, const VariantRecord & record)
+// {
+//   Q_ASSERT(count > 0);
+//   Q_ASSERT(record.columnCount() == 2);
+//   Q_ASSERT(recordHasNoIdIfCountGreaterThanOne(count, record));
+//  
+//   for(int i = 0; i < count; ++i){
+//     addPersonToStorage( makePerson(record) );
+//   }
+// }
+
 void PersonTableModelCommonImpl::clearStorage()
 {
   mStorage.clear();
@@ -118,6 +140,24 @@ void ListPersonTableModel::updateStoragePersonNameAt(int row, const QString & na
   mImpl.updatePersonInStorage(person);
 }
 
+void ListPersonTableModel::prependPersonByNameToModelAndStorage(const QString & name)
+{
+  Person person;
+  person.name = name;
+
+  person.id = mImpl.addPersonToStorage(person);
+  fromBackendInsertRecords(0, 1, makeVariantRecord(person));
+}
+
+void ListPersonTableModel::appendPersonByNameToModelAndStorage(const QString & name)
+{
+  Person person;
+  person.name = name;
+
+  person.id = mImpl.addPersonToStorage(person);
+  fromBackendAppendRecord( makeVariantRecord(person) );
+}
+
 /*
  * EditPersonTableModel
  */
@@ -161,54 +201,85 @@ void EditPersonTableModel::fetchRecordFromBackendFailed()
   taskFailed(task, error);
 }
 
-bool EditPersonTableModel::addRecordToBackend(const TableCacheRowTransaction & rowTransaction)
+bool EditPersonTableModel::addRecordToBackend(const TableCacheRowTask & rowTask)
 {
-  Q_ASSERT(rowTransaction.row() >= 0);
-  Q_ASSERT(rowTransaction.row() < rowCount());
-  Q_ASSERT(!rowTransaction.isNull());
+  Q_ASSERT(rowTask.row() >= 0);
+  Q_ASSERT(rowTask.row() < rowCount());
+  Q_ASSERT(!rowTask.isNull());
 
-  mPendingTransactionId = rowTransaction.transactionId();
-  mPendingPerson = makePerson( record(rowTransaction.row()) );
+  mAddingPerson.taskId = rowTask.taskId();
+  mAddingPerson.person = makePerson( record(rowTask.row()) );
 
   return true;
 }
 
 void EditPersonTableModel::addRecordToBackendSucceeded()
 {
-  const int id = mImpl.addPersonToStorage(mPendingPerson);
+  const int id = mImpl.addPersonToStorage(mAddingPerson.person);
   const VariantRecord record = makeVariantRecord( mImpl.getPersonFromStorage(id) );
-  const TableCacheTransaction transaction(mPendingTransactionId);
+  const TableCacheTask task(mAddingPerson.taskId);
 
-  transactionSucceeded(transaction, record);
+  taskSucceeded(task, record);
+//   const TableCacheTransaction transaction(mPendingTransactionId);
+
+//   transactionSucceeded(transaction, record);
 }
 
 void EditPersonTableModel::addRecordToBackendFailed()
 {
-  const TableCacheTransaction transaction(mPendingTransactionId);
+  const TableCacheTask task(mAddingPerson.taskId);
   const auto error = mdtErrorNewQ("Fail for test", Mdt::Error::Critical, this);
 
-  transactionFailed(transaction, error);
+  taskFailed(task, error);
+
+//   const TableCacheTransaction transaction(mPendingTransactionId);
+//   const auto error = mdtErrorNewQ("Fail for test", Mdt::Error::Critical, this);
+// 
+//   transactionFailed(transaction, error);
 }
 
-bool EditPersonTableModel::updateRecordInBackend(const TableCacheRowTransaction & rowTransaction)
-{
-  Q_ASSERT(rowTransaction.row() >= 0);
-  Q_ASSERT(rowTransaction.row() < rowCount());
-  Q_ASSERT(!rowTransaction.isNull());
+// bool EditPersonTableModel::updateRecordInBackend(const TableCacheRowTransaction & rowTransaction)
+// {
+//   Q_ASSERT(rowTransaction.row() >= 0);
+//   Q_ASSERT(rowTransaction.row() < rowCount());
+//   Q_ASSERT(!rowTransaction.isNull());
+// 
+//   mPendingTransactionId = rowTransaction.transactionId();
+//   mPendingPerson = makePerson( record(rowTransaction.row()) );
+// 
+//   return true;
+// }
 
-  mPendingTransactionId = rowTransaction.transactionId();
-  mPendingPerson = makePerson( record(rowTransaction.row()) );
+bool EditPersonTableModel::updateRecordInBackend(const TableCacheRowTask & rowTask)
+{
+  Q_ASSERT(rowTask.row() >= 0);
+  Q_ASSERT(rowTask.row() < rowCount());
+  Q_ASSERT(!rowTask.isNull());
+
+  mUpdatingPerson.taskId = rowTask.taskId();
+  mUpdatingPerson.person = makePerson( record(rowTask.row()) );
 
   return true;
 }
 
 void EditPersonTableModel::updateRecordInBackendSucceeded()
 {
-  mImpl.updatePersonInStorage(mPendingPerson);
-  const VariantRecord record = makeVariantRecord(mPendingPerson);
-  const TableCacheTransaction transaction(mPendingTransactionId);
+  mImpl.updatePersonInStorage(mUpdatingPerson.person);
+  const TableCacheTask task(mUpdatingPerson.taskId);
+  const VariantRecord record = makeVariantRecord(mUpdatingPerson.person);
 
-  transactionSucceeded(transaction, record);
+  taskSucceeded(task, record);
+
+//   const TableCacheTransaction transaction(mPendingTransactionId);
+//   transactionSucceeded(transaction, record);
+}
+
+void EditPersonTableModel::updateRecordInBackendFailed()
+{
+  const TableCacheTask task(mUpdatingPerson.taskId);
+  const auto error = mdtErrorNewQ("Fail for test", Mdt::Error::Critical, this);
+
+  taskFailed(task, error);
 }
 
 void EditPersonTableModel::updateStoragePersonNameAt(int row, const QString & name)
@@ -220,6 +291,24 @@ void EditPersonTableModel::updateStoragePersonNameAt(int row, const QString & na
   Q_ASSERT(person.id > 0);
   person.name = name;
   mImpl.updatePersonInStorage(person);
+}
+
+void EditPersonTableModel::prependPersonByNameToModelAndStorage(const QString & name)
+{
+  Person person;
+  person.name = name;
+
+  person.id = mImpl.addPersonToStorage(person);
+  fromBackendInsertRecords(0, 1, makeVariantRecord(person));
+}
+
+void EditPersonTableModel::appendPersonByNameToModelAndStorage(const QString & name)
+{
+  Person person;
+  person.name = name;
+
+  person.id = mImpl.addPersonToStorage(person);
+  fromBackendAppendRecord( makeVariantRecord(person) );
 }
 
 /*

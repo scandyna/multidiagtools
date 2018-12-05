@@ -67,6 +67,8 @@ class PersonTableModelCommonImpl
     return mStorage.add(person);
   }
 
+//   void addPersonRecordsToStorage(int count, const VariantRecord & record);
+
   int storageCount() const
   {
     return mStorage.count();
@@ -75,7 +77,7 @@ class PersonTableModelCommonImpl
   Person getPersonFromStorage(int id) const
   {
     Q_ASSERT(id > 0);
-    Q_ASSERT(mStorage.hasId(id));
+    Q_ASSERT(mStorage.containsPersonWithId (id));
 
     return mStorage.getById(id);
   }
@@ -83,7 +85,7 @@ class PersonTableModelCommonImpl
   QString storageNameForId(int id) const
   {
     Q_ASSERT(id > 0);
-    Q_ASSERT(mStorage.hasId(id));
+    Q_ASSERT(mStorage.containsPersonWithId (id));
 
     return mStorage.nameById(id);
   }
@@ -111,6 +113,12 @@ struct TaskIdPersonId
 {
   int taskId = 0;
   int personId = 0;
+};
+
+struct TaskIdPerson
+{
+  int taskId = 0;
+  Person person;
 };
 
 class ListPersonTableModel : public Mdt::ItemModel::AbstractReadOnlyCachedTableModel
@@ -168,6 +176,9 @@ class ListPersonTableModel : public Mdt::ItemModel::AbstractReadOnlyCachedTableM
   }
 
   void updateStoragePersonNameAt(int row, const QString & name);
+
+  void prependPersonByNameToModelAndStorage(const QString & name);
+  void appendPersonByNameToModelAndStorage(const QString & name);
 
   void clearStorage()
   {
@@ -233,6 +244,7 @@ class EditPersonTableModel : public Mdt::ItemModel::AbstractEditableCachedTableM
   void addRecordToBackendFailed();
 
   void updateRecordInBackendSucceeded();
+  void updateRecordInBackendFailed();
 
   int storageCount() const
   {
@@ -258,6 +270,9 @@ class EditPersonTableModel : public Mdt::ItemModel::AbstractEditableCachedTableM
 
   void updateStoragePersonNameAt(int row, const QString & name);
 
+  void prependPersonByNameToModelAndStorage(const QString & name);
+  void appendPersonByNameToModelAndStorage(const QString & name);
+
   void clearStorage()
   {
     mImpl.clearStorage();
@@ -274,14 +289,13 @@ class EditPersonTableModel : public Mdt::ItemModel::AbstractEditableCachedTableM
 
   bool fetchRecordFromBackend(const Mdt::Container::TableCacheRowTask & rowTask) override;
 
-  bool addRecordToBackend(const Mdt::Container::TableCacheRowTransaction & rowTransaction) override;
-  bool updateRecordInBackend(const Mdt::Container::TableCacheRowTransaction & rowTransaction) override;
+  bool addRecordToBackend(const Mdt::Container::TableCacheRowTask & rowTask) override;
+  bool updateRecordInBackend(const Mdt::Container::TableCacheRowTask & rowTask) override;
 
   PersonTableModelCommonImpl mImpl;
   TaskIdPersonId mFetchingPerson;
-  
-  int mPendingTransactionId = 0;
-  Person mPendingPerson;
+  TaskIdPerson mAddingPerson;
+  TaskIdPerson mUpdatingPerson;
 };
 
 void populatePersonStorage(ListPersonTableModel & model, const std::initializer_list<Person> & list);

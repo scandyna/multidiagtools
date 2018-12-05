@@ -170,6 +170,17 @@ namespace Mdt{ namespace Container{
      */
     TableCacheOperation operationAtRow(int row) const;
 
+    /*! \brief Get a row transaction to fetch a record from backend
+     *
+     * If no operation allready exists for \a row, a index will be created
+     *  with a new transaction.
+     *
+     * If a operation allready exists for \a row, ..........
+     *
+     * \pre \a row must be >= 0
+     */
+    TableCacheRowTransaction fetchRow(int row);
+
     /*! \brief Create a new transaction for \a row
      *
      * Returns a valid transaction if a operation exists for \a row,
@@ -242,12 +253,18 @@ namespace Mdt{ namespace Container{
      */
     TableCacheRowTransactionList getRowsToAddToBackend();
 
+    /*! \brief Get a list of rows that have to be updated in the backend
+     */
+    TableCacheRowTransactionList getRowsToUpdateInBackend();
+
     /*! \brief Get a list of rows that have to be inserted to the storage
      */
+    [[deprecated]]
     RowList getRowsToInsertIntoStorage() const;
 
     /*! \brief Get a list of rows that have to be updated in the storage
      */
+    [[deprecated]]
     RowList getRowsToUpdateInStorage() const;
 
     /*! \brief Get a list of rows for records that have been updated in the cache
@@ -285,6 +302,7 @@ namespace Mdt{ namespace Container{
      * Will clear all operations in this map
      *  and update committed states, like committedRows .
      */
+    [[deprecated]]
     void commitChanges();
 
     /*! \brief Get the range of committed rows
@@ -293,6 +311,7 @@ namespace Mdt{ namespace Container{
      *  If commitChanges() was not called, or no operation exists in this map,
      *  a null range is returned.
      */
+    [[deprecated]]
     Mdt::IndexRange::RowRange committedRows() const
     {
       return mCommittedRows;
@@ -367,7 +386,9 @@ namespace Mdt{ namespace Container{
     RowList getRowsForOperation(TableCacheOperation operation) const;
     RowList getRowsForOperation(TableCacheOperation operation1, TableCacheOperation operation2) const;
     int newTransactionId();
+    TableCacheRowTransaction createRowTransaction(TableCacheOperationIndex & index);
     TableCacheRowTransactionList getRowTransactionsForOperation(TableCacheOperation operation);
+    TableCacheRowTransactionList getRowTransactionsForOperation(TableCacheOperation operation1, TableCacheOperation operation2);
 
     int mLastTransactionId = 0;
     std::vector<TableCacheOperationIndex> mMap;

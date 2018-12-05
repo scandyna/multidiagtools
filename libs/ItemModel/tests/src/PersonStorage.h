@@ -54,7 +54,7 @@ class PersonStorage
     return mMap.count();
   }
 
-  bool hasId(int id) const
+  bool containsPersonWithId(int id) const
   {
     Q_ASSERT(id > 0);
     return mMap.contains(id);
@@ -63,7 +63,7 @@ class PersonStorage
   Person getById(int id) const
   {
     Q_ASSERT(id > 0);
-    Q_ASSERT(hasId(id));
+    Q_ASSERT(containsPersonWithId(id));
 
     return mMap.value(id);
   }
@@ -73,7 +73,7 @@ class PersonStorage
   QString nameById(int id) const
   {
     Q_ASSERT(id > 0);
-    Q_ASSERT(hasId(id));
+    Q_ASSERT(containsPersonWithId(id));
 
     return getById(id).name;
   }

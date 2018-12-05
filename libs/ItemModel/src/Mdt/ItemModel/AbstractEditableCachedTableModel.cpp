@@ -26,10 +26,14 @@
 using Mdt::IndexRange::RowRange;
 using Mdt::Container::RowList;
 using Mdt::Container::TableCacheOperation;
+using Mdt::Container::TableCacheTask;
+using Mdt::Container::TableCacheRowTask;
+using Mdt::Container::TableCacheRowTaskList;
+using Mdt::Container::VariantRecord;
+
 using Mdt::Container::TableCacheTransaction;
 using Mdt::Container::TableCacheRowTransaction;
 using Mdt::Container::TableCacheRowTransactionList;
-using Mdt::Container::VariantRecord;
 
 namespace Mdt{ namespace ItemModel{
 
@@ -44,9 +48,12 @@ Qt::ItemFlags AbstractEditableCachedTableModel::flags(const QModelIndex& index) 
     return Qt::NoItemFlags;
   }
   Q_ASSERT(index.row() < rowCount());
-  if(mOperationMap.isTransactionPendingForRow(index.row())){
+  if( isTaskPendingForRow(index.row()) ){
     return Qt::NoItemFlags;
   }
+//   if(mOperationMap.isTransactionPendingForRow(index.row())){
+//     return Qt::NoItemFlags;
+//   }
   return BaseClass::flags(index) | Qt::ItemIsEditable;
 }
 
@@ -80,6 +87,7 @@ bool AbstractEditableCachedTableModel::insertRows(int row, int count, const QMod
   if(parent.isValid()){
     return false;
   }
+  /// \todo Should be a method: canAddRows(int count)
   if( (rowCount()+count) > cachedRowCountLimit() ){
     return false;
   }
@@ -119,6 +127,16 @@ bool AbstractEditableCachedTableModel::submitChanges()
 //   
 // }
 
+// void AbstractEditableCachedTableModel::shiftRows(int row, int count)
+// {
+//   Q_ASSERT(row >= 0);
+//   Q_ASSERT(row < rowCount());
+//   Q_ASSERT(count != 0);
+// 
+//   mOperationMap.shiftRowsInMap(row, count);
+//   BaseClass::shiftRows(row, count);
+// }
+
 void AbstractEditableCachedTableModel::fromBackendInsertRecords(int row, int count, const Mdt::Container::VariantRecord & record)
 {
   Q_ASSERT(row >= 0);
@@ -132,13 +150,13 @@ void AbstractEditableCachedTableModel::fromBackendInsertRecords(int row, int cou
   rows.setRowCount(count);
   beginInsertRows(rows);
   insertRecordsToCache(row, count, record);
-  const RowList shiftedRows = mOperationMap.shiftRowsInMap(row, count);
+  /*const RowList shiftedRows = */ mOperationMap.shiftRowsInMap(row, count);
   endInsertRows();
 
-  if(!shiftedRows.isEmpty()){
-    Q_ASSERT( (shiftedRows.smallestRow() - count) >= 0 );
-    emit headerDataChanged(Qt::Vertical, shiftedRows.smallestRow()-count, shiftedRows.greatestRow());
-  }
+//   if(!shiftedRows.isEmpty()){
+//     Q_ASSERT( (shiftedRows.smallestRow() - count) >= 0 );
+// //     emit headerDataChanged(Qt::Vertical, shiftedRows.smallestRow()-count, shiftedRows.greatestRow());
+//   }
 }
 
 QVariant AbstractEditableCachedTableModel::verticalHeaderDisplayRoleData(int row) const
@@ -194,47 +212,79 @@ void AbstractEditableCachedTableModel::transactionFailed(const TableCacheTransac
   setLastError(error);
 }
 
+void AbstractEditableCachedTableModel::taskSucceededForRow(int row)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  mOperationMap.setTransatctionDoneForRow(row);
+}
+
+void AbstractEditableCachedTableModel::taskFailedForRow(int row)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  mOperationMap.setTransatctionFailedForRow(row);
+}
+
 // bool AbstractEditableCachedTableModel::fetchRecordFromBackend(const Mdt::Container::TableCacheRowTransaction &)
 // {
 //   return false;
 // }
 
-bool AbstractEditableCachedTableModel::addRecordsToBackend(const TableCacheRowTransactionList & rowTransactions)
+bool AbstractEditableCachedTableModel::addRecordsToBackend(const TableCacheRowTaskList & rowTasks)
 {
-  for(const auto & rowTransaction : rowTransactions){
-    if(!addRecordToBackend(rowTransaction)){
+  for(const auto & rowTask : rowTasks){
+    if(!addRecordToBackend(rowTask)){
       return false;
     }
   }
   return true;
 }
 
-bool AbstractEditableCachedTableModel::updateRecordsInBackend(const TableCacheRowTransactionList & rowTransactions)
+bool AbstractEditableCachedTableModel::updateRecordsInBackend(const TableCacheRowTaskList & rowTasks)
 {
-  for(const auto & rowTransaction : rowTransactions){
-    if(!updateRecordInBackend(rowTransaction)){
+  for(const auto & rowTask : rowTasks){
+    if(!updateRecordInBackend(rowTask)){
       return false;
     }
   }
   return true;
 }
+
+// bool AbstractEditableCachedTableModel::addNewRecordsToBackend()
+// {
+//   const TableCacheRowTransactionList rowTransactions = mOperationMap.getRowsToAddToBackend();
+// 
+//   mOperationMap.setTransactionsPending(rowTransactions);
+// 
+//   return addRecordsToBackend(rowTransactions);
+// }
 
 bool AbstractEditableCachedTableModel::addNewRecordsToBackend()
 {
-  const TableCacheRowTransactionList rowTransactions = mOperationMap.getRowsToAddToBackend();
+  const RowList rows = mOperationMap.getRowsToInsertIntoStorage();
+  const TableCacheRowTaskList rowTasks = beginRowTasks(rows);
 
-  mOperationMap.setTransactionsPending(rowTransactions);
-
-  return addRecordsToBackend(rowTransactions);
+  return addRecordsToBackend(rowTasks);
 }
+
+// bool AbstractEditableCachedTableModel::updateModifiedRowsInBackend()
+// {
+//   const TableCacheRowTransactionList rowTransactions = mOperationMap.getRowsToUpdateInBackend();
+// 
+//   mOperationMap.setTransactionsPending(rowTransactions);
+// 
+//   return updateRecordsInBackend(rowTransactions);
+// }
 
 bool AbstractEditableCachedTableModel::updateModifiedRowsInBackend()
 {
-  const TableCacheRowTransactionList rowTransactions = mOperationMap.getRowsToUpdateInBackend();
+  const RowList rows = mOperationMap.getRowsToUpdateInStorage();
+  const TableCacheRowTaskList rowTasks = beginRowTasks(rows);
 
-  mOperationMap.setTransactionsPending(rowTransactions);
-
-  return updateRecordsInBackend(rowTransactions);
+  return updateRecordsInBackend(rowTasks);
 }
 
 // Mdt::Container::TableCacheOperation AbstractEditableCachedTableModel::operationAtRow(int row) const

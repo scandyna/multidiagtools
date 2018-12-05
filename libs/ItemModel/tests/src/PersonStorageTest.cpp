@@ -32,14 +32,14 @@ void PersonStorageTest::addGetTest()
   PersonStorage storage;
 
   QCOMPARE(storage.count(), 0);
-  QVERIFY(!storage.hasId(1));
+  QVERIFY(!storage.containsPersonWithId(1));
 
   person.name = "A";
   QCOMPARE(person.id, 0);
   id = storage.add(person);
   QCOMPARE(id, 1);
   QCOMPARE(storage.count(), 1);
-  QVERIFY(storage.hasId(1));
+  QVERIFY(storage.containsPersonWithId(1));
   person = storage.getById(1);
   QCOMPARE(person.id, 1);
   QCOMPARE(person.name, QString("A"));
@@ -49,8 +49,8 @@ void PersonStorageTest::addGetTest()
   id = storage.add(person);
   QCOMPARE(id, 2);
   QCOMPARE(storage.count(), 2);
-  QVERIFY(storage.hasId(1));
-  QVERIFY(storage.hasId(2));
+  QVERIFY(storage.containsPersonWithId(1));
+  QVERIFY(storage.containsPersonWithId(2));
   person = storage.getById(2);
   QCOMPARE(person.id, 2);
   QCOMPARE(person.name, QString("B"));
@@ -60,11 +60,11 @@ void PersonStorageTest::addGetTest()
   id = storage.add(person);
   QCOMPARE(id, 5);
   QCOMPARE(storage.count(), 3);
-  QVERIFY(storage.hasId(1));
-  QVERIFY(storage.hasId(2));
-  QVERIFY(!storage.hasId(3));
-  QVERIFY(!storage.hasId(4));
-  QVERIFY(storage.hasId(5));
+  QVERIFY(storage.containsPersonWithId(1));
+  QVERIFY(storage.containsPersonWithId(2));
+  QVERIFY(!storage.containsPersonWithId(3));
+  QVERIFY(!storage.containsPersonWithId(4));
+  QVERIFY(storage.containsPersonWithId(5));
   person = storage.getById(5);
   QCOMPARE(person.id, 5);
   QCOMPARE(person.name, QString("E"));
@@ -174,14 +174,14 @@ void PersonStorageTest::removeTest()
 
   storage.remove(1);
   QCOMPARE(storage.count(), 1);
-  QVERIFY(!storage.hasId(1));
-  QVERIFY(storage.hasId(2));
+  QVERIFY(!storage.containsPersonWithId(1));
+  QVERIFY(storage.containsPersonWithId(2));
   QCOMPARE(storage.nameById(2), QString("B"));
 
   storage.remove(2);
   QCOMPARE(storage.count(), 0);
-  QVERIFY(!storage.hasId(1));
-  QVERIFY(!storage.hasId(2));
+  QVERIFY(!storage.containsPersonWithId(1));
+  QVERIFY(!storage.containsPersonWithId(2));
 }
 
 // void PersonStorageTest::pendingTasksTest()

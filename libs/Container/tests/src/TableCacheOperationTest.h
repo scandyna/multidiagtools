@@ -47,6 +47,7 @@ class TableCacheOperationTest : public TestBase
   void transactionInsertRemoveTest();
   void pendingTransactionTest();
   void setOperationAtRowTest();
+  void fetchRowTest();
   void removeOperationAtRowTest();
   void shiftRowsInMapTest();
   void getRowsToUpdateInStorageTest();

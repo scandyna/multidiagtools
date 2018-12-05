@@ -104,6 +104,11 @@ void TableCacheTaskTest::beginRowTaskTest()
   QCOMPARE(task.row(), 6);
   QCOMPARE(task.taskId(), 1);
   QCOMPARE(map.taskCount(), 1);
+
+  task = map.beginRowTask(6);
+  QCOMPARE(task.row(), 6);
+  QCOMPARE(task.taskId(), 1);
+  QCOMPARE(map.taskCount(), 1);
 }
 
 void TableCacheTaskTest::beginRowTaskListTest()
@@ -151,6 +156,16 @@ void TableCacheTaskTest::setTaskDoneFailedTest()
   QCOMPARE(map.taskCount(), 2);
   QVERIFY(!map.isTaskPendingForRow(11));
   QVERIFY(!map.isTaskPendingForRow(12));
+  QVERIFY(map.isTaskPendingForRow(13));
+  QVERIFY(!map.isTaskFailedForRow(11));
+  QVERIFY(map.isTaskFailedForRow(12));
+  QVERIFY(!map.isTaskFailedForRow(13));
+
+  const auto rowTask = map.beginRowTask(12);
+  QCOMPARE(rowTask.row(), 12);
+  QCOMPARE(map.taskCount(), 2);
+  QVERIFY(!map.isTaskPendingForRow(11));
+  QVERIFY(map.isTaskPendingForRow(12));
   QVERIFY(map.isTaskPendingForRow(13));
   QVERIFY(!map.isTaskFailedForRow(11));
   QVERIFY(map.isTaskFailedForRow(12));

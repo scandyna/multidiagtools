@@ -457,6 +457,520 @@ void CachedTableModelTest::editableFetchRowSignalTest()
   fetchRowSignalTest<EditPersonTableModel>();
 }
 
+template<typename Model>
+void fetchRowThenFromBackendInsertRecordTest()
+{
+  Model model;
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 2);
+
+  populatePersonStorageByNames(model, {"A"});
+  QVERIFY(model.fetchAll());
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+
+  model.updateStoragePersonNameAt(0, "uA");
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QVERIFY(!isItemPending(model, 0, 1));
+
+  QVERIFY(model.fetchRow(0));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QVERIFY(isItemPending(model, 0, 1));
+
+  model.appendPersonByNameToModelAndStorage("B");
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QVERIFY(isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+
+  model.fetchRecordFromBackendSucceeded();
+  QCOMPARE(getModelData(model, 0, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+
+  model.updateStoragePersonNameAt(1, "uB");
+  QCOMPARE(getModelData(model, 0, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+
+  QVERIFY(model.fetchRow(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(isItemPending(model, 1, 1));
+
+  model.prependPersonByNameToModelAndStorage("Z");
+  QCOMPARE(getModelData(model, 0, 1), QVariant("Z"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("B"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(isItemPending(model, 2, 1));
+
+  model.fetchRecordFromBackendSucceeded();
+  QCOMPARE(getModelData(model, 0, 1), QVariant("Z"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("uB"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(!isItemPending(model, 2, 1));
+}
+
+void CachedTableModelTest::readOnlyFetchRowThenFromBackendInsertRecordTest()
+{
+  fetchRowThenFromBackendInsertRecordTest<ListPersonTableModel>();
+}
+
+void CachedTableModelTest::editableFetchRowThenFromBackendInsertRecordTest()
+{
+  fetchRowThenFromBackendInsertRecordTest<EditPersonTableModel>();
+}
+
+template<typename Model>
+void fetchRowThenFromBackendInsertRecordSignalTest()
+{
+  EditPersonTableModel model;
+  populatePersonStorageByNames(model, {"A"});
+  QVERIFY(model.fetchAll());
+  QVariantList arguments;
+  QModelIndex topLeft, bottomRight;
+  QVector<int> roles;
+  QSignalSpy dataChangedSpy(&model, &EditPersonTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  QSignalSpy headerDataChangedSpy(&model, &EditPersonTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+
+  /*
+   * Initial state
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| A  |
+   * --------------
+   */
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Fetch record at row 0
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| A  |
+   * --------------
+   */
+  model.updateStoragePersonNameAt(0, "uA");
+  QVERIFY(model.fetchRow(0));
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Append a record
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| A  |
+   * --------------
+   * | 2 || 2| B  |
+   * --------------
+   */
+  model.appendPersonByNameToModelAndStorage("B");
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Fetch record succeeded
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| uA |
+   * --------------
+   * | 2 || 2| B  |
+   * --------------
+   */
+  model.fetchRecordFromBackendSucceeded();
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 0);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 0);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QVERIFY(roles.contains(Qt::DisplayRole));
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Fetch record at row 1
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| uA |
+   * --------------
+   * | 2 || 2| B  |
+   * --------------
+   */
+  model.updateStoragePersonNameAt(1, "uB");
+  QVERIFY(model.fetchRow(1));
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Prepend a record
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 3| Z  |
+   * --------------
+   * | 2 || 1| uA |
+   * --------------
+   * | 3 || 2| B  |
+   * --------------
+   */
+  model.prependPersonByNameToModelAndStorage("Z");
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Fetch record succeeded
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 3| Z  |
+   * --------------
+   * | 2 || 1| uA |
+   * --------------
+   * | 3 || 2| uB |
+   * --------------
+   */
+  model.fetchRecordFromBackendSucceeded();
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 2);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 2);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QVERIFY(roles.contains(Qt::DisplayRole));
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+}
+
+void CachedTableModelTest::readOnlyFetchRowThenFromBackendInsertRecordSignalTest()
+{
+  fetchRowThenFromBackendInsertRecordSignalTest<ListPersonTableModel>();
+}
+
+void CachedTableModelTest::editableFetchRowThenFromBackendInsertRecordSignalTest()
+{
+  fetchRowThenFromBackendInsertRecordSignalTest<EditPersonTableModel>();
+}
+
+void CachedTableModelTest::fetchRowThenInsertRowTest()
+{
+  EditPersonTableModel model;
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 2);
+
+  populatePersonStorageByNames(model, {"A"});
+  QVERIFY(model.fetchAll());
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+
+  model.updateStoragePersonNameAt(0, "uA");
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QVERIFY(!isItemPending(model, 0, 1));
+
+  QVERIFY(model.fetchRow(0));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QVERIFY(isItemPending(model, 0, 1));
+
+  QVERIFY(appendRowToModel(model));
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant());
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("*"));
+  QVERIFY(isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+
+  model.fetchRecordFromBackendSucceeded();
+  QCOMPARE(getModelData(model, 0, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant());
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("*"));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+
+  QVERIFY(setModelData(model, 1, 1, "B"));
+  QVERIFY(model.submitChanges());
+  model.addRecordToBackendSucceeded();
+  QCOMPARE(getModelData(model, 0, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+
+  model.updateStoragePersonNameAt(1, "uB");
+  QCOMPARE(getModelData(model, 0, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+
+  QVERIFY(model.fetchRow(1));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(isItemPending(model, 1, 1));
+
+  QVERIFY(prependRowToModel(model));
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant());
+  QCOMPARE(getModelData(model, 1, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("B"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("*"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(isItemPending(model, 2, 1));
+
+  model.fetchRecordFromBackendSucceeded();
+  QCOMPARE(getModelData(model, 0, 1), QVariant());
+  QCOMPARE(getModelData(model, 1, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("uB"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("*"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(!isItemPending(model, 2, 1));
+
+  QVERIFY(setModelData(model, 0, 1, "Z"));
+  QVERIFY(model.submitChanges());
+  model.addRecordToBackendSucceeded();
+  QCOMPARE(getModelData(model, 0, 1), QVariant("Z"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("uA"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("uB"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(!isItemPending(model, 2, 1));
+}
+
+void CachedTableModelTest::fetchRowThenInsertRowSignalTest()
+{
+  EditPersonTableModel model;
+  populatePersonStorageByNames(model, {"A"});
+  QVERIFY(model.fetchAll());
+  QVariantList arguments;
+  QModelIndex topLeft, bottomRight;
+  QVector<int> roles;
+  QSignalSpy dataChangedSpy(&model, &EditPersonTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  QSignalSpy headerDataChangedSpy(&model, &EditPersonTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+
+  /*
+   * Initial state
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| A  |
+   * --------------
+   */
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Fetch record at row 0
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| A  |
+   * --------------
+   */
+  model.updateStoragePersonNameAt(0, "uA");
+  QVERIFY(model.fetchRow(0));
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Add to the end
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| A  |
+   * --------------
+   * | * ||  |    |
+   * --------------
+   */
+  QVERIFY(appendRowToModel(model));
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Fetch record at row 0 succeeded
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| uA |
+   * --------------
+   * | * ||  |    |
+   * --------------
+   */
+  model.fetchRecordFromBackendSucceeded();
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 0);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 0);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QVERIFY(roles.contains(Qt::DisplayRole));
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Set and store new record
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| uA |
+   * --------------
+   * | 2 || 2| B  |
+   * --------------
+   */
+  QVERIFY(setModelData(model, 1, 1, "B"));
+  dataChangedSpy.clear();
+  headerDataChangedSpy.clear();
+  QVERIFY(model.submitChanges());
+  model.addRecordToBackendSucceeded();
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 1);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 1);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QVERIFY(roles.contains(Qt::DisplayRole));
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(1)); // first
+  QCOMPARE(arguments.at(2), QVariant(1)); // last
+
+  /*
+   * Fetch record at row 1
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 || 1| uA |
+   * --------------
+   * | 2 || 2| B  |
+   * --------------
+   */
+  model.updateStoragePersonNameAt(1, "uB");
+  QVERIFY(model.fetchRow(1));
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Prepend a new row
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | * ||  |    |
+   * --------------
+   * | 2 || 1| uA |
+   * --------------
+   * | 3 || 2| B  |
+   * --------------
+   */
+  QVERIFY(prependRowToModel(model));
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Fetch record succeeded
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | * ||  |    |
+   * --------------
+   * | 2 || 1| uA |
+   * --------------
+   * | 3 || 2| uB |
+   * --------------
+   */
+  model.fetchRecordFromBackendSucceeded();
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 2);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 2);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QVERIFY(roles.contains(Qt::DisplayRole));
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+}
 
 template<typename Model>
 void fromBackendSetDataTest()
@@ -832,13 +1346,7 @@ void CachedTableModelTest::setDataThenFromBackendInsertRecordsSignalTest()
   QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
   QCOMPARE(arguments.at(1), QVariant(0));             // first
   QCOMPARE(arguments.at(2), QVariant(0));             // last
-  QCOMPARE(headerDataChangedSpy.count(), 1);
-  arguments = headerDataChangedSpy.takeFirst();
-  QCOMPARE(arguments.count(), 3);
-  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
-  // Here, the editing flag moved from row 1 to row 2
-  QCOMPARE(arguments.at(1), QVariant(1)); // first
-  QCOMPARE(arguments.at(2), QVariant(2)); // last
+  QCOMPARE(headerDataChangedSpy.count(), 0);
 }
 
 void CachedTableModelTest::setDataThenSubmitTest()
@@ -852,8 +1360,8 @@ void CachedTableModelTest::setDataThenSubmitTest()
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
   QCOMPARE(model.storageCount(), 2);
   QCOMPARE(model.storageNameForId(1), QString("A"));
   QCOMPARE(model.storageNameForId(2), QString("B"));
@@ -876,21 +1384,22 @@ void CachedTableModelTest::setDataThenSubmitTest()
   QCOMPARE(getModelData(model, 1, 1), QVariant("eB"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("e"));
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(!isItemEnabled(model, 1, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(isItemPending(model, 1, 1));
   QCOMPARE(model.storageCount(), 2);
   QCOMPARE(model.storageNameForId(1), QString("A"));
   QCOMPARE(model.storageNameForId(2), QString("B"));
   /*
    * Done
    */
+  qDebug() << "Succeeded..";
   model.updateRecordInBackendSucceeded();
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(getModelData(model, 1, 1), QVariant("eB"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
   QCOMPARE(model.storageCount(), 2);
   QCOMPARE(model.storageNameForId(1), QString("A"));
   QCOMPARE(model.storageNameForId(2), QString("eB"));
@@ -1000,8 +1509,8 @@ void CachedTableModelTest::setDataThenSubmitAndFromBackendInsertRecordsTest()
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
   QCOMPARE(model.storageCount(), 2);
   QCOMPARE(model.storageNameForId(1), QString("A"));
   QCOMPARE(model.storageNameForId(2), QString("B"));
@@ -1024,8 +1533,8 @@ void CachedTableModelTest::setDataThenSubmitAndFromBackendInsertRecordsTest()
   QCOMPARE(getModelData(model, 1, 1), QVariant("eB"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("e"));
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(!isItemEnabled(model, 1, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(isItemPending(model, 1, 1));
   QCOMPARE(model.storageCount(), 2);
   QCOMPARE(model.storageNameForId(1), QString("A"));
   QCOMPARE(model.storageNameForId(2), QString("B"));
@@ -1039,9 +1548,9 @@ void CachedTableModelTest::setDataThenSubmitAndFromBackendInsertRecordsTest()
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
   QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("e"));
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
-  QVERIFY(!isItemEnabled(model, 2, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(isItemPending(model, 2, 1));
   QCOMPARE(model.storageCount(), 2);
   QCOMPARE(model.storageNameForId(1), QString("A"));
   QCOMPARE(model.storageNameForId(2), QString("B"));
@@ -1055,9 +1564,9 @@ void CachedTableModelTest::setDataThenSubmitAndFromBackendInsertRecordsTest()
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
   QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
-  QVERIFY(isItemEnabled(model, 2, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(!isItemPending(model, 2, 1));
   QCOMPARE(model.storageCount(), 2);
   QCOMPARE(model.storageNameForId(1), QString("A"));
   QCOMPARE(model.storageNameForId(2), QString("eB"));
@@ -1222,7 +1731,7 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   QVERIFY(appendRowToModel(model));
   QCOMPARE(model.rowCount(), 1);
-  QVERIFY(isItemEnabled(model, 0, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
   QVERIFY(getModelData(model, 0, 0).isNull());
   QVERIFY(setModelData(model, 0, 1, "A"));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
@@ -1233,7 +1742,7 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   QVERIFY(model.submitChanges());
   QCOMPARE(model.rowCount(), 1);
-  QVERIFY(!isItemEnabled(model, 0, 1));
+  QVERIFY(isItemPending(model, 0, 1));
   QVERIFY(getModelData(model, 0, 0).isNull());
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("*"));
@@ -1243,7 +1752,7 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   model.addRecordToBackendSucceeded();
   QCOMPARE(model.rowCount(), 1);
-  QVERIFY(isItemEnabled(model, 0, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
   QCOMPARE(getModelData(model, 0, 0), QVariant(1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
@@ -1254,8 +1763,8 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   QVERIFY(appendRowToModel(model));
   QCOMPARE(model.rowCount(), 2);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
   QVERIFY(setModelData(model, 1, 1, "B"));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QVERIFY(getModelData(model, 1, 0).isNull());
@@ -1268,8 +1777,8 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   QVERIFY(model.submitChanges());
   QCOMPARE(model.rowCount(), 2);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(!isItemEnabled(model, 1, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(isItemPending(model, 1, 1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QVERIFY(getModelData(model, 1, 0).isNull());
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
@@ -1281,8 +1790,8 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   model.addRecordToBackendFailed();
   QCOMPARE(model.rowCount(), 2);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QVERIFY(getModelData(model, 1, 0).isNull());
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
@@ -1294,8 +1803,8 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   QVERIFY(model.submitChanges());
   QCOMPARE(model.rowCount(), 2);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(!isItemEnabled(model, 1, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(isItemPending(model, 1, 1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QVERIFY(getModelData(model, 1, 0).isNull());
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
@@ -1307,8 +1816,8 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   model.addRecordToBackendSucceeded();
   QCOMPARE(model.rowCount(), 2);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
   QCOMPARE(getModelData(model, 0, 0), QVariant(1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(getModelData(model, 1, 0), QVariant(2));
@@ -1323,9 +1832,9 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   QVERIFY(appendRowToModel(model));
   QCOMPARE(model.rowCount(), 3);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
-  QVERIFY(isItemEnabled(model, 2, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(!isItemPending(model, 2, 1));
   QVERIFY(setModelData(model, 2, 1, "C"));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
@@ -1340,9 +1849,9 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   QVERIFY(model.submitChanges());
   QCOMPARE(model.rowCount(), 3);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
-  QVERIFY(!isItemEnabled(model, 2, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(isItemPending(model, 2, 1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
   QVERIFY(getModelData(model, 2, 0).isNull());
@@ -1356,9 +1865,9 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   model.addRecordToBackendFailed();
   QCOMPARE(model.rowCount(), 3);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
-  QVERIFY(isItemEnabled(model, 2, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(!isItemPending(model, 2, 1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
   QVERIFY(getModelData(model, 2, 0).isNull());
@@ -1372,9 +1881,9 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   QVERIFY(setModelData(model, 2, 1, "C3"));
   QCOMPARE(model.rowCount(), 3);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
-  QVERIFY(isItemEnabled(model, 2, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(!isItemPending(model, 2, 1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
   QVERIFY(getModelData(model, 2, 0).isNull());
@@ -1388,9 +1897,9 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   QVERIFY(model.submitChanges());
   QCOMPARE(model.rowCount(), 3);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
-  QVERIFY(!isItemEnabled(model, 2, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(isItemPending(model, 2, 1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
   QVERIFY(getModelData(model, 2, 0).isNull());
@@ -1404,9 +1913,9 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
    */
   model.addRecordToBackendSucceeded();
   QCOMPARE(model.rowCount(), 3);
-  QVERIFY(isItemEnabled(model, 0, 1));
-  QVERIFY(isItemEnabled(model, 1, 1));
-  QVERIFY(isItemEnabled(model, 2, 1));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(!isItemPending(model, 2, 1));
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
   QCOMPARE(getModelData(model, 2, 0), QVariant(3));

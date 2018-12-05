@@ -221,7 +221,7 @@ void TableCacheOperationTest::insertRecordsTest()
   QCOMPARE(rowTransactions.at(2).transactionId(), 4);
 //   QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({0,2,3}));
 
-  QFAIL("Not complete");
+//   QFAIL("Not complete");
 
   map.insertRecords(0, 1);
   QCOMPARE(map.indexCount(), 4);
@@ -234,7 +234,17 @@ void TableCacheOperationTest::insertRecordsTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::Insert);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::Insert);
-  QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({1,3,4,0}));
+  rowTransactions = map.getRowsToAddToBackend();
+  QCOMPARE(rowTransactions.size(), 4);
+  QCOMPARE(rowTransactions.at(0).row(), 1);
+  QCOMPARE(rowTransactions.at(0).transactionId(), 5);
+  QCOMPARE(rowTransactions.at(1).row(), 3);
+  QCOMPARE(rowTransactions.at(1).transactionId(), 6);
+  QCOMPARE(rowTransactions.at(2).row(), 4);
+  QCOMPARE(rowTransactions.at(2).transactionId(), 7);
+  QCOMPARE(rowTransactions.at(3).row(), 0);
+  QCOMPARE(rowTransactions.at(3).transactionId(), 8);
+//   QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({1,3,4,0}));
 
   map.clear();
   QCOMPARE(map.indexCount(), 0);
@@ -243,7 +253,9 @@ void TableCacheOperationTest::insertRecordsTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
-  QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({}));
+  rowTransactions = map.getRowsToAddToBackend();
+  QCOMPARE(rowTransactions.size(), 0);
+//   QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({}));
 
   map.insertRecords(0, 1);
   QCOMPARE(map.indexCount(), 1);
@@ -253,7 +265,11 @@ void TableCacheOperationTest::insertRecordsTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
-  QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({0}));
+  rowTransactions = map.getRowsToAddToBackend();
+  QCOMPARE(rowTransactions.size(), 1);
+  QCOMPARE(rowTransactions.at(0).row(), 0);
+  QCOMPARE(rowTransactions.at(0).transactionId(), 1);
+//   QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({0}));
 
   map.insertRecords(0, 2);
   QCOMPARE(map.indexCount(), 3);
@@ -265,7 +281,15 @@ void TableCacheOperationTest::insertRecordsTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::Insert);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
-  QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({2,0,1}));
+  rowTransactions = map.getRowsToAddToBackend();
+  QCOMPARE(rowTransactions.size(), 3);
+  QCOMPARE(rowTransactions.at(0).row(), 2);
+  QCOMPARE(rowTransactions.at(0).transactionId(), 2);
+  QCOMPARE(rowTransactions.at(1).row(), 0);
+  QCOMPARE(rowTransactions.at(1).transactionId(), 3);
+  QCOMPARE(rowTransactions.at(2).row(), 1);
+  QCOMPARE(rowTransactions.at(2).transactionId(), 4);
+//   QCOMPARE(map.getRowsToInsertIntoStorage(), RowList({2,0,1}));
 }
 
 void TableCacheOperationTest::insertCommitChangesTest()
@@ -307,6 +331,7 @@ void TableCacheOperationTest::insertCommitChangesTest()
 
 void TableCacheOperationTest::setRecordUpdatedTest()
 {
+  TableCacheRowTransactionList rowTransactions;
   TableCacheOperationMap map;
 
   QCOMPARE(map.indexCount(), 0);
@@ -315,6 +340,8 @@ void TableCacheOperationTest::setRecordUpdatedTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
+  rowTransactions = map.getRowsToUpdateInBackend();
+  QCOMPARE(rowTransactions.size(), 0);
 
   map.setRecordUpdated(2);
   QCOMPARE(map.indexCount(), 1);
@@ -323,6 +350,10 @@ void TableCacheOperationTest::setRecordUpdatedTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::Update);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
+  rowTransactions = map.getRowsToUpdateInBackend();
+  QCOMPARE(rowTransactions.size(), 1);
+  QCOMPARE(rowTransactions.at(0).row(), 2);
+  QCOMPARE(rowTransactions.at(0).transactionId(), 1);
 
   map.removeRecords(2, 1);
   QCOMPARE(map.indexCount(), 1);
@@ -331,6 +362,10 @@ void TableCacheOperationTest::setRecordUpdatedTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::UpdateDelete);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
+  rowTransactions = map.getRowsToUpdateInBackend();
+  QCOMPARE(rowTransactions.size(), 1);
+  QCOMPARE(rowTransactions.at(0).row(), 2);
+  QCOMPARE(rowTransactions.at(0).transactionId(), 2);
 
   map.cancelRemoveRecords(2, 1);
   QCOMPARE(map.indexCount(), 1);
@@ -339,6 +374,10 @@ void TableCacheOperationTest::setRecordUpdatedTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::Update);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
+  rowTransactions = map.getRowsToUpdateInBackend();
+  QCOMPARE(rowTransactions.size(), 1);
+  QCOMPARE(rowTransactions.at(0).row(), 2);
+  QCOMPARE(rowTransactions.at(0).transactionId(), 3);
 
   map.setTransactionPendingForRow(2);
   QCOMPARE(map.indexCount(), 1);
@@ -347,6 +386,8 @@ void TableCacheOperationTest::setRecordUpdatedTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::Update);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
+  rowTransactions = map.getRowsToUpdateInBackend();
+  QCOMPARE(rowTransactions.size(), 0);
 
   map.setTransatctionDoneForRow(2);
   QCOMPARE(map.indexCount(), 0);
@@ -355,6 +396,8 @@ void TableCacheOperationTest::setRecordUpdatedTest()
   QCOMPARE(map.operationAtRow(2), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(3), TableCacheOperation::None);
   QCOMPARE(map.operationAtRow(4), TableCacheOperation::None);
+  rowTransactions = map.getRowsToUpdateInBackend();
+  QCOMPARE(rowTransactions.size(), 0);
 }
 
 void TableCacheOperationTest::createTransactionTest()
@@ -633,6 +676,32 @@ void TableCacheOperationTest::setOperationAtRowTest()
   QCOMPARE(map.indexCount(), 2);
   QCOMPARE(map.operationAtRow(0), TableCacheOperation::Update);
   QCOMPARE(map.operationAtRow(1), TableCacheOperation::Update);
+}
+
+void TableCacheOperationTest::fetchRowTest()
+{
+  TableCacheOperationMap map;
+  TableCacheRowTransaction rowTransaction;
+
+  QCOMPARE(map.indexCount(), 0);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::None);
+  QVERIFY(!map.isTransactionPendingForRow(0));
+  QVERIFY(!map.isTransactionPendingForRow(1));
+
+  rowTransaction = map.fetchRow(1);
+  QCOMPARE(rowTransaction.row(), 1);
+  QVERIFY(!rowTransaction.transaction().isNull());
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::None);
+  QVERIFY(!map.isTransactionPendingForRow(0));
+  QVERIFY(map.isTransactionPendingForRow(1));
+
+  map.setTransatctionDoneForRow(1);
+  QCOMPARE(map.operationAtRow(0), TableCacheOperation::None);
+  QCOMPARE(map.operationAtRow(1), TableCacheOperation::None);
+  QVERIFY(!map.isTransactionPendingForRow(0));
+  QVERIFY(!map.isTransactionPendingForRow(1));
 }
 
 void TableCacheOperationTest::removeOperationAtRowTest()

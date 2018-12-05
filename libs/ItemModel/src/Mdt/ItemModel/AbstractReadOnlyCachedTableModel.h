@@ -345,11 +345,52 @@ namespace Mdt{ namespace ItemModel{
      */
     void taskSucceeded(const Mdt::Container::TableCacheTask & task, const Mdt::Container::VariantRecord record);
 
+    /*! \brief Update the state for \a row
+     *
+     * This method is called from taskSucceeded()
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    virtual void taskSucceededForRow(int row)
+    {
+      Q_UNUSED(row);
+    }
+
     /*! \brief Update the state of the row corresponding to \a task
      *
      * \pre \a task must not be null
      */
     void taskFailed(const Mdt::Container::TableCacheTask & task, const Mdt::Error & error);
+
+    /*! \brief Update the state for \a row
+     *
+     * This method is called from taskFailed()
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    virtual void taskFailedForRow(int row)
+    {
+      Q_UNUSED(row);
+    }
+
+    /*! \brief Check if a task is pending for \a row
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    bool isTaskPendingForRow(int row) const noexcept
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
+
+      return mTaskMap.isTaskPendingForRow(row);
+    }
+
+    /*! \brief Begins a row insertion operation
+     *
+     * This method will call QAbstractTableModel::beginInsertRows()
+     *  then shift rows in the task map.
+     */
+    void beginInsertRows(const QModelIndex &parent, int first, int last);
 
     /*! \brief Begins a row insertion operation
      *

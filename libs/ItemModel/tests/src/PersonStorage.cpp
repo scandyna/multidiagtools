@@ -27,7 +27,7 @@ int PersonStorage::add(Person person)
   if(person.id == 0){
     person.id = nextId();
   }
-  Q_ASSERT(!hasId(person.id));
+  Q_ASSERT(!containsPersonWithId(person.id));
 
   mMap.insert(person.id, person);
 
@@ -55,7 +55,7 @@ void PersonStorage::populateByNames(const QStringList& names)
 void PersonStorage::update(const Person& person)
 {
   Q_ASSERT(person.id > 0);
-  Q_ASSERT(hasId(person.id));
+  Q_ASSERT(containsPersonWithId(person.id));
 
   mMap[person.id] = person;
 }
@@ -63,7 +63,7 @@ void PersonStorage::update(const Person& person)
 void PersonStorage::remove(int id)
 {
   Q_ASSERT(id > 0);
-  Q_ASSERT(hasId(id));
+  Q_ASSERT(containsPersonWithId(id));
 
   mMap.remove(id);
 }

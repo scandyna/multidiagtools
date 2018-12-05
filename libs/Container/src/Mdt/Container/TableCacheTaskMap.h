@@ -116,7 +116,6 @@ namespace Mdt{ namespace Container{
     /*! \brief Begin a row task
      *
      * \pre \a row must be >= 0
-     * \pre no task must allready exists for \a row
      */
     TableCacheRowTask beginRowTask(int row);
 
