@@ -104,6 +104,17 @@ class CachedTableModelTest : public QObject
 
   void insertRowsThenSetDataThenSubmitTest();
   void insertRowsThenSetDataThenSubmitSignalTest();
+
+  void readOnlyFromBackendRemoveRowsTest();
+  void editableFromBackendRemoveRowsTest();
+
+  void readOnlyFromBackendRemoveRowsSignalTest();
+  void editableFromBackendRemoveRowsSignalTest();
+
+  void readOnlyFetchRowThenFromBackendRemoveRowsTest();
+  void editableFetchRowThenFromBackendRemoveRowsTest();
+
+
 };
 
 #endif // #ifndef CACHED_TABLE_MODEL_TEST_H

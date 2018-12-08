@@ -147,6 +147,11 @@ class ListPersonTableModel : public Mdt::ItemModel::AbstractReadOnlyCachedTableM
     BaseClass::fromBackendAppendRecord(record);
   }
 
+  void fromBackendRemoveRows(int row, int count)
+  {
+    BaseClass::fromBackendRemoveRows(row, count);
+  }
+
   void fromBackendSetData(int row, int column, const QVariant & data)
   {
     BaseClass::fromBackendSetData(row, column, data);
@@ -225,6 +230,11 @@ class EditPersonTableModel : public Mdt::ItemModel::AbstractEditableCachedTableM
   void fromBackendAppendRecord(const Mdt::Container::VariantRecord & record)
   {
     BaseClass::fromBackendAppendRecord(record);
+  }
+
+  void fromBackendRemoveRows(int row, int count)
+  {
+    BaseClass::fromBackendRemoveRows(row, count);
   }
 
   void fromBackendSetData(int row, int column, const QVariant & data)

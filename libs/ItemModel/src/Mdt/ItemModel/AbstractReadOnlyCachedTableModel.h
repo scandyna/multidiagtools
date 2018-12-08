@@ -183,6 +183,14 @@ namespace Mdt{ namespace ItemModel{
      */
     void insertRecordsToCache(int row, int count, const Mdt::Container::VariantRecord & record);
 
+    /*! \brief Remove \a count rows starting from \a row from the cache of this model
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+     */
+    void fromBackendRemoveRows(int row, int count);
+
     /*! \brief Get the display role data for the horizontal header
      *
      * This method is called by headerData() if all preconditions ar satisfied.
@@ -411,6 +419,19 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a rowRange must be valid
      */
     void beginInsertRows(const Mdt::IndexRange::RowRange & rowRange);
+
+    /*! \brief Begins a row removal operation
+     *
+     * This method will call QAbstractTableModel::beginRemoveRows()
+     *  then shift rows in the task map.
+     */
+    void beginRemoveRows(const QModelIndex &parent, int first, int last);
+
+    /*! \brief Begins a row removal operation
+     *
+     * \pre \a rowRange must be valid
+     */
+    void beginRemoveRows(const Mdt::IndexRange::RowRange & rowRange);
 
     /*! \brief Set last error
      */

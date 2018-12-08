@@ -2211,6 +2211,205 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitSignalTest()
   QCOMPARE(arguments.at(2), QVariant(0)); // last
 }
 
+template<typename Model>
+void fromBackendRemoveRowsTest()
+{
+  Model model;
+  populatePersonStorageByNames(model, {"A","B","C","D"});
+  QVERIFY(model.fetchAll());
+
+  QCOMPARE(model.rowCount(), 4);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QCOMPARE(getModelData(model, 3, 1), QVariant("D"));
+
+  model.fromBackendRemoveRows(1, 2);
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("D"));
+
+  model.fromBackendRemoveRows(1, 1);
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+
+  model.fromBackendRemoveRows(0, 1);
+  QCOMPARE(model.rowCount(), 0);
+}
+
+void CachedTableModelTest::readOnlyFromBackendRemoveRowsTest()
+{
+  fromBackendRemoveRowsTest<ListPersonTableModel>();
+}
+
+void CachedTableModelTest::editableFromBackendRemoveRowsTest()
+{
+  fromBackendRemoveRowsTest<EditPersonTableModel>();
+}
+
+template<typename Model>
+void fromBackendRemoveRowsSignalTest()
+{
+  Model model;
+  populatePersonStorageByNames(model, {"A","B","C","D"});
+  QVERIFY(model.fetchAll());
+  QVariantList arguments;
+  QSignalSpy rowsAboutToBeRemovedSpy(&model, &Model::rowsAboutToBeRemoved);
+  QVERIFY(rowsAboutToBeRemovedSpy.isValid());
+  QSignalSpy rowsRemovedSpy(&model, &Model::rowsRemoved);
+  QVERIFY(rowsRemovedSpy.isValid());
+
+  /*
+   * Initial state
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * |   ||  |  A |
+   * --------------
+   * |   ||  |  B |
+   * --------------
+   * |   ||  |  C |
+   * --------------
+   * |   ||  |  D |
+   * --------------
+   */
+  QCOMPARE(model.rowCount(), 4);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+
+  /*
+   * Remove in the middle
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * |   ||  |  A |
+   * --------------
+   * |   ||  |  D |
+   * --------------
+   */
+  model.fromBackendRemoveRows(1, 2);
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 1);
+  arguments = rowsAboutToBeRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1));             // first
+  QCOMPARE(arguments.at(2), QVariant(2));             // last
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1));             // first
+  QCOMPARE(arguments.at(2), QVariant(2));             // last
+
+  /*
+   * Remove last
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * |   ||  |  A |
+   * --------------
+   */
+  model.fromBackendRemoveRows(1, 1);
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 1);
+  arguments = rowsAboutToBeRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1));             // first
+  QCOMPARE(arguments.at(2), QVariant(1));             // last
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1));             // first
+  QCOMPARE(arguments.at(2), QVariant(1));             // last
+
+  /*
+   * Remove first
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   */
+  model.fromBackendRemoveRows(0, 1);
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 1);
+  arguments = rowsAboutToBeRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0));             // first
+  QCOMPARE(arguments.at(2), QVariant(0));             // last
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(0));             // first
+  QCOMPARE(arguments.at(2), QVariant(0));             // last
+}
+
+void CachedTableModelTest::readOnlyFromBackendRemoveRowsSignalTest()
+{
+  fromBackendRemoveRowsSignalTest<ListPersonTableModel>();
+}
+
+void CachedTableModelTest::editableFromBackendRemoveRowsSignalTest()
+{
+  fromBackendRemoveRowsSignalTest<EditPersonTableModel>();
+}
+
+template<typename Model>
+void fetchRowThenFromBackendRemoveRowsTest()
+{
+  Model model;
+  populatePersonStorageByNames(model, {"A","B","C"});
+  QVERIFY(model.fetchAll());
+
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QVERIFY(!isItemPending(model, 2, 1));
+
+  model.updateStoragePersonNameAt(1, "uB");
+  QVERIFY(model.fetchRow(1));
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(isItemPending(model, 1, 1));
+  QVERIFY(!isItemPending(model, 2, 1));
+
+  model.fromBackendRemoveRows(2, 1);
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(isItemPending(model, 1, 1));
+
+  model.fromBackendRemoveRows(0, 1);
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("B"));
+  QVERIFY(isItemPending(model, 0, 1));
+
+  model.fetchRecordFromBackendSucceeded();
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("uB"));
+  QVERIFY(!isItemPending(model, 0, 1));
+}
+
+void CachedTableModelTest::readOnlyFetchRowThenFromBackendRemoveRowsTest()
+{
+  fetchRowThenFromBackendRemoveRowsTest<ListPersonTableModel>();
+}
+
+void CachedTableModelTest::editableFetchRowThenFromBackendRemoveRowsTest()
+{
+  fetchRowThenFromBackendRemoveRowsTest<EditPersonTableModel>();
+}
+
 
 /*
  * Main
