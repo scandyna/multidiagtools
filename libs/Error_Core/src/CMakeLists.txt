@@ -13,14 +13,13 @@ set(SOURCE_FILES
     Mdt/ErrorLogger/FileBackend.cpp
     Mdt/ErrorLogger/FormatEngine.cpp
     Mdt/ErrorLogger/FileBackendFormatEngine.cpp
-    Mdt/Assert.cpp
 )
 
 mdt_add_library(
   NAME Error_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Qt5::Core Threads::Threads
+  LINK_DEPENDENCIES Assert Qt5::Core Threads::Threads
 )
 target_compile_definitions(Error_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 
