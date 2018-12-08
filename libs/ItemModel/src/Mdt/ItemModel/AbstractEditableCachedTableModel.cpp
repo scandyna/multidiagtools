@@ -31,10 +31,6 @@ using Mdt::Container::TableCacheRowTask;
 using Mdt::Container::TableCacheRowTaskList;
 using Mdt::Container::VariantRecord;
 
-using Mdt::Container::TableCacheTransaction;
-using Mdt::Container::TableCacheRowTransaction;
-using Mdt::Container::TableCacheRowTransactionList;
-
 namespace Mdt{ namespace ItemModel{
 
 AbstractEditableCachedTableModel::AbstractEditableCachedTableModel(QObject *parent)
@@ -51,9 +47,6 @@ Qt::ItemFlags AbstractEditableCachedTableModel::flags(const QModelIndex& index) 
   if( isTaskPendingForRow(index.row()) ){
     return Qt::NoItemFlags;
   }
-//   if(mOperationMap.isTransactionPendingForRow(index.row())){
-//     return Qt::NoItemFlags;
-//   }
   return BaseClass::flags(index) | Qt::ItemIsEditable;
 }
 
@@ -119,24 +112,6 @@ bool AbstractEditableCachedTableModel::submitChanges()
   return true;
 }
 
-// bool AbstractEditableCachedTableModel::fetchRow(int row)
-// {
-//   Q_ASSERT(row >= 0);
-//   Q_ASSERT(row < rowCount());
-// 
-//   
-// }
-
-// void AbstractEditableCachedTableModel::shiftRows(int row, int count)
-// {
-//   Q_ASSERT(row >= 0);
-//   Q_ASSERT(row < rowCount());
-//   Q_ASSERT(count != 0);
-// 
-//   mOperationMap.shiftRowsInMap(row, count);
-//   BaseClass::shiftRows(row, count);
-// }
-
 void AbstractEditableCachedTableModel::fromBackendInsertRecords(int row, int count, const Mdt::Container::VariantRecord & record)
 {
   Q_ASSERT(row >= 0);
@@ -164,7 +139,7 @@ QVariant AbstractEditableCachedTableModel::verticalHeaderDisplayRoleData(int row
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < rowCount());
 
-  if(mOperationMap.isTransactionFailedForRow(row)){
+  if(isTaskFailedForRow(row)){
     return QLatin1String("!");
   }
 
@@ -184,54 +159,13 @@ QVariant AbstractEditableCachedTableModel::verticalHeaderDisplayRoleData(int row
   return BaseClass::verticalHeaderDisplayRoleData(row);
 }
 
-void AbstractEditableCachedTableModel::transactionSucceeded(const TableCacheTransaction & transaction, const VariantRecord record)
-{
-  Q_ASSERT(!transaction.isNull());
-  Q_ASSERT(record.columnCount() == columnCount());
-
-  const int row = mOperationMap.getRowForTransaction(transaction);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < rowCount());
-  mOperationMap.setTransatctionDoneForRow(row);
-  fromBackendSetRecord(row, record);
-
-  emit headerDataChanged(Qt::Vertical, row, row);
-}
-
-void AbstractEditableCachedTableModel::transactionFailed(const TableCacheTransaction & transaction, const Mdt::Error & error)
-{
-  Q_ASSERT(!transaction.isNull());
-
-  const int row = mOperationMap.getRowForTransaction(transaction);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < rowCount());
-  mOperationMap.setTransatctionFailedForRow(row);
-
-  emit headerDataChanged(Qt::Vertical, row, row);
-
-  setLastError(error);
-}
-
 void AbstractEditableCachedTableModel::taskSucceededForRow(int row)
 {
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < rowCount());
 
-  mOperationMap.setTransatctionDoneForRow(row);
+  mOperationMap.removeOperationAtRow(row);
 }
-
-void AbstractEditableCachedTableModel::taskFailedForRow(int row)
-{
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < rowCount());
-
-  mOperationMap.setTransatctionFailedForRow(row);
-}
-
-// bool AbstractEditableCachedTableModel::fetchRecordFromBackend(const Mdt::Container::TableCacheRowTransaction &)
-// {
-//   return false;
-// }
 
 bool AbstractEditableCachedTableModel::addRecordsToBackend(const TableCacheRowTaskList & rowTasks)
 {
@@ -253,15 +187,6 @@ bool AbstractEditableCachedTableModel::updateRecordsInBackend(const TableCacheRo
   return true;
 }
 
-// bool AbstractEditableCachedTableModel::addNewRecordsToBackend()
-// {
-//   const TableCacheRowTransactionList rowTransactions = mOperationMap.getRowsToAddToBackend();
-// 
-//   mOperationMap.setTransactionsPending(rowTransactions);
-// 
-//   return addRecordsToBackend(rowTransactions);
-// }
-
 bool AbstractEditableCachedTableModel::addNewRecordsToBackend()
 {
   const RowList rows = mOperationMap.getRowsToInsertIntoStorage();
@@ -269,15 +194,6 @@ bool AbstractEditableCachedTableModel::addNewRecordsToBackend()
 
   return addRecordsToBackend(rowTasks);
 }
-
-// bool AbstractEditableCachedTableModel::updateModifiedRowsInBackend()
-// {
-//   const TableCacheRowTransactionList rowTransactions = mOperationMap.getRowsToUpdateInBackend();
-// 
-//   mOperationMap.setTransactionsPending(rowTransactions);
-// 
-//   return updateRecordsInBackend(rowTransactions);
-// }
 
 bool AbstractEditableCachedTableModel::updateModifiedRowsInBackend()
 {

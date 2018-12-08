@@ -23,9 +23,6 @@
 
 #include "AbstractReadOnlyCachedTableModel.h"
 #include "Mdt/Container/TableCacheOperation.h"
-#include "Mdt/Container/TableCacheTransaction.h"
-#include "Mdt/Container/TableCacheRowTransaction.h"
-#include "Mdt/Container/TableCacheRowTransactionList.h"
 #include "Mdt/Container/TableCacheOperationMap.h"
 
 #include "Mdt/Error.h"
@@ -156,30 +153,11 @@ namespace Mdt{ namespace ItemModel{
      */
 //     virtual bool addRecordToBackend(int row) = 0;
 
-    /*! \brief Update the state of the row corresponding to \a transaction
-     *
-     * \pre \a transaction must not be null
-     * \pre \a rocord must have columnCount() columns
-     */
-    void transactionSucceeded(const Mdt::Container::TableCacheTransaction & transaction, const Mdt::Container::VariantRecord record);
-
-    /*! \brief Update the state of the row corresponding to \a transaction
-     *
-     * \pre \a transaction must not be null
-     */
-    void transactionFailed(const Mdt::Container::TableCacheTransaction & transaction, const Mdt::Error & error);
-
     /*! \brief Update the state for \a row
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      */
     void taskSucceededForRow(int row) override;
-
-    /*! \brief Update the state for \a row
-     *
-     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
-     */
-    void taskFailedForRow(int row) override;
 
     /*! \brief Add the record at row to the backend
      *

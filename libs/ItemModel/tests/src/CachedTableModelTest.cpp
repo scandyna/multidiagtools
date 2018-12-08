@@ -557,8 +557,6 @@ void fetchRowThenFromBackendInsertRecordSignalTest()
   QVector<int> roles;
   QSignalSpy dataChangedSpy(&model, &EditPersonTableModel::dataChanged);
   QVERIFY(dataChangedSpy.isValid());
-  QSignalSpy headerDataChangedSpy(&model, &EditPersonTableModel::headerDataChanged);
-  QVERIFY(headerDataChangedSpy.isValid());
 
   /*
    * Initial state
@@ -570,7 +568,6 @@ void fetchRowThenFromBackendInsertRecordSignalTest()
    */
   QCOMPARE(model.rowCount(), 1);
   QCOMPARE(dataChangedSpy.count(), 0);
-  QCOMPARE(headerDataChangedSpy.count(), 0);
 
   /*
    * Fetch record at row 0
@@ -584,7 +581,6 @@ void fetchRowThenFromBackendInsertRecordSignalTest()
   QVERIFY(model.fetchRow(0));
   QCOMPARE(model.rowCount(), 1);
   QCOMPARE(dataChangedSpy.count(), 0);
-  QCOMPARE(headerDataChangedSpy.count(), 0);
 
   /*
    * Append a record
@@ -599,7 +595,6 @@ void fetchRowThenFromBackendInsertRecordSignalTest()
   model.appendPersonByNameToModelAndStorage("B");
   QCOMPARE(model.rowCount(), 2);
   QCOMPARE(dataChangedSpy.count(), 0);
-  QCOMPARE(headerDataChangedSpy.count(), 0);
 
   /*
    * Fetch record succeeded
@@ -624,7 +619,6 @@ void fetchRowThenFromBackendInsertRecordSignalTest()
   QCOMPARE(bottomRight.column(), 1);
   roles = arguments.at(2).value< QVector<int> >();
   QVERIFY(roles.contains(Qt::DisplayRole));
-  QCOMPARE(headerDataChangedSpy.count(), 0);
 
   /*
    * Fetch record at row 1
@@ -640,7 +634,6 @@ void fetchRowThenFromBackendInsertRecordSignalTest()
   QVERIFY(model.fetchRow(1));
   QCOMPARE(model.rowCount(), 2);
   QCOMPARE(dataChangedSpy.count(), 0);
-  QCOMPARE(headerDataChangedSpy.count(), 0);
 
   /*
    * Prepend a record
@@ -657,7 +650,6 @@ void fetchRowThenFromBackendInsertRecordSignalTest()
   model.prependPersonByNameToModelAndStorage("Z");
   QCOMPARE(model.rowCount(), 3);
   QCOMPARE(dataChangedSpy.count(), 0);
-  QCOMPARE(headerDataChangedSpy.count(), 0);
 
   /*
    * Fetch record succeeded
@@ -684,7 +676,6 @@ void fetchRowThenFromBackendInsertRecordSignalTest()
   QCOMPARE(bottomRight.column(), 1);
   roles = arguments.at(2).value< QVector<int> >();
   QVERIFY(roles.contains(Qt::DisplayRole));
-  QCOMPARE(headerDataChangedSpy.count(), 0);
 }
 
 void CachedTableModelTest::readOnlyFetchRowThenFromBackendInsertRecordSignalTest()
@@ -876,7 +867,6 @@ void CachedTableModelTest::fetchRowThenInsertRowSignalTest()
   QCOMPARE(bottomRight.column(), 1);
   roles = arguments.at(2).value< QVector<int> >();
   QVERIFY(roles.contains(Qt::DisplayRole));
-  QCOMPARE(headerDataChangedSpy.count(), 0);
 
   /*
    * Set and store new record
@@ -969,7 +959,6 @@ void CachedTableModelTest::fetchRowThenInsertRowSignalTest()
   QCOMPARE(bottomRight.column(), 1);
   roles = arguments.at(2).value< QVector<int> >();
   QVERIFY(roles.contains(Qt::DisplayRole));
-  QCOMPARE(headerDataChangedSpy.count(), 0);
 }
 
 template<typename Model>
@@ -1392,7 +1381,6 @@ void CachedTableModelTest::setDataThenSubmitTest()
   /*
    * Done
    */
-  qDebug() << "Succeeded..";
   model.updateRecordInBackendSucceeded();
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(getModelData(model, 1, 1), QVariant("eB"));
@@ -1461,6 +1449,209 @@ void CachedTableModelTest::setDataThenSubmitSignalTest()
    * |   || 2|  B |
    * --------------
    * | e || 3| eC |
+   * --------------
+   */
+  QVERIFY(model.submitChanges());
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  /*
+   * Done
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * |   || 1|  A |
+   * --------------
+   * |   || 2|  B |
+   * --------------
+   * |   || 3| eC |
+   * --------------
+   */
+  model.updateRecordInBackendSucceeded();
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 2);
+  QCOMPARE(topLeft.column(), 0);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 2);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QVERIFY(roles.contains(Qt::DisplayRole));
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(2)); // first
+  QCOMPARE(arguments.at(2), QVariant(2)); // last
+}
+
+void CachedTableModelTest::setDataThenSubmitFailTest()
+{
+  EditPersonTableModel model;
+  populatePersonStorage(model, {{1,"A"},{2,"B"}});
+  QVERIFY(model.fetchAll());
+
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QCOMPARE(model.storageCount(), 2);
+  QCOMPARE(model.storageNameForId(1), QString("A"));
+  QCOMPARE(model.storageNameForId(2), QString("B"));
+  /*
+   * Edit
+   */
+  QVERIFY(setModelData(model, 1, 1, "eB"));
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("eB"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("e"));
+  QCOMPARE(model.storageCount(), 2);
+  QCOMPARE(model.storageNameForId(1), QString("A"));
+  QCOMPARE(model.storageNameForId(2), QString("B"));
+  /*
+   * Submit
+   */
+  QVERIFY(model.submitChanges());
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("eB"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("e"));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(isItemPending(model, 1, 1));
+  QCOMPARE(model.storageCount(), 2);
+  QCOMPARE(model.storageNameForId(1), QString("A"));
+  QCOMPARE(model.storageNameForId(2), QString("B"));
+  /*
+   * Failed
+   */
+  model.updateRecordInBackendFailed();
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("eB"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("!"));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  /*
+   * Submit again
+   */
+  QVERIFY(model.submitChanges());
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("eB"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("!"));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(isItemPending(model, 1, 1));
+  /*
+   * Done
+   */
+  model.updateRecordInBackendSucceeded();
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("eB"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QVERIFY(!isItemPending(model, 0, 1));
+  QVERIFY(!isItemPending(model, 1, 1));
+  QCOMPARE(model.storageCount(), 2);
+  QCOMPARE(model.storageNameForId(1), QString("A"));
+  QCOMPARE(model.storageNameForId(2), QString("eB"));
+}
+
+void CachedTableModelTest::setDataThenSubmitFailSignalTest()
+{
+  EditPersonTableModel model;
+  populatePersonStorageByNames(model, {"A","B","C"});
+  QVERIFY(model.fetchAll());
+  QVariantList arguments;
+  QModelIndex topLeft, bottomRight;
+  QVector<int> roles;
+  QSignalSpy dataChangedSpy(&model, &EditPersonTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  QSignalSpy headerDataChangedSpy(&model, &EditPersonTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  QCOMPARE(model.rowCount(), 3);
+  /*
+   * Edit
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * |   || 1|  A |
+   * --------------
+   * |   || 2|  B |
+   * --------------
+   * | e || 3| eC |
+   * --------------
+   */
+  QVERIFY(setModelData(model, 2, 1, "eC"));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  topLeft = arguments.at(0).toModelIndex();
+  QCOMPARE(topLeft.row(), 2);
+  QCOMPARE(topLeft.column(), 1);
+  bottomRight = arguments.at(1).toModelIndex();
+  QCOMPARE(bottomRight.row(), 2);
+  QCOMPARE(bottomRight.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QVERIFY(roles.contains(Qt::DisplayRole));
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(2)); // first
+  QCOMPARE(arguments.at(2), QVariant(2)); // last
+  /*
+   * Submit
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * |   || 1|  A |
+   * --------------
+   * |   || 2|  B |
+   * --------------
+   * | e || 3| eC |
+   * --------------
+   */
+  QVERIFY(model.submitChanges());
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+  /*
+   * Failed
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * |   || 1|  A |
+   * --------------
+   * |   || 2|  B |
+   * --------------
+   * | ! || 3| eC |
+   * --------------
+   */
+  model.updateRecordInBackendFailed();
+  QCOMPARE(dataChangedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(2)); // first
+  QCOMPARE(arguments.at(2), QVariant(2)); // last
+  /*
+   * Submit again
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * |   || 1|  A |
+   * --------------
+   * |   || 2|  B |
+   * --------------
+   * | ! || 3| eC |
    * --------------
    */
   QVERIFY(model.submitChanges());
@@ -1809,7 +2000,7 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
   QVERIFY(getModelData(model, 1, 0).isNull());
   QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
-  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("*"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("!"));
   QCOMPARE(model.storageCount(), 1);
   /*
    * Submit done
@@ -1906,7 +2097,7 @@ void CachedTableModelTest::insertRowsThenSetDataThenSubmitTest()
   QCOMPARE(getModelData(model, 2, 1), QVariant("C3"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
-  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("*"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("!"));
   QCOMPARE(model.storageCount(), 2);
   /*
    * Submit done

@@ -32,7 +32,6 @@ void TableCacheOperationMap::clear()
 {
   mMap.clear();
   mCommittedRows.clear();
-  mLastTransactionId = 0;
 }
 
 void TableCacheOperationMap::insertRecords(int pos, int count)
@@ -135,128 +134,6 @@ TableCacheOperation TableCacheOperationMap::operationAtRow(int row) const
   Q_ASSERT(row >= 0);
 
   return findRow(row).operation();
-}
-
-TableCacheRowTransaction TableCacheOperationMap::fetchRow(int row)
-{
-  Q_ASSERT(row >= 0);
-
-  
-}
-
-TableCacheTransaction TableCacheOperationMap::createTransaction(int row)
-{
-  Q_ASSERT(row >= 0);
-
-  auto it = findRowIterator(row);
-  if(it == mMap.end()){
-    return TableCacheTransaction();
-  }
-  const int transactionId = newTransactionId();
-  it->setTransactionId(transactionId);
-
-  return TableCacheTransaction(transactionId);
-}
-
-int TableCacheOperationMap::getRowForTransaction(const TableCacheTransaction & transaction) const
-{
-  Q_ASSERT(!transaction.isNull());
-
-  const auto pred = [transaction](const TableCacheOperationIndex & index){
-    return (index.transactionId() == transaction.id());
-  };
-  const auto it = std::find_if( mMap.cbegin(), mMap.cend(), pred );
-  if(it == mMap.cend()){
-    return -1;
-  }
-  if(!it->hasTransactionId()){
-    return -1;
-  }
-
-  return it->row();
-}
-
-// bool TableCacheOperationMap::hasRowTransaction(int row) const
-// {
-//   Q_ASSERT(row >= 0);
-// 
-//   return findRow(row).hasTransactionId();
-// }
-
-void TableCacheOperationMap::setTransactionPendingForRow(int row)
-{
-  Q_ASSERT(row >= 0);
-
-  auto it = findRowIterator(row);
-  Q_ASSERT(it != mMap.end());
-
-  it->setTransactionPending();
-//   it->setOperation( pendingOperationFromOperation(it->operation()) );
-}
-
-void TableCacheOperationMap::setTransactionsPending(const TableCacheRowTransactionList & rowTransactions)
-{
-  for(const auto & rowTransaction : rowTransactions){
-    setTransactionPendingForRow(rowTransaction.row());
-  }
-}
-
-bool TableCacheOperationMap::isTransactionPendingForRow(int row) const
-{
-  Q_ASSERT(row >= 0);
-
-  const auto index = findRow(row);
-
-  if(index.isNull()){
-    return false;
-  }
-
-  return index.isTransactionPending();
-//   return isPendingTransactionOperation(index.operation());
-}
-
-void TableCacheOperationMap::setTransatctionDoneForRow(int row)
-{
-  Q_ASSERT(row >= 0);
-
-  removeOperationAtRow(row);
-  if(isEmpty()){
-    mLastTransactionId = 0;
-  }
-}
-
-void TableCacheOperationMap::setTransatctionFailedForRow(int row)
-{
-  Q_ASSERT(row >= 0);
-
-  auto it = findRowIterator(row);
-  Q_ASSERT(it != mMap.end());
-
-  it->setTransactionFailed();
-//   it->setOperation( failedOperationFromOperation(it->operation()) );
-}
-
-bool TableCacheOperationMap::isTransactionFailedForRow(int row) const
-{
-  Q_ASSERT(row >= 0);
-
-  const auto index = findRow(row);
-
-  if(index.isNull()){
-    return false;
-  }
-
-  return index.isTransactionFailed();
-}
-
-TableCacheRowTransactionList TableCacheOperationMap::getRowsToAddToBackend()
-{
-  return getRowTransactionsForOperation(TableCacheOperation::Insert);
-}
-
-TableCacheRowTransactionList TableCacheOperationMap::getRowsToUpdateInBackend()
-{
-  return getRowTransactionsForOperation(TableCacheOperation::Update, TableCacheOperation::UpdateDelete);
 }
 
 RowList TableCacheOperationMap::getRowsToInsertIntoStorage() const
@@ -377,51 +254,6 @@ TableCacheOperation TableCacheOperationMap::operationFromExisting(TableCacheOper
       break;
   }
 }
-
-// TableCacheOperation TableCacheOperationMap::pendingOperationFromOperation(TableCacheOperation operation) noexcept
-// {
-//   switch(operation){
-//     case TableCacheOperation::Insert:
-//     case TableCacheOperation::InsertFailed:
-//       return TableCacheOperation::InsertPending;
-//     case TableCacheOperation::Update:
-//     case TableCacheOperation::UpdateFailed:
-//       return TableCacheOperation::UpdatePending;
-//     default:
-//       break;
-//   }
-// 
-//   return operation;
-// }
-// 
-// TableCacheOperation TableCacheOperationMap::failedOperationFromOperation(TableCacheOperation operation) noexcept
-// {
-//   Q_ASSERT(isPendingTransactionOperation(operation));
-// 
-//   switch(operation){
-//     case TableCacheOperation::InsertPending:
-//       return TableCacheOperation::InsertFailed;
-//     case TableCacheOperation::UpdatePending:
-//       return TableCacheOperation::UpdateFailed;
-//     default:
-//       break;
-//   }
-// 
-//   return operation;
-// }
-// 
-// bool TableCacheOperationMap::isPendingTransactionOperation(TableCacheOperation operation) noexcept
-// {
-//   switch(operation){
-//     case TableCacheOperation::InsertPending:
-//     case TableCacheOperation::UpdatePending:
-//       return true;
-//     default:
-//       break;
-//   }
-// 
-//   return false;
-// }
 
 TableCacheOperationIndex TableCacheOperationMap::findIndex(int row, int column) const
 {
@@ -552,68 +384,6 @@ RowList TableCacheOperationMap::getRowsForOperation(TableCacheOperation operatio
   }
 
   return rowList;
-}
-
-int TableCacheOperationMap::newTransactionId()
-{
-  ++mLastTransactionId;
-  return mLastTransactionId;
-}
-
-TableCacheRowTransaction TableCacheOperationMap::createRowTransaction(TableCacheOperationIndex & index)
-{
-  const TableCacheTransaction transaction( newTransactionId() );
-
-  index.setTransactionId(transaction.id());
-
-  return TableCacheRowTransaction(index.row(), transaction);
-}
-
-bool hasToCreateRowTransaction(const TableCacheOperationIndex & index)
-{
-  return !index.isTransactionPending();
-}
-
-bool hasToCreateRowTransaction(const TableCacheOperationIndex & index, TableCacheOperation operation)
-{
-  if(index.operation() == operation){
-    return hasToCreateRowTransaction(index);
-  }
-  return false;
-}
-
-bool hasToCreateRowTransaction(const TableCacheOperationIndex & index, TableCacheOperation operation1, TableCacheOperation operation2)
-{
-  if( (index.operation() == operation1) || (index.operation() == operation2) ){
-    return hasToCreateRowTransaction(index);
-  }
-  return false;
-}
-
-TableCacheRowTransactionList TableCacheOperationMap::getRowTransactionsForOperation(TableCacheOperation operation)
-{
-  TableCacheRowTransactionList rowTransactions;
-
-  for(auto & index : mMap){
-    if(hasToCreateRowTransaction(index, operation)){
-      rowTransactions.push_back( createRowTransaction(index) );
-    }
-  }
-
-  return rowTransactions;
-}
-
-TableCacheRowTransactionList TableCacheOperationMap::getRowTransactionsForOperation(TableCacheOperation operation1, TableCacheOperation operation2)
-{
-  TableCacheRowTransactionList rowTransactions;
-
-  for(auto & index : mMap){
-    if(hasToCreateRowTransaction(index, operation1, operation2)){
-      rowTransactions.push_back( createRowTransaction(index) );
-    }
-  }
-
-  return rowTransactions;
 }
 
 }} // namespace Mdt{ namespace Container{

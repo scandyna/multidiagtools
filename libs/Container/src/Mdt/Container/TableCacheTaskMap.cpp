@@ -34,13 +34,15 @@ TableCacheRowTask TableCacheTaskMap::beginRowTask(int row)
   Q_ASSERT(row >= 0);
 //   Q_ASSERT(!mapContainsRow(row));
 
-  const auto it = findConstIteratorForRow(row);
-  if(it != mMap.cend()){
+  auto it = findIteratorForRow(row);
+  if(it != mMap.end()){
+    it->setPending();
     return TableCacheRowTask( row, TableCacheTask(it->taskId()) );
   }
 
   const TableCacheRowTask rowTask( row, createTask() );
-  mMap.emplace_back(row, rowTask.task(), TableCacheTaskState::Pending);
+  mMap.emplace_back(row, rowTask.task(), true, false);
+//   mMap.emplace_back(row, rowTask.task(), TableCacheTaskState::Pending);
 
   return rowTask;
 }

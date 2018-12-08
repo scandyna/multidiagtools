@@ -53,7 +53,8 @@ void TableCacheTaskTest::rowTaskTest()
 
 void TableCacheTaskTest::mapItemTest()
 {
-  TableCacheTaskMapItem i1(2, TableCacheTask(1), TableCacheTaskState::None);
+//   TableCacheTaskMapItem i1(2, TableCacheTask(1), TableCacheTaskState::None);
+  TableCacheTaskMapItem i1(2, TableCacheTask(1), false, false);
   QCOMPARE(i1.row(), 2);
   QCOMPARE(i1.taskId(), 1);
   QVERIFY(!i1.isPending());
@@ -65,17 +66,25 @@ void TableCacheTaskTest::mapItemTest()
   i1.shiftRow(-1);
   QCOMPARE(i1.row(), 3);
 
-  TableCacheTaskMapItem i2(5, TableCacheTask(2), TableCacheTaskState::Pending);
+//   TableCacheTaskMapItem i2(5, TableCacheTask(2), TableCacheTaskState::Pending);
+  TableCacheTaskMapItem i2(5, TableCacheTask(2), true, false);
   QCOMPARE(i2.row(), 5);
   QCOMPARE(i2.taskId(), 2);
   QVERIFY(i2.isPending());
   QVERIFY(!i2.isFailed());
 
-  TableCacheTaskMapItem i3(7, TableCacheTask(3), TableCacheTaskState::Failed);
+//   TableCacheTaskMapItem i3(7, TableCacheTask(3), TableCacheTaskState::Failed);
+  TableCacheTaskMapItem i3(7, TableCacheTask(3), false, true);
   QCOMPARE(i3.row(), 7);
   QCOMPARE(i3.taskId(), 3);
   QVERIFY(!i3.isPending());
   QVERIFY(i3.isFailed());
+
+  TableCacheTaskMapItem i4(9, TableCacheTask(4), true, true);
+  QCOMPARE(i4.row(), 9);
+  QCOMPARE(i4.taskId(), 4);
+  QVERIFY(i4.isPending());
+  QVERIFY(i4.isFailed());
 }
 
 void TableCacheTaskTest::beginRowTaskTest()

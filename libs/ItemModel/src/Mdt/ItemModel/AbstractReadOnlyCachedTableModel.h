@@ -385,6 +385,18 @@ namespace Mdt{ namespace ItemModel{
       return mTaskMap.isTaskPendingForRow(row);
     }
 
+    /*! \brief Check if a task is failed for \a row
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    bool isTaskFailedForRow(int row) const noexcept
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < rowCount());
+
+      return mTaskMap.isTaskFailedForRow(row);
+    }
+
     /*! \brief Begins a row insertion operation
      *
      * This method will call QAbstractTableModel::beginInsertRows()

@@ -7,9 +7,6 @@ set(SOURCE_FILES
   Mdt/Container/RowColumnListBase.cpp
   Mdt/Container/ColumnList.cpp
   Mdt/Container/RowList.cpp
-  Mdt/Container/TableCacheTransaction.cpp
-  Mdt/Container/TableCacheRowTransaction.cpp
-  Mdt/Container/TableCacheRowTransactionList.cpp
   Mdt/Container/TableCacheOperationIndex.cpp
   Mdt/Container/TableCacheOperationMap.cpp
   Mdt/Container/TableCacheTask.cpp

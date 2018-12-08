@@ -23,12 +23,7 @@
 
 #include "TableCacheOperation.h"
 #include "TableCacheOperationIndex.h"
-#include "TableCacheTransaction.h"
-#include "TableCacheRowTransaction.h"
-#include "TableCacheRowTransactionList.h"
-
 #include "RowList.h"
-
 #include "Mdt/IndexRange/RowRange.h"
 #include "MdtContainerExport.h"
 #include <QtGlobal>
@@ -170,101 +165,16 @@ namespace Mdt{ namespace Container{
      */
     TableCacheOperation operationAtRow(int row) const;
 
-    /*! \brief Get a row transaction to fetch a record from backend
-     *
-     * If no operation allready exists for \a row, a index will be created
-     *  with a new transaction.
-     *
-     * If a operation allready exists for \a row, ..........
-     *
-     * \pre \a row must be >= 0
-     */
-    TableCacheRowTransaction fetchRow(int row);
-
-    /*! \brief Create a new transaction for \a row
-     *
-     * Returns a valid transaction if a operation exists for \a row,
-     *  otherwise a null transaction.
-     *
-     * \pre \a row must be >= 0
-     */
-    TableCacheTransaction createTransaction(int row);
-
-    /*! \brief Get the row that actually correspond to \a transaction
-     *
-     * The returned row can be different than when the transaction was created,
-     *  for example if some rows have been shifted in between
-     *  (this is also why this transaction concept exists).
-     *
-     * Returns a row in a valid range it exists for \a transaction ,
-     *  otherwise -1
-     *
-     * \pre \a transaction must not be null
-     */
-    int getRowForTransaction(const TableCacheTransaction & transaction) const;
-
-//     /*! \brief Check if a transaction exists at \a row
-//      *
-//      * \pre \a row must be >= 0
-//      */
-//     [[deprecated]]
-//     bool hasRowTransaction(int row) const;
-
-    /*! \brief Set transaction pending for \a row
-     *
-     * \pre \a row must be >= 0
-     * \pre there must exist a operation for \a row
-     */
-    void setTransactionPendingForRow(int row);
-
-    /*! \brief Set transactions pending for \a rowTransactions
-     *
-     * \pre each row in \a rowTransactions must be >= 0
-     * \pre there must exist a operation for each row in \a rowTransactions
-     */
-    void setTransactionsPending(const TableCacheRowTransactionList & rowTransactions);
-
-    /*! \brief Check if there is a pending transaction for \a row
-     *
-     * \pre \a row must be >= 0
-     */
-    bool isTransactionPendingForRow(int row) const;
-
-    /*! \brief This is similar to removeOperationAtRow()
-     *
-     * \pre \a row must be >= 0
-     */
-    void setTransatctionDoneForRow(int row);
-
-    /*! \brief Set transaction failed for \a row
-     *
-     * \pre \a row must be >= 0
-     * \pre there must exist a operation for \a row
-     */
-    void setTransatctionFailedForRow(int row);
-
-    /*! \brief Check if there is a failed transaction for \a row
-     *
-     * \pre \a row must be >= 0
-     */
-    bool isTransactionFailedForRow(int row) const;
-
-    /*! \brief Get a list of rows that have to be added to the backend
-     */
-    TableCacheRowTransactionList getRowsToAddToBackend();
-
-    /*! \brief Get a list of rows that have to be updated in the backend
-     */
-    TableCacheRowTransactionList getRowsToUpdateInBackend();
-
     /*! \brief Get a list of rows that have to be inserted to the storage
+     *
+     * \todo Rename getRowsToAddToBackend()
      */
-    [[deprecated]]
     RowList getRowsToInsertIntoStorage() const;
 
     /*! \brief Get a list of rows that have to be updated in the storage
+     *
+     * \todo Rename getRowsToUpdateInBackend()
      */
-    [[deprecated]]
     RowList getRowsToUpdateInStorage() const;
 
     /*! \brief Get a list of rows for records that have been updated in the cache
@@ -357,20 +267,6 @@ namespace Mdt{ namespace Container{
      */
     static TableCacheOperation operationFromExisting(TableCacheOperation existingOperation, TableCacheOperation operation) noexcept;
 
-//     /*! \brief Get the pending operation corresponding to a operation
-//      */
-//     static TableCacheOperation pendingOperationFromOperation(TableCacheOperation operation) noexcept;
-
-//     /*! \brief Get the failed operation corresponding to a operation
-//      *
-//      * \pre \a operation must be a pending operations
-//      */
-//     static TableCacheOperation failedOperationFromOperation(TableCacheOperation operation) noexcept;
-
-//     /*! \brief Check if \a operation is a pending transaction operation
-//      */
-//     static bool isPendingTransactionOperation(TableCacheOperation operation) noexcept;
-
    private:
 
     TableCacheOperationIndex findIndex(int row, int column) const;
@@ -385,12 +281,7 @@ namespace Mdt{ namespace Container{
     void setCommittedRows();
     RowList getRowsForOperation(TableCacheOperation operation) const;
     RowList getRowsForOperation(TableCacheOperation operation1, TableCacheOperation operation2) const;
-    int newTransactionId();
-    TableCacheRowTransaction createRowTransaction(TableCacheOperationIndex & index);
-    TableCacheRowTransactionList getRowTransactionsForOperation(TableCacheOperation operation);
-    TableCacheRowTransactionList getRowTransactionsForOperation(TableCacheOperation operation1, TableCacheOperation operation2);
 
-    int mLastTransactionId = 0;
     std::vector<TableCacheOperationIndex> mMap;
     Mdt::IndexRange::RowRange mCommittedRows;
   };

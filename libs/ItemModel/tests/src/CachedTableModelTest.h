@@ -90,6 +90,9 @@ class CachedTableModelTest : public QObject
   void setDataThenSubmitTest();
   void setDataThenSubmitSignalTest();
 
+  void setDataThenSubmitFailTest();
+  void setDataThenSubmitFailSignalTest();
+
   void setDataThenSubmitAndFromBackendInsertRecordsTest();
   void setDataThenSubmitAndFromBackendInsertRecordsSignalTest();
 

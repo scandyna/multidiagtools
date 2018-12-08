@@ -30,24 +30,15 @@ class TableCacheOperationTest : public TestBase
  private slots:
 
   void indexTest();
-  void transactionObjectTest();
-  void rowTransactionObjectTest();
 
   void removeOperationFromCurrentTest();
   void updateOperationFromCurrentTest();
   void operationFromExistingTest();
 
-//   void pendingOperationFromOperationTest();
-//   void failedOperationFromOperationTest();
-//   void isPendingTransactionOperationTest();
   void insertRecordsTest();
   void insertCommitChangesTest();
   void setRecordUpdatedTest();
-  void createTransactionTest();
-  void transactionInsertRemoveTest();
-  void pendingTransactionTest();
   void setOperationAtRowTest();
-  void fetchRowTest();
   void removeOperationAtRowTest();
   void shiftRowsInMapTest();
   void getRowsToUpdateInStorageTest();

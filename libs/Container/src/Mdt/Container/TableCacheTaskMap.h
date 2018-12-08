@@ -21,7 +21,6 @@
 #ifndef MDT_CONTAINER_TABLE_CACHE_TASK_MAP_H
 #define MDT_CONTAINER_TABLE_CACHE_TASK_MAP_H
 
-#include "TableCacheTaskState.h"
 #include "TableCacheTask.h"
 #include "TableCacheRowTask.h"
 #include "TableCacheRowTaskList.h"
@@ -37,10 +36,11 @@ namespace Mdt{ namespace Container{
   {
    public:
 
-    constexpr TableCacheTaskMapItem(int row, TableCacheTask task, TableCacheTaskState state) noexcept
+    constexpr TableCacheTaskMapItem(int row, TableCacheTask task, bool isPending, bool isFailed) noexcept
      : mRow(row),
        mTask(task),
-       mState(state)
+       mIsPending(isPending),
+       mIsFailed(isFailed)
     {
     }
 
@@ -64,26 +64,37 @@ namespace Mdt{ namespace Container{
       return mTask.id();
     }
 
+    constexpr void setPending() noexcept
+    {
+      mIsPending = true;
+    }
+
     constexpr bool isPending() const noexcept
     {
-      return mState == TableCacheTaskState::Pending;
+      return mIsPending;
+//       return mState == TableCacheTaskState::Pending;
     }
 
     constexpr void setFailed() noexcept
     {
-      mState = TableCacheTaskState::Failed;
+      mIsFailed = true;
+      mIsPending = false;
+//       mState = TableCacheTaskState::Failed;
     }
 
     constexpr bool isFailed() const noexcept
     {
-      return mState == TableCacheTaskState::Failed;
+      return mIsFailed;
+//       return mState == TableCacheTaskState::Failed;
     }
 
    private:
 
     int mRow;
     TableCacheTask mTask;
-    TableCacheTaskState mState;
+    bool mIsPending;
+    bool mIsFailed;
+//     TableCacheTaskState mState;
   };
 
   /*!\brief A map of tasks in a table cache
