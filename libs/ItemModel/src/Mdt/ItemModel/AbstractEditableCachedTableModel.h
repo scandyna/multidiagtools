@@ -97,6 +97,18 @@ namespace Mdt{ namespace ItemModel{
      */
     bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
 
+    /*! \brief Remove \a count rows starting from \a row
+     *
+     * Will mark the rows in the cache as to be removed.
+     *  The records corresponding to those rows will effectively be removed
+     *  by calling submitChanges() .
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+     */
+    bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
+
     /*! \brief Submit changes
      *
      * Will submit changes done in the cache to the backend.
@@ -271,10 +283,33 @@ namespace Mdt{ namespace ItemModel{
      */
     virtual bool updateRecordsInBackend(const Mdt::Container::TableCacheRowTaskList & rowTasks);
 
+    /*! \brief Remove the record at row from the backend
+     *
+     * Once the record has been successfully processed from the backend,
+     *  removeRecordTaskSucceeded() should be called to update the model,
+     *  or taskFailed() on error.
+     *
+     * \pre the row given in \a rowTask must be in valid range ( 0 <= \a rowTask.row() < rowCount() ).
+     */
+    virtual bool removeRecordFromBackend(const Mdt::Container::TableCacheRowTask & rowTask) = 0;
+
+    /*! \brief Remove the records at rows from the backend
+     *
+     * This method can be implemented to remove all records
+     *  for \a rowTasks .
+     *
+     * The default implementation will call removeRecordFromBackend()
+     *  for each row task.
+     *
+     * \pre each row in \a rowTasks must be in valid range ( 0 <= \a row < rowCount() ).
+     */
+    virtual bool removeRecordsFromBackend(const Mdt::Container::TableCacheRowTaskList & rowTasks);
+
    private:
 
     bool addNewRecordsToBackend();
     bool updateModifiedRowsInBackend();
+    bool removeRemovedRowsFromBackend();
 
 //     Mdt::Container::TableCacheOperation operationAtRow(int row) const;
 

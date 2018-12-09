@@ -134,6 +134,12 @@ namespace Mdt{ namespace Container{
      */
     void cancelRemoveRecords(int pos, int count);
 
+    /*! \brief Check if \a row is removed
+     *
+     * \pre \a row must be >= 0
+     */
+    bool isRowRemoved(int row) const noexcept;
+
     /*! \brief Remove the operation at \a row from this map
      *
      * \pre \a row must be >= 0

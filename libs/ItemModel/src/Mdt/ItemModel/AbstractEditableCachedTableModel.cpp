@@ -47,6 +47,9 @@ Qt::ItemFlags AbstractEditableCachedTableModel::flags(const QModelIndex& index) 
   if( isTaskPendingForRow(index.row()) ){
     return Qt::NoItemFlags;
   }
+  if( mOperationMap.isRowRemoved(index.row()) ){
+    return Qt::NoItemFlags;
+  }
   return BaseClass::flags(index) | Qt::ItemIsEditable;
 }
 
@@ -97,12 +100,34 @@ bool AbstractEditableCachedTableModel::insertRows(int row, int count, const QMod
   return true;
 }
 
+bool AbstractEditableCachedTableModel::removeRows(int row, int count, const QModelIndex & parent)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 1);
+  Q_ASSERT( (row+count) <= rowCount() );
+
+  if(parent.isValid()){
+    return false;
+  }
+  mOperationMap.removeRecords(row, count);
+
+  RowRange rows;
+  rows.setFirstRow(row);
+  rows.setRowCount(count);
+  emit headerDataChanged(Qt::Vertical, rows.firstRow(), rows.lastRow());
+
+  return true;
+}
+
 bool AbstractEditableCachedTableModel::submitChanges()
 {
   if(!updateModifiedRowsInBackend()){
     return false;
   }
   if(!addNewRecordsToBackend()){
+    return false;
+  }
+  if(!removeRemovedRowsFromBackend()){
     return false;
   }
 //   removeRowsToDeleteFromCacheOnly();
@@ -187,6 +212,16 @@ bool AbstractEditableCachedTableModel::updateRecordsInBackend(const TableCacheRo
   return true;
 }
 
+bool AbstractEditableCachedTableModel::removeRecordsFromBackend(const TableCacheRowTaskList & rowTasks)
+{
+  for(const auto & rowTask : rowTasks){
+    if(!removeRecordFromBackend(rowTask)){
+      return false;
+    }
+  }
+  return true;
+}
+
 bool AbstractEditableCachedTableModel::addNewRecordsToBackend()
 {
   const RowList rows = mOperationMap.getRowsToInsertIntoStorage();
@@ -201,6 +236,14 @@ bool AbstractEditableCachedTableModel::updateModifiedRowsInBackend()
   const TableCacheRowTaskList rowTasks = beginRowTasks(rows);
 
   return updateRecordsInBackend(rowTasks);
+}
+
+bool AbstractEditableCachedTableModel::removeRemovedRowsFromBackend()
+{
+  const RowList rows = mOperationMap.getRowsToDeleteInStorage();
+  const TableCacheRowTaskList rowTasks = beginRowTasks(rows);
+
+  return removeRecordsFromBackend(rowTasks);
 }
 
 // Mdt::Container::TableCacheOperation AbstractEditableCachedTableModel::operationAtRow(int row) const

@@ -54,6 +54,11 @@ bool isItemPending(const QAbstractItemModel & model, int row, int column)
   return !isItemEnabled(model, row, column);
 }
 
+bool isItemRemoved(const QAbstractItemModel & model, int row, int column)
+{
+  return !isItemEnabled(model, row, column);
+}
+
 /*
  * Tests
  */
@@ -2410,6 +2415,235 @@ void CachedTableModelTest::editableFetchRowThenFromBackendRemoveRowsTest()
   fetchRowThenFromBackendRemoveRowsTest<EditPersonTableModel>();
 }
 
+void CachedTableModelTest::removeRowsTest()
+{
+  EditPersonTableModel model;
+  populatePersonStorageByNames(model, {"A","B","C","D"});
+  QVERIFY(model.fetchAll());
+
+  QCOMPARE(model.rowCount(), 4);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QCOMPARE(getModelData(model, 3, 1), QVariant("D"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant(4));
+  QVERIFY(!isItemRemoved(model, 0, 1));
+  QVERIFY(!isItemRemoved(model, 1, 1));
+  QVERIFY(!isItemRemoved(model, 2, 1));
+  QVERIFY(!isItemRemoved(model, 3, 1));
+
+  QVERIFY(model.removeRows(1, 2));
+  QCOMPARE(model.rowCount(), 4);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QCOMPARE(getModelData(model, 3, 1), QVariant("D"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant(4));
+  QVERIFY(!isItemRemoved(model, 0, 1));
+  QVERIFY(isItemRemoved(model, 1, 1));
+  QVERIFY(isItemRemoved(model, 2, 1));
+  QVERIFY(!isItemRemoved(model, 3, 1));
+
+  QVERIFY(removeLastRowFromModel(model));
+  QCOMPARE(model.rowCount(), 4);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QCOMPARE(getModelData(model, 3, 1), QVariant("D"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant("x"));
+  QVERIFY(!isItemRemoved(model, 0, 1));
+  QVERIFY(isItemRemoved(model, 1, 1));
+  QVERIFY(isItemRemoved(model, 2, 1));
+  QVERIFY(isItemRemoved(model, 3, 1));
+
+  QVERIFY(removeFirstRowFromModel(model));
+  QCOMPARE(model.rowCount(), 4);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QCOMPARE(getModelData(model, 3, 1), QVariant("D"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant("x"));
+  QVERIFY(isItemRemoved(model, 0, 1));
+  QVERIFY(isItemRemoved(model, 1, 1));
+  QVERIFY(isItemRemoved(model, 2, 1));
+  QVERIFY(isItemRemoved(model, 3, 1));
+}
+
+void CachedTableModelTest::removeRowsThenSubmitTest()
+{
+  EditPersonTableModel model;
+  populatePersonStorage(model, {{1,"A"},{2,"B"},{3,"C"}});
+  QVERIFY(model.fetchAll());
+
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QVERIFY(!isItemRemoved(model, 0, 1));
+  QVERIFY(!isItemRemoved(model, 1, 1));
+  QVERIFY(!isItemRemoved(model, 2, 1));
+  QCOMPARE(model.storageCount(), 3);
+  QCOMPARE(model.storageNameForId(1), QString("A"));
+  QCOMPARE(model.storageNameForId(2), QString("B"));
+  QCOMPARE(model.storageNameForId(3), QString("C"));
+
+  QVERIFY(model.removeRow(1));
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QVERIFY(!isItemRemoved(model, 0, 1));
+  QVERIFY(isItemRemoved(model, 1, 1));
+  QVERIFY(!isItemRemoved(model, 2, 1));
+  QCOMPARE(model.storageCount(), 3);
+  QCOMPARE(model.storageNameForId(1), QString("A"));
+  QCOMPARE(model.storageNameForId(2), QString("B"));
+  QCOMPARE(model.storageNameForId(3), QString("C"));
+
+  QVERIFY(model.submitChanges());
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("B"));
+  QCOMPARE(getModelData(model, 2, 1), QVariant("C"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QVERIFY(!isItemRemoved(model, 0, 1));
+  QVERIFY(isItemRemoved(model, 1, 1));
+  QVERIFY(!isItemRemoved(model, 2, 1));
+  QCOMPARE(model.storageCount(), 3);
+  QCOMPARE(model.storageNameForId(1), QString("A"));
+  QCOMPARE(model.storageNameForId(2), QString("B"));
+  QCOMPARE(model.storageNameForId(3), QString("C"));
+
+  model.removeRecordFromBackendSucceeded();
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
+  QCOMPARE(getModelData(model, 1, 1), QVariant("C"));
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QVERIFY(!isItemRemoved(model, 0, 1));
+  QVERIFY(!isItemRemoved(model, 1, 1));
+  QCOMPARE(model.storageCount(), 2);
+  QCOMPARE(model.storageNameForId(1), QString("A"));
+  QCOMPARE(model.storageNameForId(3), QString("C"));
+}
+
+void CachedTableModelTest::removeRowsThenSubmitSignalTest()
+{
+  EditPersonTableModel model;
+  populatePersonStorageByNames(model, {"A","B","C"});
+  QVERIFY(model.fetchAll());
+  QVariantList arguments;
+  QSignalSpy rowsAboutToBeRemovedSpy(&model, &EditPersonTableModel::rowsAboutToBeRemoved);
+  QVERIFY(rowsAboutToBeRemovedSpy.isValid());
+  QSignalSpy rowsRemovedSpy(&model, &EditPersonTableModel::rowsRemoved);
+  QVERIFY(rowsRemovedSpy.isValid());
+  QSignalSpy headerDataChangedSpy(&model, &EditPersonTableModel::headerDataChanged);
+  QVERIFY(headerDataChangedSpy.isValid());
+
+  /*
+   * Initial state
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 ||  |  A |
+   * --------------
+   * | 2 ||  |  B |
+   * --------------
+   * | 3 ||  |  C |
+   * --------------
+   */
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Remove rows
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 ||  |  A |
+   * --------------
+   * | x ||  |  B |
+   * --------------
+   * | 3 ||  |  C |
+   * --------------
+   */
+  QVERIFY(model.removeRow(1));
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 1);
+  arguments = headerDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QCOMPARE(arguments.at(0), QVariant(Qt::Vertical));  // orientation
+  QCOMPARE(arguments.at(1), QVariant(1)); // first
+  QCOMPARE(arguments.at(2), QVariant(1)); // last
+
+  /*
+   * Submit changes
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 ||  |  A |
+   * --------------
+   * | x ||  |  B |
+   * --------------
+   * | 3 ||  |  C |
+   * --------------
+   */
+  QVERIFY(model.submitChanges());
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 0);
+  QCOMPARE(rowsRemovedSpy.count(), 0);
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+
+  /*
+   * Succeeded
+   *
+   * |Hdr||Id|Name|
+   * --------------
+   * | 1 ||  |  A |
+   * --------------
+   * | 3 ||  |  C |
+   * --------------
+   */
+  model.removeRecordFromBackendSucceeded();
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(rowsAboutToBeRemovedSpy.count(), 1);
+  arguments = rowsAboutToBeRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1));             // first
+  QCOMPARE(arguments.at(2), QVariant(1));             // last
+  QCOMPARE(rowsRemovedSpy.count(), 1);
+  arguments = rowsRemovedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid()); // parent
+  QCOMPARE(arguments.at(1), QVariant(1));             // first
+  QCOMPARE(arguments.at(2), QVariant(1));             // last
+  QCOMPARE(headerDataChangedSpy.count(), 0);
+}
 
 /*
  * Main

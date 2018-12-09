@@ -90,6 +90,26 @@ void TableCacheOperationMap::cancelRemoveRecords(int pos, int count)
   }
 }
 
+bool TableCacheOperationMap::isRowRemoved(int row) const noexcept
+{
+  Q_ASSERT(row >= 0);
+
+  const auto it = findRowConstIterator(row);
+  if(it == mMap.cend()){
+    return false;
+  }
+  switch(it->operation()){
+    case TableCacheOperation::Delete:
+    case TableCacheOperation::InsertDelete:
+    case TableCacheOperation::UpdateDelete:
+      return true;
+    default:
+      break;
+  }
+
+  return false;
+}
+
 void TableCacheOperationMap::removeOperationAtRow(int row)
 {
   Q_ASSERT(row >= 0);

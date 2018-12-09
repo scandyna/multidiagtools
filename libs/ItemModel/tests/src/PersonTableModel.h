@@ -256,6 +256,9 @@ class EditPersonTableModel : public Mdt::ItemModel::AbstractEditableCachedTableM
   void updateRecordInBackendSucceeded();
   void updateRecordInBackendFailed();
 
+  void removeRecordFromBackendSucceeded();
+  void removeRecordFromBackendFailed();
+
   int storageCount() const
   {
     return mImpl.storageCount();
@@ -301,11 +304,13 @@ class EditPersonTableModel : public Mdt::ItemModel::AbstractEditableCachedTableM
 
   bool addRecordToBackend(const Mdt::Container::TableCacheRowTask & rowTask) override;
   bool updateRecordInBackend(const Mdt::Container::TableCacheRowTask & rowTask) override;
+  bool removeRecordFromBackend(const Mdt::Container::TableCacheRowTask & rowTask) override;
 
   PersonTableModelCommonImpl mImpl;
   TaskIdPersonId mFetchingPerson;
   TaskIdPerson mAddingPerson;
   TaskIdPerson mUpdatingPerson;
+  TaskIdPersonId mRemovingPerson;
 };
 
 void populatePersonStorage(ListPersonTableModel & model, const std::initializer_list<Person> & list);

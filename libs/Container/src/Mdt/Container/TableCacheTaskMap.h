@@ -72,20 +72,17 @@ namespace Mdt{ namespace Container{
     constexpr bool isPending() const noexcept
     {
       return mIsPending;
-//       return mState == TableCacheTaskState::Pending;
     }
 
     constexpr void setFailed() noexcept
     {
       mIsFailed = true;
       mIsPending = false;
-//       mState = TableCacheTaskState::Failed;
     }
 
     constexpr bool isFailed() const noexcept
     {
       return mIsFailed;
-//       return mState == TableCacheTaskState::Failed;
     }
 
    private:
@@ -94,7 +91,6 @@ namespace Mdt{ namespace Container{
     TableCacheTask mTask;
     bool mIsPending;
     bool mIsFailed;
-//     TableCacheTaskState mState;
   };
 
   /*!\brief A map of tasks in a table cache

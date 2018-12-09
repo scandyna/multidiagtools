@@ -114,6 +114,10 @@ class CachedTableModelTest : public QObject
   void readOnlyFetchRowThenFromBackendRemoveRowsTest();
   void editableFetchRowThenFromBackendRemoveRowsTest();
 
+  void removeRowsTest();
+
+  void removeRowsThenSubmitTest();
+  void removeRowsThenSubmitSignalTest();
 
 };
 

@@ -282,6 +282,34 @@ void EditPersonTableModel::updateRecordInBackendFailed()
   taskFailed(task, error);
 }
 
+bool EditPersonTableModel::removeRecordFromBackend(const TableCacheRowTask & rowTask)
+{
+  Q_ASSERT(rowTask.row() >= 0);
+  Q_ASSERT(rowTask.row() < rowCount());
+  Q_ASSERT(!rowTask.isNull());
+
+  mRemovingPerson.taskId = rowTask.taskId();
+  mRemovingPerson.personId = record(rowTask.row()).value(0).toInt();
+
+  return true;
+}
+
+void EditPersonTableModel::removeRecordFromBackendSucceeded()
+{
+  mImpl.removePersonFromStorage(mRemovingPerson.personId);
+  const TableCacheTask task(mRemovingPerson.taskId);
+
+  removeRecordTaskSucceeded(task);
+}
+
+void EditPersonTableModel::removeRecordFromBackendFailed()
+{
+  const TableCacheTask task(mRemovingPerson.taskId);
+  const auto error = mdtErrorNewQ("Fail for test", Mdt::Error::Critical, this);
+
+  taskFailed(task, error);
+}
+
 void EditPersonTableModel::updateStoragePersonNameAt(int row, const QString & name)
 {
   Q_ASSERT(row >= 0);

@@ -253,6 +253,19 @@ void AbstractReadOnlyCachedTableModel::taskSucceeded(const TableCacheTask & task
   emit headerDataChanged(Qt::Vertical, row, row);
 }
 
+void AbstractReadOnlyCachedTableModel::removeRecordTaskSucceeded(const TableCacheTask & task)
+{
+  Q_ASSERT(!task.isNull());
+
+  const int row = mTaskMap.getRowForTask(task);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  mTaskMap.setTaskDoneForRow(row);
+  taskSucceededForRow(row);
+  fromBackendRemoveRows(row, 1);
+}
+
 void AbstractReadOnlyCachedTableModel::taskFailed(const TableCacheTask & task, const Mdt::Error & error)
 {
   Q_ASSERT(!task.isNull());

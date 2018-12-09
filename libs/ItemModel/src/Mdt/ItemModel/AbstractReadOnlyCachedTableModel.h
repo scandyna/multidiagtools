@@ -353,6 +353,12 @@ namespace Mdt{ namespace ItemModel{
      */
     void taskSucceeded(const Mdt::Container::TableCacheTask & task, const Mdt::Container::VariantRecord record);
 
+    /*! \brief Update the state after a record removal succeeded for \a task
+     *
+     * \pre \a task must not be null
+     */
+    void removeRecordTaskSucceeded(const Mdt::Container::TableCacheTask & task);
+
     /*! \brief Update the state for \a row
      *
      * This method is called from taskSucceeded()
