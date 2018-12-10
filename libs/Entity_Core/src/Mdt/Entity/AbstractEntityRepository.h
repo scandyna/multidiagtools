@@ -170,6 +170,15 @@ namespace Mdt{ namespace Entity{
      */
     virtual bool update(const EntityData & record) = 0;
 
+    /*! \brief Remove the entity identified by \a id
+     *
+     * Returns true if the entity have been successfully removed,
+     *  or did not exists, false on error.
+     *
+     * \pre \a id must not be null
+     */
+    virtual bool remove(UniqueId id) = 0;
+
     /*! \brief Remove all records from the storage
      */
     virtual bool removeAll() = 0;

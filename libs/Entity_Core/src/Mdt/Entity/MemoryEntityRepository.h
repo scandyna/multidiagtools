@@ -149,6 +149,22 @@ namespace Mdt{ namespace Entity{
       return true;
     }
 
+    /*! \brief Remove the entity identified by \a id
+     *
+     * Returns true if the entity have been successfully removed,
+     *  or did not exists, false on error.
+     *
+     * \pre \a id must not be null
+     */
+    bool remove(UniqueId id) override
+    {
+      Q_ASSERT(!id.isNull());
+
+      mTable.remove(id.value());
+
+      return true;
+    }
+
     /*! \brief Remove all records from the storage
      */
     bool removeAll() override

@@ -38,6 +38,7 @@ class MemoryEntityRepositoryTest : public QObject
 
   void updateTest();
 
+  void removeTest();
   void removeAllTest();
 };
 

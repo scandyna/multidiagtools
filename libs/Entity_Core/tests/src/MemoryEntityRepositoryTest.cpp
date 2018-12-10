@@ -110,6 +110,17 @@ bool addPersonToRepository(const PersonData & person, const std::shared_ptr<Pers
   return true;
 }
 
+QString getPersonNameFromRepository(PersonId id, const std::shared_ptr<PersonRepository> & repository)
+{
+  Q_ASSERT(!id.isNull());
+  Q_ASSERT(repository.get() != nullptr);
+
+  const auto person = repository->getById(id);
+  Q_ASSERT(person);
+
+  return person->firstName();
+}
+
 /*
  * Tests
  */
@@ -270,6 +281,29 @@ void MemoryEntityRepositoryTest::updateTest()
   person = *personExp;
   QCOMPARE(person.id().value(), 2);
   QCOMPARE(person.firstName(), QString("EA"));
+}
+
+void MemoryEntityRepositoryTest::removeTest()
+{
+  auto repository = std::make_shared<TestPersonRepository>();
+  PersonData person;
+
+  person.setPersonId(PersonId(1));
+  person.setFirstName("A");
+  QVERIFY(addPersonToRepository(person, repository));
+  person.setPersonId(PersonId(2));
+  person.setFirstName("B");
+  QVERIFY(addPersonToRepository(person, repository));
+  QCOMPARE(getPersonNameFromRepository(PersonId(1), repository), QString("A"));
+  QCOMPARE(getPersonNameFromRepository(PersonId(2), repository), QString("B"));
+
+  QVERIFY(repository->remove(PersonId(1)));
+  QVERIFY(getPersonNameFromRepository(PersonId(1), repository).isEmpty());
+  QCOMPARE(getPersonNameFromRepository(PersonId(2), repository), QString("B"));
+
+  QVERIFY(repository->remove(PersonId(5)));
+  QVERIFY(getPersonNameFromRepository(PersonId(1), repository).isEmpty());
+  QCOMPARE(getPersonNameFromRepository(PersonId(2), repository), QString("B"));
 }
 
 void MemoryEntityRepositoryTest::removeAllTest()
