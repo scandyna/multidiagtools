@@ -137,7 +137,7 @@ class MultiIdData : public Mdt::Entity::DataTemplate<MultiIdEntity>
 
   Id pkId() const
   {
-    return constDataStruct().pkId;
+    return Id(constDataStruct().pkId);
   }
 
   void setRequiredId(int id)
@@ -379,7 +379,7 @@ void FieldDataValidatorTest::validateItergralUniqueIdTest()
   QVERIFY( !v.validateData(data.pkId(), data.def().pkId()) );
   QCOMPARE(v.state(), FieldDataValidatorState::RequiredButNull);
 
-  data.setPkId(1);
+  data.setPkId(Id(1));
   QVERIFY( v.validateData(data.pkId(), data.def().pkId()) );
   QCOMPARE(v.state(), FieldDataValidatorState::Ok);
 

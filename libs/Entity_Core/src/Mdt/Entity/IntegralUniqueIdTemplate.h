@@ -73,7 +73,7 @@ namespace Mdt{ namespace Entity{
 
     /*! \brief Construct a id
      */
-    constexpr IntegralUniqueIdTemplate(IntegralType id) noexcept
+    constexpr explicit IntegralUniqueIdTemplate(IntegralType id) noexcept
      : mId(id)
     {
       static_assert( std::is_base_of< IntegralUniqueIdTemplate, Derived >::value, "Derived must derive from IntegralUniqueIdTemplate" );
