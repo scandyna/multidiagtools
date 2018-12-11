@@ -284,6 +284,27 @@ namespace Mdt{ namespace Entity{
       return error;
     }
 
+    template<typename EntityData, typename UniqueId>
+    Mdt::Error remove(UniqueId id)
+    {
+      using EntityDef = typename EntityData::entity_def_type;
+      using Entity = typename EntityData::entity_template_type;
+
+      Mdt::Error error;
+      const auto pkRecord = SqlPrimaryKeyRecord::fromUniqueId<Entity>(id);
+      Mdt::Sql::DeleteQuery query(mDatabase);
+
+      query.setTableName(EntityDef::entityName());
+      query.setConditions(pkRecord);
+
+      if(!query.exec()){
+        error = query.lastError();
+        return error;
+      }
+
+      return error;
+    }
+
     template<typename EntityData>
     Mdt::Error removeAll()
     {
