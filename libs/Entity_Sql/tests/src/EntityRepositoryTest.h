@@ -39,6 +39,7 @@ class EntityRepositoryTest : public TestBase
 
   void updateTest();
 
+  void removeTest();
   void removeAllTest();
 
  private:
