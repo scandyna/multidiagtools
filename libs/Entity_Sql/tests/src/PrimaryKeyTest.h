@@ -35,6 +35,7 @@ class PrimaryKeyTest : public TestBase
   void fromEntityTest();
 
   void sqlPkRecordFromEntityDataTest();
+  void sqlPkRecordFromUniqueId();
 };
 
 #endif // #ifndef PRIMARY_KEY_TEST_H

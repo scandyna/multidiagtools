@@ -55,6 +55,29 @@ namespace Mdt{ namespace Entity{
 
       return sqlPkRecord;
     }
+
+    /*! \brief Get a SQL primary key record from unique id
+     *
+     * \pre \a id must not be null
+     * \pre the primary key of \a Entity must be a 1 filed integral type
+     */
+    template<typename Entity, typename UniqueId>
+    static Mdt::Sql::PrimaryKeyRecord fromUniqueId(UniqueId id)
+    {
+      Q_ASSERT(!id.isNull());
+
+      using entity_def_type = typename Entity::def_type;
+
+      Mdt::Sql::PrimaryKeyRecord sqlPkRecord;
+
+      const auto entityPk = PrimaryKey::fromEntity<Entity>();
+      Q_ASSERT(entityPk.fieldCount() == 1);
+      const auto field = entityPk.fieldAt(0);
+      const auto fieldName = Mdt::Sql::FieldName( field.template fieldName<entity_def_type>() );
+      sqlPkRecord.addValue(fieldName, id.value());
+
+      return sqlPkRecord;
+    }
   };
 
 }} // namespace Mdt{ namespace Entity{

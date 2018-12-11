@@ -23,6 +23,7 @@
 #include "Mdt/Entity/SqlPrimaryKeyRecord.h"
 #include "Mdt/Entity/Def.h"
 #include "Mdt/Entity/DataTemplate.h"
+#include "Mdt/Entity/IntegralUniqueIdTemplate.h"
 #include <QString>
 
 using namespace Mdt::Entity;
@@ -39,6 +40,13 @@ void PrimaryKeyTest::cleanupTestCase()
 /*
  * Entities
  */
+
+class ArticleId : public Mdt::Entity::IntegralUniqueIdTemplate<ArticleId, int>
+{
+ public:
+
+  using IntegralUniqueIdTemplate::IntegralUniqueIdTemplate;
+};
 
 struct ArticleDataStruct
 {
@@ -142,6 +150,14 @@ void PrimaryKeyTest::sqlPkRecordFromEntityDataTest()
   QCOMPARE(linkPkRecord.fieldCount(), 2);
   QCOMPARE(linkPkRecord.value("startId"), QVariant(5));
   QCOMPARE(linkPkRecord.value("endId"), QVariant(9));
+}
+
+void PrimaryKeyTest::sqlPkRecordFromUniqueId()
+{
+  ArticleId id(25);
+  auto articlePkRecord = SqlPrimaryKeyRecord::fromUniqueId<ArticleEntity>(id);
+  QCOMPARE(articlePkRecord.fieldCount(), 1);
+  QCOMPARE(articlePkRecord.value("id"), QVariant(25));
 }
 
 /*
