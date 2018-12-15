@@ -109,6 +109,14 @@ namespace Mdt{ namespace ItemModel{
      */
     bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
 
+    /*! \brief Cancel the removal of \a count rows starting from \a row
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count muste be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+     */
+    void cancelRemoveRows(int row, int count);
+
     /*! \brief Submit changes
      *
      * Will submit changes done in the cache to the backend.
@@ -309,6 +317,7 @@ namespace Mdt{ namespace ItemModel{
 
     bool addNewRecordsToBackend();
     bool updateModifiedRowsInBackend();
+    void removeRowsToDeleteFromCacheOnly();
     bool removeRemovedRowsFromBackend();
 
 //     Mdt::Container::TableCacheOperation operationAtRow(int row) const;

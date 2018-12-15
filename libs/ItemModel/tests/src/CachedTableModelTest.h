@@ -119,6 +119,14 @@ class CachedTableModelTest : public QObject
   void removeRowsThenSubmitTest();
   void removeRowsThenSubmitSignalTest();
 
+  void cancelRemoveRowsThenSubmitTest();
+  void cancelRemoveRowsThenSubmitSignalTest();
+
+  void insertRowsRemoveRowsThenSubmitTest();
+  void insertRowsRemoveRowsThenSubmitSignalTest();
+
+  void insertRowsCancelRemoveRowsThenSetDataThenSubmitTest();
+  void insertRowsCancelRemoveRowsThenSetDataThenSubmitSignalTest();
 };
 
 #endif // #ifndef CACHED_TABLE_MODEL_TEST_H

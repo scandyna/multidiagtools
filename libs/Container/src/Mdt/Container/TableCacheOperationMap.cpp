@@ -74,9 +74,9 @@ void TableCacheOperationMap::cancelRemoveRecords(int pos, int count)
     if(index.operation() == TableCacheOperation::Delete){
       return true;
     }
-    if(index.operation() == TableCacheOperation::InsertDelete){
-      return true;
-    }
+//     if(index.operation() == TableCacheOperation::InsertDelete){
+//       return true;
+//     }
     return false;
   };
   mMap.erase( std::remove_if(mMap.begin(), mMap.end(), indexToRemovePredicate), mMap.end() );
@@ -85,6 +85,9 @@ void TableCacheOperationMap::cancelRemoveRecords(int pos, int count)
     if( rowRange.containsRow(index.row()) ){
       if(index.operation() == TableCacheOperation::UpdateDelete){
         index.setOperation(TableCacheOperation::Update);
+      }
+      if(index.operation() == TableCacheOperation::InsertDelete){
+        index.setOperation(TableCacheOperation::Insert);
       }
     }
   }

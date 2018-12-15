@@ -119,6 +119,20 @@ bool AbstractEditableCachedTableModel::removeRows(int row, int count, const QMod
   return true;
 }
 
+void AbstractEditableCachedTableModel::cancelRemoveRows(int row, int count)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 1);
+  Q_ASSERT( (row+count) <= rowCount() );
+
+  mOperationMap.cancelRemoveRecords(row, count);
+
+  RowRange rows;
+  rows.setFirstRow(row);
+  rows.setRowCount(count);
+  emit headerDataChanged(Qt::Vertical, rows.firstRow(), rows.lastRow());
+}
+
 bool AbstractEditableCachedTableModel::submitChanges()
 {
   if(!updateModifiedRowsInBackend()){
@@ -127,10 +141,10 @@ bool AbstractEditableCachedTableModel::submitChanges()
   if(!addNewRecordsToBackend()){
     return false;
   }
+  removeRowsToDeleteFromCacheOnly();
   if(!removeRemovedRowsFromBackend()){
     return false;
   }
-//   removeRowsToDeleteFromCacheOnly();
 //   if(!removeRowsToDeleteFromBackend()){
 //     return false;
 //   }
@@ -236,6 +250,14 @@ bool AbstractEditableCachedTableModel::updateModifiedRowsInBackend()
   const TableCacheRowTaskList rowTasks = beginRowTasks(rows);
 
   return updateRecordsInBackend(rowTasks);
+}
+
+void AbstractEditableCachedTableModel::removeRowsToDeleteFromCacheOnly()
+{
+  const RowList rows = mOperationMap.getRowsToDeleteInCacheOnly();
+  for(const auto row : rows){
+    fromBackendRemoveRows(row, 1);
+  }
 }
 
 bool AbstractEditableCachedTableModel::removeRemovedRowsFromBackend()

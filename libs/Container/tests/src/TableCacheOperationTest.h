@@ -46,6 +46,7 @@ class TableCacheOperationTest : public TestBase
   void cancelRemoveRecordsTest();
   void insertRemoveRecordsTest();
   void insertSetRemoveTest();
+  void insertRowsThenCancelRemoveRowsTest();
 };
 
 #endif // #ifndef TABLE_CACHE_OPERATION_TEST_H

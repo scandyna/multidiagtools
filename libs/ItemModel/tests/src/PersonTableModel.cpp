@@ -290,12 +290,14 @@ bool EditPersonTableModel::removeRecordFromBackend(const TableCacheRowTask & row
 
   mRemovingPerson.taskId = rowTask.taskId();
   mRemovingPerson.personId = record(rowTask.row()).value(0).toInt();
+  Q_ASSERT(mRemovingPerson.personId > 0);
 
   return true;
 }
 
 void EditPersonTableModel::removeRecordFromBackendSucceeded()
 {
+  Q_ASSERT(mRemovingPerson.personId > 0);
   mImpl.removePersonFromStorage(mRemovingPerson.personId);
   const TableCacheTask task(mRemovingPerson.taskId);
 
