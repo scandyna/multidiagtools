@@ -56,7 +56,20 @@ bool isItemPending(const QAbstractItemModel & model, int row, int column)
 
 bool isItemRemoved(const QAbstractItemModel & model, int row, int column)
 {
-  return !isItemEnabled(model, row, column);
+  const auto flags = getModelFlags(model, row, column);
+
+  if(!flags.testFlag(Qt::ItemIsEnabled)){
+    return false;
+  }
+  if(!flags.testFlag(Qt::ItemIsSelectable)){
+    return false;
+  }
+  if(flags.testFlag(Qt::ItemIsEditable)){
+    return false;
+  }
+
+  return true;
+//   return !isItemEnabled(model, row, column);
 }
 
 /*
@@ -2526,9 +2539,6 @@ void CachedTableModelTest::removeRowsThenSubmitTest()
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
   QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
   QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
-  QVERIFY(!isItemRemoved(model, 0, 1));
-  QVERIFY(isItemRemoved(model, 1, 1));
-  QVERIFY(!isItemRemoved(model, 2, 1));
   QCOMPARE(model.storageCount(), 3);
   QCOMPARE(model.storageNameForId(1), QString("A"));
   QCOMPARE(model.storageNameForId(2), QString("B"));
@@ -2880,7 +2890,6 @@ void CachedTableModelTest::insertRowsRemoveRowsThenSubmitTest()
   QCOMPARE(model.rowCount(), 1);
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("x"));
-  QVERIFY(isItemRemoved(model, 0, 1));
   QCOMPARE(model.storageCount(), 1);
   QCOMPARE(model.storageNameForId(1), QString("A"));
 
@@ -2924,7 +2933,6 @@ void CachedTableModelTest::insertRowsRemoveRowsThenSubmitTest()
   QCOMPARE(model.rowCount(), 1);
   QCOMPARE(getModelData(model, 0, 1), QVariant("A"));
   QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("x"));
-  QVERIFY(isItemRemoved(model, 0, 1));
   QCOMPARE(model.storageCount(), 1);
   QCOMPARE(model.storageNameForId(1), QString("A"));
 

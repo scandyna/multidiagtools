@@ -48,7 +48,7 @@ Qt::ItemFlags AbstractEditableCachedTableModel::flags(const QModelIndex& index) 
     return Qt::NoItemFlags;
   }
   if( mOperationMap.isRowRemoved(index.row()) ){
-    return Qt::NoItemFlags;
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
   }
   return BaseClass::flags(index) | Qt::ItemIsEditable;
 }
