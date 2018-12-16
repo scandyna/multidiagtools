@@ -25,6 +25,7 @@
 #include "TableCacheRowTask.h"
 #include "TableCacheRowTaskList.h"
 #include "RowList.h"
+#include "Mdt/Assert.h"
 #include "MdtContainerExport.h"
 #include <vector>
 
@@ -52,6 +53,7 @@ namespace Mdt{ namespace Container{
     constexpr void shiftRow(int count) noexcept
     {
       mRow += count;
+      MDT_ASSERT(mRow >= 0);
     }
 
     constexpr int row() const noexcept
@@ -130,13 +132,19 @@ namespace Mdt{ namespace Container{
      */
     TableCacheRowTaskList beginRowTasks(const RowList & rows);
 
-    /*! \brief Shift the rows starting from \a row with a offset of \a count
+    /*! \brief Shift the rows for a insertion of \a count rows starting before \a row
      *
      * \pre \a row must be >= 0
-     * \pre \a count must be <> 0
-     * \note \a count can also be < 0
+     * \pre \a count must be >= 1
      */
-    void shiftRows(int row, int count);
+    void shiftRowsForInsert(int row, int count);
+
+    /*! \brief Shift the rows for a removal of \a count rows starting from \a row
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count must be >= 1
+     */
+    void shiftRowsForRemove(int row, int count);
 
     /*! \brief Get the row that actually correspond to \a task
      *

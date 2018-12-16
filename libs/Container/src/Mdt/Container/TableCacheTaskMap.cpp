@@ -58,15 +58,27 @@ TableCacheRowTaskList TableCacheTaskMap::beginRowTasks(const RowList & rows)
   return rowTaskList;
 }
 
-void TableCacheTaskMap::shiftRows(int row, int count)
+void TableCacheTaskMap::shiftRowsForInsert(int row, int count)
 {
   Q_ASSERT(row >= 0);
-  Q_ASSERT(count != 0);
+  Q_ASSERT(count >= 1);
 
   for(auto & item : mMap){
     if(item.row() >= row){
       item.shiftRow(count);
-      Q_ASSERT(item.row() >= 0);
+    }
+  }
+}
+
+void TableCacheTaskMap::shiftRowsForRemove(int row, int count)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 1);
+
+  const int firstRow = row + count;
+  for(auto & item : mMap){
+    if(item.row() >= firstRow){
+      item.shiftRow(-count);
     }
   }
 }

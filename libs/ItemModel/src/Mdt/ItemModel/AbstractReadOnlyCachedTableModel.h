@@ -179,9 +179,15 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Insert \a count copies of \a record before \a row to the cache of this model
      *
-     * This method will only insert the records to the cache, and does not emit any signal
+     * This method will insert the records to the cache and shift tasks.
+     *  No signal is emitted.
+     *
+     * \pre \a rowRange.firstRow() must be >= 0
+     * \pre \a rowRange must not be empty
+     * \pre \a rowRange.rowCount() + rowCount() must be <= cachedRowCountLimit()
+     * \pre \a record 's columnt count must be the same as columnCount()
      */
-    void insertRecordsToCache(int row, int count, const Mdt::Container::VariantRecord & record);
+    void insertRecordsToCache(const Mdt::IndexRange::RowRange & rowRange, const Mdt::Container::VariantRecord & record);
 
     /*! \brief Remove \a count rows starting from \a row from the cache of this model
      *
@@ -189,7 +195,18 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a count must be >= 1
      * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
      */
-    void fromBackendRemoveRows(int row, int count);
+    virtual void fromBackendRemoveRows(int row, int count);
+
+    /*! \brief Remove \a count records starting from \a row from the cache of this model
+     *
+     * This method will remove the records from the cache and shift tasks.
+     *  No signal is emitted.
+     *
+     * \pre \a rowRange.firstRow() must be >= 0
+     * \pre \a rowRange must not be empty
+     * \pre \a rowRange.lastRow() must be <= rowCount()
+     */
+    void removeRecordsFromCache(const Mdt::IndexRange::RowRange & rowRange);
 
     /*! \brief Get the display role data for the horizontal header
      *
@@ -413,25 +430,11 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Begins a row insertion operation
      *
-     * This method will call QAbstractTableModel::beginInsertRows()
-     *  then shift rows in the task map.
-     */
-    void beginInsertRows(const QModelIndex &parent, int first, int last);
-
-    /*! \brief Begins a row insertion operation
-     *
      * This is a convenience version of QAbstractTableModel::beginInsertRows()
      *
      * \pre \a rowRange must be valid
      */
     void beginInsertRows(const Mdt::IndexRange::RowRange & rowRange);
-
-    /*! \brief Begins a row removal operation
-     *
-     * This method will call QAbstractTableModel::beginRemoveRows()
-     *  then shift rows in the task map.
-     */
-    void beginRemoveRows(const QModelIndex &parent, int first, int last);
 
     /*! \brief Begins a row removal operation
      *

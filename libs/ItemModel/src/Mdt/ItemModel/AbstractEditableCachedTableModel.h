@@ -136,6 +136,14 @@ namespace Mdt{ namespace ItemModel{
      */
     void fromBackendInsertRecords(int row, int count, const Mdt::Container::VariantRecord & record) override;
 
+    /*! \brief Remove \a count rows starting from \a row from the cache of this model
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+     */
+    void fromBackendRemoveRows(int row, int count) override;
+
     /*! \brief Get the display role data for the vertical header
      *
      * This method is called by headerData() if all preconditions ar satisfied.

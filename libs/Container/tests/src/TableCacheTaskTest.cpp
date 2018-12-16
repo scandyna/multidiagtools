@@ -223,13 +223,13 @@ void TableCacheTaskTest::shiftRowsTest()
   QCOMPARE(map.getRowForTask(rowTask3.task()), 5);
   QCOMPARE(map.getRowForTask(rowTask4.task()), 6);
 
-  map.shiftRows(3, 1);
-  QCOMPARE(map.getRowForTask(rowTask1.task()), 1);
-  QCOMPARE(map.getRowForTask(rowTask2.task()), 4);
-  QCOMPARE(map.getRowForTask(rowTask3.task()), 6);
-  QCOMPARE(map.getRowForTask(rowTask4.task()), 7);
+  map.shiftRowsForInsert(0, 2);
+  QCOMPARE(map.getRowForTask(rowTask1.task()), 3);
+  QCOMPARE(map.getRowForTask(rowTask2.task()), 5);
+  QCOMPARE(map.getRowForTask(rowTask3.task()), 7);
+  QCOMPARE(map.getRowForTask(rowTask4.task()), 8);
 
-  map.shiftRows(3, -1);
+  map.shiftRowsForRemove(0, 2);
   QCOMPARE(map.getRowForTask(rowTask1.task()), 1);
   QCOMPARE(map.getRowForTask(rowTask2.task()), 3);
   QCOMPARE(map.getRowForTask(rowTask3.task()), 5);

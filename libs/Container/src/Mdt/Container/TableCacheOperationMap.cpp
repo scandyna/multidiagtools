@@ -34,12 +34,38 @@ void TableCacheOperationMap::clear()
   mCommittedRows.clear();
 }
 
+void TableCacheOperationMap::shiftRowsForInsert(int row, int count)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 1);
+
+  for(auto & index : mMap){
+    if(index.row() >= row){
+      index.shiftRow(count);
+    }
+  }
+}
+
+void TableCacheOperationMap::shiftRowsForRemove(int row, int count)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 1);
+
+  const int firstRow = row + count;
+  for(auto & index : mMap){
+    if(index.row() >= firstRow){
+      index.shiftRow(-count);
+    }
+  }
+}
+
 void TableCacheOperationMap::insertRecords(int pos, int count)
 {
   Q_ASSERT(pos >= 0);
   Q_ASSERT(count >= 0);
 
-  shiftRowsInMap(pos, count);
+//   shiftRowsInMap(pos, count);
+  shiftRowsForInsert(pos, count);
   updateOrAddOperationsForRows(pos, count, TableCacheOperation::Insert);
 }
 
@@ -132,6 +158,7 @@ RowList TableCacheOperationMap::shiftRowsInMap(int row, int count)
   for(auto & index : mMap){
     if(index.row() >= row){
       const int shiftedRow = index.row() + count;
+      Q_ASSERT(shiftedRow >= 0);
       index.setRow(shiftedRow);
       rowList.append(shiftedRow);
     }

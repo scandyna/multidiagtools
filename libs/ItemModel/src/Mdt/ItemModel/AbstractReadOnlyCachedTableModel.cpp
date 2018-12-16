@@ -143,19 +143,19 @@ void AbstractReadOnlyCachedTableModel::fromBackendInsertRecords(int row, int cou
   rows.setFirstRow(row);
   rows.setRowCount(count);
   beginInsertRows(rows);
-  insertRecordsToCache(row, count, record);
+  insertRecordsToCache(rows, record);
   endInsertRows();
 }
 
-void AbstractReadOnlyCachedTableModel::insertRecordsToCache(int row, int count, const Mdt::Container::VariantRecord & record)
+void AbstractReadOnlyCachedTableModel::insertRecordsToCache(const RowRange & rowRange, const VariantRecord & record)
 {
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row <= rowCount());
-  Q_ASSERT(count >= 1);
-  Q_ASSERT( (rowCount()+count) <= cachedRowCountLimit() );
+  Q_ASSERT(rowRange.firstRow() >= 0);
+  Q_ASSERT(!rowRange.isEmpty());
+  Q_ASSERT( (rowRange.rowCount() + rowCount()) <= cachedRowCountLimit() );
   Q_ASSERT(record.columnCount() == columnCount());
 
-  insertToContainer(mCache, row, count, record);
+  mTaskMap.shiftRowsForInsert(rowRange.firstRow(), rowRange.rowCount());
+  insertToContainer(mCache, rowRange.firstRow(), rowRange.rowCount(), record);
 }
 
 void AbstractReadOnlyCachedTableModel::fromBackendRemoveRows(int row, int count)
@@ -168,8 +168,19 @@ void AbstractReadOnlyCachedTableModel::fromBackendRemoveRows(int row, int count)
   rows.setFirstRow(row);
   rows.setRowCount(count);
   beginRemoveRows(rows);
-  removeFromContainer(mCache, row, count);
+  removeRecordsFromCache(rows);
   endRemoveRows();
+}
+
+void AbstractReadOnlyCachedTableModel::removeRecordsFromCache(const RowRange & rowRange)
+{
+  Q_ASSERT(rowRange.firstRow() >= 0);
+  Q_ASSERT(!rowRange.isEmpty());
+  Q_ASSERT(rowRange.lastRow() <= rowCount());
+
+  mTaskMap.shiftRowsForRemove(rowRange.firstRow(), rowRange.rowCount());
+//   mTaskMap.shiftRows(rows.firstRow(), -rows.rowCount());
+  removeFromContainer(mCache, rowRange.firstRow(), rowRange.rowCount());
 }
 
 QVariant AbstractReadOnlyCachedTableModel::horizontalHeaderDisplayRoleData(int column) const
@@ -281,47 +292,18 @@ void AbstractReadOnlyCachedTableModel::taskFailed(const TableCacheTask & task, c
   setLastError(error);
 }
 
-void AbstractReadOnlyCachedTableModel::beginInsertRows(const QModelIndex &parent, int first, int last)
-{
-  Q_ASSERT(first >= 0);
-  Q_ASSERT(first <= rowCount());
-  Q_ASSERT(last >= 0);
-
-  BaseClass::beginInsertRows(parent, first, last);
-
-  RowRange rowRange;
-  rowRange.setFirstRow(first);
-  rowRange.setLastRow(last);
-  mTaskMap.shiftRows(rowRange.firstRow(), rowRange.rowCount());
-}
-
 void AbstractReadOnlyCachedTableModel::beginInsertRows(const RowRange& rowRange)
 {
   Q_ASSERT(rowRange.isValid());
 
-  beginInsertRows(QModelIndex(), rowRange.firstRow(), rowRange.lastRow());
-}
-
-void AbstractReadOnlyCachedTableModel::beginRemoveRows(const QModelIndex &parent, int first, int last)
-{
-  Q_ASSERT(first >= 0);
-  Q_ASSERT(first <= rowCount());
-  Q_ASSERT(last >= 0);
-  Q_ASSERT(last <= rowCount());
-
-  BaseClass::beginRemoveRows(parent, first, last);
-
-  RowRange rowRange;
-  rowRange.setFirstRow(first);
-  rowRange.setLastRow(last);
-  mTaskMap.shiftRows(rowRange.firstRow(), -rowRange.rowCount());
+  BaseClass::beginInsertRows(QModelIndex(), rowRange.firstRow(), rowRange.lastRow());
 }
 
 void AbstractReadOnlyCachedTableModel::beginRemoveRows(const Mdt::IndexRange::RowRange & rowRange)
 {
   Q_ASSERT(rowRange.isValid());
 
-  beginRemoveRows(QModelIndex(), rowRange.firstRow(), rowRange.lastRow());
+  BaseClass::beginRemoveRows(QModelIndex(), rowRange.firstRow(), rowRange.lastRow());
 }
 
 void AbstractReadOnlyCachedTableModel::setLastError(const Mdt::Error & error)

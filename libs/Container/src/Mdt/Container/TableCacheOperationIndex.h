@@ -79,6 +79,12 @@ namespace Mdt{ namespace Container{
      */
     TableCacheOperationIndex & operator=(TableCacheOperationIndex && other) = default;
 
+    constexpr void shiftRow(int count) noexcept
+    {
+      mRow += count;
+      MDT_ASSERT(mRow >= 0);
+    }
+
     /*! \brief Set the row of this index
      */
     void setRow(int row)

@@ -107,6 +107,20 @@ namespace Mdt{ namespace Container{
      */
     void clear();
 
+    /*! \brief Shift the rows for a insertion of \a count rows starting before \a row
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count must be >= 1
+     */
+    void shiftRowsForInsert(int row, int count);
+
+    /*! \brief Shift the rows for a removal of \a count rows starting from \a row
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count must be >= 1
+     */
+    void shiftRowsForRemove(int row, int count);
+
     /*! \brief Add indexes to mark \a count records, starting from \a pos , as inserted records
      *
      * \pre \a pos must be >= 0
@@ -153,6 +167,7 @@ namespace Mdt{ namespace Container{
      * \return A list of rows that have been shifted,
      *    with their new value.
      */
+    [[deprecated]]
     RowList shiftRowsInMap(int row, int count);
 
     /*! \brief Set the operation at \a row in the cache

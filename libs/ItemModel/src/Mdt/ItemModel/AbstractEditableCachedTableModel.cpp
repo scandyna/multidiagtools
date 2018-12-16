@@ -93,7 +93,7 @@ bool AbstractEditableCachedTableModel::insertRows(int row, int count, const QMod
   rows.setRowCount(count);
 
   beginInsertRows(rows);
-  insertRecordsToCache(row, count, VariantRecord(columnCount()));
+  insertRecordsToCache(rows, VariantRecord(columnCount()));
   mOperationMap.insertRecords(row, count);
   endInsertRows();
 
@@ -145,9 +145,6 @@ bool AbstractEditableCachedTableModel::submitChanges()
   if(!removeRemovedRowsFromBackend()){
     return false;
   }
-//   if(!removeRowsToDeleteFromBackend()){
-//     return false;
-//   }
   return true;
 }
 
@@ -163,14 +160,24 @@ void AbstractEditableCachedTableModel::fromBackendInsertRecords(int row, int cou
   rows.setFirstRow(row);
   rows.setRowCount(count);
   beginInsertRows(rows);
-  insertRecordsToCache(row, count, record);
-  /*const RowList shiftedRows = */ mOperationMap.shiftRowsInMap(row, count);
+  insertRecordsToCache(rows, record);
+  mOperationMap.shiftRowsForInsert(row, count);
   endInsertRows();
+}
 
-//   if(!shiftedRows.isEmpty()){
-//     Q_ASSERT( (shiftedRows.smallestRow() - count) >= 0 );
-// //     emit headerDataChanged(Qt::Vertical, shiftedRows.smallestRow()-count, shiftedRows.greatestRow());
-//   }
+void AbstractEditableCachedTableModel::fromBackendRemoveRows(int row, int count)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 1);
+  Q_ASSERT( (row+count) <= rowCount() );
+
+  RowRange rows;
+  rows.setFirstRow(row);
+  rows.setRowCount(count);
+  beginRemoveRows(rows);
+  mOperationMap.shiftRowsForRemove(row, count);
+  removeRecordsFromCache(rows);
+  endRemoveRows();
 }
 
 QVariant AbstractEditableCachedTableModel::verticalHeaderDisplayRoleData(int row) const
@@ -257,6 +264,7 @@ void AbstractEditableCachedTableModel::removeRowsToDeleteFromCacheOnly()
   const RowList rows = mOperationMap.getRowsToDeleteInCacheOnly();
   for(const auto row : rows){
     fromBackendRemoveRows(row, 1);
+    mOperationMap.removeOperationAtRow(row);
   }
 }
 
