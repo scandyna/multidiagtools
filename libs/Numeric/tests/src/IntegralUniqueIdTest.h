@@ -32,6 +32,7 @@ class IntegralUniqueIdTest : public QObject
   void articleIdTest();
   void runtimeComparisonTest();
   void QVariantTest();
+  void toQVariantTest();
   void fromQVariantTest();
 };
 

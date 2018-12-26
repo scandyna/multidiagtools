@@ -143,6 +143,13 @@ namespace Mdt{ namespace Numeric{
       return a.value() >= b.value();
     }
 
+    /*! \brief Get a QVariant from this id
+     */
+    QVariant toQVariant() const
+    {
+      return QVariant(mId);
+    }
+
     /*! \brief Construct a id from \a value
      */
     static Derived fromQVariant(const QVariant & value)

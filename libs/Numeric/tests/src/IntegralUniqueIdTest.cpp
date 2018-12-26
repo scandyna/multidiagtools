@@ -79,6 +79,15 @@ void IntegralUniqueIdTest::QVariantTest()
   QCOMPARE(vId1.value<MetaTypeKnownId>().value(), 1ull);
 }
 
+void IntegralUniqueIdTest::toQVariantTest()
+{
+  ArticleId id1(1);
+  QCOMPARE(id1.toQVariant(), QVariant(1));
+
+  MetaTypeKnownId id2(2);
+  QCOMPARE(id2.toQVariant(), QVariant(2));
+}
+
 void IntegralUniqueIdTest::fromQVariantTest()
 {
   QVariant vId25(25);
