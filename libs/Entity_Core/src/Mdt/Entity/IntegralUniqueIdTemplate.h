@@ -21,6 +21,7 @@
 #ifndef MDT_ENTITY_INTEGRAL_UNIQUE_ID_TEMPLATE_H
 #define MDT_ENTITY_INTEGRAL_UNIQUE_ID_TEMPLATE_H
 
+#include "Mdt/Numeric/IntegralUniqueIdTemplate.h"
 #include <QtGlobal>
 #include <QVariant>
 #include <type_traits>
@@ -28,6 +29,8 @@
 namespace Mdt{ namespace Entity{
 
   /*! \brief Class template to create a integral unique identifier
+   *
+   * \deprecated Use Mdt::Numeric::IntegralUniqueIdTemplate
    *
    * \code
    * #include "Mdt/Entity/IntegralUniqueIdTemplate.h"
@@ -41,124 +44,7 @@ namespace Mdt{ namespace Entity{
    * \endcode
    */
   template<typename Derived, typename IntegralType = qulonglong>
-  class IntegralUniqueIdTemplate
-  {
-    static_assert( std::is_integral<IntegralType>::value, "IntegralType must be a integral type" );
-
-   public:
-
-    /*! \brief STL compatible value type this unique id holds
-     */
-    using value_type = IntegralType;
-
-    /*! \brief Construct a null id
-     */
-    constexpr IntegralUniqueIdTemplate() noexcept = default;
-
-    /*! \brief Copy construct a id from \a other
-     */
-    constexpr explicit IntegralUniqueIdTemplate(const IntegralUniqueIdTemplate & other) noexcept = default;
-
-    /*! \brief Copy assign \a other to this unique id
-     */
-    constexpr IntegralUniqueIdTemplate & operator=(const IntegralUniqueIdTemplate & other) noexcept = default;
-
-    /*! \brief Move construct a id from \a other
-     */
-    constexpr IntegralUniqueIdTemplate(IntegralUniqueIdTemplate && other) noexcept = default;
-
-    /*! \brief Move assign \a other to this unique id
-     */
-    constexpr IntegralUniqueIdTemplate & operator=(IntegralUniqueIdTemplate && other) noexcept = default;
-
-    /*! \brief Construct a id
-     */
-    constexpr explicit IntegralUniqueIdTemplate(IntegralType id) noexcept
-     : mId(id)
-    {
-      static_assert( std::is_base_of< IntegralUniqueIdTemplate, Derived >::value, "Derived must derive from IntegralUniqueIdTemplate" );
-    }
-
-    /*! \brief Check if this id is null
-     *
-     * This id is null if its value equals 0
-     */
-    constexpr bool isNull() const noexcept
-    {
-      return (mId == 0);
-    }
-
-    /*! \brief Get the value of this id
-     */
-    constexpr IntegralType value() const noexcept
-    {
-      return mId;
-    }
-
-    /*! \brief Compare id a and b
-     */
-    friend
-    constexpr bool operator==(const Derived & a, const Derived & b) noexcept
-    {
-      return a.value() == b.value();
-    }
-
-    /*! \brief Compare id a and b
-     */
-    friend
-    constexpr bool operator!=(Derived a, Derived b) noexcept
-    {
-      return a.value() != b.value();
-    }
-
-    /*! \brief Compare id a and b
-     */
-    friend
-    constexpr bool operator<(Derived a, Derived b) noexcept
-    {
-      return a.value() < b.value();
-    }
-
-    /*! \brief Compare id a and b
-     */
-    friend
-    constexpr bool operator<=(Derived a, Derived b) noexcept
-    {
-      return a.value() <= b.value();
-    }
-
-    /*! \brief Compare id a and b
-     */
-    friend
-    constexpr bool operator>(Derived a, Derived b) noexcept
-    {
-      return a.value() > b.value();
-    }
-
-    /*! \brief Compare id a and b
-     */
-    friend
-    constexpr bool operator>=(Derived a, Derived b) noexcept
-    {
-      return a.value() >= b.value();
-    }
-
-    /*! \brief Construct a id from \a value
-     */
-    static Derived fromQVariant(const QVariant & value)
-    {
-      if(value.isNull()){
-        return Derived();
-      }
-      Q_ASSERT(value.canConvert<value_type>());
-
-      return Derived( value.value<value_type>() );
-    }
-
-   private:
-
-    IntegralType mId = 0;
-  };
+  using IntegralUniqueIdTemplate = Mdt::Numeric::IntegralUniqueIdTemplate<Derived, IntegralType>;
 
 }} // namespace Mdt{ namespace Entity{
 
