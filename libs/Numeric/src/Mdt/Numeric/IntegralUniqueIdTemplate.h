@@ -18,8 +18,8 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ENTITY_INTEGRAL_UNIQUE_ID_TEMPLATE_H
-#define MDT_ENTITY_INTEGRAL_UNIQUE_ID_TEMPLATE_H
+#ifndef MDT_NUMERIC_INTEGRAL_UNIQUE_ID_TEMPLATE_H
+#define MDT_NUMERIC_INTEGRAL_UNIQUE_ID_TEMPLATE_H
 
 #include <QtGlobal>
 #include <QVariant>
@@ -162,4 +162,4 @@ namespace Mdt{ namespace Numeric{
 
 }} // namespace Mdt{ namespace Numeric{
 
-#endif // #ifndef MDT_ENTITY_INTEGRAL_UNIQUE_ID_TEMPLATE_H
+#endif // #ifndef MDT_NUMERIC_INTEGRAL_UNIQUE_ID_TEMPLATE_H
