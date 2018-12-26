@@ -4,6 +4,7 @@ set(SOURCE_FILES
   Mdt/Numeric/Resistance.cpp
   Mdt/Numeric/Length.cpp
   Mdt/Numeric/IntegralRange.cpp
+  Mdt/Numeric/IntegralUniqueIdTemplate.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
