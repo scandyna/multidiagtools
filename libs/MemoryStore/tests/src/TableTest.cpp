@@ -68,17 +68,6 @@ class Contact
 };
 
 /*
- * Person entity
- */
-
-class PersonId : public Mdt::Numeric::IntegralUniqueIdTemplate<PersonId, int>
-{
- public:
-
-  using IntegralUniqueIdTemplate::IntegralUniqueIdTemplate;
-};
-
-/*
  * Composed, non incrementable primary key
  */
 struct ComposedPrimaryKey

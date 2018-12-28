@@ -65,6 +65,8 @@ namespace Mdt{ namespace MemoryStore{
    *   \code
    *   bool operator<(const MyPrimaryKey & a, const MyPrimaryKey & b);
    *   \endcode
+   *
+   * \sa TableWithAutoId
    */
   template<typename Record, typename PrimaryKey>
   class Table
