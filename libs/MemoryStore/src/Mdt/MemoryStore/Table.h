@@ -26,6 +26,7 @@
 #include <QCoreApplication>
 #include <QString>
 #include <map>
+#include <vector>
 
 namespace Mdt{ namespace MemoryStore{
 
@@ -118,6 +119,19 @@ namespace Mdt{ namespace MemoryStore{
       }
 
       return it->second;
+    }
+
+    /*! \brief Get all records
+     */
+    std::vector<Record> getAll() const
+    {
+      std::vector<Record> list;
+
+      for(const auto & keyValuePair : mMap){
+        list.emplace_back(keyValuePair.second);
+      }
+
+      return list;
     }
 
     /*! \brief Update a record in this table

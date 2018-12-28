@@ -31,6 +31,7 @@ class TableTest : public QObject
 
   void addWithPkTest();
   void addGetByPkTest();
+  void getAllTest();
   void nextIdTest();
   void updateTest();
   void removeTest();

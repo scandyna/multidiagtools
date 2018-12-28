@@ -134,6 +134,24 @@ void TableTest::addGetByPkTest()
   QVERIFY(!rec);
 }
 
+void TableTest::getAllTest()
+{
+  Table<Contact, int> table;
+
+  Contact ca("A", "123");
+  Contact cb("B", "456");
+
+  QVERIFY(table.add(ca, 1));
+  QVERIFY(table.add(cb, 2));
+
+  const auto contacts = table.getAll();
+  QCOMPARE(contacts.size(), 2ul);
+  QCOMPARE(contacts.at(0).type(), QString("A"));
+  QCOMPARE(contacts.at(0).phoneNumber(), QString("123"));
+  QCOMPARE(contacts.at(1).type(), QString("B"));
+  QCOMPARE(contacts.at(1).phoneNumber(), QString("456"));
+}
+
 void TableTest::nextIdTest()
 {
   TableWithAutoId<Contact> table;
