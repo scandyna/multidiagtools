@@ -125,16 +125,59 @@
  * \endcode
  * In above example, we change the first name to some invalid string.
  *
- * \section reflect_with_friend Reflection with friend
+ * \section reflect_with_friend Reflection with friend access function
  *
+ * One solution could be to define friend functions to access the internal data struct:
  * \code
- * firend constPersonDataStruct; ?
+ * class Person
+ * {
+ *  public:
+ *
+ *   Person(const QString & firstName, const QString & lastName);
+ *   QString firstName() const;
+ *   QString lastName() const;
+ *   // Some other usefull methods ..
+ *
+ *   PersonDataStruct & dataStruct();
+ *   const PersonDataStruct & constDataStruct() const;
+ *
+ *  private:
+ *
+ *   friend
+ *   const PersonDataStruct & personPrivateConstDataStruct(const Person & person);
+ *
+ *   friend
+ *   PersonDataStruct & personPrivateDataStruct(Person & person);
+ *
+ *   PersonDataStruct mDataStruct;
+ * };
  * \endcode
  *
+ * In some private header, we could define those access functions:
  * \code
- * const PersonDataStruct & constPersonDataStruct(const Person & person)
+ * // Person_p.h
+ * #include "Person.h"
+ *
+ * inline
+ * const PersonDataStruct & personPrivateConstDataStruct(const Person & person)
  * {
  *   return person.mDataStruct;
+ * }
+ *
+ * inline
+ * PersonDataStruct & personPrivateDataStruct(Person & person)
+ * {
+ * return person.mDataStruct;
+ * }
+ * \endcode
+ *
+ * In the repository implementation:
+ * \code
+ * #include "Person_p.h"
+ *
+ * bool SqlPesronRepository::add(const Person & person)
+ * {
+ *   return mImpl.add<PersonDef>( personPrivateConstDataStruct(person) );
  * }
  * \endcode
  *
@@ -301,42 +344,39 @@ class Person
  public:
 
   Person(const QString & firstName, const QString & lastName)
-   : mFirstName(firstName),
-     mLastName(lastName)
+   : mDataStruct{0, firstName, lastName}
   {
-  }
-
-  void setFirstName(const QString & name)
-  {
-    mFirstName = name;
   }
 
   QString firstName() const
   {
-    return mFirstName;
-  }
-
-  void setLastName(const QString & name)
-  {
-    mLastName = name;
+    return mDataStruct.firstName;
   }
 
   QString lastName() const
   {
-    return mLastName;
+    return mDataStruct.lastName;
   }
 
  private:
 
-  QString mFirstName;
-  QString mLastName;
+  friend
+  const PersonDataStruct & personPrivateConstDataStruct(const Person & person);
+
+  friend
+  PersonDataStruct & personPrivateDataStruct(Person & person)
+  {
+    return person.mDataStruct;
+  }
+
+  PersonDataStruct mDataStruct;
 };
 
-BOOST_FUSION_ADAPT_ASSOC_ADT(
-  Person,
-  (obj.firstName(), obj.setFirstName(val), PersonDef::firstName)
-  (obj.lastName(), obj.setLastName(val), PersonDef::lastName)
-)
+inline
+const PersonDataStruct & personPrivateConstDataStruct(const Person & person)
+{
+  return person.mDataStruct;
+}
 
 template<>
 constexpr const char *reflectedClassName<Person>()
@@ -388,7 +428,7 @@ int main(int argc, char **argv)
   qDebug() << "Name: " << nameFromClass<Person>();
   qDebug() << "id name: " << fieldName<PersonDef::id>();
 
-  boost::fusion::for_each(pa, saver());
+  boost::fusion::for_each( personPrivateConstDataStruct(pa), saver());
 
 //   qDebug() << "Id name: " << boost::fusion::extension::struct_member_name<Person, 1>::call();
 
