@@ -11,6 +11,7 @@
  *  public:
  *
  *   Person(const QString & firstName, const QString & lastName);
+ *   PersonId id() const;
  *   QString firstName() const;
  *   QString lastName() const;
  *   // Some other usefull methods ..
@@ -48,21 +49,31 @@
  * };
  * \endcode
  *
+ * Whe should also provide functions to convert between %Person and %PersonDataStruct:
+ * \code
+ * Person personFromDataStruct(const PersonDataStruct & data)
+ * {
+ *   return Person(data.id, data.firstName, data.lastName);
+ * }
+ *
+ * PersonDataStruct dataStructFromPerson(const Person & person)
+ * {
+ *   return PersonDataStruct{person.id().value(), person.firstName(), person.lastName()};
+ * }
+ * \endcode
+ *
  * In the repository implementation:
  * \code
  * bool SqlPesronRepository::add(const Person & person)
  * {
- *   PersonDataStruct data;
- *   data.firstName = person.firstName();
- *   data.lastName = person.lastName();
- *
- *   return mImpl.add<PersonDef>(data);
+ *   return mImpl.add<PersonDef>( dataStructFromPerson(person) );
  * }
  * \endcode
  *
  * Here, there is no reflection details in the domain object.
- *  But, when changing attributes of %Person,
- *  remember to update all repsoitories, or other classes that uses %PersonDataStruct.
+ *  By providing the two helper functions for conversion between
+ *  %Person and %PersonDataStruct, we have only a few changes
+ *  to make when changing the attributes of %Person;
  *
  * \section somewhat_instrusive_reflection Somewhat intrusive reflection
  *
@@ -104,9 +115,61 @@
  * }
  * \endcode
  *
- * Here, the domain entity has knowlage of reflection tricks,
- *  but there is much less maintenance in the repositories
- *  (as well as less data copies for each repository operations).
+ * Here, the domain entity has knowlage of reflection tricks.
+ *  This could maybe bring some less overhead, because there are
+ *  no data structs to instanciante and copies for each repository operations.
+ *
+ * But, here the domain model has direct access to the attributes of %Person:
+ * \code
+ * person.dataStruct().firstName = " ";
+ * \endcode
+ * In above example, we change the first name to some invalid string.
+ *
+ * \section reflect_with_friend Reflection with friend
+ *
+ * \code
+ * firend constPersonDataStruct; ?
+ * \endcode
+ *
+ * \code
+ * const PersonDataStruct & constPersonDataStruct(const Person & person)
+ * {
+ *   return person.mDataStruct;
+ * }
+ * \endcode
+ *
+ * \section reflect_domain_object Reflect the domain entity directly
+ *
+ * \code
+ * class Person
+ * {
+ *  public:
+ *
+ *   Person(const QString & firstName, const QString & lastName);
+ *   Person(PersonId id, const QString & firstName, const QString & lastName);
+ *   void setPersonId(PersonId id);
+ *   PersonId id() const;
+ *   void setFirstName(const QString & name);
+ *   QString firstName() const;
+ *   void setLastName(const QString & name);
+ *   QString lastName() const;
+ *   // Some other usefull methods ..
+ *
+ *  private:
+ *
+ *   PersonId mId;
+ *   QString mFirstName;
+ *   QString mLastName;
+ * };
+ * \endcode
+ *
+ * To reflect the domain entity directly, we force %Person
+ *  to provide a ID. Also, all setters and getters are mandatory for the reflection.
+ *  Also, if some value objects are used, like %PersonId, %PersonName, etc..,
+ *  we probably will have to provide some some stuff to make those value objects serializable.
+ *
+ * Here, the domain entity is strongly coupled with the reflection details.
+ *
  *
  * \section attributes
  *
@@ -159,17 +222,189 @@
  *
  */
 
+#include <boost/fusion/adapted/struct/adapt_assoc_struct.hpp>
+#include <boost/fusion/include/adapt_assoc_struct.hpp>
+
+#include <boost/fusion/adapted/adt/adapt_assoc_adt.hpp>
+#include <boost/fusion/include/adapt_assoc_adt.hpp>
+
+#include <boost/fusion/include/for_each.hpp>
+
+#include <QDebug>
+
+/*!
+ */
+
+struct PersonDataStruct
+{
+  int id = 0;
+  QString firstName;
+  QString lastName;
+};
+
+template<typename T>
+constexpr const char *reflectedClassName()
+{
+//   static_assert(false, "Not a reflected class");
+  return "";
+}
+
+template<>
+constexpr const char *reflectedClassName<PersonDataStruct>()
+{
+  return "Person";
+}
+
+struct PersonDef
+{
+  using ReflectedClass = PersonDataStruct;
+
+  static constexpr const char *name()
+  {
+    return reflectedClassName<ReflectedClass>();
+  }
+
+  struct id
+  {
+    static constexpr const char *name()
+    {
+      return "id";
+    }
+  };
+
+  struct firstName
+  {
+    static constexpr const char *name()
+    {
+      return "id";
+    }
+  };
+
+  struct lastName
+  {
+    static constexpr const char *name()
+    {
+      return "id";
+    }
+  };
+};
+
+BOOST_FUSION_ADAPT_ASSOC_STRUCT(
+  PersonDataStruct,
+  (id, PersonDef::id)
+  (firstName, PersonDef::firstName)
+  (lastName, PersonDef::lastName)
+)
+
+class Person
+{
+ public:
+
+  Person(const QString & firstName, const QString & lastName)
+   : mFirstName(firstName),
+     mLastName(lastName)
+  {
+  }
+
+  void setFirstName(const QString & name)
+  {
+    mFirstName = name;
+  }
+
+  QString firstName() const
+  {
+    return mFirstName;
+  }
+
+  void setLastName(const QString & name)
+  {
+    mLastName = name;
+  }
+
+  QString lastName() const
+  {
+    return mLastName;
+  }
+
+ private:
+
+  QString mFirstName;
+  QString mLastName;
+};
+
+BOOST_FUSION_ADAPT_ASSOC_ADT(
+  Person,
+  (obj.firstName(), obj.setFirstName(val), PersonDef::firstName)
+  (obj.lastName(), obj.setLastName(val), PersonDef::lastName)
+)
+
+template<>
+constexpr const char *reflectedClassName<Person>()
+{
+  return "Person";
+}
+
+
+
+template<typename Def>
+static constexpr const char* nameFromDef()
+{
+  return Def::name();
+}
+
+template<typename Class>
+static constexpr const char* nameFromClass()
+{
+  return reflectedClassName<Class>();
+}
+
+
+template<typename Field>
+static constexpr const char* fieldName()
+{
+  return Field::name();
+//   return boost::fusion::extension::struct_member_name<DataStruct, Field>::call();
+}
+
+struct saver
+{
+  template<typename FieldValue>
+  void operator()(const FieldValue & value) const
+  {
+    qDebug() << value;
+//     qDebug() << "Field: " << Field::name(); /* << ", value: " << boost::fusion::at_key<Field>(field); */
+  }
+};
+
 /*
  * Main
  */
 
 int main(int argc, char **argv)
 {
+  Person pa("fA", "lA");
+
+  qDebug() << "Name: " << nameFromDef<PersonDef>();
+  qDebug() << "Name: " << nameFromClass<Person>();
+  qDebug() << "id name: " << fieldName<PersonDef::id>();
+
+  boost::fusion::for_each(pa, saver());
+
+//   qDebug() << "Id name: " << boost::fusion::extension::struct_member_name<Person, 1>::call();
+
+//   PersonDataStruct person{1, "fA", "lA"};
+
+//   qDebug() << "Name: " << name<PersonDef>();
+
+//   qDebug() << "Id name: " << boost::fusion::extension::struct_member_name<PersonDataStruct, 0>::call();
+//
+//   qDebug() << "Field: " << fieldName<PersonDataStruct, PersonDef::id>();
+
 //   Mdt::CoreApplication app(argc, argv);
 //   MemoryVehicleTypeRepositoryTest test;
-// 
+//
 // //   app.debugEnvironnement();
-// 
+//
 //   return QTest::qExec(&test, argc, argv);
 }
 
