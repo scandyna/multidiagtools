@@ -1,6 +1,8 @@
 
 # List of source files
 set(SOURCE_FILES
+  Mdt/Reflection/PrimaryKey.cpp
+  Mdt/Reflection/PrimaryKeyAlgorithm.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

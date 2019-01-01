@@ -1,5 +1,7 @@
 
 #include "TestBase.h"
+#include "Mdt/Reflection/PrimaryKey.h"
+#include "Mdt/Reflection/PrimaryKeyAlgorithm.h"
 
 /*!
  * \section introduction Introduction
@@ -209,10 +211,9 @@
  * To reflect the domain entity directly, we force %Person
  *  to provide a ID. Also, all setters and getters are mandatory for the reflection.
  *  Also, if some value objects are used, like %PersonId, %PersonName, etc..,
- *  we probably will have to provide some some stuff to make those value objects serializable.
+ *  we probably will have to provide some stuff to make those value objects serializable.
  *
  * Here, the domain entity is strongly coupled with the reflection details.
- *
  *
  * \section attributes
  *
@@ -227,10 +228,41 @@
  *
  * Some other attributes could also have meaning in the domain busines logic.
  *  For example, if some data is required, this could be defined in one place,
- *  the reused on the domain logic, in the UI and in the persistance
+ *  then reused on the domain logic, in the UI and in the persistance
  *  (f.ex. generating corresponding constraints on the databse schema).
  *
+ * \sa Mdt::Reflection::PrimaryKey
  *
+ * \section sql_schema Create a SQL schema
+ *
+ * In this example, a simple function will create
+ *  a SQL schema based on reflected entities:
+ * \code
+ * #include "Person.h"
+ * #include "Person_p.h"
+ * #include <Mdt/Sql/Schema/Reflection.h>
+ * #include <Mdt/Sql/Schema/Driver.h>
+ * #include <QSqlDatabase>
+ *
+ * using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef, PersonDef::id>;
+ *
+ * bool createSqlSchema(const QSqlDatabase & dbConnection)
+ * {
+ *   Mdt::Sql::Schema::Driver driver(dbConnection);
+ *   if(!driver.isValid()){
+ *     return false;
+ *   }
+ *
+ *   auto personTable = Mdt::Sql::Schema::tableFromReflected<PersonDef, PersonPrimaryKey>();
+ *   if( !driver.createTable(personTable) ){
+ *     return false;
+ *   }
+ *
+ *   return true;
+ * }
+ * \endcode
+ *
+ * \sa Mdt::Sql::Schema::Reflection::tableFromReflected()
  *
  * \section alternatives
  *
@@ -273,6 +305,14 @@
 
 #include <boost/fusion/include/for_each.hpp>
 
+// #include <boost/fusion/include/at.hpp>
+#include <boost/fusion/include/distance.hpp>
+#include <boost/fusion/include/begin.hpp>
+#include <boost/fusion/include/find.hpp>
+
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/for_each.hpp>
+
 #include <QDebug>
 
 /*!
@@ -285,50 +325,25 @@ struct PersonDataStruct
   QString lastName;
 };
 
-template<typename T>
-constexpr const char *reflectedClassName()
-{
-//   static_assert(false, "Not a reflected class");
-  return "";
-}
-
-template<>
-constexpr const char *reflectedClassName<PersonDataStruct>()
-{
-  return "Person";
-}
-
 struct PersonDef
 {
-  using ReflectedClass = PersonDataStruct;
+  using DataStruct = PersonDataStruct;
 
   static constexpr const char *name()
   {
-    return reflectedClassName<ReflectedClass>();
+    return "Person";
   }
 
   struct id
   {
-    static constexpr const char *name()
-    {
-      return "id";
-    }
   };
 
   struct firstName
   {
-    static constexpr const char *name()
-    {
-      return "id";
-    }
   };
 
   struct lastName
   {
-    static constexpr const char *name()
-    {
-      return "id";
-    }
   };
 };
 
@@ -338,6 +353,17 @@ BOOST_FUSION_ADAPT_ASSOC_STRUCT(
   (firstName, PersonDef::firstName)
   (lastName, PersonDef::lastName)
 )
+
+struct FieldIsRequired
+{
+};
+
+template<int Length>
+struct FieldMaxLength
+{
+};
+
+using PersonFirstNameAttributes = boost::mpl::vector<FieldIsRequired, FieldMaxLength<20> >;
 
 class Person
 {
@@ -372,38 +398,44 @@ class Person
   PersonDataStruct mDataStruct;
 };
 
+
+
 inline
 const PersonDataStruct & personPrivateConstDataStruct(const Person & person)
 {
   return person.mDataStruct;
 }
 
-template<>
-constexpr const char *reflectedClassName<Person>()
+
+template<typename StructDef>
+static constexpr const char* nameFromStructDef()
 {
-  return "Person";
+  return StructDef::name();
 }
 
 
-
-template<typename Def>
-static constexpr const char* nameFromDef()
+template<typename DataStruct, int FieldIndex>
+static constexpr const char* fieldNameAtFromDataStruct()
 {
-  return Def::name();
+  return boost::fusion::extension::struct_member_name<DataStruct, FieldIndex>::call();
 }
 
-template<typename Class>
-static constexpr const char* nameFromClass()
+template<typename DataStruct, typename Field>
+static constexpr int dataStructFieldIndex()
 {
-  return reflectedClassName<Class>();
+  using first = typename boost::fusion::result_of::begin<DataStruct>::type;
+  using it = typename boost::fusion::result_of::find<DataStruct, Field>::type;
+
+  return boost::fusion::result_of::distance<first, it>::value;
 }
 
-
-template<typename Field>
-static constexpr const char* fieldName()
+template<typename StructDef, typename Field>
+static constexpr const char *fieldNameFromStructDef()
 {
-  return Field::name();
-//   return boost::fusion::extension::struct_member_name<DataStruct, Field>::call();
+  using DataStruct = typename StructDef::DataStruct;
+  constexpr int fieldIndex = dataStructFieldIndex<DataStruct, Field>();
+
+  return fieldNameAtFromDataStruct<DataStruct, fieldIndex>();
 }
 
 struct saver
@@ -416,6 +448,26 @@ struct saver
   }
 };
 
+struct Inspector
+{
+  template<typename Field>
+  void operator()(const Field &) const
+  {
+  }
+};
+
+using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef, PersonDef::id, PersonDef::lastName, PersonDef::firstName>;
+
+template<typename StructDef>
+struct PrintPkName
+{
+  template<typename Field>
+  void operator()(Field)
+  {
+    qDebug() << "PK field: " << nameFromStructDef<StructDef>() << '.' << fieldNameFromStructDef<StructDef, Field>();
+  }
+};
+
 /*
  * Main
  */
@@ -424,11 +476,18 @@ int main(int argc, char **argv)
 {
   Person pa("fA", "lA");
 
-  qDebug() << "Name: " << nameFromDef<PersonDef>();
-  qDebug() << "Name: " << nameFromClass<Person>();
-  qDebug() << "id name: " << fieldName<PersonDef::id>();
+//   qDebug() << "Name: " << nameFromDef<PersonDef>();
+//   qDebug() << "Name: " << nameFromClass<Person>();
+//   qDebug() << "id name: " << fieldName<PersonDef::id>();
+
+  qDebug() << "Field: " << fieldNameAtFromDataStruct<PersonDataStruct, 1>();
+  qDebug() << "Field: " << fieldNameFromStructDef<PersonDef, PersonDef::lastName>();
 
   boost::fusion::for_each( personPrivateConstDataStruct(pa), saver());
+
+//   boost::fusion::for_each( PersonDef(), Inspector() );
+
+  Mdt::Reflection::forEachPrimaryKeyField<PersonPrimaryKey>( PrintPkName<PersonDef>() );
 
 //   qDebug() << "Id name: " << boost::fusion::extension::struct_member_name<Person, 1>::call();
 

@@ -10,8 +10,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtReflection_CoreTest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtReflection_CoreTest  Application_Core Qt5::Test)
-# Reflection_Core
+target_link_libraries(mdtReflection_CoreTest Reflection_Core Application_Core Qt5::Test)
 
 #=============== Helper functions ===========
 
