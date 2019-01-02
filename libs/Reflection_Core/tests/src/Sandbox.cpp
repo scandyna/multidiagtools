@@ -389,6 +389,9 @@ struct PersonDef
       return Mdt::Reflection::FieldAttributes(FieldMaxLength(215), FieldFlag::HasDefaultValue);
     }
   };
+
+  // To iterate all fields using boost::mpl::for_each() - No need to instantiate a Struct for it
+  using field_list = boost::mpl::vector<id, firstName, lastName>;
 };
 
 BOOST_FUSION_ADAPT_ASSOC_STRUCT(
@@ -582,6 +585,24 @@ void forEachFieldValuePair(const Struct & s, const F & f)
   boost::fusion::for_each(map, f);
 }
 
+template<typename StructDef>
+struct Inspector3
+{
+  template<typename Field>
+  void operator()(Field) const
+  {
+    qDebug() << "Inspector3 field: " << fieldNameFromStructDef<StructDef, Field>();
+    qDebug() << " Required: " << isFieldRequired<Field>();
+    qDebug() << " Has default value: " << hasFieldDefaultValue<Field>();
+    qDebug() << " Max length: " << fieldMaxLength<Field>();
+  }
+};
+
+template<typename StructDef, typename F>
+void forEachField(const F & f)
+{
+  boost::mpl::for_each< typename StructDef::field_list >(f);
+}
 
 using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef, PersonDef::id, PersonDef::lastName>;
 
@@ -613,6 +634,8 @@ int main(int argc, char **argv)
   boost::fusion::for_each( personPrivateConstDataStruct(pa), saver());
 
   forEachFieldValuePair( personPrivateConstDataStruct(pa), Inspector2<PersonDef>() );
+
+  forEachField<PersonDef>( Inspector3<PersonDef>() );
 
   boost::fusion::iter_fold( personPrivateConstDataStruct(pa), 0, Inspector() );
 
