@@ -26,9 +26,39 @@
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief Get a SQL schema table from a reflected struct
+   *
+   * Example to create a table without specifiying a primary key:
+   * \code
+   * using namespace Mdt::Sql::Schema;
+   *
+   * auto Table = tableFromReflected<PersonDef>(PersonDataStruct());
+   * \endcode
+   *
+   * Example with a auto increment id:
+   * \code
+   * using namespace Mdt::Sql::Schema;
+   *
+   * using PersonPrimaryKey = Mdt::Reflection::AutoIncrementUniqueId<PersonDef, PersonDef::id>;
+   *
+   * auto Table = tableFromReflected<PersonDef, PersonPrimaryKey>(PersonDataStruct());
+   * \endcode
+   *
+   * \note \a s is a instance of the struct that have beend reflected.
+   *   Passing a instance is required to retrieve default values.
+   *
+   * \sa tableFromReflected<StructDef, PrimaryKey, Struct>(const Struct &)
    */
-  template<typename StructDef>
-  Table tableFromReflected()
+  template<typename StructDef, typename Struct>
+  Table tableFromReflected(const Struct & s)
+  {
+  }
+
+  /*! \brief
+   *
+   * \sa tableFromReflected<StructDef, Struct>(const Struct &)
+   */
+  template<typename StructDef, typename PrimaryKey, typename Struct>
+  Table tableFromReflected(const Struct & s)
   {
   }
 

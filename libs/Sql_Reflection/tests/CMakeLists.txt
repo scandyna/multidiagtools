@@ -10,7 +10,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtSql_ReflectionTest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtSql_ReflectionTest Sql_Core Sql_Core_SQLite Application_Core Qt5::Test)
+target_link_libraries(mdtSql_ReflectionTest Sql_Reflection Sql_Core Sql_Core_SQLite Application_Core Qt5::Test)
 
 #=============== Helper functions ===========
 

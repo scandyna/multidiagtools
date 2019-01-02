@@ -27,3 +27,5 @@ endfunction()
 #================= Tests ====================
 
 addReflection_CoreTest("Sandbox")
+addReflection_CoreTest("FieldAttributesTest")
+addReflection_CoreTest("PrimaryKeyTest")

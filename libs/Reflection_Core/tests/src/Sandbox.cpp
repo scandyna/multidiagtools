@@ -2,6 +2,7 @@
 #include "TestBase.h"
 #include "Mdt/Reflection/PrimaryKey.h"
 #include "Mdt/Reflection/PrimaryKeyAlgorithm.h"
+#include "Mdt/Reflection/FieldAttributes.h"
 
 /*!
  * \section introduction Introduction
@@ -232,6 +233,8 @@
  *  (f.ex. generating corresponding constraints on the databse schema).
  *
  * \sa Mdt::Reflection::PrimaryKey
+ * \sa Mdt::Reflection::IdPrimaryKey
+ * \sa Mdt::Reflection::AutoIncrementIdPrimaryKey
  *
  * \section sql_schema Create a SQL schema
  *
@@ -263,6 +266,15 @@
  * \endcode
  *
  * \sa Mdt::Sql::Schema::Reflection::tableFromReflected()
+ *
+ * \section some_compromises Some compromises
+ *
+ * To get informations about a reflected struct,
+ *  a instance of that struct must be instanciated.
+ *  While this brings some runtime overhead,
+ *  for example to create a SQL schema,
+ *  practice have shown that a instance can be necessary anyway,
+ *  for example to get the default values defined in the struct.
  *
  * \section alternatives
  *
@@ -310,6 +322,18 @@
 #include <boost/fusion/include/begin.hpp>
 #include <boost/fusion/include/find.hpp>
 
+#include <boost/fusion/iterator/key_of.hpp>
+#include <boost/fusion/include/key_of.hpp>
+
+#include <boost/fusion/container/map/convert.hpp>
+#include <boost/fusion/include/as_map.hpp>
+
+#include <boost/fusion/support/pair.hpp>
+#include <boost/fusion/include/pair.hpp>
+
+#include <boost/fusion/algorithm/iteration/iter_fold.hpp>
+#include <boost/fusion/include/iter_fold.hpp>
+
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/for_each.hpp>
 
@@ -320,6 +344,11 @@
 
 struct PersonDataStruct
 {
+  PersonDataStruct(const PersonDataStruct &) = delete;
+  PersonDataStruct & operator=(const PersonDataStruct &) = delete;
+  PersonDataStruct(PersonDataStruct &&) = delete;
+  PersonDataStruct & operator=(PersonDataStruct &&) = delete;
+
   int id = 0;
   QString firstName;
   QString lastName;
@@ -327,7 +356,7 @@ struct PersonDataStruct
 
 struct PersonDef
 {
-  using DataStruct = PersonDataStruct;
+  using reflected_struct = PersonDataStruct;
 
   static constexpr const char *name()
   {
@@ -336,14 +365,29 @@ struct PersonDef
 
   struct id
   {
+    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
+    {
+      using namespace Mdt::Reflection;
+      return Mdt::Reflection::FieldAttributes();
+    }
   };
 
   struct firstName
   {
+    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
+    {
+      using namespace Mdt::Reflection;
+      return Mdt::Reflection::FieldAttributes(FieldFlag::IsRequired);
+    }
   };
 
   struct lastName
   {
+    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
+    {
+      using namespace Mdt::Reflection;
+      return Mdt::Reflection::FieldAttributes(FieldMaxLength(215), FieldFlag::HasDefaultValue);
+    }
   };
 };
 
@@ -363,7 +407,14 @@ struct FieldMaxLength
 {
 };
 
-using PersonFirstNameAttributes = boost::mpl::vector<FieldIsRequired, FieldMaxLength<20> >;
+// using PersonFirstNameAttributes = boost::mpl::vector<FieldIsRequired, FieldMaxLength<20> >;
+
+using PersonFieldAttributes =
+  boost::mpl::vector<
+    boost::mpl::vector<>,
+    boost::mpl::vector<FieldIsRequired>,
+    boost::mpl::vector< FieldIsRequired, FieldMaxLength<20> >
+  >;
 
 class Person
 {
@@ -432,10 +483,34 @@ static constexpr int dataStructFieldIndex()
 template<typename StructDef, typename Field>
 static constexpr const char *fieldNameFromStructDef()
 {
-  using DataStruct = typename StructDef::DataStruct;
-  constexpr int fieldIndex = dataStructFieldIndex<DataStruct, Field>();
+  using reflected_struct = typename StructDef::reflected_struct;
+  constexpr int fieldIndex = dataStructFieldIndex<reflected_struct, Field>();
 
-  return fieldNameAtFromDataStruct<DataStruct, fieldIndex>();
+  return fieldNameAtFromDataStruct<reflected_struct, fieldIndex>();
+}
+
+/*! \brief Check if a field is required
+ */
+template<typename Field>
+constexpr bool isFieldRequired()
+{
+  return Field::fieldAttributes().isRequired();
+}
+
+/*! \brief Check if a field has a default value
+ */
+template<typename Field>
+constexpr bool hasFieldDefaultValue()
+{
+  return Field::fieldAttributes().hasDefaultValue();
+}
+
+/*! \brief Get the max length of a field
+ */
+template<typename Field>
+constexpr int fieldMaxLength()
+{
+  return Field::fieldAttributes().maxLength();
 }
 
 struct saver
@@ -444,19 +519,71 @@ struct saver
   void operator()(const FieldValue & value) const
   {
     qDebug() << value;
-//     qDebug() << "Field: " << Field::name(); /* << ", value: " << boost::fusion::at_key<Field>(field); */
   }
 };
 
 struct Inspector
 {
-  template<typename Field>
-  void operator()(const Field &) const
+  using result_type = int;
+
+  template<typename It>
+  int operator()(const int &, const It & it) const
   {
+    using Field = typename boost::fusion::result_of::key_of<It>::type;
+
+    qDebug() << "It: " << typeid(It).name();
+    qDebug() << "Field: " << typeid(Field).name() << ", value: " << *it;
+
+    return 0;
   }
 };
 
-using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef, PersonDef::id, PersonDef::lastName, PersonDef::firstName>;
+template<typename StructDef>
+struct Inspector2
+{
+  template<typename FieldValuePair>
+  void operator()(const FieldValuePair & p) const
+  {
+    using Field = typename FieldValuePair::first_type;
+
+    qDebug() << "Field: " << nameFromStructDef<StructDef>() << "." << fieldNameFromStructDef<StructDef, Field>();
+    qDebug() << " Required: " << isFieldRequired<Field>();
+    qDebug() << " Has default value: " << hasFieldDefaultValue<Field>();
+    qDebug() << " Max length: " << fieldMaxLength<Field>();
+    qDebug() << " Value: " << p.second;
+  }
+};
+
+/*! \brief Iterate over each element on a reflected struct
+ *
+ * \a f is a functor like:
+ * \code
+ * struct MyFunctor
+ * {
+ *   template<typename FieldValuePair>
+ *   void operator()(const FieldValuePair & p) const
+ *   {
+ *   }
+ * };
+ * \endcode
+ *
+ * \a FieldValuePair will be a Boost Fusion pair.
+ *   FieldValuePair::first_type will be a Field in the StructDef assiocated to \a Struct .
+ *   FieldValuePair::second_type will be the value type.
+ *   The value is available with p.second .
+ *
+ * \pre \a Strcut must have been reflected with MDT_REFLECTION_REFLECT_STRUCT()
+ */
+template<typename Struct, typename F>
+void forEachFieldValuePair(const Struct & s, const F & f)
+{
+  // Note: this does not copy s
+  const auto map = boost::fusion::as_map(s);
+  boost::fusion::for_each(map, f);
+}
+
+
+using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef, PersonDef::id, PersonDef::lastName>;
 
 template<typename StructDef>
 struct PrintPkName
@@ -485,7 +612,9 @@ int main(int argc, char **argv)
 
   boost::fusion::for_each( personPrivateConstDataStruct(pa), saver());
 
-//   boost::fusion::for_each( PersonDef(), Inspector() );
+  forEachFieldValuePair( personPrivateConstDataStruct(pa), Inspector2<PersonDef>() );
+
+  boost::fusion::iter_fold( personPrivateConstDataStruct(pa), 0, Inspector() );
 
   Mdt::Reflection::forEachPrimaryKeyField<PersonPrimaryKey>( PrintPkName<PersonDef>() );
 

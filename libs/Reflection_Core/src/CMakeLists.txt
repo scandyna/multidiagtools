@@ -1,7 +1,12 @@
 
 # List of source files
 set(SOURCE_FILES
+  Mdt/Reflection/FieldFlags.cpp
+  Mdt/Reflection/FieldMaxLength.cpp
+  Mdt/Reflection/FieldAttributes.cpp
   Mdt/Reflection/PrimaryKey.cpp
+  Mdt/Reflection/IdPrimaryKey.cpp
+  Mdt/Reflection/AutoIncrementIdPrimaryKey.cpp
   Mdt/Reflection/PrimaryKeyAlgorithm.cpp
 )
 
@@ -21,7 +26,7 @@ mdt_add_library(
   NAME Reflection_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Qt5::Core
+  LINK_DEPENDENCIES Assert Qt5::Core
 )
 mdt_set_library_description(
   NAME Reflection_Core

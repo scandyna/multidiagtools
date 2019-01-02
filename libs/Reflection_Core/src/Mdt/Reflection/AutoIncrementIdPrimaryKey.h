@@ -18,24 +18,27 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN
-#define MDT_TEST_MAIN
+#ifndef MDT_REFLECTION_AUTO_INCREMENT_ID_PRIMARY_KEY_H
+#define MDT_REFLECTION_AUTO_INCREMENT_ID_PRIMARY_KEY_H
 
-#include "TestBase.h"
+#include <boost/mpl/vector.hpp>
 
-class ReflectionTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace Reflection{
 
- private slots:
+  /*! \brief Auto increment primary key for a reflected struct
+   *
+   * \pre \a Field must refer to a integral type in the reflected struct
+   */
+  template<typename StructDef, typename Field>
+  class AutoIncrementPrimaryKey
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    using struct_def = StructDef;
+    using field_list = boost::mpl::vector<Field>;
+  };
 
-  void personTableTest();
-  void tableNoPkTest();
-  void tableAutoIncrementPkTest();
-  void tablePkTest();
-};
 
-#endif // #ifndef MDT_TEST_MAIN
+}} // namespace Mdt{ namespace Reflection{
+
+#endif // #ifndef MDT_REFLECTION_AUTO_INCREMENT_ID_PRIMARY_KEY_H

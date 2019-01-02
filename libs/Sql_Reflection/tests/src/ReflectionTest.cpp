@@ -19,6 +19,10 @@
  **
  ****************************************************************************/
 #include "ReflectionTest.h"
+#include "Mdt/Sql/Schema/Reflection.h"
+#include "Mdt/Reflection/PrimaryKey.h"
+
+#include "Mdt/Reflection/FieldAttributes.h"
 
 #include <boost/fusion/adapted/struct/adapt_assoc_struct.hpp>
 #include <boost/fusion/include/adapt_assoc_struct.hpp>
@@ -32,6 +36,8 @@
 #include <boost/mpl/for_each.hpp>
 
 #include <QDebug>
+
+using namespace Mdt::Sql::Schema;
 
 void ReflectionTest::initTestCase()
 {
@@ -67,25 +73,28 @@ struct PersonDef
 
   struct id
   {
-    static constexpr const char *name()
+    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
     {
-      return "id";
+      using namespace Mdt::Reflection;
+      return Mdt::Reflection::FieldAttributes();
     }
   };
 
   struct firstName
   {
-    static constexpr const char *name()
+    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
     {
-      return "firstName";
+      using namespace Mdt::Reflection;
+      return Mdt::Reflection::FieldAttributes();
     }
   };
 
   struct lastName
   {
-    static constexpr const char *name()
+    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
     {
-      return "lastName";
+      using namespace Mdt::Reflection;
+      return Mdt::Reflection::FieldAttributes();
     }
   };
 };
@@ -103,11 +112,29 @@ BOOST_FUSION_ADAPT_ASSOC_STRUCT(
 
 void ReflectionTest::personTableTest()
 {
+  auto table = tableFromReflected<PersonDef>(PersonDataStruct());
+
   QFAIL("Not complete");
 }
 
 void ReflectionTest::tableNoPkTest()
 {
+  auto table = tableFromReflected<PersonDef>(PersonDataStruct());
+
+  QFAIL("Not complete");
+}
+
+void ReflectionTest::tableAutoIncrementPkTest()
+{
+  QFAIL("Not complete");
+}
+
+void ReflectionTest::tablePkTest()
+{
+  using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef, PersonDef::id>;
+
+  auto table = tableFromReflected<PersonDef, PersonPrimaryKey>(PersonDataStruct());
+
   QFAIL("Not complete");
 }
 

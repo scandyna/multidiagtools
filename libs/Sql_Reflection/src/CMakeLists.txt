@@ -10,7 +10,7 @@ mdt_add_library(
   NAME Sql_Reflection
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Sql_Core Qt5::Sql
+  LINK_DEPENDENCIES Reflection_Core Sql_Core Qt5::Sql
 )
 mdt_set_library_description(
   NAME Sql_Reflection
