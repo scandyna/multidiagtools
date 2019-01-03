@@ -23,6 +23,7 @@
 #include "Mdt/Reflection/IdPrimaryKey.h"
 #include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
 #include "Mdt/Reflection/PrimaryKeyAlgorithm.h"
+#include "Mdt/Reflection/FieldAlgorithm.h"
 #include <QStringList>
 
 #include "Mdt/Reflection/FieldAttributes.h"
@@ -59,6 +60,8 @@ struct PkTestDef
 
   struct int_id
   {
+    using struct_def = PkTestDef;
+
     static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
     {
       using namespace Mdt::Reflection;
@@ -68,6 +71,8 @@ struct PkTestDef
 
   struct qulonglong_id
   {
+    using struct_def = PkTestDef;
+
     static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
     {
       using namespace Mdt::Reflection;
@@ -77,6 +82,8 @@ struct PkTestDef
 
   struct str_A_id
   {
+    using struct_def = PkTestDef;
+
     static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
     {
       using namespace Mdt::Reflection;
@@ -86,6 +93,8 @@ struct PkTestDef
 
   struct str_B_id
   {
+    using struct_def = PkTestDef;
+
     static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
     {
       using namespace Mdt::Reflection;
@@ -95,6 +104,8 @@ struct PkTestDef
 
   struct str_C_id
   {
+    using struct_def = PkTestDef;
+
     static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
     {
       using namespace Mdt::Reflection;
@@ -118,22 +129,31 @@ BOOST_FUSION_ADAPT_ASSOC_STRUCT(
 
 struct AddFieldNameToList
 {
-  QStringList fieldNameList;
+  AddFieldNameToList(QStringList & list)
+   : mFieldNameList(list)
+  {
+  }
 
   template<typename Field>
   void operator()(Field)
   {
+    mFieldNameList << fieldName<Field>();
   }
+
+private:
+
+  QStringList & mFieldNameList;
 };
 
 template<typename PrimaryKey>
 QStringList primaryKeyToFieldNameList()
 {
-  AddFieldNameToList f;
+  QStringList fieldNameList;
+  AddFieldNameToList f(fieldNameList);
 
   Mdt::Reflection::forEachPrimaryKeyField<PrimaryKey>(f);
 
-  return f.fieldNameList;
+  return fieldNameList;
 }
 
 /*
@@ -153,22 +173,30 @@ void PrimaryKeyTest::idPkTest()
 
 void PrimaryKeyTest::autoIdPkTest()
 {
-  QFAIL("Not complete");
+  using Pk = Mdt::Reflection::AutoIncrementPrimaryKey<PkTestDef, PkTestDef::qulonglong_id>;
+
+  QCOMPARE(primaryKeyToFieldNameList<Pk>(), QStringList({"qulonglong_id"}));
 }
 
 void PrimaryKeyTest::oneFieldPkTest()
 {
-  QFAIL("Not complete");
+  using Pk = Mdt::Reflection::PrimaryKey<PkTestDef, PkTestDef::str_A_id>;
+
+  QCOMPARE(primaryKeyToFieldNameList<Pk>(), QStringList({"str_A_id"}));
 }
 
 void PrimaryKeyTest::twoFieldPkTest()
 {
-  QFAIL("Not complete");
+  using Pk = Mdt::Reflection::PrimaryKey<PkTestDef, PkTestDef::str_A_id, PkTestDef::str_B_id>;
+
+  QCOMPARE(primaryKeyToFieldNameList<Pk>(), QStringList({"str_A_id","str_B_id"}));
 }
 
 void PrimaryKeyTest::threeFieldPkTest()
 {
-  QFAIL("Not complete");
+  using Pk = Mdt::Reflection::PrimaryKey<PkTestDef, PkTestDef::str_A_id, PkTestDef::str_C_id, PkTestDef::str_B_id>;
+
+  QCOMPARE(primaryKeyToFieldNameList<Pk>(), QStringList({"str_A_id","str_C_id","str_B_id"}));
 }
 
 /*

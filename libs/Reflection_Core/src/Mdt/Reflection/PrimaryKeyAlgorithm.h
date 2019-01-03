@@ -39,7 +39,7 @@ namespace Mdt{ namespace Reflection{
    * \endcode
    */
   template<typename PrimaryKey, typename UnaryFunction>
-  void forEachPrimaryKeyField(const UnaryFunction & f)
+  void forEachPrimaryKeyField(UnaryFunction f)
   {
     boost::mpl::for_each< typename PrimaryKey::field_list >(f);
   }
