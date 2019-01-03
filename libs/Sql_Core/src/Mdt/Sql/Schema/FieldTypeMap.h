@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -41,7 +41,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *
    *  This can be used to propose a starting point to the user
    *  for database import or export tools.
-   *  Mdt::Entity::SqlTable also use it this way.
+   *  Mdt::Sql::Schema::tableFromReflected() also use it this way.
    *
    * The default implementation uses this table:
    *
