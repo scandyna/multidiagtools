@@ -67,6 +67,8 @@ namespace Mdt{ namespace Reflection{
     }
 
     /*! \brief Get field max length
+     *
+     * A length of 0 (< 1) means that the field has no maximum length.
      */
     constexpr int maxLength() const noexcept
     {
