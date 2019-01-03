@@ -29,12 +29,12 @@ namespace Mdt{ namespace Reflection{
    *
    * \pre \a Field must refer to a integral type in the reflected struct
    */
-  template<typename StructDef, typename Field>
+  template<typename Field>
   class IdPrimaryKey
   {
    public:
 
-    using struct_def = StructDef;
+    using struct_def = typename Field::struct_def;
     using field_list = boost::mpl::vector<Field>;
   };
 

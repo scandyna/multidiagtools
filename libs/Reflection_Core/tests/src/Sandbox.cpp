@@ -225,7 +225,7 @@
  * Such attributes could be defined, for example,
  *  in some SQL schema:
  * \code
- * using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef, PersonDef::id>;
+ * using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef::id>;
  * \endcode
  *
  * Some other attributes could also have meaning in the domain busines logic.
@@ -248,7 +248,7 @@
  * #include <Mdt/Sql/Schema/Driver.h>
  * #include <QSqlDatabase>
  *
- * using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef, PersonDef::id>;
+ * using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef::id>;
  *
  * bool createSqlSchema(const QSqlDatabase & dbConnection)
  * {
@@ -267,15 +267,6 @@
  * \endcode
  *
  * \sa Mdt::Sql::Schema::Reflection::tableFromReflected()
- *
- * \section some_compromises Some compromises
- *
- * To get informations about a reflected struct,
- *  a instance of that struct must be instanciated.
- *  While this brings some runtime overhead,
- *  for example to create a SQL schema,
- *  practice have shown that a instance can be necessary anyway,
- *  for example to get the default values defined in the struct.
  *
  * \section alternatives
  *
@@ -574,7 +565,7 @@ void forEachField(const F & f)
   boost::mpl::for_each< typename StructDef::field_list >(f);
 }
 
-using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef, PersonDef::id, PersonDef::lastName>;
+using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef::id, PersonDef::lastName>;
 
 template<typename StructDef>
 struct PrintPkName
