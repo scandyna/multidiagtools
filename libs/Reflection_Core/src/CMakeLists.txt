@@ -1,10 +1,13 @@
 
 # List of source files
 set(SOURCE_FILES
+  Mdt/Reflection/ReflectField.cpp
+  Mdt/Reflection/ReflectStruct.cpp
   Mdt/Reflection/FieldFlags.cpp
   Mdt/Reflection/FieldMaxLength.cpp
   Mdt/Reflection/FieldAttributes.cpp
   Mdt/Reflection/FieldAlgorithm.cpp
+  Mdt/Reflection/StructAlgorithm.cpp
   Mdt/Reflection/PrimaryKey.cpp
   Mdt/Reflection/IdPrimaryKey.cpp
   Mdt/Reflection/AutoIncrementIdPrimaryKey.cpp

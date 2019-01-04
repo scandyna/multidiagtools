@@ -4,6 +4,7 @@
 #include "Mdt/Reflection/PrimaryKeyAlgorithm.h"
 #include "Mdt/Reflection/FieldAttributes.h"
 #include "Mdt/Reflection/FieldAlgorithm.h"
+#include "Mdt/Reflection/StructAlgorithm.h"
 
 /*!
  * \section introduction Introduction
@@ -458,21 +459,6 @@ const PersonDataStruct & personPrivateConstDataStruct(const Person & person)
   return person.mDataStruct;
 }
 
-/** \todo
- *
- * structNameFromStructDef()
- *
- * structNameFromField()
- *
- * fieldNameFromField()
- */
-
-template<typename StructDef>
-static constexpr const char* nameFromStructDef()
-{
-  return StructDef::name();
-}
-
 struct saver
 {
   template<typename FieldValue>
@@ -516,34 +502,6 @@ struct Inspector2
   }
 };
 
-/*! \brief Iterate over each element on a reflected struct
- *
- * \a f is a functor like:
- * \code
- * struct MyFunctor
- * {
- *   template<typename FieldValuePair>
- *   void operator()(const FieldValuePair & p) const
- *   {
- *   }
- * };
- * \endcode
- *
- * \a FieldValuePair will be a Boost Fusion pair.
- *   FieldValuePair::first_type will be a Field in the StructDef assiocated to \a Struct .
- *   FieldValuePair::second_type will be the value type.
- *   The value is available with p.second .
- *
- * \pre \a Strcut must have been reflected with MDT_REFLECT_STRUCT()
- */
-template<typename Struct, typename F>
-void forEachFieldValuePair(const Struct & s, const F & f)
-{
-  // Note: this does not copy s
-  const auto map = boost::fusion::as_map(s);
-  boost::fusion::for_each(map, f);
-}
-
 template<typename StructDef>
 struct Inspector3
 {
@@ -558,12 +516,6 @@ struct Inspector3
     qDebug() << " Max length: " << fieldMaxLength<Field>();
   }
 };
-
-template<typename StructDef, typename F>
-void forEachField(const F & f)
-{
-  boost::mpl::for_each< typename StructDef::field_list >(f);
-}
 
 using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef::id, PersonDef::lastName>;
 
@@ -598,9 +550,9 @@ int main(int argc, char **argv)
 
   boost::fusion::for_each( personPrivateConstDataStruct(pa), saver());
 
-  forEachFieldValuePair( personPrivateConstDataStruct(pa), Inspector2<PersonDef>() );
+  forEachFieldValuePairInStruct( personPrivateConstDataStruct(pa), Inspector2<PersonDef>() );
 
-  forEachField<PersonDef>( Inspector3<PersonDef>() );
+  forEachFieldInStructDef<PersonDef>( Inspector3<PersonDef>() );
 
   boost::fusion::iter_fold( personPrivateConstDataStruct(pa), 0, Inspector() );
 
