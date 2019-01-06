@@ -26,4 +26,5 @@ class ReflectFieldTest : public QObject
 
  private slots:
 
+  void getFieldAttributesTest();
 };

@@ -351,7 +351,7 @@ struct PersonDef
 {
   using reflected_struct = PersonDataStruct;
 
-  static constexpr const char *name()
+  static constexpr const char *name_()
   {
     return "Person";
   }

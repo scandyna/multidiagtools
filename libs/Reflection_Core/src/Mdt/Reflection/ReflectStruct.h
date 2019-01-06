@@ -21,37 +21,21 @@
 #ifndef MDT_REFLECTION_REFLECT_STRUCT_H
 #define MDT_REFLECTION_REFLECT_STRUCT_H
 
-// #include "ReflectField.h"
+#include "ReflectField.h"
 #include <boost/preprocessor/config/config.hpp>
-#include <boost/preprocessor/seq/elem.hpp>
-#include <boost/preprocessor/seq/rest_n.hpp>
-#include <boost/preprocessor/seq/enum.hpp>
-#include <boost/preprocessor/seq/transform.hpp>
-#include <boost/preprocessor/seq/variadic_seq_to_seq.hpp>
-
-// For ReflectField.h
 #include <boost/preprocessor/tuple/elem.hpp>
-
-
+#include <boost/preprocessor/tuple/reverse.hpp>
+#include <boost/preprocessor/tuple/to_seq.hpp>
+#include <boost/preprocessor/tuple/pop_back.hpp>
+#include <boost/preprocessor/seq/enum.hpp>
+#include <boost/preprocessor/seq/size.hpp>
+#include <boost/preprocessor/seq/pop_back.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
-
-#include <boost/preprocessor/if.hpp>
+#include <boost/preprocessor/seq/transform.hpp>
+#include <boost/preprocessor/variadic/to_seq.hpp>
+#include <boost/preprocessor/control/if.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/stringize.hpp>
-
-
-
-#include <boost/preprocessor/tuple/to_array.hpp>
-#include <boost/preprocessor/tuple/to_seq.hpp>
-#include <boost/preprocessor/tuple/reverse.hpp>
-#include <boost/preprocessor/tuple/pop_back.hpp>
-#include <boost/preprocessor/array/size.hpp>
-#include <boost/preprocessor/array/pop_back.hpp>
-#include <boost/preprocessor/array/enum.hpp>
-#include <boost/preprocessor/array/pop_front.hpp>
-#include <boost/fusion/adapted/struct/adapt_struct.hpp>
-#include <boost/fusion/include/adapt_struct.hpp>
-#include <boost/fusion/adapted/struct/adapt_assoc_struct.hpp>
 #include <boost/fusion/include/adapt_assoc_struct.hpp>
 #include <boost/mpl/vector.hpp>
 
@@ -59,81 +43,138 @@
  #error "The macro MDT_REFLECT_STRUCT() requires a compiler that supports preprocessor variadics"
 #endif
 
-/*! \internal Extract the struct to reflect
+#define MDT_REFLECTION_STRUCT_NAMESPACE_APPLY_OP(structTuple, op)                       \
+  BOOST_PP_IF(                                                                          \
+    BOOST_PP_SEQ_SIZE( BOOST_PP_SEQ_POP_BACK( BOOST_PP_TUPLE_TO_SEQ( structTuple ) ) ), \
+    BOOST_PP_SEQ_FOR_EACH(                                                              \
+      op, ~, BOOST_PP_TUPLE_TO_SEQ( BOOST_PP_TUPLE_POP_BACK(structTuple) )              \
+    ),                                                                                  \
+  )
+
+#define MDT_REFLECTION_STRUCT_NAMESPACE_BEGIN_OP(r, unused, elem) \
+  namespace elem {
+
+#define MDT_REFLECTION_STRUCT_NAMESPACE_END_OP(r, unused, elem) \
+  }
+
+#define MDT_REFLECTION_STRUCT_NAMESPACE_REF_OP(r, unused, elem) \
+  elem::
+
+/*! \internal Begin a namespace from a struct tuple
  *
  * \code
- * MDT_REFLECTION_STRUCT_GET_STRUCT(
- *   (PersonDataStruct)
- *   (Person)
- *   (id, FieldFlag::IsRequired, FieldFlag::IsUnique)
- *   (firstName, FieldMaxLength(250))
- *   (remarks)
+ * MDT_REFLECTION_STRUCT_NAMESPACE_BEGIN(
+ *   (A,B,MyStruct)
  * )
+ * \endcode
+ * will expand to:
+ * \code
+ * namespace A{ namespace B{
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_NAMESPACE_BEGIN(structTuple) \
+  MDT_REFLECTION_STRUCT_NAMESPACE_APPLY_OP(structTuple, MDT_REFLECTION_STRUCT_NAMESPACE_BEGIN_OP)
+
+/*! \internal End a namespace from a struct tuple
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_NAMESPACE_END(
+ *   (A,B,MyStruct)
+ * )
+ * \endcode
+ * will expand to:
+ * \code
+ * }}
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_NAMESPACE_END(structTuple) \
+  MDT_REFLECTION_STRUCT_NAMESPACE_APPLY_OP(structTuple, MDT_REFLECTION_STRUCT_NAMESPACE_END_OP)
+
+/*! \internal Reference a namespace from a struct tuple
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_NAMESPACE_REF(
+ *   (A,B,MyStruct)
+ * )
+ * \endcode
+ * will expand to:
+ * \code
+ * A::B::
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_NAMESPACE_REF(structTuple) \
+  MDT_REFLECTION_STRUCT_NAMESPACE_APPLY_OP(structTuple, MDT_REFLECTION_STRUCT_NAMESPACE_REF_OP)
+
+/*! \internal Get the sutrct def from name
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME( Person )
+ * \endcode
+ * will expand to:
+ * \code
+ * PersonDef
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name) \
+  BOOST_PP_CAT( name, Def )
+
+/*! \internal Get the sutrct def from name
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAMESPACE_NAME(
+ *  (A, PersonDataStruct),
+ *  Person
+ * )
+ * \endcode
+ * will expand to:
+ * \code
+ * PersonDef
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAMESPACE_NAME(structTuple, name) \
+  MDT_REFLECTION_STRUCT_NAMESPACE_REF(structTuple) MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name)
+
+/*! \internal Get the name as string
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_GET_NAME_STR( Person )
+ * \endcode
+ * will expand to:
+ * \code
+ * "Person"
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_GET_NAME_STR(name) \
+  BOOST_PP_STRINGIZE(name)
+
+/*! \internal Get the (reflected) struct name from a struct tuple
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_GET_STRUCT_NAME( (A,PersonDataStruct) )
  * \endcode
  * will expand to:
  * \code
  * PersonDataStruct
  * \endcode
  */
-#define MDT_REFLECTION_STRUCT_GET_STRUCT(structSeq) \
-  BOOST_PP_SEQ_ELEM(0, structSeq)
+#define MDT_REFLECTION_STRUCT_GET_STRUCT_NAME(structTuple)     \
+  BOOST_PP_TUPLE_ELEM( 0, BOOST_PP_TUPLE_REVERSE(structTuple) )
 
-/*! \internal Extract the alias
+/*! \internal Get the (reflected) struct name and namespace from a struct tuple
  *
  * \code
- * MDT_REFLECTION_STRUCT_GET_ALIAS(
- *   (PersonDataStruct)
- *   (Person)
- *   (id, FieldFlag::IsRequired, FieldFlag::IsUnique)
- *   (firstName, FieldMaxLength(250))
- *   (remarks)
+ * MDT_REFLECTION_STRUCT_GET_STRUCT_NAMESPACE_NAME(
+ *   (A,PersonDataStruct)
  * )
  * \endcode
  * will expand to:
  * \code
- * Person
+ * A::PersonDataStruct
  * \endcode
  */
-#define MDT_REFLECTION_STRUCT_GET_ALIAS(structSeq) \
-  BOOST_PP_SEQ_ELEM(1, structSeq)
+#define MDT_REFLECTION_STRUCT_GET_STRUCT_NAMESPACE_NAME(structTuple) \
+  MDT_REFLECTION_STRUCT_NAMESPACE_REF(structTuple) MDT_REFLECTION_STRUCT_GET_STRUCT_NAME(structTuple)
 
-/*! \internal Extract the field tuples sequence
- *
- * \code
- * MDT_REFLECTION_STRUCT_GET_FIELD_TUPLE_SEQ(
- *   (PersonDataStruct)
- *   (Person)
- *   (id, FieldFlag::IsRequired, FieldFlag::IsUnique)
- *   (firstName, FieldMaxLength(250))
- *   (remarks)
- * )
- * \endcode
- * will expand to:
- * \code
- * (id, FieldFlag::IsRequired, FieldFlag::IsUnique)
- * (firstName, FieldMaxLength(250))
- * (remarks)
- * \endcode
- */
-#define MDT_REFLECTION_STRUCT_GET_FIELD_TUPLE_SEQ(structSeq) \
-  BOOST_PP_SEQ_REST_N(2, structSeq)
-
-/*! \internal Get the field from a field tuple
- *
- * \todo Go to ReflectField.h
- *
- * \code
- * MDT_REFLECTION_STRUCT_FIELD_GET_FIELD(
- *   (id, FieldFlag::IsRequired, FieldFlag::IsUnique)
- * )
- * \endcode
- * will expand to:
- * \code
- * id
- * \endcode
- */
-#define MDT_REFLECTION_STRUCT_FIELD_GET_FIELD(fieldTuple) \
-  BOOST_PP_TUPLE_ELEM(0, fieldTuple)
 
 #define MDT_REFLECTION_STRUCT_FIELD_GET_FIELD_OP(s, data, fieldTuple) \
   MDT_REFLECTION_STRUCT_FIELD_GET_FIELD(fieldTuple)
@@ -154,15 +195,15 @@
  * (remarks)
  * \endcode
  */
-#define MDT_REFLECTION_STRUCT_FIELD_TUPLE_SEQ_TO_FIELD_SEQ(...) \
-  BOOST_PP_SEQ_TRANSFORM( MDT_REFLECTION_STRUCT_FIELD_GET_FIELD_OP, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) )
+#define MDT_REFLECTION_STRUCT_FIELD_TUPLE_SEQ_TO_FIELD_SEQ(fieldTupleSeq) \
+  BOOST_PP_SEQ_TRANSFORM( MDT_REFLECTION_STRUCT_FIELD_GET_FIELD_OP, _, fieldTupleSeq )
 
-/*! \internal Transform a field tuple sequence to a field enum
+/*! \internal Transform a field tuple argument list to a field enum
  *
  * \code
- * MDT_REFLECTION_STRUCT_FIELD_TUPLE_SEQ_TO_FIELD_ENUM(
- *   (id, FieldFlag::IsRequired, FieldFlag::IsUnique)
- *   (firstName, FieldMaxLength(250))
+ * MDT_REFLECTION_STRUCT_FIELD_TUPLE_ARG_LIST_TO_FIELD_ENUM(
+ *   (id, FieldFlag::IsRequired, FieldFlag::IsUnique),
+ *   (firstName, FieldMaxLength(250)),
  *   (remarks)
  * )
  * \endcode
@@ -171,34 +212,78 @@
  * id,firstName,remarks
  * \endcode
  */
-#define MDT_REFLECTION_STRUCT_FIELD_TUPLE_SEQ_TO_FIELD_ENUM(fieldTupleSeq) \
-  BOOST_PP_SEQ_ENUM( MDT_REFLECTION_STRUCT_FIELD_TUPLE_SEQ_TO_FIELD_SEQ(fieldTupleSeq) )
+#define MDT_REFLECTION_STRUCT_FIELD_TUPLE_ARG_LIST_TO_FIELD_ENUM(...) \
+  BOOST_PP_SEQ_ENUM(                                                  \
+    MDT_REFLECTION_STRUCT_FIELD_TUPLE_SEQ_TO_FIELD_SEQ(               \
+      BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)                           \
+    )                                                                 \
+  )
 
-/*! \internal Generate MPL vector with the fields
- *
- * \code
- * MDT_REFLECTION_STRUCT_GEN_FIELD_LIST(
- *   (id, FieldFlag::IsRequired, FieldFlag::IsUnique)
- *   (firstName, FieldMaxLength(250))
- *   (remarks)
- * )
- * \endcode
- * will expand to:
- * \code
- * using field_list = boost::mpl::vector<id, firstName, remarks>;
- * \endcode
- */
-#define MDT_REFLECTION_STRUCT_GEN_FIELD_LIST(fieldTupleSeq) \
-  using field_list = boost::mpl::vector<MDT_REFLECTION_STRUCT_FIELD_TUPLE_SEQ_TO_FIELD_ENUM(fieldTupleSeq)>;
+
+#define MDT_REFLECTION_STRUCT_FIELD_DEF_LIST_OP(r, structDef, fieldTuple) \
+  MDT_REFLECTION_STRUCT_FIELD_DEF(structDef, fieldTuple)
 
 /*! \internal
  *
  * \code
+ * MDT_REFLECTION_STRUCT_FIELD_DEF_LIST(
+ *   PersonDef,
+ *   (id),
+ *   (firstName, FieldMaxLength(250))
+ * )
  * \endcode
  * will expand to:
  * \code
+ * MDT_REFLECTION_FIELD_DEF( PersonDef, (id) )
+ * MDT_REFLECTION_FIELD_DEF( PersonDef, (firstName, FieldMaxLength(250)) )
  * \endcode
  */
+#define MDT_REFLECTION_STRUCT_FIELD_DEF_LIST(structDef, ...)  \
+  BOOST_PP_SEQ_FOR_EACH(                                      \
+    MDT_REFLECTION_STRUCT_FIELD_DEF_LIST_OP,                  \
+    structDef,                                                \
+    BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)                     \
+  )                                                           \
+
+/*! \internal
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_FIELD_ADAPT_ASSOC_LIST_OP(
+ *   PersonDef,
+ *   (firstName, FieldMaxLength(250))
+ * )
+ * \endcode
+ * will expand to:
+ * \code
+ * firstName,PersonDef::firstName
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_FIELD_ADAPT_ASSOC_LIST_OP(s, structDef, fieldTuple) \
+  MDT_REFLECTION_STRUCT_FIELD_GET_FIELD(fieldTuple), structDef::MDT_REFLECTION_STRUCT_FIELD_GET_FIELD(fieldTuple)
+
+/*! \internal
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_FIELD_ADAPT_ASSOC_LIST(
+ *   (A, PersonDataStruct),
+ *   Person,
+ *   (id),
+ *   (firstName, FieldMaxLength(250))
+ * )
+ * \endcode
+ * will expand to:
+ * \code
+ * (id,A::PersonDef::id)
+ * (firstName,A::PersonDef::firstName)
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_FIELD_ADAPT_ASSOC_LIST(structTuple, name, ...)  \
+  BOOST_PP_SEQ_TRANSFORM(                                                     \
+    MDT_REFLECTION_STRUCT_FIELD_ADAPT_ASSOC_LIST_OP,                          \
+    MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAMESPACE_NAME(structTuple, name),   \
+    BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)                                     \
+  )
+
 
 /*! \brief Generate some meta data to reflect a struct
  *
@@ -232,7 +317,7 @@
  * {
  *   using reflected_struct = PersonDataStruct;
  *
- *   static constexpr const char *name()
+ *   static constexpr const char *name_()
  *   {
  *     return "Person";
  *   }
@@ -333,10 +418,30 @@
  *  Sadly, I did not find any solution to put a short error message
  *  using the preprocessor.
  */
-
-
-namespace Mdt{ namespace Reflection{
-
-}} // namespace Mdt{ namespace Reflection{
+#define MDT_REFLECT_STRUCT(structTuple, name, ...)        \
+  MDT_REFLECTION_STRUCT_NAMESPACE_BEGIN(structTuple)      \
+  struct MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name)  \
+  {                                                                               \
+    using reflected_struct = MDT_REFLECTION_STRUCT_GET_STRUCT_NAME(structTuple);  \
+                                                          \
+    constexpr MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name)() noexcept {}     \
+                                                          \
+    static constexpr const char *name_()                   \
+    {                                                     \
+      return MDT_REFLECTION_STRUCT_GET_NAME_STR(name);    \
+    }                                                     \
+                                                          \
+    MDT_REFLECTION_STRUCT_FIELD_DEF_LIST(                 \
+      MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name),    \
+      __VA_ARGS__                                         \
+    )                                                     \
+    using field_list = boost::mpl::vector<MDT_REFLECTION_STRUCT_FIELD_TUPLE_ARG_LIST_TO_FIELD_ENUM(__VA_ARGS__)>; \
+  };                                                      \
+  MDT_REFLECTION_STRUCT_NAMESPACE_END(structTuple)        \
+                                                          \
+  BOOST_FUSION_ADAPT_ASSOC_STRUCT(                        \
+    MDT_REFLECTION_STRUCT_GET_STRUCT_NAMESPACE_NAME(structTuple), \
+    MDT_REFLECTION_STRUCT_FIELD_ADAPT_ASSOC_LIST(structTuple, name, __VA_ARGS__) \
+  )
 
 #endif // #ifndef MDT_REFLECTION_REFLECT_STRUCT_H

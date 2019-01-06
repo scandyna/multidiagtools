@@ -23,19 +23,77 @@
 
 #include "FieldAttributes.h"
 #include <boost/preprocessor/config/config.hpp>
-#include <boost/preprocessor/cat.hpp>
-#include <boost/preprocessor/stringize.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/tuple/to_array.hpp>
 #include <boost/preprocessor/array/enum.hpp>
 #include <boost/preprocessor/array/pop_front.hpp>
 
-#if !BOOST_PP_VARIADICS
- #error "The macro MDT_REFLECT_FIELD() requires a compiler that supports preprocessor variadics"
-#endif
+/*! \internal Get the field from a field tuple
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_FIELD_GET_FIELD(
+ *   (id, FieldFlag::IsRequired, FieldFlag::IsUnique)
+ * )
+ * \endcode
+ * will expand to:
+ * \code
+ * id
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_FIELD_GET_FIELD(fieldTuple) \
+  BOOST_PP_TUPLE_ELEM(0, fieldTuple)
 
-namespace Mdt{ namespace Reflection{
+/*! \internal Get the field attributes from a field tuple
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_FIELD_GET_FIELD_ATTRIBUTES_ENUM(
+ *   (id, FieldFlag::IsRequired, FieldFlag::IsUnique)
+ * )
+ * \endcode
+ * will expand to:
+ * \code
+ * FieldFlag::IsRequired, FieldFlag::IsUnique
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_FIELD_GET_FIELD_ATTRIBUTES_ENUM(fieldTuple) \
+  BOOST_PP_ARRAY_ENUM(                                                    \
+    BOOST_PP_ARRAY_POP_FRONT(                                             \
+      BOOST_PP_TUPLE_TO_ARRAY(fieldTuple)                                 \
+    )                                                                     \
+  )
 
-}} // namespace Mdt{ namespace Reflection{
+/*! \internal Get the field definition
+ *
+ * \code
+ * MDT_REFLECTION_STRUCT_FIELD_DEF(
+ *   PersonDef,
+ *   (firstName, FieldFlag::IsRequired, FieldMaxLength(250))
+ * )
+ * \endcode
+ * will expand to:
+ * \code
+ * struct firstName
+ * {
+ *   using struct_def = PersonDef;
+ *
+ *   static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
+ *   {
+ *     using namespace Mdt::Reflection;
+ *     return Mdt::Reflection::FieldAttributes(FieldFlag::IsRequired,FieldMaxLength(250));
+ *   }
+ * };
+ * \endcode
+ */
+#define MDT_REFLECTION_STRUCT_FIELD_DEF(structDef, fieldTuple)                                                      \
+  struct MDT_REFLECTION_STRUCT_FIELD_GET_FIELD(fieldTuple)                                                          \
+  {                                                                                                                 \
+    using struct_def = structDef;                                                                                   \
+                                                                                                                    \
+    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()                                             \
+    {                                                                                                               \
+      using namespace Mdt::Reflection;                                                                              \
+      return Mdt::Reflection::FieldAttributes( MDT_REFLECTION_STRUCT_FIELD_GET_FIELD_ATTRIBUTES_ENUM(fieldTuple) ); \
+    }                                                                                                               \
+  };
 
 #endif // #ifndef MDT_REFLECTION_REFLECT_FIELD_H

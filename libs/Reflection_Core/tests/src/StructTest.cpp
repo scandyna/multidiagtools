@@ -58,7 +58,7 @@ struct PersonDef
 {
   using reflected_struct = PersonDataStruct;
 
-  static constexpr const char *name()
+  static constexpr const char *name_()
   {
     return "Person";
   }
@@ -125,7 +125,7 @@ struct AddressDef
 {
   using reflected_struct = AddressDataStruct;
 
-  static constexpr const char *name()
+  static constexpr const char *name_()
   {
     return "Address";
   }

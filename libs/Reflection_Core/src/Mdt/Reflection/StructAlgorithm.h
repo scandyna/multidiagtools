@@ -32,7 +32,7 @@ namespace Mdt{ namespace Reflection{
   template<typename StructDef>
   static constexpr const char* nameFromStructDef()
   {
-    return StructDef::name();
+    return StructDef::name_();
   }
 
   /*! \brief Get the struct reflected name from a field

@@ -26,4 +26,8 @@ class ReflectStructTest : public QObject
 
  private slots:
 
+  void namespaceTest();
+  void usePersonTest();
+  void useAddressTest();
+  void useSellerTest();
 };

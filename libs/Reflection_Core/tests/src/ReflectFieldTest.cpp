@@ -20,37 +20,14 @@
  ****************************************************************************/
 #include "ReflectFieldTest.h"
 #include "Mdt/Reflection/ReflectField.h"
+#include "Mdt/Reflection/FieldAlgorithm.h"
 #include <QString>
-
-using namespace Mdt::Reflection;
-
-/*
- * Person struct
- */
-
-struct PersonDataStruct
-{
-  int id;
-  QString firstName;
-  QString lastName;
-};
-
+#include <type_traits>
 
 /*
- * Address struct
+ * Note: to check that the macro works properly,
+ * we not declare using namespace Mdt::Reflection
  */
-
-struct AddressDataStruct
-{
-  int id;
-  QString street;
-  int personId;
-};
-
-/*
- * Helpers
- */
-
 
 /*
  * Type traits tests
@@ -60,7 +37,60 @@ struct AddressDataStruct
  * Tests
  */
 
+namespace FieldGetFieldTest{
 
+  using int1 = MDT_REFLECTION_STRUCT_FIELD_GET_FIELD( (int) );
+  static_assert( std::is_same<int1, int>::value, "" );
+
+  using int2 = MDT_REFLECTION_STRUCT_FIELD_GET_FIELD( (int, FieldFlag::IsRequired) );
+  static_assert( std::is_same<int2, int>::value, "" );
+
+} // namespace FieldGetFieldTest{
+
+
+struct FieldDefTest1
+{
+  MDT_REFLECTION_STRUCT_FIELD_DEF(FieldDefTest1, (id) )
+};
+static_assert( std::is_same<FieldDefTest1::id::struct_def, FieldDefTest1>::value , "" );
+static_assert( !Mdt::Reflection::isFieldRequired<FieldDefTest1::id>(), "" );
+
+struct FieldDefTest2
+{
+  MDT_REFLECTION_STRUCT_FIELD_DEF(FieldDefTest2, (name, FieldFlag::IsRequired) )
+};
+static_assert( std::is_same<FieldDefTest2::name::struct_def, FieldDefTest2>::value , "" );
+static_assert( Mdt::Reflection::isFieldRequired<FieldDefTest2::name>(), "" );
+
+namespace Ns3{
+  struct FieldDefTest
+  {
+    MDT_REFLECTION_STRUCT_FIELD_DEF(FieldDefTest, (name, FieldFlag::IsRequired) )
+  };
+} // namespace Ns3{
+static_assert( std::is_same<Ns3::FieldDefTest::name::struct_def, Ns3::FieldDefTest>::value , "" );
+
+void ReflectFieldTest::getFieldAttributesTest()
+{
+  using namespace Mdt::Reflection;
+
+  FieldAttributes fa;
+
+  fa = FieldAttributes( MDT_REFLECTION_STRUCT_FIELD_GET_FIELD_ATTRIBUTES_ENUM( (int) ) );
+  QVERIFY(fa.isNull());
+
+  fa = FieldAttributes( MDT_REFLECTION_STRUCT_FIELD_GET_FIELD_ATTRIBUTES_ENUM( (int, FieldFlag::IsRequired) ) );
+  QVERIFY(!fa.isNull());
+  QVERIFY(fa.isRequired());
+  QVERIFY(!fa.hasDefaultValue());
+  QCOMPARE(fa.maxLength(), 0);
+
+  fa = FieldAttributes( MDT_REFLECTION_STRUCT_FIELD_GET_FIELD_ATTRIBUTES_ENUM( (int, FieldFlag::IsRequired, FieldMaxLength(250)) ) );
+  QVERIFY(!fa.isNull());
+  QVERIFY(fa.isRequired());
+  QVERIFY(!fa.hasDefaultValue());
+  QCOMPARE(fa.maxLength(), 250);
+}
 
 /*
  * Main
