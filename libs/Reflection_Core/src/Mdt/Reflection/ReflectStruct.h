@@ -22,6 +22,7 @@
 #define MDT_REFLECTION_REFLECT_STRUCT_H
 
 #include "ReflectField.h"
+#include "TypeTraits/StructDefTag.h"
 #include <boost/preprocessor/config/config.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/tuple/reverse.hpp>
@@ -418,30 +419,30 @@
  *  Sadly, I did not find any solution to put a short error message
  *  using the preprocessor.
  */
-#define MDT_REFLECT_STRUCT(structTuple, name, ...)        \
-  MDT_REFLECTION_STRUCT_NAMESPACE_BEGIN(structTuple)      \
-  struct MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name)  \
-  {                                                                               \
-    using reflected_struct = MDT_REFLECTION_STRUCT_GET_STRUCT_NAME(structTuple);  \
-                                                          \
-    constexpr MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name)() noexcept {}     \
-                                                          \
-    static constexpr const char *name_()                   \
-    {                                                     \
-      return MDT_REFLECTION_STRUCT_GET_NAME_STR(name);    \
-    }                                                     \
-                                                          \
-    MDT_REFLECTION_STRUCT_FIELD_DEF_LIST(                 \
-      MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name),    \
-      __VA_ARGS__                                         \
-    )                                                     \
+#define MDT_REFLECT_STRUCT(structTuple, name, ...)                                                                \
+  MDT_REFLECTION_STRUCT_NAMESPACE_BEGIN(structTuple)                                                              \
+  struct MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name) : Mdt::Reflection::TypeTraits::StructDefTag              \
+  {                                                                                                               \
+    using reflected_struct = MDT_REFLECTION_STRUCT_GET_STRUCT_NAME(structTuple);                                  \
+                                                                                                                  \
+    constexpr MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name)() noexcept {}                                       \
+                                                                                                                  \
+    static constexpr const char *name_()                                                                          \
+    {                                                                                                             \
+      return MDT_REFLECTION_STRUCT_GET_NAME_STR(name);                                                            \
+    }                                                                                                             \
+                                                                                                                  \
+    MDT_REFLECTION_STRUCT_FIELD_DEF_LIST(                                                                         \
+      MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name),                                                            \
+      __VA_ARGS__                                                                                                 \
+    )                                                                                                             \
     using field_list = boost::mpl::vector<MDT_REFLECTION_STRUCT_FIELD_TUPLE_ARG_LIST_TO_FIELD_ENUM(__VA_ARGS__)>; \
-  };                                                      \
-  MDT_REFLECTION_STRUCT_NAMESPACE_END(structTuple)        \
-                                                          \
-  BOOST_FUSION_ADAPT_ASSOC_STRUCT(                        \
-    MDT_REFLECTION_STRUCT_GET_STRUCT_NAMESPACE_NAME(structTuple), \
-    MDT_REFLECTION_STRUCT_FIELD_ADAPT_ASSOC_LIST(structTuple, name, __VA_ARGS__) \
+  };                                                                                                              \
+  MDT_REFLECTION_STRUCT_NAMESPACE_END(structTuple)                                                                \
+                                                                                                                  \
+  BOOST_FUSION_ADAPT_ASSOC_STRUCT(                                                                                \
+    MDT_REFLECTION_STRUCT_GET_STRUCT_NAMESPACE_NAME(structTuple),                                                 \
+    MDT_REFLECTION_STRUCT_FIELD_ADAPT_ASSOC_LIST(structTuple, name, __VA_ARGS__)                                  \
   )
 
 #endif // #ifndef MDT_REFLECTION_REFLECT_STRUCT_H

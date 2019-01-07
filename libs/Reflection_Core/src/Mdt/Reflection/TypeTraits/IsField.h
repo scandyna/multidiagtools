@@ -18,4 +18,21 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "FieldAttributes.h"
+#ifndef MDT_REFLECTION_TYPE_TRAITS_IS_FIELD_H
+#define MDT_REFLECTION_TYPE_TRAITS_IS_FIELD_H
+
+#include "FieldTag.h"
+#include <type_traits>
+
+namespace Mdt{ namespace Reflection{ namespace TypeTraits{
+
+  /*! \brief Check if T is a field type
+   */
+  template<typename T>
+  struct IsField : std::is_base_of<FieldTag, T>
+  {
+  };
+
+}}} // namespace Mdt{ namespace Reflection{ namespace TypeTraits{
+
+#endif // #ifndef MDT_REFLECTION_TYPE_TRAITS_IS_FIELD_H

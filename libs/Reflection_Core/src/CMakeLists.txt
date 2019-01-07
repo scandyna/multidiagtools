@@ -1,6 +1,9 @@
 
 # List of source files
 set(SOURCE_FILES
+  Mdt/Reflection/TypeTraits/IsStructDef.cpp
+  Mdt/Reflection/TypeTraits/IsField.cpp
+  Mdt/Reflection/TypeTraits/IsFieldAssociatedWithReflectedStruct.cpp
   Mdt/Reflection/ReflectField.cpp
   Mdt/Reflection/ReflectStruct.cpp
   Mdt/Reflection/FieldFlags.cpp

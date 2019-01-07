@@ -20,11 +20,8 @@
  ****************************************************************************/
 #include "FieldTest.h"
 #include "Mdt/Reflection/FieldAlgorithm.h"
+#include "Mdt/Reflection/ReflectStruct.h"
 #include <QString>
-
-#include "Mdt/Reflection/FieldAttributes.h"
-#include <boost/fusion/adapted/struct/adapt_assoc_struct.hpp>
-#include <boost/fusion/include/adapt_assoc_struct.hpp>
 
 using namespace Mdt::Reflection;
 
@@ -39,59 +36,12 @@ struct PersonDataStruct
   QString lastName;
 };
 
-/*
- * Person struct - auto generated stuff
- */
-
-struct PersonDef
-{
-  using reflected_struct = PersonDataStruct;
-
-  static constexpr const char *name()
-  {
-    return "Person";
-  }
-
-  struct id
-  {
-    using struct_def = PersonDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes();
-    }
-  };
-
-  struct firstName
-  {
-    using struct_def = PersonDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes(FieldFlag::IsRequired);
-    }
-  };
-
-  struct lastName
-  {
-    using struct_def = PersonDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes(FieldFlag::HasDefaultValue);
-    }
-  };
-
-};
-
-BOOST_FUSION_ADAPT_ASSOC_STRUCT(
-  PersonDataStruct,
-  (id, PersonDef::id)
-  (firstName, PersonDef::firstName)
-  (lastName, PersonDef::lastName)
+MDT_REFLECT_STRUCT(
+  (PersonDataStruct),
+  Person,
+  (id),
+  (firstName, FieldFlag::IsRequired),
+  (lastName, FieldFlag::HasDefaultValue)
 )
 
 /*
@@ -105,59 +55,12 @@ struct AddressDataStruct
   int personId;
 };
 
-/*
- * Address struct - auto generated stuff
- */
-
-struct AddressDef
-{
-  using reflected_struct = AddressDataStruct;
-
-  static constexpr const char *name()
-  {
-    return "Address";
-  }
-
-  struct id
-  {
-    using struct_def = AddressDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes();
-    }
-  };
-
-  struct street
-  {
-    using struct_def = AddressDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes(FieldMaxLength(25),FieldFlag::IsRequired, FieldFlag::HasDefaultValue);
-    }
-  };
-
-  struct personId
-  {
-    using struct_def = AddressDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes(FieldFlag::IsRequired);
-    }
-  };
-
-};
-
-BOOST_FUSION_ADAPT_ASSOC_STRUCT(
-  AddressDataStruct,
-  (id, AddressDef::id)
-  (street, AddressDef::street)
-  (personId, AddressDef::personId)
+MDT_REFLECT_STRUCT(
+  (AddressDataStruct),
+  Address,
+  (id),
+  (street, FieldMaxLength(25),FieldFlag::IsRequired, FieldFlag::HasDefaultValue),
+  (personId, FieldFlag::IsRequired)
 )
 
 /*

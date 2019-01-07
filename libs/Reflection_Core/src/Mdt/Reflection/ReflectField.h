@@ -22,6 +22,7 @@
 #define MDT_REFLECTION_REFLECT_FIELD_H
 
 #include "FieldAttributes.h"
+#include "TypeTraits/FieldTag.h"
 #include <boost/preprocessor/config/config.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/tuple/to_array.hpp>
@@ -85,7 +86,7 @@
  * \endcode
  */
 #define MDT_REFLECTION_STRUCT_FIELD_DEF(structDef, fieldTuple)                                                      \
-  struct MDT_REFLECTION_STRUCT_FIELD_GET_FIELD(fieldTuple)                                                          \
+  struct MDT_REFLECTION_STRUCT_FIELD_GET_FIELD(fieldTuple) : Mdt::Reflection::TypeTraits::FieldTag                  \
   {                                                                                                                 \
     using struct_def = structDef;                                                                                   \
                                                                                                                     \

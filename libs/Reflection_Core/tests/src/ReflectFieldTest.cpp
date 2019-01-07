@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "ReflectFieldTest.h"
+#include "Mdt/Reflection/TypeTraits/IsField.h"
 #include "Mdt/Reflection/ReflectField.h"
 #include "Mdt/Reflection/FieldAlgorithm.h"
 #include <QString>
@@ -52,6 +53,7 @@ struct FieldDefTest1
 {
   MDT_REFLECTION_STRUCT_FIELD_DEF(FieldDefTest1, (id) )
 };
+static_assert( Mdt::Reflection::TypeTraits::IsField<FieldDefTest1::id>::value , "" );
 static_assert( std::is_same<FieldDefTest1::id::struct_def, FieldDefTest1>::value , "" );
 static_assert( !Mdt::Reflection::isFieldRequired<FieldDefTest1::id>(), "" );
 
@@ -59,6 +61,7 @@ struct FieldDefTest2
 {
   MDT_REFLECTION_STRUCT_FIELD_DEF(FieldDefTest2, (name, FieldFlag::IsRequired) )
 };
+static_assert( Mdt::Reflection::TypeTraits::IsField<FieldDefTest2::name>::value , "" );
 static_assert( std::is_same<FieldDefTest2::name::struct_def, FieldDefTest2>::value , "" );
 static_assert( Mdt::Reflection::isFieldRequired<FieldDefTest2::name>(), "" );
 
@@ -68,6 +71,7 @@ namespace Ns3{
     MDT_REFLECTION_STRUCT_FIELD_DEF(FieldDefTest, (name, FieldFlag::IsRequired) )
   };
 } // namespace Ns3{
+static_assert( Mdt::Reflection::TypeTraits::IsField<Ns3::FieldDefTest::name>::value , "" );
 static_assert( std::is_same<Ns3::FieldDefTest::name::struct_def, Ns3::FieldDefTest>::value , "" );
 
 void ReflectFieldTest::getFieldAttributesTest()

@@ -18,4 +18,15 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "FieldAttributes.h"
+#ifndef MDT_REFLECTION_TYPE_TRAITS_FIELD_TAG_H
+#define MDT_REFLECTION_TYPE_TRAITS_FIELD_TAG_H
+
+namespace Mdt{ namespace Reflection{ namespace TypeTraits{
+
+  struct FieldTag
+  {
+  };
+
+}}} // namespace Mdt{ namespace Reflection{ namespace TypeTraits{
+
+#endif // #ifndef MDT_REFLECTION_TYPE_TRAITS_FIELD_TAG_H

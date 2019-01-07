@@ -18,4 +18,20 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "FieldAttributes.h"
+#ifndef MDT_REFLECTION_TYPE_TRAITS_IS_FIELD_ASSOCIATED_WITH_REFLECTED_STRUCT_H
+#define MDT_REFLECTION_TYPE_TRAITS_IS_FIELD_ASSOCIATED_WITH_REFLECTED_STRUCT_H
+
+#include <type_traits>
+
+namespace Mdt{ namespace Reflection{ namespace TypeTraits{
+
+  /*! \brief 
+   */
+  template<typename Struct, typename Field>
+  struct IsFieldAssociatedWithReflectedStruct : std::is_same< typename Field::struct_def::reflected_struct, Struct >
+  {
+  };
+
+}}} // namespace Mdt{ namespace Reflection{ namespace TypeTraits{
+
+#endif // #ifndef MDT_REFLECTION_TYPE_TRAITS_IS_FIELD_ASSOCIATED_WITH_REFLECTED_STRUCT_H

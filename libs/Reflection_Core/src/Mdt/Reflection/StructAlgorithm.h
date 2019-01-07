@@ -21,6 +21,8 @@
 #ifndef MDT_REFLECTION_STRUCT_ALGORITHM_H
 #define MDT_REFLECTION_STRUCT_ALGORITHM_H
 
+#include "TypeTraits/IsField.h"
+#include "TypeTraits/IsStructDef.h"
 #include <boost/fusion/include/as_map.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/mpl/for_each.hpp>
@@ -28,18 +30,26 @@
 namespace Mdt{ namespace Reflection{
 
   /*! \brief Get the struct reflected name from a struct def
+   *
+   * \pre \a StructDef must be a struct definition assiocated with a reflected struct
    */
   template<typename StructDef>
   static constexpr const char* nameFromStructDef()
   {
+    static_assert( TypeTraits::IsStructDef<StructDef>::value, "StructDef must be a struct definition assiocated with a reflected struct" );
+
     return StructDef::name_();
   }
 
   /*! \brief Get the struct reflected name from a field
+   *
+   * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
    */
   template<typename Field>
   static constexpr const char* nameFromField()
   {
+    static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
+
     return nameFromStructDef<typename Field::struct_def>();
   }
 

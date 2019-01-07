@@ -24,12 +24,13 @@
 #include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
 #include "Mdt/Reflection/PrimaryKeyAlgorithm.h"
 #include "Mdt/Reflection/FieldAlgorithm.h"
+#include "Mdt/Reflection/ReflectStruct.h"
 #include <QStringList>
 #include <type_traits>
 
-#include "Mdt/Reflection/FieldAttributes.h"
-#include <boost/fusion/adapted/struct/adapt_assoc_struct.hpp>
-#include <boost/fusion/include/adapt_assoc_struct.hpp>
+// #include "Mdt/Reflection/FieldAttributes.h"
+// #include <boost/fusion/adapted/struct/adapt_assoc_struct.hpp>
+// #include <boost/fusion/include/adapt_assoc_struct.hpp>
 
 using namespace Mdt::Reflection;
 
@@ -46,10 +47,20 @@ struct PkTestStruct
   QString str_C_id;
 };
 
+MDT_REFLECT_STRUCT(
+  (PkTestStruct),
+  PkTest,
+  (int_id),
+  (qulonglong_id),
+  (str_A_id),
+  (str_B_id),
+  (str_C_id)
+)
+
 /*
  * Struct - auto generated stuff
  */
-
+/*
 struct PkTestDef
 {
   using reflected_struct = PkTestStruct;
@@ -123,6 +134,7 @@ BOOST_FUSION_ADAPT_ASSOC_STRUCT(
   (str_B_id, PkTestDef::str_B_id)
   (str_C_id, PkTestDef::str_C_id)
 )
+*/
 
 /*
  * Helpers

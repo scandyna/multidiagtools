@@ -30,6 +30,7 @@ addReflection_CoreTest("Sandbox")
 
 addReflection_CoreTest("ReflectFieldTest")
 addReflection_CoreTest("ReflectStructTest")
+addReflection_CoreTest("TypeTraitsTest")
 addReflection_CoreTest("FieldAttributesTest")
 addReflection_CoreTest("FieldTest")
 addReflection_CoreTest("StructTest")

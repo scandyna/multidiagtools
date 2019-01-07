@@ -22,6 +22,7 @@
 #include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/StructAlgorithm.h"
 #include "Mdt/Reflection/FieldAlgorithm.h"
+#include "Mdt/Reflection/TypeTraits/IsStructDef.h"
 #include <QString>
 #include <boost/preprocessor/variadic/to_seq.hpp>
 #include <boost/mpl/at.hpp>
@@ -125,7 +126,14 @@ static_assert( std::is_same< A::B::SellerDef::field_list, boost::mpl::vector<A::
  * Type traits tests
  */
 
+static_assert( Mdt::Reflection::TypeTraits::IsStructDef<PersonDef>::value, "" );
+static_assert( !Mdt::Reflection::TypeTraits::IsStructDef<PersonDataStruct>::value, "" );
 
+static_assert( Mdt::Reflection::TypeTraits::IsStructDef<A::AddressDef>::value, "" );
+static_assert( !Mdt::Reflection::TypeTraits::IsStructDef<A::AddressDataStruct>::value, "" );
+
+static_assert( Mdt::Reflection::TypeTraits::IsStructDef<A::B::SellerDef>::value, "" );
+static_assert( !Mdt::Reflection::TypeTraits::IsStructDef<A::B::SellerDataStruct>::value, "" );
 
 // Macros for namespaceTest()
 

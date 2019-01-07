@@ -1,5 +1,6 @@
 
 #include "TestBase.h"
+#include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/PrimaryKey.h"
 #include "Mdt/Reflection/PrimaryKeyAlgorithm.h"
 #include "Mdt/Reflection/FieldAttributes.h"
@@ -347,6 +348,15 @@ struct PersonDataStruct
   QString lastName;
 };
 
+MDT_REFLECT_STRUCT(
+  (PersonDataStruct),
+  Person,
+  (id),
+  (firstName, FieldFlag::IsRequired),
+  (lastName, FieldFlag::HasDefaultValue, FieldMaxLength(250))
+)
+
+/*
 struct PersonDef
 {
   using reflected_struct = PersonDataStruct;
@@ -400,23 +410,25 @@ BOOST_FUSION_ADAPT_ASSOC_STRUCT(
   (lastName, PersonDef::lastName)
 )
 
-struct FieldIsRequired
-{
-};
+*/
 
-template<int Length>
-struct FieldMaxLength
-{
-};
+// struct FieldIsRequired
+// {
+// };
+//
+// template<int Length>
+// struct FieldMaxLength
+// {
+// };
 
 // using PersonFirstNameAttributes = boost::mpl::vector<FieldIsRequired, FieldMaxLength<20> >;
 
-using PersonFieldAttributes =
-  boost::mpl::vector<
-    boost::mpl::vector<>,
-    boost::mpl::vector<FieldIsRequired>,
-    boost::mpl::vector< FieldIsRequired, FieldMaxLength<20> >
-  >;
+// using PersonFieldAttributes =
+//   boost::mpl::vector<
+//     boost::mpl::vector<>,
+//     boost::mpl::vector<FieldIsRequired>,
+//     boost::mpl::vector< FieldIsRequired, FieldMaxLength<20> >
+//   >;
 
 class Person
 {
