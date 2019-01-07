@@ -18,28 +18,21 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_REFLECTION_ID_PRIMARY_KEY_H
-#define MDT_REFLECTION_ID_PRIMARY_KEY_H
+#ifndef MDT_REFLECTION_TYPE_TRAITS_IS_PRIMARYKEY_H
+#define MDT_REFLECTION_TYPE_TRAITS_IS_PRIMARYKEY_H
 
-#include "TypeTraits/PrimaryKeyTag.h"
-#include <boost/mpl/vector.hpp>
+#include "PrimaryKeyTag.h"
+#include <type_traits>
 
-namespace Mdt{ namespace Reflection{
+namespace Mdt{ namespace Reflection{ namespace TypeTraits{
 
-  /*! \brief Id primary key for a reflected struct
-   *
-   * \pre \a Field must refer to a integral type in the reflected struct
+  /*! \brief Check if T is a primary key
    */
-  template<typename Field>
-  class IdPrimaryKey : TypeTraits::PrimaryKeyTag
+  template<typename T>
+  struct IsPrimaryKey : std::is_base_of<PrimaryKeyTag, T>
   {
-   public:
-
-    using struct_def = typename Field::struct_def;
-    using field_list = boost::mpl::vector<Field>;
   };
 
+}}} // namespace Mdt{ namespace Reflection{ namespace TypeTraits{
 
-}} // namespace Mdt{ namespace Reflection{
-
-#endif // #ifndef MDT_REFLECTION_ID_PRIMARY_KEY_H
+#endif // #ifndef MDT_REFLECTION_TYPE_TRAITS_IS_PRIMARYKEY_H

@@ -21,6 +21,7 @@
 #ifndef MDT_REFLECTION_PRIMARY_KEY_H
 #define MDT_REFLECTION_PRIMARY_KEY_H
 
+#include "TypeTraits/PrimaryKeyTag.h"
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/at.hpp>
 
@@ -29,7 +30,7 @@ namespace Mdt{ namespace Reflection{
   /*! \brief Primary key for a reflected struct
    */
   template<typename ...FieldList>
-  class PrimaryKey
+  class PrimaryKey : TypeTraits::PrimaryKeyTag
   {
     static_assert( sizeof...(FieldList) >= 1 , "A primary key must contain at least 1 field" );
 

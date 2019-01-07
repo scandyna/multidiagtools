@@ -25,7 +25,7 @@
 
 namespace Mdt{ namespace Reflection{ namespace TypeTraits{
 
-  /*! \brief 
+  /*! \brief Check if a field is assiocated with a reflected struct
    */
   template<typename Struct, typename Field>
   struct IsFieldAssociatedWithReflectedStruct : std::is_same< typename Field::struct_def::reflected_struct, Struct >

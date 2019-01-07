@@ -22,8 +22,11 @@
 #include "Mdt/Reflection/TypeTraits/IsField.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
 #include "Mdt/Reflection/TypeTraits/IsFieldAssociatedWithReflectedStruct.h"
+#include "Mdt/Reflection/TypeTraits/IsPrimaryKey.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/PrimaryKey.h"
+#include "Mdt/Reflection/IdPrimaryKey.h"
+#include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
 #include <QString>
 
 using namespace Mdt::Reflection;
@@ -46,6 +49,8 @@ MDT_REFLECT_STRUCT(
   (description, FieldFlag::IsRequired, FieldMaxLength(250))
 )
 
+using ArticlePrimaryKey = AutoIncrementIdPrimaryKey<ArticleDef::id>;
+
 struct ArticleDetailDataStruct
 {
   qlonglong id;
@@ -59,6 +64,7 @@ MDT_REFLECT_STRUCT(
   (articleId)
 )
 
+using ArticleDetailPrimaryKey = IdPrimaryKey<ArticleDetailDef::id>;
 // using ArticleDetailRelation = Mdt::Reflection::Relation<ArticleEntity, ArticleDetailEntity, ArticleDetailDef::articleIdField>;
 
 struct ArticleTypeDataStruct
@@ -73,6 +79,8 @@ MDT_REFLECT_STRUCT(
   (code),
   (label)
 )
+
+using ArticleTypePrimaryKey = PrimaryKey<ArticleTypeDef::code>;
 
 /*
  * IsStructDef compile time tests
@@ -110,6 +118,12 @@ static_assert( !IsFieldAssociatedWithReflectedStruct<int, ArticleDef::id>::value
 /*
  * IsPrimaryKey compile time tests
  */
+
+static_assert( IsPrimaryKey<ArticlePrimaryKey>::value, "" );
+static_assert( IsPrimaryKey<ArticleDetailPrimaryKey>::value, "" );
+static_assert( IsPrimaryKey<ArticleTypePrimaryKey>::value, "" );
+static_assert( !IsPrimaryKey<ArticleDef>::value, "" );
+static_assert( !IsPrimaryKey<int>::value, "" );
 
 /*
  * IsRelation compile time tests

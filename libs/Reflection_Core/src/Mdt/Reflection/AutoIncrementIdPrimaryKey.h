@@ -21,6 +21,7 @@
 #ifndef MDT_REFLECTION_AUTO_INCREMENT_ID_PRIMARY_KEY_H
 #define MDT_REFLECTION_AUTO_INCREMENT_ID_PRIMARY_KEY_H
 
+#include "TypeTraits/PrimaryKeyTag.h"
 #include <boost/mpl/vector.hpp>
 
 namespace Mdt{ namespace Reflection{
@@ -30,7 +31,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a Field must refer to a integral type in the reflected struct
    */
   template<typename Field>
-  class AutoIncrementPrimaryKey
+  class AutoIncrementIdPrimaryKey : TypeTraits::PrimaryKeyTag
   {
    public:
 

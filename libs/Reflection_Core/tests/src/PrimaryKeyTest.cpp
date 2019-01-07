@@ -187,7 +187,7 @@ void PrimaryKeyTest::idPkTest()
 
 void PrimaryKeyTest::autoIdPkTest()
 {
-  using Pk = Mdt::Reflection::AutoIncrementPrimaryKey<PkTestDef::qulonglong_id>;
+  using Pk = Mdt::Reflection::AutoIncrementIdPrimaryKey<PkTestDef::qulonglong_id>;
 
   QCOMPARE(primaryKeyToFieldNameList<Pk>(), QStringList({"qulonglong_id"}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
