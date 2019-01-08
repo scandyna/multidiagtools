@@ -23,10 +23,12 @@
 
 #include "TypeTraits/IsField.h"
 #include "TypeTraits/IsFieldAssociatedWithReflectedStruct.h"
+#include <QMetaType>
 #include <boost/fusion/include/adapt_assoc_struct.hpp>
 #include <boost/fusion/include/distance.hpp>
 #include <boost/fusion/include/begin.hpp>
 #include <boost/fusion/include/find.hpp>
+#include <boost/fusion/include/at_key.hpp>
 #include <type_traits>
 
 namespace Mdt{ namespace Reflection{
@@ -36,7 +38,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a FieldIndex must be >= 0
    */
   template<typename Struct, int FieldIndex>
-  static constexpr const char* fieldNameAtInStruct()
+  static constexpr const char* fieldNameAtInStruct() noexcept
   {
     static_assert( FieldIndex >= 0, "FieldIndex must be >= 0" );
 
@@ -48,7 +50,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a Field must be a field defined in the struct definition associated with \a Struct
    */
   template<typename Struct, typename Field>
-  static constexpr int fieldIndexInStruct()
+  static constexpr int fieldIndexInStruct() noexcept
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in the struct definition associated with Struct" );
     static_assert( TypeTraits::IsFieldAssociatedWithReflectedStruct<Struct, Field>::value ,
@@ -65,7 +67,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
    */
   template<typename Field>
-  static constexpr const char *fieldName()
+  static constexpr const char *fieldName() noexcept
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
 
@@ -74,6 +76,26 @@ namespace Mdt{ namespace Reflection{
     constexpr int fieldIndex = fieldIndexInStruct<reflected_struct, Field>();
 
     return fieldNameAtInStruct<reflected_struct, fieldIndex>();
+  }
+
+  /*! \brief Get the QMetaType type for a field
+   *
+   * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
+   * \note This function can be called as constexpr as long as \a Field refers to a type
+   *    natively handled by QMetaType. For types declared with Q_DECLARE_METATYPE(),
+   *    it cannot be called as constexpr .
+   */
+  template<typename Field>
+  static constexpr QMetaType::Type qmetaTypeFromField() noexcept
+  {
+    static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
+
+    using struct_def = typename Field::struct_def;
+    using reflected_struct = typename struct_def::reflected_struct;
+    using field_type_raw = typename boost::fusion::result_of::at_key<reflected_struct, Field>::type;
+    using field_type = typename std::remove_reference<field_type_raw>::type;
+
+    return static_cast<QMetaType::Type>( qMetaTypeId<field_type>() );
   }
 
   /*! \brief Check if a field is required
@@ -86,7 +108,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
    */
   template<typename Field>
-  constexpr bool isFieldRequired()
+  constexpr bool isFieldRequired() noexcept
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
 
@@ -98,7 +120,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
    */
   template<typename Field>
-  constexpr bool hasFieldDefaultValue()
+  constexpr bool hasFieldDefaultValue() noexcept
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
 
@@ -112,7 +134,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
    */
   template<typename Field>
-  constexpr int fieldMaxLength()
+  constexpr int fieldMaxLength() noexcept
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
 

@@ -28,5 +28,6 @@ class FieldTest : public QObject
 
   void fieldNameByIndexInStructTest();
   void fieldNameFromFieldTest();
+  void qmetaTypeFromFieldTest();
   void fieldAttributesTest();
 };

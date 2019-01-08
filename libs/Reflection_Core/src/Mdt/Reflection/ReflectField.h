@@ -90,7 +90,7 @@
   {                                                                                                                 \
     using struct_def = structDef;                                                                                   \
                                                                                                                     \
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()                                             \
+    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes() noexcept                                    \
     {                                                                                                               \
       using namespace Mdt::Reflection;                                                                              \
       return Mdt::Reflection::FieldAttributes( MDT_REFLECTION_STRUCT_FIELD_GET_FIELD_ATTRIBUTES_ENUM(fieldTuple) ); \

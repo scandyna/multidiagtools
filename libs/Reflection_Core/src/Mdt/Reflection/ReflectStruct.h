@@ -427,7 +427,7 @@
                                                                                                                   \
     constexpr MDT_REFLECTION_STRUCT_GET_STRUCT_DEF_NAME(name)() noexcept {}                                       \
                                                                                                                   \
-    static constexpr const char *name_()                                                                          \
+    static constexpr const char *name_() noexcept                                                                 \
     {                                                                                                             \
       return MDT_REFLECTION_STRUCT_GET_NAME_STR(name);                                                            \
     }                                                                                                             \

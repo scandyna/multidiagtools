@@ -219,6 +219,40 @@
  *
  * Here, the domain entity is strongly coupled with the reflection details.
  *
+ * \section field_types Field types
+ *
+ * While defining the data struct to reflect, take care to privilege types that are handled by QMetaType:
+ * \code
+ * struct PersonDataStruct
+ * {
+ *   qulonlong id = 0;
+ *   QString firstName;
+ *   QString lastName;
+ * };
+ * \endcode
+ *
+ * Doing so will enable to reuse the existing tools.
+ *  For example, Qt modules, like QSqlQuery uses QVariant as data interface,
+ *  which also relies on QMetaType.
+ *  In a later chapiter, it will be prposed a simple way to
+ *  create a SQL schema using functions provided in Mdt/Sql/Schema/Reflection.h .
+ *  Those functions also relies on types known by QMetaType.
+ *
+ * It is possible to define custom types:
+ * \code
+ * #include <QMetaType>
+ *
+ * struct MyStruct
+ * {
+ *   int i = 0;
+ * };
+ * Q_DECLARE_METATYPE(MyStruct)
+ * \endcode
+ * See Qt's QMetaType documentation for more details.
+ *
+ * Please also considere that using custom types will require
+ *  more work in some modules.
+ *
  * \section attributes
  *
  * Some attributes could be specific to some persistance engine.
@@ -269,6 +303,12 @@
  * \endcode
  *
  * \sa Mdt::Sql::Schema::Reflection::tableFromReflected()
+ *
+ * \note If the reflected struct uses custom types,
+ *  a mapping between the custom type or the SQL field type
+ *  must be provided.
+ *  If such mapping is possible, see Mdt::Sql::Schema::FieldTypeMap .
+ *  If not possible, the SQL schema should be done manually .
  *
  * \section alternatives
  *

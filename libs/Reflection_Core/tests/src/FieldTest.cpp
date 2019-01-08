@@ -22,6 +22,7 @@
 #include "Mdt/Reflection/FieldAlgorithm.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include <QString>
+#include <type_traits>
 
 using namespace Mdt::Reflection;
 
@@ -63,14 +64,26 @@ MDT_REFLECT_STRUCT(
   (personId, FieldFlag::IsRequired)
 )
 
-/*
- * Helpers
- */
+struct MyStruct
+{
+  int i = 0;
+};
+Q_DECLARE_METATYPE(MyStruct)
 
+struct FieldTypeTestStruct
+{
+  int int_type;
+  QString QString_type;
+  MyStruct MyStruct_type;
+};
 
-/*
- * Type traits tests
- */
+MDT_REFLECT_STRUCT(
+  (FieldTypeTestStruct),
+  FieldTypeTest,
+  (int_type),
+  (QString_type),
+  (MyStruct_type)
+)
 
 /*
  * Tests
@@ -112,6 +125,18 @@ void FieldTest::fieldNameFromFieldTest()
   QCOMPARE(fName, QString("street"));
   fName = fieldName<AddressDef::personId>();
   QCOMPARE(fName, QString("personId"));
+}
+
+void FieldTest::qmetaTypeFromFieldTest()
+{
+  constexpr auto qmt_int = qmetaTypeFromField<FieldTypeTestDef::int_type>();
+  QCOMPARE(qmt_int, QMetaType::Int);
+
+  constexpr auto qmt_QString = qmetaTypeFromField<FieldTypeTestDef::QString_type>();
+  QCOMPARE(qmt_QString, QMetaType::QString);
+
+  const auto qmt_MyStruct = qmetaTypeFromField<FieldTypeTestDef::MyStruct_type>();
+  QVERIFY(qmt_MyStruct >= QMetaType::User);
 }
 
 void FieldTest::fieldAttributesTest()

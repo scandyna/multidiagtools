@@ -34,7 +34,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a StructDef must be a struct definition assiocated with a reflected struct
    */
   template<typename StructDef>
-  static constexpr const char* nameFromStructDef()
+  static constexpr const char* nameFromStructDef() noexcept
   {
     static_assert( TypeTraits::IsStructDef<StructDef>::value, "StructDef must be a struct definition assiocated with a reflected struct" );
 
@@ -46,7 +46,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
    */
   template<typename Field>
-  static constexpr const char* nameFromField()
+  static constexpr const char* nameFromField() noexcept
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
 
