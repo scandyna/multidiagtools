@@ -168,6 +168,15 @@ SQL: %2</source>
     </message>
 </context>
 <context>
+    <name>Mdt::Sql::Schema::DriverMySql</name>
+    <message>
+        <location filename="../src/Mdt/Sql/Schema/DriverMySql.cpp" line="47"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverMySql.cpp" line="55"/>
+        <source>Fetching database default character set failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mdt::Sql::Schema::DriverSQLite</name>
     <message>
         <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="52"/>

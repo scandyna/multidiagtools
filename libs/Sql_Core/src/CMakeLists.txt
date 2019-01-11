@@ -50,7 +50,7 @@ set(SOURCE_FILES
     Mdt/Sql/Schema/Driver.cpp
     Mdt/Sql/Schema/DriverImplementationInterface.cpp
     Mdt/Sql/Schema/DriverSQLite.cpp
-#     Mdt/Sql/Schema/DriverMySql.cpp
+    Mdt/Sql/Schema/DriverMySql.cpp
 #     Mdt/Sql/Schema/DriverPostgreSQL.cpp
     Mdt/Sql/Schema/FieldLength.cpp
     Mdt/Sql/Schema/FieldTypeFlags.cpp
