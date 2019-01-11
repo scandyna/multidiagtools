@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -86,7 +86,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Get field type from string
      *
-     * Extracts the field tape name and retruns corresponding field type.
+     * Extracts the field type name and retruns corresponding field type.
      *  For example, if fieldTypeString is VARCHAR(50),
      *  FieldType::Varchar is retruned.
      *
