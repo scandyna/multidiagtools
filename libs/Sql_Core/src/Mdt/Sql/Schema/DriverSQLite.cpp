@@ -24,6 +24,7 @@
 #include "ForeignKeyActionSqlTransform.h"
 #include "Mdt/Sql/Error.h"
 #include "Mdt/Algorithm.h"
+#include <QLatin1String>
 #include <QStringBuilder>
 #include <QSqlField>
 #include <QSqlRecord>
@@ -95,6 +96,10 @@ QString DriverSQLite::getFieldDefinition(const Field & field) const
   // Length
   if(field.length() > 0){
     sql += QStringLiteral("(") % QString::number(field.length()) % QStringLiteral(")");
+  }
+  // Unsigned
+  if(field.isUnsigned()){
+    sql += QLatin1String(" UNSIGNED");
   }
   // Unique constraint
   if(field.isUnique()){

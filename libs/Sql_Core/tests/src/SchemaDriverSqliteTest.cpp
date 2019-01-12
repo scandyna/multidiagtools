@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -202,6 +202,16 @@ void SchemaDriverSqliteTest::fieldDefinitionTest()
   field.setType(FieldType::Integer);
   // Check
   expectedSql = "\"Number\" INTEGER DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * Unsigned INTEGER field
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  field.setUnsigned(true);
+  // Check
+  expectedSql = "\"Number\" INTEGER UNSIGNED DEFAULT NULL";
   QCOMPARE(driver.getFieldDefinition(field), expectedSql);
   /*
    * INTEGER field with UNIQUE constraint
@@ -602,6 +612,11 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   Remarks.setName("Remarks");
   Remarks.setType(FieldType::Varchar);
   Remarks.setLength(100);
+  // UintField
+  Field UintField;
+  UintField.setName("UintField");
+  UintField.setType(FieldType::Integer);
+  UintField.setUnsigned(true);
   // Connector_Id_FK
   Field Connector_Id_FK;
   Connector_Id_FK.setName("Connector_Id_FK");
@@ -668,6 +683,22 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
   expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL,\n";
   expectedSql += "  \"Remarks\" VARCHAR(100) DEFAULT NULL\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - Auto increment primary key
+   *  - 1 integral unsigned field
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Client_tbl");
+  table.setAutoIncrementPrimaryKey("Id_PK");
+  table.addField(UintField);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  \"UintField\" INTEGER UNSIGNED DEFAULT NULL\n";
   expectedSql += ");\n";
   QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
   /*
@@ -855,6 +886,30 @@ void SchemaDriverSqliteTest::simpleCreateAndDropTableTest()
   QVERIFY(database().tables().contains(client_tbl.tableName()));
   QVERIFY(driver.dropTable(client_tbl));
   QVERIFY(!database().tables().contains(client_tbl.tableName()));
+}
+
+void SchemaDriverSqliteTest::createTableWithUnsignedIntegralFieldTest()
+{
+  using namespace Mdt::Sql::Schema;
+
+  Mdt::Sql::Schema::Driver driver(database());
+  QVERIFY(driver.isValid());
+
+  Field uintField;
+  uintField.setName("UintField");
+  uintField.setType(FieldType::Integer);
+  uintField.setUnsigned(true);
+
+  Table table;
+  table.setTableName("MyTable");
+  table.setAutoIncrementPrimaryKey("Id_PK");
+  table.addField(uintField);
+
+  QVERIFY(!database().tables().contains(table.tableName()));
+  QVERIFY(driver.createTable(table));
+  QVERIFY(database().tables().contains(table.tableName()));
+  QVERIFY(driver.dropTable(table));
+  QVERIFY(!database().tables().contains(table.tableName()));
 }
 
 void SchemaDriverSqliteTest::reverseFieldListTest()

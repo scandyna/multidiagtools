@@ -188,43 +188,43 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::Schema::DriverSQLite</name>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="52"/>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="60"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="53"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="61"/>
         <source>Fetching database default character set failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="131"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="136"/>
         <source>Fetching unique constraint informations of table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="143"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="148"/>
         <source>Fetching informations of table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="224"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="229"/>
         <source>Fetching primary key for table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="275"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="280"/>
         <source>Fetching foreign keys for table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="353"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="358"/>
         <source>Fetching list of indexes for table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="384"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="389"/>
         <source>Fetching information for index &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="405"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="410"/>
         <source>Fetching case sensitivity for field &apos;%1&apos; in index &apos;%2&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
