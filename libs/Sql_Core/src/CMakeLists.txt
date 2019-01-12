@@ -59,6 +59,7 @@ set(SOURCE_FILES
     Mdt/Sql/Schema/FieldTypeMapImplementation.cpp
     Mdt/Sql/Schema/FieldTypeMap.cpp
     Mdt/Sql/Schema/FieldTypeName.cpp
+    Mdt/Sql/Schema/Field.cpp
 #     Mdt/Sql/Schema/FieldTypeListModel.cpp
     Mdt/Sql/Schema/PrimaryKeyFieldIndexList.cpp
     Mdt/Sql/Schema/PrimaryKeyType.cpp

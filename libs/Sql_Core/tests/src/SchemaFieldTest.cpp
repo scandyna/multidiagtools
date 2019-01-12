@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -155,6 +155,7 @@ void SchemaFieldTest::fieldTest()
    */
   Field field;
   QVERIFY(field.type() == FieldType::UnknownType);
+  QVERIFY(!field.isUnsigned());
   QVERIFY(!field.isRequired());
   QVERIFY(!field.isUnique());
   QCOMPARE(field.length(), -1);
@@ -171,6 +172,7 @@ void SchemaFieldTest::fieldTest()
   field.setUnique(true);
   // Check
   QVERIFY(field.type() == FieldType::Integer);
+  QVERIFY(!field.isUnsigned());
   QCOMPARE(field.name(), QString("Id_PK"));
   QVERIFY(field.isRequired());
   QVERIFY(field.isUnique());
@@ -179,6 +181,7 @@ void SchemaFieldTest::fieldTest()
    */
   field.clear();
   QVERIFY(field.type() == FieldType::UnknownType);
+  QVERIFY(!field.isUnsigned());
   QVERIFY(field.name().isEmpty());
   QVERIFY(!field.isRequired());
   QVERIFY(!field.isUnique());
@@ -194,11 +197,13 @@ void SchemaFieldTest::fieldTest()
   QVERIFY(field.isNull());
   field.setType(FieldType::Varchar);
   QVERIFY(!field.isNull());
+  field.setUnsigned(true);
   field.setLength(50);
   field.setDefaultValue("Empty");
   field.setCaseSensitive(false);
   // Check
   QVERIFY(field.type() == FieldType::Varchar);
+  QVERIFY(field.isUnsigned());
   QCOMPARE(field.name(), QString("Name"));
   QVERIFY(!field.isRequired());
   QCOMPARE(field.length(), 50);
@@ -209,6 +214,7 @@ void SchemaFieldTest::fieldTest()
    */
   field.clear();
   QVERIFY(field.type() == FieldType::UnknownType);
+  QVERIFY(!field.isUnsigned());
   QVERIFY(field.name().isEmpty());
   QVERIFY(!field.isRequired());
   QVERIFY(!field.isUnique());

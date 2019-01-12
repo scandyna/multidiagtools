@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -38,10 +38,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Create a null field
      */
     Field()
-    : pvType(FieldType::UnknownType),
-      pvIsRequired(false),
-      pvIsUnique(false),
-      pvLength(-1)
+    : mType (FieldType::UnknownType),
+      mIsUnsigned(false),
+      mIsRequired (false),
+      mIsUnique (false),
+      mLength (-1)
     {
     }
 
@@ -49,70 +50,89 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void setType(FieldType t)
     {
-      pvType = t;
+      mType = t;
     }
 
     /*! \brief Get field type
      */
     FieldType type() const
     {
-      return pvType;
+      return mType;
+    }
+
+    /*! \brief Set field unsigned
+     *
+     * \note This has only sense for integral types
+     * \warning Some DBMS do not support unsigned integers
+     */
+    void setUnsigned(bool u)
+    {
+      mIsUnsigned = u;
+    }
+
+    /*! \brief Check if this field is unsigned
+     *
+     * \note This has only sense for integral types
+     */
+    bool isUnsigned() const noexcept
+    {
+      return mIsUnsigned;
     }
 
     /*! \brief Set field name
      */
     void setName(const QString & name)
     {
-      pvName = name;
+      mName = name;
     }
 
     /*! \brief Get field name
      */
     QString name() const
     {
-      return pvName;
+      return mName;
     }
 
     /*! \brief Set field required
      */
     void setRequired(bool r)
     {
-      pvIsRequired = r;
+      mIsRequired = r;
     }
 
     /*! \brief Check if field is required
      */
     bool isRequired() const
     {
-      return pvIsRequired;
+      return mIsRequired;
     }
 
     /*! \brief Set field unique
      */
     void setUnique(bool u)
     {
-      pvIsUnique = u;
+      mIsUnique = u;
     }
 
     /*! \brief Check if field is unique
      */
     bool isUnique() const
     {
-      return pvIsUnique;
+      return mIsUnique;
     }
 
     /*! \brief Set default value
      */
     void setDefaultValue(const QVariant & v)
     {
-      pvDefaultValue = v;
+        mDefaultValue = v;
     }
 
     /*! \brief Get default value
      */
     QVariant defaultValue() const
     {
-      return pvDefaultValue;
+      return mDefaultValue;
     }
 
     /*! \brief Set length
@@ -121,7 +141,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void setLength(int length)
     {
-      pvLength = length;
+        mLength = length;
     }
 
     /*! \brief Get length
@@ -130,14 +150,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     int length() const
     {
-      return pvLength;
+      return mLength;
     }
 
     /*! \brief Set collation
      */
     void setCollation(const Collation & collation)
     {
-      pvCollation = collation;
+      mCollation = collation;
     }
 
     /*! \brief Set case sensitivity
@@ -147,14 +167,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void setCaseSensitive(bool cs)
     {
-      pvCollation.setCaseSensitive(cs);
+      mCollation.setCaseSensitive(cs);
     }
 
     /*! \brief Get collation
      */
     Collation collation() const
     {
-      return pvCollation;
+      return mCollation;
     }
 
     /*! \brief Check if field is null
@@ -166,32 +186,34 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     bool isNull() const
     {
-      return ( (pvType == FieldType::UnknownType) || pvName.isEmpty());
+      return ( ( mType == FieldType::UnknownType) || mName.isEmpty());
     }
 
     /*! \brief Clear
      */
     void clear()
     {
-      pvType = FieldType::UnknownType;
-      pvName.clear();
-      pvIsRequired = false;
-      pvIsUnique = false;
-      pvDefaultValue.clear();
-      pvLength = -1;
-      pvCollation.clear();
+      mType = FieldType::UnknownType;
+      mIsUnsigned = false;
+      mName.clear();
+      mIsRequired = false;
+      mIsUnique = false;
+      mDefaultValue.clear();
+      mLength = -1;
+      mCollation.clear();
     }
 
 
    private:
 
-    FieldType pvType;
-    bool pvIsRequired;
-    bool pvIsUnique;
-    int pvLength;
-    QString pvName;
-    QVariant pvDefaultValue;
-    Collation pvCollation;
+    FieldType mType;
+    bool mIsUnsigned;
+    bool mIsRequired;
+    bool mIsUnique;
+    int mLength;
+    QString mName;
+    QVariant mDefaultValue;
+    Collation mCollation;
   };
 
 }}} //namespace Mdt{ namespace Sql{ namespace Schema{
