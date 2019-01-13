@@ -36,6 +36,23 @@ DriverPostgreSQL::DriverPostgreSQL(const QSqlDatabase& db)
   Q_ASSERT(qsqlDriver()->dbmsType() == QSqlDriver::PostgreSQL);
 }
 
+QString DriverPostgreSQL::fieldTypeName(FieldType fieldType) const
+{
+  switch(fieldType){
+    case FieldType::Float:
+      return QLatin1String("REAL");
+    case FieldType::Double:
+      return QLatin1String("DOUBLE PRECISION");
+    case FieldType::Char:
+      return QLatin1String("CHARACTER");
+    case FieldType::DateTime:
+      return QLatin1String("TIMESTAMP");
+    default:
+      break;
+  }
+  return BaseClass::fieldTypeName(fieldType);
+}
+
 Charset DriverPostgreSQL::getDatabaseDefaultCharset() const
 {
   Charset cs;

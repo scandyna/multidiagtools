@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,10 +21,7 @@
 #ifndef MDT_SQL_SCHEMA_DRIVER_POSTGRESQL_TEST_H
 #define MDT_SQL_SCHEMA_DRIVER_POSTGRESQL_TEST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QTemporaryFile>
-#include <QSqlDatabase>
+#include "TestBase.h"
 
 class SchemaDriverPostgreSqlTest : public QObject
 {
@@ -40,7 +37,9 @@ class SchemaDriverPostgreSqlTest : public QObject
   void driverInstanceTest();
 
   void availableFieldTypeTest();
-  void fieldTypeMapTest();
+  void fieldTypeNameTest();
+  void fieldTypeFromStringTest();
+  void fieldLengthFromStringTest();
 
   void databaseDefaultCharsetTest();
   void collationDefinitionTest();
@@ -56,8 +55,7 @@ class SchemaDriverPostgreSqlTest : public QObject
 
   bool dropTable(const QString & tableName);
 
-  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase pvDatabase;
+  QSqlDatabase mDatabase;
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_DRIVER_POSTGRESQL_TEST_H

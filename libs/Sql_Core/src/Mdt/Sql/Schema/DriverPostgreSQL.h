@@ -29,6 +29,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    */
   class DriverPostgreSQL : public DriverImplementationInterface
   {
+    using BaseClass = DriverImplementationInterface;
+
    public:
 
     /*! \brief Constructor
@@ -41,6 +43,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       return DriverType::PostgreSQL;
     }
+
+    /*! \brief Get field type name
+     */
+    QString fieldTypeName(FieldType fieldType) const override;
 
     /*! \brief Get default charset for current database/schema
      */

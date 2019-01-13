@@ -28,6 +28,8 @@
 
 #include <QDebug>
 
+using namespace Mdt::Sql::Schema;
+
 void SchemaDriverPostgreSqlTest::initTestCase()
 {
   /*
@@ -43,18 +45,18 @@ void SchemaDriverPostgreSqlTest::initTestCase()
   const QString dbName = "testdb";
 
   // Get database instance
-  pvDatabase = QSqlDatabase::addDatabase("QPSQL");
-  if(!pvDatabase.isValid()){
+  mDatabase = QSqlDatabase::addDatabase("QPSQL");
+  if(!mDatabase.isValid()){
     QSKIP("QPSQL driver is not available - Skip all tests");  // Will also skip all tests
   }
   // Connect to test database
-  pvDatabase.setHostName(host);
-  pvDatabase.setUserName(user);
-  pvDatabase.setPassword(pwd);
-  pvDatabase.setDatabaseName(dbName);
-  if(!pvDatabase.open()){
+  mDatabase.setHostName(host);
+  mDatabase.setUserName(user);
+  mDatabase.setPassword(pwd);
+  mDatabase.setDatabaseName(dbName);
+  if(!mDatabase.open()){
     qWarning() << "Could not open database. Make shure that test database is created with correct login as defined in initTestCase()";
-    qWarning() << "Reported error: " << pvDatabase.lastError().text();
+    qWarning() << "Reported error: " << mDatabase.lastError().text();
   }
   /*
    * Because some tests can be executed without a open connection to the server,
@@ -68,13 +70,13 @@ void SchemaDriverPostgreSqlTest::cleanupTestCase()
 
 void SchemaDriverPostgreSqlTest::sandbox()
 {
-  pvDatabase.setHostName("localhost");
-  pvDatabase.setUserName("postgres");
-  pvDatabase.setPassword("12345678");
-  pvDatabase.setDatabaseName("sandbox");
-  QVERIFY(pvDatabase.open());
+  mDatabase.setHostName("localhost");
+  mDatabase.setUserName("postgres");
+  mDatabase.setPassword("12345678");
+  mDatabase.setDatabaseName("sandbox");
+  QVERIFY(mDatabase.open());
   
-  qDebug() << "Tables: " << pvDatabase.tables(QSql::AllTables);
+  qDebug() << "Tables: " << mDatabase.tables(QSql::AllTables);
 }
 
 /*
@@ -86,7 +88,7 @@ void SchemaDriverPostgreSqlTest::driverInstanceTest()
   using Mdt::Sql::Schema::Driver;
   using Mdt::Sql::Schema::DriverType;
 
-  auto db = pvDatabase;
+  auto db = mDatabase;
   /*
    * Create a SQLite driver
    */
@@ -98,9 +100,7 @@ void SchemaDriverPostgreSqlTest::driverInstanceTest()
 
 void SchemaDriverPostgreSqlTest::availableFieldTypeTest()
 {
-  using Mdt::Sql::Schema::FieldType;
-
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  DriverPostgreSQL driver(mDatabase);
   auto list = driver.getAvailableFieldTypeList();
 
   QCOMPARE(list.size(), 8);
@@ -114,45 +114,97 @@ void SchemaDriverPostgreSqlTest::availableFieldTypeTest()
   QVERIFY(list.at(7) == FieldType::DateTime);
 }
 
-void SchemaDriverPostgreSqlTest::fieldTypeMapTest()
+void SchemaDriverPostgreSqlTest::fieldTypeNameTest()
 {
-  using Mdt::Sql::Schema::FieldType;
+  DriverPostgreSQL driver(mDatabase);
 
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
-  QVERIFY(driver.isValid());
+  QCOMPARE(driver.fieldTypeName(FieldType::UnknownType), QString());
+  QCOMPARE(driver.fieldTypeName(FieldType::Boolean), QString("BOOLEAN"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Smallint), QString("SMALLINT"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Integer), QString("INTEGER"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Bigint), QString("BIGINT"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Float), QString("REAL"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Double), QString("DOUBLE PRECISION"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Char), QString("CHARACTER"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Varchar), QString("VARCHAR"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Text), QString("TEXT"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Blob), QString("BLOB"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Date), QString("DATE"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Time), QString("TIME"));
+  QCOMPARE(driver.fieldTypeName(FieldType::DateTime), QString("TIMESTAMP"));
+}
+
+void SchemaDriverPostgreSqlTest::fieldTypeFromStringTest()
+{
+  DriverPostgreSQL driver(mDatabase);
+
+  QVERIFY(driver.fieldTypeFromString("BOOLEAN") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("boolean") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("BOOL") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("bool") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("SMALLINT") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("smallint") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("int2") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("INTEGER") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("integer") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("Integer") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("int4") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("BIGINT") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("bigint") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("int8") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("SMALLSERIAL") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("smallserial") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("SERIAL") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("serial") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("BIGSERIAL") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("bigserial") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("DECIMAL") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("decimal") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("NUMERIC") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("numeric") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("REAL") == FieldType::Float);
+  QVERIFY(driver.fieldTypeFromString("real") == FieldType::Float);
+  QVERIFY(driver.fieldTypeFromString("DOUBLE") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("double") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("DOUBLE PRECISION") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("double precision") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("CHARACTER") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("character") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("CHAR") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("char") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("CHAR(1)") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("CHAR(2)") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("CHAR(10)") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("VARCHAR") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("varchar") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("VARCHAR(50)") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("VARCHAR (50)") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("CHARACTER VARYING") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("character varying") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("CHARACTER VARYING(35)") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("TEXT") == FieldType::Text);
+  QVERIFY(driver.fieldTypeFromString("DATE") == FieldType::Date);
+  QVERIFY(driver.fieldTypeFromString("date") == FieldType::Date);
+  QVERIFY(driver.fieldTypeFromString("TIME") == FieldType::Time);
+  QVERIFY(driver.fieldTypeFromString("time") == FieldType::Time);
+  QVERIFY(driver.fieldTypeFromString("TIMESTAMP") == FieldType::DateTime);
+  QVERIFY(driver.fieldTypeFromString("timestamp") == FieldType::DateTime);
+}
+
+void SchemaDriverPostgreSqlTest::fieldLengthFromStringTest()
+{
+  DriverPostgreSQL driver(mDatabase);
+
 
   QFAIL("Not complete");
-  /*
-   * Check FieldType <-> QMetaType mapping
-   */
-//   // QMetaType -> FieldType
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::UnknownType) == FieldType::UnknownType);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QPolygon) == FieldType::UnknownType);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Int) == FieldType::Integer);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Bool) == FieldType::Boolean);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Double) == FieldType::Double);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Float) == FieldType::Float);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QDate) == FieldType::Date);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QTime) == FieldType::Time);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QDateTime) == FieldType::DateTime);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QString) == FieldType::Varchar);
-//   // FieldType -> QMetaType
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::UnknownType) == QMetaType::UnknownType);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Boolean) == QMetaType::Bool);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Integer) == QMetaType::Int);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Float) == QMetaType::Float);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Double) == QMetaType::Double);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Varchar) == QMetaType::QString);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Date) == QMetaType::QDate);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Time) == QMetaType::QTime);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::DateTime) == QMetaType::QDateTime);
 }
+
 
 void SchemaDriverPostgreSqlTest::databaseDefaultCharsetTest()
 {
   using Mdt::Sql::Schema::Charset;
 
-  Mdt::Sql::Schema::DriverPostgreSQL driver(pvDatabase);
+  Mdt::Sql::Schema::DriverPostgreSQL driver(mDatabase);
   Charset cs;
 
   /*
@@ -166,7 +218,7 @@ void SchemaDriverPostgreSqlTest::collationDefinitionTest()
 {
   using Mdt::Sql::Schema::Collation;
 
-  Mdt::Sql::Schema::DriverPostgreSQL driver(pvDatabase);
+  Mdt::Sql::Schema::DriverPostgreSQL driver(mDatabase);
   Collation collation;
 
   /*
@@ -205,7 +257,7 @@ void SchemaDriverPostgreSqlTest::fieldDefinitionTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::Field;
 
-  Mdt::Sql::Schema::DriverPostgreSQL driver(pvDatabase);
+  Mdt::Sql::Schema::DriverPostgreSQL driver(mDatabase);
   QString expectedSql;
   Field field;
 
@@ -216,7 +268,7 @@ void SchemaDriverPostgreSqlTest::autoIncrementPrimaryKeyDefinitionTest()
 {
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
 
-  Mdt::Sql::Schema::DriverPostgreSQL driver(pvDatabase);
+  Mdt::Sql::Schema::DriverPostgreSQL driver(mDatabase);
   QString expectedSql;
   AutoIncrementPrimaryKey pk;
 
@@ -231,7 +283,7 @@ void SchemaDriverPostgreSqlTest::singleFieldPrimaryKeyDefinitionTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::Field;
 
-  Mdt::Sql::Schema::DriverPostgreSQL driver(pvDatabase);
+  Mdt::Sql::Schema::DriverPostgreSQL driver(mDatabase);
   QString expectedSql;
   PrimaryKey pk;
   Field Id_A_PK, Id_B_PK;
@@ -274,15 +326,15 @@ void SchemaDriverPostgreSqlTest::indexDefinitionTest()
 
 void SchemaDriverPostgreSqlTest::createTableTest()
 {
-  if(!pvDatabase.isOpen()){
+  if(!mDatabase.isOpen()){
     QSKIP("Not connected to server");
   }
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  Mdt::Sql::Schema::Driver driver(mDatabase);
   QVERIFY(driver.isValid());
 
   QVERIFY(dropTable("Client_tbl"));
 
-  QSqlQuery q(pvDatabase);
+  QSqlQuery q(mDatabase);
   if(!q.exec("CREATE TABLE Client_tbl (Id_PK INTEGER NOT NULL PRIMARY Key)")){
     qDebug() << q.lastError().text();
   }
@@ -299,7 +351,7 @@ void SchemaDriverPostgreSqlTest::createTableTest()
 
 bool SchemaDriverPostgreSqlTest::dropTable(const QString& tableName)
 {
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(mDatabase);
 
   if(!query.exec("DROP TABLE IF EXISTS " + tableName + "")){
     qWarning() << query.lastError().text();
