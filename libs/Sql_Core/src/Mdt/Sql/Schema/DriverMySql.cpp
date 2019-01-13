@@ -24,6 +24,8 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QStringBuilder>
+#include <QLatin1String>
+#include <QLatin1Char>
 #include <QLocale>
 
 // #include <QDebug>
@@ -123,7 +125,7 @@ QString DriverMySql::getFieldDefinition(const Field & field) const
 
 QString DriverMySql::getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const
 {
-
+  return escapeFieldName(pk.fieldName()) % QLatin1Char(' ') % fieldTypeName(pk.fieldType()) % QLatin1String(" NOT NULL AUTO_INCREMENT PRIMARY KEY");
 }
 
 Mdt::Expected<PrimaryKeyContainer> DriverMySql::getTablePrimaryKeyFromDatabase(const QString & tableName) const

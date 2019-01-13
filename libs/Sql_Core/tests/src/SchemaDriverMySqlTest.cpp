@@ -392,15 +392,22 @@ void SchemaDriverMySqlTest::fieldDefinitionTest()
 
 void SchemaDriverMySqlTest::autoIncrementPrimaryKeyDefinitionTest()
 {
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-
-  Mdt::Sql::Schema::DriverMySql driver(mDatabase);
+  DriverMySql driver(mDatabase);
   QString expectedSql;
   AutoIncrementPrimaryKey pk;
 
   pk.setFieldName("Id_PK");
+  pk.setFieldType(FieldType::Smallint);
+  expectedSql = "`Id_PK` SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
 
-  QFAIL("No implemented yet");
+  pk.setFieldType(FieldType::Integer);
+  expectedSql = "`Id_PK` INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
+
+  pk.setFieldType(FieldType::Bigint);
+  expectedSql = "`Id_PK` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
 }
 
 void SchemaDriverMySqlTest::singleFieldPrimaryKeyDefinitionTest()
