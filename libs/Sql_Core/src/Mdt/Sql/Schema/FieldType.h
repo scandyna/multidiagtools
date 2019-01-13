@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -39,7 +39,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     Bigint,       /*!< Bigint type , 8 bytes (64 bit) storage */
     Float,        /*!< Float type */
     Double,       /*!< Double type */
-    Char,         /*!< Char type */
+    Char,         /*!< Fixed length string (if the stored string is shorter than the defined one, the right part is padded) */
     Varchar,      /*!< Variable length string (permit to fix a maximum length) */
     Text,         /*!< Variable length string */
     Blob,         /*!< Blob type */
