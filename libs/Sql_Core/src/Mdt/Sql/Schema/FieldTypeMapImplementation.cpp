@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -33,6 +33,8 @@ FieldType FieldTypeMapImplementation::fieldTypeFromQMetaType(QMetaType::Type qme
     case QMetaType::Int:
     case QMetaType::UInt:
       return FieldType::Integer;
+    case QMetaType::Long:
+    case QMetaType::ULong:
     case QMetaType::LongLong:
     case QMetaType::ULongLong:
       return FieldType::Bigint;
@@ -69,6 +71,8 @@ FieldTypeFlags FieldTypeMapImplementation::fieldTypeFlagsFromQMetaType(QMetaType
     case QMetaType::Int:
       return FieldTypeFlag::NoFlag;
     case QMetaType::UInt:
+      return FieldTypeFlag::IsUnsigned;
+    case QMetaType::ULong:
       return FieldTypeFlag::IsUnsigned;
     case QMetaType::LongLong:
       return FieldTypeFlag::NoFlag;

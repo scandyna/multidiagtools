@@ -46,33 +46,33 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * The default implementation uses this table:
    *
    * | QMetaType type |   FieldType  | FieldTypeFlags |   %FieldLength    | Remarks
-   * |:--------------:|:------------:|:--------------:|:-----------------:|:--------------------------------------------------------------------------------------------------------------------|
-   * |  UnknownType   | UnknownType  | NoFlag         | null              |                                                                                                                     |
-   * |  Bool          | Boolean      | NoFlag         | null              |                                                                                                                     |
-   * |  Short         | Smallint     | NoFlag         | null              |                                                                                                                     |
-   * |  UShort        | Smallint     | IsUnsigned     | null              |                                                                                                                     |
-   * |  Int           | Integer      | NoFlag         | null              | Correspond to a C++ int, at least 16 bit, mostly 32 bit                                                             |
-   * |  UInt          | Integer      | IsUnsigned     | null              | Correspond to a C++ unsigned int, at least 16 bit, mostly 32 bit                                                    |
-   * |  Long          | ?            | ?              | ?                 |                                                                                                                     |
-   * |  ULong         | ?            | ?              | ?                 |                                                                                                                     |
-   * |  LongLong      | Bigint       | NoFlag         | null              |                                                                                                                     |
-   * |  ULongLong     | Bigint       | IsUnsigned     | null              |                                                                                                                     |
-   * |  Float         | Float        | NoFlag         | null              |                                                                                                                     |
-   * |  Double        | Double       | NoFlag         | null              |                                                                                                                     |
-   * |  Char          | ?            | ?              | ?                 |                                                                                                                     |
-   * |  SChar         | ?            | ?              | ?                 |                                                                                                                     |
-   * |  UChar         | ?            | ?              | ?                 |                                                                                                                     |
-   * |  QChar         | Char         | NoFlag         | null              | Correspond to a SQL CHAR(1), which can store 1 character (which can require 1 or more byte, dependeing on encoding) |
-   * |  QString       | Char         | NoFlag         | 2                 |                                                                                                                     |
-   * |  QString       | Varchar      | NoFlag         | > 2               | Varchar may require at least 1 byte as length prefix.                                                               |
-   * |  QString       | Text         | NoFlag         | null              |                                                                                                                     |
-   * |  QByteArray    | Blob         | IsBinary       | null              |                                                                                                                     |
-   * |  QDate         | ?            | ?              | ?                 |                                                                                                                     |
-   * |  QTime         | ?            | ?              | ?                 |                                                                                                                     |
-   * |  QDateTime     | ?            | ?              | ?                 |                                                                                                                     |
-   * |  QImage        | ?            | ?              | ?                 |                                                                                                                     |
-   * |  QPixmap       | ?            | ?              | ?                 |                                                                                                                     |
-   * |  QBitmap       | ?            | ?              | ?                 |                                                                                                                     |
+   * |:--------------:|:------------:|:--------------:|:-----------------:|:------------------------------------------------------------------------------------------------------------------------|
+   * |  UnknownType   | UnknownType  | NoFlag         | null              |                                                                                                                         |
+   * |  Bool          | Boolean      | NoFlag         | null              |                                                                                                                         |
+   * |  Short         | Smallint     | NoFlag         | null              |                                                                                                                         |
+   * |  UShort        | Smallint     | IsUnsigned     | null              |                                                                                                                         |
+   * |  Int           | Integer      | NoFlag         | null              | Correspond to a C++ int, at least 16 bit, mostly 32 bit                                                                 |
+   * |  UInt          | Integer      | IsUnsigned     | null              | Correspond to a C++ unsigned int, at least 16 bit, mostly 32 bit                                                        |
+   * |  Long          | Bigint       | NoFlag         | null              | Correspond to a C++ long int, at least 32 bit (Win64), can be 64 bit (64bit Linux, Mac OS-X). See notes below.          |
+   * |  ULong         | Bigint       | IsUnsigned     | null              | Correspond to a C++ unsigned long int, at least 32 bit (Win64), can be 64 bit (64bit Linux, Mac OS-X). See notes below. |
+   * |  LongLong      | Bigint       | NoFlag         | null              | Correspond to a C++11 long long int, at least 64 bit                                                                    |
+   * |  ULongLong     | Bigint       | IsUnsigned     | null              | Correspond to a C++11 unsigned long long int, at least 64 bit                                                           |
+   * |  Float         | Float        | NoFlag         | null              |                                                                                                                         |
+   * |  Double        | Double       | NoFlag         | null              |                                                                                                                         |
+   * |  Char          | ?            | ?              | ?                 |                                                                                                                         |
+   * |  SChar         | ?            | ?              | ?                 |                                                                                                                         |
+   * |  UChar         | ?            | ?              | ?                 |                                                                                                                         |
+   * |  QChar         | Char         | NoFlag         | null              | Correspond to a SQL CHAR(1), which can store 1 character (which can require 1 or more byte, dependeing on encoding)     |
+   * |  QString       | Char         | NoFlag         | 2                 |                                                                                                                         |
+   * |  QString       | Varchar      | NoFlag         | > 2               | Varchar may require at least 1 byte as length prefix.                                                                   |
+   * |  QString       | Text         | NoFlag         | null              |                                                                                                                         |
+   * |  QByteArray    | Blob         | IsBinary       | null              |                                                                                                                         |
+   * |  QDate         | ?            | ?              | ?                 |                                                                                                                         |
+   * |  QTime         | ?            | ?              | ?                 |                                                                                                                         |
+   * |  QDateTime     | ?            | ?              | ?                 |                                                                                                                         |
+   * |  QImage        | ?            | ?              | ?                 |                                                                                                                         |
+   * |  QPixmap       | ?            | ?              | ?                 |                                                                                                                         |
+   * |  QBitmap       | ?            | ?              | ?                 |                                                                                                                         |
    *
    * It is also possible to provide a different table by subclassing FieldTypeMapImplementation
    *  and setting it using setImplementation() or make<>().
@@ -82,6 +82,21 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * To instantiate a FieldTypeMap with its default implementation:
    * \code
    * const auto fieldTypeMap = FieldTypeMap::make();
+   * \endcode
+   *
+   * \note Some types are mapped the same way in both directions:
+   * \code
+   * FieldType fieldType = fieldTypeMap.fieldTypeFromQMetaType(QMetaType::Int);
+   * // fieldType is FieldType::Integer
+   * QMetaType::Type metaType = fieldTypeMap.qmetaTypeFromFieldType(fieldType, FieldLength(), FieldTypeFlags(FieldTypeFlag::NoFlag));
+   * // metaType is QMetaType::Int
+   * \endcode
+   * For some types, this is not the case:
+   * \code
+   * FieldType fieldType = fieldTypeMap.fieldTypeFromQMetaType(QMetaType::Long);
+   * // fieldType is FieldType::Bigint
+   * QMetaType::Type metaType = fieldTypeMap.qmetaTypeFromFieldType(fieldType, FieldLength(), FieldTypeFlags(FieldTypeFlag::NoFlag));
+   * // metaType is QMetaType::LongLong
    * \endcode
    */
   class MDT_SQL_CORE_EXPORT FieldTypeMap

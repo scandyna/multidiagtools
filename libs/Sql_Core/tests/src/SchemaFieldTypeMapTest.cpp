@@ -59,6 +59,8 @@ void SchemaFieldTypeMapTest::fieldTypeFromQMetaTypeTest()
   QCOMPARE(ftm.fieldTypeFromQMetaType(QMetaType::UShort, FieldLength()), FieldType::Smallint);
   QCOMPARE(ftm.fieldTypeFromQMetaType(QMetaType::Int, FieldLength()), FieldType::Integer);
   QCOMPARE(ftm.fieldTypeFromQMetaType(QMetaType::UInt, FieldLength()), FieldType::Integer);
+  QCOMPARE(ftm.fieldTypeFromQMetaType(QMetaType::Long, FieldLength()), FieldType::Bigint);
+  QCOMPARE(ftm.fieldTypeFromQMetaType(QMetaType::ULong, FieldLength()), FieldType::Bigint);
   QCOMPARE(ftm.fieldTypeFromQMetaType(QMetaType::LongLong, FieldLength()), FieldType::Bigint);
   QCOMPARE(ftm.fieldTypeFromQMetaType(QMetaType::ULongLong, FieldLength()), FieldType::Bigint);
   QCOMPARE(ftm.fieldTypeFromQMetaType(QMetaType::Float, FieldLength()), FieldType::Float);
@@ -88,6 +90,8 @@ void SchemaFieldTypeMapTest::fieldTypeFlagsFromQMetaTypeTest()
   QCOMPARE(ftm.fieldTypeFlagsFromQMetaType(QMetaType::UShort), FieldTypeFlags(FieldTypeFlag::IsUnsigned));
   QCOMPARE(ftm.fieldTypeFlagsFromQMetaType(QMetaType::Int), FieldTypeFlags(FieldTypeFlag::NoFlag));
   QCOMPARE(ftm.fieldTypeFlagsFromQMetaType(QMetaType::UInt), FieldTypeFlags(FieldTypeFlag::IsUnsigned));
+  QCOMPARE(ftm.fieldTypeFlagsFromQMetaType(QMetaType::Long), FieldTypeFlags(FieldTypeFlag::NoFlag));
+  QCOMPARE(ftm.fieldTypeFlagsFromQMetaType(QMetaType::ULong), FieldTypeFlags(FieldTypeFlag::IsUnsigned));
   QCOMPARE(ftm.fieldTypeFlagsFromQMetaType(QMetaType::LongLong), FieldTypeFlags(FieldTypeFlag::NoFlag));
   QCOMPARE(ftm.fieldTypeFlagsFromQMetaType(QMetaType::ULongLong), FieldTypeFlags(FieldTypeFlag::IsUnsigned));
   QCOMPARE(ftm.fieldTypeFlagsFromQMetaType(QMetaType::Float), FieldTypeFlags(FieldTypeFlag::NoFlag));
