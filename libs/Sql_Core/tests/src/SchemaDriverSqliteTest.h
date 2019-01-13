@@ -35,6 +35,7 @@ class SchemaDriverSqliteTest : public TestBase
   void driverInstanceTest();
 
   void availableFieldTypeTest();
+  void fieldTypeNameTest();
   void fieldTypeFromStringTest();
   void fieldLengthFromStringTest();
 

@@ -51,6 +51,41 @@ FieldTypeList DriverImplementationInterface::getAvailableFieldTypeList() const
   return list;
 }
 
+QString DriverImplementationInterface::fieldTypeName(FieldType fieldType) const
+{
+  switch(fieldType){
+    case FieldType::UnknownType:
+      return QString();
+    case FieldType::Boolean:
+      return QLatin1String("BOOLEAN");
+    case FieldType::Smallint:
+      return QLatin1String("SMALLINT");
+    case FieldType::Integer:
+      return QLatin1String("INTEGER");
+    case FieldType::Bigint:
+      return QLatin1String("BIGINT");
+    case FieldType::Float:
+      return QLatin1String("FLOAT");
+    case FieldType::Double:
+      return QLatin1String("DOUBLE");
+    case FieldType::Char:
+      return QLatin1String("CHAR");
+    case FieldType::Varchar:
+      return QLatin1String("VARCHAR");
+    case FieldType::Text:
+      return QLatin1String("TEXT");
+    case FieldType::Blob:
+      return QLatin1String("BLOB");
+    case FieldType::Date:
+      return QLatin1String("DATE");
+    case FieldType::Time:
+      return QLatin1String("TIME");
+    case FieldType::DateTime:
+      return QLatin1String("DATETIME");
+  }
+  return QString();
+}
+
 FieldType DriverImplementationInterface::fieldTypeFromString(const QString & fieldTypeString) const
 {
   Q_ASSERT(!fieldTypeString.isEmpty());

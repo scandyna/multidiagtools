@@ -126,43 +126,43 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::Schema::DriverImplementationInterface</name>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="96"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="131"/>
         <source>Parsing length in &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="289"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="324"/>
         <source>Creating table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="300"/>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="314"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="335"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="349"/>
         <source>Creating index &apos;%1&apos; for table &apos;%2&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="338"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="373"/>
         <source>Removing table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="356"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="391"/>
         <source>Creating view &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="374"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="409"/>
         <source>Removing view &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="410"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="445"/>
         <source>Creating trigger &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="428"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="463"/>
         <source>Removing trigger &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -188,43 +188,43 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::Schema::DriverSQLite</name>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="53"/>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="61"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="66"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="74"/>
         <source>Fetching database default character set failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="136"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="149"/>
         <source>Fetching unique constraint informations of table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="148"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="161"/>
         <source>Fetching informations of table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="229"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="242"/>
         <source>Fetching primary key for table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="280"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="293"/>
         <source>Fetching foreign keys for table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="358"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="371"/>
         <source>Fetching list of indexes for table &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="389"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="402"/>
         <source>Fetching information for index &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="410"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="423"/>
         <source>Fetching case sensitivity for field &apos;%1&apos; in index &apos;%2&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>

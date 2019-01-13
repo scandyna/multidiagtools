@@ -84,6 +84,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual FieldTypeList getAvailableFieldTypeList() const;
 
+    /*! \brief Get field type name
+     *
+     * This default implementation returns the type upper-case.
+     *  For example, for FieldType::Integer, INTEGER will be returned.
+     */
+    virtual QString fieldTypeName(FieldType fieldType) const;
+
     /*! \brief Get field type from string
      *
      * Extracts the field type name and retruns corresponding field type.

@@ -19,12 +19,12 @@
  **
  ****************************************************************************/
 #include "DriverSQLite.h"
-#include "FieldTypeName.h"
 #include "ForeignTable.h"
 #include "ForeignKeyActionSqlTransform.h"
 #include "Mdt/Sql/Error.h"
 #include "Mdt/Algorithm.h"
 #include <QLatin1String>
+#include <QLatin1Char>
 #include <QStringBuilder>
 #include <QSqlField>
 #include <QSqlRecord>
@@ -41,6 +41,19 @@ DriverSQLite::DriverSQLite(const QSqlDatabase& db)
  : DriverImplementationInterface(db)
 {
   Q_ASSERT(qsqlDriver()->dbmsType() == QSqlDriver::SQLite);
+}
+
+QString DriverSQLite::fieldTypeName(FieldType fieldType) const
+{
+  switch(fieldType){
+    case FieldType::Char:
+      return QLatin1String("CHARACTER");
+    case FieldType::Time:
+      return QLatin1String("DATETIME");
+    default:
+      break;
+  }
+  return BaseClass::fieldTypeName(fieldType);
 }
 
 Charset DriverSQLite::getDatabaseDefaultCharset() const
@@ -92,10 +105,10 @@ QString DriverSQLite::getFieldDefinition(const Field & field) const
   QString sql;
 
   // Field name and type
-  sql = escapeFieldName(field.name()) % QStringLiteral(" ") % FieldTypeName::nameFromType( field.type() );
+  sql = escapeFieldName(field.name()) % QLatin1Char(' ') % fieldTypeName( field.type() );
   // Length
   if(field.length() > 0){
-    sql += QStringLiteral("(") % QString::number(field.length()) % QStringLiteral(")");
+    sql += QLatin1Char('(') % QString::number(field.length()) % QLatin1Char(')');
   }
   // Unsigned
   if(field.isUnsigned()){
@@ -103,21 +116,21 @@ QString DriverSQLite::getFieldDefinition(const Field & field) const
   }
   // Unique constraint
   if(field.isUnique()){
-    sql += QStringLiteral(" UNIQUE");
+    sql += QLatin1String(" UNIQUE");
   }
   // Null constraint
   if(field.isRequired()){
-    sql += QStringLiteral(" NOT NULL");
+    sql += QLatin1String(" NOT NULL");
   }
   // Default value
   if(field.defaultValue().isNull()){
-    sql += QStringLiteral(" DEFAULT NULL");
+    sql += QLatin1String(" DEFAULT NULL");
   }else{
-    sql += QStringLiteral(" DEFAULT ") + escapeFieldDefaultValue(field);
+    sql += QLatin1String(" DEFAULT ") + escapeFieldDefaultValue(field);
   }
   // Collation
   if(!field.collation().isNull()){
-    sql += QStringLiteral(" ") % getCollationDefinition(field.collation());
+    sql += QLatin1Char(' ') % getCollationDefinition(field.collation());
   }
 
   return sql;
