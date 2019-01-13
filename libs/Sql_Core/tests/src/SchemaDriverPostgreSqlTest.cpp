@@ -266,15 +266,22 @@ void SchemaDriverPostgreSqlTest::fieldDefinitionTest()
 
 void SchemaDriverPostgreSqlTest::autoIncrementPrimaryKeyDefinitionTest()
 {
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-
-  Mdt::Sql::Schema::DriverPostgreSQL driver(mDatabase);
+  DriverPostgreSQL driver(mDatabase);
   QString expectedSql;
   AutoIncrementPrimaryKey pk;
 
   pk.setFieldName("Id_PK");
+  pk.setFieldType(FieldType::Smallint);
+  expectedSql = "\"Id_PK\" SMALLSERIAL";
+  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
 
-  QFAIL("No implemented yet");
+  pk.setFieldType(FieldType::Integer);
+  expectedSql = "\"Id_PK\" SERIAL";
+  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
+
+  pk.setFieldType(FieldType::Bigint);
+  expectedSql = "\"Id_PK\" BIGSERIAL";
+  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
 }
 
 void SchemaDriverPostgreSqlTest::singleFieldPrimaryKeyDefinitionTest()

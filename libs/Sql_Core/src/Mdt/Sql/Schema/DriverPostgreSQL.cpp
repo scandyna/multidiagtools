@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,8 @@
 #include "FieldTypeName.h"
 #include "Mdt/Sql/Error.h"
 #include <QStringBuilder>
+#include <QLatin1String>
+#include <QLatin1Char>
 #include <QSqlField>
 #include <QSqlRecord>
 #include <QSqlQuery>
@@ -104,7 +106,23 @@ QString DriverPostgreSQL::getFieldDefinition(const Field& field) const
 
 QString DriverPostgreSQL::getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey& pk) const
 {
+  QString serialTypeName;
 
+  switch(pk.fieldType()){
+    case FieldType::Smallint:
+      serialTypeName = QLatin1String("SMALLSERIAL");
+      break;
+    case FieldType::Integer:
+      serialTypeName = QLatin1String("SERIAL");
+      break;
+    case FieldType::Bigint:
+      serialTypeName = QLatin1String("BIGSERIAL");
+      break;
+    default:
+      break;
+  }
+
+  return escapeFieldName(pk.fieldName()) % QLatin1Char(' ') % serialTypeName;
 }
 
 Mdt::Expected<PrimaryKeyContainer> DriverPostgreSQL::getTablePrimaryKeyFromDatabase(const QString& tableName) const
