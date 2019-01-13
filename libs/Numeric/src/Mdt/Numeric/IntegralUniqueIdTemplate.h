@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -40,7 +40,7 @@ namespace Mdt{ namespace Numeric{
    * };
    * \endcode
    */
-  template<typename Derived, typename IntegralType = qulonglong>
+  template<typename Derived, typename IntegralType = qlonglong>
   class IntegralUniqueIdTemplate
   {
     static_assert( std::is_integral<IntegralType>::value, "IntegralType must be a integral type" );
