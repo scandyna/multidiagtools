@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,6 +28,8 @@
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief Mapping between a FieldType and its name
+   *
+   * \deprecated Consider using Driver methods
    */
   class MDT_SQL_CORE_EXPORT FieldTypeName
   {
@@ -35,6 +37,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Get field type name from type
      */
+    [[deprecated]]
     static QString nameFromType(FieldType ft)
     {
       return QString::fromLatin1( pvNames[static_cast<int>(ft)] );
@@ -42,6 +45,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Get field type from name
      */
+    [[deprecated]]
     static FieldType typeFromName(const QString & name);
 
    private:
