@@ -26,6 +26,7 @@ class FieldTest : public QObject
 
  private slots:
 
+  void fieldValueTest();
   void fieldNameByIndexInStructTest();
   void fieldNameFromFieldTest();
   void qmetaTypeFromFieldTest();

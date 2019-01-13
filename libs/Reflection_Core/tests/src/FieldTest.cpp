@@ -22,6 +22,7 @@
 #include "Mdt/Reflection/FieldAlgorithm.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include <QString>
+#include <QVariant>
 #include <type_traits>
 
 using namespace Mdt::Reflection;
@@ -73,6 +74,8 @@ Q_DECLARE_METATYPE(MyStruct)
 struct FieldTypeTestStruct
 {
   int int_type;
+  qlonglong qlonglong_type;
+  qulonglong qulonglong_type;
   QString QString_type;
   MyStruct MyStruct_type;
 };
@@ -81,6 +84,8 @@ MDT_REFLECT_STRUCT(
   (FieldTypeTestStruct),
   FieldTypeTest,
   (int_type),
+  (qlonglong_type),
+  (qulonglong_type),
   (QString_type),
   (MyStruct_type)
 )
@@ -88,6 +93,38 @@ MDT_REFLECT_STRUCT(
 /*
  * Tests
  */
+
+void FieldTest::fieldValueTest()
+{
+  PersonDataStruct person;
+  person.id = 1;
+  person.firstName = "fA";
+  person.lastName = "lA";
+  QCOMPARE(fieldValue<PersonDef::id>(person), 1);
+  QCOMPARE(fieldValue<PersonDef::firstName>(person), QString("fA"));
+  QCOMPARE(fieldValue<PersonDef::lastName>(person), QString("lA"));
+
+  FieldTypeTestStruct fieldTypeTest;
+  fieldTypeTest.int_type = -1;
+  fieldTypeTest.qlonglong_type = 1000;
+  fieldTypeTest.qulonglong_type = 2000;
+  fieldTypeTest.MyStruct_type = MyStruct{25};
+  QCOMPARE(fieldValue<FieldTypeTestDef::int_type>(fieldTypeTest), -1);
+  QCOMPARE(fieldValue<FieldTypeTestDef::qlonglong_type>(fieldTypeTest), 1000LL);
+  QCOMPARE(fieldValue<FieldTypeTestDef::qulonglong_type>(fieldTypeTest), 2000uLL);
+  QCOMPARE(fieldValue<FieldTypeTestDef::MyStruct_type>(fieldTypeTest).i, 25);
+
+  QVariant var;
+  var = fieldValue<FieldTypeTestDef::int_type>(fieldTypeTest);
+  QCOMPARE(var.type(), QVariant::Int);
+  QCOMPARE(var, QVariant(-1));
+  var = fieldValue<FieldTypeTestDef::qlonglong_type>(fieldTypeTest);
+  QCOMPARE(var.type(), QVariant::LongLong);
+  QCOMPARE(var, QVariant(1000));
+  var = fieldValue<FieldTypeTestDef::qulonglong_type>(fieldTypeTest);
+  QCOMPARE(var.type(), QVariant::ULongLong);
+  QCOMPARE(var, QVariant(2000));
+}
 
 void FieldTest::fieldNameByIndexInStructTest()
 {
@@ -131,6 +168,12 @@ void FieldTest::qmetaTypeFromFieldTest()
 {
   constexpr auto qmt_int = qmetaTypeFromField<FieldTypeTestDef::int_type>();
   QCOMPARE(qmt_int, QMetaType::Int);
+
+  constexpr auto qmt_longlong = qmetaTypeFromField<FieldTypeTestDef::qlonglong_type>();
+  QCOMPARE(qmt_longlong, QMetaType::LongLong);
+
+  constexpr auto qmt_ulonglong = qmetaTypeFromField<FieldTypeTestDef::qulonglong_type>();
+  QCOMPARE(qmt_ulonglong, QMetaType::ULongLong);
 
   constexpr auto qmt_QString = qmetaTypeFromField<FieldTypeTestDef::QString_type>();
   QCOMPARE(qmt_QString, QMetaType::QString);
