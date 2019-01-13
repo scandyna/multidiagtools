@@ -225,18 +225,33 @@
  * \code
  * struct PersonDataStruct
  * {
- *   qulonlong id = 0;
+ *   qlonglong id = 0;
  *   QString firstName;
  *   QString lastName;
  * };
  * \endcode
  *
  * Doing so will enable to reuse the existing tools.
- *  For example, Qt modules, like QSqlQuery uses QVariant as data interface,
+ *  For example, Qt modules, like QSqlQuery, uses QVariant as data interface,
  *  which also relies on QMetaType.
- *  In a later chapiter, it will be prposed a simple way to
+ *  In a later chapiter, it will be proposed a simple way to
  *  create a SQL schema using functions provided in Mdt/Sql/Schema/Reflection.h .
  *  Those functions also relies on types known by QMetaType.
+ *
+ * For primitive types, like integral types, they should be initialized in the struct,
+ *  avoiding strange values when a struct is intanciated.
+ *
+ * Please also note to avoid using unsigned integral types.
+ *  Comparing them < 0, for example, can be surprising.
+ *  They also will give problems to be stored in some databases,
+ *  because some DBMS do not support unsigned integral types (like PostgreSQL).
+ *
+ * Choosing a unique ID type.
+ *  Most DBMS provide a auto increment integral unique id primary key.
+ *  SQLite uses 64 bit (signed) int, and no other type can be defined.
+ *  MySQL is more flexible. In some examples, a (signed, 32bit) integer is used.
+ *  PostgreSQL uses smallserial (signed 16bit integral), serial (signed 32bit integral) and bigserial (signed 64bit  integral).
+ *  To be compatible across those databases, qlonglong (signed 64 bit integer) should be choosed.
  *
  * It is possible to define custom types:
  * \code
