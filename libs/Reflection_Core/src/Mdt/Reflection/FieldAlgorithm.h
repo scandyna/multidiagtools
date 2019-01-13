@@ -63,7 +63,7 @@ namespace Mdt{ namespace Reflection{
    *
    * \pre \a Field must be a field defined in the struct definition associated with \a Struct
    */
-  template<typename Struct, typename Field>
+  template<typename Field, typename Struct>
   static constexpr int fieldIndexInStruct() noexcept
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in the struct definition associated with Struct" );
@@ -87,7 +87,7 @@ namespace Mdt{ namespace Reflection{
 
     using struct_def = typename Field::struct_def;
     using reflected_struct = typename struct_def::reflected_struct;
-    constexpr int fieldIndex = fieldIndexInStruct<reflected_struct, Field>();
+    constexpr int fieldIndex = fieldIndexInStruct<Field, reflected_struct>();
 
     return fieldNameAtInStruct<reflected_struct, fieldIndex>();
   }
