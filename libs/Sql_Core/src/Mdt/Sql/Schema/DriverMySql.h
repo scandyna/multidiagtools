@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,6 +29,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    */
   class DriverMySql : public DriverImplementationInterface
   {
+    using BaseClass = DriverImplementationInterface;
+
    public:
 
     /*! \brief Constructor
@@ -41,6 +43,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       return DriverType::MySQL;
     }
+
+    /*! \brief Get field type name
+     */
+    QString fieldTypeName(FieldType fieldType) const override;
 
     /*! \brief Get default charset for current database/schema
      */

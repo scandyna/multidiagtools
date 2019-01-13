@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "SchemaDriverMySqlTest.h"
-#include "Mdt/CoreApplication.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Schema/DriverMySql.h"
 #include <QSqlDatabase>
@@ -27,6 +26,8 @@
 #include <QSqlError>
 
 #include <QDebug>
+
+using namespace Mdt::Sql::Schema;
 
 void SchemaDriverMySqlTest::initTestCase()
 {
@@ -37,29 +38,31 @@ void SchemaDriverMySqlTest::initTestCase()
   const QString host = "localhost";
   const QString user = "TestUser";
   const QString pwd = "TestPassword";
-  const QString dbName = "testdb";
+  const QString dbName = "test";
 
   // Get database instance
-  pvDatabase = QSqlDatabase::addDatabase("QMYSQL");
-  if(!pvDatabase.isValid()){
+  mDatabase = QSqlDatabase::addDatabase("QMYSQL");
+  if(!mDatabase.isValid()){
     QSKIP("QMYSQL driver is not available - Skip all tests");  // Will also skip all tests
   }
   // Connect to test database
-  pvDatabase.setHostName(host);
-  pvDatabase.setUserName(user);
-  pvDatabase.setPassword(pwd);
-  pvDatabase.setDatabaseName(dbName);
-  if(!pvDatabase.open()){
+  mDatabase.setHostName(host);
+  mDatabase.setUserName(user);
+  mDatabase.setPassword(pwd);
+  mDatabase.setDatabaseName(dbName);
+  if(!mDatabase.open()){
     qWarning() << "Could not open database. Make shure that test database is created with correct login as defined in initTestCase()";
-    qWarning() << "Reported error: " << pvDatabase.lastError().text();
+    qWarning() << "Reported error: " << mDatabase.lastError().text();
   }
   /*
    * Because some tests can be executed without a open connection to the server,
    * we not fail here if database could not be open.
    */
-  QSqlQuery query(pvDatabase);
-  // Define database default charset (is important for some tests)
-  QVERIFY(query.exec("ALTER DATABASE `testdb` CHARACTER SET 'utf8'"));
+  if(mDatabase.isOpen()){
+    QSqlQuery query(mDatabase);
+    // Define database default charset (is important for some tests)
+    QVERIFY(query.exec("ALTER DATABASE `" + dbName + "` CHARACTER SET 'utf8'"));
+  }
 }
 
 void SchemaDriverMySqlTest::cleanupTestCase()
@@ -76,7 +79,7 @@ void SchemaDriverMySqlTest::driverInstanceTest()
   using Mdt::Sql::Schema::Driver;
   using Mdt::Sql::Schema::DriverType;
 
-  auto db = pvDatabase;
+  auto db = mDatabase;
   /*
    * Create a SQLite driver
    */
@@ -88,9 +91,7 @@ void SchemaDriverMySqlTest::driverInstanceTest()
 
 void SchemaDriverMySqlTest::availableFieldTypeTest()
 {
-  using Mdt::Sql::Schema::FieldType;
-
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  DriverMySql driver(mDatabase);
   auto list = driver.getAvailableFieldTypeList();
 
   QCOMPARE(list.size(), 8);
@@ -104,45 +105,117 @@ void SchemaDriverMySqlTest::availableFieldTypeTest()
   QVERIFY(list.at(7) == FieldType::DateTime);
 }
 
-void SchemaDriverMySqlTest::fieldTypeMapTest()
+void SchemaDriverMySqlTest::fieldTypeNameTest()
 {
-  using Mdt::Sql::Schema::FieldType;
+  DriverMySql driver(mDatabase);
 
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
-  QVERIFY(driver.isValid());
+  QCOMPARE(driver.fieldTypeName(FieldType::UnknownType), QString());
+  QCOMPARE(driver.fieldTypeName(FieldType::Boolean), QString("BOOLEAN"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Smallint), QString("SMALLINT"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Integer), QString("INT"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Bigint), QString("BIGINT"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Float), QString("FLOAT"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Double), QString("DOUBLE"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Char), QString("CHARACTER"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Varchar), QString("VARCHAR"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Text), QString("TEXT"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Blob), QString("BLOB"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Date), QString("DATE"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Time), QString("TIME"));
+  QCOMPARE(driver.fieldTypeName(FieldType::DateTime), QString("DATETIME"));
+}
 
-  QFAIL("No complete");
-  /*
-   * Check FieldType <-> QMetaType mapping
-   */
-//   // QMetaType -> FieldType
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::UnknownType) == FieldType::UnknownType);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QPolygon) == FieldType::UnknownType);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Int) == FieldType::Integer);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Bool) == FieldType::Boolean);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Double) == FieldType::Double);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Float) == FieldType::Float);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QDate) == FieldType::Date);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QTime) == FieldType::Time);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QDateTime) == FieldType::DateTime);
-//   QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QString) == FieldType::Varchar);
-//   // FieldType -> QMetaType
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::UnknownType) == QMetaType::UnknownType);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Boolean) == QMetaType::Bool);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Integer) == QMetaType::Int);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Float) == QMetaType::Float);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Double) == QMetaType::Double);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Varchar) == QMetaType::QString);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Date) == QMetaType::QDate);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Time) == QMetaType::QTime);
-//   QVERIFY(driver.fieldTypeToQMetaType(FieldType::DateTime) == QMetaType::QDateTime);
+void SchemaDriverMySqlTest::fieldTypeFromStringTest()
+{
+  DriverMySql driver(mDatabase);
+
+  QVERIFY(driver.fieldTypeFromString("BOOLEAN") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("boolean") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("BOOL") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("bool") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("BIT") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("BIT(1)") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("BIT(2)") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("BIT(16)") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("BIT(17)") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("BIT(32)") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("BIT(33)") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("BIT(64)") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("bit") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("TINYINT") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("tinyint") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("SMALLINT") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("smallint") == FieldType::Smallint);
+  QVERIFY(driver.fieldTypeFromString("MEDIUMINT") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("mediumint") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("INTEGER") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("integer") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("Integer") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("INT") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("int") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("BIGINT") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("bigint") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("SERIAL") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("serial") == FieldType::Bigint);
+  QVERIFY(driver.fieldTypeFromString("DECIMAL") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("decimal") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("FLOAT") == FieldType::Float);
+  QVERIFY(driver.fieldTypeFromString("float") == FieldType::Float);
+  QVERIFY(driver.fieldTypeFromString("DOUBLE") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("double") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("DOUBLE PRECISION") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("double precision") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("CHAR") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("char") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("CHAR(1)") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("CHAR(2)") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("CHAR(10)") == FieldType::Char);
+  QVERIFY(driver.fieldTypeFromString("VARCHAR") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("varchar") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("VARCHAR(50)") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("VARCHAR (50)") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("TINYTEXT") == FieldType::Text);
+  QVERIFY(driver.fieldTypeFromString("TEXT") == FieldType::Text);
+  QVERIFY(driver.fieldTypeFromString("MEDIUMTEXT") == FieldType::Text);
+  QVERIFY(driver.fieldTypeFromString("LONGTEXT") == FieldType::Text);
+  QVERIFY(driver.fieldTypeFromString("BINARY") == FieldType::Blob);
+  QVERIFY(driver.fieldTypeFromString("TINYBLOB") == FieldType::Blob);
+  QVERIFY(driver.fieldTypeFromString("BLOB") == FieldType::Blob);
+  QVERIFY(driver.fieldTypeFromString("MEDIUMBLOB") == FieldType::Blob);
+  QVERIFY(driver.fieldTypeFromString("LONGBLOB") == FieldType::Blob);
+  QVERIFY(driver.fieldTypeFromString("DATE") == FieldType::Date);
+  QVERIFY(driver.fieldTypeFromString("date") == FieldType::Date);
+  QVERIFY(driver.fieldTypeFromString("TIME") == FieldType::Time);
+  QVERIFY(driver.fieldTypeFromString("time") == FieldType::Time);
+  QVERIFY(driver.fieldTypeFromString("DATETIME") == FieldType::DateTime);
+  QVERIFY(driver.fieldTypeFromString("datetime") == FieldType::DateTime);
+  QVERIFY(driver.fieldTypeFromString("TIMESTAMP") == FieldType::DateTime);
+  QVERIFY(driver.fieldTypeFromString("timestamp") == FieldType::DateTime);
+  QVERIFY(driver.fieldTypeFromString("Unkown") == FieldType::UnknownType);
+  QVERIFY(driver.fieldTypeFromString("YEAR") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("year") == FieldType::Integer);
+}
+
+void SchemaDriverMySqlTest::fieldLengthFromStringTest()
+{
+  DriverMySql driver(mDatabase);
+
+  QCOMPARE(driver.fieldLengthFromString("INTEGER"), -1);
+  QCOMPARE(driver.fieldLengthFromString("VARCHAR"), -1);
+  QCOMPARE(driver.fieldLengthFromString("VARCHAR(50)"), 50);
+  QCOMPARE(driver.fieldLengthFromString("VARCHAR (50)"), 50);
+  QCOMPARE(driver.fieldLengthFromString("varcher(50)"), 50);
+  QCOMPARE(driver.fieldLengthFromString("VARCHAR( 50 )"), 50);
+  QCOMPARE(driver.fieldLengthFromString("VARCHAR ( 50 )"), 50);
+  // Currently not supported..
+  QCOMPARE(driver.fieldLengthFromString("DOUBLE(2,3)"), -2);
+
+  QFAIL("Not complete");
 }
 
 void SchemaDriverMySqlTest::databaseDefaultCharsetTest()
 {
-  using Mdt::Sql::Schema::Charset;
-
-  Mdt::Sql::Schema::DriverMySql driver(pvDatabase);
+  DriverMySql driver(mDatabase);
   Charset cs;
 
   /*
@@ -154,9 +227,7 @@ void SchemaDriverMySqlTest::databaseDefaultCharsetTest()
 
 void SchemaDriverMySqlTest::collationDefinitionTest()
 {
-  using Mdt::Sql::Schema::Collation;
-
-  Mdt::Sql::Schema::DriverMySql driver(pvDatabase);
+  DriverMySql driver(mDatabase);
   Collation collation;
 
   /*
@@ -196,22 +267,134 @@ void SchemaDriverMySqlTest::collationDefinitionTest()
 
 void SchemaDriverMySqlTest::fieldDefinitionTest()
 {
-  using Mdt::Sql::Schema::Collation;
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::Field;
-
-  Mdt::Sql::Schema::DriverMySql driver(pvDatabase);
+  DriverMySql driver(mDatabase);
   QString expectedSql;
   Field field;
 
-  QFAIL("No implemented yet");
+  /*
+   * Simple Integer field
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  // Check
+  expectedSql = "`Number` INT DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * Unsigned Integer field
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  field.setUnsigned(true);
+  // Check
+  expectedSql = "`Number` INT UNSIGNED DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * Integer field with UNIQUE constraint
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  field.setUnique(true);
+  // Check
+  expectedSql = "`Number` INT UNIQUE DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * Integer field with NOT NULL constraint
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  field.setRequired(true);
+  // Check
+  expectedSql = "`Number` INT NOT NULL DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * Integer field with UNIQUE and NOT NULL constraints
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  field.setRequired(true);
+  field.setUnique(true);
+  // Check
+  expectedSql = "`Number` INT UNIQUE NOT NULL DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * Integer field with a default value
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  field.setDefaultValue(5);
+  // Check
+  expectedSql = "`Number` INT DEFAULT 5";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * Simple VARCHAR field
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(FieldType::Varchar);
+  field.setLength(50);
+  // Check
+  expectedSql = "`Name` VARCHAR(50) DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * VARCHAR field with a default value
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(FieldType::Varchar);
+  field.setLength(150);
+  field.setDefaultValue("Default name");
+  // Check
+  expectedSql = "`Name` VARCHAR(150) DEFAULT \\Default name\\";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * VARCHAR field with collation set
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(FieldType::Varchar);
+  field.setLength(100);
+  field.setCaseSensitive(false);
+  // Check
+  expectedSql = "`Name` VARCHAR(100) DEFAULT NULL COLLATE NOCASE";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * VARCHAR field with NOT NULL constraint
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(FieldType::Varchar);
+  field.setLength(25);
+  field.setRequired(true);
+  // Check
+  expectedSql = "`Name` VARCHAR(25) NOT NULL DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * VARCHAR field with NOT NULL constraint and a collation set
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(FieldType::Varchar);
+  field.setLength(50);
+  field.setRequired(true);
+  field.setCaseSensitive(false);
+  // Check
+  expectedSql = "`Name` VARCHAR(50) NOT NULL DEFAULT NULL COLLATE NOCASE";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+
+  QFAIL("No complete/correct");
 }
 
 void SchemaDriverMySqlTest::autoIncrementPrimaryKeyDefinitionTest()
 {
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
 
-  Mdt::Sql::Schema::DriverMySql driver(pvDatabase);
+  Mdt::Sql::Schema::DriverMySql driver(mDatabase);
   QString expectedSql;
   AutoIncrementPrimaryKey pk;
 
@@ -222,11 +405,7 @@ void SchemaDriverMySqlTest::autoIncrementPrimaryKeyDefinitionTest()
 
 void SchemaDriverMySqlTest::singleFieldPrimaryKeyDefinitionTest()
 {
-  using Mdt::Sql::Schema::PrimaryKey;
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::Field;
-
-  Mdt::Sql::Schema::DriverMySql driver(pvDatabase);
+  DriverMySql driver(mDatabase);
   QString expectedSql;
   PrimaryKey pk;
   Field Id_A_PK, Id_B_PK;
@@ -260,22 +439,43 @@ void SchemaDriverMySqlTest::singleFieldPrimaryKeyDefinitionTest()
 void SchemaDriverMySqlTest::primaryKeyDefinitionTest()
 {
 
+  QFAIL("Not complete");
 }
 
 void SchemaDriverMySqlTest::indexDefinitionTest()
 {
 
+  QFAIL("Not complete");
 }
 
-void SchemaDriverMySqlTest::createTableTest()
+void SchemaDriverMySqlTest::createAndDropTableTest()
 {
-  if(!pvDatabase.isOpen()){
+  if(!mDatabase.isOpen()){
     QSKIP("Not connected to server");
   }
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  Mdt::Sql::Schema::Driver driver(mDatabase);
   QVERIFY(driver.isValid());
 
-  
+  Table table;
+  table.setTableName("TestTable");
+  table.setAutoIncrementPrimaryKey("Id_PK");
+
+  Field field;
+  field.setName("f_A");
+  field.setType(FieldType::Integer);
+  table.addField(field);
+
+  field.clear();
+  field.setName("f_B");
+  field.setType(FieldType::Integer);
+  field.setUnsigned(true);
+  table.addField(field);
+
+  QVERIFY(!mDatabase.tables().contains(table.tableName()));
+  QVERIFY(driver.createTable(table));
+  QVERIFY(mDatabase.tables().contains(table.tableName()));
+  QVERIFY(driver.dropTable(table));
+  QVERIFY(!mDatabase.tables().contains(table.tableName()));
 }
 
 /*

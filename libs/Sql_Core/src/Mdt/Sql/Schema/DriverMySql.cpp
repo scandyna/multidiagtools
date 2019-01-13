@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -34,6 +34,19 @@ DriverMySql::DriverMySql(const QSqlDatabase& db)
  : DriverImplementationInterface(db)
 {
   Q_ASSERT(qsqlDriver()->dbmsType() == QSqlDriver::MySqlServer);
+}
+
+QString DriverMySql::fieldTypeName(FieldType fieldType) const
+{
+  switch(fieldType){
+    case FieldType::Integer:
+      return QLatin1String("INT");
+    case FieldType::Char:
+      return QLatin1String("CHARACTER");
+    default:
+      break;
+  }
+  return BaseClass::fieldTypeName(fieldType);
 }
 
 Charset DriverMySql::getDatabaseDefaultCharset() const
@@ -113,17 +126,17 @@ QString DriverMySql::getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey 
 
 }
 
-Mdt::Expected<PrimaryKeyContainer> DriverMySql::getTablePrimaryKeyFromDatabase(const QString& tableName) const
+Mdt::Expected<PrimaryKeyContainer> DriverMySql::getTablePrimaryKeyFromDatabase(const QString & tableName) const
 {
 
 }
 
-Mdt::Expected<ForeignKeyList> DriverMySql::getTableForeignKeyListFromDatabase(const QString& tableName) const
+Mdt::Expected<ForeignKeyList> DriverMySql::getTableForeignKeyListFromDatabase(const QString & tableName) const
 {
 
 }
 
-Mdt::Expected< IndexList > DriverMySql::getTableIndexListFromDatabase(const QString& tableName) const
+Mdt::Expected< IndexList > DriverMySql::getTableIndexListFromDatabase(const QString & tableName) const
 {
   /*
    * To get indexes, see INFORMATION_SCHEMA.STATISTICS
