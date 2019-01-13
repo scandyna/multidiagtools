@@ -170,8 +170,8 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::Schema::DriverMySql</name>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverMySql.cpp" line="47"/>
-        <location filename="../src/Mdt/Sql/Schema/DriverMySql.cpp" line="55"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverMySql.cpp" line="60"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverMySql.cpp" line="68"/>
         <source>Fetching database default character set failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -179,8 +179,8 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::Schema::DriverPostgreSQL</name>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverPostgreSQL.cpp" line="47"/>
-        <location filename="../src/Mdt/Sql/Schema/DriverPostgreSQL.cpp" line="55"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverPostgreSQL.cpp" line="64"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverPostgreSQL.cpp" line="72"/>
         <source>Fetching database default character set failed.</source>
         <translation type="unfinished"></translation>
     </message>
