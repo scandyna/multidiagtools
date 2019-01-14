@@ -91,6 +91,16 @@ MDT_REFLECT_STRUCT(
 )
 
 /*
+ * Compile time tests
+ */
+
+static_assert( std::is_same< TypeFromField<FieldTypeTestDef::int_type>::type, int >::value ,"" );
+static_assert( std::is_same< TypeFromField<FieldTypeTestDef::qlonglong_type>::type, qlonglong >::value ,"" );
+static_assert( std::is_same< TypeFromField<FieldTypeTestDef::qulonglong_type>::type, qulonglong >::value ,"" );
+static_assert( std::is_same< TypeFromField<FieldTypeTestDef::QString_type>::type, QString >::value ,"" );
+static_assert( std::is_same< TypeFromField<FieldTypeTestDef::MyStruct_type>::type, MyStruct >::value ,"" );
+
+/*
  * Tests
  */
 

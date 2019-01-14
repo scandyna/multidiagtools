@@ -92,6 +92,24 @@ namespace Mdt{ namespace Reflection{
     return fieldNameAtInStruct<reflected_struct, fieldIndex>();
   }
 
+  /*! \brief Get the type (in the reflected struct) for a field
+   *
+   * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
+   */
+  template<typename Field>
+  class TypeFromField
+  {
+    static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
+
+    using struct_def = typename Field::struct_def;
+    using reflected_struct = typename struct_def::reflected_struct;
+    using field_type_raw = typename boost::fusion::result_of::at_key<reflected_struct, Field>::type;
+
+   public:
+
+    using type = typename std::remove_reference<field_type_raw>::type;
+  };
+
   /*! \brief Get the QMetaType type for a field
    *
    * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
@@ -104,10 +122,7 @@ namespace Mdt{ namespace Reflection{
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
 
-    using struct_def = typename Field::struct_def;
-    using reflected_struct = typename struct_def::reflected_struct;
-    using field_type_raw = typename boost::fusion::result_of::at_key<reflected_struct, Field>::type;
-    using field_type = typename std::remove_reference<field_type_raw>::type;
+    using field_type = typename TypeFromField<Field>::type;
 
     return static_cast<QMetaType::Type>( qMetaTypeId<field_type>() );
   }

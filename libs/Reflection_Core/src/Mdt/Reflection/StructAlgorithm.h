@@ -88,7 +88,7 @@ namespace Mdt{ namespace Reflection{
    * struct MyFunctor
    * {
    *   template<typename Field>
-   *   void operator()(Field) const
+   *   void operator()(const Field) const
    *   {
    *   }
    * };

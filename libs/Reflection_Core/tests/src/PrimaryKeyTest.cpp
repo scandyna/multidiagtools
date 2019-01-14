@@ -28,10 +28,6 @@
 #include <QStringList>
 #include <type_traits>
 
-// #include "Mdt/Reflection/FieldAttributes.h"
-// #include <boost/fusion/adapted/struct/adapt_assoc_struct.hpp>
-// #include <boost/fusion/include/adapt_assoc_struct.hpp>
-
 using namespace Mdt::Reflection;
 
 /*
@@ -56,85 +52,6 @@ MDT_REFLECT_STRUCT(
   (str_B_id),
   (str_C_id)
 )
-
-/*
- * Struct - auto generated stuff
- */
-/*
-struct PkTestDef
-{
-  using reflected_struct = PkTestStruct;
-
-  static constexpr const char *name()
-  {
-    return "PkTest";
-  }
-
-  struct int_id
-  {
-    using struct_def = PkTestDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes();
-    }
-  };
-
-  struct qulonglong_id
-  {
-    using struct_def = PkTestDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes();
-    }
-  };
-
-  struct str_A_id
-  {
-    using struct_def = PkTestDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes();
-    }
-  };
-
-  struct str_B_id
-  {
-    using struct_def = PkTestDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes();
-    }
-  };
-
-  struct str_C_id
-  {
-    using struct_def = PkTestDef;
-
-    static constexpr Mdt::Reflection::FieldAttributes fieldAttributes()
-    {
-      using namespace Mdt::Reflection;
-      return Mdt::Reflection::FieldAttributes();
-    }
-  };
-};
-
-BOOST_FUSION_ADAPT_ASSOC_STRUCT(
-  PkTestStruct,
-  (int_id, PkTestDef::int_id)
-  (qulonglong_id, PkTestDef::qulonglong_id)
-  (str_A_id, PkTestDef::str_A_id)
-  (str_B_id, PkTestDef::str_B_id)
-  (str_C_id, PkTestDef::str_C_id)
-)
-*/
 
 /*
  * Helpers
@@ -168,10 +85,6 @@ QStringList primaryKeyToFieldNameList()
 
   return fieldNameList;
 }
-
-/*
- * Type traits tests
- */
 
 /*
  * Tests
