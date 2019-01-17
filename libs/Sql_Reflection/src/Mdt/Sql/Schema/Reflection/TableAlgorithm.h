@@ -18,63 +18,92 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_REFLECTION_H
-#define MDT_SQL_SCHEMA_REFLECTION_H
+#ifndef MDT_SQL_REFLECTION_SCHEMA_REFLECTION_TABLE_ALGORITHM_H
+#define MDT_SQL_REFLECTION_SCHEMA_REFLECTION_TABLE_ALGORITHM_H
 
-#include "Reflection/TableAlgorithm.h"
+#include "FieldAlgorithm.h"
+#include "PrimaryKeyAlgorithm.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/FieldTypeMap.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
-// #include "Mdt/Reflection/StructAlgorithm.h"
+#include "Mdt/Reflection/StructAlgorithm.h"
+// #include "MdtSql_ReflectionExport.h"
+#include <QMetaType>
 #include <QLatin1String>
 
-namespace Mdt{ namespace Sql{ namespace Schema{
+namespace Mdt{ namespace Sql{ namespace Schema{ namespace Reflection{
 
-  /*! \brief Get a SQL schema table from a reflected struct
-   *
-   * Example to create a table without specifiying a primary key:
-   * \code
-   * using namespace Mdt::Sql::Schema;
-   *
-   * auto Table = tableFromReflected<PersonDef>();
-   * \endcode
+  /*! \brief Functor called from tableFromReflectedImpl()
+   */
+  template<typename Struct>
+  class AddFieldToTable
+  {
+   public:
+
+    AddFieldToTable(Table & table, const Struct & s, const FieldTypeMap & fieldTypeMap)
+     : mTable(table),
+       mStruct(s),
+       mFieldTypeMap(fieldTypeMap)
+    {
+    }
+
+    template<typename Field>
+    void operator()(const Field)
+    {
+      mTable.addField( fieldFromReflected<Field>(mStruct, mFieldTypeMap) );
+    }
+
+   private:
+
+    Table & mTable;
+    const Struct & mStruct;
+    const FieldTypeMap & mFieldTypeMap;
+  };
+
+  /*! \internal Get a SQL schema table from a reflected struct
    *
    * \pre \a StructDef must be a struct definition assiocated with a reflected struct
    */
   template<typename StructDef>
-  Table tableFromReflected(const FieldTypeMap & fieldTypeMap = FieldTypeMap::make())
+  Table tableFromReflectedImpl(const FieldTypeMap & fieldTypeMap)
   {
     static_assert( Mdt::Reflection::TypeTraits::IsStructDef<StructDef>::value,
                    "StructDef must be a struct definition assiocated with a reflected struct" );
 
-    return Reflection::tableFromReflectedImpl<StructDef>(fieldTypeMap);
+    using namespace Mdt::Reflection;
+    using Struct = typename StructDef::reflected_struct;
+
+    Table table;
+
+    table.setTableName( QLatin1String( nameFromStructDef<StructDef>() ) );
+    Struct s;
+    AddFieldToTable<Struct> f(table, s, fieldTypeMap);
+    forEachFieldInStructDef<StructDef>(f);
+
+    return table;
   }
 
-  /*! \brief Get a SQL schema table from a reflected struct
+  /*! \internal Get a SQL schema table from a reflected struct
    *
-   * Example with a auto increment id:
-   * \code
-   * using namespace Mdt::Sql::Schema;
-   *
-   * using PersonPrimaryKey = Mdt::Reflection::AutoIncrementUniqueId<PersonDef::id>;
-   *
-   * auto Table = tableFromReflected<PersonDef, PersonPrimaryKey>();
-   * \endcode
    *
    * \pre \a StructDef must be a struct definition assiocated with a reflected struct
    */
   template<typename StructDef, typename PrimaryKey>
-  Table tableFromReflected(const FieldTypeMap & fieldTypeMap = FieldTypeMap::make())
+  Table tableFromReflectedImpl(const FieldTypeMap & fieldTypeMap)
   {
     static_assert( Mdt::Reflection::TypeTraits::IsStructDef<StructDef>::value,
                    "StructDef must be a struct definition assiocated with a reflected struct" );
     static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<PrimaryKey>::value,
                    "PrimaryKey must be a primary key" );
 
-    return Reflection::tableFromReflectedImpl<StructDef, PrimaryKey>(fieldTypeMap);
+    auto table = tableFromReflectedImpl<StructDef>(fieldTypeMap);
+    table.setPrimaryKeyContainer( primaryKeyContainerFromReflected<PrimaryKey>(fieldTypeMap) );
+
+    return table;
   }
 
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+}}}} // namespace Mdt{ namespace Sql{ namespace Schema{ namespace Reflection{
 
-#endif // #ifndef MDT_SQL_SCHEMA_REFLECTION_H
+
+#endif // #ifndef MDT_SQL_REFLECTION_SCHEMA_REFLECTION_TABLE_ALGORITHM_H

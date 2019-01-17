@@ -18,8 +18,8 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ReflectionTest.h"
-#include "Mdt/Sql/Schema/Reflection.h"
+#include "SchemaTableTest.h"
+#include "Mdt/Sql/Schema/Reflection/TableAlgorithm.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/IdPrimaryKey.h"
 #include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
@@ -29,11 +29,11 @@
 
 using namespace Mdt::Sql::Schema;
 
-void ReflectionTest::initTestCase()
+void SchemaTableTest::initTestCase()
 {
 }
 
-void ReflectionTest::cleanupTestCase()
+void SchemaTableTest::cleanupTestCase()
 {
 }
 
@@ -60,9 +60,11 @@ MDT_REFLECT_STRUCT(
  * Tests
  */
 
-void ReflectionTest::tableNoPkTest()
+void SchemaTableTest::tableNoPkTest()
 {
-  auto table = tableFromReflected<PersonDef>();
+  const auto fieldTypeMap = Mdt::Sql::Schema::FieldTypeMap::make();
+
+  auto table = Mdt::Sql::Schema::Reflection::tableFromReflectedImpl<PersonDef>(fieldTypeMap);
   QCOMPARE(table.fieldCount(), 3);
   QCOMPARE(table.primaryKeyType(), PrimaryKeyType::Unknown);
   // id
@@ -76,11 +78,13 @@ void ReflectionTest::tableNoPkTest()
   QVERIFY(!table.isFieldAutoIncrement(2));
 }
 
-void ReflectionTest::tableAutoIncrementPkTest()
+void SchemaTableTest::tableAutoIncrementPkTest()
 {
   using PersonPrimaryKey = Mdt::Reflection::AutoIncrementIdPrimaryKey<PersonDef::id>;
 
-  auto table = tableFromReflected<PersonDef, PersonPrimaryKey>();
+  const auto fieldTypeMap = Mdt::Sql::Schema::FieldTypeMap::make();
+
+  auto table = Mdt::Sql::Schema::Reflection::tableFromReflectedImpl<PersonDef, PersonPrimaryKey>(fieldTypeMap);
   QCOMPARE(table.fieldCount(), 3);
   QCOMPARE(table.primaryKeyType(), PrimaryKeyType::AutoIncrementPrimaryKey);
   QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QString("id"));
@@ -95,11 +99,13 @@ void ReflectionTest::tableAutoIncrementPkTest()
   QVERIFY(!table.isFieldAutoIncrement(2));
 }
 
-void ReflectionTest::tablePkTest()
+void SchemaTableTest::tablePkTest()
 {
   using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef::firstName, PersonDef::lastName>;
 
-  auto table = tableFromReflected<PersonDef, PersonPrimaryKey>();
+  const auto fieldTypeMap = Mdt::Sql::Schema::FieldTypeMap::make();
+
+  auto table = Mdt::Sql::Schema::Reflection::tableFromReflectedImpl<PersonDef, PersonPrimaryKey>(fieldTypeMap);
   QCOMPARE(table.fieldCount(), 3);
   QCOMPARE(table.primaryKeyType(), PrimaryKeyType::PrimaryKey);
   QCOMPARE(table.primaryKey().fieldNameList(), QStringList({"firstName","lastName"}));
@@ -114,11 +120,13 @@ void ReflectionTest::tablePkTest()
   QVERIFY(!table.isFieldAutoIncrement(2));
 }
 
-void ReflectionTest::personTableTest()
+void SchemaTableTest::personTableTest()
 {
   using PersonPrimaryKey = Mdt::Reflection::AutoIncrementIdPrimaryKey<PersonDef::id>;
 
-  auto table = tableFromReflected<PersonDef, PersonPrimaryKey>();
+  const auto fieldTypeMap = Mdt::Sql::Schema::FieldTypeMap::make();
+
+  auto table = Mdt::Sql::Schema::Reflection::tableFromReflectedImpl<PersonDef, PersonPrimaryKey>(fieldTypeMap);
   QCOMPARE(table.tableName(), QString("Person"));
   QCOMPARE(table.fieldCount(), 3);
   // id
@@ -157,7 +165,7 @@ void ReflectionTest::personTableTest()
 int main(int argc, char **argv)
 {
   Mdt::CoreApplication app(argc, argv);
-  ReflectionTest test;
+  SchemaTableTest test;
 
 //   app.debugEnvironnement();
 

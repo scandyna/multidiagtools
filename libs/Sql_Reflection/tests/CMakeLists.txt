@@ -26,4 +26,7 @@ endfunction()
 
 #================= Tests ====================
 
+addSql_ReflectionTest("SchemaFieldTest")
+addSql_ReflectionTest("SchemaPrimaryKeyTest")
+addSql_ReflectionTest("SchemaTableTest")
 addSql_ReflectionTest("ReflectionTest")
