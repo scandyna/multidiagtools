@@ -22,7 +22,7 @@
 #define MDT_REFLECTION_AUTO_INCREMENT_ID_PRIMARY_KEY_H
 
 #include "FieldAlgorithm.h"
-#include "TypeTraits/PrimaryKeyTag.h"
+#include "TypeTraits/PrimaryKeyClassTag.h"
 #include "TypeTraits/IsField.h"
 #include <boost/mpl/vector.hpp>
 #include <type_traits>
@@ -35,7 +35,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a Field must refer to a integral type in the reflected struct
    */
   template<typename Field>
-  class AutoIncrementIdPrimaryKey : TypeTraits::PrimaryKeyTag
+  class AutoIncrementIdPrimaryKey : TypeTraits::PrimaryKeyClassTag
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
     static_assert( std::is_integral< typename TypeFromField<Field>::type >::value, "Field must refer to a integral type in the reflected struct" );
@@ -44,6 +44,7 @@ namespace Mdt{ namespace Reflection{
 
     using struct_def = typename Field::struct_def;
     using field_list = boost::mpl::vector<Field>;
+    using field = Field;
   };
 
 

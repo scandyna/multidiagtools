@@ -36,7 +36,9 @@ using namespace Mdt::Reflection;
 
 struct PkTestStruct
 {
+  short int short_int_id;
   int int_id;
+  qlonglong qlonglong_id;
   qulonglong qulonglong_id;
   QString str_A_id;
   QString str_B_id;
@@ -46,7 +48,9 @@ struct PkTestStruct
 MDT_REFLECT_STRUCT(
   (PkTestStruct),
   PkTest,
+  (short_int_id),
   (int_id),
+  (qlonglong_id),
   (qulonglong_id),
   (str_A_id),
   (str_B_id),
@@ -57,35 +61,6 @@ MDT_REFLECT_STRUCT(
  * Helpers
  */
 
-struct AddFieldNameToList
-{
-  AddFieldNameToList(QStringList & list)
-   : mFieldNameList(list)
-  {
-  }
-
-  template<typename Field>
-  void operator()(Field)
-  {
-    mFieldNameList << fieldName<Field>();
-  }
-
-private:
-
-  QStringList & mFieldNameList;
-};
-
-template<typename PrimaryKey>
-QStringList primaryKeyToFieldNameList()
-{
-  QStringList fieldNameList;
-  AddFieldNameToList f(fieldNameList);
-
-  Mdt::Reflection::forEachPrimaryKeyField<PrimaryKey>(f);
-
-  return fieldNameList;
-}
-
 /*
  * Tests
  */
@@ -94,23 +69,27 @@ void PrimaryKeyTest::idPkTest()
 {
   using Pk = Mdt::Reflection::IdPrimaryKey<PkTestDef::int_id>;
 
-  QCOMPARE(primaryKeyToFieldNameList<Pk>(), QStringList({"int_id"}));
+  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({"int_id"}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
+
+  QCOMPARE(fieldNameFromIdPrimaryKeyField<Pk>(), "int_id");
 }
 
 void PrimaryKeyTest::autoIdPkTest()
 {
   using Pk = Mdt::Reflection::AutoIncrementIdPrimaryKey<PkTestDef::qulonglong_id>;
 
-  QCOMPARE(primaryKeyToFieldNameList<Pk>(), QStringList({"qulonglong_id"}));
+  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({"qulonglong_id"}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
+
+  QCOMPARE(fieldNameFromAutoIncrementIdPrimaryKeyField<Pk>(), "qulonglong_id");
 }
 
 void PrimaryKeyTest::oneFieldPkTest()
 {
   using Pk = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id>;
 
-  QCOMPARE(primaryKeyToFieldNameList<Pk>(), QStringList({"str_A_id"}));
+  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({"str_A_id"}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 }
 
@@ -118,7 +97,7 @@ void PrimaryKeyTest::twoFieldPkTest()
 {
   using Pk = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id, PkTestDef::str_B_id>;
 
-  QCOMPARE(primaryKeyToFieldNameList<Pk>(), QStringList({"str_A_id","str_B_id"}));
+  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({"str_A_id","str_B_id"}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 }
 
@@ -126,8 +105,34 @@ void PrimaryKeyTest::threeFieldPkTest()
 {
   using Pk = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id, PkTestDef::str_C_id, PkTestDef::str_B_id>;
 
-  QCOMPARE(primaryKeyToFieldNameList<Pk>(), QStringList({"str_A_id","str_C_id","str_B_id"}));
+  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({"str_A_id","str_C_id","str_B_id"}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
+}
+
+void PrimaryKeyTest::qMetaTypeFromIdPkTest()
+{
+  using ShortIntPk = IdPrimaryKey<PkTestDef::short_int_id>;
+  using IntPk = IdPrimaryKey<PkTestDef::int_id>;
+  using LongLongPk = IdPrimaryKey<PkTestDef::qlonglong_id>;
+  using ULongLongPk = IdPrimaryKey<PkTestDef::qulonglong_id>;
+
+  QCOMPARE(qMetaTypeFromIdPrimaryKeyField<ShortIntPk>(), QMetaType::Short);
+  QCOMPARE(qMetaTypeFromIdPrimaryKeyField<IntPk>(), QMetaType::Int);
+  QCOMPARE(qMetaTypeFromIdPrimaryKeyField<LongLongPk>(), QMetaType::LongLong);
+  QCOMPARE(qMetaTypeFromIdPrimaryKeyField<ULongLongPk>(), QMetaType::ULongLong);
+}
+
+void PrimaryKeyTest::qMetaTypeFromAutoIncrementIdPkTest()
+{
+  using ShortIntPk = AutoIncrementIdPrimaryKey<PkTestDef::short_int_id>;
+  using IntPk = AutoIncrementIdPrimaryKey<PkTestDef::int_id>;
+  using LongLongPk = AutoIncrementIdPrimaryKey<PkTestDef::qlonglong_id>;
+  using ULongLongPk = AutoIncrementIdPrimaryKey<PkTestDef::qulonglong_id>;
+
+  QCOMPARE(qMetaTypeFromAutoIncrementIdPrimaryKeyField<ShortIntPk>(), QMetaType::Short);
+  QCOMPARE(qMetaTypeFromAutoIncrementIdPrimaryKeyField<IntPk>(), QMetaType::Int);
+  QCOMPARE(qMetaTypeFromAutoIncrementIdPrimaryKeyField<LongLongPk>(), QMetaType::LongLong);
+  QCOMPARE(qMetaTypeFromAutoIncrementIdPrimaryKeyField<ULongLongPk>(), QMetaType::ULongLong);
 }
 
 /*

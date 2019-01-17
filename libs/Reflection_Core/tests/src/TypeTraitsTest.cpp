@@ -22,7 +22,10 @@
 #include "Mdt/Reflection/TypeTraits/IsField.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
 #include "Mdt/Reflection/TypeTraits/IsFieldAssociatedWithReflectedStruct.h"
+#include "Mdt/Reflection/TypeTraits/IsAutoIncrementIdPrimaryKey.h"
+#include "Mdt/Reflection/TypeTraits/IsIdPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKey.h"
+#include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/PrimaryKey.h"
 #include "Mdt/Reflection/IdPrimaryKey.h"
@@ -71,16 +74,20 @@ struct ArticleTypeDataStruct
 {
   QString code;
   QString label;
+  QString type;
 };
 
 MDT_REFLECT_STRUCT(
   (ArticleTypeDataStruct),
   ArticleType,
   (code),
-  (label)
+  (label),
+  (type)
 )
 
 using ArticleTypePrimaryKey = PrimaryKey<ArticleTypeDef::code>;
+using ArticleTypePrimaryKey2 = PrimaryKey<ArticleTypeDef::code, ArticleTypeDef::label>;
+using ArticleTypePrimaryKey3 = PrimaryKey<ArticleTypeDef::code, ArticleTypeDef::label, ArticleTypeDef::type>;
 
 /*
  * IsStructDef compile time tests
@@ -116,14 +123,40 @@ static_assert( !IsFieldAssociatedWithReflectedStruct<QString, ArticleDef::id>::v
 static_assert( !IsFieldAssociatedWithReflectedStruct<int, ArticleDef::id>::value , "" );
 
 /*
+ * IsPrimaryKeyClass compile time tests
+ */
+
+static_assert( IsPrimaryKeyClass<ArticlePrimaryKey>::value, "" );
+static_assert( IsPrimaryKeyClass<ArticleDetailPrimaryKey>::value, "" );
+static_assert( IsPrimaryKeyClass<ArticleTypePrimaryKey>::value, "" );
+static_assert( !IsPrimaryKeyClass<ArticleDef>::value, "" );
+static_assert( !IsPrimaryKeyClass<int>::value, "" );
+
+/*
+ * IsAutoIncrementIdPrimaryKey compile time tests
+ */
+
+static_assert( IsAutoIncrementIdPrimaryKey<ArticlePrimaryKey>::value, "" );
+static_assert( !IsAutoIncrementIdPrimaryKey<ArticleDetailPrimaryKey>::value, "" );
+static_assert( !IsAutoIncrementIdPrimaryKey<ArticleTypePrimaryKey>::value, "" );
+
+/*
+ * IsIdPrimaryKey compile time tests
+ */
+
+static_assert( !IsIdPrimaryKey<ArticlePrimaryKey>::value, "" );
+static_assert( IsIdPrimaryKey<ArticleDetailPrimaryKey>::value, "" );
+static_assert( !IsIdPrimaryKey<ArticleTypePrimaryKey>::value, "" );
+
+/*
  * IsPrimaryKey compile time tests
  */
 
-static_assert( IsPrimaryKey<ArticlePrimaryKey>::value, "" );
-static_assert( IsPrimaryKey<ArticleDetailPrimaryKey>::value, "" );
+static_assert( !IsPrimaryKey<ArticlePrimaryKey>::value, "" );
+static_assert( !IsPrimaryKey<ArticleDetailPrimaryKey>::value, "" );
 static_assert( IsPrimaryKey<ArticleTypePrimaryKey>::value, "" );
-static_assert( !IsPrimaryKey<ArticleDef>::value, "" );
-static_assert( !IsPrimaryKey<int>::value, "" );
+static_assert( IsPrimaryKey<ArticleTypePrimaryKey2>::value, "" );
+static_assert( IsPrimaryKey<ArticleTypePrimaryKey3>::value, "" );
 
 /*
  * IsRelation compile time tests

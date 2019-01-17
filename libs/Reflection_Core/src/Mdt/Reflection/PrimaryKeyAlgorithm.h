@@ -22,9 +22,63 @@
 #define MDT_REFLECTION_PRIMARY_KEY_ALGORITHM_H
 
 #include "PrimaryKey.h"
+#include "FieldAlgorithm.h"
+#include "TypeTraits/IsField.h"
+#include "TypeTraits/IsAutoIncrementIdPrimaryKey.h"
+#include "TypeTraits/IsIdPrimaryKey.h"
+#include "TypeTraits/IsPrimaryKeyClass.h"
+#include <QStringList>
 #include <boost/mpl/for_each.hpp>
 
 namespace Mdt{ namespace Reflection{
+
+  /*! \brief Get the field QMetaType type from a auto increment id primary key
+   *
+   * \pre \a Pk must be a auto increment id primary key for a reflected struct
+   */
+  template<typename Pk>
+  static constexpr QMetaType::Type qMetaTypeFromAutoIncrementIdPrimaryKeyField() noexcept
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsAutoIncrementIdPrimaryKey<Pk>::value, "Pk must be a auto increment id primary key for a reflected struct" );
+
+    return qMetaTypeFromField<typename Pk::field>();
+  }
+
+  /*! \brief Get the field QMetaType type from a id primary key
+   *
+   * \pre \a Pk must be a id primary key for a reflected struct
+   */
+  template<typename Pk>
+  static constexpr QMetaType::Type qMetaTypeFromIdPrimaryKeyField() noexcept
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsIdPrimaryKey<Pk>::value, "Pk must be a id primary key for a reflected struct" );
+
+    return qMetaTypeFromField<typename Pk::field>();
+  }
+
+  /*! \brief Get the field name from a auto increment id primary key
+   *
+   * \pre \a Pk must be a auto increment id primary key for a reflected struct
+   */
+  template<typename Pk>
+  static constexpr const char *fieldNameFromAutoIncrementIdPrimaryKeyField() noexcept
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsAutoIncrementIdPrimaryKey<Pk>::value, "Pk must be a auto increment id primary key for a reflected struct" );
+
+    return fieldName<typename Pk::field>();
+  }
+
+  /*! \brief Get the field name from a id primary key
+   *
+   * \pre \a Pk must be a id primary key for a reflected struct
+   */
+  template<typename Pk>
+  static constexpr const char *fieldNameFromIdPrimaryKeyField() noexcept
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsIdPrimaryKey<Pk>::value, "Pk must be a id primary key for a reflected struct" );
+
+    return fieldName<typename Pk::field>();
+  }
 
   /*! \brief Apply a functor for each field in a primary key
    *
@@ -37,11 +91,54 @@ namespace Mdt{ namespace Reflection{
    *   }
    * };
    * \endcode
+   *
+   * \pre \a PrimaryKey must be a primary key class
    */
   template<typename PrimaryKey, typename UnaryFunction>
   void forEachPrimaryKeyField(UnaryFunction f)
   {
     boost::mpl::for_each< typename PrimaryKey::field_list >(f);
+  }
+
+  namespace Impl{
+
+    struct AddFieldNameToList
+    {
+      AddFieldNameToList(QStringList & list)
+      : mFieldNameList(list)
+      {
+      }
+
+      template<typename Field>
+      void operator()(Field)
+      {
+        static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
+
+        mFieldNameList << fieldName<Field>();
+      }
+
+    private:
+
+      QStringList & mFieldNameList;
+    };
+
+  } // namespace Impl{
+
+  /*! \brief Get a list of field names from a primary key
+   *
+   * \pre \a Pk must be primary key class for a reflected struct
+   */
+  template<typename Pk>
+  QStringList fieldNameListFromPrimaryKey()
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<Pk>::value, "Pk must be a primary key class for a reflected struct" );
+
+    QStringList fieldNameList;
+    Impl::AddFieldNameToList f(fieldNameList);
+
+    forEachPrimaryKeyField<Pk>(f);
+
+    return fieldNameList;
   }
 
 }} // namespace Mdt{ namespace Reflection{

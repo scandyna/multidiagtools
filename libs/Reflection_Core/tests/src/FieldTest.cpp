@@ -176,19 +176,19 @@ void FieldTest::fieldNameFromFieldTest()
 
 void FieldTest::qmetaTypeFromFieldTest()
 {
-  constexpr auto qmt_int = qmetaTypeFromField<FieldTypeTestDef::int_type>();
+  constexpr auto qmt_int = qMetaTypeFromField<FieldTypeTestDef::int_type>();
   QCOMPARE(qmt_int, QMetaType::Int);
 
-  constexpr auto qmt_longlong = qmetaTypeFromField<FieldTypeTestDef::qlonglong_type>();
+  constexpr auto qmt_longlong = qMetaTypeFromField<FieldTypeTestDef::qlonglong_type>();
   QCOMPARE(qmt_longlong, QMetaType::LongLong);
 
-  constexpr auto qmt_ulonglong = qmetaTypeFromField<FieldTypeTestDef::qulonglong_type>();
+  constexpr auto qmt_ulonglong = qMetaTypeFromField<FieldTypeTestDef::qulonglong_type>();
   QCOMPARE(qmt_ulonglong, QMetaType::ULongLong);
 
-  constexpr auto qmt_QString = qmetaTypeFromField<FieldTypeTestDef::QString_type>();
+  constexpr auto qmt_QString = qMetaTypeFromField<FieldTypeTestDef::QString_type>();
   QCOMPARE(qmt_QString, QMetaType::QString);
 
-  const auto qmt_MyStruct = qmetaTypeFromField<FieldTypeTestDef::MyStruct_type>();
+  const auto qmt_MyStruct = qMetaTypeFromField<FieldTypeTestDef::MyStruct_type>();
   QVERIFY(qmt_MyStruct >= QMetaType::User);
 }
 

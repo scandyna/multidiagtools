@@ -118,7 +118,7 @@ namespace Mdt{ namespace Reflection{
    *    it cannot be called as constexpr .
    */
   template<typename Field>
-  static constexpr QMetaType::Type qmetaTypeFromField() noexcept
+  static constexpr QMetaType::Type qMetaTypeFromField() noexcept
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
 

@@ -21,15 +21,16 @@
 #ifndef MDT_REFLECTION_TYPE_TRAITS_IS_PRIMARYKEY_H
 #define MDT_REFLECTION_TYPE_TRAITS_IS_PRIMARYKEY_H
 
+#include "../PrimaryKey.h"
 #include "PrimaryKeyTag.h"
 #include <type_traits>
 
 namespace Mdt{ namespace Reflection{ namespace TypeTraits{
 
-  /*! \brief Check if T is a primary key
+  /*! \brief Check if Pk is a primary key
    */
-  template<typename T>
-  struct IsPrimaryKey : std::is_base_of<PrimaryKeyTag, T>
+  template<typename Pk>
+  struct IsPrimaryKey : std::is_base_of<PrimaryKeyTag, Pk>
   {
   };
 

@@ -5,6 +5,9 @@ set(SOURCE_FILES
   Mdt/Reflection/TypeTraits/IsField.cpp
   Mdt/Reflection/TypeTraits/IsFieldAssociatedWithReflectedStruct.cpp
   Mdt/Reflection/TypeTraits/IsPrimaryKey.cpp
+  Mdt/Reflection/TypeTraits/IsAutoIncrementIdPrimaryKey.cpp
+  Mdt/Reflection/TypeTraits/IsIdPrimaryKey.cpp
+  Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.cpp
   Mdt/Reflection/ReflectField.cpp
   Mdt/Reflection/ReflectStruct.cpp
   Mdt/Reflection/FieldFlags.cpp
