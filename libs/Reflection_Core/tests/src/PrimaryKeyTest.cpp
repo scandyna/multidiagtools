@@ -58,10 +58,6 @@ MDT_REFLECT_STRUCT(
 )
 
 /*
- * Helpers
- */
-
-/*
  * Tests
  */
 
