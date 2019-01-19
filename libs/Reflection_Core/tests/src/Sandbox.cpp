@@ -288,6 +288,15 @@
  * \sa Mdt::Reflection::IdPrimaryKey
  * \sa Mdt::Reflection::AutoIncrementIdPrimaryKey
  *
+ * Defining a unique constraint can be done this way:
+ * \code
+ * using PersonUniqueConstraint = Mdt::Reflection::UniqueConstraint<PersonDef::firstName, PersonDef::lastName>;
+ * \endcode
+ *
+ * This can be later enforced, for example, in a SQL schema.
+ *
+ * \sa Mdt::Reflection::UniqueConstraint
+ *
  * \section sql_schema Create a SQL schema
  *
  * In this example, a simple function will create
@@ -606,7 +615,7 @@ int main(int argc, char **argv)
 {
   using namespace Mdt::Reflection;
 
-  Person pa("fA", "lA");
+  Person pa(QLatin1String("fA"), QLatin1String("lA"));
 
 //   qDebug() << "Name: " << nameFromDef<PersonDef>();
 //   qDebug() << "Name: " << nameFromClass<Person>();

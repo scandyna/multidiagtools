@@ -25,6 +25,7 @@
 #include "Mdt/Reflection/PrimaryKeyAlgorithm.h"
 #include "Mdt/Reflection/FieldAlgorithm.h"
 #include "Mdt/Reflection/ReflectStruct.h"
+#include <QLatin1String>
 #include <QStringList>
 #include <type_traits>
 
@@ -65,7 +66,7 @@ void PrimaryKeyTest::idPkTest()
 {
   using Pk = Mdt::Reflection::IdPrimaryKey<PkTestDef::int_id>;
 
-  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({"int_id"}));
+  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("int_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 
   QCOMPARE(fieldNameFromIdPrimaryKeyField<Pk>(), "int_id");
@@ -75,7 +76,7 @@ void PrimaryKeyTest::autoIdPkTest()
 {
   using Pk = Mdt::Reflection::AutoIncrementIdPrimaryKey<PkTestDef::qulonglong_id>;
 
-  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({"qulonglong_id"}));
+  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("qulonglong_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 
   QCOMPARE(fieldNameFromAutoIncrementIdPrimaryKeyField<Pk>(), "qulonglong_id");
@@ -85,7 +86,7 @@ void PrimaryKeyTest::oneFieldPkTest()
 {
   using Pk = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id>;
 
-  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({"str_A_id"}));
+  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("str_A_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 }
 
@@ -93,7 +94,7 @@ void PrimaryKeyTest::twoFieldPkTest()
 {
   using Pk = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id, PkTestDef::str_B_id>;
 
-  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({"str_A_id","str_B_id"}));
+  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("str_A_id"),QLatin1String("str_B_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 }
 
@@ -101,7 +102,7 @@ void PrimaryKeyTest::threeFieldPkTest()
 {
   using Pk = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id, PkTestDef::str_C_id, PkTestDef::str_B_id>;
 
-  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({"str_A_id","str_C_id","str_B_id"}));
+  QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("str_A_id"),QLatin1String("str_C_id"),QLatin1String("str_B_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 }
 

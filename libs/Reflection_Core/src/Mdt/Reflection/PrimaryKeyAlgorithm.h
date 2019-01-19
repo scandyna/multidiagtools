@@ -27,6 +27,7 @@
 #include "TypeTraits/IsAutoIncrementIdPrimaryKey.h"
 #include "TypeTraits/IsIdPrimaryKey.h"
 #include "TypeTraits/IsPrimaryKeyClass.h"
+#include "Impl/AddFieldNameToList.h"
 #include <QStringList>
 #include <boost/mpl/for_each.hpp>
 
@@ -99,30 +100,6 @@ namespace Mdt{ namespace Reflection{
   {
     boost::mpl::for_each< typename PrimaryKey::field_list >(f);
   }
-
-  namespace Impl{
-
-    struct AddFieldNameToList
-    {
-      AddFieldNameToList(QStringList & list)
-      : mFieldNameList(list)
-      {
-      }
-
-      template<typename Field>
-      void operator()(Field)
-      {
-        static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
-
-        mFieldNameList << fieldName<Field>();
-      }
-
-    private:
-
-      QStringList & mFieldNameList;
-    };
-
-  } // namespace Impl{
 
   /*! \brief Get a list of field names from a primary key
    *

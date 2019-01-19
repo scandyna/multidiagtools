@@ -26,10 +26,12 @@
 #include "Mdt/Reflection/TypeTraits/IsIdPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
+#include "Mdt/Reflection/TypeTraits/IsUniqueConstraint.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/PrimaryKey.h"
 #include "Mdt/Reflection/IdPrimaryKey.h"
 #include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
+#include "Mdt/Reflection/UniqueConstraint.h"
 #include <QString>
 
 using namespace Mdt::Reflection;
@@ -88,6 +90,10 @@ MDT_REFLECT_STRUCT(
 using ArticleTypePrimaryKey = PrimaryKey<ArticleTypeDef::code>;
 using ArticleTypePrimaryKey2 = PrimaryKey<ArticleTypeDef::code, ArticleTypeDef::label>;
 using ArticleTypePrimaryKey3 = PrimaryKey<ArticleTypeDef::code, ArticleTypeDef::label, ArticleTypeDef::type>;
+
+using ArticleTypeUniqueConstraint1 = UniqueConstraint<ArticleTypeDef::code>;
+using ArticleTypeUniqueConstraint2 = UniqueConstraint<ArticleTypeDef::code, ArticleTypeDef::label>;
+using ArticleTypeUniqueConstraint3 = UniqueConstraint<ArticleTypeDef::code, ArticleTypeDef::label, ArticleTypeDef::type>;
 
 /*
  * IsStructDef compile time tests
@@ -157,6 +163,17 @@ static_assert( !IsPrimaryKey<ArticleDetailPrimaryKey>::value, "" );
 static_assert( IsPrimaryKey<ArticleTypePrimaryKey>::value, "" );
 static_assert( IsPrimaryKey<ArticleTypePrimaryKey2>::value, "" );
 static_assert( IsPrimaryKey<ArticleTypePrimaryKey3>::value, "" );
+
+/*
+ * IsUniqueConstraint compile time tests
+ */
+
+static_assert( IsUniqueConstraint<ArticleTypeUniqueConstraint1>::value, "" );
+static_assert( IsUniqueConstraint<ArticleTypeUniqueConstraint2>::value, "" );
+static_assert( IsUniqueConstraint<ArticleTypeUniqueConstraint2>::value, "" );
+static_assert( !IsUniqueConstraint<int>::value, "" );
+static_assert( !IsUniqueConstraint<QString>::value, "" );
+static_assert( !IsUniqueConstraint<ArticleTypePrimaryKey>::value, "" );
 
 /*
  * IsRelation compile time tests

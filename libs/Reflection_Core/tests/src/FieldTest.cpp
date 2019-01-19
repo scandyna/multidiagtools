@@ -22,6 +22,7 @@
 #include "Mdt/Reflection/FieldAlgorithm.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include <QString>
+#include <QLatin1String>
 #include <QVariant>
 #include <type_traits>
 
@@ -108,11 +109,11 @@ void FieldTest::fieldValueTest()
 {
   PersonDataStruct person;
   person.id = 1;
-  person.firstName = "fA";
-  person.lastName = "lA";
+  person.firstName = QLatin1String("fA");
+  person.lastName = QLatin1String("lA");
   QCOMPARE(fieldValue<PersonDef::id>(person), 1);
-  QCOMPARE(fieldValue<PersonDef::firstName>(person), QString("fA"));
-  QCOMPARE(fieldValue<PersonDef::lastName>(person), QString("lA"));
+  QCOMPARE(fieldValue<PersonDef::firstName>(person), QLatin1String("fA"));
+  QCOMPARE(fieldValue<PersonDef::lastName>(person), QLatin1String("lA"));
 
   FieldTypeTestStruct fieldTypeTest;
   fieldTypeTest.int_type = -1;
@@ -140,38 +141,32 @@ void FieldTest::fieldNameByIndexInStructTest()
 {
   QString fieldName;
 
-  fieldName = fieldNameAtInStruct<PersonDataStruct, 0>();
-  QCOMPARE(fieldName, QString("id"));
-  fieldName = fieldNameAtInStruct<PersonDataStruct, 1>();
-  QCOMPARE(fieldName, QString("firstName"));
-  fieldName = fieldNameAtInStruct<PersonDataStruct, 2>();
-  QCOMPARE(fieldName, QString("lastName"));
+  fieldName = QLatin1String( fieldNameAtInStruct<PersonDataStruct, 0>() );
+  QCOMPARE(fieldName, QLatin1String("id"));
+  fieldName = QLatin1String( fieldNameAtInStruct<PersonDataStruct, 1>() );
+  QCOMPARE(fieldName, QLatin1String("firstName"));
+  fieldName = QLatin1String( fieldNameAtInStruct<PersonDataStruct, 2>() );
+  QCOMPARE(fieldName, QLatin1String("lastName"));
 
-  fieldName = fieldNameAtInStruct<AddressDataStruct, 0>();
-  QCOMPARE(fieldName, QString("id"));
-  fieldName = fieldNameAtInStruct<AddressDataStruct, 1>();
-  QCOMPARE(fieldName, QString("street"));
-  fieldName = fieldNameAtInStruct<AddressDataStruct, 2>();
-  QCOMPARE(fieldName, QString("personId"));
+  fieldName = QLatin1String( fieldNameAtInStruct<AddressDataStruct, 0>() );
+  QCOMPARE(fieldName, QLatin1String("id"));
+  fieldName = QLatin1String( fieldNameAtInStruct<AddressDataStruct, 1>() );
+  QCOMPARE(fieldName, QLatin1String("street"));
+  fieldName = QLatin1String( fieldNameAtInStruct<AddressDataStruct, 2>() );
+  QCOMPARE(fieldName, QLatin1String("personId"));
 }
 
 void FieldTest::fieldNameFromFieldTest()
 {
   QString fName;
 
-  fName = fieldName<PersonDef::id>();
-  QCOMPARE(fName, QString("id"));
-  fName = fieldName<PersonDef::firstName>();
-  QCOMPARE(fName, QString("firstName"));
-  fName = fieldName<PersonDef::lastName>();
-  QCOMPARE(fName, QString("lastName"));
+  QCOMPARE(fieldName<PersonDef::id>(), "id");
+  QCOMPARE(fieldName<PersonDef::firstName>(), "firstName");
+  QCOMPARE(fieldName<PersonDef::lastName>(), "lastName");
 
-  fName = fieldName<AddressDef::id>();
-  QCOMPARE(fName, QString("id"));
-  fName = fieldName<AddressDef::street>();
-  QCOMPARE(fName, QString("street"));
-  fName = fieldName<AddressDef::personId>();
-  QCOMPARE(fName, QString("personId"));
+  QCOMPARE(fieldName<AddressDef::id>(), "id");
+  QCOMPARE(fieldName<AddressDef::street>(), "street");
+  QCOMPARE(fieldName<AddressDef::personId>(), "personId");
 }
 
 void FieldTest::qmetaTypeFromFieldTest()

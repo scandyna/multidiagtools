@@ -8,6 +8,8 @@ set(SOURCE_FILES
   Mdt/Reflection/TypeTraits/IsAutoIncrementIdPrimaryKey.cpp
   Mdt/Reflection/TypeTraits/IsIdPrimaryKey.cpp
   Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.cpp
+  Mdt/Reflection/TypeTraits/IsUniqueConstraint.cpp
+  Mdt/Reflection/Impl/AddFieldNameToList.cpp
   Mdt/Reflection/ReflectField.cpp
   Mdt/Reflection/ReflectStruct.cpp
   Mdt/Reflection/FieldFlags.cpp
@@ -19,6 +21,8 @@ set(SOURCE_FILES
   Mdt/Reflection/IdPrimaryKey.cpp
   Mdt/Reflection/AutoIncrementIdPrimaryKey.cpp
   Mdt/Reflection/PrimaryKeyAlgorithm.cpp
+  Mdt/Reflection/UniqueConstraint.cpp
+  Mdt/Reflection/UniqueConstraintAlgorithm.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

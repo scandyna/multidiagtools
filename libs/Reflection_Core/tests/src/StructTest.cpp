@@ -23,6 +23,7 @@
 #include "Mdt/Reflection/FieldAlgorithm.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include <QString>
+#include <QLatin1String>
 #include <QStringList>
 #include <QVariant>
 
@@ -74,27 +75,14 @@ MDT_REFLECT_STRUCT(
 )
 
 /*
- * Helpers
- */
-
-
-/*
- * Type traits tests
- */
-
-/*
  * Tests
  */
 
 void StructTest::nameTest()
 {
-  QString name;
+  QCOMPARE(nameFromStructDef<PersonDef>(), "Person");
 
-  name = nameFromStructDef<PersonDef>();
-  QCOMPARE(name, QString("Person"));
-
-  name = nameFromStructDef<AddressDef>();
-  QCOMPARE(name, QString("Address"));
+  QCOMPARE(nameFromStructDef<AddressDef>(), "Address");
 }
 
 struct AddNameAndFieldNameToList
@@ -109,8 +97,8 @@ struct AddNameAndFieldNameToList
   {
     using Field = typename FieldValuePair::first_type;
 
-    const QString name = QString(nameFromField<Field>()) + QString('.') + QString(fieldName<Field>())\
-                       + QString(':') + QVariant(p.second).toString();
+    const QString name = QLatin1String(nameFromField<Field>()) + QLatin1Char('.') + QLatin1String(fieldName<Field>())\
+                       + QLatin1Char(':') + QVariant(p.second).toString();
     mList << name;
   }
 
@@ -125,14 +113,14 @@ void StructTest::forEachFieldValuePairTest()
   AddNameAndFieldNameToList f(fieldNameList);
 
   fieldNameList.clear();
-  PersonDataStruct person{1,"fA","lA"};
+  PersonDataStruct person{1,QLatin1String("fA"),QLatin1String("lA")};
   forEachFieldValuePairInStruct(person, f);
-  QCOMPARE(fieldNameList, QStringList({"Person.id:1","Person.firstName:fA","Person.lastName:lA"}));
+  QCOMPARE(fieldNameList, QStringList({QLatin1String("Person.id:1"),QLatin1String("Person.firstName:fA"),QLatin1String("Person.lastName:lA")}));
 
   fieldNameList.clear();
-  AddressDataStruct address{10,"sA",1};
+  AddressDataStruct address{10,QLatin1String("sA"),1};
   forEachFieldValuePairInStruct(address, f);
-  QCOMPARE(fieldNameList, QStringList({"Address.id:10","Address.street:sA","Address.personId:1"}));
+  QCOMPARE(fieldNameList, QStringList({QLatin1String("Address.id:10"),QLatin1String("Address.street:sA"),QLatin1String("Address.personId:1")}));
 }
 
 struct AddFieldNameToList
@@ -145,7 +133,7 @@ struct AddFieldNameToList
   template<typename Field>
   void operator()(Field)
   {
-    const QString name = QString(nameFromField<Field>()) + QString('.') + QString(fieldName<Field>());
+    const QString name = QLatin1String(nameFromField<Field>()) + QLatin1Char('.') + QLatin1String(fieldName<Field>());
 
     mFieldNameList << name;
   }
@@ -162,11 +150,11 @@ void StructTest::forEachFieldTest()
 
   fieldNameList.clear();
   forEachFieldInStructDef<PersonDef>(f);
-  QCOMPARE(fieldNameList, QStringList({"Person.id","Person.firstName","Person.lastName"}));
+  QCOMPARE(fieldNameList, QStringList({QLatin1String("Person.id"),QLatin1String("Person.firstName"),QLatin1String("Person.lastName")}));
 
   fieldNameList.clear();
   forEachFieldInStructDef<AddressDef>(f);
-  QCOMPARE(fieldNameList, QStringList({"Address.id","Address.street","Address.personId"}));
+  QCOMPARE(fieldNameList, QStringList({QLatin1String("Address.id"),QLatin1String("Address.street"),QLatin1String("Address.personId")}));
 }
 
 /*

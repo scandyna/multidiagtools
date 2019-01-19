@@ -167,28 +167,21 @@ void ReflectStructTest::usePersonTest()
 {
   using namespace Mdt::Reflection;
 
-  QString name;
+  QCOMPARE(nameFromStructDef<PersonDef>(), "Person");
 
-  name = nameFromStructDef<PersonDef>();
-  QCOMPARE(name, QString("Person"));
+  QCOMPARE(nameFromField<PersonDef::id>(), "Person");
 
-  name = nameFromField<PersonDef::id>();
-  QCOMPARE(name, QString("Person"));
-
-  name = fieldName<PersonDef::id>();
-  QCOMPARE(name, QString("id"));
+  QCOMPARE(fieldName<PersonDef::id>(), "id");
   QVERIFY(!isFieldRequired<PersonDef::id>());
   QVERIFY(!hasFieldDefaultValue<PersonDef::id>());
   QCOMPARE(fieldMaxLength<PersonDef::id>(), 0);
 
-  name = fieldName<PersonDef::firstName>();
-  QCOMPARE(name, QString("firstName"));
+  QCOMPARE(fieldName<PersonDef::firstName>(), "firstName");
   QVERIFY(isFieldRequired<PersonDef::firstName>());
   QVERIFY(!hasFieldDefaultValue<PersonDef::firstName>());
   QCOMPARE(fieldMaxLength<PersonDef::firstName>(), 0);
 
-  name = fieldName<PersonDef::lastName>();
-  QCOMPARE(name, QString("lastName"));
+  QCOMPARE(fieldName<PersonDef::lastName>(), "lastName");
   QVERIFY(isFieldRequired<PersonDef::lastName>());
   QVERIFY(!hasFieldDefaultValue<PersonDef::lastName>());
   QCOMPARE(fieldMaxLength<PersonDef::lastName>(), 250);
@@ -199,28 +192,21 @@ void ReflectStructTest::useAddressTest()
   using namespace Mdt::Reflection;
   using namespace A;
 
-  QString name;
+  QCOMPARE(nameFromStructDef<AddressDef>(), "Address");
 
-  name = nameFromStructDef<AddressDef>();
-  QCOMPARE(name, QString("Address"));
+  QCOMPARE(nameFromField<AddressDef::id>(), "Address");
 
-  name = nameFromField<AddressDef::id>();
-  QCOMPARE(name, QString("Address"));
-
-  name = fieldName<AddressDef::id>();
-  QCOMPARE(name, QString("id"));
+  QCOMPARE(fieldName<AddressDef::id>(), "id");
   QVERIFY(!isFieldRequired<AddressDef::id>());
   QVERIFY(!hasFieldDefaultValue<AddressDef::id>());
   QCOMPARE(fieldMaxLength<AddressDef::id>(), 0);
 
-  name = fieldName<AddressDef::street>();
-  QCOMPARE(name, QString("street"));
+  QCOMPARE(fieldName<AddressDef::street>(), "street");
   QVERIFY(isFieldRequired<AddressDef::street>());
   QVERIFY(!hasFieldDefaultValue<AddressDef::street>());
   QCOMPARE(fieldMaxLength<AddressDef::street>(), 0);
 
-  name = fieldName<AddressDef::personId>();
-  QCOMPARE(name, QString("personId"));
+  QCOMPARE(fieldName<AddressDef::personId>(), "personId");
   QVERIFY(!isFieldRequired<AddressDef::personId>());
   QVERIFY(!hasFieldDefaultValue<AddressDef::personId>());
   QCOMPARE(fieldMaxLength<AddressDef::personId>(), 0);
@@ -233,20 +219,16 @@ void ReflectStructTest::useSellerTest()
 
   QString name;
 
-  name = nameFromStructDef<SellerDef>();
-  QCOMPARE(name, QString("Seller"));
+  QCOMPARE(nameFromStructDef<SellerDef>(), "Seller");
 
-  name = nameFromField<SellerDef::id>();
-  QCOMPARE(name, QString("Seller"));
+  QCOMPARE(nameFromField<SellerDef::id>(), "Seller");
 
-  name = fieldName<SellerDef::id>();
-  QCOMPARE(name, QString("id"));
+  QCOMPARE(fieldName<SellerDef::id>(), "id");
   QVERIFY(!isFieldRequired<SellerDef::id>());
   QVERIFY(!hasFieldDefaultValue<SellerDef::id>());
   QCOMPARE(fieldMaxLength<SellerDef::id>(), 0);
 
-  name = fieldName<SellerDef::name>();
-  QCOMPARE(name, QString("name"));
+  QCOMPARE(fieldName<SellerDef::name>(), "name");
   QVERIFY(isFieldRequired<SellerDef::name>());
   QVERIFY(!hasFieldDefaultValue<SellerDef::name>());
   QCOMPARE(fieldMaxLength<SellerDef::name>(), 0);
