@@ -24,8 +24,11 @@
 #include "Mdt/Reflection/IdPrimaryKey.h"
 #include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
 #include "Mdt/Reflection/PrimaryKey.h"
+#include "Mdt/Reflection/UniqueConstraint.h"
+#include <QLatin1String>
+#include <QStringList>
 
-#include <QDebug>
+// #include <QDebug>
 
 using namespace Mdt::Sql::Schema;
 
@@ -45,7 +48,7 @@ struct PersonDataStruct
 {
   qlonglong id = 0;
   QString firstName;
-  QString lastName = "LN";
+  QString lastName = QLatin1String("LN");
 };
 
 MDT_REFLECT_STRUCT(
@@ -83,7 +86,7 @@ void ReflectionTest::tableAutoIncrementPkTest()
   auto table = tableFromReflected<PersonDef, PersonPrimaryKey>();
   QCOMPARE(table.fieldCount(), 3);
   QCOMPARE(table.primaryKeyType(), PrimaryKeyType::AutoIncrementPrimaryKey);
-  QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QString("id"));
+  QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QLatin1String("id"));
   // id
   QVERIFY(table.isFieldPartOfPrimaryKey(0));
   QVERIFY(table.isFieldAutoIncrement(0));
@@ -102,7 +105,7 @@ void ReflectionTest::tablePkTest()
   auto table = tableFromReflected<PersonDef, PersonPrimaryKey>();
   QCOMPARE(table.fieldCount(), 3);
   QCOMPARE(table.primaryKeyType(), PrimaryKeyType::PrimaryKey);
-  QCOMPARE(table.primaryKey().fieldNameList(), QStringList({"firstName","lastName"}));
+  QCOMPARE(table.primaryKey().fieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
   // id
   QVERIFY(!table.isFieldPartOfPrimaryKey(0));
   QVERIFY(!table.isFieldAutoIncrement(0));
@@ -119,10 +122,10 @@ void ReflectionTest::personTableTest()
   using PersonPrimaryKey = Mdt::Reflection::AutoIncrementIdPrimaryKey<PersonDef::id>;
 
   auto table = tableFromReflected<PersonDef, PersonPrimaryKey>();
-  QCOMPARE(table.tableName(), QString("Person"));
+  QCOMPARE(table.tableName(), QLatin1String("Person"));
   QCOMPARE(table.fieldCount(), 3);
   // id
-  QCOMPARE(table.fieldName(0), QString("id"));
+  QCOMPARE(table.fieldName(0), QLatin1String("id"));
   QCOMPARE(table.fieldType(0), FieldType::Bigint);
   QVERIFY(table.isFieldPartOfPrimaryKey(0));
   QVERIFY(table.isFieldRequired(0));
@@ -131,7 +134,7 @@ void ReflectionTest::personTableTest()
   QVERIFY(table.fieldLength(0) < 1);
   QVERIFY(table.fieldDefaultValue(0).isNull());
   // firstName
-  QCOMPARE(table.fieldName(1), QString("firstName"));
+  QCOMPARE(table.fieldName(1), QLatin1String("firstName"));
   QCOMPARE(table.fieldType(1), FieldType::Text);
   QVERIFY(!table.isFieldPartOfPrimaryKey(1));
   QVERIFY(table.isFieldRequired(1));
@@ -140,14 +143,28 @@ void ReflectionTest::personTableTest()
   QVERIFY(table.fieldLength(1) < 1);
   QVERIFY(table.fieldDefaultValue(1).isNull());
   // lastName
-  QCOMPARE(table.fieldName(2), QString("lastName"));
+  QCOMPARE(table.fieldName(2), QLatin1String("lastName"));
   QCOMPARE(table.fieldType(2), FieldType::Varchar);
   QVERIFY(!table.isFieldPartOfPrimaryKey(2));
   QVERIFY(table.isFieldRequired(2));
   QVERIFY(!table.isFieldUnique(2));
   QVERIFY(!table.isFieldAutoIncrement(2));
   QCOMPARE(table.fieldLength(2), 250);
-  QCOMPARE(table.fieldDefaultValue(2), QVariant("LN"));
+  QCOMPARE(table.fieldDefaultValue(2), QVariant(QLatin1String("LN")));
+}
+
+void ReflectionTest::addUniqueConstraintToTableTest()
+{
+  using PersonUniqueConstraint = Mdt::Reflection::UniqueConstraint<PersonDef::firstName, PersonDef::lastName>;
+
+  auto table = tableFromReflected<PersonDef>();
+  QCOMPARE(table.indexList().size(), 0);
+
+  addUniqueConstraintToTable<PersonUniqueConstraint>(table);
+  QCOMPARE(table.indexList().size(), 1);
+  const auto index = table.indexList().at(0);
+  QVERIFY(index.isUnique());
+  QCOMPARE(index.fieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
 }
 
 /*

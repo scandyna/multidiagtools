@@ -23,6 +23,7 @@
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include <QString>
+#include <QLatin1String>
 #include <type_traits>
 
 using namespace Mdt::Reflection;
@@ -99,7 +100,7 @@ void SchemaFieldTest::fieldFromReflectedTest()
   const auto id = Mdt::Sql::Schema::Reflection::fieldFromReflected<TestCaseDef::id>(dataStruct, fieldTypeMap);
   QCOMPARE(id.type(), FieldType::Bigint);
   QVERIFY(!id.isUnsigned());
-  QCOMPARE(id.name(), QString("id"));
+  QCOMPARE(id.name(), QLatin1String("id"));
   QVERIFY(!id.isRequired());  // Required flag for primary key is handled by Mdt::Sql::Schema::Table
   QVERIFY(!id.isUnique());    // Unique flag for primary key is handled by Mdt::Sql::Schema::Table
   QVERIFY(id.defaultValue().isNull());
@@ -109,7 +110,7 @@ void SchemaFieldTest::fieldFromReflectedTest()
   const auto name = Mdt::Sql::Schema::Reflection::fieldFromReflected<TestCaseDef::name>(dataStruct, fieldTypeMap);
   QCOMPARE(name.type(), FieldType::Varchar);
   QVERIFY(!name.isUnsigned());
-  QCOMPARE(name.name(), QString("name"));
+  QCOMPARE(name.name(), QLatin1String("name"));
   QVERIFY(name.isRequired());
   QVERIFY(!name.isUnique());
   QVERIFY(name.defaultValue().isNull());
@@ -119,7 +120,7 @@ void SchemaFieldTest::fieldFromReflectedTest()
   const auto qty = Mdt::Sql::Schema::Reflection::fieldFromReflected<TestCaseDef::qty>(dataStruct, fieldTypeMap);
   QCOMPARE(qty.type(), FieldType::Double);
   QVERIFY(!qty.isUnsigned());
-  QCOMPARE(qty.name(), QString("qty"));
+  QCOMPARE(qty.name(), QLatin1String("qty"));
   QVERIFY(!qty.isRequired());
   QVERIFY(!qty.isUnique());
   QCOMPARE(qty.defaultValue(), QVariant(1.0));

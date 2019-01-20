@@ -25,6 +25,7 @@
 #include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
 #include "Mdt/Reflection/PrimaryKey.h"
 #include <QString>
+#include <QLatin1String>
 #include <QStringList>
 
 // #include <QDebug>
@@ -116,26 +117,26 @@ void SchemaPrimaryKeyTest::autoIncrementPkTest()
   const auto fieldTypeMap = FieldTypeMap::make();
 
   const AutoIncrementPrimaryKey shortIntPk = Mdt::Sql::Schema::Reflection::autoIncrementPrimaryKeyFromReflected<ShortIntPk>(fieldTypeMap);
-  QCOMPARE(shortIntPk.fieldName(), QString("short_int_id"));
+  QCOMPARE(shortIntPk.fieldName(), QLatin1String("short_int_id"));
   QCOMPARE(shortIntPk.fieldType(), FieldType::Smallint);
 
   const AutoIncrementPrimaryKey intPk = Mdt::Sql::Schema::Reflection::autoIncrementPrimaryKeyFromReflected<IntPk>(fieldTypeMap);
-  QCOMPARE(intPk.fieldName(), QString("int_id"));
+  QCOMPARE(intPk.fieldName(), QLatin1String("int_id"));
   QCOMPARE(intPk.fieldType(), FieldType::Integer);
 
   const AutoIncrementPrimaryKey qlonglongPk = Mdt::Sql::Schema::Reflection::autoIncrementPrimaryKeyFromReflected<QlonglongPk>(fieldTypeMap);
-  QCOMPARE(qlonglongPk.fieldName(), QString("qlonglong_id"));
+  QCOMPARE(qlonglongPk.fieldName(), QLatin1String("qlonglong_id"));
   QCOMPARE(qlonglongPk.fieldType(), FieldType::Bigint);
 
   const AutoIncrementPrimaryKey articlePk = Mdt::Sql::Schema::Reflection::autoIncrementPrimaryKeyFromReflected<ArticlePrimaryKey>(fieldTypeMap);
-  QCOMPARE(articlePk.fieldName(), QString("id"));
+  QCOMPARE(articlePk.fieldName(), QLatin1String("id"));
   QCOMPARE(articlePk.fieldType(), FieldType::Integer);
 }
 
 void SchemaPrimaryKeyTest::idPkTest()
 {
   const PrimaryKey pk = Mdt::Sql::Schema::Reflection::primaryKeyFromReflectedId<ArticleDetailPrimaryKey>();
-  QCOMPARE(pk.fieldNameList(), QStringList({"id"}));
+  QCOMPARE(pk.fieldNameList(), QStringList({QLatin1String("id")}));
 }
 
 void SchemaPrimaryKeyTest::pkTest()
@@ -145,13 +146,13 @@ void SchemaPrimaryKeyTest::pkTest()
   using Pk3 = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id, PkTestDef::str_B_id, PkTestDef::str_C_id>;
 
   const PrimaryKey pk1 = Mdt::Sql::Schema::Reflection::primaryKeyFromReflected<Pk1>();
-  QCOMPARE(pk1.fieldNameList(), QStringList({"int_id"}));
+  QCOMPARE(pk1.fieldNameList(), QStringList({QLatin1String("int_id")}));
 
   const PrimaryKey pk2 = Mdt::Sql::Schema::Reflection::primaryKeyFromReflected<Pk2>();
-  QCOMPARE(pk2.fieldNameList(), QStringList({"str_A_id","int_id"}));
+  QCOMPARE(pk2.fieldNameList(), QStringList({QLatin1String("str_A_id"),QLatin1String("int_id")}));
 
   const PrimaryKey pk3 = Mdt::Sql::Schema::Reflection::primaryKeyFromReflected<Pk3>();
-  QCOMPARE(pk3.fieldNameList(), QStringList({"str_A_id","str_B_id","str_C_id"}));
+  QCOMPARE(pk3.fieldNameList(), QStringList({QLatin1String("str_A_id"),QLatin1String("str_B_id"),QLatin1String("str_C_id")}));
 }
 
 void SchemaPrimaryKeyTest::pkContainerTest()
@@ -160,20 +161,20 @@ void SchemaPrimaryKeyTest::pkContainerTest()
 
   const auto aiPkc = Mdt::Sql::Schema::Reflection::primaryKeyContainerFromReflected<ArticlePrimaryKey>(fieldTypeMap);
   QCOMPARE(aiPkc.primaryKeyType(), PrimaryKeyType::AutoIncrementPrimaryKey);
-  QCOMPARE(aiPkc.fieldNameList(), QStringList({"id"}));
+  QCOMPARE(aiPkc.fieldNameList(), QStringList({QLatin1String("id")}));
 
   const auto idPkc = Mdt::Sql::Schema::Reflection::primaryKeyContainerFromReflected<ArticleDetailPrimaryKey>(fieldTypeMap);
   QCOMPARE(idPkc.primaryKeyType(), PrimaryKeyType::PrimaryKey);
-  QCOMPARE(idPkc.fieldNameList(), QStringList({"id"}));
+  QCOMPARE(idPkc.fieldNameList(), QStringList({QLatin1String("id")}));
 
   const auto pkc = Mdt::Sql::Schema::Reflection::primaryKeyContainerFromReflected<ArticleTypePrimaryKey>(fieldTypeMap);
   QCOMPARE(pkc.primaryKeyType(), PrimaryKeyType::PrimaryKey);
-  QCOMPARE(pkc.fieldNameList(), QStringList({"code"}));
+  QCOMPARE(pkc.fieldNameList(), QStringList({QLatin1String("code")}));
 
   using Pk2 = Mdt::Reflection::PrimaryKey<ArticleTypeDef::code, ArticleTypeDef::label>;
   const auto pkc2 = Mdt::Sql::Schema::Reflection::primaryKeyContainerFromReflected<Pk2>(fieldTypeMap);
   QCOMPARE(pkc2.primaryKeyType(), PrimaryKeyType::PrimaryKey);
-  QCOMPARE(pkc2.fieldNameList(), QStringList({"code","label"}));
+  QCOMPARE(pkc2.fieldNameList(), QStringList({QLatin1String("code"),QLatin1String("label")}));
 }
 
 /*

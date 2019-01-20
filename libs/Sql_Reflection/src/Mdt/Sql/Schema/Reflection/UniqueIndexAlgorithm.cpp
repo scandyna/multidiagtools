@@ -18,25 +18,4 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN
-#define MDT_TEST_MAIN
-
-#include "TestBase.h"
-
-class ReflectionTest : public QObject
-{
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void personTableTest();
-  void tableNoPkTest();
-  void tableAutoIncrementPkTest();
-  void tablePkTest();
-  void addUniqueConstraintToTableTest();
-};
-
-#endif // #ifndef MDT_TEST_MAIN
+#include "UniqueIndexAlgorithm.h"

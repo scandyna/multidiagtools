@@ -4,6 +4,7 @@ set(SOURCE_FILES
   Mdt/Sql/Schema/Reflection/FieldAlgorithm.cpp
   Mdt/Sql/Schema/Reflection/PrimaryKeyAlgorithm.cpp
   Mdt/Sql/Schema/Reflection/TableAlgorithm.cpp
+  Mdt/Sql/Schema/Reflection/UniqueIndexAlgorithm.cpp
   Mdt/Sql/Schema/Reflection.cpp
 )
 

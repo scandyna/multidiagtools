@@ -22,10 +22,12 @@
 #define MDT_SQL_SCHEMA_REFLECTION_H
 
 #include "Reflection/TableAlgorithm.h"
+#include "Reflection/UniqueIndexAlgorithm.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/FieldTypeMap.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
+#include "Mdt/Reflection/TypeTraits/IsUniqueConstraint.h"
 // #include "Mdt/Reflection/StructAlgorithm.h"
 #include <QLatin1String>
 
@@ -74,6 +76,18 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     return Reflection::tableFromReflectedImpl<StructDef, PrimaryKey>(fieldTypeMap);
   }
+
+    /*! \brief Add a unique constraint to \a table
+     *
+     * \pre \a UniqueConstraint must be a unique constraint
+     */
+    template<typename UniqueConstraint>
+    static void addUniqueConstraintToTable(Table & table)
+    {
+      static_assert( Mdt::Reflection::TypeTraits::IsUniqueConstraint<UniqueConstraint>::value , "UniqueConstraint must be a unique constraint" );
+
+      table.addIndex( Reflection::uniqueIndexFromReflected<UniqueConstraint>() );
+    }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
