@@ -23,6 +23,7 @@
 
 #include "UniqueConstraint.h"
 #include "FieldAlgorithm.h"
+#include "StructAlgorithm.h"
 #include "TypeTraits/IsField.h"
 #include "TypeTraits/IsUniqueConstraint.h"
 #include "Impl/AddFieldNameToList.h"
@@ -30,6 +31,18 @@
 #include <boost/mpl/for_each.hpp>
 
 namespace Mdt{ namespace Reflection{
+
+  /*! \brief Get the struct reflected name from a unique constraint
+   *
+   * \pre \a UniqueConstraint must be a unique constraint
+   */
+  template<typename UniqueConstraint>
+  static constexpr const char* nameFromUniqueConstraint() noexcept
+  {
+    static_assert( TypeTraits::IsUniqueConstraint<UniqueConstraint>::value , "UniqueConstraint must be a unique constraint" );
+
+    return nameFromStructDef<typename UniqueConstraint::struct_def>();
+  }
 
   /*! \brief Apply a functor for each field in a unique constraint
    *

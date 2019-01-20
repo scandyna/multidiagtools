@@ -318,6 +318,7 @@
  *   }
  *
  *   auto personTable = Mdt::Sql::Schema::tableFromReflected<PersonDef, PersonPrimaryKey>();
+ *   Mdt::Sql::Schema::addUniqueConstraintToTable<PersonUniqueConstraint>(personTable);
  *   if( !driver.createTable(personTable) ){
  *     return false;
  *   }

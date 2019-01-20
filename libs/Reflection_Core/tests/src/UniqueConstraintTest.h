@@ -26,6 +26,7 @@ class UniqueConstraintTest : public QObject
 
  private slots:
 
+  void nameFromUniqueConstraintTest();
   void oneFieldConstraintTest();
   void twoFieldConstraintTest();
   void threeFieldConstraintTest();

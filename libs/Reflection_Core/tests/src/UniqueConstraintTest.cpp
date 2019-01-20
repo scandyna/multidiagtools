@@ -54,6 +54,13 @@ MDT_REFLECT_STRUCT(
  * Tests
  */
 
+void UniqueConstraintTest::nameFromUniqueConstraintTest()
+{
+  using UC = UniqueConstraint<TestDef::id>;
+
+  QCOMPARE(nameFromUniqueConstraint<UC>(), "Test");
+}
+
 void UniqueConstraintTest::oneFieldConstraintTest()
 {
   using UC = UniqueConstraint<TestDef::id>;
