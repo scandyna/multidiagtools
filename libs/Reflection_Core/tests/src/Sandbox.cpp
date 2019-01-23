@@ -31,10 +31,10 @@
  *
  * At some place, we should be able to persist a object of %Person,
  *  in a database, or send it over the network in JSON format.
- *  In a context of  database, we also need to create some schema first.
+ *  In a context of database, we also need to create some schema first.
  *
  * The goal is to avoid creating all the necessary stuff to create
- *  a SQL databse schema, SQL queries, etc..
+ *  a SQL database schema, SQL queries, etc..
  *
  * The domain entity, %Person, should ideally not be affected for reflection.
  *
@@ -43,20 +43,34 @@
  *  there members (like member name).
  *  To create reflection, we can use tuples and template magic.
  *
- * \section non_intrusive_reflection Non intrusive reflection
- *
- * First, we create a data struct that will be used ase base:
+ * Reflection is done by creating a data struct,
+ *  the using MDT_REFLECT_STRUCT() :
  * \code
  * struct PersonDataStruct
  * {
- *   qulonlong id = 0;
+ *   qlonlong id = 0;
  *   QString firstName;
  *   QString lastName;
  * };
+ *
+ * MDT_REFLECT_STRUCT(
+ *   (PersonDataStruct),
+ *   Person,
+ *   (id),
+ *   (firstName, FieldFlag::IsRequired),
+ *   (lastName, FieldFlag::IsRequired)
+ * )
  * \endcode
  *
- * Whe should also provide functions to convert between %Person and %PersonDataStruct:
+ * \sa MDT_REFLECT_STRUCT()
+ *
+ * \section non_intrusive_reflection Non intrusive reflection
+ *
+ * Whe could provide functions to convert between %Person and %PersonDataStruct:
  * \code
+ * #include "Person.h"
+ * #include "PersonDataStruct.h"
+ *
  * Person personFromDataStruct(const PersonDataStruct & data)
  * {
  *   return Person(data.id, data.firstName, data.lastName);
@@ -70,7 +84,7 @@
  *
  * In the repository implementation:
  * \code
- * bool SqlPesronRepository::add(const Person & person)
+ * bool SqlPersonRepository::add(const Person & person)
  * {
  *   return mImpl.add<PersonDef>( dataStructFromPerson(person) );
  * }
@@ -83,18 +97,10 @@
  *
  * \section somewhat_instrusive_reflection Somewhat intrusive reflection
  *
- * First, we create a data struct that will be used ase base:
- * \code
- * struct PersonDataStruct
- * {
- *   qulonlong id = 0;
- *   QString firstName;
- *   QString lastName;
- * };
- * \endcode
- *
  * The above data struct will now be used as member in the domain object:
  * \code
+ * #include "PersonDataStruct.h"
+ *
  * class Person
  * {
  *  public:
@@ -115,7 +121,7 @@
  *
  * In the repository implementation:
  * \code
- * bool SqlPesronRepository::add(const Person & person)
+ * bool SqlPersonRepository::add(const Person & person)
  * {
  *   return mImpl.add<PersonDef>(person.constDataStruct());
  * }
@@ -123,7 +129,7 @@
  *
  * Here, the domain entity has knowlage of reflection tricks.
  *  This could maybe bring some less overhead, because there are
- *  no data structs to instanciante and copies for each repository operations.
+ *  no data structs to instanciante and copy for each repository operations.
  *
  * But, here the domain model has direct access to the attributes of %Person:
  * \code
@@ -135,6 +141,8 @@
  *
  * One solution could be to define friend functions to access the internal data struct:
  * \code
+ * #include "PersonDataStruct.h"
+ *
  * class Person
  * {
  *  public:
@@ -143,9 +151,6 @@
  *   QString firstName() const;
  *   QString lastName() const;
  *   // Some other usefull methods ..
- *
- *   PersonDataStruct & dataStruct();
- *   const PersonDataStruct & constDataStruct() const;
  *
  *  private:
  *
@@ -181,7 +186,7 @@
  * \code
  * #include "Person_p.h"
  *
- * bool SqlPesronRepository::add(const Person & person)
+ * bool SqlPersonRepository::add(const Person & person)
  * {
  *   return mImpl.add<PersonDef>( personPrivateConstDataStruct(person) );
  * }
@@ -218,6 +223,8 @@
  *  we probably will have to provide some stuff to make those value objects serializable.
  *
  * Here, the domain entity is strongly coupled with the reflection details.
+ *
+ * This is not supported by %Mdt %Reflection.
  *
  * \section field_types Field types
  *
@@ -297,21 +304,84 @@
  *
  * \sa Mdt::Reflection::UniqueConstraint
  *
+ * Define a relation between 2 structs.
+ *  The concept of relation can be used to generate,
+ *  for example, a SQL schema, and can also be re-used
+ *  later to generate some queries.
+ *
+ * In this example, a relation between a person and its addresses will be defined.
+ *
+ * Here is the person struct:
+ * \code
+ * struct PersonDataStruct
+ * {
+ *   qlonglong id = 0;
+ *   QString firstName;
+ *   QString lastName;
+ * };
+ *
+ * MDT_REFLECT_STRUCT(
+ *   (PersonDataStruct),
+ *   Person,
+ *   (id),
+ *   (firstName),
+ *   (lastName)
+ * )
+ * \endcode
+ *
+ * Here the address struct is defined:
+ * \code
+ * struct AddressDataStruct
+ * {
+ *   qlonglong id = 0;
+ *   QString street;
+ *   qlonglong personId = 0;
+ * };
+ *
+ * MDT_REFLECT_STRUCT(
+ *   (AddressDataStruct),
+ *   Address,
+ *   (id),
+ *   (street),
+ *   (personId)
+ * )
+ * \endcode
+ *
+ * \code
+ * using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef::id>;
+ * \endcode
+ *
+ * \code
+ * using PersonAddressRelation = Mdt::Reflection::Relation<PersonPrimaryKey, AddressDef::personId>;
+ * \endcode
+ *
+ * \sa Mdt::Reflection::Relation
+ *
  * \section sql_schema Create a SQL schema
  *
  * In this example, a simple function will create
  *  a SQL schema based on reflected entities:
  * \code
- * #include "Person.h"
- * #include "Person_p.h"
+ * #include "PersonDataStruct.h"
+ * #include "AddressDataStruct.h"
  * #include <Mdt/Sql/Schema/Reflection.h>
+ * #include <Mdt/Sql/Schema/ForeignKeySettings.h"
  * #include <Mdt/Sql/Schema/Driver.h>
  * #include <QSqlDatabase>
  *
  * using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef::id>;
+ * using AddressPrimaryKey = Mdt::Reflection::PrimaryKey<AddressDef::id>;
+ * using PersonAddressRelation = Mdt::Reflection::Relation<PersonPrimaryKey, AddressDef::personId>;
  *
  * bool createSqlSchema(const QSqlDatabase & dbConnection)
  * {
+ *   using Mdt::Sql::Schema::ForeignKeyAction;
+ *
+ *   Mdt::Sql::Schema::ForeignKeySettings commonForeignKeySettings;
+ *   commonForeignKeySettings.setIndexed(true);
+ *   commonForeignKeySettings.setOnDeleteAction(ForeignKeyAction::Restrict);
+ *   commonForeignKeySettings.setOnUpdateAction(ForeignKeyAction::Cascade);
+ *
  *   Mdt::Sql::Schema::Driver driver(dbConnection);
  *   if(!driver.isValid()){
  *     return false;
@@ -319,6 +389,7 @@
  *
  *   auto personTable = Mdt::Sql::Schema::tableFromReflected<PersonDef, PersonPrimaryKey>();
  *   Mdt::Sql::Schema::addUniqueConstraintToTable<PersonUniqueConstraint>(personTable);
+ *   Mdt::Sql::Schema::addForeignKeyFromRelationToTable<PersonAddressRelation>(personTable, commonForeignKeySettings);
  *   if( !driver.createTable(personTable) ){
  *     return false;
  *   }
