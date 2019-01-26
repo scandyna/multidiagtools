@@ -24,6 +24,7 @@
 #include <QString>
 #include <QLatin1String>
 #include <QVariant>
+#include <boost/mpl/vector.hpp>
 #include <type_traits>
 
 using namespace Mdt::Reflection;
@@ -100,6 +101,18 @@ static_assert( std::is_same< TypeFromField<FieldTypeTestDef::qlonglong_type>::ty
 static_assert( std::is_same< TypeFromField<FieldTypeTestDef::qulonglong_type>::type, qulonglong >::value ,"" );
 static_assert( std::is_same< TypeFromField<FieldTypeTestDef::QString_type>::type, QString >::value ,"" );
 static_assert( std::is_same< TypeFromField<FieldTypeTestDef::MyStruct_type>::type, MyStruct >::value ,"" );
+
+void fieldIndexInMplSequenceTest()
+{
+  using v1 = boost::mpl::vector<FieldTypeTestDef::int_type>;
+  using v3 = boost::mpl::vector<FieldTypeTestDef::int_type, FieldTypeTestDef::qlonglong_type, FieldTypeTestDef::qulonglong_type>;
+
+  static_assert( fieldIndexInMplSequence<FieldTypeTestDef::int_type, v1>() == 0 ,"" );
+
+  static_assert( fieldIndexInMplSequence<FieldTypeTestDef::int_type, v3>() == 0 ,"" );
+  static_assert( fieldIndexInMplSequence<FieldTypeTestDef::qlonglong_type, v3>() == 1 ,"" );
+  static_assert( fieldIndexInMplSequence<FieldTypeTestDef::qulonglong_type, v3>() == 2 ,"" );
+}
 
 /*
  * Tests

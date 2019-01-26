@@ -29,7 +29,7 @@
 
 namespace Mdt{ namespace Reflection{
 
-  /*! \brief Get the struct reflected name from a struct def
+  /*! \brief Get the name given to a reflected struct from a struct def
    *
    * \pre \a StructDef must be a struct definition assiocated with a reflected struct
    */
@@ -41,7 +41,7 @@ namespace Mdt{ namespace Reflection{
     return StructDef::name_();
   }
 
-  /*! \brief Get the struct reflected name from a field
+  /*! \brief Get the name given to a reflected struct from a field
    *
    * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
    */

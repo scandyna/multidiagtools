@@ -22,6 +22,7 @@
 #define MDT_REFLECTION_PRIMARY_KEY_ALGORITHM_H
 
 #include "PrimaryKey.h"
+#include "StructAlgorithm.h"
 #include "FieldAlgorithm.h"
 #include "TypeTraits/IsField.h"
 #include "TypeTraits/IsAutoIncrementIdPrimaryKey.h"
@@ -30,8 +31,21 @@
 #include "Impl/AddFieldNameToList.h"
 #include <QStringList>
 #include <boost/mpl/for_each.hpp>
+#include <boost/mpl/size.hpp>
 
 namespace Mdt{ namespace Reflection{
+
+  /*! \brief Get the name given to the reflected struct in \a Pk
+   *
+   * \pre \a Pk must be primary key class for a reflected struct
+   */
+  template<typename Pk>
+  static constexpr const char *nameFromPrimaryKey() noexcept
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<Pk>::value, "Pk must be a primary key class for a reflected struct" );
+
+    return nameFromStructDef<typename Pk::struct_def>();
+  }
 
   /*! \brief Get the field QMetaType type from a auto increment id primary key
    *
@@ -79,6 +93,18 @@ namespace Mdt{ namespace Reflection{
     static_assert( Mdt::Reflection::TypeTraits::IsIdPrimaryKey<Pk>::value, "Pk must be a id primary key for a reflected struct" );
 
     return fieldName<typename Pk::field>();
+  }
+
+  /*! \brief Get the count of fields in a primary key
+   *
+   * \pre \a Pk must be primary key class for a reflected struct
+   */
+  template<typename Pk>
+  constexpr int primaryKeyFieldCount() noexcept
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<Pk>::value, "Pk must be a primary key class for a reflected struct" );
+
+    return boost::mpl::size<typename Pk::field_list>::value;
   }
 
   /*! \brief Apply a functor for each field in a primary key

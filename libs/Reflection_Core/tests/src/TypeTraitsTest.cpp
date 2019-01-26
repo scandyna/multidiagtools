@@ -27,11 +27,13 @@
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
 #include "Mdt/Reflection/TypeTraits/IsUniqueConstraint.h"
+#include "Mdt/Reflection/TypeTraits/IsRelation.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/PrimaryKey.h"
 #include "Mdt/Reflection/IdPrimaryKey.h"
 #include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
 #include "Mdt/Reflection/UniqueConstraint.h"
+#include "Mdt/Reflection/Relation.h"
 #include <QString>
 
 using namespace Mdt::Reflection;
@@ -70,7 +72,6 @@ MDT_REFLECT_STRUCT(
 )
 
 using ArticleDetailPrimaryKey = IdPrimaryKey<ArticleDetailDef::id>;
-// using ArticleDetailRelation = Mdt::Reflection::Relation<ArticleEntity, ArticleDetailEntity, ArticleDetailDef::articleIdField>;
 
 struct ArticleTypeDataStruct
 {
@@ -94,6 +95,8 @@ using ArticleTypePrimaryKey3 = PrimaryKey<ArticleTypeDef::code, ArticleTypeDef::
 using ArticleTypeUniqueConstraint1 = UniqueConstraint<ArticleTypeDef::code>;
 using ArticleTypeUniqueConstraint2 = UniqueConstraint<ArticleTypeDef::code, ArticleTypeDef::label>;
 using ArticleTypeUniqueConstraint3 = UniqueConstraint<ArticleTypeDef::code, ArticleTypeDef::label, ArticleTypeDef::type>;
+
+using ArticleDetailRelation = Relation<ArticlePrimaryKey, ArticleDetailDef::articleId>;
 
 /*
  * IsStructDef compile time tests
@@ -179,14 +182,12 @@ static_assert( !IsUniqueConstraint<ArticleTypePrimaryKey>::value, "" );
  * IsRelation compile time tests
  */
 
-// static_assert(!IsRelation<ArticleDef::idField>::value , "" );
-// static_assert(!IsRelation<ArticleDef::descriptionField>::value , "" );
-// static_assert(!IsRelation<ArticleDataStruct>::value , "" );
-// static_assert(!IsRelation<ArticleDef>::value , "" );
-// static_assert(!IsRelation<ArticleEntity>::value, "" );
-// static_assert( IsRelation<ArticleDetailRelation>::value, "" );
-// static_assert(!IsRelation<int>::value , "" );
-// static_assert(!IsRelation<QString>::value , "" );
+static_assert(!IsRelation<ArticleDef::id>::value , "" );
+static_assert(!IsRelation<ArticlePrimaryKey>::value , "" );
+static_assert(!IsRelation<ArticleTypeUniqueConstraint1>::value , "" );
+static_assert( IsRelation<ArticleDetailRelation>::value , "" );
+static_assert(!IsRelation<int>::value , "" );
+static_assert(!IsRelation<QString>::value , "" );
 
 /*
  * Main

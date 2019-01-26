@@ -389,8 +389,13 @@
  *
  *   auto personTable = Mdt::Sql::Schema::tableFromReflected<PersonDef, PersonPrimaryKey>();
  *   Mdt::Sql::Schema::addUniqueConstraintToTable<PersonUniqueConstraint>(personTable);
- *   Mdt::Sql::Schema::addForeignKeyFromRelationToTable<PersonAddressRelation>(personTable, commonForeignKeySettings);
  *   if( !driver.createTable(personTable) ){
+ *     return false;
+ *   }
+ *
+ *   auto addressTable = Mdt::Sql::Schema::tableFromReflected<AddressDef, AddressPrimaryKey>();
+ *   Mdt::Sql::Schema::addForeignKeyFromRelationToTable<PersonAddressRelation>(addressTable, commonForeignKeySettings);
+ *   if( !driver.createTable(addressTable) ){
  *     return false;
  *   }
  *

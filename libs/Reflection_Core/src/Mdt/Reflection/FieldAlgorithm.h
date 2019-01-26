@@ -29,6 +29,9 @@
 #include <boost/fusion/include/begin.hpp>
 #include <boost/fusion/include/find.hpp>
 #include <boost/fusion/include/at_key.hpp>
+#include <boost/mpl/distance.hpp>
+#include <boost/mpl/begin_end.hpp>
+#include <boost/mpl/find.hpp>
 #include <type_traits>
 
 namespace Mdt{ namespace Reflection{
@@ -57,6 +60,21 @@ namespace Mdt{ namespace Reflection{
     static_assert( FieldIndex >= 0, "FieldIndex must be >= 0" );
 
     return boost::fusion::extension::struct_member_name<Struct, FieldIndex>::call();
+  }
+
+  /*! \brief Get the field index in a Boost MPL sequence from a field defined in a struct definition
+   *
+   * \pre \a Field must be a field defined in the struct definition associated with \a Struct
+   */
+  template< typename Field, typename MplSequence>
+  static constexpr int fieldIndexInMplSequence() noexcept
+  {
+    static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
+
+    using first = typename boost::mpl::begin<MplSequence>::type;
+    using it = typename boost::mpl::find<MplSequence, Field>::type;
+
+    return boost::mpl::distance<first, it>::value;
   }
 
   /*! \brief Get the field index in a reflected struct from a field defined in a struct definition

@@ -59,6 +59,25 @@ MDT_REFLECT_STRUCT(
 )
 
 /*
+ * Compile time tests
+ */
+
+void pkFieldCountTest()
+{
+  using IdPk = Mdt::Reflection::IdPrimaryKey<PkTestDef::int_id>;
+  using AutoIncrementIdPk = Mdt::Reflection::AutoIncrementIdPrimaryKey<PkTestDef::qulonglong_id>;
+  using Pk1 = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id>;
+  using Pk2 = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id, PkTestDef::str_B_id>;
+  using Pk3 = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id, PkTestDef::str_C_id, PkTestDef::str_B_id>;
+
+  static_assert( primaryKeyFieldCount<IdPk>() == 1 , "" );
+  static_assert( primaryKeyFieldCount<AutoIncrementIdPk>() == 1 , "" );
+  static_assert( primaryKeyFieldCount<Pk1>() == 1 , "" );
+  static_assert( primaryKeyFieldCount<Pk2>() == 2 , "" );
+  static_assert( primaryKeyFieldCount<Pk3>() == 3 , "" );
+}
+
+/*
  * Tests
  */
 
@@ -66,6 +85,7 @@ void PrimaryKeyTest::idPkTest()
 {
   using Pk = Mdt::Reflection::IdPrimaryKey<PkTestDef::int_id>;
 
+  QCOMPARE(nameFromPrimaryKey<Pk>(), "PkTest");
   QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("int_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 
@@ -76,6 +96,7 @@ void PrimaryKeyTest::autoIdPkTest()
 {
   using Pk = Mdt::Reflection::AutoIncrementIdPrimaryKey<PkTestDef::qulonglong_id>;
 
+  QCOMPARE(nameFromPrimaryKey<Pk>(), "PkTest");
   QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("qulonglong_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 
@@ -86,6 +107,7 @@ void PrimaryKeyTest::oneFieldPkTest()
 {
   using Pk = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id>;
 
+  QCOMPARE(nameFromPrimaryKey<Pk>(), "PkTest");
   QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("str_A_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 }
