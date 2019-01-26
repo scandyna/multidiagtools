@@ -27,8 +27,6 @@ endfunction()
 
 #================= Tests ====================
 
-addReflection_CoreTest("Sandbox")
-
 addReflection_CoreTest("ReflectFieldTest")
 addReflection_CoreTest("ReflectStructTest")
 addReflection_CoreTest("TypeTraitsTest")
