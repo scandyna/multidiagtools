@@ -451,7 +451,8 @@
  *  is not possible.
  *
  * There are several C++ libraries available for compile time reflection:
- * - [Boost Mpl](http://www.boost.org/doc/libs/1_66_0/libs/mpl/doc/index.html) which is used to implement Mdt Reflection
+ * - [Boost Mpl](http://www.boost.org/doc/libs/1_69_0/libs/mpl/doc/index.html) which is used to implement Mdt Reflection
+ * - [Boost Fusion](https://www.boost.org/doc/libs/1_69_0/libs/fusion/doc/html/index.html) which is used to implement Mdt Reflection
  * - [Boost Hana](http://www.boost.org/doc/libs/1_66_0/libs/hana/doc/html/index.html)
  * - [iguana](https://github.com/qicosmos/iguana)
  * - Probably many more
