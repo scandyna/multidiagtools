@@ -57,7 +57,7 @@
  *  To create reflection, we can use tuples and template magic.
  *
  * Reflection is done by creating a data struct,
- *  the using MDT_REFLECT_STRUCT() :
+ *  then using MDT_REFLECT_STRUCT() :
  * \code
  * struct PersonDataStruct
  * {
@@ -259,7 +259,7 @@
  *  Those functions also relies on types known by QMetaType.
  *
  * For primitive types, like integral types, they should be initialized in the struct,
- *  avoiding strange values when a struct is intanciated.
+ *  avoiding strange values when a struct is instanciated.
  *
  * Please also note to avoid using unsigned integral types.
  *  Comparing them < 0, for example, can be surprising.
@@ -288,7 +288,7 @@
  * Please also considere that using custom types will require
  *  more work in some modules.
  *
- * \section attributes
+ * \section Attributes
  *
  * Some attributes could be specific to some persistance engine.
  *  A example could be the primary key in a SQL database.
@@ -302,7 +302,7 @@
  * Some other attributes could also have meaning in the domain busines logic.
  *  For example, if some data is required, this could be defined in one place,
  *  then reused on the domain logic, in the UI and in the persistance
- *  (f.ex. generating corresponding constraints on the databse schema).
+ *  (f.ex. generating corresponding constraints on the database schema).
  *
  * \sa Mdt::Reflection::PrimaryKey
  * \sa Mdt::Reflection::IdPrimaryKey
@@ -417,6 +417,8 @@
  * \endcode
  *
  * \sa Mdt::Sql::Schema::Reflection::tableFromReflected()
+ * \sa Mdt::Sql::Schema::Reflection::addUniqueConstraintToTable()
+ * \sa Mdt::Sql::Schema::Reflection::addForeignKeyFromRelationToTable()
  *
  * \note If the reflected struct uses custom types,
  *  a mapping between the custom type or the SQL field type
@@ -449,7 +451,7 @@
  *  is not possible.
  *
  * There are several C++ libraries available for compile time reflection:
- * - [Boost Mpl](http://www.boost.org/doc/libs/1_66_0/libs/mpl/doc/index.html)
+ * - [Boost Mpl](http://www.boost.org/doc/libs/1_66_0/libs/mpl/doc/index.html) which is used to implement Mdt Reflection
  * - [Boost Hana](http://www.boost.org/doc/libs/1_66_0/libs/hana/doc/html/index.html)
  * - [iguana](https://github.com/qicosmos/iguana)
  * - Probably many more
