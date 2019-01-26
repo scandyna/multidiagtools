@@ -426,7 +426,7 @@
  *  If such mapping is possible, see Mdt::Sql::Schema::FieldTypeMap .
  *  If not possible, the SQL schema should be done manually .
  *
- * \section alternatives
+ * \section Alternatives
  *
  * Qt offers some runtime introspection with the QMetaObject.
  *  A idea could be to create a entity as a subclass of QObject,
