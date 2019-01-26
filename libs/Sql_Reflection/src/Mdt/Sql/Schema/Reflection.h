@@ -23,12 +23,15 @@
 
 #include "Reflection/TableAlgorithm.h"
 #include "Reflection/UniqueIndexAlgorithm.h"
+#include "Reflection/ForeignKeyAlgorithm.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/FieldTypeMap.h"
+#include "Mdt/Sql/Schema/ForeignKeySettings.h"
+#include "Mdt/Reflection/RelationAlgorithm.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
 #include "Mdt/Reflection/TypeTraits/IsUniqueConstraint.h"
-// #include "Mdt/Reflection/StructAlgorithm.h"
+#include "Mdt/Reflection/TypeTraits/IsRelation.h"
 #include <QLatin1String>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -77,17 +80,31 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     return Reflection::tableFromReflectedImpl<StructDef, PrimaryKey>(fieldTypeMap);
   }
 
-    /*! \brief Add a unique constraint to \a table
-     *
-     * \pre \a UniqueConstraint must be a unique constraint
-     */
-    template<typename UniqueConstraint>
-    static void addUniqueConstraintToTable(Table & table)
-    {
-      static_assert( Mdt::Reflection::TypeTraits::IsUniqueConstraint<UniqueConstraint>::value , "UniqueConstraint must be a unique constraint" );
+  /*! \brief Add a unique constraint to \a table
+   *
+   * \pre \a UniqueConstraint must be a unique constraint
+   */
+  template<typename UniqueConstraint>
+  void addUniqueConstraintToTable(Table & table)
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsUniqueConstraint<UniqueConstraint>::value , "UniqueConstraint must be a unique constraint" );
 
-      table.addIndex( Reflection::uniqueIndexFromReflected<UniqueConstraint>() );
-    }
+    table.addIndex( Reflection::uniqueIndexFromReflected<UniqueConstraint>() );
+  }
+
+  /*! \brief Add a foreign key from a relation to \a table
+   *
+   * \pre \a Relation must be a relation between two reflected structs
+   * \pre the name given to the related struct in \a Relation must match \a table name
+   */
+  template<typename Relation>
+  void addForeignKeyFromRelationToTable(Table & table, const ForeignKeySettings & foreignKeySettings)
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsRelation<Relation>::value, "Relation must be a relation between two reflected structs" );
+    Q_ASSERT( QLatin1String(Mdt::Reflection::relatedNameFromRelation<Relation>()) == table.tableName() );
+
+    table.addForeignKey( Reflection::foreignKeyFromRelation<Relation>(foreignKeySettings) );
+  }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
 

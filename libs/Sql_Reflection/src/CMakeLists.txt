@@ -5,6 +5,7 @@ set(SOURCE_FILES
   Mdt/Sql/Schema/Reflection/PrimaryKeyAlgorithm.cpp
   Mdt/Sql/Schema/Reflection/TableAlgorithm.cpp
   Mdt/Sql/Schema/Reflection/UniqueIndexAlgorithm.cpp
+  Mdt/Sql/Schema/Reflection/ForeignKeyAlgorithm.cpp
   Mdt/Sql/Schema/Reflection.cpp
 )
 

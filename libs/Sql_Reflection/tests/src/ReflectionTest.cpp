@@ -60,6 +60,25 @@ MDT_REFLECT_STRUCT(
 )
 
 /*
+ * Address
+ */
+
+struct AddressDataStruct
+{
+  qlonglong id = 0;
+  QString street;
+  qlonglong personId = 0;
+};
+
+MDT_REFLECT_STRUCT(
+  (AddressDataStruct),
+  Address,
+  (id),
+  (street),
+  (personId)
+)
+
+/*
  * Tests
  */
 
@@ -165,6 +184,34 @@ void ReflectionTest::addUniqueConstraintToTableTest()
   const auto index = table.indexList().at(0);
   QVERIFY(index.isUnique());
   QCOMPARE(index.fieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
+}
+
+void ReflectionTest::addForeignKeyFromRelationToTableTest()
+{
+  using PersonPrimaryKey = Mdt::Reflection::AutoIncrementIdPrimaryKey<PersonDef::id>;
+  using AddressPrimaryKey = Mdt::Reflection::AutoIncrementIdPrimaryKey<AddressDef::id>;
+  using PersonAddressRelation = Mdt::Reflection::Relation<PersonPrimaryKey, AddressDef::personId>;
+
+  auto personTable = tableFromReflected<PersonDef, PersonPrimaryKey>();
+  auto addressTable = tableFromReflected<AddressDef, AddressPrimaryKey>();
+
+  ForeignKeySettings fkSettings;
+  fkSettings.setIndexed(true);
+  fkSettings.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fkSettings.setOnUpdateAction(ForeignKeyAction::Cascade);
+
+  QCOMPARE(addressTable.foreignKeyList().size(), 0);
+
+  addForeignKeyFromRelationToTable<PersonAddressRelation>(addressTable, fkSettings);
+  QCOMPARE(addressTable.foreignKeyList().size(), 1);
+  const auto fk = addressTable.foreignKeyList().at(0);
+  QCOMPARE(fk.tableName(), QLatin1String("Address"));
+  QCOMPARE(fk.fieldNameList(), QStringList({QLatin1String("personId")}));
+  QCOMPARE(fk.foreignTableName(), QLatin1String("Person"));
+  QCOMPARE(fk.foreignTableFieldNameList(), QStringList({QLatin1String("id")}));
+  QVERIFY(fk.isIndexed());
+  QCOMPARE(fk.onDeleteAction(), ForeignKeyAction::Restrict);
+  QCOMPARE(fk.onUpdateAction(), ForeignKeyAction::Cascade);
 }
 
 /*
