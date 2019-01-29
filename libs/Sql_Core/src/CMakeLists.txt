@@ -13,6 +13,7 @@ set(SOURCE_FILES
     Mdt/Sql/PrimaryKeyRecord.cpp
 #     Mdt/Sql/Query.cpp
     Mdt/Sql/AbstractQuery.cpp
+    Mdt/Sql/InsertStatement.cpp
     Mdt/Sql/InsertQuery.cpp
     Mdt/Sql/UpdateStatement.cpp
     Mdt/Sql/UpdateQuery.cpp

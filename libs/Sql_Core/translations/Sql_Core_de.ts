@@ -77,13 +77,13 @@
 <context>
     <name>Mdt::Sql::InsertQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="72"/>
+        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="82"/>
         <source>Preparing query for insertion into &apos;%1&apos; failed.
 SQL: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="84"/>
+        <location filename="../src/Mdt/Sql/InsertQuery.cpp" line="95"/>
         <source>Executing query for insertion into &apos;%1&apos; failed.
 SQL: %2</source>
         <translation type="unfinished"></translation>
@@ -170,8 +170,8 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::Schema::DriverMySql</name>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverMySql.cpp" line="60"/>
-        <location filename="../src/Mdt/Sql/Schema/DriverMySql.cpp" line="68"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverMySql.cpp" line="62"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverMySql.cpp" line="70"/>
         <source>Fetching database default character set failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -179,8 +179,8 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::Schema::DriverPostgreSQL</name>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverPostgreSQL.cpp" line="64"/>
-        <location filename="../src/Mdt/Sql/Schema/DriverPostgreSQL.cpp" line="72"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverPostgreSQL.cpp" line="66"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverPostgreSQL.cpp" line="74"/>
         <source>Fetching database default character set failed.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_SQL_INSERT_QUERY_H
 
 #include "AbstractQuery.h"
+#include "InsertStatement.h"
 #include "FieldName.h"
 #include "Mdt/Error.h"
 #include <QString>
@@ -30,8 +31,6 @@
 #include <QVariant>
 #include <QSqlQuery>
 #include <QSqlDatabase>
-
-class QSqlRecord;
 
 namespace Mdt{ namespace Sql{
 
@@ -107,16 +106,27 @@ namespace Mdt{ namespace Sql{
     }
 
     /*! \brief Add a value for a specified field
+     *
+     * \pre \a fieldName must not be null
+     * \pre \a fieldName must not allready exist in this statement
      */
     void addValue(const FieldName & fieldName, const QVariant & value);
 
     /*! \brief Add a value for a specified field
+     *
+     * \pre \a field must not allready exist in this statement
      */
     void addValue(const Schema::Field & field, const QVariant & value);
 
     /*! \brief Add a value for a specified field
+     *
+     * \pre \a field must not allready exist in this statement
      */
     void addValue(const Schema::AutoIncrementPrimaryKey & field, const QVariant & value);
+
+    /*! \brief Execute a insert statement
+     */
+    bool execStatement(const InsertStatement & statement);
 
     /*! \brief Execute insert query
      */
@@ -135,27 +145,9 @@ namespace Mdt{ namespace Sql{
       return mQuery.lastInsertId();
     }
 
-   protected:
-
-    /*! \internal Get prepare stamenet
-     *
-     * Is exposed as protected for unit tests
-     */
-    QString getPrepareStatement() const;
-
    private:
 
-    /*! \brief Escape field name
-     */
-    QString escapeFieldName(const QString & fieldName) const;
-
-    /*! \brief Escape table name
-     */
-    QString escapeTableName(const QString & tableName) const;
-
-    QString mTableName;
-    QStringList mFieldNameList;
-    QVector<QVariant> mValueList;
+    InsertStatement mStatement;
     QSqlQuery mQuery;
   };
 

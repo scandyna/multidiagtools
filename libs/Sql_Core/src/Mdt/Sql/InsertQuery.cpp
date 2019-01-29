@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,9 +23,6 @@
 #include "Schema/Field.h"
 #include "Schema/Table.h"
 #include "Mdt/Sql/Error.h"
-#include <QSqlRecord>
-#include <QSqlDriver>
-#include <QStringBuilder>
 #include <QChar>
 
 namespace Mdt{ namespace Sql{
@@ -38,51 +35,65 @@ InsertQuery::InsertQuery(const QSqlDatabase & db)
 
 void InsertQuery::setTableName(const QString & name)
 {
-  mTableName = name;
+  mStatement.setTableName(name);
 }
 
 void InsertQuery::setTable(const Schema::Table & table)
 {
-  mTableName = table.tableName();
+  setTableName(table.tableName());
 }
 
 void InsertQuery::addValue(const FieldName & fieldName, const QVariant & value)
 {
-  mFieldNameList << escapeFieldName(fieldName.toString());
-  mValueList.append(value);
+  Q_ASSERT(!fieldName.isNull());
+  Q_ASSERT(!mStatement.containsFieldName(fieldName.toString()));
+
+  mStatement.addValue(fieldName, value);
 }
 
 void InsertQuery::addValue(const Schema::Field & field, const QVariant & value)
 {
-  mFieldNameList << escapeFieldName(field.name());
-  mValueList.append(value);
+  Q_ASSERT(!field.isNull());
+  Q_ASSERT(!mStatement.containsFieldName(field.name()));
+
+  addValue( FieldName(field.name()), value );
 }
 
 void InsertQuery::addValue(const Schema::AutoIncrementPrimaryKey& field, const QVariant& value)
 {
-  mFieldNameList << escapeFieldName(field.fieldName());
-  mValueList.append(value);
+  Q_ASSERT(!field.isNull());
+  Q_ASSERT(!mStatement.containsFieldName(field.fieldName()));
+
+  addValue( FieldName(field.fieldName()), value );
+}
+
+bool InsertQuery::execStatement(const InsertStatement & statement)
+{
+  mStatement = statement;
+
+  return exec();
 }
 
 bool InsertQuery::exec()
 {
-  const QString sql = getPrepareStatement();
+  const QString sql = mStatement.toPrepareStatementSql(constDatabase());
 
   if(!mQuery.prepare(sql)){
     QString msg = tr("Preparing query for insertion into '%1' failed.\nSQL: %2")
-                  .arg(mTableName, mQuery.executedQuery());
+                  .arg(mStatement.tableName(), mQuery.executedQuery());
     const Mdt::ErrorCode code = Mdt::Sql::Error::errorCodeFromQSqlError(mQuery.lastError(), mQuery.driver());
     auto error = mdtErrorNewTQ(code, msg, Mdt::Error::Critical, this);
     error.stackError(mdtErrorFromQSqlQueryQ(mQuery, this));
     setLastError(error);
     return false;
   }
-  for(const auto & value : mValueList){
+  const auto valueList = mStatement.toValueList();
+  for(const auto & value : valueList){
     mQuery.addBindValue(value);
   }
   if(!mQuery.exec()){
     QString msg = tr("Executing query for insertion into '%1' failed.\nSQL: %2")
-                  .arg(mTableName, mQuery.executedQuery());
+                  .arg(mStatement.tableName(), mQuery.executedQuery());
     const Mdt::ErrorCode code = Mdt::Sql::Error::errorCodeFromQSqlError(mQuery.lastError(), mQuery.driver());
     auto error = mdtErrorNewTQ(code, msg, Mdt::Error::Critical, this);
     error.stackError(mdtErrorFromQSqlQueryQ(mQuery, this));
@@ -95,43 +106,7 @@ bool InsertQuery::exec()
 
 void InsertQuery::clear()
 {
-  mTableName.clear();
-  mFieldNameList.clear();
-  mValueList.clear();
-}
-
-QString InsertQuery::getPrepareStatement() const
-{
-  Q_ASSERT(mFieldNameList.size() == mValueList.size());
-
-  QString sql;
-  const int n = mValueList.size();
-  QStringList placeHolders;
-
-  placeHolders.reserve(n);
-  for(int i = 0; i < n; ++i){
-    placeHolders.append(QChar('?'));
-  }
-  // Build SQL
-  sql = QStringLiteral("INSERT INTO ") % escapeTableName(mTableName) \
-      % QStringLiteral(" (") % mFieldNameList.join(QChar(',')) \
-      % QStringLiteral(") VALUES (") \
-      % placeHolders.join(QChar(',')) \
-      % QStringLiteral(")");
-  
-  return sql;
-}
-
-QString InsertQuery::escapeFieldName(const QString& fieldName) const
-{
-  Q_ASSERT(constDatabase().driver() != nullptr);
-  return constDatabase().driver()->escapeIdentifier(fieldName, QSqlDriver::FieldName);
-}
-
-QString InsertQuery::escapeTableName(const QString& tableName) const
-{
-  Q_ASSERT(constDatabase().driver() != nullptr);
-  return constDatabase().driver()->escapeIdentifier(tableName, QSqlDriver::TableName);
+  mStatement.clear();
 }
 
 }} // namespace Mdt{ namespace Sql{

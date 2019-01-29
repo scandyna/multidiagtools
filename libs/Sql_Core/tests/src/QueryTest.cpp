@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,6 +21,7 @@
 #include "QueryTest.h"
 #include "Mdt/Sql/Schema/Driver.h"
 // #include "Mdt/Sql/Query.h"
+#include "Mdt/Sql/InsertStatement.h"
 #include "Mdt/Sql/InsertQuery.h"
 #include "Mdt/Sql/UpdateStatement.h"
 #include "Mdt/Sql/UpdateQuery.h"
@@ -40,22 +41,6 @@
 using Mdt::Sql::FieldName;
 
 /*
- * Class to test InsertQuery
- */
-class InsertQueryTest : public Mdt::Sql::InsertQuery
-{
- public:
-
-  InsertQueryTest(const QSqlDatabase& db)
-   : InsertQuery(db) {}
-
-  QString getPrepareStatement() const
-  {
-    return InsertQuery::getPrepareStatement();
-  }
-};
-
-/*
  * Init/cleanup functions
  */
 
@@ -73,57 +58,111 @@ void QueryTest::cleanupTestCase()
  * Tests
  */
 
+void QueryTest::insertStatementTest()
+{
+  Mdt::Sql::InsertStatement statement;
+  QString expectedSql;
+  const auto db = database();
+
+  /*
+   * Check basic API - 1 field/value
+   */
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Name"), "Name 1");
+  expectedSql = "INSERT INTO \"Client_tbl\" (\"Name\") VALUES (?)";
+  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+  QCOMPARE(statement.toValueList(), QVariantList({"Name 1"}));
+
+  /*
+   * Check basic API - many values
+   */
+  statement.clear();
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("FirstName"), "F 1");
+  statement.addValue(FieldName("LastName"), "L 1");
+  expectedSql = "INSERT INTO \"Client_tbl\" (\"FirstName\",\"LastName\") VALUES (?,?)";
+  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+  QCOMPARE(statement.toValueList(), QVariantList({"F 1","L 1"}));
+}
+
 void QueryTest::insertQueryTest()
 {
-  InsertQueryTest query(database());
+  Mdt::Sql::InsertQuery query(database());
   Schema::Client client;
   QString expectedSql;
+
+  QVERIFY(cleanupClientTable());
 
   /*
    * Check basic API - 1 field/value
    */
   query.setTableName("Client_tbl");
   query.addValue(FieldName("Id_PK"), 1);
-  // Check
-  expectedSql = "INSERT INTO \"Client_tbl\" (\"Id_PK\") VALUES (?)";
-  QCOMPARE(query.getPrepareStatement(), expectedSql);
-  // Clear
-  query.clear();
-  /*
-   * Check basic API - many values
-   */
-  query.setTableName("Client_tbl");
-  query.addValue(FieldName("Id_PK"), 1);
-  query.addValue(FieldName("Name"), "Name 1");
-  // Check
-  expectedSql = "INSERT INTO \"Client_tbl\" (\"Id_PK\",\"Name\") VALUES (?,?)";
-  QCOMPARE(query.getPrepareStatement(), expectedSql);
-  // Clear
-  query.clear();
-  /*
-   * Check more typed API
-   */
-  query.setTable(client);
-  query.addValue(client.Id_PK(), 1);
-  query.addValue(client.Name(), "Name 1");
-  // Check
-  expectedSql = "INSERT INTO \"Client_tbl\" (\"Id_PK\",\"Name\") VALUES (?,?)";
-  QCOMPARE(query.getPrepareStatement(), expectedSql);
-  /*
-   * Check insertion to database
-   */
-  // Make shure Client_tbl is empty
-  QVERIFY(cleanupClientTable());
-  // Insert and check
   QVERIFY(query.exec());
+  QCOMPARE(query.lastInsertId(), QVariant(1));
   {
     QSqlQuery q(database());
     QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
     QVERIFY(q.next());
     QCOMPARE(q.value(0), QVariant(1));
-    QCOMPARE(q.value(1), QVariant("Name 1"));
   }
-  // Cleanup
+
+  /*
+   * Check basic API - many values
+   */
+  query.clear();
+  query.setTableName("Client_tbl");
+  query.addValue(FieldName("Id_PK"), 2);
+  query.addValue(FieldName("Name"), "Name 2");
+  QVERIFY(query.exec());
+  QCOMPARE(query.lastInsertId(), QVariant(2));
+  {
+    QSqlQuery q(database());
+    QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
+    QVERIFY(q.next());
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(2));
+    QCOMPARE(q.value(1), QVariant("Name 2"));
+  }
+
+  /*
+   * Check more typed API
+   */
+  query.clear();
+  query.setTable(client);
+  query.addValue(client.Id_PK(), 3);
+  query.addValue(client.Name(), "Name 3");
+  QVERIFY(query.exec());
+  QCOMPARE(query.lastInsertId(), QVariant(3));
+  {
+    QSqlQuery q(database());
+    QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
+    QVERIFY(q.next());
+    QVERIFY(q.next());
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(3));
+    QCOMPARE(q.value(1), QVariant("Name 3"));
+  }
+
+  /*
+   * Execute statement
+   */
+  Mdt::Sql::InsertStatement statement;
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Id_PK"), 4);
+  statement.addValue(FieldName("Name"), "Name 4");
+  QVERIFY(query.execStatement(statement));
+  {
+    QSqlQuery q(database());
+    QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
+    QVERIFY(q.next());
+    QVERIFY(q.next());
+    QVERIFY(q.next());
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(4));
+    QCOMPARE(q.value(1), QVariant("Name 4"));
+  }
+
   QVERIFY(cleanupClientTable());
 }
 
@@ -131,7 +170,7 @@ void QueryTest::insertQueryErrorTest()
 {
   QVERIFY(cleanupClientTable());
 
-  InsertQueryTest query(database());
+  Mdt::Sql::InsertQuery query(database());
 
   query.setTableName("Client_tbl");
   query.addValue(FieldName("Id_PK"), 1);
