@@ -3,7 +3,9 @@
 set(SOURCE_FILES
   Mdt/Reflection/TypeTraits/IsStructDef.cpp
   Mdt/Reflection/TypeTraits/IsField.cpp
+  Mdt/Reflection/TypeTraits/IsStructDefAssociatedWithReflectedStruct.cpp
   Mdt/Reflection/TypeTraits/IsFieldAssociatedWithReflectedStruct.cpp
+  Mdt/Reflection/TypeTraits/IsFieldStructDefAssociatedWithPrimaryKey.cpp
   Mdt/Reflection/TypeTraits/IsPrimaryKey.cpp
   Mdt/Reflection/TypeTraits/IsAutoIncrementIdPrimaryKey.cpp
   Mdt/Reflection/TypeTraits/IsIdPrimaryKey.cpp

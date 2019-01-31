@@ -28,10 +28,12 @@
 #include "TypeTraits/IsAutoIncrementIdPrimaryKey.h"
 #include "TypeTraits/IsIdPrimaryKey.h"
 #include "TypeTraits/IsPrimaryKeyClass.h"
+#include "TypeTraits/IsFieldStructDefAssociatedWithPrimaryKey.h"
 #include "Impl/AddFieldNameToList.h"
 #include <QStringList>
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/size.hpp>
+#include <type_traits>
 
 namespace Mdt{ namespace Reflection{
 
@@ -143,6 +145,46 @@ namespace Mdt{ namespace Reflection{
 
     return fieldNameList;
   }
+
+  namespace Impl{
+
+    template<typename Pk, typename Value>
+    constexpr bool isAutoIncrementIdPrimaryKeyValue() noexcept
+    {
+      return TypeTraits::IsAutoIncrementIdPrimaryKey<Pk>::value && std::is_integral<Value>::value;
+    }
+
+    template<typename Pk, typename Value>
+    typename std::enable_if< isAutoIncrementIdPrimaryKeyValue<Pk, Value>(), bool >::type
+    isNullValuePartOfAutoIncrementIdPrimaryKey(const Value & value) noexcept
+    {
+      return value == 0;
+    }
+
+    template<typename Pk, typename Value>
+    typename std::enable_if< !isAutoIncrementIdPrimaryKeyValue<Pk, Value>(), bool >::type
+    isNullValuePartOfAutoIncrementIdPrimaryKey(const Value &) noexcept
+    {
+      return false;
+    }
+
+  }
+
+  /*! \brief Check if the value, associated with a field, is a null value part of a auto increment id primary key
+   *
+   * \pre \a Pk must be primary key class for a reflected struct
+   * \pre \a Field must be a field defined in a struct definition which must be the same the one \a Pk fefers to
+   */
+  template<typename Pk, typename Field, typename Value>
+  bool isNullValuePartOfAutoIncrementIdPrimaryKey(const Value & value) noexcept
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<Pk>::value, "Pk must be a primary key class for a reflected struct" );
+    static_assert( Mdt::Reflection::TypeTraits::IsFieldStructDefAssociatedWithPrimaryKey<Field, Pk>::value,
+                   "Field must be a field defined in a struct definition which must be the same the one Pk fefers to" );
+
+    return Impl::isNullValuePartOfAutoIncrementIdPrimaryKey<Pk>(value);
+  }
+
 
 }} // namespace Mdt{ namespace Reflection{
 

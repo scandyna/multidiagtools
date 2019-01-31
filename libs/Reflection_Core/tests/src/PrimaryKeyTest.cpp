@@ -154,6 +154,47 @@ void PrimaryKeyTest::qMetaTypeFromAutoIncrementIdPkTest()
   QCOMPARE(qMetaTypeFromAutoIncrementIdPrimaryKeyField<ULongLongPk>(), QMetaType::ULongLong);
 }
 
+void PrimaryKeyTest::isNullValuePartOfAutoIncrementIdPrimaryKeyTest()
+{
+  using AutoIncrementIdPk = AutoIncrementIdPrimaryKey<PkTestDef::int_id>;
+  using IdPk = IdPrimaryKey<PkTestDef::int_id>;
+  using StrPk = PrimaryKey<PkTestDef::str_A_id>;
+  using TwoFieldPk = PrimaryKey<PkTestDef::int_id, PkTestDef::str_A_id>;
+
+  bool is = isNullValuePartOfAutoIncrementIdPrimaryKey<AutoIncrementIdPk, PkTestDef::int_id>(0);
+  QVERIFY(is);
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<AutoIncrementIdPk, PkTestDef::int_id>(1);
+  QVERIFY(!is);
+
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<AutoIncrementIdPk, PkTestDef::str_C_id>( QString::fromLatin1("") );
+  QVERIFY(!is);
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<AutoIncrementIdPk, PkTestDef::str_C_id>( QString::fromLatin1("A") );
+  QVERIFY(!is);
+
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<IdPk, PkTestDef::int_id>(0);
+  QVERIFY(!is);
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<IdPk, PkTestDef::int_id>(1);
+  QVERIFY(!is);
+
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<StrPk, PkTestDef::str_A_id>( QString::fromLatin1("") );
+  QVERIFY(!is);
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<StrPk, PkTestDef::str_A_id>( QString::fromLatin1("A") );
+  QVERIFY(!is);
+
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<TwoFieldPk, PkTestDef::int_id>(0);
+  QVERIFY(!is);
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<TwoFieldPk, PkTestDef::int_id>(1);
+  QVERIFY(!is);
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<TwoFieldPk, PkTestDef::str_A_id>( QString::fromLatin1("") );
+  QVERIFY(!is);
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<TwoFieldPk, PkTestDef::str_A_id>( QString::fromLatin1("A") );
+  QVERIFY(!is);
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<TwoFieldPk, PkTestDef::str_C_id>( QString::fromLatin1("") );
+  QVERIFY(!is);
+  is = isNullValuePartOfAutoIncrementIdPrimaryKey<TwoFieldPk, PkTestDef::str_C_id>( QString::fromLatin1("A") );
+  QVERIFY(!is);
+}
+
 /*
  * Main
  */

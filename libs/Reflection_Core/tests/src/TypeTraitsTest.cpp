@@ -21,7 +21,9 @@
 #include "TypeTraitsTest.h"
 #include "Mdt/Reflection/TypeTraits/IsField.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
+#include "Mdt/Reflection/TypeTraits/IsStructDefAssociatedWithReflectedStruct.h"
 #include "Mdt/Reflection/TypeTraits/IsFieldAssociatedWithReflectedStruct.h"
+#include "Mdt/Reflection/TypeTraits/IsFieldStructDefAssociatedWithPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsAutoIncrementIdPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsIdPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKey.h"
@@ -121,6 +123,24 @@ static_assert(!IsField<ArticleDef>::value , "" );
 // static_assert(!IsField<ArticleDetailRelation>::value, "" );
 static_assert(!IsField<int>::value , "" );
 static_assert(!IsField<QString>::value , "" );
+
+/*
+ * IsStructDefAssociatedWithReflectedStruct
+ */
+
+static_assert( IsStructDefAssociatedWithReflectedStruct<ArticleDef, ArticleDataStruct>::value, "" );
+static_assert( !IsStructDefAssociatedWithReflectedStruct<ArticleTypeDef, ArticleDataStruct>::value, "" );
+static_assert( !IsStructDefAssociatedWithReflectedStruct<ArticleDef, QString>::value, "" );
+static_assert( !IsStructDefAssociatedWithReflectedStruct<ArticleDef, int>::value, "" );
+
+/*
+ * IsFieldStructDefAssociatedWithPrimaryKey
+ */
+
+static_assert( IsFieldStructDefAssociatedWithPrimaryKey<ArticleDef::id, ArticlePrimaryKey>::value , "" );
+static_assert( IsFieldStructDefAssociatedWithPrimaryKey<ArticleDef::description, ArticlePrimaryKey>::value , "" );
+static_assert( !IsFieldStructDefAssociatedWithPrimaryKey<ArticleDetailDef::id, ArticlePrimaryKey>::value , "" );
+static_assert( !IsFieldStructDefAssociatedWithPrimaryKey<ArticleDetailDef::articleId, ArticlePrimaryKey>::value , "" );
 
 /*
  * IsFieldAssociatedWithReflectedStruct compile time tests
