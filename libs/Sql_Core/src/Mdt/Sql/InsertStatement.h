@@ -25,6 +25,7 @@
 #include "FieldNameValueMap.h"
 #include "MdtSql_CoreExport.h"
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 #include <QVariantList>
 #include <QSqlDatabase>
@@ -83,6 +84,16 @@ namespace Mdt{ namespace Sql{
      * \pre \a db must be valid (must have a driver loaded)
      */
     QString toPrepareStatementSql(const QSqlDatabase & db) const;
+
+    /*! \brief Get a list of field names this query is containing
+     *
+     * \note The order of field names in the returned list
+     *    is the result of consecutive calls to addValue() .
+     */
+    QStringList toFieldNameList() const
+    {
+      return mFieldValueMap.toFieldNameList();
+    }
 
     /*! \brief Get a list of values this query is containing
      *
