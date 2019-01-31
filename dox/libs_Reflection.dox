@@ -426,6 +426,37 @@
  *  If such mapping is possible, see Mdt::Sql::Schema::FieldTypeMap .
  *  If not possible, the SQL schema should be done manually .
  *
+ * \section sql_queries Use SQL queries
+ *
+ * In this section it will be discussed how some queries could be created with the reflected structs.
+ *
+ * Here is a example of a function (which could be a method of a repository)
+ *  to add a person to a table:
+ * \code
+ * #include "PersonDataStruct.h"
+ * #include "PersonId.h"
+ * #include <Mdt/Expected.h>
+ * #include <Mdt/Sql/InsertQuery.h>
+ * #include <Mdt/Sql/Reflection/InsertStatement.h>
+ *
+ * Mdt::Expected<PersonId> addPerson(const PersonDataStruct & person, const QSqlDatabase & dbConnection)
+ * {
+ *   const auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonDef, PersonPrimaryKey>(person);
+ *   Mdt::Sql::InsertQuery query(dbConnection);
+ *
+ *   if(!query.execStatement(statement)){
+ *     return query.lastError(); // Maybe a better error message should be generated here
+ *   }
+ *
+ *   return PersonId::fromQVariant(query.lastInsertId());
+ * }
+ * \endcode
+ *
+ *
+ * \sa Mdt::Sql::Reflection::insertStatementFromReflected()
+ * \sa Mdt::Sql::InsertQuery
+ *
+ *
  * \section Alternatives
  *
  * Qt offers some runtime introspection with the QMetaObject.
