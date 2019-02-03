@@ -24,6 +24,7 @@
 #include "Mdt/Reflection/TypeTraits/IsStructDefAssociatedWithReflectedStruct.h"
 #include "Mdt/Reflection/TypeTraits/IsFieldAssociatedWithReflectedStruct.h"
 #include "Mdt/Reflection/TypeTraits/IsFieldStructDefAssociatedWithPrimaryKey.h"
+#include "Mdt/Reflection/TypeTraits/IsReflectedStructAssociatedWithPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsAutoIncrementIdPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsIdPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKey.h"
@@ -141,6 +142,13 @@ static_assert( IsFieldStructDefAssociatedWithPrimaryKey<ArticleDef::id, ArticleP
 static_assert( IsFieldStructDefAssociatedWithPrimaryKey<ArticleDef::description, ArticlePrimaryKey>::value , "" );
 static_assert( !IsFieldStructDefAssociatedWithPrimaryKey<ArticleDetailDef::id, ArticlePrimaryKey>::value , "" );
 static_assert( !IsFieldStructDefAssociatedWithPrimaryKey<ArticleDetailDef::articleId, ArticlePrimaryKey>::value , "" );
+
+/*
+ * IsReflectedStructAssociatedWithPrimaryKey
+ */
+
+static_assert( IsReflectedStructAssociatedWithPrimaryKey<ArticleDataStruct, ArticlePrimaryKey>::value , "" );
+static_assert( !IsReflectedStructAssociatedWithPrimaryKey<ArticleDataStruct, ArticleTypePrimaryKey>::value , "" );
 
 /*
  * IsFieldAssociatedWithReflectedStruct compile time tests

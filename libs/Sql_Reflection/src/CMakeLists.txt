@@ -7,7 +7,9 @@ set(SOURCE_FILES
   Mdt/Sql/Schema/Reflection/UniqueIndexAlgorithm.cpp
   Mdt/Sql/Schema/Reflection/ForeignKeyAlgorithm.cpp
   Mdt/Sql/Schema/Reflection.cpp
+  Mdt/Sql/Reflection/PrimaryKeyRecordAlgorithm.cpp
   Mdt/Sql/Reflection/InsertStatement.cpp
+  Mdt/Sql/Reflection/DeleteStatement.cpp
 )
 
 find_package(Qt5 COMPONENTS Sql)

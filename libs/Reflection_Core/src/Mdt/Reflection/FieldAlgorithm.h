@@ -41,7 +41,7 @@ namespace Mdt{ namespace Reflection{
    * \pre \a Field must be a field defined in the struct definition associated with \a Struct
    */
   template<typename Field, typename Struct>
-  auto fieldValue(const Struct & s) noexcept
+  auto & fieldValue(const Struct & s) noexcept
   {
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in the struct definition associated with Struct" );
     static_assert( TypeTraits::IsFieldAssociatedWithReflectedStruct<Struct, Field>::value ,

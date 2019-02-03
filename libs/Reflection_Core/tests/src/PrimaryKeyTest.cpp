@@ -27,6 +27,7 @@
 #include "Mdt/Reflection/ReflectStruct.h"
 #include <QLatin1String>
 #include <QStringList>
+#include <QVariantList>
 #include <type_traits>
 
 using namespace Mdt::Reflection;
@@ -57,6 +58,29 @@ MDT_REFLECT_STRUCT(
   (str_B_id),
   (str_C_id)
 )
+
+/*
+ * Functors
+ */
+
+struct AddFieldNameAndValueToLists
+{
+  AddFieldNameAndValueToLists(QStringList & fieldNames, QVariantList & values)
+   : fieldNameList(fieldNames),
+     valueList(values)
+  {
+  }
+
+  template<typename Field, typename Value>
+  void operator()(const Field, const Value & v)
+  {
+    fieldNameList << QString::fromLatin1( fieldName<Field>() );
+    valueList << v;
+  }
+
+  QStringList & fieldNameList;
+  QVariantList & valueList;
+};
 
 /*
  * Compile time tests
@@ -193,6 +217,39 @@ void PrimaryKeyTest::isNullValuePartOfAutoIncrementIdPrimaryKeyTest()
   QVERIFY(!is);
   is = isNullValuePartOfAutoIncrementIdPrimaryKey<TwoFieldPk, PkTestDef::str_C_id>( QString::fromLatin1("A") );
   QVERIFY(!is);
+}
+
+void PrimaryKeyTest::forEachPrimaryKeyFieldAndValueTest()
+{
+  using AutoIncrementIdPk = AutoIncrementIdPrimaryKey<PkTestDef::int_id>;
+  using TwoFieldPk = PrimaryKey<PkTestDef::str_A_id, PkTestDef::int_id>;
+  using threeFieldPk = PrimaryKey<PkTestDef::str_A_id, PkTestDef::str_B_id, PkTestDef::str_C_id>;
+
+  PkTestStruct data;
+  QStringList fieldNames;
+  QVariantList values;
+  AddFieldNameAndValueToLists f(fieldNames, values);
+
+  data.int_id = 1;
+  data.str_A_id = QLatin1String("a1");
+  data.str_B_id = QLatin1String("b1");
+  data.str_C_id = QLatin1String("c1");
+
+  forEachPrimaryKeyFieldAndValue<AutoIncrementIdPk>(data, f);
+  QCOMPARE(fieldNames, QStringList({QLatin1String("int_id")}));
+  QCOMPARE(values, QVariantList({1}));
+
+  fieldNames.clear();
+  values.clear();
+  forEachPrimaryKeyFieldAndValue<TwoFieldPk>(data, f);
+  QCOMPARE(fieldNames, QStringList({QLatin1String("str_A_id"),QLatin1String("int_id")}));
+  QCOMPARE(values, QVariantList({QLatin1String("a1"),1}));
+
+  fieldNames.clear();
+  values.clear();
+  forEachPrimaryKeyFieldAndValue<threeFieldPk>(data, f);
+  QCOMPARE(fieldNames, QStringList({QLatin1String("str_A_id"),QLatin1String("str_B_id"),QLatin1String("str_C_id")}));
+  QCOMPARE(values, QVariantList({QLatin1String("a1"),QLatin1String("b1"),QLatin1String("c1")}));
 }
 
 /*

@@ -28,6 +28,7 @@
 #include "TypeTraits/IsAutoIncrementIdPrimaryKey.h"
 #include "TypeTraits/IsIdPrimaryKey.h"
 #include "TypeTraits/IsPrimaryKeyClass.h"
+#include "TypeTraits/IsReflectedStructAssociatedWithPrimaryKey.h"
 #include "TypeTraits/IsFieldStructDefAssociatedWithPrimaryKey.h"
 #include "Impl/AddFieldNameToList.h"
 #include <QStringList>
@@ -127,6 +128,70 @@ namespace Mdt{ namespace Reflection{
   void forEachPrimaryKeyField(UnaryFunction f)
   {
     boost::mpl::for_each< typename PrimaryKey::field_list >(f);
+  }
+
+  namespace Impl{
+
+    template<typename Struct, typename F>
+    class CallPrimaryKeyFieldAndValueFunctor
+    {
+     public:
+
+      CallPrimaryKeyFieldAndValueFunctor(const Struct & data, F & f)
+       : mData(data),
+         mF(f)
+      {
+      }
+
+      template<typename Field>
+      void operator()(const Field & field) const
+      {
+        mF(field, fieldValue<Field>(mData));
+      }
+
+     private:
+
+      const Struct & mData;
+      F & mF;
+    };
+
+  } // namespace Impl{
+
+  /*! \brief Apply a functor for each field and related value in a primary key
+   *
+   * \a f is a functor like:
+   * \code
+   * struct MyFunctor
+   * {
+   *   template<typename Field, typename Value>
+   *   void operator()(const Field &, const Value & value)
+   *   {
+   *   }
+   * };
+   * \endcode
+   *
+   * Example of call:
+   * \code
+   * using PersonPrimaryKey = Mdt::Reflection::IsAutoIncrementIdPrimaryKey<PersonDef>;
+   * MyFunctor f;
+   * PersonDataStruct person;
+   *
+   * forEachPrimaryKeyFieldAndValue<PersonPrimaryKey>(data, f);
+   * \endcode
+   *
+   * \pre \a PrimaryKey must be primary key class for a reflected struct
+   */
+  template<typename PrimaryKey, typename F>
+  void forEachPrimaryKeyFieldAndValue(const typename PrimaryKey::struct_def::reflected_struct & data, F f)
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<PrimaryKey>::value,
+                   "PrimaryKey must be a primary key class for a reflected struct" );
+
+    using Struct = typename PrimaryKey::struct_def::reflected_struct;
+
+    Impl::CallPrimaryKeyFieldAndValueFunctor<Struct, F> c(data, f);
+
+    forEachPrimaryKeyField<PrimaryKey>(c);
   }
 
   /*! \brief Get a list of field names from a primary key

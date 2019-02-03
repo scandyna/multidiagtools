@@ -20,22 +20,13 @@
  ****************************************************************************/
 #include "TestBase.h"
 
-class PrimaryKeyTest : public QObject
+class PrimaryKeyRecordAlgorithmTest : public QObject
 {
  Q_OBJECT
 
  private slots:
 
-  void idPkTest();
-  void autoIdPkTest();
-  void oneFieldPkTest();
-  void twoFieldPkTest();
-  void threeFieldPkTest();
-
-  void qMetaTypeFromIdPkTest();
-  void qMetaTypeFromAutoIncrementIdPkTest();
-
-  void isNullValuePartOfAutoIncrementIdPrimaryKeyTest();
-
-  void forEachPrimaryKeyFieldAndValueTest();
+  void primaryKeyRecordFromValuesTest();
+  void primaryKeyRecordFromReflectedTest();
+  void primaryKeyRecordCheckTest();
 };
