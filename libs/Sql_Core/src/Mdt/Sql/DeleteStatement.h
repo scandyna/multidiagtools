@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,7 +25,9 @@
 #include "PrimaryKeyRecord.h"
 #include "MdtSql_CoreExport.h"
 #include <QString>
+#include <QStringList>
 #include <QVariant>
+#include <QVariantList>
 #include <QSqlDatabase>
 
 namespace Mdt{ namespace Sql{
@@ -51,7 +53,7 @@ namespace Mdt{ namespace Sql{
       return mTableName;
     }
 
-    /*! \brief Set the conditions for this update statement
+    /*! \brief Set the conditions for this delete statement
      *
      * \pre \a primaryKeyRecord must not be null
      */
@@ -76,7 +78,14 @@ namespace Mdt{ namespace Sql{
      */
     QString toPrepareStatementSql(const QSqlDatabase & db) const;
 
-    /*! \brief Get a list of values for the conditions this query is containing
+    /*! \brief Get a list of field names for the conditions this statement is containing
+     */
+    QStringList toConditionsFieldNameList() const
+    {
+      return mPkrConditions.toFieldNameList();
+    }
+
+    /*! \brief Get a list of values for the conditions this statement is containing
      */
     QVariantList toConditionsValueList() const
     {
