@@ -85,7 +85,7 @@ namespace Mdt{ namespace Sql{
      */
     QString toPrepareStatementSql(const QSqlDatabase & db) const;
 
-    /*! \brief Get a list of field names this query is containing
+    /*! \brief Get a list of field names this statement is containing
      *
      * \note The order of field names in the returned list
      *    is the result of consecutive calls to addValue() .

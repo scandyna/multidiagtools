@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,7 +26,9 @@
 #include "FieldNameValueMap.h"
 #include "MdtSql_CoreExport.h"
 #include <QString>
+#include <QStringList>
 #include <QVariant>
+#include <QVariantList>
 #include <QMetaType>
 #include <QSqlDatabase>
 
@@ -86,7 +88,17 @@ namespace Mdt{ namespace Sql{
      */
     QString toPrepareStatementSql(const QSqlDatabase & db) const;
 
-    /*! \brief Get a list of values this query is containing
+    /*! \brief Get a list of field names this statement is containing
+     *
+     * \note The order of field names in the returned list
+     *    is the result of consecutive calls to addValue() .
+     */
+    QStringList toFieldNameList() const
+    {
+      return mFieldValueMap.toFieldNameList();
+    }
+
+    /*! \brief Get a list of values this statement is containing
      *
      * \note The order of values in the returned list
      *    is the result of consecutive calls to addValue() .
@@ -96,7 +108,14 @@ namespace Mdt{ namespace Sql{
       return mFieldValueMap.toValueList();
     }
 
-    /*! \brief Get a list of values for the conditions this query is containing
+    /*! \brief Get a list of field names for the conditions this statement is containing
+     */
+    QStringList toConditionsFieldNameList() const
+    {
+      return mPkrConditions.toFieldNameList();
+    }
+
+    /*! \brief Get a list of values for the conditions this statement is containing
      */
     QVariantList toConditionsValueList() const
     {
