@@ -73,11 +73,9 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
 
   /*! \brief Get a insert statement from a reflected struct
    *
-   * \todo Should remove StructDef template argument
-   *
    * Create a SQL insert statement:
    * \code
-   * const auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonDef, PersonPrimaryKey>(person);
+   * const auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonPrimaryKey>(person);
    * \endcode
    * This statement can be used with a SQL insert query:
    * \code
@@ -93,24 +91,25 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
    *  it will not be added to the set of values in the statement
    *  (This way, the DBMS will auto-generate a new id).
    *
-   * \pre \a StructDef must be a struct definition associated with \a Struct
    * \pre \a PrimaryKey must be primary key class for a reflected struct
    *
    * \sa Mdt::Sql::InsertStatement
    * \sa Mdt::Sql::InsertQuery
    */
-  template<typename StructDef, typename PrimaryKey, typename Struct>
+  template<typename PrimaryKey, typename Struct>
   InsertStatement insertStatementFromReflected(const Struct & data)
   {
-    static_assert( Mdt::Reflection::TypeTraits::IsStructDefAssociatedWithReflectedStruct<StructDef, Struct>::value ,
-                   "StructDef must be a struct definition associated with \a Struct" );
     static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<PrimaryKey>::value,
                    "PrimaryKey must be a primary key class for a reflected struct" );
+
+    using struct_def = typename PrimaryKey::struct_def;
+    static_assert( Mdt::Reflection::TypeTraits::IsStructDefAssociatedWithReflectedStruct<struct_def, Struct>::value ,
+                   "PrimaryKey must be associated with given data of type Struct" );
 
     InsertStatement statement;
     Impl::AddValueToInsertStatement<PrimaryKey> f(statement);
 
-    statement.setTableName( QLatin1String(Mdt::Reflection::nameFromStructDef<StructDef>()) );
+    statement.setTableName( QLatin1String(Mdt::Reflection::nameFromStructDef<struct_def>()) );
     Mdt::Reflection::forEachFieldValuePairInStruct(data, f);
 
     return statement;

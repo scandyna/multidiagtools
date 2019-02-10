@@ -116,7 +116,7 @@ void QueryStatementTest::insertStatementFromReflectedTest()
   person.id = 0;
   person.firstName = QString::fromLocal8Bit("fN");
   person.lastName = QString::fromLocal8Bit("lN");
-  auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonDef, AutoIncIdPk>(person);
+  auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<AutoIncIdPk>(person);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
   QCOMPARE(statement.toValueList(), QVariantList({QLatin1String("fN"),QLatin1String("lN")}));
@@ -124,7 +124,7 @@ void QueryStatementTest::insertStatementFromReflectedTest()
   person.id = 1;
   person.firstName = QString::fromLocal8Bit("fN");
   person.lastName = QString::fromLocal8Bit("lN");
-  statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonDef, AutoIncIdPk>(person);
+  statement = Mdt::Sql::Reflection::insertStatementFromReflected<AutoIncIdPk>(person);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("id"),QLatin1String("firstName"),QLatin1String("lastName")}));
   QCOMPARE(statement.toValueList(), QVariantList({1,QLatin1String("fN"),QLatin1String("lN")}));
@@ -133,7 +133,7 @@ void QueryStatementTest::insertStatementFromReflectedTest()
   person.id = 0;
   person.firstName = QString::fromLocal8Bit("fN");
   person.lastName = QString::fromLocal8Bit("lN");
-  statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonDef, Pk>(person);
+  statement = Mdt::Sql::Reflection::insertStatementFromReflected<Pk>(person);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("id"),QLatin1String("firstName"),QLatin1String("lastName")}));
   QCOMPARE(statement.toValueList(), QVariantList({0,QLatin1String("fN"),QLatin1String("lN")}));
@@ -141,7 +141,7 @@ void QueryStatementTest::insertStatementFromReflectedTest()
   person.id = 1;
   person.firstName = QString::fromLocal8Bit("fN");
   person.lastName = QString::fromLocal8Bit("lN");
-  statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonDef, Pk>(person);
+  statement = Mdt::Sql::Reflection::insertStatementFromReflected<Pk>(person);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("id"),QLatin1String("firstName"),QLatin1String("lastName")}));
   QCOMPARE(statement.toValueList(), QVariantList({1,QLatin1String("fN"),QLatin1String("lN")}));
