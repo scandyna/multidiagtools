@@ -18,16 +18,17 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_REFLECTION_INSERT_STATEMENT_H
-#define MDT_SQL_REFLECTION_INSERT_STATEMENT_H
+#ifndef MDT_SQL_REFLECTION_UPDATE_STATEMENT_H
+#define MDT_SQL_REFLECTION_UPDATE_STATEMENT_H
 
+#include "PrimaryKeyRecordAlgorithm.h"
 #include "Mdt/Reflection/StructAlgorithm.h"
-#include "Mdt/Reflection/FieldAlgorithm.h"
 #include "Mdt/Reflection/PrimaryKeyAlgorithm.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDefAssociatedWithReflectedStruct.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
-#include "Mdt/Sql/InsertStatement.h"
+#include "Mdt/Sql/UpdateStatement.h"
+#include "Mdt/Sql/PrimaryKeyRecord.h"
 #include "Mdt/Sql/FieldName.h"
 #include <QLatin1String>
 
@@ -38,9 +39,9 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
     /*! \internal
      */
     template<typename Pk>
-    struct AddValueToInsertStatement
+    struct AddValueToUpdateStatement
     {
-      AddValueToInsertStatement(InsertStatement & statement)
+      AddValueToUpdateStatement(UpdateStatement & statement)
        : mStatement(statement)
       {
       }
@@ -50,68 +51,62 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
       {
         using Mdt::Sql::FieldName;
 
-        if( mustAddValueToStatement<typename FieldValuePair::first_type>(p.second) ){
+        if( mustAddValueToStatement<typename FieldValuePair::first_type>() ){
           mStatement.addValue( FieldName(QLatin1String(Mdt::Reflection::fieldName<typename FieldValuePair::first_type>())), p.second );
         }
       }
 
      private:
 
-      template<typename Field, typename Value>
-      static bool mustAddValueToStatement(const Value & value) noexcept
+      template<typename Field>
+      static bool mustAddValueToStatement() noexcept
       {
-        if(Mdt::Reflection::isNullValuePartOfAutoIncrementIdPrimaryKey<Pk, Field>(value)){
-          return false;
-        }
-        return true;
+        return !Mdt::Reflection::isFieldPartOfPrimaryKey<Pk, Field>();
       }
 
-      InsertStatement & mStatement;
+      UpdateStatement & mStatement;
     };
 
   } // namespace Impl{
 
-  /*! \brief Get a insert statement from a reflected struct
+  /*! \brief Get a update statement from a reflected struct
    *
-   * \todo Should remove StructDef template argument
-   *
-   * Create a SQL insert statement:
+   * Create a SQL update statement:
    * \code
-   * const auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonDef, PersonPrimaryKey>(person);
+   * const auto statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey<PersonPrimaryKey>(personData, personPkRecord);
    * \endcode
-   * This statement can be used with a SQL insert query:
+   * This statement can be used with a SQL update query:
    * \code
-   * Mdt::Sql::InsertQuery query(dbConnection);
+   * Mdt::Sql::UpdateQuery query(dbConnection);
    *
    * if(!query.execStatement(statement)){
    *   // Error handling
    * }
    * \endcode
    *
-   * If \a PrimaryKey is a AutoIncrementIdPrimaryKey,
-   *  and the value associated to it in \a data is null,
-   *  it will not be added to the set of values in the statement
-   *  (This way, the DBMS will auto-generate a new id).
+   * \pre \a PrimaryKey must be primary key class for ther reflected struct \a Struct ( \a data )
+   * \pre \a pkRecord must contain the same fields than defined in \a PrimaryKey, and in the same order
    *
-   * \pre \a StructDef must be a struct definition associated with \a Struct
-   * \pre \a PrimaryKey must be primary key class for a reflected struct
-   *
-   * \sa Mdt::Sql::InsertStatement
-   * \sa Mdt::Sql::InsertQuery
+   * \sa Mdt::Sql::UpdateStatement
+   * \sa Mdt::Sql::UpdateQuery
    */
-  template<typename StructDef, typename PrimaryKey, typename Struct>
-  InsertStatement insertStatementFromReflected(const Struct & data)
+  template<typename PrimaryKey, typename Struct>
+  UpdateStatement updateStatementFromReflectedByPrimaryKey(const Struct & data, const PrimaryKeyRecord & pkRecord)
   {
-    static_assert( Mdt::Reflection::TypeTraits::IsStructDefAssociatedWithReflectedStruct<StructDef, Struct>::value ,
-                   "StructDef must be a struct definition associated with \a Struct" );
     static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<PrimaryKey>::value,
                    "PrimaryKey must be a primary key class for a reflected struct" );
+    Q_ASSERT( primaryKeyRecordHasCorrectFieldNameList<PrimaryKey>(pkRecord) );
 
-    InsertStatement statement;
-    Impl::AddValueToInsertStatement<PrimaryKey> f(statement);
+    using struct_def = typename PrimaryKey::struct_def;
+    static_assert( Mdt::Reflection::TypeTraits::IsStructDefAssociatedWithReflectedStruct<struct_def, Struct>::value ,
+                   "PrimaryKey must be associated with given data of type Struct" );
 
-    statement.setTableName( QLatin1String(Mdt::Reflection::nameFromStructDef<StructDef>()) );
+    UpdateStatement statement;
+    Impl::AddValueToUpdateStatement<PrimaryKey> f(statement);
+
+    statement.setTableName( QLatin1String(Mdt::Reflection::nameFromStructDef<struct_def>()) );
     Mdt::Reflection::forEachFieldValuePairInStruct(data, f);
+    statement.setConditions(pkRecord);
 
     return statement;
   }
@@ -119,4 +114,4 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
 }}} // namespace Mdt{ namespace Sql{ namespace Reflection{
 
 
-#endif // #ifndef MDT_SQL_REFLECTION_INSERT_STATEMENT_H
+#endif // #ifndef MDT_SQL_REFLECTION_UPDATE_STATEMENT_H

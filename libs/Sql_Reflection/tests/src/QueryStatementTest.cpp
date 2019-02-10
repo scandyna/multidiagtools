@@ -19,11 +19,12 @@
  **
  ****************************************************************************/
 #include "QueryStatementTest.h"
-#include "Mdt/Expected.h"
-#include "Mdt/Sql/InsertQuery.h"
+// #include "Mdt/Expected.h"
+// #include "Mdt/Sql/InsertQuery.h"
 #include "Mdt/Sql/PrimaryKeyRecord.h"
 #include "Mdt/Sql/Reflection/InsertStatement.h"
 #include "Mdt/Sql/Reflection/DeleteStatement.h"
+#include "Mdt/Sql/Reflection/UpdateStatement.h"
 #include "Mdt/Sql/Reflection/PrimaryKeyRecordAlgorithm.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
@@ -167,6 +168,43 @@ void QueryStatementTest::deleteStatementFromReflectedPrimaryKeyTest()
   pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<Pk2>({QLatin1String("a1"),QLatin1String("a2")});
   statement = Mdt::Sql::Reflection::deleteStatementFromReflectedPrimaryKey<Pk2>(pkr);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
+  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
+  QCOMPARE(statement.toConditionsValueList(), QVariantList({QLatin1String("a1"),QLatin1String("a2")}));
+}
+
+void QueryStatementTest::updateStatementFromReflectedByPrimaryKeyTest()
+{
+  using AutoIncIdPk = AutoIncrementIdPrimaryKey<PersonDef::id>;
+  using Pk = PrimaryKey<PersonDef::id>;
+  using Pk2 = PrimaryKey<PersonDef::firstName, PersonDef::lastName>;
+
+  PersonDataStruct person;
+
+  person.id = 1;
+  person.firstName = QString::fromLocal8Bit("fN");
+  person.lastName = QString::fromLocal8Bit("lN");
+
+  auto pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<AutoIncIdPk>({1});
+  auto statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey<AutoIncIdPk>(person, pkr);
+  QCOMPARE(statement.tableName(), QLatin1String("Person"));
+  QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
+  QCOMPARE(statement.toValueList(), QVariantList({QLatin1String("fN"),QLatin1String("lN")}));
+  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
+  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
+
+  pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<Pk>({1});
+  statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey<Pk>(person, pkr);
+  QCOMPARE(statement.tableName(), QLatin1String("Person"));
+  QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
+  QCOMPARE(statement.toValueList(), QVariantList({QLatin1String("fN"),QLatin1String("lN")}));
+  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
+  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
+
+  pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<Pk2>({QLatin1String("a1"),QLatin1String("a2")});
+  statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey<Pk2>(person, pkr);
+  QCOMPARE(statement.tableName(), QLatin1String("Person"));
+  QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("id")}));
+  QCOMPARE(statement.toValueList(), QVariantList({1}));
   QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
   QCOMPARE(statement.toConditionsValueList(), QVariantList({QLatin1String("a1"),QLatin1String("a2")}));
 }

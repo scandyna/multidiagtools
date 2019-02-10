@@ -10,6 +10,7 @@ set(SOURCE_FILES
   Mdt/Sql/Reflection/PrimaryKeyRecordAlgorithm.cpp
   Mdt/Sql/Reflection/InsertStatement.cpp
   Mdt/Sql/Reflection/DeleteStatement.cpp
+  Mdt/Sql/Reflection/UpdateStatement.cpp
 )
 
 find_package(Qt5 COMPONENTS Sql)

@@ -35,6 +35,8 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
 
   /*! \brief Get a delete statement from a reflected struct
    *
+   * \todo rename deleteStatementFromReflectedByPrimaryKey()
+   *
    * Create a SQL delete statement:
    * \code
    * const auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedPrimaryKey<PersonPrimaryKey>(personPkRecord);
