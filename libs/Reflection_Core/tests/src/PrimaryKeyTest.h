@@ -35,6 +35,7 @@ class PrimaryKeyTest : public QObject
   void qMetaTypeFromIdPkTest();
   void qMetaTypeFromAutoIncrementIdPkTest();
 
+  void isFieldPartOfPrimaryKeyTest();
   void isNullValuePartOfAutoIncrementIdPrimaryKeyTest();
 
   void forEachPrimaryKeyFieldAndValueTest();

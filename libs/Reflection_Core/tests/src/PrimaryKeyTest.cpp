@@ -178,6 +178,36 @@ void PrimaryKeyTest::qMetaTypeFromAutoIncrementIdPkTest()
   QCOMPARE(qMetaTypeFromAutoIncrementIdPrimaryKeyField<ULongLongPk>(), QMetaType::ULongLong);
 }
 
+void PrimaryKeyTest::isFieldPartOfPrimaryKeyTest()
+{
+  using AutoIncrementIdPk = AutoIncrementIdPrimaryKey<PkTestDef::int_id>;
+  using IdPk = IdPrimaryKey<PkTestDef::int_id>;
+  using StrPk = PrimaryKey<PkTestDef::str_A_id>;
+  using TwoFieldPk = PrimaryKey<PkTestDef::int_id, PkTestDef::str_A_id>;
+
+  bool is = isFieldPartOfPrimaryKey<AutoIncrementIdPk, PkTestDef::int_id>();
+  QVERIFY(is);
+  is = isFieldPartOfPrimaryKey<AutoIncrementIdPk, PkTestDef::str_A_id>();
+  QVERIFY(!is);
+
+  is = isFieldPartOfPrimaryKey<IdPk, PkTestDef::int_id>();
+  QVERIFY(is);
+  is = isFieldPartOfPrimaryKey<IdPk, PkTestDef::str_A_id>();
+  QVERIFY(!is);
+
+  is = isFieldPartOfPrimaryKey<StrPk, PkTestDef::str_A_id>();
+  QVERIFY(is);
+  is = isFieldPartOfPrimaryKey<StrPk, PkTestDef::int_id>();
+  QVERIFY(!is);
+
+  is = isFieldPartOfPrimaryKey<TwoFieldPk, PkTestDef::int_id>();
+  QVERIFY(is);
+  is = isFieldPartOfPrimaryKey<TwoFieldPk, PkTestDef::str_A_id>();
+  QVERIFY(is);
+  is = isFieldPartOfPrimaryKey<TwoFieldPk, PkTestDef::str_B_id>();
+  QVERIFY(!is);
+}
+
 void PrimaryKeyTest::isNullValuePartOfAutoIncrementIdPrimaryKeyTest()
 {
   using AutoIncrementIdPk = AutoIncrementIdPrimaryKey<PkTestDef::int_id>;
