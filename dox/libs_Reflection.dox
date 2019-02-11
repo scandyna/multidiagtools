@@ -288,6 +288,10 @@
  * Please also considere that using custom types will require
  *  more work in some modules.
  *
+ * \section Ids_and_primary_keys IDs and primary keys
+ *
+ * The concept of a primary key seems to be specific to the world of relational database.
+ *
  * \section Attributes
  *
  * Some attributes could be specific to some persistance engine.
@@ -441,7 +445,7 @@
  *
  * Mdt::Expected<PersonId> addPerson(const PersonDataStruct & person, const QSqlDatabase & dbConnection)
  * {
- *   const auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonDef, PersonPrimaryKey>(person);
+ *   const auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonPrimaryKey>(person);
  *   Mdt::Sql::InsertQuery query(dbConnection);
  *
  *   if(!query.execStatement(statement)){
@@ -452,10 +456,56 @@
  * }
  * \endcode
  *
- *
  * \sa Mdt::Sql::Reflection::insertStatementFromReflected()
  * \sa Mdt::Sql::InsertQuery
  *
+ * This next example shows how a person could be updated in a table:
+ * \code
+ * #include "PersonDataStruct.h"
+ * #include <Mdt/Sql/UpdateQuery.h>
+ * #include <Mdt/Sql/Reflection/UpdateStatement.h>
+ *
+ * bool updatePerson(const PersonDataStruct & person, const QSqlDatabase & dbConnection)
+ * {
+ *   const auto statement = Mdt::Sql::Reflection::updateStatementFromReflected<PersonPrimaryKey>(person);
+ *   Mdt::Sql::UpdateQuery query(dbConnection);
+ *
+ *   if(!query.execStatement(statement)){
+ *     setLastError( query.lastError() ); // Maybe a better error message should be generated here
+ *     return false;
+ *   }
+ *
+ *   return true;
+ * }
+ * \endcode
+ *
+ * \sa Mdt::Sql::Reflection::updateStatementFromReflected()
+ * \sa Mdt::Sql::UpdateQuery
+ *
+ * This example shows how a person could be removed from a table:
+ * \code
+ * #include "PersonDataStruct.h"
+ * #include "PersonId.h"
+ * #include <Mdt/Expected.h>
+ * #include <Mdt/Sql/DeleteQuery.h>
+ * #include <Mdt/Sql/Reflection/DeleteStatement.h>
+ *
+ * bool removePersonById(PersonId id, const QSqlDatabase & dbConnection)
+ * {
+ *   const auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedById<PersonPrimaryKey>(id);
+ *   Mdt::Sql::DeleteQuery query(dbConnection);
+ *
+ *   if(!query.execStatement(statement)){
+ *     setLastError( query.lastError() ); // Maybe a better error message should be generated here
+ *     return false;
+ *   }
+ *
+ *   return true;
+ * }
+ * \endcode
+ *
+ * \sa Mdt::Sql::Reflection::deleteStatementFromReflectedById()
+ * \sa Mdt::Sql::DeleteQuery
  *
  * \section Alternatives
  *
