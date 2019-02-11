@@ -87,6 +87,7 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
    * \pre \a PrimaryKey must be primary key class for ther reflected struct \a Struct ( \a data )
    * \pre \a pkRecord must contain the same fields than defined in \a PrimaryKey, and in the same order
    *
+   * \sa updateStatementFromReflected()
    * \sa Mdt::Sql::UpdateStatement
    * \sa Mdt::Sql::UpdateQuery
    */
@@ -109,6 +110,42 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
     statement.setConditions(pkRecord);
 
     return statement;
+  }
+
+  /*! \brief Get a update statement from a reflected struct
+   *
+   * Create a SQL update statement:
+   * \code
+   * const auto statement = Mdt::Sql::Reflection::updateStatementFromReflected<PersonPrimaryKey>(personData);
+   * \endcode
+   * This statement can be used with a SQL update query:
+   * \code
+   * Mdt::Sql::UpdateQuery query(dbConnection);
+   *
+   * if(!query.execStatement(statement)){
+   *   // Error handling
+   * }
+   * \endcode
+   *
+   * \pre \a PrimaryKey must be primary key class for ther reflected struct \a Struct ( \a data )
+   * \pre \a pkRecord must contain the same fields than defined in \a PrimaryKey, and in the same order
+   *
+   * \sa Mdt::Sql::UpdateStatement
+   * \sa Mdt::Sql::UpdateQuery
+   */
+  template<typename PrimaryKey, typename Struct>
+  UpdateStatement updateStatementFromReflected(const Struct & data)
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<PrimaryKey>::value,
+                   "PrimaryKey must be a primary key class for a reflected struct" );
+
+    using struct_def = typename PrimaryKey::struct_def;
+    static_assert( Mdt::Reflection::TypeTraits::IsStructDefAssociatedWithReflectedStruct<struct_def, Struct>::value ,
+                   "PrimaryKey must be associated with given data of type Struct" );
+
+    const auto pkr = primaryKeyRecordFromReflected<PrimaryKey>(data);
+
+    return updateStatementFromReflectedByPrimaryKey<PrimaryKey>(data, pkr);
   }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Reflection{

@@ -29,4 +29,5 @@ class QueryStatementTest : public QObject
   void insertStatementFromReflectedTest();
   void deleteStatementFromReflectedPrimaryKeyTest();
   void updateStatementFromReflectedByPrimaryKeyTest();
+  void updateStatementFromReflectedTest();
 };
