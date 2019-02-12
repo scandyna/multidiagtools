@@ -30,12 +30,11 @@
 #include "Mdt/Sql/PrimaryKeyRecord.h"
 #include "Mdt/Sql/FieldName.h"
 #include <QLatin1String>
+#include <type_traits>
 
 namespace Mdt{ namespace Sql{ namespace Reflection{
 
   /*! \brief Get a delete statement from a reflected struct
-   *
-   * \todo rename deleteStatementFromReflectedByPrimaryKey()
    *
    * Create a SQL delete statement:
    * \code
@@ -57,7 +56,7 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
    * \sa Mdt::Sql::DeleteQuery
    */
   template<typename PrimaryKey>
-  DeleteStatement deleteStatementFromReflectedPrimaryKey(const PrimaryKeyRecord & pkRecord)
+  DeleteStatement deleteStatementFromReflectedByPrimaryKey(const PrimaryKeyRecord & pkRecord)
   {
     static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<PrimaryKey>::value,
                    "PrimaryKey must be a primary key class for a reflected struct" );
@@ -71,6 +70,45 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
     statement.setConditions(pkRecord);
 
     return statement;
+  }
+
+  /*! \brief Get a delete statement from a reflected struct
+   *
+   * Create a SQL delete statement:
+   * \code
+   * const auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedById<PersonPrimaryKey>(personId);
+   * \endcode
+   * This statement can be used with a SQL delete query:
+   * \code
+   * Mdt::Sql::DeleteQuery query(dbConnection);
+   *
+   * if(!query.execStatement(statement)){
+   *   // Error handling
+   * }
+   * \endcode
+   *
+   * \pre \a PrimaryKey must be a primary key class for a reflected struct
+   *          and must contain exactly 1 field
+   * \pre \a id must be integral type
+   *
+   * \sa Mdt::Sql::DeleteStatement
+   * \sa Mdt::Sql::DeleteQuery
+   */
+  template<typename PrimaryKey, typename Id>
+  DeleteStatement deleteStatementFromReflectedById(Id id)
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<PrimaryKey>::value,
+                   "PrimaryKey must be a primary key class for a reflected struct" );
+    static_assert( Mdt::Reflection::primaryKeyFieldCount<PrimaryKey>() == 1,
+                   "PrimaryKey must contain exactly 1 field" );
+    static_assert( std::is_integral<Id>::value,
+                   "id must be a integral type" );
+
+
+    const auto pkRecord = primaryKeyRecordFromValues<PrimaryKey>({id});
+    Q_ASSERT( primaryKeyRecordHasCorrectFieldNameList<PrimaryKey>(pkRecord) );
+
+    return deleteStatementFromReflectedByPrimaryKey<PrimaryKey>(pkRecord);
   }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Reflection{

@@ -154,22 +154,38 @@ void QueryStatementTest::deleteStatementFromReflectedPrimaryKeyTest()
   using Pk2 = PrimaryKey<PersonDef::firstName, PersonDef::lastName>;
 
   auto pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<AutoIncIdPk>({1});
-  auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedPrimaryKey<AutoIncIdPk>(pkr);
+  auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedByPrimaryKey<AutoIncIdPk>(pkr);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
   QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
 
   pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<Pk>({1});
-  statement = Mdt::Sql::Reflection::deleteStatementFromReflectedPrimaryKey<Pk>(pkr);
+  statement = Mdt::Sql::Reflection::deleteStatementFromReflectedByPrimaryKey<Pk>(pkr);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
   QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
 
   pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<Pk2>({QLatin1String("a1"),QLatin1String("a2")});
-  statement = Mdt::Sql::Reflection::deleteStatementFromReflectedPrimaryKey<Pk2>(pkr);
+  statement = Mdt::Sql::Reflection::deleteStatementFromReflectedByPrimaryKey<Pk2>(pkr);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
   QCOMPARE(statement.toConditionsValueList(), QVariantList({QLatin1String("a1"),QLatin1String("a2")}));
+}
+
+void QueryStatementTest::deleteStatementFromReflectedByIdTest()
+{
+  using AutoIncIdPk = AutoIncrementIdPrimaryKey<PersonDef::id>;
+  using Pk = PrimaryKey<PersonDef::id>;
+
+  auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedById<AutoIncIdPk>(1);
+  QCOMPARE(statement.tableName(), QLatin1String("Person"));
+  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
+  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
+
+  statement = Mdt::Sql::Reflection::deleteStatementFromReflectedById<Pk>(2);
+  QCOMPARE(statement.tableName(), QLatin1String("Person"));
+  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
+  QCOMPARE(statement.toConditionsValueList(), QVariantList({2}));
 }
 
 void QueryStatementTest::updateStatementFromReflectedByPrimaryKeyTest()
