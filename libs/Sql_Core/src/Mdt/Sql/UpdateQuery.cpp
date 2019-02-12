@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -49,6 +49,13 @@ void UpdateQuery::setConditions(const PrimaryKeyRecord& primaryKeyRecord)
   Q_ASSERT(!primaryKeyRecord.isNull());
 
   mStatement.setConditions(primaryKeyRecord);
+}
+
+bool UpdateQuery::execStatement(const UpdateStatement & statement)
+{
+  mStatement = statement;
+
+  return exec();
 }
 
 bool UpdateQuery::exec()

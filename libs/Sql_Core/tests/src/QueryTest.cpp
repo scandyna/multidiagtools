@@ -278,6 +278,7 @@ void QueryTest::updateQueryTest()
 
   QVERIFY(cleanupClientTable());
   QVERIFY(insertClient(1, "Name 1"));
+  QVERIFY(insertClient(2, "Name 2"));
 
   query.setTableName("Client_tbl");
   query.addValue(FieldName("Name"), "A");
@@ -289,6 +290,28 @@ void QueryTest::updateQueryTest()
     QVERIFY(q.next());
     QCOMPARE(q.value(0), QVariant(1));
     QCOMPARE(q.value(1), QVariant("A"));
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(2));
+    QCOMPARE(q.value(1), QVariant("Name 2"));
+  }
+
+  /*
+   * Execute statement
+   */
+  Mdt::Sql::UpdateStatement statement;
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Name"), "B");
+  statement.setConditions( buildPrimaryKeyRecord(1) );
+  QVERIFY(query.execStatement(statement));
+  {
+    QSqlQuery q(database());
+    QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(1));
+    QCOMPARE(q.value(1), QVariant("B"));
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(2));
+    QCOMPARE(q.value(1), QVariant("Name 2"));
   }
 
   QVERIFY(cleanupClientTable());
@@ -386,6 +409,7 @@ void QueryTest::deleteQueryTest()
   QVERIFY(insertClient(1, "Name 1"));
   QVERIFY(insertClient(2, "Name 2"));
   QVERIFY(insertClient(3, "Name 3"));
+  QVERIFY(insertClient(4, "Name 4"));
 
   query.setTableName("Client_tbl");
   query.setConditions( buildPrimaryKeyRecord(2) );
@@ -399,6 +423,28 @@ void QueryTest::deleteQueryTest()
     QVERIFY(q.next());
     QCOMPARE(q.value(0), QVariant(3));
     QCOMPARE(q.value(1), QVariant("Name 3"));
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(4));
+    QCOMPARE(q.value(1), QVariant("Name 4"));
+
+  }
+
+  /*
+   * Execute statement
+   */
+  Mdt::Sql::DeleteStatement statement;
+  statement.setTableName("Client_tbl");
+  statement.setConditions( buildPrimaryKeyRecord(3) );
+  QVERIFY(query.execStatement(statement));
+  {
+    QSqlQuery q(database());
+    QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(1));
+    QCOMPARE(q.value(1), QVariant("Name 1"));
+    QVERIFY(q.next());
+    QCOMPARE(q.value(0), QVariant(4));
+    QCOMPARE(q.value(1), QVariant("Name 4"));
   }
 
   query.clear();

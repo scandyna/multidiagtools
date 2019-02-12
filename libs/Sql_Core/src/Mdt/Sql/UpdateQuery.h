@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -83,6 +83,10 @@ namespace Mdt{ namespace Sql{
      * \pre \a primaryKeyRecord must not be null
      */
     void setConditions(const PrimaryKeyRecord & primaryKeyRecord);
+
+    /*! \brief Execute a update statement
+     */
+    bool execStatement(const UpdateStatement & statement);
 
     /*! \brief Execute this query
      */

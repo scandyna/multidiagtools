@@ -27,12 +27,12 @@
 <context>
     <name>Mdt::Sql::DeleteQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="52"/>
+        <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="59"/>
         <source>Preparing query to delete in &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="63"/>
+        <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="70"/>
         <source>Executing query to delete in &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -232,12 +232,12 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::UpdateQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="59"/>
+        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="66"/>
         <source>Preparing query to update &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="75"/>
+        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="82"/>
         <source>Executing query to update &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>

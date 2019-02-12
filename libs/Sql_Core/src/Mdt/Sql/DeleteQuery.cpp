@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -42,6 +42,13 @@ void DeleteQuery::setConditions(const PrimaryKeyRecord& primaryKeyRecord)
   Q_ASSERT(!primaryKeyRecord.isNull());
 
   mStatement.setConditions(primaryKeyRecord);
+}
+
+bool DeleteQuery::execStatement(const DeleteStatement & statement)
+{
+  mStatement = statement;
+
+  return exec();
 }
 
 bool DeleteQuery::exec()
