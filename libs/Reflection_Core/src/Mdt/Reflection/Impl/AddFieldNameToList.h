@@ -23,7 +23,6 @@
 
 #include "../FieldAlgorithm.h"
 #include "../TypeTraits/IsField.h"
-#include <QLatin1String>
 #include <QStringList>
 
 namespace Mdt{ namespace Reflection{ namespace Impl{
@@ -38,9 +37,10 @@ namespace Mdt{ namespace Reflection{ namespace Impl{
       template<typename Field>
       void operator()(Field)
       {
-        static_assert( Mdt::Reflection::TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
+        static_assert( Mdt::Reflection::TypeTraits::IsField<Field>::value ,
+                       "Field must be a field defined in a struct definition associated with a reflected struct" );
 
-        mFieldNameList << QLatin1String( fieldName<Field>() );
+        mFieldNameList << fieldNameQString<Field>();
       }
 
     private:

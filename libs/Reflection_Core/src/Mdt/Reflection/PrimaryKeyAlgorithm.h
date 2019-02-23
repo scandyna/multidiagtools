@@ -31,6 +31,7 @@
 #include "TypeTraits/IsReflectedStructAssociatedWithPrimaryKey.h"
 #include "TypeTraits/IsFieldStructDefAssociatedWithPrimaryKey.h"
 #include "Impl/AddFieldNameToList.h"
+#include <QString>
 #include <QStringList>
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/size.hpp>
@@ -42,6 +43,7 @@ namespace Mdt{ namespace Reflection{
   /*! \brief Get the name given to the reflected struct in \a Pk
    *
    * \pre \a Pk must be primary key class for a reflected struct
+   * \sa nameFromPrimaryKeyQString()
    */
   template<typename Pk>
   static constexpr const char *nameFromPrimaryKey() noexcept
@@ -49,6 +51,16 @@ namespace Mdt{ namespace Reflection{
     static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<Pk>::value, "Pk must be a primary key class for a reflected struct" );
 
     return nameFromStructDef<typename Pk::struct_def>();
+  }
+
+  /*! \brief Get the name given to the reflected struct in \a Pk
+   *
+   * \sa nameFromPrimaryKey()
+   */
+  template<typename Pk>
+  static const QString nameFromPrimaryKeyQString()
+  {
+    return QString::fromLatin1( nameFromPrimaryKey<Pk>() );
   }
 
   /*! \brief Get the field QMetaType type from a auto increment id primary key
@@ -78,6 +90,7 @@ namespace Mdt{ namespace Reflection{
   /*! \brief Get the field name from a auto increment id primary key
    *
    * \pre \a Pk must be a auto increment id primary key for a reflected struct
+   * \sa fieldNameFromAutoIncrementIdPrimaryKeyFieldQString()
    */
   template<typename Pk>
   static constexpr const char *fieldNameFromAutoIncrementIdPrimaryKeyField() noexcept
@@ -87,9 +100,20 @@ namespace Mdt{ namespace Reflection{
     return fieldName<typename Pk::field>();
   }
 
+  /*! \brief Get the field name from a auto increment id primary key
+   *
+   * \sa fieldNameFromAutoIncrementIdPrimaryKeyField()
+   */
+  template<typename Pk>
+  static const QString fieldNameFromAutoIncrementIdPrimaryKeyFieldQString()
+  {
+    return QString::fromLatin1( fieldNameFromAutoIncrementIdPrimaryKeyField<Pk>() );
+  }
+
   /*! \brief Get the field name from a id primary key
    *
    * \pre \a Pk must be a id primary key for a reflected struct
+   * \sa fieldNameFromIdPrimaryKeyFieldQString()
    */
   template<typename Pk>
   static constexpr const char *fieldNameFromIdPrimaryKeyField() noexcept
@@ -97,6 +121,16 @@ namespace Mdt{ namespace Reflection{
     static_assert( Mdt::Reflection::TypeTraits::IsIdPrimaryKey<Pk>::value, "Pk must be a id primary key for a reflected struct" );
 
     return fieldName<typename Pk::field>();
+  }
+
+  /*! \brief Get the field name from a id primary key
+   *
+   * \sa fieldNameFromIdPrimaryKeyField()
+   */
+  template<typename Pk>
+  static const QString fieldNameFromIdPrimaryKeyFieldQString()
+  {
+    return QString::fromLatin1( fieldNameFromIdPrimaryKeyField<Pk>() );
   }
 
   /*! \brief Get the count of fields in a primary key

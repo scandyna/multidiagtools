@@ -24,6 +24,8 @@
 #include "TypeTraits/IsField.h"
 #include "TypeTraits/IsFieldAssociatedWithReflectedStruct.h"
 #include <QMetaType>
+#include <QString>
+#include <QLatin1String>
 #include <boost/fusion/include/adapt_assoc_struct.hpp>
 #include <boost/fusion/include/distance.hpp>
 #include <boost/fusion/include/begin.hpp>
@@ -97,6 +99,8 @@ namespace Mdt{ namespace Reflection{
   /*! \brief Get field name from given field defined in a struct def
    *
    * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
+   *
+   * \sa fieldNameQString()
    */
   template<typename Field>
   static constexpr const char *fieldName() noexcept
@@ -108,6 +112,16 @@ namespace Mdt{ namespace Reflection{
     constexpr int fieldIndex = fieldIndexInStruct<Field, reflected_struct>();
 
     return fieldNameAtInStruct<reflected_struct, fieldIndex>();
+  }
+
+  /*! \brief Get field name from given field defined in a struct def
+   *
+   * \sa fieldName()
+   */
+  template<typename Field>
+  static const QString fieldNameQString()
+  {
+    return QString::fromLatin1( fieldName<Field>() );
   }
 
   /*! \brief Get the type (in the reflected struct) for a field

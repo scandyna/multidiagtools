@@ -82,6 +82,8 @@ void StructTest::nameTest()
 {
   QCOMPARE(nameFromStructDef<PersonDef>(), "Person");
 
+  QCOMPARE(nameFromStructDefQString<PersonDef>(), QLatin1String("Person"));
+
   QCOMPARE(nameFromStructDef<AddressDef>(), "Address");
 }
 
@@ -97,7 +99,7 @@ struct AddNameAndFieldNameToList
   {
     using Field = typename FieldValuePair::first_type;
 
-    const QString name = QLatin1String(nameFromField<Field>()) + QLatin1Char('.') + QLatin1String(fieldName<Field>())\
+    const QString name = nameFromFieldQString<Field>() + QLatin1Char('.') + fieldNameQString<Field>() \
                        + QLatin1Char(':') + QVariant(p.second).toString();
     mList << name;
   }

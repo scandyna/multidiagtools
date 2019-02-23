@@ -23,6 +23,7 @@
 
 #include "TypeTraits/IsField.h"
 #include "TypeTraits/IsStructDef.h"
+#include <QString>
 #include <boost/fusion/include/as_map.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/mpl/for_each.hpp>
@@ -32,6 +33,7 @@ namespace Mdt{ namespace Reflection{
   /*! \brief Get the name given to a reflected struct from a struct def
    *
    * \pre \a StructDef must be a struct definition assiocated with a reflected struct
+   * \sa nameFromStructDefQString()
    */
   template<typename StructDef>
   static constexpr const char* nameFromStructDef() noexcept
@@ -41,9 +43,21 @@ namespace Mdt{ namespace Reflection{
     return StructDef::name_();
   }
 
+  /*! \brief Get the name given to a reflected struct from a struct def
+   *
+   * \sa nameFromStructDef()
+   */
+  template<typename StructDef>
+  static const QString nameFromStructDefQString()
+  {
+    // Note: the name given to the reflected struct cannot contain any non ASCII characters (will not compile)
+    return QString::fromLatin1( nameFromStructDef<StructDef>() );
+  }
+
   /*! \brief Get the name given to a reflected struct from a field
    *
    * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
+   * \sa nameFromFieldQString()
    */
   template<typename Field>
   static constexpr const char* nameFromField() noexcept
@@ -51,6 +65,17 @@ namespace Mdt{ namespace Reflection{
     static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
 
     return nameFromStructDef<typename Field::struct_def>();
+  }
+
+  /*! \brief Get the name given to a reflected struct from a field
+   *
+   * \sa nameFromField()
+   */
+  template<typename Field>
+  static const QString nameFromFieldQString()
+  {
+    // Note: the name given to the reflected struct cannot contain any non ASCII characters (will not compile)
+    return QString::fromLatin1( nameFromField<Field>() );
   }
 
   /*! \brief Iterate over each element on a reflected struct

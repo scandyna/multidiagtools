@@ -177,6 +177,8 @@ void FieldTest::fieldNameFromFieldTest()
   QCOMPARE(fieldName<PersonDef::firstName>(), "firstName");
   QCOMPARE(fieldName<PersonDef::lastName>(), "lastName");
 
+  QCOMPARE( fieldNameQString<PersonDef::id>(), QLatin1String("id") );
+
   QCOMPARE(fieldName<AddressDef::id>(), "id");
   QCOMPARE(fieldName<AddressDef::street>(), "street");
   QCOMPARE(fieldName<AddressDef::personId>(), "personId");

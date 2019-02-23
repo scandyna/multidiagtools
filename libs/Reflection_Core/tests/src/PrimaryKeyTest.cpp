@@ -113,7 +113,11 @@ void PrimaryKeyTest::idPkTest()
   QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("int_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 
+  QCOMPARE(nameFromPrimaryKeyQString<Pk>(), QLatin1String("PkTest"));
+
   QCOMPARE(fieldNameFromIdPrimaryKeyField<Pk>(), "int_id");
+
+  QCOMPARE(fieldNameFromIdPrimaryKeyFieldQString<Pk>(), QLatin1String("int_id"));
 }
 
 void PrimaryKeyTest::autoIdPkTest()
@@ -125,6 +129,8 @@ void PrimaryKeyTest::autoIdPkTest()
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 
   QCOMPARE(fieldNameFromAutoIncrementIdPrimaryKeyField<Pk>(), "qulonglong_id");
+
+  QCOMPARE(fieldNameFromAutoIncrementIdPrimaryKeyFieldQString<Pk>(), QLatin1String("qulonglong_id"));
 }
 
 void PrimaryKeyTest::oneFieldPkTest()
