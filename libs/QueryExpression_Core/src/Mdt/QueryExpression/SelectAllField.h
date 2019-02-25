@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,8 @@
 #define MDT_QUERY_EXPRESSION_SELECT_ALL_FIELD_H
 
 #include "SelectEntity.h"
+
+#include "QueryEntity.h"
 #include "MdtQueryExpression_CoreExport.h"
 
 namespace Mdt{ namespace QueryExpression{
@@ -46,8 +48,21 @@ namespace Mdt{ namespace QueryExpression{
      *
      * \pre \a entity must not be null
      */
-    SelectAllField(const SelectEntity & entity)
+    SelectAllField(const QueryEntity & entity)
      : mEntity(entity)
+    {
+      Q_ASSERT(!mEntity.isNull());
+    }
+
+    /*! \brief Construct a select all field
+     *
+     * This would be equivalent to entity.* in SQL.
+     *
+     * \pre \a entity must not be null
+     */
+    [[deprecated]]
+    SelectAllField(const SelectEntity & entity)
+    /* : mEntity(entity)*/
     {
       Q_ASSERT(!mEntity.isNull());
     }
@@ -62,11 +77,11 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Move construct a select  all field from \a other
      */
-    SelectAllField(SelectAllField && other) = default;
+    SelectAllField(SelectAllField && other) noexcept = default;
 
     /*! \brief Move assign \a other to this select all field
      */
-    SelectAllField & operator=(SelectAllField && other) = default;
+    SelectAllField & operator=(SelectAllField && other) noexcept = default;
 
     /*! \brief Check if a entity was defined
      */
@@ -84,7 +99,7 @@ namespace Mdt{ namespace QueryExpression{
 
    private:
 
-    SelectEntity mEntity;
+    QueryEntity mEntity;
   };
 
 }} // namespace Mdt{ namespace QueryExpression{

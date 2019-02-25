@@ -2,11 +2,16 @@
 # List of source files
 set(SOURCE_FILES
   Mdt/QueryExpression/LiteralValue.cpp
+  Mdt/QueryExpression/EntityAlias.cpp
+  Mdt/QueryExpression/FieldAlias.cpp
+#   Mdt/QueryExpression/QueryEntity.cpp
   Mdt/QueryExpression/FieldName.cpp
   Mdt/QueryExpression/EntityName.cpp
+  Mdt/QueryExpression/QueryField.cpp
   Mdt/QueryExpression/SelectEntity.cpp
   Mdt/QueryExpression/EntityAndField.cpp
   Mdt/QueryExpression/SelectAllField.cpp
+  Mdt/QueryExpression/QueryFieldVariant.cpp
   Mdt/QueryExpression/SelectFieldVariant.cpp
   Mdt/QueryExpression/SelectField.cpp
   Mdt/QueryExpression/SelectFieldList.cpp

@@ -35,11 +35,11 @@ class MemorySelectQuery : public Mdt::QueryExpression::AbstractSelectQuery
   {
   }
 
-  bool exec(const Mdt::QueryExpression::SelectStatement& statement) override
+  bool exec(const Mdt::QueryExpression::SelectStatement& statement, int maxRows) override
   {
   }
 
-  bool next() override
+  bool fetchNext() override
   {
   }
 

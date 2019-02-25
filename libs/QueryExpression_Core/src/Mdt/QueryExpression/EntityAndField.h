@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,8 +21,12 @@
 #ifndef MDT_QUERY_EXPRESSION_ENTITY_AND_FIELD_H
 #define MDT_QUERY_EXPRESSION_ENTITY_AND_FIELD_H
 
+#include "FieldAlias.h"
+#include "QueryEntity.h"
+
 #include "FieldName.h"
 #include "SelectEntity.h"
+
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
 
@@ -36,16 +40,47 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Construct with a field name and a optional field alias
      *
+     * \pre \a fieldName must not be empty
+     */
+    EntityAndField(const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias())
+     : mFieldName( fieldName.trimmed() ),
+       mFieldAlias( fieldAlias.toString() )
+    {
+      Q_ASSERT(!mFieldName.isEmpty());
+    }
+
+    /*! \brief Construct with a query entity, a field name and a optional field alias
+     *
+     * \pre \a entity must not be null
+     * \pre \a fieldName must not be empty
+     */
+    EntityAndField(const QueryEntity & entity, const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias())
+     : mEntity(entity),
+       mFieldName( fieldName.trimmed() ),
+       mFieldAlias( fieldAlias.toString() )
+    {
+      Q_ASSERT(!entity.isNull());
+      Q_ASSERT(!mFieldName.isEmpty());
+    }
+
+    /*! \brief Construct with a field name and a optional field alias
+     *
      * \pre \a fieldName must not be null
      */
-    EntityAndField(const FieldName & fieldName, const QString & fieldAlias = QString());
+    [[deprecated]]
+    EntityAndField(const FieldName & fieldName, const QString & fieldAlias = QString())
+    {
+    }
 
     /*! \brief Construct with a select entity, a field name and a optional field alias
      *
      * \pre \a entity must not be null
      * \pre \a fieldName must not be null
      */
-    EntityAndField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString());
+    [[deprecated]]
+    EntityAndField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString())
+    {
+    }
 
     /*! \brief Copy construct from \a other
      */
@@ -57,11 +92,11 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Move construct from \a other
      */
-    EntityAndField(EntityAndField && other) = default;
+    EntityAndField(EntityAndField && other) noexcept = default;
 
     /*! \brief Move assign \a other to this
      */
-    EntityAndField & operator=(EntityAndField && other) = default;
+    EntityAndField & operator=(EntityAndField && other) noexcept = default;
 
     /*! \brief Check if a entity was defined
      */
@@ -126,7 +161,8 @@ namespace Mdt{ namespace QueryExpression{
 
     QString mFieldName;
     QString mFieldAlias;
-    SelectEntity mEntity;
+    QueryEntity mEntity;
+//     SelectEntity mEntity;
   };
 
 }} // namespace Mdt{ namespace QueryExpression{
