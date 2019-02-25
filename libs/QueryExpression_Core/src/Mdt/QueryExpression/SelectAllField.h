@@ -61,7 +61,7 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a entity must not be null
      */
     [[deprecated]]
-    SelectAllField(const SelectEntity & entity)
+    SelectAllField(const SelectEntity &)
     /* : mEntity(entity)*/
     {
       Q_ASSERT(!mEntity.isNull());

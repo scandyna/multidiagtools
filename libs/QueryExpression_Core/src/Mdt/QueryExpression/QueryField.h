@@ -34,15 +34,33 @@
 
 namespace Mdt{ namespace QueryExpression{
 
+  /*! \internal Tag for QueryField
+   */
+  struct MDT_QUERYEXPRESSION_CORE_EXPORT QueryFieldTag
+  {
+  };
+
   /*! \brief Represents a field for a query expression
    */
-  class MDT_QUERYEXPRESSION_CORE_EXPORT QueryField
+  class MDT_QUERYEXPRESSION_CORE_EXPORT QueryField : public boost::proto::extends<
+                                                        boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QueryFieldVariant> >,
+                                                        QueryField,
+                                                        boost::proto::default_domain
+                                                      >
   {
+    using Domain = boost::proto::default_domain;
+    using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QueryFieldVariant> >;
+    using BaseClass = boost::proto::extends< Expression, QueryField, Domain >;
+
    public:
 
-//     /*! \brief Construct a null query field
-//      */
-//     QueryField() noexcept = default;
+    using value_type = QueryFieldVariant;
+    using reference = value_type &;
+    using const_reference = const value_type &;
+
+    /*! \brief Construct a null query field
+     */
+    QueryField() = default;
 
     /*! \brief Copy construct a query field from \a other
      */
@@ -63,6 +81,7 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Construct a select all field
      */
     QueryField(const SelectAllField & field)
+     : BaseClass( Expression::make(field) )
     {
     }
 
@@ -71,8 +90,8 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a fieldName must not be empty
      */
     QueryField(const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias())
+     : BaseClass( Expression::make( EntityAndField(fieldName, fieldAlias) ) )
     {
-//       Q_ASSERT(!mName.isEmpty());
     }
 
     /*! \brief Construct a query field
@@ -81,71 +100,24 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a fieldName must not be empty
      */
     QueryField(const QueryEntity & entity, const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias())
+     : BaseClass( Expression::make( EntityAndField(entity, fieldName, fieldAlias) ) )
     {
-      Q_ASSERT(!entity.isNull());
     }
-
-//     /*! \brief Set the entity name and alias
-//      *
-//      * \pre \a name must not be empty
-//      */
-//     void setNameAndAlias(const QString & name, const EntityAlias & alias = EntityAlias())
-//     {
-//       mName = name.trimmed();
-//       mAlias = alias.toString();
-//       Q_ASSERT(!mName.isEmpty());
-//     }
 
     /*! \brief Check if this query entity is null
      */
-    bool isNull() const noexcept
+    bool isNull() const
     {
-//       return mName.isEmpty();
+      return internalVariant().isNull();
     }
 
-//     /*! \brief Check if the alias was set
-//      */
-//     bool hasAlias() const noexcept
-//     {
-//       return !mAlias.isEmpty();
-//     }
-// 
-//     /*! \brief Get the entity name
-//      */
-//     QString name() const
-//     {
-//       return mName;
-//     }
-// 
-//     /*! \brief Get the entity alias
-//      */
-//     QString alias() const
-//     {
-//       return mAlias;
-//     }
-// 
-//     /*! \brief Get the entity alias if set, otherwise the name
-//      */
-//     QString aliasOrName() const
-//     {
-//       if(mAlias.isEmpty()){
-//         return mName;
-//       }
-//       return mAlias;
-//     }
+    /*! \internal Access internal variant of this query field
+     */
+    const QueryFieldVariant & internalVariant() const
+    {
+      return boost::proto::value(*this);
+    }
 
-//     /*! \brief Clear this query entity
-//      */
-//     void clear()
-//     {
-//       mName.clear();
-//       mAlias.clear();
-//     }
-// 
-//   private:
-// 
-//     QString mName;
-//     QString mAlias;
   };
 }} // namespace Mdt{ namespace QueryExpression{
 

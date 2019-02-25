@@ -55,9 +55,9 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a fieldName must not be empty
      */
     EntityAndField(const QueryEntity & entity, const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias())
-     : mEntity(entity),
-       mFieldName( fieldName.trimmed() ),
-       mFieldAlias( fieldAlias.toString() )
+     : mFieldName( fieldName.trimmed() ),
+       mFieldAlias( fieldAlias.toString() ),
+       mEntity(entity)
     {
       Q_ASSERT(!entity.isNull());
       Q_ASSERT(!mFieldName.isEmpty());
@@ -68,7 +68,7 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a fieldName must not be null
      */
     [[deprecated]]
-    EntityAndField(const FieldName & fieldName, const QString & fieldAlias = QString())
+    EntityAndField(const FieldName &, const QString & fieldAlias = QString())
     {
     }
 
@@ -78,7 +78,7 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a fieldName must not be null
      */
     [[deprecated]]
-    EntityAndField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString())
+    EntityAndField(const SelectEntity &, const FieldName &, const QString & fieldAlias = QString())
     {
     }
 
