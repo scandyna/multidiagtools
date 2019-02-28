@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,6 +21,8 @@
 #ifndef MDT_QUERY_EXPRESSION_FILTER_EXPRESSION_H
 #define MDT_QUERY_EXPRESSION_FILTER_EXPRESSION_H
 
+#include "QueryEntity.h"
+#include "QueryField.h"
 #include "ExpressionTree.h"
 #include "ExpressionGrammar.h"
 #include "TypeTraits/FilterExpression.h"
@@ -33,15 +35,15 @@ namespace Mdt{ namespace QueryExpression{
    *
    * Example of usage:
    * \code
+   * #include <Mdt/QueryExpression/FilterExpression.h>
+   *
    * using namespace Mdt::QueryExpression;
    *
-   * SelectField name( FieldName("name") );
+   * QueryField name("name");
    * FilterExpression filter;
    *
    * filter.setFilter( (name == "A") || (name == "B") );
    * \endcode
-   *
-   * \sa SelectQuery
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT FilterExpression
   {

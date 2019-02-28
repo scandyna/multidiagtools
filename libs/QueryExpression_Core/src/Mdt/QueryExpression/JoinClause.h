@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,7 +22,7 @@
 #define MDT_QUERY_EXPRESSION_JOIN_CLAUSE_H
 
 #include "JoinOperator.h"
-#include "SelectEntity.h"
+#include "QueryEntity.h"
 #include "JoinConstraintExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
@@ -32,8 +32,6 @@ namespace Mdt{ namespace QueryExpression{
   /*! \brief Representation of a join clause
    *
    * This class should not be used in application code.
-   *
-   * \sa SelectStatement
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT JoinClause
   {
@@ -44,7 +42,7 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a entity must not be null
      * \pre \a join must not be null
      */
-    JoinClause(JoinOperator op, const SelectEntity & entity, const JoinConstraintExpression & join)
+    JoinClause(JoinOperator op, const QueryEntity & entity, const JoinConstraintExpression & join)
      : mJoinOperator(op),
        mEntity(entity),
        mJoinConstraintExpression(join)
@@ -63,11 +61,11 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Move construct a join clause from \a other
      */
-    JoinClause(JoinClause && other) = default;
+    JoinClause(JoinClause && other) noexcept = default;
 
     /*! \brief Move assign \a other to this join clause
      */
-    JoinClause & operator=(JoinClause && other) = default;
+    JoinClause & operator=(JoinClause && other) noexcept = default;
 
     /*! \brief Get join operator
      */
@@ -78,7 +76,7 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Get entity
      */
-    const SelectEntity & entity() const
+    const QueryEntity & entity() const
     {
       return mEntity;
     }
@@ -100,7 +98,7 @@ namespace Mdt{ namespace QueryExpression{
    private:
 
     JoinOperator mJoinOperator;
-    SelectEntity mEntity;
+    QueryEntity mEntity;
     JoinConstraintExpression mJoinConstraintExpression;
   };
 

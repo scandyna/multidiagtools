@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -94,10 +94,10 @@ void SelectStatementTest::setEntityTest()
   stm.setEntityName("Person");
   QCOMPARE(stm.entity().aliasOrName(), QString("Person"));
 
-  stm.setEntityName(EntityName("Person"), "P");
+  stm.setEntityName("Person", EntityAlias("P"));
   QCOMPARE(stm.entity().aliasOrName(), QString("P"));
 
-  SelectEntity address( EntityName("Address"), "ADR");
+  QueryEntity address( "Address", EntityAlias("ADR") );
   stm.setEntity(address);
   QCOMPARE(stm.entity().aliasOrName(), QString("ADR"));
 
@@ -107,23 +107,23 @@ void SelectStatementTest::setEntityTest()
 
 void SelectStatementTest::addFieldTest()
 {
-  SelectEntity person( EntityName("Person") );
-  SelectEntity address( EntityName("Address"), "ADR");
+  QueryEntity person("Person");
+  QueryEntity address( "Address", EntityAlias("ADR") );
 
-  SelectField personId( person, FieldName("id") );
-  SelectField personName( person, FieldName("name") );
-  SelectField addressId( address, FieldName("id") );
-  SelectField addressStreet( address, FieldName("street"), "AddressStreet" );
+  QueryField personId( person, "id" );
+  QueryField personName( person, "name" );
+  QueryField addressId( address, "id" );
+  QueryField addressStreet( address, "street", FieldAlias("AddressStreet") );
 
   SelectStatement stm;
   QCOMPARE(stm.fieldCount(), 0);
   stm.setEntity(person);
   stm.addField(personName);
-  stm.addField(person, FieldName("remarks"), "PersonRemarks");
+  stm.addField(person, "remarks", FieldAlias("PersonRemarks"));
   stm.addField("notices");
-  stm.addField(FieldName("age"), "A");
+  stm.addField("age", FieldAlias("A"));
   stm.addField(addressStreet);
-  stm.addField(address, FieldName("remarks"), "AddressRemarks");
+  stm.addField(address, "remarks", FieldAlias("AddressRemarks"));
   QCOMPARE(stm.fieldCount(), 6);
   auto fieldList = stm.fieldList();
   QCOMPARE(fieldList.fieldCount(), 6);
@@ -160,35 +160,35 @@ void SelectStatementTest::addFieldTest()
 
 void SelectStatementTest::fieldIndexTest()
 {
-  SelectEntity person( EntityName("Person") );
-  SelectEntity address( EntityName("Address"), "ADR");
+  QueryEntity person("Person");
+  QueryEntity address( "Address", EntityAlias("ADR") );
 
-  SelectField personId( person, FieldName("id") );
-  SelectField personName( person, FieldName("name") );
-  SelectField addressId( address, FieldName("id") );
-  SelectField addressStreet( address, FieldName("street"), "AddressStreet" );
+  QueryField personId( person, "id" );
+  QueryField personName( person, "name" );
+  QueryField addressId( address, "id" );
+  QueryField addressStreet( address, "street", FieldAlias("AddressStreet") );
 
   SelectStatement stm;
   stm.setEntity(person);
   stm.addField(personName);
-  stm.addField(person, FieldName("remarks"), "PersonRemarks");
+  stm.addField(person, "remarks", FieldAlias("PersonRemarks"));
   stm.addField("notices");
-  stm.addField(FieldName("age"), "A");
+  stm.addField("age", FieldAlias("A"));
   stm.addField(addressStreet);
-  stm.addField(address, FieldName("remarks"), "AddressRemarks");
+  stm.addField(address, "remarks", FieldAlias("AddressRemarks"));
   QCOMPARE(stm.fieldIndex(personId), -1);
   QCOMPARE(stm.fieldIndex(personName), 0);
-  QCOMPARE(stm.fieldIndex( SelectField(FieldName("PersonRemarks")) ), -1);
-  QCOMPARE(stm.fieldIndex( SelectField(person, FieldName("remarks")) ), 1);
+  QCOMPARE(stm.fieldIndex( QueryField("PersonRemarks") ), -1);
+  QCOMPARE(stm.fieldIndex( QueryField(person, "remarks") ), 1);
 }
 
 void SelectStatementTest::joinEntityTest()
 {
-  SelectEntity person( EntityName("Person") );
-  SelectEntity address( EntityName("Address"), "ADR");
+  QueryEntity person("Person");
+  QueryEntity address( "Address", EntityAlias("ADR") );
 
-  SelectField personId( person, FieldName("id") );
-  SelectField addressPersonId( address, FieldName("personId") );
+  QueryField personId( person, "id" );
+  QueryField addressPersonId(address, "personId");
 
   SelectStatement stm;
   stm.joinEntity(address, addressPersonId == personId);

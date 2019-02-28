@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,8 @@
 #define MDT_QUERY_EXPRESSION_TERMINAL_H
 
 #include "SelectField.h"
+
+#include "QueryField.h"
 #include "LiteralValue.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <boost/proto/traits.hpp>
@@ -32,7 +34,7 @@ namespace Mdt{ namespace QueryExpression{
   /*! \brief Terminal grammar for the left part of a binary expression
    */
   struct MDT_QUERYEXPRESSION_CORE_EXPORT LeftTerminal : boost::proto::or_<
-                                                          SelectField
+                                                          QueryField
                                                         >
   {
   };
@@ -40,7 +42,7 @@ namespace Mdt{ namespace QueryExpression{
   /*! \brief Terminal grammar for the right part of a binary expression
    */
   struct MDT_QUERYEXPRESSION_CORE_EXPORT RightTerminal : boost::proto::or_<
-                                                          SelectField,
+                                                          QueryField,
                                                           LiteralValue
                                                         >
   {

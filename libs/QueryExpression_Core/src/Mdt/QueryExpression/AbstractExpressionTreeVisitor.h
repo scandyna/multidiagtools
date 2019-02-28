@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,10 +21,11 @@
 #ifndef MDT_QUERY_EXPRESSION_ABSTRACT_EXPRESSION_TREE_VISITOR_H
 #define MDT_QUERY_EXPRESSION_ABSTRACT_EXPRESSION_TREE_VISITOR_H
 
+#include "SelectField.h"
+
 #include "ExpressionTreeGraph.h"
 #include "ComparisonOperator.h"
 #include "LogicalOperator.h"
-#include "SelectField.h"
 #include "EntityAndField.h"
 #include "LikeExpression.h"
 #include "MdtQueryExpression_CoreExport.h"

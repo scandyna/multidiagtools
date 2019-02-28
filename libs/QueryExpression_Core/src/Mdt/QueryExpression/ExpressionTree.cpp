@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -73,6 +73,10 @@ ExpressionTreeVertex ExpressionTree::addVertex(ComparisonOperator op)
 ExpressionTreeVertex ExpressionTree::addVertex(LogicalOperator op)
 {
   return boost::add_vertex(ExpressionTreeVertexData(op), mGraph);
+}
+
+ExpressionTreeVertex ExpressionTree::addVertex(const QueryFieldVariant & field)
+{
 }
 
 ExpressionTreeVertex ExpressionTree::addVertex(const SelectFieldVariant & field)

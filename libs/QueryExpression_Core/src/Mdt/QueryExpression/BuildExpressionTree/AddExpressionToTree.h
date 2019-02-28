@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,8 +21,10 @@
 #ifndef MDT_QUERY_EXPRESSION_BUILD_EXPRESSION_TREE_ADD_EXPRESSION_TO_TREE_H
 #define MDT_QUERY_EXPRESSION_BUILD_EXPRESSION_TREE_ADD_EXPRESSION_TO_TREE_H
 
-#include "../ExpressionTree.h"
 #include "../SelectField.h"
+
+#include "../ExpressionTree.h"
+#include "../QueryFieldVariant.h"
 #include "../LikeExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
@@ -40,16 +42,34 @@ namespace Mdt{ namespace QueryExpression{ namespace BuildExpressionTree{
 //       return tree.addNode(left, op, QVariant(right));
 //     }
 
+    ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const QVariant & right, ExpressionTree & tree) const
+    {
+      return tree.addNode(left, op, right);
+    }
+
+    ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const LikeExpressionData & right, ExpressionTree & tree) const
+    {
+      return tree.addNode(left, op, right);
+    }
+
+    ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const QueryFieldVariant & right, ExpressionTree & tree) const
+    {
+      return tree.addNode(left, op, right);
+    }
+
+    [[deprecated]]
     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const QVariant & right, ExpressionTree & tree) const
     {
       return tree.addNode(left, op, right);
     }
 
+    [[deprecated]]
     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const LikeExpressionData & right, ExpressionTree & tree) const
     {
       return tree.addNode(left, op, right);
     }
 
+    [[deprecated]]
     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const SelectFieldVariant & right, ExpressionTree & tree) const
     {
       return tree.addNode(left, op, right);

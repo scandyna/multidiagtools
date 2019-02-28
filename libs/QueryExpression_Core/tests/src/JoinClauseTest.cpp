@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,9 @@
 #include "Mdt/QueryExpression/JoinClause.h"
 #include "Mdt/QueryExpression/JoinClauseList.h"
 #include "Mdt/QueryExpression/JoinConstraintExpression.h"
+#include "Mdt/QueryExpression/QueryEntity.h"
+#include "Mdt/QueryExpression/QueryField.h"
+
 #include "Mdt/QueryExpression/SelectEntity.h"
 #include "Mdt/QueryExpression/SelectField.h"
 #include "Mdt/QueryExpression/EntityName.h"
@@ -35,11 +38,17 @@ using namespace Mdt::QueryExpression;
 
 void JoinClauseTest::joinClauseTest()
 {
-  SelectEntity person( EntityName("Person") );
-  SelectEntity address( EntityName("Address"), "ADR");
+//   SelectEntity person( EntityName("Person") );
+//   SelectEntity address( EntityName("Address"), "ADR");
+// 
+//   SelectField personId( person, FieldName("id") );
+//   SelectField addressPersonId( address, FieldName("personId") );
 
-  SelectField personId( person, FieldName("id") );
-  SelectField addressPersonId( address, FieldName("personId") );
+  QueryEntity person("Person");
+  QueryEntity address("Address", EntityAlias("ADR"));
+
+  QueryField personId(person, "id");
+  QueryField addressPersonId(address, "personId");
 
   JoinConstraintExpression joinExpression;
 
@@ -52,11 +61,11 @@ void JoinClauseTest::joinClauseTest()
 
 void JoinClauseTest::joinClauseListTest()
 {
-  SelectEntity person( EntityName("Person") );
-  SelectEntity address( EntityName("Address"), "ADR");
+  QueryEntity person("Person");
+  QueryEntity address("Address", EntityAlias("ADR"));
 
-  SelectField personId( person, FieldName("id") );
-  SelectField addressPersonId( address, FieldName("personId") );
+  QueryField personId(person, "id");
+  QueryField addressPersonId(address, "personId");
 
   JoinConstraintExpression joinExpression;
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -336,8 +336,11 @@ void ExpressionTreeTest::filterExpressionTest()
 {
   using Like = LikeExpression;
 
-  SelectEntity person(EntityName("Person"), "P");
-  SelectField clientId(person, FieldName("id"));
+//   SelectEntity person(EntityName("Person"), "P");
+//   SelectField clientId(person, FieldName("id"));
+  
+  QueryEntity person("Person", EntityAlias("P"));
+  QueryField clientId(person, "id");
   ExpressionToInfixStringVisitor infixVisitor;
   QString expectedString;
   FilterExpression filter;
@@ -424,12 +427,18 @@ void ExpressionTreeTest::filterExpressionTest()
 
 void ExpressionTreeTest::joinConstraintExpressionTest()
 {
-  SelectEntity person(EntityName("Person"), "P");
-  SelectEntity address(EntityName("Address"), "ADR");
+//   SelectEntity person(EntityName("Person"), "P");
+//   SelectEntity address(EntityName("Address"), "ADR");
+// 
+//   SelectField personId(person, FieldName("id"));
+//   SelectField addressPersonId(address, FieldName("personId"));
 
-  SelectField personId(person, FieldName("id"));
-  SelectField addressPersonId(address, FieldName("personId"));
+  QueryEntity person("Person", EntityAlias("P"));
+  QueryEntity address("Address", EntityAlias("ADR"));
 
+  QueryField personId(person, "id");
+  QueryField addressPersonId(address, "personId");
+  
   ExpressionToInfixStringVisitor infixVisitor;
   QString expectedString;
 

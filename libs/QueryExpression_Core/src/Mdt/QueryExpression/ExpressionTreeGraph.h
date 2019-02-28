@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,9 +21,11 @@
 #ifndef MDT_QUERY_EXPRESSION_EXPRESSION_TREE_GRAPH_H
 #define MDT_QUERY_EXPRESSION_EXPRESSION_TREE_GRAPH_H
 
+#include "SelectField.h"
+
+#include "QueryFieldVariant.h"
 #include "LogicalOperator.h"
 #include "ComparisonOperator.h"
-#include "SelectField.h"
 #include "LikeExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QVariant>
@@ -33,8 +35,10 @@
 namespace Mdt{ namespace QueryExpression{
 
   /*! \internal Vertex data used in ExpressionTreeGraph
+   *
+   * \todo Remove SelectFieldVariant when possible
    */
-  using ExpressionTreeVertexData = boost::variant<LogicalOperator, ComparisonOperator, QVariant, SelectFieldVariant, LikeExpressionData>;
+  using ExpressionTreeVertexData = boost::variant<LogicalOperator, ComparisonOperator, QVariant, QueryFieldVariant, SelectFieldVariant, LikeExpressionData>;
 
   /*! \internal Graph for ExpressionTree
    */

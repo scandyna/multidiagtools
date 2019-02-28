@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "AbstractExpressionTreeVisitor.h"
+#include "QueryFieldVariant.h"
 #include <boost/variant.hpp>
 
 namespace Mdt{ namespace QueryExpression{
@@ -36,11 +37,16 @@ namespace AbstractExpressionTreeVisitorImpl{
     {
     }
 
-    void operator()(const NullSelectField &)
+    void operator()(const NullQueryField &)
     {
       Q_ASSERT_X(false, "processInorder", "A null SelectField is not allowed in a condition expression");
     }
 
+//     void operator()(const NullSelectField &)
+//     {
+//       Q_ASSERT_X(false, "processInorder", "A null SelectField is not allowed in a condition expression");
+//     }
+// 
     void operator()(const SelectAllField &)
     {
       Q_ASSERT_X(false, "processInorder", "SelectAllField is not allowed in a condition expression");
@@ -60,7 +66,7 @@ namespace AbstractExpressionTreeVisitorImpl{
 
   /*! \internal
    */
-  class CallProcessPreorderForSelectFieldVariant : public CallForSelectFieldVariantBase
+  class CallProcessPreorderForQueryFieldVariant : public CallForSelectFieldVariantBase
   {
     public:
 
@@ -76,7 +82,7 @@ namespace AbstractExpressionTreeVisitorImpl{
 
   /*! \internal
    */
-  class CallProcessInorderForSelectFieldVariant : public CallForSelectFieldVariantBase
+  class CallProcessInorderForQueryFieldVariant : public CallForSelectFieldVariantBase
   {
     public:
 
@@ -92,7 +98,7 @@ namespace AbstractExpressionTreeVisitorImpl{
 
   /*! \internal
    */
-  class CallProcessPostorderForSelectFieldVariant : public CallForSelectFieldVariantBase
+  class CallProcessPostorderForQueryFieldVariant : public CallForSelectFieldVariantBase
   {
     public:
 
@@ -127,9 +133,14 @@ namespace AbstractExpressionTreeVisitorImpl{
       mTreeVisitor.processPreorder(op);
     }
 
-    void operator()(const SelectFieldVariant & field)
+    [[deprecated]]
+    void operator()(const SelectFieldVariant &)
     {
-      CallProcessPreorderForSelectFieldVariant visitor(mTreeVisitor);
+    }
+
+    void operator()(const QueryFieldVariant & field)
+    {
+      CallProcessPreorderForQueryFieldVariant visitor(mTreeVisitor);
       boost::apply_visitor(visitor, field.internalVariant());
     }
 
@@ -169,9 +180,14 @@ namespace AbstractExpressionTreeVisitorImpl{
       mTreeVisitor.processInorder(op);
     }
 
-    void operator()(const SelectFieldVariant & field)
+    [[deprecated]]
+    void operator()(const SelectFieldVariant &)
     {
-      CallProcessInorderForSelectFieldVariant visitor(mTreeVisitor);
+    }
+    
+    void operator()(const QueryFieldVariant & field)
+    {
+      CallProcessInorderForQueryFieldVariant visitor(mTreeVisitor);
       boost::apply_visitor(visitor, field.internalVariant());
     }
 
@@ -211,9 +227,14 @@ namespace AbstractExpressionTreeVisitorImpl{
       mTreeVisitor.processPostorder(op);
     }
 
-    void operator()(const SelectFieldVariant & field)
+    [[deprecated]]
+    void operator()(const SelectFieldVariant &)
     {
-      CallProcessPostorderForSelectFieldVariant visitor(mTreeVisitor);
+    }
+    
+    void operator()(const QueryFieldVariant & field)
+    {
+      CallProcessPostorderForQueryFieldVariant visitor(mTreeVisitor);
       boost::apply_visitor(visitor, field.internalVariant());
     }
 

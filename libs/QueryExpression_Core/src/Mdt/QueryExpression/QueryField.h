@@ -41,6 +41,8 @@ namespace Mdt{ namespace QueryExpression{
   };
 
   /*! \brief Represents a field for a query expression
+   *
+   * \todo It seems that the QueryFieldVariant has no sense anmore ?
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT QueryField : public boost::proto::extends<
                                                         boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QueryFieldVariant> >,
@@ -78,12 +80,12 @@ namespace Mdt{ namespace QueryExpression{
      */
     QueryField & operator=(QueryField && other) noexcept = default;
 
-    /*! \brief Construct a select all field
-     */
-    QueryField(const SelectAllField & field)
-     : BaseClass( Expression::make(field) )
-    {
-    }
+//     /*! \brief Construct a select all field
+//      */
+//     QueryField(const SelectAllField & field)
+//      : BaseClass( Expression::make(field) )
+//     {
+//     }
 
     /*! \brief Construct a query field
      *

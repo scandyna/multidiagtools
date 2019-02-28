@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,7 +23,7 @@
 
 #include "JoinClause.h"
 #include "JoinOperator.h"
-#include "SelectEntity.h"
+#include "QueryEntity.h"
 #include "JoinConstraintExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <vector>
@@ -33,8 +33,6 @@ namespace Mdt{ namespace QueryExpression{
   /*! \brief Used by SelectStatement to hold a list of entities to join
    *
    * This class should not be used in application code.
-   *
-   * \sa SelectStatement
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT JoinClauseList
   {
@@ -49,7 +47,7 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a entity must not be null
      * \pre \a join must not be null
      */
-    void addClause(JoinOperator joinOperator, const SelectEntity & entity, const JoinConstraintExpression & join);
+    void addClause(JoinOperator joinOperator, const QueryEntity & entity, const JoinConstraintExpression & join);
 
     /*! \brief Get count of clauses
      */

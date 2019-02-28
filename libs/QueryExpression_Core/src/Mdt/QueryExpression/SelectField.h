@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,9 @@
 
 #include "FieldName.h"
 #include "SelectEntity.h"
+
+#include "FieldAlias.h"
+#include "QueryEntity.h"
 #include "EntityAndField.h"
 #include "SelectAllField.h"
 #include "SelectFieldVariant.h"
@@ -35,16 +38,55 @@
 
 namespace Mdt{ namespace QueryExpression{
 
+  class QueryField;
+
   /*! \internal Tag for SelectField
    */
   struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectFieldTag
   {
   };
 
-  /*! \brief Represents a field and the optional field alias and maybe a SelectEntity
+  /*! \internal Represents a field in a select statement
+   *
+   * A select field can be represented by specifying simply the field name:
+   * \code
+   * SelectField name("name");
+   * \endcode
+   *
+   * a field alias can also be provided:
+   * \code
+   * SelectField name("name", FieldAlias("N"));
+   * \endcode
+   *
+   * for select statement that refers to more than 1 entity,
+   *  the entity the field refers to should be specified:
+   * \code
+   * QueryEntity person("Person");
+   *
+   * SelectField personName(person, "name");
+   * \endcode
+   *
+   * A select field can also represent all fields (the * in SQL):
+   * \code
+   * SelectField allField(SelectAllField{});
+   * \endcode
+   *
+   * the entity can also be specified:
+   * \code
+   * QueryEntity person("Person");
+   *
+   * SelectField personAllFields(SelectAllField{person});
+   * \endcode
+   *
+   * A select field can also be constructed from a QueryField.
+   *
+   * \todo SelectField should become a simple holder for SelectFieldList,
+   *        which is used in SelectStatement.
+   *        It should no longer be used for expression (QueryField makes it)
    *
    * \todo Should make default constructible, so we can make select statement classs in a intuitive way.
    *       Will also require to have some NullField flag in the variant
+   *       Note: why ?
    */
   struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectField : boost::proto::extends<
                                                         boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<SelectFieldVariant> >,
@@ -56,7 +98,7 @@ namespace Mdt{ namespace QueryExpression{
 
     using Domain = boost::proto::default_domain;
     using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<SelectFieldVariant> >;
-    using ParentClass = boost::proto::extends< Expression, SelectField, Domain >;
+    using BaseClass = boost::proto::extends< Expression, SelectField, Domain >;
 
    public:
 
@@ -74,16 +116,41 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Construct a select field with a field name and a optional field alias
      *
+     * \pre \a fieldName must not be empty
+     */
+    SelectField(const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias());
+
+    /*! \brief Construct a select field with a field name and a optional field alias
+     *
      * \pre \a fieldName must not be null
      */
-    SelectField(const FieldName & fieldName, const QString & fieldAlias = QString());
+    [[deprecated]]
+    SelectField(const FieldName & fieldName, const QString & fieldAlias = QString())
+    {
+    }
+
+    /*! \brief Construct a select field with a query entity, a field name and a optional field alias
+     *
+     * \pre \a entity must not be null
+     * \pre \a fieldName must not be empty
+     */
+    SelectField(const QueryEntity & entity, const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias());
 
     /*! \brief Construct a select field with a select entity, a field name and a optional field alias
      *
      * \pre \a entity must not be null
      * \pre \a fieldName must not be null
      */
-    SelectField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString());
+    [[deprecated]]
+    SelectField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString())
+    {
+    }
+
+    /*! \brief Construct a select field from a query field
+     *
+     * \pre \a field must not be null
+     */
+    SelectField(const QueryField & field);
 
     /*! \brief Copy construct a select field from \a other
      */
@@ -95,11 +162,11 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Move construct a select field from \a other
      */
-    SelectField(SelectField && other) = default;
+    SelectField(SelectField && other) noexcept = default;
 
     /*! \brief Move assign \a other to this select field
      */
-    SelectField & operator=(SelectField && other) = default;
+    SelectField & operator=(SelectField && other) noexcept = default;
 
     /*! \brief Check if this select field is null
      */

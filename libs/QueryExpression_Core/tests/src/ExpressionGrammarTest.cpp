@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "ExpressionGrammarTest.h"
+#include "Mdt/QueryExpression/QueryField.h"
 #include "Mdt/QueryExpression/FieldName.h"
 #include "Mdt/QueryExpression/EntityName.h"
 #include "Mdt/QueryExpression/LiteralValue.h"
@@ -66,7 +67,8 @@ void ExpressionGrammarTest::literalValueTest()
 
 void ExpressionGrammarTest::terminalTest()
 {
-  SelectField A( FieldName("A") );
+  QueryField A("A");
+//   SelectField A( FieldName("A") );
 
   // LeftTerminal
   static_assert(  expressionMatchesGrammar< decltype( A ) , LeftTerminal >() , "" );
@@ -80,9 +82,15 @@ void ExpressionGrammarTest::comparisonTest()
 {
   using Like = LikeExpression;
 
-  SelectField A(EntityName("A"), FieldName("a"));
-  SelectField B(EntityName("B"), FieldName("b"));
+  QueryEntity EA("A");
+  QueryEntity EB("B");
+  QueryField A(EA, "a");
+  QueryField B(EB, "b");
   QString str("S");
+
+//   SelectField A(EntityName("A"), FieldName("a"));
+//   SelectField B(EntityName("B"), FieldName("b"));
+//   QString str("S");
 
   // ==
   static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , Comparison >() , "" );
@@ -148,8 +156,14 @@ void ExpressionGrammarTest::expressionTest()
 {
   using Like = LikeExpression;
 
-  SelectField clientId(EntityName("Client"), FieldName("id"));
-  SelectField adrClientId(EntityName("Address"), FieldName("Client_id"));
+  QueryEntity client("Client");
+  QueryEntity address("Address");
+
+  QueryField clientId(client, "id");
+  QueryField adrClientId(address, "Client_id");
+  
+//   SelectField clientId(EntityName("Client"), FieldName("id"));
+//   SelectField adrClientId(EntityName("Address"), FieldName("Client_id"));
 
   static_assert(  expressionMatchesGrammar< decltype( clientId == 25 ) , ExpressionGrammar >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( clientId == adrClientId ) , ExpressionGrammar >() , "" );

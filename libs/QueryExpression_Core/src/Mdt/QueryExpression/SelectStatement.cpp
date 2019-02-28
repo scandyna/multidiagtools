@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,22 +22,22 @@
 
 namespace Mdt{ namespace QueryExpression{
 
-void SelectStatement::setEntityName(const QString& name)
+void SelectStatement::setEntityName(const QString& name, const EntityAlias & entityAlias)
 {
   Q_ASSERT(!EntityName(name).isNull());
 
-  mEntity.setNameAndAlias(EntityName(name));
+  mEntity.setNameAndAlias(name, entityAlias);
 }
 
-void SelectStatement::setEntityName(const EntityName& name, const QString & alias)
-{
-  Q_ASSERT(!name.isNull());
-  Q_ASSERT(!alias.trimmed().isEmpty());
+// void SelectStatement::setEntityName(const EntityName& name, const QString & alias)
+// {
+//   Q_ASSERT(!name.isNull());
+//   Q_ASSERT(!alias.trimmed().isEmpty());
+// 
+//   mEntity.setNameAndAlias(name, alias);
+// }
 
-  mEntity.setNameAndAlias(name, alias);
-}
-
-void SelectStatement::setEntity(const SelectEntity & entity)
+void SelectStatement::setEntity(const QueryEntity & entity)
 {
   Q_ASSERT(!entity.isNull());
 
@@ -50,47 +50,47 @@ void SelectStatement::selectAllFields()
   mFieldList.addField(SelectAllField{});
 }
 
-void SelectStatement::addSelectAllFields(const SelectEntity& entity)
+void SelectStatement::addSelectAllFields(const QueryEntity & entity)
 {
   Q_ASSERT(!entity.isNull());
 
   mFieldList.addField( SelectAllField(entity) );
 }
 
-void SelectStatement::addField(const QString & fieldName)
+void SelectStatement::addField(const QString & fieldName, const FieldAlias & fieldAlias)
 {
   Q_ASSERT(!FieldName(fieldName).isNull());
 
-  mFieldList.addField(FieldName(fieldName));
+//   mFieldList.addField(FieldName(fieldName));
 }
 
-void SelectStatement::addField(const FieldName& fieldName, const QString& fieldAlias)
+// void SelectStatement::addField(const FieldName& fieldName, const QString& fieldAlias)
+// {
+//   Q_ASSERT(!fieldName.isNull());
+//   Q_ASSERT(!fieldAlias.trimmed().isEmpty());
+// 
+//   mFieldList.addField(fieldName, fieldAlias);
+// }
+
+void SelectStatement::addField(const QueryField & field)
 {
-  Q_ASSERT(!fieldName.isNull());
-  Q_ASSERT(!fieldAlias.trimmed().isEmpty());
-
-  mFieldList.addField(fieldName, fieldAlias);
+//   mFieldList.addField(field);
 }
 
-void SelectStatement::addField(const SelectField & field)
-{
-  mFieldList.addField(field);
-}
-
-void SelectStatement::addField(const SelectEntity& entity, const FieldName& fieldName, const QString& fieldAlias)
+void SelectStatement::addField(const QueryEntity& entity, const QString & fieldName, const FieldAlias & fieldAlias)
 {
   Q_ASSERT(!entity.isNull());
-  Q_ASSERT(!fieldName.isNull());
+  Q_ASSERT(!fieldName.trimmed().isEmpty());
 
-  mFieldList.addField(entity, fieldName, fieldAlias);
+//   mFieldList.addField(entity, fieldName, fieldAlias);
 }
 
-void SelectStatement::joinEntity(const SelectEntity& entity, const JoinConstraintExpression& joinConstraintExpression)
+void SelectStatement::joinEntity(const QueryEntity & entity, const JoinConstraintExpression& joinConstraintExpression)
 {
   Q_ASSERT(!entity.isNull());
   Q_ASSERT(!joinConstraintExpression.isNull());
 
-  mJoinClauseList.addClause(JoinOperator::Join, entity, joinConstraintExpression);
+//   mJoinClauseList.addClause(JoinOperator::Join, entity, joinConstraintExpression);
 }
 
 void SelectStatement::setFilterExpression(const FilterExpression & filter)

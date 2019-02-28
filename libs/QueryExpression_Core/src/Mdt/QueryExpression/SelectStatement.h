@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,6 +26,11 @@
 #include "SelectEntity.h"
 #include "SelectField.h"
 #include "SelectFieldList.h"
+
+#include "EntityAlias.h"
+#include "FieldAlias.h"
+#include "QueryEntity.h"
+#include "QueryField.h"
 #include "JoinConstraintExpression.h"
 #include "JoinClauseList.h"
 #include "FilterExpression.h"
@@ -57,7 +62,7 @@ namespace Mdt{ namespace QueryExpression{
    *
    * It is also possible to specify a entity alias:
    * \code
-   * stm.setEntity( EntityName("Person"), "P" );
+   * stm.setEntityName("Person", EntityAlias("P"));
    * \endcode
    *
    * To specify the fields that the query must report:
@@ -65,7 +70,7 @@ namespace Mdt{ namespace QueryExpression{
    * SelectStatement stm;
    * stm.setEntityName("Person");
    * stm.addField("name");
-   * stm.addField( FieldName("age"), "A" );
+   * stm.addField( "age", FieldAlias("A") );
    * \endcode
    * notice the age field, to which a alias was passed, A.
    *
@@ -73,14 +78,14 @@ namespace Mdt{ namespace QueryExpression{
    * \code
    * using Like = LikeExpression;
    *
-   * SelectField name( FieldName("name") );
-   * SelectField age( FieldName("age"), "A" );
+   * QueryField name("name");
+   * QueryField age( "age", FieldAlias("A") );
    *
    * SelectStatement stm;
    * stm.setEntityName("Person");
    * stm.addField(name);
    * stm.addField(age);
-   * stm.addField( FieldName("remarks") );
+   * stm.addField("remarks");
    * stm.setFilter( (name == Like("A*")) && (age > 29) );
    * \endcode
    *
@@ -90,20 +95,20 @@ namespace Mdt{ namespace QueryExpression{
    *
    * Example of a statement that joins a other entity to the primary entity:
    * \code
-   * SelectEntity person( EntityName("Person") );
-   * SelectEntity address( EntityName("Address"), "ADR");
+   * QueryEntity person("Person");
+   * QueryEntity address("Address", EntityAlias("ADR"));
    *
-   * SelectField personId( person, FieldName("id") );
-   * SelectField personName( person, FieldName("name") );
-   * SelectField addressPersonId( address, FieldName("personId") );
-   * SelectField addressStreet( address, FieldName("street"), "AddressStreet" );
+   * QueryField personId( person, "id" );
+   * QueryField personName( person, "name" );
+   * QueryField addressPersonId( address, "personId" );
+   * QueryField addressStreet( address, "street", FieldAlias("AddressStreet") );
    *
    * SelectStatement stm;
    * stm.setEntity( person );
    * stm.addField( personName );
-   * stm.addField( person, FieldName("remarks"), "PersonRemarks" );
+   * stm.addField( person, "remarks", FieldAlias("PersonRemarks") );
    * stm.addField( addressStreet );
-   * stm.addField( address, FieldName("remarks"), "AddressRemarks" );
+   * stm.addField( address, "remarks", FieldAlias("AddressRemarks") );
    * stm.joinEntity( address, addressPersonId == personId );
    * stm.setFilter( (personName == "A") || (addressStreet == "Street name B") );
    * \endcode
@@ -116,24 +121,36 @@ namespace Mdt{ namespace QueryExpression{
      *
      * \pre \a name must not be empty
      */
-    void setEntityName(const QString & name);
+    void setEntityName(const QString & name, const EntityAlias & entityAlias = EntityAlias());
 
     /*! \brief Set the entity name and its alias
      *
      * \pre \a name must not be null
      * \pre \a alias must not be empty
      */
-    void setEntityName(const EntityName & name, const QString & alias);
+    [[deprecaed]]
+    void setEntityName(const EntityName & name, const QString & alias)
+    {
+    }
 
     /*! \brief Set the entity name and its optional alias
      *
      * \pre \a entity must not be null
      */
-    void setEntity(const SelectEntity & entity);
+    void setEntity(const QueryEntity & entity);
+
+    /*! \brief Set the entity name and its optional alias
+     *
+     * \pre \a entity must not be null
+     */
+    [[deprecaed]]
+    void setEntity(const SelectEntity & entity)
+    {
+    }
 
     /*! \brief Get the entity
      */
-    SelectEntity entity() const
+    QueryEntity entity() const
     {
       return mEntity;
     }
@@ -150,33 +167,66 @@ namespace Mdt{ namespace QueryExpression{
      *
      * \pre \a entity must not be null
      */
-    void addSelectAllFields(const SelectEntity & entity);
+    void addSelectAllFields(const QueryEntity & entity);
+
+    /*! \brief Select all fields from \a entity
+     *
+     * This would be equivalent to entity.* in SQL.
+     *
+     * \pre \a entity must not be null
+     */
+    [[deprecaed]]
+    void addSelectAllFields(const SelectEntity & entity)
+    {
+    }
 
     /*! \brief Add a field to this statement
      *
      * \pre \a fieldName must not be empty
      */
-    void addField(const QString & fieldName);
+    void addField(const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias());
 
     /*! \brief Add a field to this statement
      *
      * \pre \a fieldName must not be null
      * \pre \a fieldAlias must not be empty
      */
-    void addField(const FieldName & fieldName, const QString & fieldAlias);
+    [[deprecaed]]
+    void addField(const FieldName & fieldName, const QString & fieldAlias)
+    {
+    }
 
     /*! \brief Add a field to this statement
      *
      * \todo Preconditions ?
      */
-    void addField(const SelectField & field);
+    void addField(const QueryField & field);
+
+    /*! \brief Add a field to this statement
+     *
+     * \todo Preconditions ?
+     */
+    [[deprecaed]]
+    void addField(const SelectField & field)
+    {
+    }
+
+    /*! \brief Add a field to this statement
+     *
+     * \pre \a entity must not be null
+     * \pre \a fieldName must not be empty
+     */
+    void addField(const QueryEntity & entity, const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias());
 
     /*! \brief Add a field to this statement
      *
      * \pre \a entity must not be null
      * \pre \a fieldName must not be null
      */
-    void addField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString());
+    [[deprecaed]]
+    void addField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString())
+    {
+    }
 
     /*! \brief Get the count of fields this statement contains
      */
@@ -187,8 +237,18 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Get the index of a field
      *
-     * If the requested field was found, -1 is returned.
+     * If the requested field was not found, -1 is returned.
      */
+    int fieldIndex(const QueryField & field) const
+    {
+//       return mFieldList.fieldIndex(field);
+    }
+
+    /*! \brief Get the index of a field
+     *
+     * If the requested field was not found, -1 is returned.
+     */
+    [[deprecaed]]
     int fieldIndex(const SelectField & field) const
     {
       return mFieldList.fieldIndex(field);
@@ -206,14 +266,25 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a entity must not be null
      */
     template<typename JoinExpr>
+    void joinEntity(const QueryEntity & entity, const JoinExpr & join)
+    {
+      Q_ASSERT(!entity.isNull());
+    }
+
+    /*! \brief Join \a entity to this statement
+     *
+     * \pre \a entity must not be null
+     */
+    template<typename JoinExpr>
+    [[deprecaed]]
     void joinEntity(const SelectEntity & entity, const JoinExpr & join)
     {
       Q_ASSERT(!entity.isNull());
 
-      JoinConstraintExpression joinConstraint;
-      joinConstraint.setJoin(join);
-      Q_ASSERT(!joinConstraint.isNull());
-      joinEntity(entity, joinConstraint);
+//       JoinConstraintExpression joinConstraint;
+//       joinConstraint.setJoin(join);
+//       Q_ASSERT(!joinConstraint.isNull());
+//       joinEntity(entity, joinConstraint);
     }
 
     /*! \brief Join \a entity to this statement
@@ -221,7 +292,7 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a entity must not be null
      * \pre \a joinConstraintExpression must not be null
      */
-    void joinEntity(const SelectEntity & entity, const JoinConstraintExpression & joinConstraintExpression);
+    void joinEntity(const QueryEntity & entity, const JoinConstraintExpression & joinConstraintExpression);
 
     /*! \brief Check if this statement has at least 1 join clause
      */
@@ -281,7 +352,7 @@ namespace Mdt{ namespace QueryExpression{
 
    private:
 
-    SelectEntity mEntity;
+    QueryEntity mEntity;
     SelectFieldList mFieldList;
     JoinClauseList mJoinClauseList;
     FilterExpression mFilter;

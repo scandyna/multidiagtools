@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,7 +22,7 @@
 
 namespace Mdt{ namespace QueryExpression{
 
-void JoinClauseList::addClause(JoinOperator joinOperator, const SelectEntity& entity, const JoinConstraintExpression& join)
+void JoinClauseList::addClause(JoinOperator joinOperator, const QueryEntity & entity, const JoinConstraintExpression& join)
 {
   Q_ASSERT(!entity.isNull());
   Q_ASSERT(!join.isNull());

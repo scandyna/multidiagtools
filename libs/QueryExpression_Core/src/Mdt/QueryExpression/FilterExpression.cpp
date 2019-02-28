@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,6 +19,3 @@
  **
  ****************************************************************************/
 #include "FilterExpression.h"
-
-namespace Mdt{ namespace QueryExpression{
-}} // namespace Mdt{ namespace QueryExpression{

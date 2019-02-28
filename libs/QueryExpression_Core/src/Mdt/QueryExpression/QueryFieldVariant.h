@@ -46,12 +46,14 @@ namespace Mdt{ namespace QueryExpression{
    * See: https://stackoverflow.com/questions/24791319/boostvariant-and-function-overload-resolution
    *
    * This is why QueryFieldVariant became a class using boost::variant
+   *
+   * \todo SelectAllField has probably nothing to do in a QueryField, but is SelectField specific
    */
   class QueryFieldVariant
   {
    public:
 
-    using Variant = boost::variant<NullQueryField, SelectAllField, EntityAndField>;
+    using Variant = boost::variant<NullQueryField, /*SelectAllField,*/ EntityAndField>;
 
     QueryFieldVariant() noexcept = default;
 
@@ -61,15 +63,15 @@ namespace Mdt{ namespace QueryExpression{
     QueryFieldVariant(QueryFieldVariant &&) noexcept = default;
     QueryFieldVariant & operator=(QueryFieldVariant &&) noexcept = default;
 
-    QueryFieldVariant(const SelectAllField & field)
-     : mVariant(field)
-    {
-    }
+//     QueryFieldVariant(const SelectAllField & field)
+//      : mVariant(field)
+//     {
+//     }
 
-    QueryFieldVariant(SelectAllField && field) noexcept
-     : mVariant(field)
-    {
-    }
+//     QueryFieldVariant(SelectAllField && field) noexcept
+//      : mVariant(field)
+//     {
+//     }
 
     QueryFieldVariant(const EntityAndField & field)
      : mVariant(field)
