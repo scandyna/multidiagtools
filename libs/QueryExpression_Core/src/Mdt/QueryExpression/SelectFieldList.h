@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,18 +21,23 @@
 #ifndef MDT_QUERY_EXPRESSION_SELECT_FIELD_LIST_H
 #define MDT_QUERY_EXPRESSION_SELECT_FIELD_LIST_H
 
-#include "SelectField.h"
-#include "SelectAllField.h"
 #include "FieldName.h"
 #include "EntityName.h"
 #include "SelectEntity.h"
+
+#include "SelectField.h"
+#include "SelectAllField.h"
+#include "FieldAlias.h"
+#include "QueryEntity.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
 #include <vector>
 
 namespace Mdt{ namespace QueryExpression{
 
-  /*! \brief A list of fields in a SelectQuery
+  class QueryField;
+
+  /*! \brief A list of fields in a select statement
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT SelectFieldList
   {
@@ -54,24 +59,34 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Add a field to this list
      *
-     * \pre \a fieldName must not be null
+     * \pre \a fieldName must not be empty
      */
-    void addField(const FieldName & fieldName, const QString & fieldAlias = QString());
+    void addField(const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias());
 
     /*! \brief Add a field to this list
      *
      * \pre \a entity must not be null
-     * \pre \a fieldName must not be null
+     * \pre \a fieldName must not be empty
      */
-    void addField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString());
+    void addField(const QueryEntity & entity, const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias());
 
     /*! \brief Get the index of a field
      *
-     * If the requested field was found, -1 is returned.
+     * If the requested field was not found, -1 is returned.
      *
      * \pre \a field must not be null
      */
     int fieldIndex(const SelectField & field) const;
+
+    /*! \brief Get the index of a field
+     *
+     * If the requested field was not found, -1 is returned.
+     *
+     * \pre \a field must not be null
+     * \todo Check precondition
+     */
+    [[deprecated]]
+    int fieldIndex(const QueryField & field) const;
 
     /*! \brief Get count of fields in this list
      */

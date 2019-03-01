@@ -22,9 +22,10 @@
 #define MDT_QUERY_EXPRESSION_BUILD_EXPRESSION_TREE_ADD_EXPRESSION_TO_TREE_H
 
 #include "../SelectField.h"
+#include "../QueryFieldVariant.h"
 
 #include "../ExpressionTree.h"
-#include "../QueryFieldVariant.h"
+#include "../EntityAndField.h"
 #include "../LikeExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
@@ -42,38 +43,56 @@ namespace Mdt{ namespace QueryExpression{ namespace BuildExpressionTree{
 //       return tree.addNode(left, op, QVariant(right));
 //     }
 
-    ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const QVariant & right, ExpressionTree & tree) const
+    ExpressionTreeVertex addNode(const EntityAndField & left, ComparisonOperator op, const QVariant & right, ExpressionTree & tree) const
     {
       return tree.addNode(left, op, right);
     }
 
-    ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const LikeExpressionData & right, ExpressionTree & tree) const
+    ExpressionTreeVertex addNode(const EntityAndField & left, ComparisonOperator op, const LikeExpressionData & right, ExpressionTree & tree) const
     {
       return tree.addNode(left, op, right);
     }
 
-    ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const QueryFieldVariant & right, ExpressionTree & tree) const
+    ExpressionTreeVertex addNode(const EntityAndField & left, ComparisonOperator op, const EntityAndField & right, ExpressionTree & tree) const
     {
       return tree.addNode(left, op, right);
     }
 
-    [[deprecated]]
-    ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const QVariant & right, ExpressionTree & tree) const
-    {
-      return tree.addNode(left, op, right);
-    }
-
-    [[deprecated]]
-    ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const LikeExpressionData & right, ExpressionTree & tree) const
-    {
-      return tree.addNode(left, op, right);
-    }
-
-    [[deprecated]]
-    ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const SelectFieldVariant & right, ExpressionTree & tree) const
-    {
-      return tree.addNode(left, op, right);
-    }
+//     [[deprecated]]
+//     ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const QVariant & right, ExpressionTree & tree) const
+//     {
+//       return tree.addNode(left, op, right);
+//     }
+// 
+//     [[deprecated]]
+//     ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const LikeExpressionData & right, ExpressionTree & tree) const
+//     {
+//       return tree.addNode(left, op, right);
+//     }
+// 
+//     [[deprecated]]
+//     ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const QueryFieldVariant & right, ExpressionTree & tree) const
+//     {
+//       return tree.addNode(left, op, right);
+//     }
+// 
+//     [[deprecated]]
+//     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const QVariant & right, ExpressionTree & tree) const
+//     {
+//       return tree.addNode(left, op, right);
+//     }
+// 
+//     [[deprecated]]
+//     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const LikeExpressionData & right, ExpressionTree & tree) const
+//     {
+//       return tree.addNode(left, op, right);
+//     }
+// 
+//     [[deprecated]]
+//     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const SelectFieldVariant & right, ExpressionTree & tree) const
+//     {
+//       return tree.addNode(left, op, right);
+//     }
   };
 
   struct MDT_QUERYEXPRESSION_CORE_EXPORT AddEqualExpressionToTree : AddComparisonExpressionToTreeBase

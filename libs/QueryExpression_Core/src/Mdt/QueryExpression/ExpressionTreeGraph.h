@@ -21,9 +21,7 @@
 #ifndef MDT_QUERY_EXPRESSION_EXPRESSION_TREE_GRAPH_H
 #define MDT_QUERY_EXPRESSION_EXPRESSION_TREE_GRAPH_H
 
-#include "SelectField.h"
-
-#include "QueryFieldVariant.h"
+#include "EntityAndField.h"
 #include "LogicalOperator.h"
 #include "ComparisonOperator.h"
 #include "LikeExpression.h"
@@ -38,7 +36,7 @@ namespace Mdt{ namespace QueryExpression{
    *
    * \todo Remove SelectFieldVariant when possible
    */
-  using ExpressionTreeVertexData = boost::variant<LogicalOperator, ComparisonOperator, QVariant, QueryFieldVariant, SelectFieldVariant, LikeExpressionData>;
+  using ExpressionTreeVertexData = boost::variant<LogicalOperator, ComparisonOperator, QVariant, EntityAndField, LikeExpressionData>;
 
   /*! \internal Graph for ExpressionTree
    */

@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "ExpressionTreeTest.h"
-#include "Mdt/QueryExpression/SelectField.h"
+#include "Mdt/QueryExpression/QueryField.h"
 #include "Mdt/QueryExpression/ExpressionTree.h"
 #include "Mdt/QueryExpression/AbstractExpressionTreeVisitor.h"
 #include "Mdt/QueryExpression/TravserseTreeGraph.h"
@@ -219,8 +219,10 @@ class ExpressionToPostfixStringVisitor : public AbstractExpressionToStringVisito
 
 void ExpressionTreeTest::simpleBuildTreeTest()
 {
-  SelectEntity person(EntityName("Person"), "P");
-  SelectField clientId(person, FieldName("id"), "ID");
+  QueryEntity person("Person", EntityAlias("P"));
+  EntityAndField clientId(person, "id", FieldAlias("ID"));
+//   SelectEntity person(EntityName("Person"), "P");
+//   SelectField clientId(person, FieldName("id"), "ID");
   ExpressionTreeVertex leftVertex, rightVertex, rootVertex;
 
   ExpressionTree tree;
@@ -245,8 +247,10 @@ void ExpressionTreeTest::simpleBuildTreeTest()
 
 void ExpressionTreeTest::buildAndVisitTreeTest()
 {
-  SelectEntity person(EntityName("Person"), "P");
-  SelectField clientId(person, FieldName("id"));
+  QueryEntity person("Person", EntityAlias("P"));
+  EntityAndField clientId(person, "id");
+//   SelectEntity person(EntityName("Person"), "P");
+//   SelectField clientId(person, FieldName("id"));
   ExpressionTree tree;
   ExpressionTreeVertex leftVertex, rightVertex;
   ExpressionToPrefixStringVisitor prefixVisitor;

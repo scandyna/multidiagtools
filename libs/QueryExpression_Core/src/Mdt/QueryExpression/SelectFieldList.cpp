@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "SelectFieldList.h"
 #include "EntityAndField.h"
+#include "QueryField.h"
 #include <QString>
 #include <QStringBuilder>
 #include <QLatin1Char>
@@ -49,6 +50,35 @@ class ExtractEntityAndFieldVisitor : public boost::static_visitor<QString>
   }
 };
 
+// class SelectFieldListCompareEntityAndFieldVisitor : public boost::static_visitor<bool>
+// {
+//  public:
+// 
+//   SelectFieldListCompareEntityAndFieldVisitor(const EntityAndField & a)
+//    : mA(a)
+//   {
+//   }
+// 
+//   bool operator()(const NullSelectField &) const
+//   {
+//     return QString();
+//   }
+// 
+//   bool operator()(const SelectAllField &) const
+//   {
+//     return QString();
+//   }
+// 
+//   bool operator()(const EntityAndField & field) const
+//   {
+//     return field.entityName() % QLatin1Char('.') % field.fieldName();
+//   }
+// 
+//  private:
+// 
+//   const EntityAndField & mA;
+// };
+
 void SelectFieldList::addField(const SelectAllField& field)
 {
   mList.emplace_back(field);
@@ -59,17 +89,17 @@ void SelectFieldList::addField(const SelectField& field)
   mList.push_back(field);
 }
 
-void SelectFieldList::addField(const FieldName& fieldName, const QString& fieldAlias)
+void SelectFieldList::addField(const QString & fieldName, const FieldAlias & fieldAlias)
 {
-  Q_ASSERT(!fieldName.isNull());
+  Q_ASSERT(!fieldName.trimmed().isEmpty());
 
   mList.emplace_back(fieldName, fieldAlias);
 }
 
-void SelectFieldList::addField(const SelectEntity& entity, const FieldName& fieldName, const QString& fieldAlias)
+void SelectFieldList::addField(const QueryEntity & entity, const QString & fieldName, const FieldAlias & fieldAlias)
 {
   Q_ASSERT(!entity.isNull());
-  Q_ASSERT(!fieldName.isNull());
+  Q_ASSERT(!fieldName.trimmed().isEmpty());
 
   mList.emplace_back(entity, fieldName, fieldAlias);
 }
@@ -91,6 +121,10 @@ int SelectFieldList::fieldIndex(const SelectField & field) const
   }
 
   return std::distance(mList.cbegin(), it);
+}
+
+int SelectFieldList::fieldIndex(const QueryField & field) const
+{
 }
 
 void SelectFieldList::clear()

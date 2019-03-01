@@ -21,11 +21,14 @@
 #ifndef MDT_QUERY_EXPRESSION_QUERY_FIELD_H
 #define MDT_QUERY_EXPRESSION_QUERY_FIELD_H
 
+#include "SelectAllField.h"
+
+#include "QueryFieldVariant.h"
+
 #include "FieldAlias.h"
 #include "EntityAlias.h"
 #include "QueryEntity.h"
-#include "SelectAllField.h"
-#include "QueryFieldVariant.h"
+#include "EntityAndField.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <boost/proto/expr.hpp>
 #include <boost/proto/extends.hpp>
@@ -45,24 +48,24 @@ namespace Mdt{ namespace QueryExpression{
    * \todo It seems that the QueryFieldVariant has no sense anmore ?
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT QueryField : public boost::proto::extends<
-                                                        boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QueryFieldVariant> >,
+                                                        boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<EntityAndField> >,
                                                         QueryField,
                                                         boost::proto::default_domain
                                                       >
   {
     using Domain = boost::proto::default_domain;
-    using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QueryFieldVariant> >;
+    using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<EntityAndField> >;
     using BaseClass = boost::proto::extends< Expression, QueryField, Domain >;
 
    public:
 
-    using value_type = QueryFieldVariant;
+    using value_type = EntityAndField;
     using reference = value_type &;
     using const_reference = const value_type &;
 
-    /*! \brief Construct a null query field
-     */
-    QueryField() = default;
+//     /*! \brief Construct a null query field
+//      */
+//     QueryField() = default;
 
     /*! \brief Copy construct a query field from \a other
      */
@@ -106,19 +109,27 @@ namespace Mdt{ namespace QueryExpression{
     {
     }
 
-    /*! \brief Check if this query entity is null
-     */
-    bool isNull() const
-    {
-      return internalVariant().isNull();
-    }
+//     /*! \brief Check if this query entity is null
+//      */
+//     bool isNull() const
+//     {
+//       return entityAndField().isNull();
+//       //return internalVariant().isNull();
+//     }
 
-    /*! \internal Access internal variant of this query field
+    /*! \brief Access internal entity and field
      */
-    const QueryFieldVariant & internalVariant() const
+    const EntityAndField & entityAndField() const
     {
       return boost::proto::value(*this);
     }
+
+//     /*! \internal Access internal variant of this query field
+//      */
+//     const QueryFieldVariant & internalVariant() const
+//     {
+//       return boost::proto::value(*this);
+//     }
 
   };
 }} // namespace Mdt{ namespace QueryExpression{

@@ -19,7 +19,10 @@
  **
  ****************************************************************************/
 #include "AbstractExpressionTreeVisitor.h"
+#include "EntityAndField.h"
+
 #include "QueryFieldVariant.h"
+
 #include <boost/variant.hpp>
 
 namespace Mdt{ namespace QueryExpression{
@@ -138,10 +141,16 @@ namespace AbstractExpressionTreeVisitorImpl{
     {
     }
 
+    [[deprecated]]
     void operator()(const QueryFieldVariant & field)
     {
-      CallProcessPreorderForQueryFieldVariant visitor(mTreeVisitor);
-      boost::apply_visitor(visitor, field.internalVariant());
+//       CallProcessPreorderForQueryFieldVariant visitor(mTreeVisitor);
+//       boost::apply_visitor(visitor, field.internalVariant());
+    }
+
+    void operator()(const EntityAndField & field)
+    {
+      mTreeVisitor.processPreorder(field);
     }
 
     void operator()(const QVariant & value)
@@ -185,10 +194,16 @@ namespace AbstractExpressionTreeVisitorImpl{
     {
     }
     
+    [[deprecated]]
     void operator()(const QueryFieldVariant & field)
     {
-      CallProcessInorderForQueryFieldVariant visitor(mTreeVisitor);
-      boost::apply_visitor(visitor, field.internalVariant());
+//       CallProcessInorderForQueryFieldVariant visitor(mTreeVisitor);
+//       boost::apply_visitor(visitor, field.internalVariant());
+    }
+
+    void operator()(const EntityAndField & field)
+    {
+      mTreeVisitor.processInorder(field);
     }
 
     void operator()(const QVariant & value)
@@ -232,10 +247,16 @@ namespace AbstractExpressionTreeVisitorImpl{
     {
     }
     
+    [[deprecated]]
     void operator()(const QueryFieldVariant & field)
     {
       CallProcessPostorderForQueryFieldVariant visitor(mTreeVisitor);
       boost::apply_visitor(visitor, field.internalVariant());
+    }
+
+    void operator()(const EntityAndField & field)
+    {
+      mTreeVisitor.processPostorder(field);
     }
 
     void operator()(const QVariant & value)

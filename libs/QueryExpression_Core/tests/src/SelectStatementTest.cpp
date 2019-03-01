@@ -160,6 +160,8 @@ void SelectStatementTest::addFieldTest()
 
 void SelectStatementTest::fieldIndexTest()
 {
+  QFAIL("Remove or Fix");
+
   QueryEntity person("Person");
   QueryEntity address( "Address", EntityAlias("ADR") );
 
@@ -180,6 +182,8 @@ void SelectStatementTest::fieldIndexTest()
   QCOMPARE(stm.fieldIndex(personName), 0);
   QCOMPARE(stm.fieldIndex( QueryField("PersonRemarks") ), -1);
   QCOMPARE(stm.fieldIndex( QueryField(person, "remarks") ), 1);
+
+  
 }
 
 void SelectStatementTest::joinEntityTest()

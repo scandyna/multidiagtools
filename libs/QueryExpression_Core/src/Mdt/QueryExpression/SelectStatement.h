@@ -25,12 +25,12 @@
 #include "FieldName.h"
 #include "SelectEntity.h"
 #include "SelectField.h"
-#include "SelectFieldList.h"
 
+#include "QueryField.h"
+#include "SelectFieldList.h"
 #include "EntityAlias.h"
 #include "FieldAlias.h"
 #include "QueryEntity.h"
-#include "QueryField.h"
 #include "JoinConstraintExpression.h"
 #include "JoinClauseList.h"
 #include "FilterExpression.h"
@@ -239,6 +239,7 @@ namespace Mdt{ namespace QueryExpression{
      *
      * If the requested field was not found, -1 is returned.
      */
+    [[deprecated]]
     int fieldIndex(const QueryField & field) const
     {
 //       return mFieldList.fieldIndex(field);

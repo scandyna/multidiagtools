@@ -38,6 +38,10 @@ namespace Mdt{ namespace QueryExpression{
   {
    public:
 
+//     /*! \brief Construct a null field
+//      */
+//     EntityAndField() noexcept = default;
+
     /*! \brief Construct with a field name and a optional field alias
      *
      * \pre \a fieldName must not be empty
@@ -97,6 +101,13 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Move assign \a other to this
      */
     EntityAndField & operator=(EntityAndField && other) noexcept = default;
+
+//     /*! \brief Check if this field is null
+//      */
+//     bool isNull() const noexcept
+//     {
+//       
+//     }
 
     /*! \brief Check if a entity was defined
      */

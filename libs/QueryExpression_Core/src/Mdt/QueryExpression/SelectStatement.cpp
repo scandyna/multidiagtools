@@ -59,9 +59,9 @@ void SelectStatement::addSelectAllFields(const QueryEntity & entity)
 
 void SelectStatement::addField(const QString & fieldName, const FieldAlias & fieldAlias)
 {
-  Q_ASSERT(!FieldName(fieldName).isNull());
+  Q_ASSERT(!fieldName.trimmed().isEmpty());
 
-//   mFieldList.addField(FieldName(fieldName));
+  mFieldList.addField(fieldName, fieldAlias);
 }
 
 // void SelectStatement::addField(const FieldName& fieldName, const QString& fieldAlias)
@@ -74,15 +74,15 @@ void SelectStatement::addField(const QString & fieldName, const FieldAlias & fie
 
 void SelectStatement::addField(const QueryField & field)
 {
-//   mFieldList.addField(field);
+  mFieldList.addField(field);
 }
 
-void SelectStatement::addField(const QueryEntity& entity, const QString & fieldName, const FieldAlias & fieldAlias)
+void SelectStatement::addField(const QueryEntity & entity, const QString & fieldName, const FieldAlias & fieldAlias)
 {
   Q_ASSERT(!entity.isNull());
   Q_ASSERT(!fieldName.trimmed().isEmpty());
 
-//   mFieldList.addField(entity, fieldName, fieldAlias);
+  mFieldList.addField(entity, fieldName, fieldAlias);
 }
 
 void SelectStatement::joinEntity(const QueryEntity & entity, const JoinConstraintExpression& joinConstraintExpression)

@@ -88,17 +88,17 @@ namespace Mdt{ namespace QueryExpression{
    *       Will also require to have some NullField flag in the variant
    *       Note: why ?
    */
-  struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectField : boost::proto::extends<
+  struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectField /* : boost::proto::extends<
                                                         boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<SelectFieldVariant> >,
                                                         SelectField,
                                                         boost::proto::default_domain
-                                                      >
+                                                      > */
   {
    private:
 
-    using Domain = boost::proto::default_domain;
-    using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<SelectFieldVariant> >;
-    using BaseClass = boost::proto::extends< Expression, SelectField, Domain >;
+//     using Domain = boost::proto::default_domain;
+//     using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<SelectFieldVariant> >;
+//     using BaseClass = boost::proto::extends< Expression, SelectField, Domain >;
 
    public:
 
@@ -149,6 +149,7 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Construct a select field from a query field
      *
      * \pre \a field must not be null
+     * \todo precondition is deprecaed
      */
     SelectField(const QueryField & field);
 
@@ -179,8 +180,13 @@ namespace Mdt{ namespace QueryExpression{
      */
     const SelectFieldVariant & internalVariant() const
     {
-      return boost::proto::value(*this);
+      return mVariant;
+//       return boost::proto::value(*this);
     }
+
+   private:
+
+    SelectFieldVariant mVariant;
   };
 
 }} // namespace Mdt{ namespace QueryExpression{

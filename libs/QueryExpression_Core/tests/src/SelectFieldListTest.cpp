@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "SelectFieldListTest.h"
 #include "Mdt/QueryExpression/SelectFieldList.h"
+#include "Mdt/QueryExpression/QueryEntity.h"
+#include "Mdt/QueryExpression/QueryField.h"
 #include <boost/variant.hpp>
 
 using namespace Mdt::QueryExpression;
@@ -48,16 +50,16 @@ EntityAndField getEntityAndField(const SelectField & field)
 
 void SelectFieldListTest::addFieldTest()
 {
-  SelectEntity person(EntityName("Person"), "P");
+  QueryEntity person("Person", EntityAlias("P"));
 
   SelectFieldList list;
   QCOMPARE(list.fieldCount(), 0);
   QVERIFY(list.isEmpty());
 
   list.addField( SelectAllField(person) );
-  list.addField(FieldName("id"));
-  list.addField(FieldName("age"), "A");
-  list.addField(person, FieldName("name"), "PersonName");
+  list.addField("id");
+  list.addField("age", FieldAlias("A"));
+  list.addField(person, "name", FieldAlias("PersonName"));
   QCOMPARE(list.fieldCount(), 4);
   QVERIFY(!list.isEmpty());
   QCOMPARE( getSelectAllField(list.at(0)).entityAliasOrName(), QString("P") );
@@ -77,17 +79,23 @@ void SelectFieldListTest::addFieldTest()
 
 void SelectFieldListTest::fieldIndexTest()
 {
-  SelectEntity person(EntityName("Person"), "P");
-  SelectEntity address(EntityName("Address"), "ADR");
+  QueryEntity person("Person", EntityAlias("P"));
+  QueryEntity address("Address", EntityAlias("ADR"));
 
   SelectFieldList list;
-  list.addField(FieldName("id"));
-  list.addField(person, FieldName("id"));
-  list.addField(address, FieldName("id"));
-  QCOMPARE(list.fieldIndex( SelectField(FieldName("None")) ), -1);
-  QCOMPARE(list.fieldIndex( SelectField(FieldName("id")) ), 0);
-  QCOMPARE(list.fieldIndex( SelectField(person, FieldName("id")) ), 1);
-  QCOMPARE(list.fieldIndex( SelectField(address, FieldName("id")) ), 2);
+  list.addField("id");
+  list.addField(person, "id");
+  list.addField(address, "id");
+  QCOMPARE(list.fieldIndex( SelectField("None") ), -1);
+  QCOMPARE(list.fieldIndex( SelectField("id") ), 0);
+  QCOMPARE(list.fieldIndex( SelectField(person, "id") ), 1);
+  QCOMPARE(list.fieldIndex( SelectField(address, "id") ), 2);
+  QCOMPARE(list.fieldIndex( QueryField("None") ), -1);
+  QCOMPARE(list.fieldIndex( QueryField("id") ), 0);
+  QCOMPARE(list.fieldIndex( QueryField(person, "id") ), 1);
+  QCOMPARE(list.fieldIndex( QueryField(address, "id") ), 2);
+
+  QFAIL("Remove or Fix");
 }
 
 /*
