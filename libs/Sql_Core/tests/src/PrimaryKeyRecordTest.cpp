@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "PrimaryKeyRecordTest.h"
 #include "Mdt/Sql/PrimaryKeyRecord.h"
+#include <QLatin1String>
 
 using namespace Mdt::Sql;
 
@@ -45,6 +46,8 @@ void PrimaryKeyRecordTest::addValueTest()
   QCOMPARE(record.fieldCount(), 1);
   QVERIFY(!record.isNull());
   QCOMPARE(record.value("A"), QVariant(1));
+  QCOMPARE(record.fieldNameAt(0), QLatin1String("A"));
+  QCOMPARE(record.valueAt(0), QVariant(1));
 }
 
 
