@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -56,6 +56,30 @@ namespace Mdt{ namespace Sql{
      * \pre \a fieldName must not be empty
      */
     QVariant value(const QString & fieldName) const;
+
+    /*! \brief Get field name at \a index
+     *
+     * \pre \a index must be in valid range ( 0 <= \a index < size() ) .
+     */
+    QString fieldNameAt(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < size());
+
+      return mMap[index].first;
+    }
+
+    /*! \brief Get the value at \a index
+     *
+     * \pre \a index must be in valid range ( 0 <= \a index < size() ) .
+     */
+    QVariant valueAt(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < size());
+
+      return mMap[index].second;
+    }
 
     /*! \brief Check if this map contains \a fieldName
      *

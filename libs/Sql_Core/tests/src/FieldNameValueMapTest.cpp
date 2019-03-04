@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "FieldNameValueMapTest.h"
 #include "Mdt/Sql/FieldNameValueMap.h"
+#include <QLatin1String>
 
 using namespace Mdt::Sql;
 
@@ -42,6 +43,8 @@ void FieldNameValueMapTest::addGetTest()
   QVERIFY(map.containsFieldName("a"));
   QCOMPARE(map.value("A"), QVariant(1));
   QCOMPARE(map.value("a"), QVariant(1));
+  QCOMPARE(map.fieldNameAt(0), QLatin1String("A"));
+  QCOMPARE(map.valueAt(0), QVariant(1));
 
   map.addValue(FieldName("B"), 2);
   QVERIFY(map.containsFieldName("A"));
