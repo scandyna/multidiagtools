@@ -427,6 +427,10 @@ void ExpressionTreeTest::filterExpressionTest()
   traverseExpressionTree(filter.internalTree(), infixVisitor);
   QCOMPARE(infixVisitor.toString(), expectedString);
   infixVisitor.clear();
+
+  QVERIFY(!filter.isNull());
+  filter.clear();
+  QVERIFY(filter.isNull());
 }
 
 void ExpressionTreeTest::joinConstraintExpressionTest()

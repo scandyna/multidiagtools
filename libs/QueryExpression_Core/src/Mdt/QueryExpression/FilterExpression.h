@@ -101,7 +101,10 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Clear this filter expression
      */
-    void clear();
+    void clear()
+    {
+      mTree.clear();
+    }
 
     /*! \brief Access the internal tree of this filter expression
      *
