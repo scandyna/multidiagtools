@@ -19,9 +19,50 @@
  **
  ****************************************************************************/
 #include "TestBase.h"
+#include "Mdt/Railway/SqlSchema.h"
+#include "Mdt/Sql/SQLiteConnectionParameters.h"
+#include "Mdt/Sql/SQLiteDatabase.h"
+#include "Mdt/Sql/Schema/Driver.h"
 #include <QTextStream>
 #include <QTextCodec>
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
 #include <QDebug>
+
+using Mdt::Railway::SqlSchema;
+using Mdt::Sql::SQLiteConnectionParameters;
+using Mdt::Sql::SQLiteDatabase;
+
+bool TestBase::initDatabaseSqlite()
+{
+  SQLiteConnectionParameters parameters;
+
+  // Create a database
+  if(!mTempFile.open()){
+    qWarning() << "Could not open file " << mTempFile.fileName();
+    return false;
+  }
+  mTempFile.close();
+  parameters.setDatabaseFile(mTempFile.fileName());
+  mConnectionParameters = parameters.toConnectionParameters();
+
+  SQLiteDatabase sqliteDb;
+  if( !sqliteDb.openExisting(mConnectionParameters.databaseName()) ){
+    qWarning() << "Could not open database, error: " << sqliteDb.lastError().text();
+    return false;
+  }
+  mDatabase = sqliteDb.database();
+  qDebug() << "initDatabaseSqlite(), driver: " << mDatabase.driverName();
+
+  return true;
+}
+
+bool TestBase::createTestSchema()
+{
+  Q_ASSERT(mDatabase.isValid());
+
+  SqlSchema schema;
+
+  return schema.createSchema(mDatabase);
+}

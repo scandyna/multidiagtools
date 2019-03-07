@@ -19,63 +19,15 @@
  **
  ****************************************************************************/
 #include "CreateVehicleTypeClassTest.h"
+#include "ResponseHandler.h"
+#include "TestVehicleTypeClassRepository.h"
 #include "Mdt/Railway/CreateVehicleTypeClass.h"
 #include "Mdt/Railway/VehicleTypeClassData.h"
-#include "Mdt/Railway/VehicleTypeClassRepository.h"
-#include "Mdt/Entity/MemoryEntityRepository.h"
 #include <memory>
 
 using namespace Mdt::Railway;
 
-/*
- * Test repository
- */
-
-class TestVehicleTypeClassRepository : public VehicleTypeClassRepository, public Mdt::Entity::MemoryEntityRepository<VehicleTypeClassData, VehicleTypeClassId>
-{
-};
-
-/*
- * Helper classes
- */
-
-class ResponseHandler : public QObject
-{
- public:
-
-  CreateVehicleTypeClassResponse response() const
-  {
-    return mResponse;
-  }
-
-  Mdt::Error error() const
-  {
-    return mError;
-  }
-
- public slots:
-
-  void setResponse(const CreateVehicleTypeClassResponse & response)
-  {
-    mResponse = response;
-  }
-
-  void setError(const Mdt::Error & error)
-  {
-    mError = error;
-  }
-
- private:
-
-  CreateVehicleTypeClassResponse mResponse;
-  Mdt::Error mError;
-};
-
-void setupResponseHandler(const ResponseHandler & handler, const CreateVehicleTypeClass & cvtc)
-{
-  QObject::connect(&cvtc, &CreateVehicleTypeClass::succeed, &handler, &ResponseHandler::setResponse);
-  QObject::connect(&cvtc, &CreateVehicleTypeClass::failed, &handler, &ResponseHandler::setError);
-}
+using CreateVehicleTypeClassResponseHandler = ResponseHandler<CreateVehicleTypeClassRequest, CreateVehicleTypeClassResponse>;
 
 /*
  * Tests
@@ -85,10 +37,10 @@ void CreateVehicleTypeClassTest::createFromEmptyRepositoryTest()
 {
   auto vehicleTypeClassRepository = std::make_shared<TestVehicleTypeClassRepository>();
   CreateVehicleTypeClass cvtc(vehicleTypeClassRepository);
+  CreateVehicleTypeClassResponseHandler responseHandler;
+  responseHandler.setUseCase(cvtc);
   CreateVehicleTypeClassRequest request;
-  ResponseHandler responseHandler;
   CreateVehicleTypeClassResponse response;
-//   setupResponseHandler(responseHandler, cvtc);
 
   /*
    * Initially, the repository is empty
@@ -99,20 +51,21 @@ void CreateVehicleTypeClassTest::createFromEmptyRepositoryTest()
    */
   request.name = "RBDe 560 DO";
   request.alias = "DOMINO";
+  request.transactionId = 22;
   QVERIFY(cvtc.execute(request));
   // Check the response
-  response = cvtc.response();
-  QCOMPARE(response.id.value(), 1u);
+  response = responseHandler.response();
+  QCOMPARE(response.id, VehicleTypeClassId(1));
   QCOMPARE(response.name, QString("RBDe 560 DO"));
   QCOMPARE(response.alias, QString("DOMINO"));
+  QCOMPARE(response.transactionId, request.transactionId);
   // Check that the vehicle type class was stored
   QCOMPARE(vehicleTypeClassRepository->storageCount(), 1);
-  auto dataExp = vehicleTypeClassRepository->getById(response.id);
-  QVERIFY(dataExp);
-  auto data = *dataExp;
-  QCOMPARE(data.id().value(), 1u);
-  QCOMPARE(data.name(), QString("RBDe 560 DO"));
-  QCOMPARE(data.alias(), QString("DOMINO"));
+  const auto vehicle = vehicleTypeClassRepository->getById(response.id);
+  QVERIFY(vehicle);
+  QCOMPARE(vehicle->id(), VehicleTypeClassId(1));
+  QCOMPARE(vehicle->name(), QString("RBDe 560 DO"));
+  QCOMPARE(vehicle->alias(), QString("DOMINO"));
 }
 
 /*

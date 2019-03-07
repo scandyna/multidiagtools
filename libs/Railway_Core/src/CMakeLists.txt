@@ -1,16 +1,34 @@
 
 # List of source files
 set(SOURCE_FILES
+  Mdt/Railway/AbstractEntityRepository.cpp
   Mdt/Railway/Entity/VehicleTypeClass.cpp
   Mdt/Railway/Entity/VehicleType.cpp
   Mdt/Railway/VehicleTypeClassData.cpp
+  Mdt/Railway/VehicleTypeClassDataValidator.cpp
+  Mdt/Railway/CreateVehicleTypeClass.cpp
+  Mdt/Railway/UpdateVehicleTypeClass.cpp
+  Mdt/Railway/RemoveVehicleTypeClass.cpp
   Mdt/Railway/VehicleTypeClassDataList.cpp
+  Mdt/Railway/VehicleTypeClass.cpp
   Mdt/Railway/VehicleTypeClassTableModel.cpp
-  Mdt/Railway/VehicleTypeClassEdition.cpp
+  Mdt/Railway/EditVehicleTypeClassCache.cpp
+  Mdt/Railway/EditVehicleTypeClassCacheAsync.cpp
+  Mdt/Railway/EditVehicleTypeClassTableModel.cpp
+  Mdt/Railway/EditVehicleTypeClass.cpp
+  Mdt/Railway/VehicleTypeId.cpp
   Mdt/Railway/VehicleTypeData.cpp
+  Mdt/Railway/VehicleTypeDataValidator.cpp
   Mdt/Railway/VehicleTypeModel.cpp
   Mdt/Railway/VehicleTypeClassRepository.cpp
   Mdt/Railway/VehicleTypeEdition.cpp
+  Mdt/Railway/EditVehicleTypeTableModel.cpp
+  Mdt/Railway/ChooseVehicleTypeClassCache.cpp
+  Mdt/Railway/ChooseVehicleTypeCache.cpp
+  Mdt/Railway/VehicleTypeRepository.cpp
+  Mdt/Railway/CreateVehicleType.cpp
+  Mdt/Railway/UpdateVehicleType.cpp
+  Mdt/Railway/VehicleTypeClassCommonError.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
@@ -29,7 +47,7 @@ mdt_add_library(
   NAME Railway_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES ItemModel Qt5::Core Entity_Core Error_Core;
+  LINK_DEPENDENCIES ItemModel Qt5::Core Entity_Core Error_Core Expected;
 )
 target_compile_definitions(Railway_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

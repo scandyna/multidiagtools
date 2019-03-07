@@ -21,12 +21,14 @@
 #ifndef MDT_RAILWAY_SQL_TEST_BASE_H
 #define MDT_RAILWAY_SQL_TEST_BASE_H
 
+#include "Mdt/Sql/ConnectionParameters.h"
 #include "Mdt/CoreApplication.h"
 #include <QObject>
 #include <QByteArray>
 #include <QString>
 #include <QStringList>
 #include <QVariant>
+#include <QSqlDatabase>
 #include <QTemporaryFile>
 #include <QTemporaryDir>
 #include <QtTest/QtTest>
@@ -38,6 +40,27 @@ class TestBase : public QObject
 {
  Q_OBJECT
 
+ protected:
+
+  bool initDatabaseSqlite();
+
+  QSqlDatabase database() const
+  {
+    return mDatabase;
+  }
+
+  Mdt::Sql::ConnectionParameters connectionParameters() const
+  {
+    return mConnectionParameters;
+  }
+
+  bool createTestSchema();
+
+ private:
+
+  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase mDatabase;
+  Mdt::Sql::ConnectionParameters mConnectionParameters;
 };
 
 #endif // #ifndef MDT_RAILWAY_SQL_TEST_BASE_H

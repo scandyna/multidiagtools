@@ -32,6 +32,10 @@ namespace Mdt{ namespace Railway{
   {
    public:
 
+    /*! \brief Constructor
+     */
+    SqlSchema();
+
     /*! \brief Create railway SQL schema
      *
      * \a dbConnection must be valid (must have a driver loaded)

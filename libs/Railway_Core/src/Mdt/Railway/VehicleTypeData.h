@@ -21,31 +21,52 @@
 #ifndef MDT_RAILWAY_VEHICLE_TYPE_DATA_H
 #define MDT_RAILWAY_VEHICLE_TYPE_DATA_H
 
+#include "VehicleTypeId.h"
+#include "VehicleTypeClassId.h"
 #include "Entity/VehicleType.h"
 #include "Mdt/Entity/DataTemplate.h"
 #include <QString>
 
 namespace Mdt{ namespace Railway{
 
+  /*! \brief Vehicle type entity data
+   */
   class MDT_RAILWAY_CORE_EXPORT VehicleTypeData : public Mdt::Entity::DataTemplate<Entity::VehicleTypeEntity>
   {
    public:
 
     /*! \brief Set id
      *
-     * \pre id must be > 0
+     * \pre \a id must not be null
      */
-    void setId(qulonglong id)
+    void setId(VehicleTypeId id)
     {
-      Q_ASSERT(id > 0);
-      dataStruct().id = id;
+      Q_ASSERT(!id.isNull());
+      dataStruct().id = id.value();
     }
 
     /*! \brief Get id
      */
-    qulonglong id() const
+    VehicleTypeId id() const
     {
-      return constDataStruct().id;
+      return VehicleTypeId(constDataStruct().id);
+    }
+
+    /*! \brief Set vehicle type class id
+     *
+     * \pre \a id must not be null
+     */
+    void setVehicleTypeClassId(VehicleTypeClassId id)
+    {
+      Q_ASSERT(!id.isNull());
+      dataStruct().vehicleTypeClassId = id.value();
+    }
+
+    /*! \brief Get vehicle type class id
+     */
+    VehicleTypeClassId vehicleTypeClassId() const noexcept
+    {
+      return VehicleTypeClassId(constDataStruct().vehicleTypeClassId);
     }
 
     /*! \brief Set manufacturer serie

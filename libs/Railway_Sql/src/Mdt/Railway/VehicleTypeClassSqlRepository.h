@@ -46,7 +46,9 @@ namespace Mdt{ namespace Railway{
    private:
 
     bool fetchRecords(int count) override;
-    bool insertRecordToStorage(const VehicleTypeClassData& record) override;
+    bool insertRecordToStorage(const VehicleTypeClassData& record, QVariant& autoId) override;
+    bool removeRecordFromStorage(int row) override;
+    bool updateRecordInStorage(int row) override;
 
     QSqlDatabase mDbConnection;
   };

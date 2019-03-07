@@ -21,14 +21,14 @@
 #ifndef MDT_RAILWAY_VEHICLE_TYPE_ID_H
 #define MDT_RAILWAY_VEHICLE_TYPE_ID_H
 
-#include "Mdt/Entity/IntegralUniqueIdTemplate.h"
+#include "Mdt/Numeric/IntegralUniqueIdTemplate.h"
 #include "MdtRailway_CoreExport.h"
 
 namespace Mdt{ namespace Railway{
 
   /*! \brief Vehicle type ID
    */
-  class MDT_RAILWAY_CORE_EXPORT VehicleTypeId : public Mdt::Entity::IntegralUniqueIdTemplate<VehicleTypeId>
+  class MDT_RAILWAY_CORE_EXPORT VehicleTypeId : public Mdt::Numeric::IntegralUniqueIdTemplate<VehicleTypeId>
   {
    public:
 

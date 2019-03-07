@@ -7,6 +7,7 @@ find_package(Qt5 COMPONENTS Test)
 
 set(SOURCE_FILES
   src/TestBase.cpp
+  src/ResponseHandler.cpp
 )
 
 add_library(mdtRailway_CoreTest SHARED ${SOURCE_FILES})
@@ -27,3 +28,8 @@ endfunction()
 #================= Tests ====================
 
 addRailway_CoreTest("VehicleTypeTest")
+addRailway_CoreTest("CreateVehicleTypeClassTest")
+addRailway_CoreTest("UpdateVehicleTypeClassTest")
+addRailway_CoreTest("RemoveVehicleTypeClassTest")
+addRailway_CoreTest("CreateVehicleTypeTest")
+addRailway_CoreTest("UpdateVehicleTypeTest")

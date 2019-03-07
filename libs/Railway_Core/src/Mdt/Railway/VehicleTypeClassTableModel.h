@@ -57,21 +57,18 @@ namespace Mdt{ namespace Railway{
      */
     int nameColumn() const;
 
-    /*! \brief Set vehicle type name
-     */
-    bool setName(const QModelIndex & index, const QString & name);
-
     /*! \brief Get column index of vehicle type alias
      */
     int aliasColumn() const;
 
-    /*! \brief Set vehicle type alias
-     */
-    bool setAlias(const QModelIndex & index, const QString & alias);
+   private:
 
-    /*! \brief Set data
-     */
-    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
+//     /*! \brief set data
+//      */
+//     bool setEditRoleData(int row, int column, const QVariant& value);
+
+    bool setName(int row, const QString & name);
+    bool setAlias(int row, const QString & alias);
   };
 
 }} // namespace Mdt{ namespace Railway{

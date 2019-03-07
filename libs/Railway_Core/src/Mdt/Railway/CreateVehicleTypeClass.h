@@ -21,6 +21,8 @@
 #ifndef MDT_RAILWAY_CREATE_VEHICLE_TYPE_CLASS_H
 #define MDT_RAILWAY_CREATE_VEHICLE_TYPE_CLASS_H
 
+#include "CreateVehicleTypeClassRequest.h"
+#include "CreateVehicleTypeClassResponse.h"
 #include "VehicleTypeClassId.h"
 #include "VehicleTypeClassRepository.h"
 #include "Mdt/Error.h"
@@ -31,29 +33,14 @@
 
 namespace Mdt{ namespace Railway{
 
-  /*! \brief Request data for CreateVehicleTypeClass
-   */
-  struct MDT_RAILWAY_CORE_EXPORT CreateVehicleTypeClassRequest
-  {
-    QString name;
-    QString alias;
-  };
-
-  /*! \brief Response data for CreateVehicleTypeClass
-   */
-  struct MDT_RAILWAY_CORE_EXPORT CreateVehicleTypeClassResponse
-  {
-    VehicleTypeClassId id;
-    QString name;
-    QString alias;
-  };
+  class VehicleTypeClassData;
 
   /*! \brief Create a vehicle type class
    *
    * \pre All fields in the input data must be set
    * \exception Error if the unique constraint is violated,
    *    or if some infrastructure problem occurs
-   * \post The vehicle type is created
+   * \post The vehicle type class is created
    */
   class MDT_RAILWAY_CORE_EXPORT CreateVehicleTypeClass : public QObject
   {
@@ -91,73 +78,24 @@ namespace Mdt{ namespace Railway{
 
     /*! \brief Emitted after successfull creation of the vehicle type class
      */
-    void succeed(const CreateVehicleTypeClassResponse & response);
+    void succeeded(const CreateVehicleTypeClassResponse & response);
 
     /*! \brief Emitted when the creation of the vehicle type class failed
      */
-    void failed(const Mdt::Error & error) const;
+    void failed(int transactionId, const Mdt::Error & error) const;
+//     void failed(const CreateVehicleTypeClassRequest & request, const Mdt::Error & error) const;
 
    private:
 
     bool checkRequest(const CreateVehicleTypeClassRequest & request);
     void setResponse(const CreateVehicleTypeClassResponse & response);
-    void setLastError(const Mdt::Error & error);
+    void buildAndNotifyError(int transactionId, const VehicleTypeClassData & data, const Mdt::Error & error);
+//     void setLastError(const CreateVehicleTypeClassRequest & request, const Mdt::Error & error);
 
     std::shared_ptr<VehicleTypeClassRepository> mRepository;
     CreateVehicleTypeClassResponse mResponse;
     Mdt::Error mLastError;
   };
-
-//   /*! \brief Recieve a response from CreateVehicleTypeClass
-//    */
-//   class CreateVehicleTypeClassResponseReciever : public QObject
-//   {
-//    Q_OBJECT
-// 
-//    public:
-// 
-//     /*! \brief Constructor
-//      */
-//     CreateVehicleTypeClassResponseReciever(CreateVehicleTypeClass *cvtc, QObject *parent = nullptr);
-// 
-//     /*! \brief Check a error was set
-//      */
-//     bool hasError() const
-//     {
-//       return !mError.isNull();
-//     }
-// 
-//     /*! \brief Get response
-//      */
-//     CreateVehicleTypeClassResponse response() const
-//     {
-//       return mResponse;
-//     }
-// 
-//     /*! \brief Get error
-//      */
-//     Mdt::Error error() const
-//     {
-//       return mError;
-//     }
-// 
-//    public slots:
-// 
-//     void setResponse(const CreateVehicleTypeClassResponse & response)
-//     {
-//       mResponse = response;
-//     }
-// 
-//     void setError(const Mdt::Error & error)
-//     {
-//       mError = error;
-//     }
-// 
-//    private:
-// 
-//     CreateVehicleTypeClassResponse mResponse;
-//     Mdt::Error mError;
-//   };
 
 }} // namespace Mdt{ namespace Railway{
 

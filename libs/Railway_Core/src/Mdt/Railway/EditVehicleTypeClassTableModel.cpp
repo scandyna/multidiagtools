@@ -20,60 +20,177 @@
  ****************************************************************************/
 #include "EditVehicleTypeClassTableModel.h"
 
-using namespace Mdt::Entity;
+using namespace Mdt::Container;
+using namespace Mdt::ItemModel;
 
 namespace Mdt{ namespace Railway{
 
 EditVehicleTypeClassTableModel::EditVehicleTypeClassTableModel(QObject* parent)
- : AbstractEditableCacheTableModel(parent)
+ : BaseClass(parent)
 {
-  /// \todo See for a helper to make signal/slot connections
-//   connect(&mCache, &EditVehicleTypeClassCache::cacheAboutToBeReset, this, &EditVehicleTypeClassTableModel::beginResetModel);
-//   connect(&mCache, &EditVehicleTypeClassCache::cacheReset, this, &EditVehicleTypeClassTableModel::endResetModel);
 }
 
-// void EditVehicleTypeClassTableModel::setVehicleTypeClassRepository(const std::shared_ptr< VehicleTypeClassRepository >& repository)
+// void EditVehicleTypeClassTableModel::setQueryFactory(const std::shared_ptr<SelectQueryFactory> & factory)
 // {
-//   Q_ASSERT(repository.get() != nullptr);
+//   Q_ASSERT(factory.get() != nullptr);
 // 
-//   mCache.setVehicleTypeClassRepository(repository);
+//   mSelectQueryFactory = factory;
+//   mSelectQuery = std::move( mSelectQueryFactory->createSelectQuery() );
+//   connect( mSelectQuery.get(), &SelectQuery::newRecordAvailable, this, &EditVehicleTypeClassTableModel::fromBackendAppendRecord );
 // }
 
-// void EditVehicleTypeClassTableModel::setSelectQueryFactory(const QueryExpression::SelectQueryFactory& factory)
-// {
-//   Q_ASSERT(factory.isValid());
+void EditVehicleTypeClassTableModel::onCreateVehicleTypeClassSucceded(const CreateVehicleTypeClassResponse & response)
+{
+  const TableCacheTask task(response.transactionId);
+  const VariantRecord record = makeVariantRecord(response);
+
+  taskSucceeded(task, record);
+
+//   const TableCacheTransaction transaction(response.transactionId);
+//   const VariantRecord record = makeVariantRecord(response);
 // 
-//   mCache.setSelectQueryFactory(factory);
+//   transactionSucceeded(transaction, record);
+}
+
+// void EditVehicleTypeClassTableModel::onCreateVehicleTypeClassFailed(const CreateVehicleTypeClassRequest & request, const Mdt::Error & error)
+// {
+//   const TableCacheTransaction transaction(request.transactionId);
+// 
+//   transactionFailed(transaction, error);
 // }
 
-// bool EditVehicleTypeClassTableModel::fetchAll()
+void EditVehicleTypeClassTableModel::onCreateVehicleTypeClassFailed(int transactionId, const Mdt::Error & error)
+{
+  const TableCacheTask task(transactionId);
+
+  taskFailed(task, error);
+
+//   const TableCacheTransaction transaction(transactionId);
+// 
+//   transactionFailed(transaction, error);
+}
+
+void EditVehicleTypeClassTableModel::onUpdateVehicleTypeClassSucceded(const UpdateVehicleTypeClassResponse & response)
+{
+  const TableCacheTask task(response.transactionId);
+  const VariantRecord record = makeVariantRecord(response);
+
+  taskSucceeded(task, record);
+
+//   const TableCacheTransaction transaction(response.transactionId);
+//   const VariantRecord record = makeVariantRecord(response);
+// 
+//   transactionSucceeded(transaction, record);
+}
+
+// void EditVehicleTypeClassTableModel::onUpdateVehicleTypeClassFailed(const UpdateVehicleTypeClassRequest & request, const Mdt::Error & error)
 // {
-//   return mCache.fetchAll();
+//   const TableCacheTransaction transaction(request.transactionId);
+// 
+//   transactionFailed(transaction, error);
+// }
+
+void EditVehicleTypeClassTableModel::onUpdateVehicleTypeClassFailed(int transactionId, const Mdt::Error & error)
+{
+  const TableCacheTask task(transactionId);
+
+  taskFailed(task, error);
+
+//   const TableCacheTransaction transaction(transactionId);
+// 
+//   transactionFailed(transaction, error);
+}
+
+void EditVehicleTypeClassTableModel::onRemoveVehicleTypeClassSucceeded(const RemoveVehicleTypeClassResponse & response)
+{
+  const TableCacheTask task(response.taskId);
+
+  removeRecordTaskSucceeded(task);
+}
+
+void EditVehicleTypeClassTableModel::onRemoveVehicleTypeClassFailed(int taskId, const Mdt::Error & error)
+{
+  const TableCacheTask task(taskId);
+
+  taskFailed(task, error);
+}
+
+bool EditVehicleTypeClassTableModel::fetchRecords(int count)
+{
+  emit fetchVehicleTypeClassesRequested(mSelectStatement, count);
+//   mSelectQuery->submitStatement(mSelectStatement, count);
+
+  return true;
+}
+
+bool EditVehicleTypeClassTableModel::addRecordToBackend(const Mdt::Container::TableCacheRowTask & rowTask)
+{
+  CreateVehicleTypeClassRequest request = makeCreateVehicleTypeRequest(rowTask.row());
+  request.transactionId = rowTask.taskId();
+
+  emit createVehicleTypeClassRequested(request);
+
+  return true;
+}
+
+bool EditVehicleTypeClassTableModel::updateRecordInBackend(const Mdt::Container::TableCacheRowTask & rowTask)
+{
+  UpdateVehicleTypeClassRequest request = makeUpdateVehicleTypeRequest(rowTask.row());
+  request.transactionId = rowTask.taskId();
+
+  emit updateVehicleTypeClassRequested(request);
+
+  return true;
+}
+
+bool EditVehicleTypeClassTableModel::removeRecordFromBackend(const Mdt::Container::TableCacheRowTask & rowTask)
+{
+  RemoveVehicleTypeClassRequest request;
+  const auto rec = record(rowTask.row());
+
+  request.id = VehicleTypeClassId::fromQVariant( rec.value(idColumn()) );
+  request.taskId = rowTask.taskId();
+
+  emit removeVehicleTypeClassRequested(request);
+
+  return true;
+}
+
+CreateVehicleTypeClassRequest EditVehicleTypeClassTableModel::makeCreateVehicleTypeRequest(int row) const
+{
+  CreateVehicleTypeClassRequest request;
+  VariantRecord rec = record(row);
+
+  request.name = rec.value(vehicleTypeNameColumn()).toString();
+  request.alias = rec.value(vehicleTypeAliasColumn()).toString();
+
+  return request;
+}
+
+UpdateVehicleTypeClassRequest EditVehicleTypeClassTableModel::makeUpdateVehicleTypeRequest(int row) const
+{
+  UpdateVehicleTypeClassRequest request;
+  VariantRecord rec = record(row);
+
+  request.id = VehicleTypeClassId::fromQVariant( rec.value(idColumn()) );
+  request.name = rec.value(vehicleTypeNameColumn()).toString();
+  request.alias = rec.value(vehicleTypeAliasColumn()).toString();
+
+  return request; 
+}
+
+// Mdt::Container::VariantRecord EditVehicleTypeClassTableModel::makeVariantRecord(const CreateVehicleTypeClassResponse & response) const
+// {
+//   VariantRecord record(columnCount());
+// 
+//   return record;
 // }
 // 
-// int EditVehicleTypeClassTableModel::columnCountImpl() const
+// Mdt::Container::VariantRecord EditVehicleTypeClassTableModel::makeVariantRecord(const UpdateVehicleTypeClassResponse & response) const
 // {
-//   return mCache.columnCount();
-// }
+//   VariantRecord record(columnCount());
 // 
-// int EditVehicleTypeClassTableModel::cachedRowCount() const
-// {
-//   return mCache.rowCount();
-// }
-// 
-// QVariant EditVehicleTypeClassTableModel::horizontalHeaderDisplayRoleData(int column) const
-// {
-//   return cache()->horizontalHeaderName(column);
-// }
-// 
-// QVariant EditVehicleTypeClassTableModel::displayRoleData(int row, int column) const
-// {
-//   return mCache.data(row, column);
-// }
-// 
-// Container::TableCacheOperation EditVehicleTypeClassTableModel::operationAtRow(int row) const
-// {
-// 
+//   return record;
 // }
 
 }} // namespace Mdt{ namespace Railway{

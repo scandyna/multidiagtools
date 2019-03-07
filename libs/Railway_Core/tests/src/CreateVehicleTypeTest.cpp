@@ -19,74 +19,43 @@
  **
  ****************************************************************************/
 #include "CreateVehicleTypeTest.h"
+#include "TestVehicleTypeClassRepository.h"
+#include "TestVehicleTypeRepository.h"
+#include "ResponseHandler.h"
+#include "Mdt/Error.h"
+#include "Mdt/Railway/VehicleTypeClassId.h"
 #include "Mdt/Railway/CreateVehicleType.h"
+#include "Mdt/Railway/CreateVehicleTypeClass.h"
 #include "Mdt/Railway/VehicleTypeRepository.h"
 #include "Mdt/Entity/IntegralUniqueIdTemplate.h"
 #include "Mdt/Entity/PrimaryKeyRecord.h"
 #include "Mdt/Entity/MemoryEntityRepository.h"
 #include <QStringList>
 #include <QObject>
+#include <memory>
+
+#include <QDebug>
 
 using namespace Mdt::Railway;
 
 /*
- * Test repository
+ * Helpers
  */
 
-class TestVehicleTypeRepository : public VehicleTypeRepository, public Mdt::Entity::MemoryEntityRepository<VehicleTypeData, VehicleTypeId>
+VehicleTypeClassId createVehicleTypeClass(const QString & name, const QString & alias)
 {
- public:
+  auto repository = std::make_shared<TestVehicleTypeClassRepository>();
+  CreateVehicleTypeClass cvtc(repository);
+  CreateVehicleTypeClassRequest request;
 
-  QStringList storageRecordStringList(int id) const
-  {
-    const auto dataExp = getById(VehicleTypeId(id));
-    Q_ASSERT(dataExp);
-    const auto data = *dataExp;
-    return QStringList{ data.manufacturerSerie() };
-  }
-};
+  request.name = name;
+  request.alias = alias;
+  cvtc.execute(request);
 
-/*
- * Helper classes
- */
-
-class ResponseHandler : public QObject
-{
- public:
-
-  CreateVehicleTypeResponse response() const
-  {
-    return mResponse;
-  }
-
-  Error error() const
-  {
-    return mError;
-  }
-
- public slots:
-
-  void setResponse(const CreateVehicleTypeResponse & response)
-  {
-    mResponse = response;
-  }
-
-  void setError(const Error & error)
-  {
-    mError = error;
-  }
-
- private:
-
-  CreateVehicleTypeResponse mResponse;
-  Error mError;
-};
-
-void setupResponseHandler(const ResponseHandler & handler, const CreateVehicleType & cvt)
-{
-  QObject::connect(&cvt, &CreateVehicleType::succeed, &handler, &ResponseHandler::setResponse);
-  QObject::connect(&cvt, &CreateVehicleType::failed, &handler, &ResponseHandler::setError);
+  return cvtc.response().id;
 }
+
+using CreateVehicleTypeResponseHandler = ResponseHandler<CreateVehicleTypeRequest, CreateVehicleTypeResponse>;
 
 /*
  * tests
@@ -97,9 +66,10 @@ void CreateVehicleTypeTest::createFromEmptyRepository()
   auto repository = std::make_shared<TestVehicleTypeRepository>();
   CreateVehicleType cvt(repository);
   CreateVehicleTypeRequest request;
-  ResponseHandler responseHandler;
+  CreateVehicleTypeResponseHandler responseHandler;
+
   CreateVehicleTypeResponse response;
-  setupResponseHandler(responseHandler, cvt);
+  responseHandler.setUseCase(cvt);
 
   /*
    * Initially, the repository is empty
@@ -108,19 +78,27 @@ void CreateVehicleTypeTest::createFromEmptyRepository()
   /*
    * We create a vehicle type
    */
-  request.className = "RBDe 560 DO";
-  request.alias = "DOMINO";
+  const VehicleTypeClassId vehicleTypeClassId = createVehicleTypeClass("RBDe 560 DO", "DOMINO");
+  QVERIFY(!vehicleTypeClassId.isNull());
+  request.vehicleTypeClassId = vehicleTypeClassId;
   request.manufacturerSerie = "1";
+  request.transactionId = 5;
   QVERIFY(cvt.execute(request));
-  // Check that the vehicle type was stored
-  QCOMPARE(repository->storageCount(), 1);
-  QCOMPARE(repository->storageRecordStringList(1), QStringList({"RBDe 560 DO","DOMINO","1"}));
   // Check the response
   response = responseHandler.response();
-  QCOMPARE(response.vehicleTypeId, QString("1"));
-  QCOMPARE(response.className, QString("RBDe 560 DO"));
-  QCOMPARE(response.alias, QString("DOMINO"));
+  QCOMPARE(response.vehicleTypeId, VehicleTypeId(1));
+  QCOMPARE(response.vehicleTypeClassId, vehicleTypeClassId);
   QCOMPARE(response.manufacturerSerie, QString("1"));
+  QCOMPARE(response.vehicleTypeClassName, QString("RBDe 560 DO"));
+  QCOMPARE(response.vehicleTypeClassAlias, QString("DOMINO"));
+  QCOMPARE(response.transactionId, 5);
+  // Check that the vehicle type was stored
+  QCOMPARE(repository->storageCount(), 1);
+  const auto vehicleType = repository->getById(response.vehicleTypeId);
+  QVERIFY(vehicleType);
+  QCOMPARE(vehicleType->id(), response.vehicleTypeId);
+  QCOMPARE(vehicleType->vehicleTypeClassId(), vehicleTypeClassId);
+  QCOMPARE(vehicleType->manufacturerSerie(), QString("1"));
 }
 
 

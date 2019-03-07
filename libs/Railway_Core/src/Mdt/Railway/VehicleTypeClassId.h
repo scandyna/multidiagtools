@@ -29,11 +29,11 @@ namespace Mdt{ namespace Railway{
 
   /*! \brief Vehicle type class id
    */
-  class MDT_RAILWAY_CORE_EXPORT VehicleTypeClassId : public Mdt::Entity::IntegralUniqueIdTemplate<>
+  class MDT_RAILWAY_CORE_EXPORT VehicleTypeClassId : public Mdt::Entity::IntegralUniqueIdTemplate<VehicleTypeClassId, qulonglong>
   {
    public:
 
-    using IntegralUniqueIdTemplate<>::IntegralUniqueIdTemplate;
+    using IntegralUniqueIdTemplate::IntegralUniqueIdTemplate;
   };
 
 }} // namespace Mdt{ namespace Railway{

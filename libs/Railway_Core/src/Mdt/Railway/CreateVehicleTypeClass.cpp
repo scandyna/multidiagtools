@@ -21,6 +21,7 @@
 #include "CreateVehicleTypeClass.h"
 #include "VehicleTypeClassData.h"
 #include "VehicleTypeClassDataValidator.h"
+#include "VehicleTypeClassCommonError.h"
 
 namespace Mdt{ namespace Railway{
 
@@ -42,7 +43,8 @@ bool CreateVehicleTypeClass::execute(const CreateVehicleTypeClassRequest& reques
   data.setAlias(request.alias);
   const auto id = mRepository->add(data);
   if(!id){
-    setLastError(id.error());
+//     setLastError(request, id.error());
+    buildAndNotifyError(request.transactionId, data, id.error());
     return false;
   }
 
@@ -50,6 +52,7 @@ bool CreateVehicleTypeClass::execute(const CreateVehicleTypeClassRequest& reques
   response.id = *id;
   response.name = data.name();
   response.alias = data.alias();
+  response.transactionId = request.transactionId;
   setResponse(response);
 
   return true;
@@ -60,7 +63,8 @@ bool CreateVehicleTypeClass::checkRequest(const CreateVehicleTypeClassRequest& r
   VehicleTypeClassDataValidator validator;
 
   if(!validator.validateName(request.name)){
-    setLastError(validator.lastError());
+//     setLastError(request, validator.lastError());
+    emit failed(request.transactionId, validator.lastError());
     return false;
   }
 
@@ -70,14 +74,25 @@ bool CreateVehicleTypeClass::checkRequest(const CreateVehicleTypeClassRequest& r
 void CreateVehicleTypeClass::setResponse(const CreateVehicleTypeClassResponse& response)
 {
   mResponse = response;
-  emit succeed(response);
+  emit succeeded(response);
 }
 
-void CreateVehicleTypeClass::setLastError(const Error& error)
+void CreateVehicleTypeClass::buildAndNotifyError(int transactionId, const VehicleTypeClassData & data, const Mdt::Error & error)
 {
-  mLastError = error;
-  emit failed(error);
+  VehicleTypeClassCommonError commonError;
+
+  if(commonError.isKnownError(error)){
+    emit failed( transactionId, commonError.createError(data, error) );
+    return;
+  }
+  emit failed( transactionId, error );
 }
+
+// void CreateVehicleTypeClass::setLastError(const CreateVehicleTypeClassRequest & request, const Error& error)
+// {
+//   mLastError = error;
+//   emit failed(request, error);
+// }
 
 
 // CreateVehicleTypeClassResponseReciever::CreateVehicleTypeClassResponseReciever(CreateVehicleTypeClass* cvtc, QObject *parent)

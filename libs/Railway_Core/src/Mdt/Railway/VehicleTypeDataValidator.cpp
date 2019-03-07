@@ -22,6 +22,24 @@
 
 namespace Mdt{ namespace Railway{
 
+bool VehicleTypeDataValidator::validateVehicleTypeId(VehicleTypeId id)
+{
+  if( !mFieldDataValidator.validateData(id, def().id()) ){
+    setLastError(mFieldDataValidator.toGenericError());
+    return false;
+  }
+  return true;
+}
+
+bool VehicleTypeDataValidator::validateVehicleTypeClassId(VehicleTypeClassId id)
+{
+  if( !mFieldDataValidator.validateData(id.value(), def().vehicleTypeClassId()) ){
+    setLastError(mFieldDataValidator.toGenericError());
+    return false;
+  }
+  return true;
+}
+
 bool VehicleTypeDataValidator::validateManufacturerSerie(const QString& manufacturerSerie)
 {
   if( !mFieldDataValidator.validateData(manufacturerSerie, def().manufacturerSerie()) ){

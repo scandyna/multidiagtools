@@ -21,7 +21,9 @@
 #ifndef MDT_RAILWAY_CREATE_VEHICLE_TYPE_H
 #define MDT_RAILWAY_CREATE_VEHICLE_TYPE_H
 
-#include "Error.h"
+#include "VehicleTypeClassId.h"
+#include "VehicleTypeId.h"
+#include "Mdt/Error.h"
 #include "VehicleTypeRepository.h"
 #include "MdtRailway_CoreExport.h"
 #include <QObject>
@@ -34,19 +36,9 @@ namespace Mdt{ namespace Railway{
    */
   struct MDT_RAILWAY_CORE_EXPORT CreateVehicleTypeRequest
   {
-    /*! \brief Vehicle type class
-     *
-     * This is the vehicle type name,
-     *  without taking the variant into account
+    /*! \brief Vehicle type class id
      */
-    QString className;
-
-    /*! \brief Alias
-     *
-     * The alias is, for example, a project name given to y vehicle type
-     *  (for example DOMINO).
-     */
-    QString alias;
+    VehicleTypeClassId vehicleTypeClassId;
 
     /*! \brief Manufacturer serie
      */
@@ -55,16 +47,22 @@ namespace Mdt{ namespace Railway{
     /*! \brief Options
      */
     
+
+    /*! \brief Transaction id
+     */
+    int transactionId = 0;
   };
 
   /*! \brief Response data for CreateVehicleType
    */
   struct MDT_RAILWAY_CORE_EXPORT CreateVehicleTypeResponse
   {
-    QString vehicleTypeId;
-    QString className;
-    QString alias;
+    VehicleTypeId vehicleTypeId;
+    VehicleTypeClassId vehicleTypeClassId;
     QString manufacturerSerie;
+    QString vehicleTypeClassName;
+    QString vehicleTypeClassAlias;
+    int transactionId = 0;
   };
 
   /*! \brief Create a vehicle type
@@ -103,6 +101,16 @@ namespace Mdt{ namespace Railway{
      */
     CreateVehicleType(const std::shared_ptr<VehicleTypeRepository> & repository, QObject *parent = nullptr);
 
+//     /*! \brief Constructor
+//      */
+//     explicit CreateVehicleType(QObject *parent = nullptr);
+
+//     /*! \brief Set the repository
+//      *
+//      * \pre \a repository must not be null
+//      */
+//     void setVehicleTypeRepository(const std::shared_ptr<VehicleTypeRepository> & repository);
+
    public slots:
 
     /*! \brief Execute
@@ -113,15 +121,17 @@ namespace Mdt{ namespace Railway{
 
     /*! \brief Emitted after successfull creation of the vehicle type
      */
-    void succeed(const CreateVehicleTypeResponse & response);
+    void succeeded(const CreateVehicleTypeResponse & response);
 
     /*! \brief Emitted when the creation of the vehicle type failed
      */
-    void failed(const Error & error) const;
+    void failed(int transactionId, const Error & error) const;
 
    private:
 
     bool checkRequest(const CreateVehicleTypeRequest & request) const;
+    void buildAndNotifyError(const CreateVehicleTypeRequest & request, const Mdt::Error & error);
+    void notifyUniqueConstraintError(const CreateVehicleTypeRequest & request, const Mdt::Error & inError);
 
     std::shared_ptr<VehicleTypeRepository> mRepository;
   };

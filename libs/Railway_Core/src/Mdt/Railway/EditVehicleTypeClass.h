@@ -18,21 +18,22 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_RAILWAY_VEHICLE_TYPE_CLASS_EDITION_H
-#define MDT_RAILWAY_VEHICLE_TYPE_CLASS_EDITION_H
+#ifndef MDT_RAILWAY_EDIT_VEHICLE_TYPE_CLASS_H
+#define MDT_RAILWAY_EDIT_VEHICLE_TYPE_CLASS_H
 
 #include "VehicleTypeClassData.h"
 #include "Mdt/Entity/FieldDataValidator.h"
 #include "Mdt/Error.h"
 #include "MdtRailway_CoreExport.h"
+#include <QObject>
 
 namespace Mdt{ namespace Railway{
 
-  /*! \brief
+  /*! \brief Edit vehicle type class
    */
-  class MDT_RAILWAY_CORE_EXPORT VehicleTypeClassEdition /*: public QObject*/
+  class MDT_RAILWAY_CORE_EXPORT EditVehicleTypeClass : public QObject
   {
-//    Q_OBJECT
+   Q_OBJECT
 
    public:
 
@@ -58,6 +59,24 @@ namespace Mdt{ namespace Railway{
       return mData.alias();
     }
 
+
+//     /*! \brief Set data
+//      */
+//     void setData(const VehicleTypeClassData & data);
+// 
+//     /*! \brief Get data
+//      */
+//     VehicleTypeClassData data() const
+//     {
+//       return mData;
+//     }
+
+    /*! \brief Validate all attributes of this vehicle type class
+     *
+     * \note Unique constraint are not checked here
+     */
+    bool validate();
+
     /*! \brief Get last error
      */
     Mdt::Error lastError() const
@@ -74,4 +93,4 @@ namespace Mdt{ namespace Railway{
 
 }} // namespace Mdt{ namespace Railway{
 
-#endif // #ifndef MDT_RAILWAY_VEHICLE_TYPE_CLASS_EDITION_H
+#endif // #ifndef MDT_RAILWAY_EDIT_VEHICLE_TYPE_CLASS_H

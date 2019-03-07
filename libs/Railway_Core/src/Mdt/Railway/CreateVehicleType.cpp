@@ -21,10 +21,12 @@
 #include "CreateVehicleType.h"
 #include "VehicleTypeData.h"
 #include "VehicleTypeDataValidator.h"
+#include "VehicleTypeClassData.h"
+#include "Mdt/ErrorCode.h"
 
 namespace Mdt{ namespace Railway{
 
-CreateVehicleType::CreateVehicleType(const std::shared_ptr< VehicleTypeRepository >& repository, QObject* parent)
+CreateVehicleType::CreateVehicleType(const std::shared_ptr<VehicleTypeRepository> & repository, QObject* parent)
  : QObject(parent),
    mRepository(repository)
 {
@@ -35,22 +37,34 @@ bool CreateVehicleType::execute(const CreateVehicleTypeRequest & request)
 {
   CreateVehicleTypeResponse response;
 
+  response.transactionId = request.transactionId;
+
   if(!checkRequest(request)){
     return false;
   }
+
   VehicleTypeData vehicleType;
   vehicleType.setManufacturerSerie(request.manufacturerSerie);
+  vehicleType.setVehicleTypeClassId(request.vehicleTypeClassId);
   const auto vehicleTypeId = mRepository->add(vehicleType);
   if(!vehicleTypeId){
-    emit failed(vehicleTypeId.error());
+    buildAndNotifyError(request, vehicleTypeId.error());
     return false;
   }
-  
-  response.vehicleTypeId = QString::number(25);
-  response.className = request.className;
-  response.manufacturerSerie = QString::number(7);
 
-  emit succeed(response);
+  const auto vehicleTypeClass = mRepository->getVehicleTypeClassById(request.vehicleTypeClassId);
+  if(!vehicleTypeClass){
+    buildAndNotifyError(request, vehicleTypeClass.error());
+    return false;
+  }
+
+  response.vehicleTypeId = *vehicleTypeId;
+  response.vehicleTypeClassId = vehicleType.vehicleTypeClassId();
+  response.manufacturerSerie = vehicleType.manufacturerSerie();
+  response.vehicleTypeClassName = vehicleTypeClass->name();
+  response.vehicleTypeClassAlias = vehicleTypeClass->alias();
+
+  emit succeeded(response);
 
   return true;
 }
@@ -59,18 +73,40 @@ bool CreateVehicleType::checkRequest(const CreateVehicleTypeRequest & request) c
 {
   VehicleTypeDataValidator validator;
 
-  if(!validator.validateManufacturerSerie(request.manufacturerSerie)){
-    emit failed(validator.lastError());
+  if(!validator.validateVehicleTypeClassId(request.vehicleTypeClassId)){
+    emit failed(request.transactionId, validator.lastError());
     return false;
   }
-//   if(request.className.trimmed().isEmpty()){
-//     const QString msg = tr("Creating vehicle type failed because the vehicle type class is missing.");
-//     const auto error = mdtErrorNewQ(msg, Mdt::Error::Warning, this);
-//     emit failed(error);
-//     return false;
-//   }
+  if(!validator.validateManufacturerSerie(request.manufacturerSerie)){
+    emit failed(request.transactionId, validator.lastError());
+    return false;
+  }
 
   return true;
+}
+
+void CreateVehicleType::buildAndNotifyError(const CreateVehicleTypeRequest & request, const Error& error)
+{
+  if(error.isErrorType<Mdt::ErrorCode>()){
+    const auto errorCode = error.error<Mdt::ErrorCode>();
+    switch(errorCode){
+      case Mdt::ErrorCode::UniqueConstraintError:
+        notifyUniqueConstraintError(request, error);
+        return;
+      default:
+        break;
+    }
+  }
+
+  emit failed(request.transactionId, error);
+}
+
+void CreateVehicleType::notifyUniqueConstraintError(const CreateVehicleTypeRequest & request, const Error& inError)
+{
+  const auto msg = tr("A vehicle type with given data allready exists");
+  auto error = mdtErrorNewQ(msg, Mdt::Error::Warning, this);
+  error.stackError(inError);
+  emit failed(request.transactionId, error);
 }
 
 }} // namespace Mdt{ namespace Railway{

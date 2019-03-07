@@ -18,11 +18,11 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "VehicleTypeClassEdition.h"
+#include "EditVehicleTypeClass.h"
 
 namespace Mdt{ namespace Railway{
 
-bool VehicleTypeClassEdition::setName(const QString& name)
+bool EditVehicleTypeClass::setName(const QString& name)
 {
   if( !mFieldDataValidator.validateData(name, mData.def().name()) ){
     mLastError = mFieldDataValidator.toGenericError();
@@ -33,13 +33,33 @@ bool VehicleTypeClassEdition::setName(const QString& name)
   return true;
 }
 
-bool VehicleTypeClassEdition::setAlias(const QString& alias)
+bool EditVehicleTypeClass::setAlias(const QString& alias)
 {
   if( !mFieldDataValidator.validateData(alias, mData.def().alias()) ){
     mLastError = mFieldDataValidator.toGenericError();
     return false;
   }
   mData.setAlias(alias);
+
+  return true;
+}
+
+
+// void EditVehicleTypeClass::setData(const VehicleTypeClassData& data)
+// {
+//   mData = data;
+// }
+
+bool EditVehicleTypeClass::validate()
+{
+  if( !mFieldDataValidator.validateData(mData.name(), mData.def().name()) ){
+    mLastError = mFieldDataValidator.toGenericError();
+    return false;
+  }
+  if( !mFieldDataValidator.validateData(mData.alias(), mData.def().alias()) ){
+    mLastError = mFieldDataValidator.toGenericError();
+    return false;
+  }
 
   return true;
 }

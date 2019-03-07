@@ -21,6 +21,7 @@
 #ifndef MDT_RAILWAY_CHOOSE_VEHICLE_TYPE_CLASS_CACHE_H
 #define MDT_RAILWAY_CHOOSE_VEHICLE_TYPE_CLASS_CACHE_H
 
+#include "VehicleTypeClassId.h"
 #include "Entity/VehicleTypeClass.h"
 #include "Mdt/Entity/AbstractAsyncReadOnlyCache.h"
 #include "Mdt/Entity/EntitySelectStatement.h"
@@ -54,7 +55,14 @@ namespace Mdt{ namespace Railway{
      */
     int columnCount() const noexcept override
     {
-      return mSelectStatement.fieldCount();
+//       return mSelectStatement.fieldCount();
+    }
+
+    /*! \brief Get the id column
+     */
+    int idColumn() const noexcept
+    {
+      return 0;
     }
 
     /*! \brief Get the name column
@@ -64,11 +72,17 @@ namespace Mdt{ namespace Railway{
       return 1;
     }
 
+    /*! \brief Get vehicle type class id for \a row
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < rowCount() )
+     */
+    VehicleTypeClassId id(int row) const noexcept;
+
    private:
 
     bool fetchRecords(int count) override;
 
-    Mdt::Entity::EntitySelectStatement<Entity::VehicleTypeClassEntity> mSelectStatement;
+//     Mdt::Entity::EntitySelectStatement<Entity::VehicleTypeClassEntity> mSelectStatement;
     std::shared_ptr<SelectQueryFactory> mSelectQueryFactory;
     std::unique_ptr<SelectQuery> mSelectQuery;
   };

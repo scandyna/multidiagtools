@@ -25,8 +25,8 @@ namespace Mdt{ namespace Railway{
 ChooseVehicleTypeClassCache::ChooseVehicleTypeClassCache(QObject* parent)
  : AbstractAsyncReadOnlyCache(parent)
 {
-  mSelectStatement.addField( mSelectStatement.def().id() );
-  mSelectStatement.addField( mSelectStatement.def().name() );
+//   mSelectStatement.addField( mSelectStatement.def().id() );
+//   mSelectStatement.addField( mSelectStatement.def().name() );
 }
 
 void ChooseVehicleTypeClassCache::setQueryFactory(const std::shared_ptr< ChooseVehicleTypeClassCache::SelectQueryFactory >& factory)
@@ -39,9 +39,17 @@ void ChooseVehicleTypeClassCache::setQueryFactory(const std::shared_ptr< ChooseV
   connect( mSelectQuery.get(), &SelectQuery::errorOccured, this, &ChooseVehicleTypeClassCache::setLastError );
 }
 
+VehicleTypeClassId ChooseVehicleTypeClassCache::id(int row) const noexcept
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  return VehicleTypeClassId::fromQVariant( data(row, idColumn()) );
+}
+
 bool ChooseVehicleTypeClassCache::fetchRecords(int count)
 {
-  mSelectQuery->submitStatement(mSelectStatement, count);
+//   mSelectQuery->submitStatement(mSelectStatement, count);
 
   return true;
 }

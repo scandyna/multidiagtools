@@ -7,10 +7,11 @@ find_package(Qt5 COMPONENTS Test)
 
 set(SOURCE_FILES
   src/TestBase.cpp
+  src/ResponseHandler.cpp
 )
 
 add_library(mdtRailway_SqlTest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtRailway_SqlTest Railway_Core Application_Core TestLib_Core Qt5::Test)
+target_link_libraries(mdtRailway_SqlTest Railway_Sql Sql_Core_SQLite Application_Core TestLib_Core Qt5::Test)
 
 #=============== Helper functions ===========
 
@@ -26,4 +27,5 @@ endfunction()
 
 #================= Tests ====================
 
-# addRailway_SqlTest("")
+addRailway_SqlTest("EditVehicleTypeClassTableModelTest")
+addRailway_SqlTest("EditVehicleTypeTableModelTest")

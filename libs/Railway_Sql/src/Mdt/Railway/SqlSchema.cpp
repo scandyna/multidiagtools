@@ -20,13 +20,21 @@
  ****************************************************************************/
 #include "SqlSchema.h"
 #include "Mdt/Railway/Entity/VehicleTypeClass.h"
+#include "Mdt/Railway/Entity/VehicleType.h"
 #include "Mdt/Entity/SqlTable.h"
 #include "Mdt/Sql/Schema/Driver.h"
-
+#include "Mdt/Sql/Schema/ForeignKeySettings.h"
 
 #include <QDebug>
 
+using Mdt::Entity::SqlTable;
+using Mdt::Sql::Schema::ForeignKeyAction;
+
 namespace Mdt{ namespace Railway{
+
+SqlSchema::SqlSchema()
+{
+}
 
 bool SqlSchema::createSchema(const QSqlDatabase& dbConnection)
 {
@@ -38,10 +46,34 @@ bool SqlSchema::createSchema(const QSqlDatabase& dbConnection)
     return false;
   }
 
-  if( !driver.createTable( Mdt::Entity::SqlTable::fromEntity<Entity::VehicleTypeClassEntity>() ) ){
+  Mdt::Sql::Schema::ForeignKeySettings commonForeignKeySettings;
+  commonForeignKeySettings.setIndexed(true);
+  commonForeignKeySettings.setOnDeleteAction(ForeignKeyAction::Restrict);
+  commonForeignKeySettings.setOnUpdateAction(ForeignKeyAction::Cascade);
+
+  auto vehicleTypeClassTable = SqlTable::fromEntity<Entity::VehicleTypeClassEntity>();
+  SqlTable::addUniqueConstraintToTable<Entity::VehicleTypeClassNameUniqueConstraint>(vehicleTypeClassTable);
+  if( !driver.createTable(vehicleTypeClassTable) ){
     qDebug() << "Create VehicleTypeClass table failed";
     return false;
   }
+
+  auto vehicleTypeTable = SqlTable::fromEntity<Entity::VehicleTypeEntity>();
+  SqlTable::addForeignKeyFromRelationToTable<Entity::VehicleTypeClassVehicleTypeRelation>(vehicleTypeTable, commonForeignKeySettings);
+  SqlTable::addUniqueConstraintToTable<Entity::VehicleTypeUniqueConstraint>(vehicleTypeTable);
+  if( !driver.createTable(vehicleTypeTable) ){
+    qDebug() << "Create VehicleType table failed";
+    return false;
+  }
+
+//   if( !driver.createTable( Mdt::Entity::SqlTable::fromEntity<Entity::VehicleTypeClassEntity>() ) ){
+//     qDebug() << "Create VehicleTypeClass table failed";
+//     return false;
+//   }
+//   if( !driver.createTable( Mdt::Entity::SqlTable::fromEntity<Entity::VehicleTypeEntity>() ) ){
+//     qDebug() << "Create VehicleType table failed";
+//     return false;
+//   }
 
   return true;
 }
