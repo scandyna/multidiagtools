@@ -12,6 +12,12 @@ set(SOURCE_FILES
     Mdt/Sql/FieldNameValueMap.cpp
     Mdt/Sql/PrimaryKeyRecord.cpp
 #     Mdt/Sql/Query.cpp
+    Mdt/Sql/StatementAlgorithm.cpp
+    Mdt/Sql/QueryExpressionSqlTransform.cpp
+    Mdt/Sql/EntityAlias.cpp
+    Mdt/Sql/FieldAlias.cpp
+    Mdt/Sql/QueryEntity.cpp
+    Mdt/Sql/QueryField.cpp
     Mdt/Sql/AbstractQuery.cpp
     Mdt/Sql/InsertStatement.cpp
     Mdt/Sql/InsertQuery.cpp
@@ -43,7 +49,6 @@ set(SOURCE_FILES
     Mdt/Sql/SelectStatement.cpp
     Mdt/Sql/SelectStatementSqlTransform.cpp
     Mdt/Sql/ConnectionParameters.cpp
-    Mdt/Sql/AbstractSelectQuery.cpp
     Mdt/Sql/SelectQuery.cpp
     Mdt/Sql/AsyncQuery.cpp
     Mdt/Sql/AsyncQueryConnection.cpp
@@ -83,7 +88,7 @@ mdt_add_library(
   NAME Sql_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Expected LibraryInfo_Core Error_Core Algorithm Container Qt5::Sql FilterExpression # TODO remove FilterExpression once possible
+  LINK_DEPENDENCIES Expected LibraryInfo_Core Error_Core Algorithm Container QueryExpression_Core Qt5::Sql FilterExpression # TODO remove FilterExpression once possible
 )
 mdt_set_library_description(
   NAME Sql_Core

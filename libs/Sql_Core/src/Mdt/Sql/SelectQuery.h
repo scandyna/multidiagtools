@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_SELECT_QUERY_H
 #define MDT_SQL_SELECT_QUERY_H
 
-#include "AbstractSelectQuery.h"
+#include "AbstractQuery.h"
 #include "MdtSql_CoreExport.h"
 // #include "SelectStatement.h"
 
@@ -47,7 +47,7 @@ namespace Mdt{ namespace Sql{
    *  If SelectStatement can not handle some query, and a raw SQL string must be executed,
    *  consider using QSqlQuery directly.
    */
-  class MDT_SQL_CORE_EXPORT SelectQuery : public AbstractSelectQuery
+  class MDT_SQL_CORE_EXPORT SelectQuery : public AbstractQuery
   {
    Q_OBJECT
 

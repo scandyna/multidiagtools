@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,13 +23,13 @@
 namespace Mdt{ namespace Sql{
 
 SelectQuery::SelectQuery(const QSqlDatabase& db)
- : AbstractSelectQuery(db)
+ : AbstractQuery(db)
 {
   Q_ASSERT(db.isValid());
 }
 
 SelectQuery::SelectQuery(QObject* parent, const QSqlDatabase& db)
- : AbstractSelectQuery(parent, db)
+ : AbstractQuery(parent, db)
 {
   Q_ASSERT(db.isValid());
 }
