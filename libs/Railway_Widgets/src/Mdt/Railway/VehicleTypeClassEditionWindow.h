@@ -22,8 +22,10 @@
 #define MDT_RAILWAY_VEHICLE_TYPE_CLASS_EDITION_WINDOW_H
 
 #include "Mdt/Railway/VehicleTypeClass.h"
-#include "Mdt/Railway/EditVehicleTypeClassCache.h"
-#include "Mdt/Railway/EditVehicleTypeClassCacheAsync.h"
+
+// #include "Mdt/Railway/EditVehicleTypeClassCache.h"
+// #include "Mdt/Railway/EditVehicleTypeClassCacheAsync.h"
+
 #include "Mdt/Railway/VehicleTypeClassRepository.h"
 #include "Mdt/QueryExpression/AbstractSelectQueryFactory.h"
 #include "Mdt/QueryExpression/AbstractAsyncSelectQueryFactory.h"
@@ -61,25 +63,35 @@ namespace Mdt{ namespace Railway{
      */
     ~VehicleTypeClassEditionWindow();
 
-    /*! \brief Set vehicle type class repository
-     */
-    void setVehicleTypeClassRepository(const VehicleTypeClassRepositoryHandle & repository);
-
-    /*! \brief Set vehicle type class repository
-     */
-    void setVehicleTypeClassRepository(const std::shared_ptr<VehicleTypeClassRepository> & repository);
-
-    /*! \brief Set the query factory
+    /*! \brief Set the table model
      *
-     * \pre \a factory must be valid
+     * \pre \a model must be a valid pointer
      */
-    void setSelectQueryFactory(const std::shared_ptr<Mdt::QueryExpression::AbstractSelectQueryFactory> & factory);
+    void setModel(const std::shared_ptr<EditVehicleTypeClassTableModel> & model);
 
-    /*! \brief Set the async query factory
-     *
-     * \pre \a factory must be valid
-     */
-    void setAsyncSelectQueryFactory(const std::shared_ptr<Mdt::QueryExpression::AbstractAsyncSelectQueryFactory> & factory);
+//     /*! \brief Set vehicle type class repository
+//      */
+//     void setVehicleTypeClassRepository(const VehicleTypeClassRepositoryHandle & repository);
+
+//     /*! \brief Set vehicle type class repository
+//      */
+//     void setVehicleTypeClassRepository(const std::shared_ptr<VehicleTypeClassRepository> & repository);
+
+//     /*! \brief Set the query factory
+//      *
+//      * \pre \a factory must be valid
+//      */
+//     void setSelectQueryFactory(const std::shared_ptr<Mdt::QueryExpression::AbstractSelectQueryFactory> & factory);
+
+//     /*! \brief Set the async query factory
+//      *
+//      * \pre \a factory must be valid
+//      */
+//     void setAsyncSelectQueryFactory(const std::shared_ptr<Mdt::QueryExpression::AbstractAsyncSelectQueryFactory> & factory);
+
+   public slots:
+
+    void displayError(const Mdt::Error & error);
 
    private slots:
 
@@ -90,15 +102,14 @@ namespace Mdt{ namespace Railway{
 
    private:
 
-    void displayError(const Mdt::Error & error);
     void createUndoActions();
 
     std::unique_ptr<Ui::VehicleTypeClassEditionWindow> mUi;
-    VehicleTypeClassTableModel *mTableModel;
-    EditVehicleTypeClassTableModel *mEditVehicleTypeClassTableModel;
-    Mdt::Entity::AbstractReadOnlyCacheTableModel *mEditVehicleTypeClassTableModelAsync;
-    EditVehicleTypeClassCache mEditVehicleTypeClassCache;
-    EditVehicleTypeClassCacheAsync mEditVehicleTypeClassCacheAsync;
+//     VehicleTypeClassTableModel *mTableModel;
+    std::shared_ptr<EditVehicleTypeClassTableModel> mEditVehicleTypeClassTableModel;
+//     Mdt::Entity::AbstractReadOnlyCacheTableModel *mEditVehicleTypeClassTableModelAsync;
+//     EditVehicleTypeClassCache mEditVehicleTypeClassCache;
+//     EditVehicleTypeClassCacheAsync mEditVehicleTypeClassCacheAsync;
     VehicleTypeClass *mVehicleTypeClass;
     QUndoStack *mUndoStack;
     QAction *mUndoAction;

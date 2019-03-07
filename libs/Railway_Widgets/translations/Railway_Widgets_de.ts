@@ -120,6 +120,10 @@
         <source>&amp;New</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Available vehicle types</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VehicleTypeEditionWidget</name>

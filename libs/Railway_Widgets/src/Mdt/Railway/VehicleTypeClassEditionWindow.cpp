@@ -78,23 +78,21 @@ namespace Mdt{ namespace Railway{
 VehicleTypeClassEditionWindow::VehicleTypeClassEditionWindow(QWidget* parent)
  : QMainWindow(parent),
    mUi( std::make_unique<Ui::VehicleTypeClassEditionWindow>() ),
-   mTableModel( new VehicleTypeClassTableModel(this) ),
-   mEditVehicleTypeClassTableModel( new EditVehicleTypeClassTableModel(this) ),
-   mEditVehicleTypeClassTableModelAsync( new AbstractReadOnlyCacheTableModel(this) ),
+   /* mTableModel( new VehicleTypeClassTableModel(this) ), */
    mVehicleTypeClass( new VehicleTypeClass(this) ),
    mUndoStack( new QUndoStack(this) )
 {
   mUi->setupUi(this);
 
-  mUi->tableView->setModel( mTableModel );
-  using Delegate = Mdt::Entity::FieldAttributesItemDelegate<Entity::VehicleTypeClassEntity>;
-  mUi->tableView->setItemDelegate( new Delegate(this) );
+//   mUi->tableView->setModel( mTableModel );
+//   using Delegate = Mdt::Entity::FieldAttributesItemDelegate<Entity::VehicleTypeClassEntity>;
+//   mUi->tableView->setItemDelegate( new Delegate(this) );
 
-  mEditVehicleTypeClassTableModel->setCache(&mEditVehicleTypeClassCache);
-  mUi->tvEditVehicleTypeClass->setModel(mEditVehicleTypeClassTableModel);
+//   mEditVehicleTypeClassTableModel->setCache(&mEditVehicleTypeClassCache);
+//   mUi->tvEditVehicleTypeClass->setModel(mEditVehicleTypeClassTableModel);
 
-  mEditVehicleTypeClassTableModelAsync->setCache(&mEditVehicleTypeClassCacheAsync);
-  mUi->tvEditVehicleTypeClassAsync->setModel(mEditVehicleTypeClassTableModelAsync);
+//   mEditVehicleTypeClassTableModelAsync->setCache(&mEditVehicleTypeClassCacheAsync);
+//   mUi->tvEditVehicleTypeClassAsync->setModel(mEditVehicleTypeClassTableModelAsync);
 
   mUi->undoView->setStack(mUndoStack);
 
@@ -111,46 +109,70 @@ VehicleTypeClassEditionWindow::~VehicleTypeClassEditionWindow()
 {
 }
 
-void VehicleTypeClassEditionWindow::setVehicleTypeClassRepository(const VehicleTypeClassRepositoryHandle& repository)
+void VehicleTypeClassEditionWindow::setModel(const std::shared_ptr<EditVehicleTypeClassTableModel> & model)
 {
-  mVehicleTypeClass->setRepository(repository);
-  mTableModel->setRepository(repository);
+  Q_ASSERT(model.get() != nullptr);
+
+  mEditVehicleTypeClassTableModel = model;
+  mUi->tvEditVehicleTypeClass->setModel(mEditVehicleTypeClassTableModel.get());
+
+  using Delegate = Mdt::Entity::FieldAttributesItemDelegate<Entity::VehicleTypeClassEntity>;
+  mUi->tvEditVehicleTypeClass->setItemDelegate( new Delegate(this) );
+
 }
 
-void VehicleTypeClassEditionWindow::setVehicleTypeClassRepository(const std::shared_ptr<VehicleTypeClassRepository> & repository)
-{
-  mEditVehicleTypeClassCache.setVehicleTypeClassRepository(repository);
-//   mEditVehicleTypeClassTableModel->setVehicleTypeClassRepository(repository);
-}
+// void VehicleTypeClassEditionWindow::setVehicleTypeClassRepository(const VehicleTypeClassRepositoryHandle& repository)
+// {
+//   mVehicleTypeClass->setRepository(repository);
+//   mTableModel->setRepository(repository);
+// }
 
-void VehicleTypeClassEditionWindow::setSelectQueryFactory(const std::shared_ptr<QueryExpression::AbstractSelectQueryFactory> & factory)
-{
-  Q_ASSERT(factory.get() != nullptr);
-  Q_ASSERT(factory->isValid());
+// void VehicleTypeClassEditionWindow::setVehicleTypeClassRepository(const std::shared_ptr<VehicleTypeClassRepository> & repository)
+// {
+// //   mEditVehicleTypeClassCache.setVehicleTypeClassRepository(repository);
+// //   mEditVehicleTypeClassTableModel->setVehicleTypeClassRepository(repository);
+// }
 
-  mEditVehicleTypeClassCache.setSelectQueryFactory(factory);
-  if(!mEditVehicleTypeClassCache.fetchAll()){
-    displayError(mEditVehicleTypeClassCache.lastError());
-  }
-//   mEditVehicleTypeClassTableModel->setSelectQueryFactory(factory);
-//   if(!mEditVehicleTypeClassTableModel->fetchAll()){
-//     displayError(mEditVehicleTypeClassTableModel->lastError());
-//   }
-}
-
-void VehicleTypeClassEditionWindow::setAsyncSelectQueryFactory(const std::shared_ptr< QueryExpression::AbstractAsyncSelectQueryFactory >& factory)
-{
-  Q_ASSERT(factory.get() != nullptr);
+// void VehicleTypeClassEditionWindow::setSelectQueryFactory(const std::shared_ptr<QueryExpression::AbstractSelectQueryFactory> & factory)
+// {
+//   Q_ASSERT(factory.get() != nullptr);
 //   Q_ASSERT(factory->isValid());
+// 
+// //   mEditVehicleTypeClassCache.setSelectQueryFactory(factory);
+// //   if(!mEditVehicleTypeClassCache.fetchAll()){
+// //     displayError(mEditVehicleTypeClassCache.lastError());
+// //   }
+// //   mEditVehicleTypeClassTableModel->setSelectQueryFactory(factory);
+// //   if(!mEditVehicleTypeClassTableModel->fetchAll()){
+// //     displayError(mEditVehicleTypeClassTableModel->lastError());
+// //   }
+// }
 
-  mEditVehicleTypeClassCacheAsync.setQueryFactory(factory);
-  mEditVehicleTypeClassCacheAsync.fetchAll();
+// void VehicleTypeClassEditionWindow::setAsyncSelectQueryFactory(const std::shared_ptr< QueryExpression::AbstractAsyncSelectQueryFactory >& factory)
+// {
+//   Q_ASSERT(factory.get() != nullptr);
+// //   Q_ASSERT(factory->isValid());
+// 
+// //   mEditVehicleTypeClassCacheAsync.setQueryFactory(factory);
+// //   mEditVehicleTypeClassCacheAsync.fetchAll();
+// }
+
+void VehicleTypeClassEditionWindow::displayError(const Error& error)
+{
+  Mdt::ErrorDialog dialog(error);
+  dialog.exec();
 }
 
 void VehicleTypeClassEditionWindow::addVehicleTypeClass()
 {
-  mTableModel->insertRow(mTableModel->rowCount());
-  mEditVehicleTypeClassCache.appendRow();
+  Q_ASSERT(mEditVehicleTypeClassTableModel.get() != nullptr);
+
+//   mTableModel->insertRow(mTableModel->rowCount());
+
+  mEditVehicleTypeClassTableModel->insertRow(0);
+//   mEditVehicleTypeClassTableModel->insertRow( mEditVehicleTypeClassTableModel->rowCount() );
+
+  //   mEditVehicleTypeClassCache.appendRow();
 
 //   auto *command = new AddVehicleTypeClassCommand(mTableModel);
 //   mUndoStack->push(command);
@@ -158,29 +180,30 @@ void VehicleTypeClassEditionWindow::addVehicleTypeClass()
 
 void VehicleTypeClassEditionWindow::removeSelectedVehicleTypeClasses()
 {
-  Mdt::ItemModel::removeRows(mTableModel, mUi->tableView->selectionModel());
-  Mdt::ItemModel::removeRows(mEditVehicleTypeClassTableModel, mUi->tvEditVehicleTypeClass->selectionModel());
+  Q_ASSERT(mEditVehicleTypeClassTableModel.get() != nullptr);
+
+//   Mdt::ItemModel::removeRows(mTableModel, mUi->tableView->selectionModel());
+  Mdt::ItemModel::removeRows(mEditVehicleTypeClassTableModel.get(), mUi->tvEditVehicleTypeClass->selectionModel());
 }
 
 void VehicleTypeClassEditionWindow::unremoveSelectedVehicleTypeClasses()
 {
-  Mdt::ItemModel::cancelRemoveRows(mTableModel, mUi->tableView->selectionModel());
+  Q_ASSERT(mUi->tvEditVehicleTypeClass->selectionModel() != nullptr);
+
+  Mdt::ItemModel::cancelRemoveRows(mEditVehicleTypeClassTableModel.get(), mUi->tvEditVehicleTypeClass->selectionModel());
 }
 
 void VehicleTypeClassEditionWindow::save()
 {
+  Q_ASSERT(mEditVehicleTypeClassTableModel.get() != nullptr);
+
+  mEditVehicleTypeClassTableModel->submitChanges();
 //   if(!mVehicleTypeClass->submitChanges()){
 //     displayError(mVehicleTypeClass->lastError());
 //   }
-  if(!mEditVehicleTypeClassCache.submitChanges()){
-    displayError(mEditVehicleTypeClassCache.lastError());
-  }
-}
-
-void VehicleTypeClassEditionWindow::displayError(const Error& error)
-{
-  Mdt::ErrorDialog dialog(error);
-  dialog.exec();
+//   if(!mEditVehicleTypeClassCache.submitChanges()){
+//     displayError(mEditVehicleTypeClassCache.lastError());
+//   }
 }
 
 void VehicleTypeClassEditionWindow::createUndoActions()

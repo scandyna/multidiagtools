@@ -23,8 +23,13 @@
 
 #include "Mdt/Railway/CreateVehicleType.h"
 #include "Mdt/Railway/Error.h"
-#include "Mdt/Railway/ChooseVehicleTypeClassCache.h"
+#include "Mdt/Railway/VehicleTypeClassId.h"
+#include "Mdt/Railway/EditVehicleTypeClassTableModel.h"
+#include "Mdt/Railway/EditVehicleTypeTableModel.h"
 #include "Mdt/QueryExpression/AbstractAsyncSelectQueryFactory.h"
+#include "Mdt/ItemModel/ProxyModelContainer.h"
+#include "Mdt/ItemModel/SelectionModelCurrentRowChanged.h"
+#include "Mdt/ItemEditor/DataWidgetMapper.h"
 #include "Mdt/Error.h"
 #include "MdtRailway_WidgetsExport.h"
 #include <QWidget>
@@ -55,34 +60,38 @@ namespace Mdt{ namespace Railway{
      */
     ~VehicleTypeEditionWindow();
 
-    /*! \brief Set the query factory
-     *
-     * \pre \a factory must be valid
-     */
-    void setQueryFactory(const std::shared_ptr<SelectQueryFactory> & factory);
+    void setVehicleTypeClassTableModel(const std::shared_ptr<EditVehicleTypeClassTableModel> & model);
+
+    void setEditVehicleTypeTableModel(const std::shared_ptr<EditVehicleTypeTableModel> & model);
 
    public slots:
 
-    void displayCreatedVehicleType(const CreateVehicleTypeResponse & response);
+    void displayError(const Mdt::Error & error);
 
-    void handleError(const Error & error);
+//    signals:
 
-   signals:
-
-    void createVehicleTypeRequested(const CreateVehicleTypeRequest & request);
+//     void createVehicleTypeRequested(const CreateVehicleTypeRequest & request);
 
    private slots:
 
+    void addNew();
     void save();
 
    private:
 
-    CreateVehicleTypeRequest makeCreateVehicleTypeRequest() const;
-    bool validateRequest(const CreateVehicleTypeRequest & request);
+    void setSelectedVehicleTypeClassIdToModel();
+    VehicleTypeClassId selectedVehicleTypeClassId() const;
     void setupChooseVehicleTypeClass();
-    void displayError(const Mdt::Error & error);
+    void setupVehicleTypeModels();
+    void setupChooseVehicleType();
+    void setupEditVehicleType();
 
-    ChooseVehicleTypeClassCache mChooseVehicleTypeClassCache;
+    std::shared_ptr<EditVehicleTypeClassTableModel> mVehicleTypeClassTableModel;
+    Mdt::ItemModel::ProxyModelContainer mEditVehicleTypeModelContainer;
+    Mdt::ItemModel::SelectionModelCurrentRowChanged mVehicleTypeCurrentRowChanged;
+    std::shared_ptr<EditVehicleTypeTableModel> mEditVehicleTypeTableModel;
+    Mdt::ItemEditor::DataWidgetMapper *mWidgetMapper = nullptr;
+    
     std::unique_ptr<Ui::VehicleTypeEditionWindow> mUi;
   };
 
