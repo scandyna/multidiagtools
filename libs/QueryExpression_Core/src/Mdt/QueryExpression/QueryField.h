@@ -59,10 +59,6 @@ namespace Mdt{ namespace QueryExpression{
     using reference = value_type &;
     using const_reference = const value_type &;
 
-//     /*! \brief Construct a null query field
-//      */
-//     QueryField() = default;
-
     /*! \brief Copy construct a query field from \a other
      */
     QueryField(const QueryField & other) = default;
@@ -78,13 +74,6 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Move assign \a other to this query field
      */
     QueryField & operator=(QueryField && other) noexcept = default;
-
-//     /*! \brief Construct a select all field
-//      */
-//     QueryField(const SelectAllField & field)
-//      : BaseClass( Expression::make(field) )
-//     {
-//     }
 
     /*! \brief Construct a query field
      *
@@ -105,27 +94,12 @@ namespace Mdt{ namespace QueryExpression{
     {
     }
 
-//     /*! \brief Check if this query entity is null
-//      */
-//     bool isNull() const
-//     {
-//       return entityAndField().isNull();
-//       //return internalVariant().isNull();
-//     }
-
     /*! \brief Access internal entity and field
      */
     const EntityAndField & entityAndField() const
     {
       return boost::proto::value(*this);
     }
-
-//     /*! \internal Access internal variant of this query field
-//      */
-//     const QueryFieldVariant & internalVariant() const
-//     {
-//       return boost::proto::value(*this);
-//     }
 
   };
 }} // namespace Mdt{ namespace QueryExpression{
