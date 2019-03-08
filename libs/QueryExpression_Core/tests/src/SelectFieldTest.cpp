@@ -110,10 +110,10 @@ void SelectFieldTest::constructGetTest()
   QueryEntity person("Person");
   QueryEntity address("Address", EntityAlias("ADR"));
 
-//   SelectField nullSelectField;
-//   QVERIFY( nullSelectField.isNull() );
-//   QVERIFY( boost::get<SelectAllField>(&nullSelectField.internalVariant().internalVariant()) == nullptr );
-//   QVERIFY( boost::get<EntityAndField>(&nullSelectField.internalVariant().internalVariant()) == nullptr );
+  SelectField nullSelectField;
+  QVERIFY( nullSelectField.isNull() );
+  QVERIFY( boost::get<SelectAllField>(&nullSelectField.internalVariant().internalVariant()) == nullptr );
+  QVERIFY( boost::get<EntityAndField>(&nullSelectField.internalVariant().internalVariant()) == nullptr );
 
   SelectField selectAll1(SelectAllField{});
   QVERIFY( !selectAll1.isNull() );

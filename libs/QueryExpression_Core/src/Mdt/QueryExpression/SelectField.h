@@ -73,10 +73,6 @@ namespace Mdt{ namespace QueryExpression{
    * \endcode
    *
    * A select field can also be constructed from a QueryField.
-   *
-   * \todo Should make default constructible, so we can make select statement classs in a intuitive way.
-   *       Will also require to have some NullField flag in the variant
-   *       Note: why ?
    */
   struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectField
   {
@@ -85,6 +81,10 @@ namespace Mdt{ namespace QueryExpression{
     using value_type = SelectFieldVariant;
     using reference = value_type &;
     using const_reference = const value_type &;
+
+    /*! \brief Construct a null select field
+     */
+    SelectField() noexcept = default;
 
     /*! \brief Construct a select all field
      */

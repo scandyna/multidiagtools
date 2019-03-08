@@ -79,6 +79,8 @@ void SelectFieldListTest::addFieldTest()
 
 void SelectFieldListTest::fieldIndexTest()
 {
+  QFAIL("Remove or Fix");
+
   QueryEntity person("Person", EntityAlias("P"));
   QueryEntity address("Address", EntityAlias("ADR"));
 
@@ -94,8 +96,6 @@ void SelectFieldListTest::fieldIndexTest()
   QCOMPARE(list.fieldIndex( QueryField("id") ), 0);
   QCOMPARE(list.fieldIndex( QueryField(person, "id") ), 1);
   QCOMPARE(list.fieldIndex( QueryField(address, "id") ), 2);
-
-  QFAIL("Remove or Fix");
 }
 
 /*
