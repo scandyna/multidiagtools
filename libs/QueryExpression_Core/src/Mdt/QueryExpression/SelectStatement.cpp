@@ -90,7 +90,7 @@ void SelectStatement::joinEntity(const QueryEntity & entity, const JoinConstrain
   Q_ASSERT(!entity.isNull());
   Q_ASSERT(!joinConstraintExpression.isNull());
 
-//   mJoinClauseList.addClause(JoinOperator::Join, entity, joinConstraintExpression);
+  mJoinClauseList.addClause(JoinOperator::Join, entity, joinConstraintExpression);
 }
 
 void SelectStatement::setFilterExpression(const FilterExpression & filter)

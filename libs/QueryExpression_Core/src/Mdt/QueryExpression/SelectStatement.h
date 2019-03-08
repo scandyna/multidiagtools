@@ -270,6 +270,11 @@ namespace Mdt{ namespace QueryExpression{
     void joinEntity(const QueryEntity & entity, const JoinExpr & join)
     {
       Q_ASSERT(!entity.isNull());
+
+      JoinConstraintExpression joinConstraint;
+      joinConstraint.setJoin(join);
+      Q_ASSERT(!joinConstraint.isNull());
+      joinEntity(entity, joinConstraint);
     }
 
     /*! \brief Join \a entity to this statement

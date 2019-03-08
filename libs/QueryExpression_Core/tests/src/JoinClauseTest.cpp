@@ -38,12 +38,6 @@ using namespace Mdt::QueryExpression;
 
 void JoinClauseTest::joinClauseTest()
 {
-//   SelectEntity person( EntityName("Person") );
-//   SelectEntity address( EntityName("Address"), "ADR");
-// 
-//   SelectField personId( person, FieldName("id") );
-//   SelectField addressPersonId( address, FieldName("personId") );
-
   QueryEntity person("Person");
   QueryEntity address("Address", EntityAlias("ADR"));
 

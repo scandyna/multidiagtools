@@ -435,12 +435,6 @@ void ExpressionTreeTest::filterExpressionTest()
 
 void ExpressionTreeTest::joinConstraintExpressionTest()
 {
-//   SelectEntity person(EntityName("Person"), "P");
-//   SelectEntity address(EntityName("Address"), "ADR");
-// 
-//   SelectField personId(person, FieldName("id"));
-//   SelectField addressPersonId(address, FieldName("personId"));
-
   QueryEntity person("Person", EntityAlias("P"));
   QueryEntity address("Address", EntityAlias("ADR"));
 
