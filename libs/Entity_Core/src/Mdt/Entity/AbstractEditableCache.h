@@ -152,7 +152,7 @@ namespace Mdt{ namespace Entity{
      * This method must be implemented in the concrete class.
      *
      * Once the record has been successfully processed from the backend,
-     *  setRecordFromBackend() should be called to update the corresponding
+     *  fromBackendSetRecord() should be called to update the corresponding
      *  record to the new values.
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
@@ -174,7 +174,7 @@ namespace Mdt{ namespace Entity{
     /*! \brief Update the record at \a row in the backend
      *
      * Once the record has been successfully processed from the backend,
-     *  setRecordFromBackend() should be called to update the corresponding
+     *  fromBackendSetRecord() should be called to update the corresponding
      *  record to the new values.
      *
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).

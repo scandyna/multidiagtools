@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -34,14 +34,14 @@ namespace Mdt{ namespace Entity{ namespace Impl{
 
 SelectFieldVariant createSelectFieldVariant(const QString & entityName, const QString & fieldName)
 {
-  return SelectFieldVariant( EntityAndField( SelectEntity(EntityName(entityName)), FieldName(fieldName) ) );
+//   return SelectFieldVariant( EntityAndField( SelectEntity(EntityName(entityName)), FieldName(fieldName) ) );
 }
 
 ExpressionTreeVertex addEqualityToTree(ExpressionTree & tree,
                                         const QString & primaryEntityName, const QString & pkFieldName,
                                         const QString & foreignEntityName, const QString & fkFieldName)
 {
-  return tree.addNode( createSelectFieldVariant(foreignEntityName, fkFieldName), ComparisonOperator::Equal, createSelectFieldVariant(primaryEntityName, pkFieldName) );
+//   return tree.addNode( createSelectFieldVariant(foreignEntityName, fkFieldName), ComparisonOperator::Equal, createSelectFieldVariant(primaryEntityName, pkFieldName) );
 }
 
 ExpressionTree buildJoinConstraintExpressionTree(const QString& primaryEntityName, const QStringList& pk,

@@ -53,6 +53,11 @@ class AsyncPersonCacheCommonImpl : public QObject
     mBackendLatency = ms;
   }
 
+  int backendLatency() const noexcept
+  {
+    return mBackendLatency;
+  }
+
   int storageRowCount() const
   {
     return mImpl.storageRowCount();
@@ -220,5 +225,6 @@ class AsyncEditPersonCache : public Mdt::Entity::AbstractEditableCache
 };
 
 void populatePersonStorage(AsyncPersonCache & pc, const QStringList & names);
+void populatePersonStorage(AsyncEditPersonCache & pc, const QStringList & names);
 
 #endif // #ifndef ASYNC_PERSON_CACHE_H

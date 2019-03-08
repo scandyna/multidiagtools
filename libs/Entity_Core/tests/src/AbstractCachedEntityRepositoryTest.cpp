@@ -52,7 +52,7 @@ MDT_ENTITY_DEF(
   (firstName, FieldMaxLength(5))
 )
 
-class PersonId : public Mdt::Entity::IntegralUniqueIdTemplate<int>
+class PersonId : public Mdt::Entity::IntegralUniqueIdTemplate<PersonId, int>
 {
  public:
 
@@ -149,7 +149,7 @@ class MemoryPersonRepository : public AbstractPersonRepository
   {
     auto recordCpy = record;
     auto id = getNextId();
-    recordCpy.setId(id);
+    recordCpy.setId(PersonId(id));
     mMem.push_back(recordCpy);
     autoId = id;
     return true;

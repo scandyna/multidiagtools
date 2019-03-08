@@ -33,6 +33,11 @@ class AsyncCacheTest : public QObject
 
   void readOnlyFetchAllTest();
 
+  void updateSubmitUpdateTest();
+
+ private:
+
+  int mTimeout = 1000;
 };
 
 #endif // #ifndef TEST_MAIN_H

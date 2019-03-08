@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -70,7 +70,7 @@ namespace Mdt{ namespace Entity{
     {
       static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
 
-      return Mdt::QueryExpression::SelectField( toSelectEntity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()) );
+//       return Mdt::QueryExpression::SelectField( toSelectEntity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()) );
     }
 
     /*! \brief Create a select field with a field alias
@@ -83,7 +83,7 @@ namespace Mdt{ namespace Entity{
       static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
       Q_ASSERT(!fieldAlias.trimmed().isEmpty());
 
-      return Mdt::QueryExpression::SelectField( toSelectEntity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()), fieldAlias );
+//       return Mdt::QueryExpression::SelectField( toSelectEntity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()), fieldAlias );
     }
 
     /*! \brief Get entity definition

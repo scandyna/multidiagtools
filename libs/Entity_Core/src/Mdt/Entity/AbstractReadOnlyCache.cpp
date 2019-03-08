@@ -116,9 +116,10 @@ void AbstractReadOnlyCache::fromBackendAppendRecord(const VariantRecord& record)
   fromBackendInsertRecords(rowCount(), 1, record);
 }
 
-void AbstractReadOnlyCache::setLastError(const Error& error)
+void AbstractReadOnlyCache::setLastError(const Mdt::Error & error)
 {
   mLastError = error;
+  emit errorOccured(error);
 }
 
 void AbstractReadOnlyCache::beginResetCache()

@@ -73,7 +73,7 @@ namespace Mdt{ namespace Entity{
      * \pre \a row must be in valid range ( 0 <= \a row < rowCount() ).
      * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).
      */
-    QVariant data(int row, int column) const
+    QVariant data(int row, int column) const override
     {
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < rowCount());

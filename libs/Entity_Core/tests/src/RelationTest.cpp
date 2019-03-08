@@ -96,6 +96,44 @@ MDT_ENTITY_DEF(
 
 using TwoFieldRelation = Relation<TwoFieldPkEntity, TwoFieldFkEntity, TwoFieldFkDef::fk1Field, TwoFieldFkDef::fk2Field>;
 
+namespace Entity{
+
+  struct PersonDataStruct
+  {
+    int id;
+    QString name;
+  };
+
+  struct AddressDataStruct
+  {
+    int id;
+    QString street;
+    int personId;
+  };
+
+} // namespace Entity{
+
+MDT_ENTITY_DEF(
+  (Entity, PersonDataStruct),
+  Person,
+  (id, FieldFlag::IsPrimaryKey),
+  (name)
+)
+
+MDT_ENTITY_DEF(
+  (Entity, AddressDataStruct),
+  Address,
+  (id, FieldFlag::IsPrimaryKey),
+  (street),
+  (personId)
+)
+
+namespace Entity{
+
+  using PersonAddressRelation = Mdt::Entity::Relation<PersonEntity, AddressEntity, AddressDef::personIdField>;
+
+} // namespace Entity{
+
 /*
  * Tests
  */
@@ -123,6 +161,11 @@ void RelationTest::forEachForeignFieldTest()
   QCOMPARE(f.fieldNameList.size(), 2);
   QCOMPARE(f.fieldNameList.at(0), QString("fk1"));
   QCOMPARE(f.fieldNameList.at(1), QString("fk2"));
+
+  f.fieldNameList.clear();
+  forEachRelationForeignField<Entity::PersonAddressRelation>(f);
+  QCOMPARE(f.fieldNameList.size(), 1);
+  QCOMPARE(f.fieldNameList.at(0), QString("personId"));
 }
 
 void RelationTest::getPrimaryKeyFieldNameListTest()

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -208,7 +208,8 @@ namespace Mdt{ namespace Entity{
     {
       static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
 
-      ParentClass::addField( entity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()) );
+      //ParentClass::addField( entity(), fieldDef.fieldName() );
+      //ParentClass::addField( entity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()) );
     }
 
     /*! \brief Add a field to this statement
@@ -220,7 +221,7 @@ namespace Mdt{ namespace Entity{
     {
       static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
 
-      ParentClass::addField( entity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()), fieldAlias );
+      //ParentClass::addField( entity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()), fieldAlias );
     }
 
     /*! \brief Add a field to this statement
@@ -230,7 +231,7 @@ namespace Mdt{ namespace Entity{
     {
       static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
 
-      ParentClass::addField( queryEntity.toSelectEntity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()) );
+      //ParentClass::addField( queryEntity.toSelectEntity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()) );
     }
 
     /*! \brief Add a field to this statement
@@ -242,7 +243,7 @@ namespace Mdt{ namespace Entity{
     {
       static_assert( TypeTraits::IsEntityFieldDef<FieldDef>::value, "FieldDef must be a entity field definition type" );
 
-      ParentClass::addField( queryEntity.toSelectEntity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()), fieldAlias );
+      //ParentClass::addField( queryEntity.toSelectEntity(), Mdt::QueryExpression::FieldName(fieldDef.fieldName()), fieldAlias );
     }
 
     /*! \brief Get the index of a field

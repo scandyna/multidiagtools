@@ -42,7 +42,7 @@ namespace Mdt{ namespace Entity{
    * \endcode
    *
    * If a interafce repository is used in the business code,
-   *  the test class will look like tis:
+   *  the test class will look like this:
    * \code
    * class TestPersonRepository : public PersonRepository, public Mdt::Entity::MemoryEntityRepository<PersonData, PersonId>
    * {

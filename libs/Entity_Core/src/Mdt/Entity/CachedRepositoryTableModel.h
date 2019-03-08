@@ -133,6 +133,22 @@ namespace Mdt{ namespace Entity{
       return true;
     }
 
+    /*! \brief Cancel the removal of \a count rows starting from \a row
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count muste be >= 1
+     * \pre \a row + \a count must be in valid range ( 1 <= \a row + \a count <= rowCount() ).
+     */
+    void cancelRemoveRows(int row, int count) override
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(count >= 1);
+      Q_ASSERT( (row+count) <= rowCount() );
+      Q_ASSERT(!mRepositoryHandle.isNull());
+
+      mRepositoryHandle.repository().cancelRemoveRecords(row, count);
+    }
+
     /*! \brief Submit changes to the storage
      *
      * \note QTableView will call submit() on row change,
@@ -153,23 +169,7 @@ namespace Mdt{ namespace Entity{
       return mRepositoryHandle.constRepository().lastError();
     }
 
-   private:
-
-    int cachedRowCount() const override
-    {
-      if(mRepositoryHandle.isNull()){
-        return 0;
-      }
-      return mRepositoryHandle.constRepository().rowCount();
-    }
-
-    int columnCountImpl() const override
-    {
-      if(mRepositoryHandle.isNull()){
-        return 0;
-      }
-      return mRepositoryHandle.constRepository().columnCount();
-    }
+   protected:
 
     QVariant displayRoleData(int row, int column) const override
     {
@@ -191,6 +191,24 @@ namespace Mdt{ namespace Entity{
       mRepositoryHandle.repository().setData(row, column, value);
 
       return true;
+    }
+
+   private:
+
+    int cachedRowCount() const override
+    {
+      if(mRepositoryHandle.isNull()){
+        return 0;
+      }
+      return mRepositoryHandle.constRepository().rowCount();
+    }
+
+    int columnCountImpl() const override
+    {
+      if(mRepositoryHandle.isNull()){
+        return 0;
+      }
+      return mRepositoryHandle.constRepository().columnCount();
     }
 
     Mdt::Container::TableCacheOperation operationAtRow(int row) const override
