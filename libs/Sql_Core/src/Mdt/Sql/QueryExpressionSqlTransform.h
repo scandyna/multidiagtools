@@ -30,6 +30,10 @@
 #include "Mdt/QueryExpression/LogicalOperator.h"
 #include "Mdt/QueryExpression/LikeExpression.h"
 #include "Mdt/QueryExpression/FilterExpression.h"
+#include "Mdt/QueryExpression/JoinOperator.h"
+#include "Mdt/QueryExpression/JoinConstraintExpression.h"
+#include "Mdt/QueryExpression/JoinClause.h"
+#include "Mdt/QueryExpression/JoinClauseList.h"
 #include "Mdt/QueryExpression/SelectStatement.h"
 #include "MdtSql_CoreExport.h"
 #include <QString>
@@ -73,6 +77,22 @@ namespace Mdt{ namespace Sql{
   /*! \internal
    */
   QString MDT_SQL_CORE_EXPORT filterExpressionToSql(const Mdt::QueryExpression::FilterExpression & expression, const QSqlDatabase & db);
+
+  /*! \internal
+   */
+  QString MDT_SQL_CORE_EXPORT joinOperatorToSql(Mdt::QueryExpression::JoinOperator op);
+
+  /*! \internal
+   */
+  QString MDT_SQL_CORE_EXPORT joinConstraintExpressionToSql(const Mdt::QueryExpression::JoinConstraintExpression & expression, const QSqlDatabase & db);
+
+  /*! \internal
+   */
+  QString MDT_SQL_CORE_EXPORT joinClauseToSql(const Mdt::QueryExpression::JoinClause & joinClause, const QSqlDatabase & db);
+
+  /*! \internal
+   */
+  QString MDT_SQL_CORE_EXPORT joinClauseListToSql(const Mdt::QueryExpression::JoinClauseList & joinClauseList, const QSqlDatabase & db);
 
   /*! \internal
    */

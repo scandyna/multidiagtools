@@ -36,9 +36,13 @@ class QueryExpressionSqlTransformTest : public TestBase
   void likeExpressionToSqlTest();
   void likeExpressionToSqlTest_data();
   void filterExpressionToSqlTest();
+  void joinOperatorToSqlTest();
+  void joinConstraintExpressionToSqlTest();
+  void joinClauseToSqlTest();
+  void joinClauseListToSqlTest();
   void selectFromEntityToSqlTest();
   void selectStatementToSqlLimitSyntaxTest();
   void selectStatementToSqlTopSyntaxTest();
   void selectStatementToSqlTest();
-
+  void selectStatementWithJoinToSqlTest();
 };

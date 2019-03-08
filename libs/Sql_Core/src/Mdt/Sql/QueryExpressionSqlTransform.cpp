@@ -241,6 +241,103 @@ QString filterExpressionToSql(const Mdt::QueryExpression::FilterExpression & exp
   return visitor.toSql();
 }
 
+QString joinOperatorToSql(Mdt::QueryExpression::JoinOperator op)
+{
+  using Mdt::QueryExpression::JoinOperator;
+
+  switch(op){
+    case JoinOperator::Join:
+      return QLatin1String("JOIN");
+    case JoinOperator::LeftJoin:
+      return QLatin1String("LEFT JOIN");
+  }
+  return QString();
+}
+
+class JoinConstraintExpressionToSqlVisitor : public Mdt::QueryExpression::AbstractExpressionTreeVisitor
+{
+ public:
+
+  JoinConstraintExpressionToSqlVisitor(const QSqlDatabase & db)
+   : mDatabase(db)
+  {
+  }
+
+  void processPreorder(Mdt::QueryExpression::LogicalOperator) override
+  {
+    mSql += QLatin1Char('(');
+  }
+
+  void processPostorder(Mdt::QueryExpression::LogicalOperator) override
+  {
+    mSql += QLatin1Char(')');
+  }
+
+  void processInorder(Mdt::QueryExpression::ComparisonOperator op) override
+  {
+    mSql += operatorToSql(op);
+  }
+
+  void processInorder(Mdt::QueryExpression::LogicalOperator op) override
+  {
+    mSql += QLatin1Char(')') % operatorToSql(op) % QLatin1Char('(');
+  }
+
+  void processInorder(const Mdt::QueryExpression::EntityAndField& field) override
+  {
+    mSql += fieldToWhereSql(field, mDatabase);
+  }
+
+//   void processInorder(const QVariant & value) override
+//   {
+//     mSql += valueToSql(value, mDatabase);
+//   }
+
+  QString toSql() const
+  {
+    return mSql;
+  }
+
+ private:
+
+  QString mSql;
+  const QSqlDatabase & mDatabase;
+};
+
+QString joinConstraintExpressionToSql(const Mdt::QueryExpression::JoinConstraintExpression & expression, const QSqlDatabase & db)
+{
+  Q_ASSERT(db.isValid());
+
+  JoinConstraintExpressionToSqlVisitor visitor(db);
+  traverseExpressionTree(expression.internalTree(), visitor);
+
+  return visitor.toSql();
+}
+
+QString joinClauseToSql(const Mdt::QueryExpression::JoinClause & joinClause, const QSqlDatabase & db)
+{
+  Q_ASSERT(db.isValid());
+
+  return joinOperatorToSql(joinClause.joinOperator())\
+         % QLatin1String("\n ")\
+         % selectFromEntityToSql(joinClause.entity(), db)\
+         % QLatin1String("\n  ON ")\
+         % joinConstraintExpressionToSql(joinClause.joinConstraintExpression(), db);
+}
+
+QString joinClauseListToSql(const Mdt::QueryExpression::JoinClauseList & joinClauseList, const QSqlDatabase & db)
+{
+  Q_ASSERT(db.isValid());
+  Q_ASSERT(!joinClauseList.isEmpty());
+
+  QString sql = joinClauseToSql(joinClauseList.clauseAt(0), db);
+  for(int i = 1; i < joinClauseList.clauseCount(); ++i){
+    sql += QLatin1Char('\n') % joinClauseToSql(joinClauseList.clauseAt(i), db);
+  }
+
+  return sql;
+}
+
 QString selectFromEntityToSql(const Mdt::QueryExpression::QueryEntity & entity, const QSqlDatabase & db)
 {
   Q_ASSERT(db.isValid());
@@ -265,7 +362,7 @@ QString selectStatementToSqlLimitSyntax(const Mdt::QueryExpression::SelectStatem
       % QLatin1Char('\n') \
       % QLatin1String("FROM ") % selectFromEntityToSql(stm.entity(), db);
   if(stm.hasJoin()){
-    ///sql += QLatin1Char('\n') % joinClauseListToSql(stm.joinClauseList(), db);
+    sql += QLatin1Char('\n') % joinClauseListToSql(stm.joinClauseList(), db);
   }
   if(stm.hasFilter()){
     sql += QLatin1String("\nWHERE ") % filterExpressionToSql(stm.filter(), db);
@@ -295,7 +392,7 @@ QString selectStatementToSqlTopSyntax(const Mdt::QueryExpression::SelectStatemen
       % QLatin1Char('\n') \
       % QLatin1String("FROM ") % selectFromEntityToSql(stm.entity(), db);
   if(stm.hasJoin()){
-    ///sql += QLatin1Char('\n') % joinClauseListToSql(stm.joinClauseList(), db);
+    sql += QLatin1Char('\n') % joinClauseListToSql(stm.joinClauseList(), db);
   }
   if(stm.hasFilter()){
     sql += QLatin1String("\nWHERE ") % filterExpressionToSql(stm.filter(), db);

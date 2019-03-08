@@ -239,6 +239,94 @@ void QueryExpressionSqlTransformTest::filterExpressionToSqlTest()
   QCOMPARE(filterExpressionToSql(filter, db), expectedSql);
 }
 
+void QueryExpressionSqlTransformTest::joinOperatorToSqlTest()
+{
+  using Mdt::QueryExpression::JoinOperator;
+
+  QCOMPARE(joinOperatorToSql(JoinOperator::Join), QString("JOIN"));
+  QCOMPARE(joinOperatorToSql(JoinOperator::LeftJoin), QString("LEFT JOIN"));
+}
+
+void QueryExpressionSqlTransformTest::joinConstraintExpressionToSqlTest()
+{
+  QString expectedSql;
+  const auto db = database();
+  Mdt::QueryExpression::JoinConstraintExpression join;
+
+  QueryEntity person("Person");
+  QueryEntity address("Address", EntityAlias("ADR"));
+
+  QueryField personId(person, "id", FieldAlias("personId"));
+  QueryField addressPersonId(address, "personId");
+
+  join.setJoin(addressPersonId == personId);
+  expectedSql = "\"ADR\".\"personId\"=\"Person\".\"id\"";
+  QCOMPARE(joinConstraintExpressionToSql(join, db), expectedSql);
+}
+
+void QueryExpressionSqlTransformTest::joinClauseToSqlTest()
+{
+  using Mdt::QueryExpression::JoinConstraintExpression;
+  using Mdt::QueryExpression::JoinClause;
+  using Mdt::QueryExpression::JoinOperator;
+
+  QString expectedSql;
+  const auto db = database();
+  JoinConstraintExpression constraintExpression;
+
+  QueryEntity person("Person");
+  QueryEntity address("Address", EntityAlias("ADR"));
+
+  QueryField personId(person, "id", FieldAlias("personId"));
+  QueryField addressPersonId(address, "personId");
+
+  constraintExpression.setJoin(addressPersonId == personId);
+  JoinClause join1(JoinOperator::Join, address, constraintExpression);
+  expectedSql = "JOIN\n"\
+                " \"Address\" \"ADR\"\n"\
+                "  ON \"ADR\".\"personId\"=\"Person\".\"id\"";
+  QCOMPARE(joinClauseToSql(join1, db), expectedSql);
+}
+
+void QueryExpressionSqlTransformTest::joinClauseListToSqlTest()
+{
+  using Mdt::QueryExpression::JoinConstraintExpression;
+  using Mdt::QueryExpression::JoinClause;
+  using Mdt::QueryExpression::JoinClauseList;
+  using Mdt::QueryExpression::JoinOperator;
+
+  QString expectedSql;
+  const auto db = database();
+  JoinConstraintExpression constraintExpression;
+
+  QueryEntity person("Person");
+  QueryEntity address("Address", EntityAlias("ADR"));
+  QueryEntity land("Land");
+
+  QueryField personId(person, "id", FieldAlias("personId"));
+  QueryField addressPersonId(address, "personId");
+  QueryField landId(land, "id");
+  QueryField addressLandId(address, "landId");
+
+  JoinClauseList joinList;
+  constraintExpression.setJoin(addressPersonId == personId);
+  joinList.addClause(JoinOperator::Join, address, constraintExpression);
+  expectedSql = "JOIN\n"\
+                " \"Address\" \"ADR\"\n"\
+                "  ON \"ADR\".\"personId\"=\"Person\".\"id\"";
+  QCOMPARE(joinClauseListToSql(joinList, db), expectedSql);
+
+  constraintExpression.setJoin(addressLandId == landId);
+  joinList.addClause(JoinOperator::Join, land, constraintExpression);
+  expectedSql = "JOIN\n"\
+                " \"Address\" \"ADR\"\n"\
+                "  ON \"ADR\".\"personId\"=\"Person\".\"id\"\n"\
+                "JOIN\n"\
+                " \"Land\"\n"\
+                "  ON \"ADR\".\"landId\"=\"Land\".\"id\"";
+  QCOMPARE(joinClauseListToSql(joinList, db), expectedSql);
+}
+
 void QueryExpressionSqlTransformTest::selectFromEntityToSqlTest()
 {
   QString expectedSql;
@@ -345,6 +433,46 @@ void QueryExpressionSqlTransformTest::selectStatementToSqlTest()
                 "WHERE \"Person\".\"id\">29\n"\
                 "LIMIT 1200";
   QCOMPARE(selectStatementToSql(stm, 1200, db), expectedSql);
+}
+
+void QueryExpressionSqlTransformTest::selectStatementWithJoinToSqlTest()
+{
+  using Mdt::QueryExpression::SelectStatement;
+
+  QString expectedSql;
+  const auto db = database();
+
+  QueryEntity person("Person");
+  QueryEntity address("Address", EntityAlias("ADR"));
+
+  QueryField personId(person, "id");
+  QueryField addressPersonId(address, "personId");
+
+  SelectStatement stm;
+  stm.setEntity(person);
+  stm.selectAllFields();
+  stm.joinEntity(address, addressPersonId == personId);
+  expectedSql = "SELECT\n"\
+                " *\n"\
+                "FROM \"Person\"\n"\
+                "JOIN\n"\
+                " \"Address\" \"ADR\"\n"\
+                "  ON \"ADR\".\"personId\"=\"Person\".\"id\"";
+  QCOMPARE(selectStatementToSql(stm, 0, db), expectedSql);
+
+  stm.clear();
+  stm.setEntity(person);
+  stm.selectAllFields();
+  stm.joinEntity(address, addressPersonId == personId);
+  stm.setFilter(personId > 29);
+  expectedSql = "SELECT\n"\
+                " *\n"\
+                "FROM \"Person\"\n"\
+                "JOIN\n"\
+                " \"Address\" \"ADR\"\n"\
+                "  ON \"ADR\".\"personId\"=\"Person\".\"id\"\n"\
+                "WHERE \"Person\".\"id\">29";
+  QCOMPARE(selectStatementToSql(stm, 0, db), expectedSql);
 }
 
 /*
