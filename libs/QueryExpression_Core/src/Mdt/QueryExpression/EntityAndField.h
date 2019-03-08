@@ -23,16 +23,12 @@
 
 #include "FieldAlias.h"
 #include "QueryEntity.h"
-
-#include "FieldName.h"
-#include "SelectEntity.h"
-
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
 
 namespace Mdt{ namespace QueryExpression{
 
-  /*! \brief Represents a field and the optional field alias and maybe a SelectEntity
+  /*! \brief Represents a field and the optional field alias and maybe a QueryEntity
    */
   class MDT_QUERYEXPRESSION_CORE_EXPORT EntityAndField
   {
@@ -65,25 +61,6 @@ namespace Mdt{ namespace QueryExpression{
     {
       Q_ASSERT(!entity.isNull());
       Q_ASSERT(!mFieldName.isEmpty());
-    }
-
-    /*! \brief Construct with a field name and a optional field alias
-     *
-     * \pre \a fieldName must not be null
-     */
-    [[deprecated]]
-    EntityAndField(const FieldName &, const QString & fieldAlias = QString())
-    {
-    }
-
-    /*! \brief Construct with a select entity, a field name and a optional field alias
-     *
-     * \pre \a entity must not be null
-     * \pre \a fieldName must not be null
-     */
-    [[deprecated]]
-    EntityAndField(const SelectEntity &, const FieldName &, const QString & fieldAlias = QString())
-    {
     }
 
     /*! \brief Copy construct from \a other
@@ -173,7 +150,6 @@ namespace Mdt{ namespace QueryExpression{
     QString mFieldName;
     QString mFieldAlias;
     QueryEntity mEntity;
-//     SelectEntity mEntity;
   };
 
 }} // namespace Mdt{ namespace QueryExpression{

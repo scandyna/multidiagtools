@@ -23,7 +23,7 @@
 
 #include "SelectAllField.h"
 
-#include "QueryFieldVariant.h"
+// #include "QueryFieldVariant.h"
 
 #include "FieldAlias.h"
 #include "EntityAlias.h"

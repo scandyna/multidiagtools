@@ -23,25 +23,6 @@
 
 namespace Mdt{ namespace QueryExpression{
 
-// ExpressionTreeVertex ExpressionTree::addNode(const SelectField & left, ComparisonOperator op, const QVariant& right)
-// {
-//   return addNode( boost::proto::value(left), op, right );
-// }
-
-// ExpressionTreeVertex ExpressionTree::addNode(const SelectFieldVariant & left, ComparisonOperator op, const QVariant & right)
-// {
-//   const auto lv = addVertex(left);
-//   const auto rv = addVertex(right);
-//   const auto v = addVertex(op);
-// 
-//   mRootVertex = v;
-// 
-//   addEdge(v, lv);
-//   addEdge(v, rv);
-// 
-//   return v;
-// }
-
 ExpressionTreeVertex ExpressionTree::addNode(ExpressionTreeVertex leftChild, LogicalOperator op, ExpressionTreeVertex rightChild)
 {
   const auto v = addVertex(op);
@@ -79,15 +60,6 @@ ExpressionTreeVertex ExpressionTree::addVertex(const EntityAndField & field)
 {
   return boost::add_vertex(ExpressionTreeVertexData(field), mGraph);
 }
-
-// ExpressionTreeVertex ExpressionTree::addVertex(const QueryFieldVariant & field)
-// {
-// }
-// 
-// ExpressionTreeVertex ExpressionTree::addVertex(const SelectFieldVariant & field)
-// {
-//   return boost::add_vertex(ExpressionTreeVertexData(field), mGraph);
-// }
 
 ExpressionTreeVertex ExpressionTree::addVertex(const QVariant & value)
 {

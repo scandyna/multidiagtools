@@ -186,6 +186,32 @@ void SelectStatementTest::fieldIndexTest()
   
 }
 
+void SelectStatementTest::filterTest()
+{
+  QueryField id("id");
+
+  SelectStatement stm;
+  QVERIFY(!stm.hasFilter());
+
+  stm.addField(id);
+  stm.addField("name");
+  QVERIFY(!stm.hasFilter());
+
+  stm.setFilter(id == 22);
+  QVERIFY(stm.hasFilter());
+
+  stm.clear();
+  QVERIFY(!stm.hasFilter());
+
+  FilterExpression filter;
+  filter.setFilter(id < 33);
+  stm.setFilterExpression(filter);
+  QVERIFY(stm.hasFilter());
+
+  stm.clear();
+  QVERIFY(!stm.hasFilter());
+}
+
 void SelectStatementTest::joinEntityTest()
 {
   QueryEntity person("Person");

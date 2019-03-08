@@ -63,11 +63,6 @@ namespace Mdt{ namespace QueryExpression{
      */
     ExpressionTree & operator=(ExpressionTree && other) = default;
 
-//     /*! \brief Add a node for \a left select field, \a op operation and \a right value
-//      */
-//     [[deprecated]]
-//     ExpressionTreeVertex addNode(const SelectField & left, ComparisonOperator op, const QVariant & right);
-
     /*! \brief Add a node for \a left field, \a op operation and \a right value
      */
     ExpressionTreeVertex addNode(const EntityAndField & left, ComparisonOperator op, const QVariant & right)
@@ -88,54 +83,6 @@ namespace Mdt{ namespace QueryExpression{
     {
       return addComparisonNode(left, op, right);
     }
-
-//     /*! \brief Add a node for \a left query field, \a op operation and \a right value
-//      */
-//     [[deprecated]]
-//     ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const QVariant & right)
-//     {
-//       return addComparisonNode(left, op, right);
-//     }
-
-//     /*! \brief Add a node for \a left query field, \a op operation and \a right like expression
-//      */
-//     [[deprecated]]
-//     ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const LikeExpressionData & right)
-//     {
-//       return addComparisonNode(left, op, right);
-//     }
-// 
-//     /*! \brief Add a node for \a left query field, \a op operation and \a right select field
-//      */
-//     [[deprecated]]
-//     ExpressionTreeVertex addNode(const QueryFieldVariant & left, ComparisonOperator op, const QueryFieldVariant & right)
-//     {
-//       return addComparisonNode(left, op, right);
-//     }
-// 
-//     /*! \brief Add a node for \a left select field, \a op operation and \a right value
-//      */
-//     [[deprecated]]
-//     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const QVariant & right)
-//     {
-//       return addComparisonNode(left, op, right);
-//     }
-// 
-//     /*! \brief Add a node for \a left select field, \a op operation and \a right like expression
-//      */
-//     [[deprecated]]
-//     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const LikeExpressionData & right)
-//     {
-//       return addComparisonNode(left, op, right);
-//     }
-// 
-//     /*! \brief Add a node for \a left select field, \a op operation and \a right select field
-//      */
-//     [[deprecated]]
-//     ExpressionTreeVertex addNode(const SelectFieldVariant & left, ComparisonOperator op, const SelectFieldVariant & right)
-//     {
-//       return addComparisonNode(left, op, right);
-//     }
 
     /*! \brief Add a \a op operation node with \a leftChild and \a rightChild
      */

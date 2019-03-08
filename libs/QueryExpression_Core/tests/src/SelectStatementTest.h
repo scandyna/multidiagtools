@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -32,6 +32,7 @@ class SelectStatementTest : public QObject
   void setEntityTest();
   void addFieldTest();
   void fieldIndexTest();
+  void filterTest();
   void joinEntityTest();
 };
 
