@@ -28,6 +28,7 @@
 #include "Mdt/Sql/DeleteStatement.h"
 #include "Mdt/Sql/DeleteQuery.h"
 #include "Mdt/Sql/SelectQuery.h"
+#include "Mdt/QueryExpression/SelectStatement.h"
 #include "Mdt/Error.h"
 #include "Mdt/ErrorCode.h"
 #include "Schema/TestSchema.h"
@@ -332,29 +333,39 @@ void QueryTest::updateQueryErrorTest()
   QCOMPARE(query.lastError().error<Mdt::ErrorCode>(), Mdt::ErrorCode::UniqueConstraintError);
 }
 
-void QueryTest::deleteStatementTest()
+void QueryTest::deleteStatementFilterExpressionTest_1()
 {
-  Mdt::Sql::DeleteStatement statement;
-  Mdt::Sql::PrimaryKeyRecord pkr;
+  using namespace Mdt::Sql;
+
   QString expectedSql;
   const auto db = database();
 
-  /*
-   * Check basic API - 1 field condition
-   */
-  statement.clear();
+  QueryField id("Id_PK");
+
+  DeleteStatement statement;
   statement.setTableName("Client_tbl");
-  statement.setConditions( buildPrimaryKeyRecord(1) );
+  statement.setConditions( id == 21 );
   expectedSql = "DELETE FROM \"Client_tbl\"\n"\
-                "WHERE \"Id_PK\"=?";
-  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
-  /*
-   * Basic API - no condition
-   */
-  statement.clear();
+                "WHERE \"Id_PK\"=21";
+  QCOMPARE(statement.toSql(db), expectedSql);
+}
+
+void QueryTest::deleteStatementFilterExpressionTest_2()
+{
+  using namespace Mdt::Sql;
+  using Mdt::QueryExpression::QueryField;
+
+  QString expectedSql;
+  const auto db = database();
+
+  QueryField id("Id_PK");
+
+  DeleteStatement statement;
   statement.setTableName("Client_tbl");
-  expectedSql = "DELETE FROM \"Client_tbl\"";
-  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+  statement.setConditions( id == 21 );
+  expectedSql = "DELETE FROM \"Client_tbl\"\n"\
+                "WHERE \"Id_PK\"=21";
+  QCOMPARE(statement.toSql(db), expectedSql);
 }
 
 void QueryTest::deleteStatementPrimaryKeyConditionsTest()
@@ -366,12 +377,11 @@ void QueryTest::deleteStatementPrimaryKeyConditionsTest()
   /*
    * 1 field PK
    */
-  statement.clear();
   statement.setTableName("Client_tbl");
   statement.setConditions( buildPrimaryKeyRecord(1) );
   expectedSql = "DELETE FROM \"Client_tbl\"\n"\
-                "WHERE \"Id_PK\"=?";
-  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+                "WHERE \"Id_PK\"=1";
+  QCOMPARE(statement.toSql(db), expectedSql);
   /*
    * 2 fields PK
    */
@@ -379,26 +389,15 @@ void QueryTest::deleteStatementPrimaryKeyConditionsTest()
   statement.setTableName("Link_tbl");
   statement.setConditions( buildPrimaryKeyRecord(1, 2) );
   expectedSql = "DELETE FROM \"Link_tbl\"\n"\
-                "WHERE \"IdA_PK\"=? AND \"IdB_PK\"=?";
-  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
-}
-
-void QueryTest::deleteStatementToConditionsValueListTest()
-{
-  Mdt::Sql::DeleteStatement statement;
-
+                "WHERE (\"IdA_PK\"=1)AND(\"IdB_PK\"=2)";
+  QCOMPARE(statement.toSql(db), expectedSql);
   /*
-   * 1 field PK
+   * Clear
    */
   statement.clear();
   statement.setTableName("Client_tbl");
-  statement.setConditions( buildPrimaryKeyRecord(1) );
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
-  /*
-   * 2 fields PK
-   */
-  statement.setConditions( buildPrimaryKeyRecord(2,1) );
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({2,1}));
+  expectedSql = "DELETE FROM \"Client_tbl\"";
+  QCOMPARE(statement.toSql(db), expectedSql);
 }
 
 void QueryTest::deleteQueryTest()
@@ -411,6 +410,9 @@ void QueryTest::deleteQueryTest()
   QVERIFY(insertClient(3, "Name 3"));
   QVERIFY(insertClient(4, "Name 4"));
 
+  /*
+   * Use PrimaryKeyRecord as conditions
+   */
   query.setTableName("Client_tbl");
   query.setConditions( buildPrimaryKeyRecord(2) );
   QVERIFY(query.exec());
@@ -426,15 +428,16 @@ void QueryTest::deleteQueryTest()
     QVERIFY(q.next());
     QCOMPARE(q.value(0), QVariant(4));
     QCOMPARE(q.value(1), QVariant("Name 4"));
-
   }
 
   /*
    * Execute statement
+   * Use a expression as conditions
    */
   Mdt::Sql::DeleteStatement statement;
+  Mdt::Sql::QueryField id("Id_PK");
   statement.setTableName("Client_tbl");
-  statement.setConditions( buildPrimaryKeyRecord(3) );
+  statement.setConditions(id == 3);
   QVERIFY(query.execStatement(statement));
   {
     QSqlQuery q(database());
@@ -455,6 +458,52 @@ void QueryTest::deleteQueryTest()
     QVERIFY(q.exec("SELECT Id_PK, Name FROM Client_tbl"));
     QVERIFY(!q.next());
   }
+}
+
+void QueryTest::selectQueryTest()
+{
+  using namespace Mdt::QueryExpression;
+
+  Mdt::Sql::SelectQuery query(database());
+
+  QVERIFY(cleanupClientTable());
+  QVERIFY(insertClient(1, "Name 1"));
+  QVERIFY(insertClient(2, "Name 2"));
+  QVERIFY(insertClient(3, "Name 3"));
+
+  /*
+   * Execute a statement
+   */
+  SelectStatement statement;
+  statement.setEntityName("Client_tbl");
+  statement.addField("Id_PK");
+  statement.addField("Name");
+  QVERIFY(query.execStatement(statement));
+  QVERIFY(query.next());
+  QCOMPARE(query.value(0), QVariant(1));
+  QCOMPARE(query.value(1), QVariant("Name 1"));
+  QVERIFY(query.next());
+  QCOMPARE(query.value(0), QVariant(2));
+  QCOMPARE(query.value(1), QVariant("Name 2"));
+  QVERIFY(query.next());
+  QCOMPARE(query.value(0), QVariant(3));
+  QCOMPARE(query.value(1), QVariant("Name 3"));
+
+  /*
+   * Fetch a single record
+   */
+  QueryField clientId("Id_PK");
+  QSqlRecord record;
+
+  QVERIFY(query.execStatement(statement));
+  record = query.fetchSingleRecord();
+  QVERIFY(record.isEmpty());
+  statement.setFilter(clientId == 2);
+  QVERIFY(query.execStatement(statement));
+  record = query.fetchSingleRecord();
+  QVERIFY(!record.isEmpty());
+  QCOMPARE(record.value(0), QVariant(2));
+  QCOMPARE(record.value(1), QVariant("Name 2"));
 }
 
 /*

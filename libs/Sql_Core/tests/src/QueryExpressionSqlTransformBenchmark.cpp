@@ -18,46 +18,26 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "DeleteStatement.h"
-#include "StatementAlgorithm.h"
-#include "QueryExpressionSqlTransform.h"
-#include <QLatin1String>
-#include <QLatin1Char>
-#include <QStringBuilder>
-#include <QSqlDriver>
+#include "QueryExpressionSqlTransformBenchmark.h"
 
-namespace Mdt{ namespace Sql{
-
-void DeleteStatement::setTableName(const QString& name)
+void QueryExpressionSqlTransformBenchmark::initTestCase()
 {
-  Q_ASSERT(!name.trimmed().isEmpty());
-
-  mTableName = name;
+  QVERIFY(initDatabaseSqlite());
 }
 
-void DeleteStatement::setConditions(const PrimaryKeyRecord & primaryKeyRecord)
+void QueryExpressionSqlTransformBenchmark::cleanupTestCase()
 {
-  Q_ASSERT(!primaryKeyRecord.isNull());
-
-  mConditionsFilter = filterExpressionFromPrimaryKeyRecord(primaryKeyRecord);
 }
 
-void DeleteStatement::clear()
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
 {
-  mTableName.clear();
-  mConditionsFilter.clear();
+  Mdt::CoreApplication app(argc, argv);
+  QueryExpressionSqlTransformBenchmark test;
+
+  return QTest::qExec(&test, argc, argv);
 }
 
-QString DeleteStatement::toSql(const QSqlDatabase & db) const
-{
-  Q_ASSERT(db.isValid());
-
-  QString sql = QLatin1String("DELETE FROM ") % escapeTableName(mTableName, db);
-  if(!mConditionsFilter.isNull()){
-    sql += QLatin1String("\nWHERE ") % filterExpressionToSql(mConditionsFilter, db);
-  }
-
-  return sql;
-}
-
-}} // namespace Mdt{ namespace Sql{

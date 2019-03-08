@@ -18,46 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "DeleteStatement.h"
-#include "StatementAlgorithm.h"
-#include "QueryExpressionSqlTransform.h"
-#include <QLatin1String>
-#include <QLatin1Char>
-#include <QStringBuilder>
-#include <QSqlDriver>
+#ifndef MDT_SQL_QUERY_FIELD_H
+#define MDT_SQL_QUERY_FIELD_H
+
+#include "Mdt/QueryExpression/QueryField.h"
 
 namespace Mdt{ namespace Sql{
 
-void DeleteStatement::setTableName(const QString& name)
-{
-  Q_ASSERT(!name.trimmed().isEmpty());
-
-  mTableName = name;
-}
-
-void DeleteStatement::setConditions(const PrimaryKeyRecord & primaryKeyRecord)
-{
-  Q_ASSERT(!primaryKeyRecord.isNull());
-
-  mConditionsFilter = filterExpressionFromPrimaryKeyRecord(primaryKeyRecord);
-}
-
-void DeleteStatement::clear()
-{
-  mTableName.clear();
-  mConditionsFilter.clear();
-}
-
-QString DeleteStatement::toSql(const QSqlDatabase & db) const
-{
-  Q_ASSERT(db.isValid());
-
-  QString sql = QLatin1String("DELETE FROM ") % escapeTableName(mTableName, db);
-  if(!mConditionsFilter.isNull()){
-    sql += QLatin1String("\nWHERE ") % filterExpressionToSql(mConditionsFilter, db);
-  }
-
-  return sql;
-}
+  /*! \brief Type alias to Mdt::QueryExpression::QueryField
+   */
+  using QueryField = Mdt::QueryExpression::QueryField;
 
 }} // namespace Mdt{ namespace Sql{
+
+#endif // #ifndef MDT_SQL_QUERY_FIELD_H

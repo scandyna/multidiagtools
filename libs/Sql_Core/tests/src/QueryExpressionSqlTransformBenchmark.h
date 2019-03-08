@@ -18,13 +18,9 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_QUERY_TEST_H
-#define MDT_SQL_QUERY_TEST_H
-
 #include "TestBase.h"
-#include "Mdt/Sql/PrimaryKeyRecord.h"
 
-class QueryTest : public TestBase
+class QueryExpressionSqlTransformBenchmark : public TestBase
 {
  Q_OBJECT
 
@@ -33,27 +29,4 @@ class QueryTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void insertStatementTest();
-  void insertQueryTest();
-  void insertQueryErrorTest();
-
-  void updateStatementTest();
-  void updateStatementPrimaryKeyConditionsTest();
-  void updateStatementToConditionsValueListTest();
-  void updateQueryTest();
-  void updateQueryErrorTest();
-
-  void deleteStatementFilterExpressionTest_1();
-  void deleteStatementFilterExpressionTest_2();
-  void deleteStatementPrimaryKeyConditionsTest();
-  void deleteQueryTest();
-
-  void selectQueryTest();
-
- private:
-
-  Mdt::Sql::PrimaryKeyRecord buildPrimaryKeyRecord(int id);
-  Mdt::Sql::PrimaryKeyRecord buildPrimaryKeyRecord(int idA, int idB);
 };
-
-#endif // #ifndef MDT_SQL_QUERY_TEST_H

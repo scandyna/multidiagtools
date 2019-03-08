@@ -28,11 +28,6 @@
     <name>Mdt::Sql::DeleteQuery</name>
     <message>
         <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="59"/>
-        <source>Preparing query to delete in &apos;%1&apos; failed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="70"/>
         <source>Executing query to delete in &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -226,6 +221,24 @@ SQL: %2</source>
     <message>
         <location filename="../src/Mdt/Sql/Schema/DriverSQLite.cpp" line="423"/>
         <source>Fetching case sensitivity for field &apos;%1&apos; in index &apos;%2&apos; failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Mdt::Sql::SelectQuery</name>
+    <message>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="48"/>
+        <source>Executing query to select from &apos;%1&apos; failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="63"/>
+        <source>Fetching a single record from &apos;%1&apos; failed because no record is available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="73"/>
+        <source>Fetching a single record from &apos;%1&apos; failed because more than 1 record is available.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
