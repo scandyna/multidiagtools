@@ -23,7 +23,6 @@
 #include "Mdt/QueryExpression/FieldAlias.h"
 #include "Mdt/QueryExpression/QueryEntity.h"
 #include "Mdt/QueryExpression/EntityAndField.h"
-#include "Mdt/QueryExpression/QueryFieldVariant.h"
 #include <boost/variant/get.hpp>
 
 using namespace Mdt::QueryExpression;
@@ -127,38 +126,6 @@ void QueryFieldTest::entityAndFieldTest()
   QCOMPARE(ef3.fieldAlias(), QString("F3"));
   QCOMPARE(ef3.fieldAliasOrName(), QString("F3"));
 }
-
-// void QueryFieldTest::queryFieldVariantTest()
-// {
-//   QueryFieldVariant nullField;
-//   QVERIFY( nullField.isNull() );
-// //   QVERIFY( boost::get<SelectAllField>(&nullField.internalVariant()) == nullptr );
-// //   QVERIFY( boost::get<EntityAndField>(&nullField.internalVariant()) == nullptr );
-// 
-// //   QueryFieldVariant selectAll1(SelectAllField{});
-// //   QVERIFY( !selectAll1.isNull() );
-// // //   QVERIFY( boost::get<SelectAllField>(&selectAll1.internalVariant()) != nullptr );
-// //   QVERIFY( boost::get<EntityAndField>(&selectAll1.internalVariant()) == nullptr );
-// //   const auto selectAllField1 = boost::get<SelectAllField>(selectAll1.internalVariant());
-// //   QVERIFY(selectAllField1.entityAliasOrName().isEmpty());
-// // 
-// //   QueryFieldVariant selectAll2(SelectAllField(QueryEntity("Person")));
-// //   QVERIFY( !selectAll2.isNull() );
-// //   QVERIFY( boost::get<SelectAllField>(&selectAll2.internalVariant()) != nullptr );
-// //   QVERIFY( boost::get<EntityAndField>(&selectAll2.internalVariant()) == nullptr );
-// //   const auto selectAllField2 = boost::get<SelectAllField>(selectAll2.internalVariant());
-// //   QCOMPARE(selectAllField2.entityAliasOrName(), QString("Person"));
-// 
-//   EntityAndField id("id");
-//   QueryFieldVariant idFieldVariant(id);
-//   QVERIFY( !idFieldVariant.isNull() );
-// //   QVERIFY( boost::get<SelectAllField>(&idFieldVariant.internalVariant()) == nullptr );
-//   QVERIFY( boost::get<EntityAndField>(&idFieldVariant.internalVariant()) != nullptr );
-//   const auto idField = boost::get<EntityAndField>(idFieldVariant.internalVariant());
-//   QCOMPARE(idField.fieldAliasOrName(), QString("id"));
-// 
-//   QFAIL("API not fixed");
-// }
 
 void QueryFieldTest::constructTest()
 {

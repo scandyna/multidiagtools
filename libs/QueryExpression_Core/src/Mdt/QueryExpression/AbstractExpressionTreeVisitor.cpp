@@ -20,100 +20,97 @@
  ****************************************************************************/
 #include "AbstractExpressionTreeVisitor.h"
 #include "EntityAndField.h"
-
-#include "QueryFieldVariant.h"
-
 #include <boost/variant.hpp>
 
 namespace Mdt{ namespace QueryExpression{
 
 namespace AbstractExpressionTreeVisitorImpl{
 
-  /*! \internal
-   */
-  class CallForSelectFieldVariantBase : public boost::static_visitor<>
-  {
-    public:
-
-    CallForSelectFieldVariantBase(AbstractExpressionTreeVisitor & treeVisitor)
-    : mTreeVisitor(treeVisitor)
-    {
-    }
-
-    void operator()(const NullQueryField &)
-    {
-      Q_ASSERT_X(false, "processInorder", "A null SelectField is not allowed in a condition expression");
-    }
-
-//     void operator()(const NullSelectField &)
+//   /*! \internal
+//    */
+//   class CallForSelectFieldVariantBase : public boost::static_visitor<>
+//   {
+//     public:
+// 
+//     CallForSelectFieldVariantBase(AbstractExpressionTreeVisitor & treeVisitor)
+//     : mTreeVisitor(treeVisitor)
 //     {
-//       Q_ASSERT_X(false, "processInorder", "A null SelectField is not allowed in a condition expression");
 //     }
 // 
-    void operator()(const SelectAllField &)
-    {
-      Q_ASSERT_X(false, "processInorder", "SelectAllField is not allowed in a condition expression");
-    }
-
-    protected:
-
-    AbstractExpressionTreeVisitor & treeVisitor()
-    {
-      return mTreeVisitor;
-    }
-
-    private:
-
-    AbstractExpressionTreeVisitor & mTreeVisitor;
-  };
-
-  /*! \internal
-   */
-  class CallProcessPreorderForQueryFieldVariant : public CallForSelectFieldVariantBase
-  {
-    public:
-
-    using ParentClass = CallForSelectFieldVariantBase;
-    using ParentClass::ParentClass;
-    using ParentClass::operator();
-
-    void operator()(const EntityAndField & field)
-    {
-      treeVisitor().processPreorder(field);
-    }
-  };
-
-  /*! \internal
-   */
-  class CallProcessInorderForQueryFieldVariant : public CallForSelectFieldVariantBase
-  {
-    public:
-
-    using ParentClass = CallForSelectFieldVariantBase;
-    using ParentClass::ParentClass;
-    using ParentClass::operator();
-
-    void operator()(const EntityAndField & field)
-    {
-      treeVisitor().processInorder(field);
-    }
-  };
-
-  /*! \internal
-   */
-  class CallProcessPostorderForQueryFieldVariant : public CallForSelectFieldVariantBase
-  {
-    public:
-
-    using ParentClass = CallForSelectFieldVariantBase;
-    using ParentClass::ParentClass;
-    using ParentClass::operator();
-
-    void operator()(const EntityAndField & field)
-    {
-      treeVisitor().processPostorder(field);
-    }
-  };
+// //     void operator()(const NullQueryField &)
+// //     {
+// //       Q_ASSERT_X(false, "processInorder", "A null SelectField is not allowed in a condition expression");
+// //     }
+// 
+// //     void operator()(const NullSelectField &)
+// //     {
+// //       Q_ASSERT_X(false, "processInorder", "A null SelectField is not allowed in a condition expression");
+// //     }
+// // 
+//     void operator()(const SelectAllField &)
+//     {
+//       Q_ASSERT_X(false, "processInorder", "SelectAllField is not allowed in a condition expression");
+//     }
+// 
+//     protected:
+// 
+//     AbstractExpressionTreeVisitor & treeVisitor()
+//     {
+//       return mTreeVisitor;
+//     }
+// 
+//     private:
+// 
+//     AbstractExpressionTreeVisitor & mTreeVisitor;
+//   };
+// 
+//   /*! \internal
+//    */
+//   class CallProcessPreorderForQueryFieldVariant : public CallForSelectFieldVariantBase
+//   {
+//     public:
+// 
+//     using ParentClass = CallForSelectFieldVariantBase;
+//     using ParentClass::ParentClass;
+//     using ParentClass::operator();
+// 
+//     void operator()(const EntityAndField & field)
+//     {
+//       treeVisitor().processPreorder(field);
+//     }
+//   };
+// 
+//   /*! \internal
+//    */
+//   class CallProcessInorderForQueryFieldVariant : public CallForSelectFieldVariantBase
+//   {
+//     public:
+// 
+//     using ParentClass = CallForSelectFieldVariantBase;
+//     using ParentClass::ParentClass;
+//     using ParentClass::operator();
+// 
+//     void operator()(const EntityAndField & field)
+//     {
+//       treeVisitor().processInorder(field);
+//     }
+//   };
+// 
+//   /*! \internal
+//    */
+//   class CallProcessPostorderForQueryFieldVariant : public CallForSelectFieldVariantBase
+//   {
+//     public:
+// 
+//     using ParentClass = CallForSelectFieldVariantBase;
+//     using ParentClass::ParentClass;
+//     using ParentClass::operator();
+// 
+//     void operator()(const EntityAndField & field)
+//     {
+//       treeVisitor().processPostorder(field);
+//     }
+//   };
 
   /*! \internal
    */
@@ -141,12 +138,12 @@ namespace AbstractExpressionTreeVisitorImpl{
     {
     }
 
-    [[deprecated]]
-    void operator()(const QueryFieldVariant & field)
-    {
-//       CallProcessPreorderForQueryFieldVariant visitor(mTreeVisitor);
-//       boost::apply_visitor(visitor, field.internalVariant());
-    }
+//     [[deprecated]]
+//     void operator()(const QueryFieldVariant & field)
+//     {
+// //       CallProcessPreorderForQueryFieldVariant visitor(mTreeVisitor);
+// //       boost::apply_visitor(visitor, field.internalVariant());
+//     }
 
     void operator()(const EntityAndField & field)
     {
@@ -194,12 +191,12 @@ namespace AbstractExpressionTreeVisitorImpl{
     {
     }
     
-    [[deprecated]]
-    void operator()(const QueryFieldVariant & field)
-    {
-//       CallProcessInorderForQueryFieldVariant visitor(mTreeVisitor);
-//       boost::apply_visitor(visitor, field.internalVariant());
-    }
+//     [[deprecated]]
+//     void operator()(const QueryFieldVariant & field)
+//     {
+// //       CallProcessInorderForQueryFieldVariant visitor(mTreeVisitor);
+// //       boost::apply_visitor(visitor, field.internalVariant());
+//     }
 
     void operator()(const EntityAndField & field)
     {
@@ -247,12 +244,12 @@ namespace AbstractExpressionTreeVisitorImpl{
     {
     }
     
-    [[deprecated]]
-    void operator()(const QueryFieldVariant & field)
-    {
-      CallProcessPostorderForQueryFieldVariant visitor(mTreeVisitor);
-      boost::apply_visitor(visitor, field.internalVariant());
-    }
+//     [[deprecated]]
+//     void operator()(const QueryFieldVariant & field)
+//     {
+//       CallProcessPostorderForQueryFieldVariant visitor(mTreeVisitor);
+//       boost::apply_visitor(visitor, field.internalVariant());
+//     }
 
     void operator()(const EntityAndField & field)
     {

@@ -21,10 +21,6 @@
 #ifndef MDT_QUERY_EXPRESSION_QUERY_FIELD_H
 #define MDT_QUERY_EXPRESSION_QUERY_FIELD_H
 
-#include "SelectAllField.h"
-
-// #include "QueryFieldVariant.h"
-
 #include "FieldAlias.h"
 #include "EntityAlias.h"
 #include "QueryEntity.h"

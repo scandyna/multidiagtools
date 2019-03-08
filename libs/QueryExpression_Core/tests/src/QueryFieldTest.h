@@ -31,7 +31,6 @@ class QueryFieldTest : public QObject
   void queryEntityTest();
 
   void entityAndFieldTest();
-//   void queryFieldVariantTest();
 
   void constructTest();
 };

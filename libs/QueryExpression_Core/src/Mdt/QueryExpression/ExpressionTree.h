@@ -21,7 +21,7 @@
 #ifndef MDT_QUERY_EXPRESSION_EXPRESSION_TREE_H
 #define MDT_QUERY_EXPRESSION_EXPRESSION_TREE_H
 
-#include "QueryFieldVariant.h"
+// #include "QueryFieldVariant.h"
 
 #include "EntityAndField.h"
 #include "ComparisonOperator.h"

@@ -22,7 +22,6 @@
 #define MDT_QUERY_EXPRESSION_BUILD_EXPRESSION_TREE_ADD_EXPRESSION_TO_TREE_H
 
 #include "../SelectField.h"
-#include "../QueryFieldVariant.h"
 
 #include "../ExpressionTree.h"
 #include "../EntityAndField.h"
