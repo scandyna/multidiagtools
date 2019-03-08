@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -27,6 +27,7 @@ using namespace Mdt::QueryExpression;
  * Tests
  */
 
+/*
 void SelectStatementBenchmark::fieldIndexBenchmark()
 {
   SelectEntity person( EntityName("Person") );
@@ -52,6 +53,7 @@ void SelectStatementBenchmark::fieldIndexBenchmark()
   }
   QCOMPARE(index, 4);
 }
+*/
 
 /*
  * Main

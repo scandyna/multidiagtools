@@ -21,9 +21,6 @@
 #ifndef MDT_QUERY_EXPRESSION_SELECT_FIELD_H
 #define MDT_QUERY_EXPRESSION_SELECT_FIELD_H
 
-#include "FieldName.h"
-#include "SelectEntity.h"
-
 #include "FieldAlias.h"
 #include "QueryEntity.h"
 #include "EntityAndField.h"
@@ -32,9 +29,6 @@
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
 #include <boost/variant.hpp>
-#include <boost/proto/expr.hpp>
-#include <boost/proto/extends.hpp>
-#include <boost/proto/operators.hpp>
 
 namespace Mdt{ namespace QueryExpression{
 
@@ -80,35 +74,17 @@ namespace Mdt{ namespace QueryExpression{
    *
    * A select field can also be constructed from a QueryField.
    *
-   * \todo SelectField should become a simple holder for SelectFieldList,
-   *        which is used in SelectStatement.
-   *        It should no longer be used for expression (QueryField makes it)
-   *
    * \todo Should make default constructible, so we can make select statement classs in a intuitive way.
    *       Will also require to have some NullField flag in the variant
    *       Note: why ?
    */
-  struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectField /* : boost::proto::extends<
-                                                        boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<SelectFieldVariant> >,
-                                                        SelectField,
-                                                        boost::proto::default_domain
-                                                      > */
+  struct MDT_QUERYEXPRESSION_CORE_EXPORT SelectField
   {
-   private:
-
-//     using Domain = boost::proto::default_domain;
-//     using Expression = boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<SelectFieldVariant> >;
-//     using BaseClass = boost::proto::extends< Expression, SelectField, Domain >;
-
    public:
 
     using value_type = SelectFieldVariant;
     using reference = value_type &;
     using const_reference = const value_type &;
-
-    /*! \brief Construct a null select field
-     */
-    SelectField() = default;
 
     /*! \brief Construct a select all field
      */
@@ -120,31 +96,12 @@ namespace Mdt{ namespace QueryExpression{
      */
     SelectField(const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias());
 
-    /*! \brief Construct a select field with a field name and a optional field alias
-     *
-     * \pre \a fieldName must not be null
-     */
-    [[deprecated]]
-    SelectField(const FieldName & fieldName, const QString & fieldAlias = QString())
-    {
-    }
-
     /*! \brief Construct a select field with a query entity, a field name and a optional field alias
      *
      * \pre \a entity must not be null
      * \pre \a fieldName must not be empty
      */
     SelectField(const QueryEntity & entity, const QString & fieldName, const FieldAlias & fieldAlias = FieldAlias());
-
-    /*! \brief Construct a select field with a select entity, a field name and a optional field alias
-     *
-     * \pre \a entity must not be null
-     * \pre \a fieldName must not be null
-     */
-    [[deprecated]]
-    SelectField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString())
-    {
-    }
 
     /*! \brief Construct a select field from a query field
      *
@@ -181,7 +138,6 @@ namespace Mdt{ namespace QueryExpression{
     const SelectFieldVariant & internalVariant() const
     {
       return mVariant;
-//       return boost::proto::value(*this);
     }
 
    private:

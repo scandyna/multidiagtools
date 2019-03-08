@@ -34,7 +34,7 @@ SelectField::SelectField(const QString & fieldName, const FieldAlias & fieldAlia
   Q_ASSERT(!fieldName.trimmed().isEmpty());
 }
 
-SelectField::SelectField(const QueryEntity& entity, const QString & fieldName, const FieldAlias & fieldAlias)
+SelectField::SelectField(const QueryEntity & entity, const QString & fieldName, const FieldAlias & fieldAlias)
  : mVariant( EntityAndField(entity, fieldName, fieldAlias) )
 {
   Q_ASSERT(!entity.isNull());
@@ -46,29 +46,5 @@ SelectField::SelectField(const QueryField & field)
 {
 //   Q_ASSERT(!field.isNull());
 }
-
-// SelectField::SelectField(const SelectAllField & field)
-//  : BaseClass( Expression::make(field) )
-// {
-// }
-// 
-// SelectField::SelectField(const QString & fieldName, const FieldAlias & fieldAlias)
-//  : BaseClass( Expression::make( EntityAndField(fieldName, fieldAlias) ) )
-// {
-//   Q_ASSERT(!fieldName.trimmed().isEmpty());
-// }
-// 
-// SelectField::SelectField(const QueryEntity& entity, const QString & fieldName, const FieldAlias & fieldAlias)
-//  : BaseClass( Expression::make( EntityAndField(entity, fieldName, fieldAlias) ) )
-// {
-//   Q_ASSERT(!entity.isNull());
-//   Q_ASSERT(!fieldName.trimmed().isEmpty());
-// }
-// 
-// SelectField::SelectField(const QueryField & field)
-//  : BaseClass( Expression::make(field.entityAndField()) )
-// {
-// //   Q_ASSERT(!field.isNull());
-// }
 
 }} // namespace Mdt{ namespace QueryExpression{

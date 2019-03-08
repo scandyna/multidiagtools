@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,7 +29,7 @@ class SelectStatementBenchmark : public QObject
 
  private slots:
 
-  void fieldIndexBenchmark();
+//   void fieldIndexBenchmark();
 };
 
 #endif // #ifndef SELECT_STATEMENT_BENCHMARK_H
