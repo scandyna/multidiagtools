@@ -19,22 +19,3 @@
  **
  ****************************************************************************/
 #include "EntityAndField.h"
-
-// namespace Mdt{ namespace QueryExpression{
-// 
-// EntityAndField::EntityAndField(const FieldName& fieldName, const QString& fieldAlias)
-//  : mFieldName(fieldName.toString()),
-//    mFieldAlias(fieldAlias)
-// {
-//   Q_ASSERT(!fieldName.isNull());
-// }
-// 
-// EntityAndField::EntityAndField(const SelectEntity& entity, const FieldName& fieldName, const QString& fieldAlias)
-//  : mFieldName(fieldName.toString()),
-//    mFieldAlias(fieldAlias),
-//    mEntity(entity)
-// {
-//   Q_ASSERT(!mEntity.isNull());
-// }
-// 
-// }} // namespace Mdt{ namespace QueryExpression{

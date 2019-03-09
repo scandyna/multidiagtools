@@ -85,10 +85,6 @@ namespace Mdt{ namespace QueryExpression{
      */
     bool containsEntity(const QString & entityName) const;
 
-//     /*! \brief Get a iterator to the first clause thet refers to \a entity
-//      */
-//     const_iterator findEntity(const QueryEntity & entity) const;
-
     /*! \brief Get a STL iterator to the beginning of this list
      */
     const_iterator begin() const

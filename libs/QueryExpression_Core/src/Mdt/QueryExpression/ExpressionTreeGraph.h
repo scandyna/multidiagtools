@@ -33,8 +33,6 @@
 namespace Mdt{ namespace QueryExpression{
 
   /*! \internal Vertex data used in ExpressionTreeGraph
-   *
-   * \todo Remove SelectFieldVariant when possible
    */
   using ExpressionTreeVertexData = boost::variant<LogicalOperator, ComparisonOperator, QVariant, EntityAndField, LikeExpressionData>;
 

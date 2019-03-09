@@ -134,12 +134,6 @@ namespace Mdt{ namespace QueryExpression{
     ExpressionTreeVertex addVertex(ComparisonOperator op);
     ExpressionTreeVertex addVertex(LogicalOperator op);
     ExpressionTreeVertex addVertex(const EntityAndField & field);
-    
-//     ExpressionTreeVertex addVertex(const QueryFieldVariant & field);
-    
-//     [[deprecated]]
-//     ExpressionTreeVertex addVertex(const SelectFieldVariant & field);
-    
     ExpressionTreeVertex addVertex(const QVariant & value);
     ExpressionTreeVertex addVertex(const LikeExpressionData & data);
     void addEdge(ExpressionTreeVertex left, ExpressionTreeVertex right);
