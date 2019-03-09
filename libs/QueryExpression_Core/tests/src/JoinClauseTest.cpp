@@ -79,6 +79,26 @@ void JoinClauseTest::joinClauseListTest()
   QVERIFY(list.isEmpty());
 }
 
+void JoinClauseTest::joinClauseListContainsEntityTest()
+{
+  QueryEntity person("Person");
+  QueryEntity address("Address", EntityAlias("ADR"));
+
+  QueryField personId(person, "id");
+  QueryField addressPersonId(address, "personId");
+
+  JoinConstraintExpression joinExpression;
+
+  JoinClauseList list;
+  QVERIFY(!list.containsEntity(person.name()));
+  QVERIFY(!list.containsEntity(address.name()));
+
+  joinExpression.setJoin( addressPersonId == personId );
+  list.addClause(JoinOperator::Join, address, joinExpression);
+  QVERIFY(!list.containsEntity(person.name()));
+  QVERIFY( list.containsEntity(address.name()));
+}
+
 /*
  * Main
  */

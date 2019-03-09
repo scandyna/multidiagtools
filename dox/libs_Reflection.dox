@@ -482,11 +482,44 @@
  * \sa Mdt::Sql::Reflection::updateStatementFromReflected()
  * \sa Mdt::Sql::UpdateQuery
  *
+ *
+ * This example shows how to create arbitrary filter conditions:
+ * \code
+ * #include "PersonDataStruct.h"
+ * #include <Mdt/Sql/DeleteQuery.h>
+ * #include <Mdt/QueryExpression/Reflection/FilterExpression.h>
+ *
+ * using namespace Mdt::QueryExpression::Reflection;
+ *
+ * QueryField<PersonDef::id> personId;
+ *
+ * Mdt::Sql::DeleteStatement statement;
+ * statement.setTableName("Person");
+ * statement.setConditions( id == 21 );
+ * \endcode
+ *
+ * \todo Above statement.setConditions( id == 21 ); will not work !
+ *
+ *
+ * This example shows how to create a delete statement which could accept arbitrary conditions:
+ * \code
+ * #include "PersonDataStruct.h"
+ * #include <Mdt/Sql/DeleteQuery.h>
+ * #include <Mdt/QueryExpression/Reflection/DeleteStatement.h>
+ *
+ * using namespace Mdt::QueryExpression::Reflection;
+ *
+ * QueryField<PersonDef::id> personId;
+ *
+ * DeleteStatement<PersonDef> statement; // Inherits Mdt::QueryExpression::DeleteStatement
+ * statement.setConditions( id == 21 );
+ * \endcode
+ *
+ *
  * This example shows how a person could be removed from a table:
  * \code
  * #include "PersonDataStruct.h"
  * #include "PersonId.h"
- * #include <Mdt/Expected.h>
  * #include <Mdt/Sql/DeleteQuery.h>
  * #include <Mdt/Sql/Reflection/DeleteStatement.h>
  *

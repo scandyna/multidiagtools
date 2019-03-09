@@ -33,6 +33,7 @@ class ExpressionTreeTest : public QObject
   void buildAndVisitTreeTest();
   void filterExpressionTest();
   void joinConstraintExpressionTest();
+  void joinConstraintExpressionFromEqualityTest();
 };
 
 #endif // #ifndef TEST_MAIN_H

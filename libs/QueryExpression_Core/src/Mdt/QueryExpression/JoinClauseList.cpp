@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "JoinClauseList.h"
+#include <algorithm>
 
 namespace Mdt{ namespace QueryExpression{
 
@@ -33,6 +34,18 @@ void JoinClauseList::addClause(JoinOperator joinOperator, const QueryEntity & en
 void JoinClauseList::clear()
 {
   mList.clear();
+}
+
+bool JoinClauseList::containsEntity(const QString & entityName) const
+{
+  Q_ASSERT(!entityName.trimmed().isEmpty());
+
+  const auto pred = [&entityName](const JoinClause & jc){
+    return jc.entity().name() == entityName;
+  };
+  const auto it = std::find_if(mList.cbegin(), mList.cend(), pred);
+
+  return it != mList.cend();
 }
 
 }} // namespace Mdt{ namespace QueryExpression{

@@ -31,7 +31,7 @@ class JoinClauseTest : public QObject
 
   void joinClauseTest();
   void joinClauseListTest();
-
+  void joinClauseListContainsEntityTest();
 };
 
 #endif // #ifndef MDT_TEST_MAIN_H

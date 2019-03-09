@@ -22,9 +22,12 @@
 #define MDT_QUERY_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_H
 
 #include "ExpressionTree.h"
+#include "QueryEntity.h"
 #include "BuildExpressionTree/Transform.h"
 #include "TypeTraits/JoinConstraintExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
+#include <QString>
+#include <QStringList>
 
 namespace Mdt{ namespace QueryExpression{
 
@@ -59,6 +62,8 @@ namespace Mdt{ namespace QueryExpression{
     JoinConstraintExpression & operator=(JoinConstraintExpression && other) = default;
 
     /*! \brief Set \a join to this expression
+     *
+     * \pre \a join must be a valid join constraint expression
      */
     template<typename JoinExpr>
     void setJoin(const JoinExpr & join)
@@ -101,6 +106,16 @@ namespace Mdt{ namespace QueryExpression{
     {
       return mTree;
     }
+
+    /*! \brief Build a equality join constraint expression
+     *
+     * \pre \a primaryEntity must not be null
+     * \pre \a foreignEntity must not be null
+     * \pre Count of fields in \a pk and \a fk must be the same
+     * \pre \a pk and \a fk must not be empty
+     */
+    static JoinConstraintExpression fromEquality(const QueryEntity & primaryEntity, const QStringList & pk,
+                                                 const QueryEntity & foreignEntity, const QStringList & fk);
 
    private:
 

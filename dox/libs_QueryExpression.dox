@@ -21,17 +21,195 @@
 
 /*! \page libs_QueryExpression QueryExpression
  *
+ * \todo SelectField should become QueryField,
+ *       SelectEntity should become QueryEntity
+ *
+ * \todo To disambiguate, do not use FieldName,
+ *   but FieldAlias ... or not !
+ *
  * \section introduction Introduction
  *
  * QueryExpression provide a interface to create query expressions.
  *  It is divided in several parts:
  *  - Compile time expression creation and checking
  *  - Runtime expression creation
- *  - Creation of select statements
+ *  - Creation of CRUD statements (InsertStatement, SelectStatement, UpdateStatement and DeleteStatement)
  *  - Execution of a statement in a select query
  *  - Using select queries in a backend independ way, using a select query factory
  *
+ * \todo Review the 2 last items above
+ *
+ * \section qe_filter_expression Filter expression
+ *
+ * A filter expression (which is a WHERE clause in SQL),
+ *  is common for all statements that uses it.
+ *
+ * The key part to create a expression is Mdt::QueryExpression::QueryField :
+ * \code
+ * #include <Mdt/QueryExpression/QueryField.h>
+ *
+ * using namespace Mdt::QueryExpression;
+ *
+ * QueryField name( "name" );
+ * QueryField age( "age", FieldAlias("A") );
+ * \endcode
+ *
+ * Once instances of query fields have been created,
+ *  filter conditions can be expressed:
+ * \code
+ * (name == Like("%A?B%")) && (age > 29)
+ * \endcode
+ *
+ * For some queries that refers to multiple entities (tables in SQL),
+ *  the entity should be specified to avoid ambiguities:
+ * \code
+ * #include <Mdt/QueryExpression/FilterExpression.h>
+ *
+ * using namespace Mdt::QueryExpression;
+ *
+ * QueryEntity person("Person");
+ * QueryEntity address("Address");
+ *
+ * QueryField name( person, "name" );
+ * QueryField age( address, "age", FieldAlias("A") );
+ * \endcode
+ *
+ * The above expression remains the same:
+ * \code
+ * (name == Like("%A?B%")) && (age > 29)
+ * \endcode
+ *
+ * While generating the backend specific query
+ *  (for example a SQL query string), the entity names will be added.
+ *
+ *
  * \section create_select_statement Create select statements
+ *
+ * Here is a example to create a simple select statement:
+ * \code
+ * #include <Mdt/QueryExpression/SelectStatement.h>
+ *
+ * using namespace Mdt::QueryExpression;
+ *
+ * SelectStatement stm;
+ * stm.setEntityName("Person");
+ * stm.selectAllFields();
+ * \endcode
+ *
+ * It is possible to specify a alias for the entity,
+ *  the fields to select and maybe their field aliases,
+ *  and a filter:
+ * \code
+ * #include <Mdt/QueryExpression/SelectStatement.h>
+ *
+ * using namespace Mdt::QueryExpression;
+ *
+ * QueryField name( "name" );
+ * QueryField age( "age", FieldAlias("A") );
+ *
+ * SelectStatement stm;
+ * stm.setEntityName( "Person", EntityAlias("P") );
+ * stm.addField("id");
+ * stm.addField(name);
+ * stm.addField(age);
+ * stm.addField( "remarks", FieldAlias("R") );
+ * stm.setFilter( (name == "A") && (age > 29) );
+ * \endcode
+ *
+ * It is also possible to create more complex queries that links entities:
+ * \code
+ * #include <Mdt/QueryExpression/SelectStatement.h>
+ *
+ * using namespace Mdt::QueryExpression;
+ *
+ * QueryEntity person("Person");
+ * QueryEntity address( "Address", EntityAlias("ADR") );
+ *
+ * QueryField personId(person, "id");
+ * QueryField personName( person, "name", FieldAlias("PersonName") );
+ * QueryField addressPersonId(address, "personId");
+ * QueryField addressStreet(address, "street");
+ *
+ * SelectStatement stm;
+ * stm.setEntity(person);
+ * stm.addField(personName);
+ * stm.addField( person, "remarks", FieldAlias("PersonRemarks") );
+ * stm.addField(addressStreet);
+ * stm.addField( address, "remarks", FieldAlias("AddressRemarks") );
+ * stm.joinEntity( address, addressPersonId == personId );
+ * stm.setFilter( (personName == "A") || (addressStreet == "Street name B") );
+ * \endcode
+ *
+ * \sa Mdt::QueryExpression::SelectStatement
+ *
+ * \section qe_use_reflection_lib Using the reflection library
+ *
+ * \ref libs_Reflection
+ *
+ * \code
+ * #include <Mdt/QueryExpression/Reflection/SelectStatement.h>
+ *
+ * using namespace Mdt::QueryExpression::Reflection;
+ *
+ * ReflectionSelectStatement<PersonDef> stm;
+ * stm.selectAllFields();
+ * \endcode
+ *
+ *
+ * \code
+ * #include <Mdt/QueryExpression/ReflectionSelectStatement.h>
+ *
+ * using namespace Mdt::QueryExpression;
+ *
+ * ReflectionQueryField<PersonDef::name> personName( FieldAlias("PersonName") );
+ * ReflectionQueryField<AddressDef::street> addressStreet;
+ *
+ * ReflectionSelectStatement<PersonDef> stm( EntityAlias("P") );
+ * stm.addField(personName);
+ * stm.addField<PersonDef::remarks>( FieldAlias("PersonRemarks") );
+ * stm.addField(addressStreet);
+ * stm.addField<AddressDef::remarks>( FieldAlias("AddressRemarks") );
+ * stm.joinEntity<PersonAddressRelation>();
+ * stm.setFilter( (personName == "A") || (addressStreet == "Street name B") );
+ * \endcode
+ *
+ * \sa Mdt::QueryExpression::ReflectionSelectStatement
+ *
+ * \section OLD
+ *
+ * \code
+ * #include <Mdt/QueryExpression/Reflection/SelectStatement.h>
+ *
+ * using namespace Mdt::QueryExpression::Reflection;
+ *
+ * QueryField<PersonDef::name> personName( FieldAlias("PersonName") );
+ * QueryField<AddressDef::street> addressStreet;
+ *
+ * SelectStatement<PersonDef> stm( EntityAlias("P") );
+ * stm.addField(personName);
+ * stm.addField<PersonDef::remarks>( FieldAlias("PersonRemarks") );
+ * stm.addField(addressStreet);
+ * stm.addField<AddressDef::remarks>( FieldAlias("AddressRemarks") );
+ * stm.joinEntity<PersonAddressRelation>();
+ * stm.setFilter( (personName == "A") || (addressStreet == "Street name B") );
+ * \endcode
+ *
+ *
+ * \code
+ * #include <Mdt/QueryExpression/Reflection/SelectStatement.h>
+ *
+ * using namespace Mdt::QueryExpression::Reflection;
+ *
+ * SelectStatement<PersonDef> stm( EntityAlias("P") );
+ * stm.addField<PersonDef::name>();
+ * stm.addField<PersonDef::remarks>( FieldAlias("PersonRemarks") );
+ * stm.addField<AddressDef::street>();
+ * stm.addField<AddressDef::remarks>( FieldAlias("AddressRemarks") );
+ * stm.joinEntity<PersonAddressRelation>();
+ * stm.setFilter( (PersonDef::name == "A") || (AddressDef::street == "Street name B") );
+ * \endcode
+ *
+ * \section create_select_statement_OLD Create select statements OLD
  *
  * Here is a example to create a simple select statement:
  * \code
@@ -169,12 +347,18 @@
  *  \endcode
  *
  * \sa Mdt::QueryExpression::SqlSelectQuery
+ * \sa Mdt::QueryExpression::AbstractAsyncReadOnlyCache
  *
  * As said before, the concrete backend that will be used in the application
  *  must not become a dependency in all the business logic.
  *
  * In the domain code, we must be able to create queries that are correctly
  *  setup with a concrete backend, without knowing anything about this backend.
+ *
+ * \todo Document this part
+ *
+ * \sa Mdt::QueryExpression::AbstractReadOnlyCache
+ * \sa Mdt::QueryExpression::AbstractAsyncReadOnlyCache
  *
  * To achieve this, Mdt::QueryExpression::AbstractSelectQueryFactory can be used:
  * \code

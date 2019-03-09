@@ -18,23 +18,4 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SELECT_STATEMENT_TEST_H
-#define SELECT_STATEMENT_TEST_H
-
-#include "TestBase.h"
-
-class SelectStatementTest : public QObject
-{
- Q_OBJECT
-
- private slots:
-
-  void setEntityTest();
-  void addFieldTest();
-  void fieldIndexTest();
-  void filterTest();
-  void joinEntityTest();
-  void isPrimaryEntityOrExistsInJoinedEntitiesTest();
-};
-
-#endif // #ifndef SELECT_STATEMENT_TEST_H
+#include "ReflectionSelectStatement.h"

@@ -56,6 +56,7 @@ class AbstractExpressionToStringVisitor : public Mdt::QueryExpression::AbstractE
       case ComparisonOperator::GreaterEqual:
         return ">=";
     }
+    return QString();
   }
 
   static QString logicalOperatorToString(LogicalOperator op)
@@ -120,6 +121,11 @@ class ExpressionToInfixStringVisitor : public AbstractExpressionToStringVisitor
 {
  public:
 
+  void setIncludeEntity(bool inc)
+  {
+    mIncludeEntity = inc;
+  }
+
   void processPreorder(Mdt::QueryExpression::LogicalOperator) override
   {
     mExpressionString += "(";
@@ -142,7 +148,11 @@ class ExpressionToInfixStringVisitor : public AbstractExpressionToStringVisitor
 
   void processInorder(const Mdt::QueryExpression::EntityAndField & field) override
   {
-    mExpressionString += field.fieldAliasOrName();
+    if( mIncludeEntity && field.hasEntity() ){
+      mExpressionString += field.entityAliasOrName() + "." + field.fieldName();
+    }else{
+      mExpressionString += field.fieldName();
+    }
   }
 
   void processInorder(const QVariant & value) override
@@ -172,6 +182,7 @@ class ExpressionToInfixStringVisitor : public AbstractExpressionToStringVisitor
  private:
 
   QString mExpressionString;
+  bool mIncludeEntity = false;
 };
 
 class ExpressionToPostfixStringVisitor : public AbstractExpressionToStringVisitor
@@ -212,6 +223,17 @@ class ExpressionToPostfixStringVisitor : public AbstractExpressionToStringVisito
 
   QString mExpressionString;
 };
+
+QString toInfixString(const ExpressionTree & tree, bool includeEntityInField = true)
+{
+  Q_ASSERT(!tree.isNull());
+
+  ExpressionToInfixStringVisitor visitor;
+  visitor.setIncludeEntity(includeEntityInField);
+  traverseExpressionTree(tree, visitor);
+
+  return visitor.toString();
+}
 
 /*
  * Tests
@@ -440,7 +462,7 @@ void ExpressionTreeTest::joinConstraintExpressionTest()
 
   QueryField personId(person, "id");
   QueryField addressPersonId(address, "personId");
-  
+
   ExpressionToInfixStringVisitor infixVisitor;
   QString expectedString;
 
@@ -455,6 +477,26 @@ void ExpressionTreeTest::joinConstraintExpressionTest()
   infixVisitor.clear();
 }
 
+void ExpressionTreeTest::joinConstraintExpressionFromEqualityTest()
+{
+  JoinConstraintExpression join;
+  QString expectedString;
+
+  QueryEntity person("Person");
+  QueryEntity address("Address", EntityAlias("ADR"));
+
+  join = JoinConstraintExpression::fromEquality(person, {"id"}, address, {"personId"});
+  expectedString = "ADR.personId==Person.id";
+  QCOMPARE(toInfixString(join.internalTree()), expectedString);
+
+  join = JoinConstraintExpression::fromEquality(person, {"idA","idB"}, address, {"personIdA","personIdB"});
+  expectedString = "(ADR.personIdA==Person.idA)&&(ADR.personIdB==Person.idB)";
+  QCOMPARE(toInfixString(join.internalTree()), expectedString);
+
+  join = JoinConstraintExpression::fromEquality(person, {"idA","idB","idC"}, address, {"personIdA","personIdB","personIdC"});
+  expectedString = "((ADR.personIdA==Person.idA)&&(ADR.personIdB==Person.idB))&&(ADR.personIdC==Person.idC)";
+  QCOMPARE(toInfixString(join.internalTree()), expectedString);
+}
 
 /*
  * Main

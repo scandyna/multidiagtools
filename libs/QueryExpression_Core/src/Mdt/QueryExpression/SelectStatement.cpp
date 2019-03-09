@@ -104,13 +104,24 @@ void SelectStatement::clear()
 {
   clearAttributesExceptEntity();
   clearEntity();
-  mFilter.clear();
-  mJoinClauseList.clear();
+}
+
+bool SelectStatement::isPrimaryEntityOrExistsInJoinedEntities(const QString & entityName) const
+{
+  Q_ASSERT(!entityName.trimmed().isEmpty());
+
+  if(entityName ==  mEntity.name()){
+    return true;
+  }
+
+  return mJoinClauseList.containsEntity(entityName);
 }
 
 void SelectStatement::clearAttributesExceptEntity()
 {
   mFieldList.clear();
+  mFilter.clear();
+  mJoinClauseList.clear();
 }
 
 void SelectStatement::clearEntity()

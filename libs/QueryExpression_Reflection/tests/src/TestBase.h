@@ -18,23 +18,26 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SELECT_STATEMENT_TEST_H
-#define SELECT_STATEMENT_TEST_H
+#ifndef TEST_BASE_H
+#define TEST_BASE_H
 
-#include "TestBase.h"
+#include "Mdt/CoreApplication.h"
+#include <QObject>
+#include <QByteArray>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
+#include <QTemporaryFile>
+#include <QTemporaryDir>
+#include <QtTest/QtTest>
+#include <Qt>
+#include <initializer_list>
 
-class SelectStatementTest : public QObject
+
+class TestBase : public QObject
 {
  Q_OBJECT
 
- private slots:
-
-  void setEntityTest();
-  void addFieldTest();
-  void fieldIndexTest();
-  void filterTest();
-  void joinEntityTest();
-  void isPrimaryEntityOrExistsInJoinedEntitiesTest();
 };
 
-#endif // #ifndef SELECT_STATEMENT_TEST_H
+#endif // #ifndef TEST_BASE_H

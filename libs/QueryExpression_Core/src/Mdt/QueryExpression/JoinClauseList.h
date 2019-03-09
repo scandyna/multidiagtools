@@ -79,6 +79,12 @@ namespace Mdt{ namespace QueryExpression{
      */
     void clear();
 
+    /*! \brief Check if this list contains a entity
+     *
+     * \pre \a entityName must not be empty
+     */
+    bool containsEntity(const QString & entityName) const;
+
 //     /*! \brief Get a iterator to the first clause thet refers to \a entity
 //      */
 //     const_iterator findEntity(const QueryEntity & entity) const;

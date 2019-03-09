@@ -11,7 +11,6 @@ set(SOURCE_FILES
   Mdt/QueryExpression/SelectEntity.cpp
   Mdt/QueryExpression/EntityAndField.cpp
   Mdt/QueryExpression/SelectAllField.cpp
-#   Mdt/QueryExpression/QueryFieldVariant.cpp
   Mdt/QueryExpression/SelectFieldVariant.cpp
   Mdt/QueryExpression/SelectField.cpp
   Mdt/QueryExpression/SelectFieldList.cpp

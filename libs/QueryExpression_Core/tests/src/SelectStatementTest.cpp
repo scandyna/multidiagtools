@@ -221,11 +221,34 @@ void SelectStatementTest::joinEntityTest()
   QueryField addressPersonId(address, "personId");
 
   SelectStatement stm;
+  QVERIFY(!stm.hasJoin());
   stm.joinEntity(address, addressPersonId == personId);
+  QVERIFY(stm.hasJoin());
   QCOMPARE(stm.joinClauseList().clauseCount(), 1);
 
   stm.clear();
   QCOMPARE(stm.joinClauseList().clauseCount(), 0);
+}
+
+void SelectStatementTest::isPrimaryEntityOrExistsInJoinedEntitiesTest()
+{
+  QueryEntity person("Person");
+  QueryEntity address( "Address", EntityAlias("ADR") );
+
+  QueryField personId( person, "id" );
+  QueryField addressPersonId(address, "personId");
+
+  SelectStatement stm;
+  QVERIFY(!stm.isPrimaryEntityOrExistsInJoinedEntities(person.name()));
+  QVERIFY(!stm.isPrimaryEntityOrExistsInJoinedEntities(address.name()));
+
+  stm.setEntity(person);
+  QVERIFY( stm.isPrimaryEntityOrExistsInJoinedEntities(person.name()));
+  QVERIFY(!stm.isPrimaryEntityOrExistsInJoinedEntities(address.name()));
+
+  stm.joinEntity(address, addressPersonId == personId);
+  QVERIFY( stm.isPrimaryEntityOrExistsInJoinedEntities(person.name()));
+  QVERIFY( stm.isPrimaryEntityOrExistsInJoinedEntities(address.name()));
 }
 
 /*

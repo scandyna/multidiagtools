@@ -34,6 +34,7 @@
 #include "JoinConstraintExpression.h"
 #include "JoinClauseList.h"
 #include "FilterExpression.h"
+#include "TypeTraits/JoinConstraintExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
 #include <QString>
 
@@ -265,10 +266,13 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Join \a entity to this statement
      *
      * \pre \a entity must not be null
+     * \pre \a join must be a valid join constraint expression
      */
     template<typename JoinExpr>
     void joinEntity(const QueryEntity & entity, const JoinExpr & join)
     {
+      static_assert(TypeTraits::isJoinConstraintExpression<JoinExpr>() ,
+                    "join must be a valid join constraint expression");
       Q_ASSERT(!entity.isNull());
 
       JoinConstraintExpression joinConstraint;
@@ -345,6 +349,12 @@ namespace Mdt{ namespace QueryExpression{
     /*! \brief Clear this statement
      */
     void clear();
+
+    /*! \brief Check if a entity is the primary entity of this statement, or if it exists in the joined entities
+     *
+     * \pre \a entityName must not be empty
+     */
+    bool isPrimaryEntityOrExistsInJoinedEntities(const QString & entityName) const;
 
    protected:
 
