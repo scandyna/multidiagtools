@@ -26,6 +26,7 @@
 #include "StructAlgorithm.h"
 #include "TypeTraits/IsRelation.h"
 #include "Impl/AddFieldNameToList.h"
+#include <QString>
 #include <QStringList>
 #include <QLatin1String>
 #include <boost/mpl/at.hpp>
@@ -55,6 +56,30 @@ namespace Mdt{ namespace Reflection{
     static_assert( TypeTraits::IsRelation<Relation>::value, "Relation must be a relation between two reflected structs" );
 
     return nameFromStructDef<typename Relation::related_struct_def>();
+  }
+
+  /*! \brief Get the name given to the primary reflected struct in \a Relation
+   *
+   * \pre \a Relation must be a relation between two reflected structs
+   */
+  template<typename Relation>
+  static const QString primaryNameFromRelationQString() noexcept
+  {
+    static_assert( TypeTraits::IsRelation<Relation>::value, "Relation must be a relation between two reflected structs" );
+
+    return QString::fromLatin1( primaryNameFromRelation<Relation>() );
+  }
+
+  /*! \brief Get the name given to the related reflected struct in \a Relation
+   *
+   * \pre \a Relation must be a relation between two reflected structs
+   */
+  template<typename Relation>
+  static const QString relatedNameFromRelationQString() noexcept
+  {
+    static_assert( TypeTraits::IsRelation<Relation>::value, "Relation must be a relation between two reflected structs" );
+
+    return QString::fromLatin1( relatedNameFromRelation<Relation>() );
   }
 
   namespace Impl{

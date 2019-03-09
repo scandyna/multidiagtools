@@ -88,6 +88,8 @@ void RelationTest::namesFromRelationTest()
 
   QCOMPARE( primaryNameFromRelation<Relation>(), "PrimaryEntity" );
   QCOMPARE( relatedNameFromRelation<Relation>(), "RelatedEntity" );
+  QCOMPARE( primaryNameFromRelationQString<Relation>(), QLatin1String("PrimaryEntity") );
+  QCOMPARE( relatedNameFromRelationQString<Relation>(), QLatin1String("RelatedEntity") );
 }
 
 struct RelationToFieldPairNames
