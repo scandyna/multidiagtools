@@ -29,6 +29,7 @@
 #include "Mdt/Reflection/TypeTraits/IsIdPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
+#include "Mdt/Reflection/TypeTraits/IsIdPrimaryKeyClass.h"
 #include "Mdt/Reflection/TypeTraits/IsUniqueConstraint.h"
 #include "Mdt/Reflection/TypeTraits/IsRelation.h"
 #include "Mdt/Reflection/ReflectStruct.h"
@@ -168,6 +169,16 @@ static_assert( IsPrimaryKeyClass<ArticleDetailPrimaryKey>::value, "" );
 static_assert( IsPrimaryKeyClass<ArticleTypePrimaryKey>::value, "" );
 static_assert( !IsPrimaryKeyClass<ArticleDef>::value, "" );
 static_assert( !IsPrimaryKeyClass<int>::value, "" );
+
+/*
+ * IsIdPrimaryKeyClass compile time tests
+ */
+
+static_assert( IsIdPrimaryKeyClass<ArticlePrimaryKey>::value, "" );
+static_assert( IsIdPrimaryKeyClass<ArticleDetailPrimaryKey>::value, "" );
+static_assert( !IsIdPrimaryKeyClass<ArticleTypePrimaryKey>::value, "" );
+static_assert( !IsIdPrimaryKeyClass<ArticleDef>::value, "" );
+static_assert( !IsIdPrimaryKeyClass<int>::value, "" );
 
 /*
  * IsAutoIncrementIdPrimaryKey compile time tests

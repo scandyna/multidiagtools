@@ -18,33 +18,24 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_REFLECTION_ID_PRIMARY_KEY_H
-#define MDT_REFLECTION_ID_PRIMARY_KEY_H
+#ifndef MDT_REFLECTION_TYPE_TRAITS_IS_ID_PRIMARYKEY_CLASS_H
+#define MDT_REFLECTION_TYPE_TRAITS_IS_ID_PRIMARYKEY_CLASS_H
 
-#include "TypeTraits/PrimaryKeyClassTag.h"
-#include "TypeTraits/IdPrimaryKeyClassTag.h"
-#include "TypeTraits/IsField.h"
-#include <boost/mpl/vector.hpp>
+#include "IdPrimaryKeyClassTag.h"
+#include <type_traits>
 
-namespace Mdt{ namespace Reflection{
+namespace Mdt{ namespace Reflection{ namespace TypeTraits{
 
-  /*! \brief Id primary key for a reflected struct
+  /*! \brief Check if T is a id primary key class
    *
-   * \pre \a Field must be a field defined in a struct definition associated with a reflected struct
+   * A id primary key class is either a AutoIncrementIdPrimaryKey,
+   *  or a IdPrimaryKey
    */
-  template<typename Field>
-  class IdPrimaryKey : TypeTraits::PrimaryKeyClassTag, TypeTraits::IdPrimaryKeyClassTag
+  template<typename T>
+  struct IsIdPrimaryKeyClass : std::is_base_of<IdPrimaryKeyClassTag, T>
   {
-    static_assert( TypeTraits::IsField<Field>::value , "Field must be a field defined in a struct definition associated with a reflected struct" );
-
-   public:
-
-    using struct_def = typename Field::struct_def;
-    using field_list = boost::mpl::vector<Field>;
-    using field = Field;
   };
 
+}}} // namespace Mdt{ namespace Reflection{ namespace TypeTraits{
 
-}} // namespace Mdt{ namespace Reflection{
-
-#endif // #ifndef MDT_REFLECTION_ID_PRIMARY_KEY_H
+#endif // #ifndef MDT_REFLECTION_TYPE_TRAITS_IS_ID_PRIMARYKEY_CLASS_H

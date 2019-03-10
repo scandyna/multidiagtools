@@ -11,6 +11,7 @@ set(SOURCE_FILES
   Mdt/Reflection/TypeTraits/IsAutoIncrementIdPrimaryKey.cpp
   Mdt/Reflection/TypeTraits/IsIdPrimaryKey.cpp
   Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.cpp
+  Mdt/Reflection/TypeTraits/IsIdPrimaryKeyClass.cpp
   Mdt/Reflection/TypeTraits/IsUniqueConstraint.cpp
   Mdt/Reflection/TypeTraits/IsRelation.cpp
   Mdt/Reflection/Impl/AddFieldNameToList.cpp
