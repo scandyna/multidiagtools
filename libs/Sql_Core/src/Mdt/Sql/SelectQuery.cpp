@@ -22,6 +22,7 @@
 #include "QueryExpressionSqlTransform.h"
 #include "Error.h"
 #include <QSqlError>
+#include <QSqlRecord>
 
 namespace Mdt{ namespace Sql{
 
@@ -53,6 +54,11 @@ bool SelectQuery::execStatement(const Mdt::QueryExpression::SelectStatement & st
   }
 
   return true;
+}
+
+int SelectQuery::fieldCount() const
+{
+  return mQuery.record().count();
 }
 
 QSqlRecord SelectQuery::fetchSingleRecord()

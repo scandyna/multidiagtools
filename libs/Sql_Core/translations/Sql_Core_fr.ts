@@ -227,17 +227,17 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::SelectQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="48"/>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="49"/>
         <source>Executing query to select from &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="63"/>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="69"/>
         <source>Fetching a single record from &apos;%1&apos; failed because no record is available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="73"/>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="79"/>
         <source>Fetching a single record from &apos;%1&apos; failed because more than 1 record is available.</source>
         <translation type="unfinished"></translation>
     </message>

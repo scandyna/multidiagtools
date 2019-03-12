@@ -478,8 +478,11 @@ void QueryTest::selectQueryTest()
   statement.setEntityName("Client_tbl");
   statement.addField("Id_PK");
   statement.addField("Name");
+  QCOMPARE(query.fieldCount(), 0);
   QVERIFY(query.execStatement(statement));
+  QCOMPARE(query.fieldCount(), 2);
   QVERIFY(query.next());
+  QCOMPARE(query.fieldCount(), 2);
   QCOMPARE(query.value(0), QVariant(1));
   QCOMPARE(query.value(1), QVariant("Name 1"));
   QVERIFY(query.next());

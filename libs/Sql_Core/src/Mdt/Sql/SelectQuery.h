@@ -120,6 +120,12 @@ namespace Mdt{ namespace Sql{
      */
     bool execStatement(const Mdt::QueryExpression::SelectStatement & statement, int maxRows = 0);
 
+    /*! \brief Get the count of fields the result of this query contains
+     *
+     * If not query have been executed, 0 is returned
+     */
+    int fieldCount() const;
+
     /*! \brief Retrieves the next record in the result, if available, and positions the query on the retrieved record
      *
      * This is a call to QSqlQuery::next()
