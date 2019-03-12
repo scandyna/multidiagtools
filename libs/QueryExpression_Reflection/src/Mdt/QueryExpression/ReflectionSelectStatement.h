@@ -37,6 +37,33 @@
 
 namespace Mdt{ namespace QueryExpression{
 
+  namespace Impl{
+
+    /*! \internal
+     */
+    template<typename Statement>
+    class AddFieldToReflectionSelectStatement
+    {
+     public:
+
+      AddFieldToReflectionSelectStatement(Statement & statement)
+       : mStatement(statement)
+      {
+      }
+
+      template<typename Field>
+      void operator()(const Field) const
+      {
+        mStatement.template addField<Field>();
+      }
+
+     private:
+
+      Statement & mStatement;
+    };
+
+  } // namespace Impl{
+
   /*! \brief Creation of a statement to select data
    *
    * Here is a example to create a simple select statement:
@@ -45,6 +72,14 @@ namespace Mdt{ namespace QueryExpression{
    *
    * ReflectionSelectStatement<PersonDef> stm;
    * stm.selectAllFields();
+   * \endcode
+   *
+   * If the order of fields is important, addAllFields() should be used:
+   * \code
+   * using namespace Mdt::QueryExpression;
+   *
+   * ReflectionSelectStatement<PersonDef> stm;
+   * stm.addAllFields();
    * \endcode
    *
    * It is also possible to specify a entity alias:
@@ -212,6 +247,32 @@ namespace Mdt{ namespace QueryExpression{
                     "Field must be a field defined in a struct definition associated with a reflected struct" );
 
       BaseClass::addField( makeQueryEntityFromField<Field>(), fieldNameQString<Field>(), fieldAlias );
+    }
+
+    /*! \brief Add all fields from the main entity to this statement
+     *
+     * Will add each field defined in \a StructDef to this statement.
+     *  Using this method, the backend will explicitly generage
+     *  a request that lists each field, in the order defined
+     *  by the reflected struct.
+     *
+     * \code
+     * ReflectionSelectStatement<PersonDef> stm;
+     * \endcode
+     *
+     * In SQL, this will generate a query like:
+     * \code
+     * SELECT Person.id, Person.name
+     * FROM Person
+     * \endcode
+     *
+     * \note This is different from selectAllFields()
+     */
+    void addAllFields()
+    {
+//       Impl::AddFieldToReflectionSelectStatement< ReflectionSelectStatement > f(*this);
+      Impl::AddFieldToReflectionSelectStatement< decltype(*this) > f(*this);
+      Mdt::Reflection::forEachFieldInStructDef<StructDef>(f);
     }
 
     /*! \brief Join a entity to this statement

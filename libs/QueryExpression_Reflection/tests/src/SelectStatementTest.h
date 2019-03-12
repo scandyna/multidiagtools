@@ -27,6 +27,7 @@ class SelectStatementTest : public QObject
  private slots:
 
   void apiExamplesTest();
+  void addAllFieldsTest();
   void joinTest();
   void joinByRelationTest();
 };

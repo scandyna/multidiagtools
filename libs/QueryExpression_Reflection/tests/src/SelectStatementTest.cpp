@@ -309,6 +309,26 @@ void SelectStatementTest::apiExamplesTest()
   QVERIFY(!stm4.hasFilter());
 }
 
+void SelectStatementTest::addAllFieldsTest()
+{
+  SelectFieldList fieldList;
+
+  ReflectionSelectStatement<PersonDef> stm;
+  stm.addAllFields();
+  fieldList = stm.fieldList();
+  QCOMPARE(fieldList.fieldCount(), 5);
+  QCOMPARE(getEntityAliasOrName(fieldList.at(0)), QLatin1String("Person"));
+  QCOMPARE(getFieldAliasOrName(fieldList.at(0)), QLatin1String("id"));
+  QCOMPARE(getEntityAliasOrName(fieldList.at(1)), QLatin1String("Person"));
+  QCOMPARE(getFieldAliasOrName(fieldList.at(1)), QLatin1String("teamId"));
+  QCOMPARE(getEntityAliasOrName(fieldList.at(2)), QLatin1String("Person"));
+  QCOMPARE(getFieldAliasOrName(fieldList.at(2)), QLatin1String("name"));
+  QCOMPARE(getEntityAliasOrName(fieldList.at(3)), QLatin1String("Person"));
+  QCOMPARE(getFieldAliasOrName(fieldList.at(3)), QLatin1String("age"));
+  QCOMPARE(getEntityAliasOrName(fieldList.at(4)), QLatin1String("Person"));
+  QCOMPARE(getFieldAliasOrName(fieldList.at(4)), QLatin1String("remarks"));
+}
+
 void SelectStatementTest::joinTest()
 {
   JoinClauseList joinList;
