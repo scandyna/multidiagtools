@@ -27,6 +27,7 @@ class StructTest : public QObject
  private slots:
 
   void nameTest();
+  void fieldCountTest();
   void forEachFieldValuePairTest();
   void forEachFieldTest();
 };

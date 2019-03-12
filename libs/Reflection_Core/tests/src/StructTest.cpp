@@ -75,6 +75,52 @@ MDT_REFLECT_STRUCT(
 )
 
 /*
+ * For field count test
+ */
+
+struct Fc1DataStruct
+{
+  int f1;
+  int f2;
+  int f3;
+};
+
+MDT_REFLECT_STRUCT(
+  (Fc1DataStruct),
+  Fc1,
+  (f1)
+)
+
+struct Fc2DataStruct
+{
+  int f1;
+  int f2;
+  int f3;
+};
+
+MDT_REFLECT_STRUCT(
+  (Fc2DataStruct),
+  Fc2,
+  (f1),
+  (f2)
+)
+
+struct Fc3DataStruct
+{
+  int f1;
+  int f2;
+  int f3;
+};
+
+MDT_REFLECT_STRUCT(
+  (Fc3DataStruct),
+  Fc3,
+  (f1),
+  (f2),
+  (f3)
+)
+
+/*
  * Tests
  */
 
@@ -85,6 +131,13 @@ void StructTest::nameTest()
   QCOMPARE(nameFromStructDefQString<PersonDef>(), QLatin1String("Person"));
 
   QCOMPARE(nameFromStructDef<AddressDef>(), "Address");
+}
+
+void StructTest::fieldCountTest()
+{
+  QCOMPARE(reflectedFieldCountFromStructDef<Fc1Def>(), 1);
+  QCOMPARE(reflectedFieldCountFromStructDef<Fc2Def>(), 2);
+  QCOMPARE(reflectedFieldCountFromStructDef<Fc3Def>(), 3);
 }
 
 struct AddNameAndFieldNameToList

@@ -24,6 +24,7 @@
 #include "TypeTraits/IsField.h"
 #include "TypeTraits/IsStructDef.h"
 #include <QString>
+#include <boost/fusion/include/size.hpp>
 #include <boost/fusion/include/as_map.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/mpl/for_each.hpp>
@@ -52,6 +53,19 @@ namespace Mdt{ namespace Reflection{
   {
     // Note: the name given to the reflected struct cannot contain any non ASCII characters (will not compile)
     return QString::fromLatin1( nameFromStructDef<StructDef>() );
+  }
+
+  /*! \brief Get the count of reflected fields of a reflected struct from struct def
+   *
+   * \pre \a StructDef must be a struct definition assiocated with a reflected struct
+   */
+  template<typename StructDef>
+  static constexpr int reflectedFieldCountFromStructDef() noexcept
+  {
+    static_assert( TypeTraits::IsStructDef<StructDef>::value,
+                   "StructDef must be a struct definition assiocated with a reflected struct" );
+
+    return boost::fusion::result_of::size<typename StructDef::reflected_struct>::type::value;
   }
 
   /*! \brief Get the name given to a reflected struct from a field
