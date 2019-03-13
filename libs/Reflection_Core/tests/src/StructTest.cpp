@@ -197,7 +197,7 @@ struct AddValueToList
   QVariantList & mValueList;
 };
 
-void StructTest::forEachValueInStructTest()
+void StructTest::forEachValueInConstStructTest()
 {
   QVariantList valueList;
   AddValueToList f(valueList);
@@ -217,6 +217,40 @@ void StructTest::forEachValueInStructTest()
   valueList.clear();
   forEachValueInStruct(address, f);
   QCOMPARE(valueList, QVariantList({44,QLatin1String("S44"),36}));
+}
+
+struct AddValueToStruct
+{
+  AddValueToStruct(const QVariantList & list)
+   : mValueList(list)
+  {
+  }
+
+  template<typename T>
+  void operator()(T & value) const
+  {
+    Q_ASSERT(mIndex < mValueList.size());
+    value = mValueList.at(mIndex).value<T>();
+    ++mIndex;
+  }
+
+ private:
+
+  const QVariantList & mValueList;
+  mutable int mIndex = 0;
+};
+
+void StructTest::forEachValueInStructTest()
+{
+  QVariantList valueList;
+  AddValueToStruct f(valueList);
+
+  valueList = {15,QLatin1String("fN15"),QLatin1String("lN15")};
+  PersonDataStruct person;
+  forEachValueInStruct(person, f);
+  QCOMPARE(person.id, 15);
+  QCOMPARE(person.firstName, QLatin1String("fN15"));
+  QCOMPARE(person.lastName, QLatin1String("lN15"));
 }
 
 struct AddFieldNameToList

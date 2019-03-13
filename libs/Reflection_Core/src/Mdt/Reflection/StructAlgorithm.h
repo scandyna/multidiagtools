@@ -92,7 +92,7 @@ namespace Mdt{ namespace Reflection{
     return QString::fromLatin1( nameFromField<Field>() );
   }
 
-  /*! \brief Iterate over each element on a reflected struct
+  /*! \brief Iterate over each element on a const reflected struct
    *
    * \a f is a functor like:
    * \code
@@ -110,13 +110,46 @@ namespace Mdt{ namespace Reflection{
    * MyFunctor f;
    * PersonDataStruct person{25, "Name 25"};
    *
+   * Mdt::Reflection::forEachValueInConstStruct(person, f);
+   * \endcode
+   *
+   * \pre \a Strcut must have been reflected with MDT_REFLECT_STRUCT()
+   */
+  template<typename Struct, typename F>
+  void forEachValueInConstStruct(const Struct & s, F f)
+  {
+    boost::fusion::for_each(s, f);
+  }
+
+  /*! \brief Iterate over each element on a reflected struct
+   *
+   * \a f is a functor like:
+   * \code
+   * struct MyFunctor
+   * {
+   *   template<typename T>
+   *   void operator()(T & value) const
+   *   {
+   *   }
+   * };
+   * \endcode
+   *
+   * \note The call operator of the functor must be const.
+   *   This is required by boost::proto::for_each()
+   *   which is internally used.
+   *
+   * Example of call:
+   * \code
+   * MyFunctor f;
+   * PersonDataStruct person;
+   *
    * Mdt::Reflection::forEachValueInStruct(person, f);
    * \endcode
    *
    * \pre \a Strcut must have been reflected with MDT_REFLECT_STRUCT()
    */
   template<typename Struct, typename F>
-  void forEachValueInStruct(const Struct & s, F f)
+  void forEachValueInStruct(Struct & s, F f)
   {
     boost::fusion::for_each(s, f);
   }
