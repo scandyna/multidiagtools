@@ -26,6 +26,7 @@
 #include <QLatin1String>
 #include <QStringList>
 #include <QVariant>
+#include <QVariantList>
 
 using namespace Mdt::Reflection;
 
@@ -178,6 +179,46 @@ void StructTest::forEachFieldValuePairTest()
   QCOMPARE(fieldNameList, QStringList({QLatin1String("Address.id:10"),QLatin1String("Address.street:sA"),QLatin1String("Address.personId:1")}));
 }
 
+struct AddValueToList
+{
+  AddValueToList(QVariantList & list)
+   : mValueList(list)
+  {
+  }
+
+  template<typename T>
+  void operator()(const T & value) const
+  {
+    mValueList << value;
+  }
+
+ private:
+
+  QVariantList & mValueList;
+};
+
+void StructTest::forEachValueInStructTest()
+{
+  QVariantList valueList;
+  AddValueToList f(valueList);
+
+  PersonDataStruct person;
+  person.id = 25;
+  person.firstName = QLatin1String("fN25");
+  person.lastName = QLatin1String("lN25");
+  valueList.clear();
+  forEachValueInStruct(person, f);
+  QCOMPARE(valueList, QVariantList({25,QLatin1String("fN25"),QLatin1String("lN25")}));
+
+  AddressDataStruct address;
+  address.id = 44;
+  address.street = QLatin1String("S44");
+  address.personId = 36;
+  valueList.clear();
+  forEachValueInStruct(address, f);
+  QCOMPARE(valueList, QVariantList({44,QLatin1String("S44"),36}));
+}
+
 struct AddFieldNameToList
 {
   AddFieldNameToList(QStringList & list)
@@ -198,7 +239,7 @@ private:
   QStringList & mFieldNameList;
 };
 
-void StructTest::forEachFieldTest()
+void StructTest::forEachFieldInStructDefTest()
 {
   QStringList fieldNameList;
   AddFieldNameToList f(fieldNameList);

@@ -98,6 +98,35 @@ namespace Mdt{ namespace Reflection{
    * \code
    * struct MyFunctor
    * {
+   *   template<typename T>
+   *   void operator()(const T & value) const
+   *   {
+   *   }
+   * };
+   * \endcode
+   *
+   * Example of call:
+   * \code
+   * MyFunctor f;
+   * PersonDataStruct person{25, "Name 25"};
+   *
+   * Mdt::Reflection::forEachValueInStruct(person, f);
+   * \endcode
+   *
+   * \pre \a Strcut must have been reflected with MDT_REFLECT_STRUCT()
+   */
+  template<typename Struct, typename F>
+  void forEachValueInStruct(const Struct & s, F f)
+  {
+    boost::fusion::for_each(s, f);
+  }
+
+  /*! \brief Iterate over each element on a reflected struct
+   *
+   * \a f is a functor like:
+   * \code
+   * struct MyFunctor
+   * {
    *   template<typename FieldValuePair>
    *   void operator()(const FieldValuePair & p) const
    *   {
@@ -132,10 +161,15 @@ namespace Mdt{ namespace Reflection{
    *   }
    * };
    * \endcode
+   *
+   * \pre \a StructDef must be a struct definition assiocated with a reflected struct
    */
   template<typename StructDef, typename F>
   void forEachFieldInStructDef(F f)
   {
+    static_assert( TypeTraits::IsStructDef<StructDef>::value,
+                   "StructDef must be a struct definition assiocated with a reflected struct" );
+
     boost::mpl::for_each< typename StructDef::field_list >(f);
   }
 
