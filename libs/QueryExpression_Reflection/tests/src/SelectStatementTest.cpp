@@ -20,8 +20,7 @@
  ****************************************************************************/
 #include "SelectStatementTest.h"
 #include "Mdt/QueryExpression/ReflectionSelectStatement.h"
-#include "Mdt/QueryExpression/AbstractExpressionTreeVisitor.h"
-#include "Mdt/QueryExpression/TravserseTreeGraph.h"
+#include "Mdt/QueryExpression/Debug/ExpressionTreeToString.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/PrimaryKey.h"
 #include "Mdt/Reflection/Relation.h"
@@ -29,6 +28,7 @@
 #include <boost/variant.hpp>
 
 using namespace Mdt::QueryExpression;
+using namespace Mdt::QueryExpression::Debug;
 
 /*
  * Entities
@@ -150,104 +150,11 @@ QString getFieldAliasOrName(const SelectField & field)
  * Helper to get a join constraint expression as string
  */
 
-class ExpressionToInfixStringVisitor : public Mdt::QueryExpression::AbstractExpressionTreeVisitor
-{
- public:
-
-  void processPreorder(Mdt::QueryExpression::LogicalOperator) override
-  {
-    mExpressionString += QLatin1Char('(');
-  }
-
-  void processPostorder(Mdt::QueryExpression::LogicalOperator) override
-  {
-    mExpressionString += QLatin1Char(')');
-  }
-
-  void processInorder(Mdt::QueryExpression::ComparisonOperator op) override
-  {
-    mExpressionString += comparisonOperatorToString(op);
-  }
-
-  void processInorder(Mdt::QueryExpression::LogicalOperator op) override
-  {
-    mExpressionString += QLatin1Char(')') + logicalOperatorToString(op) + QLatin1Char('(');
-  }
-
-  void processInorder(const Mdt::QueryExpression::EntityAndField & field) override
-  {
-    if(field.hasEntity()){
-      mExpressionString += field.entityAliasOrName() + QLatin1Char('.') + field.fieldName();
-    }else{
-      mExpressionString += field.fieldName();
-    }
-  }
-
-  void processInorder(const QVariant & value) override
-  {
-    mExpressionString += value.toString();
-  }
-
-  void processInorder(const LikeExpressionData& data) override
-  {
-    mExpressionString += QLatin1Char('\'') + data.toString() + QLatin1Char('\'');
-  }
-
-  void clear()
-  {
-    mExpressionString.clear();
-  }
-
-  QString toString() const
-  {
-    return mExpressionString;
-  }
-
- private:
-
-  static QString comparisonOperatorToString(Mdt::QueryExpression::ComparisonOperator op)
-  {
-    using Mdt::QueryExpression::ComparisonOperator;
-    switch(op){
-      case ComparisonOperator::Equal:
-        return QLatin1String("==");
-      case ComparisonOperator::Like:
-        return QLatin1String(" Like ");
-      case ComparisonOperator::NotEqual:
-        return QLatin1String("!=");
-      case ComparisonOperator::Less:
-        return QLatin1String("<");
-      case ComparisonOperator::LessEqual:
-        return QLatin1String("<=");
-      case ComparisonOperator::Greater:
-        return QLatin1String(">");
-      case ComparisonOperator::GreaterEqual:
-        return QLatin1String(">=");
-    }
-  }
-
-  static QString logicalOperatorToString(LogicalOperator op)
-  {
-    switch(op){
-      case LogicalOperator::And:
-        return QLatin1String("&&");
-      case LogicalOperator::Or:
-        return QLatin1String("||");
-    }
-    return QString();
-  }
-
-  QString mExpressionString;
-};
-
 QString expressionToString(const Mdt::QueryExpression::JoinConstraintExpression & expr)
 {
   Q_ASSERT(!expr.isNull());
 
-  ExpressionToInfixStringVisitor visitor;
-  Mdt::QueryExpression::traverseExpressionTree(expr.internalTree(), visitor);
-
-  return visitor.toString();
+  return expressionTreeToInfixString(expr.internalTree());
 }
 
 /*
