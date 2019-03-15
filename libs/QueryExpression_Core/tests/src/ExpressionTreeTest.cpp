@@ -25,9 +25,11 @@
 #include "Mdt/QueryExpression/TravserseTreeGraph.h"
 #include "Mdt/QueryExpression/FilterExpression.h"
 #include "Mdt/QueryExpression/JoinConstraintExpression.h"
+#include "Mdt/QueryExpression/Debug/ExpressionTreeToString.h"
 #include <QMetaType>
 
 using namespace Mdt::QueryExpression;
+using namespace Mdt::QueryExpression::Debug;
 
 /*
  * Expression tree visitors for tests
@@ -36,39 +38,6 @@ using namespace Mdt::QueryExpression;
 class AbstractExpressionToStringVisitor : public Mdt::QueryExpression::AbstractExpressionTreeVisitor
 {
  protected:
-
-  static QString comparisonOperatorToString(Mdt::QueryExpression::ComparisonOperator op)
-  {
-    using Mdt::QueryExpression::ComparisonOperator;
-    switch(op){
-      case ComparisonOperator::Equal:
-        return "==";
-      case ComparisonOperator::Like:
-        return " Like ";
-      case ComparisonOperator::NotEqual:
-        return "!=";
-      case ComparisonOperator::Less:
-        return "<";
-      case ComparisonOperator::LessEqual:
-        return "<=";
-      case ComparisonOperator::Greater:
-        return ">";
-      case ComparisonOperator::GreaterEqual:
-        return ">=";
-    }
-    return QString();
-  }
-
-  static QString logicalOperatorToString(LogicalOperator op)
-  {
-    switch(op){
-      case LogicalOperator::And:
-        return "&&";
-      case LogicalOperator::Or:
-        return "||";
-    }
-    return QString();
-  }
 
   static bool isTypeString(const QVariant & v)
   {
@@ -117,74 +86,6 @@ class ExpressionToPrefixStringVisitor : public AbstractExpressionToStringVisitor
   QString mExpressionString;
 };
 
-class ExpressionToInfixStringVisitor : public AbstractExpressionToStringVisitor
-{
- public:
-
-  void setIncludeEntity(bool inc)
-  {
-    mIncludeEntity = inc;
-  }
-
-  void processPreorder(Mdt::QueryExpression::LogicalOperator) override
-  {
-    mExpressionString += "(";
-  }
-
-  void processPostorder(Mdt::QueryExpression::LogicalOperator) override
-  {
-    mExpressionString += ")";
-  }
-
-  void processInorder(Mdt::QueryExpression::ComparisonOperator op) override
-  {
-    mExpressionString += comparisonOperatorToString(op);
-  }
-
-  void processInorder(Mdt::QueryExpression::LogicalOperator op) override
-  {
-    mExpressionString += ")" + logicalOperatorToString(op) + "(";
-  }
-
-  void processInorder(const Mdt::QueryExpression::EntityAndField & field) override
-  {
-    if( mIncludeEntity && field.hasEntity() ){
-      mExpressionString += field.entityAliasOrName() + "." + field.fieldName();
-    }else{
-      mExpressionString += field.fieldName();
-    }
-  }
-
-  void processInorder(const QVariant & value) override
-  {
-    if(isTypeString(value)){
-      mExpressionString += "\"" + value.toString() + "\"";
-    }else{
-      mExpressionString += value.toString();
-    }
-  }
-
-  void processInorder(const LikeExpressionData& data) override
-  {
-    mExpressionString += "'" + data.toString() + "'";
-  }
-
-  void clear()
-  {
-    mExpressionString.clear();
-  }
-
-  QString toString() const
-  {
-    return mExpressionString;
-  }
-
- private:
-
-  QString mExpressionString;
-  bool mIncludeEntity = false;
-};
-
 class ExpressionToPostfixStringVisitor : public AbstractExpressionToStringVisitor
 {
  public:
@@ -224,17 +125,6 @@ class ExpressionToPostfixStringVisitor : public AbstractExpressionToStringVisito
   QString mExpressionString;
 };
 
-QString toInfixString(const ExpressionTree & tree, bool includeEntityInField = true)
-{
-  Q_ASSERT(!tree.isNull());
-
-  ExpressionToInfixStringVisitor visitor;
-  visitor.setIncludeEntity(includeEntityInField);
-  traverseExpressionTree(tree, visitor);
-
-  return visitor.toString();
-}
-
 /*
  * Tests
  */
@@ -243,8 +133,6 @@ void ExpressionTreeTest::simpleBuildTreeTest()
 {
   QueryEntity person("Person", EntityAlias("P"));
   EntityAndField clientId(person, "id", FieldAlias("ID"));
-//   SelectEntity person(EntityName("Person"), "P");
-//   SelectField clientId(person, FieldName("id"), "ID");
   ExpressionTreeVertex leftVertex, rightVertex, rootVertex;
 
   ExpressionTree tree;
@@ -269,14 +157,11 @@ void ExpressionTreeTest::simpleBuildTreeTest()
 
 void ExpressionTreeTest::buildAndVisitTreeTest()
 {
-  QueryEntity person("Person", EntityAlias("P"));
-  EntityAndField clientId(person, "id");
-//   SelectEntity person(EntityName("Person"), "P");
-//   SelectField clientId(person, FieldName("id"));
+  EntityAndField clientId("id");
+
   ExpressionTree tree;
   ExpressionTreeVertex leftVertex, rightVertex;
   ExpressionToPrefixStringVisitor prefixVisitor;
-  ExpressionToInfixStringVisitor infixVisitor;
   ExpressionToPostfixStringVisitor postFixVisitor;
   QString expectedString;
 
@@ -292,8 +177,7 @@ void ExpressionTreeTest::buildAndVisitTreeTest()
   QCOMPARE(prefixVisitor.toString(), expectedString);
   // Infix expression
   expectedString = "id==25";
-  traverseExpressionTree(tree, infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
+  QCOMPARE(expressionTreeToInfixString(tree), expectedString);
   // Postfix expression
   expectedString = "id 25 == ";
   traverseExpressionTree(tree, postFixVisitor);
@@ -316,10 +200,8 @@ void ExpressionTreeTest::buildAndVisitTreeTest()
   traverseExpressionTree(tree, prefixVisitor);
   QCOMPARE(prefixVisitor.toString(), expectedString);
   // Infix expression
-  infixVisitor.clear();
   expectedString = "(id==25)||(id<150)";
-  traverseExpressionTree(tree, infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
+  QCOMPARE(expressionTreeToInfixString(tree), expectedString);
   // Postfix expression
   postFixVisitor.clear();
   expectedString = "id 25 == id 150 < || ";
@@ -347,10 +229,8 @@ void ExpressionTreeTest::buildAndVisitTreeTest()
   traverseExpressionTree(tree, prefixVisitor);
   QCOMPARE(prefixVisitor.toString(), expectedString);
   // Infix expression
-  infixVisitor.clear();
   expectedString = "((id==25)||(id<150))&&(id>=200)";
-  traverseExpressionTree(tree, infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
+  QCOMPARE(expressionTreeToInfixString(tree), expectedString);
   // Postfix expression
   postFixVisitor.clear();
   expectedString = "id 25 == id 150 < || id 200 >= && ";
@@ -362,93 +242,63 @@ void ExpressionTreeTest::filterExpressionTest()
 {
   using Like = LikeExpression;
 
-//   SelectEntity person(EntityName("Person"), "P");
-//   SelectField clientId(person, FieldName("id"));
-  
-  QueryEntity person("Person", EntityAlias("P"));
-  QueryField clientId(person, "id");
-  ExpressionToInfixStringVisitor infixVisitor;
+  QueryField clientId("id");
+
   QString expectedString;
   FilterExpression filter;
 
   filter.setFilter(clientId == 15);
   expectedString = "id==15";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId == "A");
-  expectedString = "id==\"A\"";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  expectedString = "id==A";
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   QString matchinString = "M";
   filter.setFilter(clientId == matchinString);
-  expectedString = "id==\"M\"";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  expectedString = "id==M";
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId == Like("?B*"));
   expectedString = "id Like '?B*'";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId != 15);
   expectedString = "id!=15";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId < 20);
   expectedString = "id<20";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId <= 20);
   expectedString = "id<=20";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId > 20);
   expectedString = "id>20";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId >= 20);
   expectedString = "id>=20";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId == 2 || clientId < 12);
   expectedString = "(id==2)||(id<12)";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId > 0 && clientId < 100);
   expectedString = "(id>0)&&(id<100)";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId == 2 || clientId < 12 || clientId == 22);
   expectedString = "((id==2)||(id<12))||(id==22)";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   filter.setFilter(clientId == 1 || ((clientId > 2) && (clientId < 22)));
   expectedString = "(id==1)||((id>2)&&(id<22))";
-  traverseExpressionTree(filter.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  QCOMPARE(filterExpressionToInfixString(filter), expectedString);
 
   QVERIFY(!filter.isNull());
   filter.clear();
@@ -463,7 +313,6 @@ void ExpressionTreeTest::joinConstraintExpressionTest()
   QueryField personId(person, "id");
   QueryField addressPersonId(address, "personId");
 
-  ExpressionToInfixStringVisitor infixVisitor;
   QString expectedString;
 
   JoinConstraintExpression join;
@@ -471,10 +320,8 @@ void ExpressionTreeTest::joinConstraintExpressionTest()
 
   join.setJoin(addressPersonId == personId);
   QVERIFY(!join.isNull());
-  expectedString = "personId==id";
-  traverseExpressionTree(join.internalTree(), infixVisitor);
-  QCOMPARE(infixVisitor.toString(), expectedString);
-  infixVisitor.clear();
+  expectedString = "ADR.personId==P.id";
+  QCOMPARE(expressionTreeToInfixString(join.internalTree()), expectedString);
 }
 
 void ExpressionTreeTest::joinConstraintExpressionFromEqualityTest()
@@ -487,15 +334,15 @@ void ExpressionTreeTest::joinConstraintExpressionFromEqualityTest()
 
   join = JoinConstraintExpression::fromEquality(person, {"id"}, address, {"personId"});
   expectedString = "ADR.personId==Person.id";
-  QCOMPARE(toInfixString(join.internalTree()), expectedString);
+  QCOMPARE(expressionTreeToInfixString(join.internalTree()), expectedString);
 
   join = JoinConstraintExpression::fromEquality(person, {"idA","idB"}, address, {"personIdA","personIdB"});
   expectedString = "(ADR.personIdA==Person.idA)&&(ADR.personIdB==Person.idB)";
-  QCOMPARE(toInfixString(join.internalTree()), expectedString);
+  QCOMPARE(expressionTreeToInfixString(join.internalTree()), expectedString);
 
   join = JoinConstraintExpression::fromEquality(person, {"idA","idB","idC"}, address, {"personIdA","personIdB","personIdC"});
   expectedString = "((ADR.personIdA==Person.idA)&&(ADR.personIdB==Person.idB))&&(ADR.personIdC==Person.idC)";
-  QCOMPARE(toInfixString(join.internalTree()), expectedString);
+  QCOMPARE(expressionTreeToInfixString(join.internalTree()), expectedString);
 }
 
 /*

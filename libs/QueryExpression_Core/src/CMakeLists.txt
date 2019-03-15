@@ -42,6 +42,7 @@ set(SOURCE_FILES
   Mdt/QueryExpression/CachedSelectQuery.cpp
   Mdt/QueryExpression/AbstractAsyncSelectQuery.cpp
   Mdt/QueryExpression/AbstractAsyncSelectQueryFactory.cpp
+  Mdt/QueryExpression/Debug/ExpressionTreeToString.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
