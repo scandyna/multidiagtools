@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -69,6 +69,7 @@ namespace Mdt{ namespace QueryExpression{
    *
    * \pre \a tree must not be null
    */
+  inline
   void MDT_QUERYEXPRESSION_CORE_EXPORT traverseExpressionTree(const ExpressionTree & tree, AbstractExpressionTreeVisitor & visitor)
   {
     Q_ASSERT(!tree.isNull());
