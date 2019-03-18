@@ -30,12 +30,14 @@
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKey.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
 #include "Mdt/Reflection/TypeTraits/IsIdPrimaryKeyClass.h"
+#include "Mdt/Reflection/TypeTraits/IsPrimaryKeyRecord.h"
 #include "Mdt/Reflection/TypeTraits/IsUniqueConstraint.h"
 #include "Mdt/Reflection/TypeTraits/IsRelation.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/PrimaryKey.h"
 #include "Mdt/Reflection/IdPrimaryKey.h"
 #include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
+#include "Mdt/Reflection/PrimaryKeyRecord.h"
 #include "Mdt/Reflection/UniqueConstraint.h"
 #include "Mdt/Reflection/Relation.h"
 #include <QString>
@@ -95,6 +97,10 @@ MDT_REFLECT_STRUCT(
 using ArticleTypePrimaryKey = PrimaryKey<ArticleTypeDef::code>;
 using ArticleTypePrimaryKey2 = PrimaryKey<ArticleTypeDef::code, ArticleTypeDef::label>;
 using ArticleTypePrimaryKey3 = PrimaryKey<ArticleTypeDef::code, ArticleTypeDef::label, ArticleTypeDef::type>;
+
+using ArticleTypePrimaryKeyRecord = PrimaryKeyRecord<ArticleTypePrimaryKey>;
+using ArticleTypePrimaryKeyRecord2 = PrimaryKeyRecord<ArticleTypePrimaryKey2>;
+using ArticleTypePrimaryKeyRecord3 = PrimaryKeyRecord<ArticleTypePrimaryKey3>;
 
 using ArticleTypeUniqueConstraint1 = UniqueConstraint<ArticleTypeDef::code>;
 using ArticleTypeUniqueConstraint2 = UniqueConstraint<ArticleTypeDef::code, ArticleTypeDef::label>;
@@ -205,6 +211,19 @@ static_assert( !IsPrimaryKey<ArticleDetailPrimaryKey>::value, "" );
 static_assert( IsPrimaryKey<ArticleTypePrimaryKey>::value, "" );
 static_assert( IsPrimaryKey<ArticleTypePrimaryKey2>::value, "" );
 static_assert( IsPrimaryKey<ArticleTypePrimaryKey3>::value, "" );
+
+/*
+ * IsPrimaryKeyRecord compile time tests
+ */
+
+static_assert( !IsPrimaryKeyRecord<ArticlePrimaryKey>::value, "" );
+static_assert( !IsPrimaryKeyRecord<ArticleDetailPrimaryKey>::value, "" );
+static_assert( !IsPrimaryKeyRecord<ArticleTypePrimaryKey>::value, "" );
+static_assert( !IsPrimaryKeyRecord<ArticleTypePrimaryKey2>::value, "" );
+static_assert( !IsPrimaryKeyRecord<ArticleTypePrimaryKey3>::value, "" );
+static_assert( IsPrimaryKeyRecord<ArticleTypePrimaryKeyRecord>::value, "" );
+static_assert( IsPrimaryKeyRecord<ArticleTypePrimaryKeyRecord2>::value, "" );
+static_assert( IsPrimaryKeyRecord<ArticleTypePrimaryKeyRecord3>::value, "" );
 
 /*
  * IsUniqueConstraint compile time tests

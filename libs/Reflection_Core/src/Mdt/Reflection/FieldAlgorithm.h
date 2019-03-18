@@ -66,7 +66,7 @@ namespace Mdt{ namespace Reflection{
 
   /*! \brief Get the field index in a Boost MPL sequence from a field defined in a struct definition
    *
-   * \pre \a Field must be a field defined in the struct definition associated with \a Struct
+   * \pre \a Field must be a field defined in the struct definition associated with a reflected struct
    */
   template< typename Field, typename MplSequence>
   static constexpr int fieldIndexInMplSequence() noexcept

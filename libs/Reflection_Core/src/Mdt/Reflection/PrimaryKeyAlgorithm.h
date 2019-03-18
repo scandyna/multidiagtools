@@ -207,7 +207,7 @@ namespace Mdt{ namespace Reflection{
    *
    * Example of call:
    * \code
-   * using PersonPrimaryKey = Mdt::Reflection::IsAutoIncrementIdPrimaryKey<PersonDef>;
+   * using PersonPrimaryKey = Mdt::Reflection::IdAutoIncrementIdPrimaryKey<PersonDef>;
    * MyFunctor f;
    * PersonDataStruct person;
    *
