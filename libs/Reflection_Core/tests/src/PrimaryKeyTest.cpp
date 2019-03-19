@@ -115,6 +115,9 @@ void PrimaryKeyTest::idPkTest()
 
   QCOMPARE(nameFromPrimaryKeyQString<Pk>(), QLatin1String("PkTest"));
 
+  QCOMPARE(fieldNameFromSingleFieldPrimaryKey<Pk>(), "int_id");
+  QCOMPARE(fieldNameFromSingleFieldPrimaryKeyQString<Pk>(), QLatin1String("int_id"));
+
   QCOMPARE(fieldNameFromIdPrimaryKeyField<Pk>(), "int_id");
 
   QCOMPARE(fieldNameFromIdPrimaryKeyFieldQString<Pk>(), QLatin1String("int_id"));
@@ -128,6 +131,9 @@ void PrimaryKeyTest::autoIdPkTest()
   QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("qulonglong_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 
+  QCOMPARE(fieldNameFromSingleFieldPrimaryKey<Pk>(), "qulonglong_id");
+  QCOMPARE(fieldNameFromSingleFieldPrimaryKeyQString<Pk>(), QLatin1String("qulonglong_id"));
+
   QCOMPARE(fieldNameFromAutoIncrementIdPrimaryKeyField<Pk>(), "qulonglong_id");
 
   QCOMPARE(fieldNameFromAutoIncrementIdPrimaryKeyFieldQString<Pk>(), QLatin1String("qulonglong_id"));
@@ -138,6 +144,10 @@ void PrimaryKeyTest::oneFieldPkTest()
   using Pk = Mdt::Reflection::PrimaryKey<PkTestDef::str_A_id>;
 
   QCOMPARE(nameFromPrimaryKey<Pk>(), "PkTest");
+
+  QCOMPARE(fieldNameFromSingleFieldPrimaryKey<Pk>(), "str_A_id");
+  QCOMPARE(fieldNameFromSingleFieldPrimaryKeyQString<Pk>(), QLatin1String("str_A_id"));
+
   QCOMPARE(fieldNameListFromPrimaryKey<Pk>(), QStringList({QLatin1String("str_A_id")}));
   static_assert( std::is_same<Pk::struct_def, PkTestDef>::value , "" );
 }

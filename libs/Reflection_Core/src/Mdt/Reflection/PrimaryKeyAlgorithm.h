@@ -36,6 +36,7 @@
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/contains.hpp>
+#include <boost/mpl/at.hpp>
 #include <type_traits>
 
 namespace Mdt{ namespace Reflection{
@@ -87,6 +88,46 @@ namespace Mdt{ namespace Reflection{
     return qMetaTypeFromField<typename Pk::field>();
   }
 
+  /*! \brief Get the count of fields in a primary key
+   *
+   * \pre \a Pk must be primary key class for a reflected struct
+   */
+  template<typename Pk>
+  constexpr int primaryKeyFieldCount() noexcept
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<Pk>::value, "Pk must be a primary key class for a reflected struct" );
+
+    return boost::mpl::size<typename Pk::field_list>::value;
+  }
+
+  /*! \brief Get the field name from a primary key containig 1 field
+   *
+   * \pre \a PrimaryKey must be primary key class for a reflected struct
+   * \pre \a PrimaryKey must must contain exactly 1 field
+   */
+  template<typename PrimaryKey>
+  static constexpr const char *fieldNameFromSingleFieldPrimaryKey() noexcept
+  {
+    static_assert( TypeTraits::IsPrimaryKeyClass<PrimaryKey>::value,
+                   "PrimaryKey must be a primary key class for a reflected struct" );
+    static_assert( primaryKeyFieldCount<PrimaryKey>() == 1,
+                   "PrimaryKey must must contain exactly 1 field" );
+
+    using field = typename boost::mpl::at_c<typename PrimaryKey::field_list, 0>::type;
+
+    return fieldName<field>();
+  }
+
+  /*! \brief Get the field name from a primary key containig 1 field
+   *
+   * \sa fieldNameFromSingleFieldPrimaryKey()
+   */
+  template<typename PrimaryKey>
+  static const QString fieldNameFromSingleFieldPrimaryKeyQString()
+  {
+    return QString::fromLatin1( fieldNameFromSingleFieldPrimaryKey<PrimaryKey>() );
+  }
+
   /*! \brief Get the field name from a auto increment id primary key
    *
    * \pre \a Pk must be a auto increment id primary key for a reflected struct
@@ -131,18 +172,6 @@ namespace Mdt{ namespace Reflection{
   static const QString fieldNameFromIdPrimaryKeyFieldQString()
   {
     return QString::fromLatin1( fieldNameFromIdPrimaryKeyField<Pk>() );
-  }
-
-  /*! \brief Get the count of fields in a primary key
-   *
-   * \pre \a Pk must be primary key class for a reflected struct
-   */
-  template<typename Pk>
-  constexpr int primaryKeyFieldCount() noexcept
-  {
-    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<Pk>::value, "Pk must be a primary key class for a reflected struct" );
-
-    return boost::mpl::size<typename Pk::field_list>::value;
   }
 
   /*! \brief Apply a functor for each field in a primary key
