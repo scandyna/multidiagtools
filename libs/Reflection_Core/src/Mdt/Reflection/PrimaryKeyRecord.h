@@ -138,6 +138,24 @@ namespace Mdt{ namespace Reflection{
       return mRecord[fieldIndex];
     }
 
+    /*! \brief Get the variant value for \a Field
+     *
+     * \pre \a Field must be a field defined in the struct definition associated with a reflected struct
+     * \pre \a Field must exist in this primary key record
+     */
+    template<typename Field>
+    const QVariant & variantValue() const
+    {
+      static_assert( TypeTraits::IsField<Field>::value ,
+                     "Field must be a field defined in a struct definition associated with a reflected struct" );
+      static_assert( boost::mpl::contains<field_list, Field>::value ,
+                     "Field must exist in this primary key record" );
+
+      constexpr int index = fieldIndexInMplSequence<Field, field_list>();
+
+      return variantValueAt(index);
+    }
+
     /*! \brief Get the value for \a Field
      *
      * \pre \a Field must be a field defined in the struct definition associated with a reflected struct
@@ -152,9 +170,8 @@ namespace Mdt{ namespace Reflection{
                      "Field must exist in this primary key record" );
 
       using field_value_type = typename TypeFromField<Field>::type;
-      constexpr int index = fieldIndexInMplSequence<Field, field_list>();
 
-      return variantValueAt(index).template value<field_value_type>();
+      return variantValue<Field>().template value<field_value_type>();
     }
 
 //     /*! \brief Get the value at \a fieldIndex

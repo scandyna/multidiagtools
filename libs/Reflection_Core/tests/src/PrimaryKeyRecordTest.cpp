@@ -167,6 +167,8 @@ void PrimaryKeyRecordTest::primaryKeyRecordTest()
   pkr1.setValue<CableLinkDef::endConnectionId>(12);
   QCOMPARE(pkr1.variantValueAt(0), QVariant(11));
   QCOMPARE(pkr1.variantValueAt(1), QVariant(12));
+  QCOMPARE(pkr1.variantValue<CableLinkDef::startConnectionId>(), QVariant(11));
+  QCOMPARE(pkr1.variantValue<CableLinkDef::endConnectionId>(), QVariant(12));
   QCOMPARE(pkr1.value<CableLinkDef::startConnectionId>(), 11);
   QCOMPARE(pkr1.value<CableLinkDef::endConnectionId>(), 12);
 }
