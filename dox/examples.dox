@@ -19,11 +19,7 @@
  **
  ****************************************************************************/
 
-/*! \mainpage Main
+/*! \page examples_page Examples
  *
- * \ref guideline_page
- *
- * \ref libraries_page
- *
- * \ref examples_page
+ * \ref example_Repository
  */

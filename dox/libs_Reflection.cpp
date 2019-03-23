@@ -77,7 +77,9 @@
  *
  * \sa MDT_REFLECT_STRUCT()
  *
- * \section non_intrusive_reflection Non intrusive reflection
+ * \section reflection_and_domain_object Reflection and domain object
+ *
+ * \subsection non_intrusive_reflection Non intrusive reflection
  *
  * Whe could provide functions to convert between %Person and %PersonDataStruct:
  * \code
@@ -108,7 +110,7 @@
  *  %Person and %PersonDataStruct, we have only a few changes
  *  to make when changing the attributes of %Person;
  *
- * \section somewhat_instrusive_reflection Somewhat intrusive reflection
+ * \subsection somewhat_instrusive_reflection Somewhat intrusive reflection
  *
  * The above data struct will now be used as member in the domain object:
  * \code
@@ -150,7 +152,7 @@
  * \endcode
  * In above example, we change the first name to some invalid string.
  *
- * \section reflect_with_friend Reflection with friend access function
+ * \subsection reflect_with_friend Reflection with friend access function
  *
  * One solution could be to define friend functions to access the internal data struct:
  * \code
@@ -216,7 +218,7 @@
  * }
  * \endcode
  *
- * \section reflect_domain_object Reflect the domain entity directly
+ * \subsection reflect_domain_object Reflect the domain entity directly
  *
  * \code
  * class Person
@@ -352,146 +354,50 @@
  * link.startConnectionId = 14;
  * link.endConnectionId = 31;
  *
- * CableLinkIdRecord pkr = Mdt::Reflection::primaryKeyRecordFromStruct<CableLinkPrimaryKey>(link);
+ * CableLinkIdRecord pkr = Mdt::Reflection::primaryKeyRecordFromStruct<CableLinkIdRecord>(link);
  * \endcode
  *
- * 
- *
- * \code
- * struct CableLinkIdRecord
- * {
- *   qlonglong startConnectionId = 0;
- *   qlonglong endConnectionId = 0;
- * };
- * \endcode
- *
- *
- * Above code will not compile, because LinkIdRecord was not reflected,
- *  implying that the LinkIdRecord struct cannot be traversed.
- *
- * \code
- * using CableLinkIdRecord = std::array<qlonglong, 2>;
- * \endcode
- *
- * \todo should also support tuple
- *
- * \code
- * using CableLinkIdRecord = Mdt::Reflection::PrimaryKeyRecord<CableLinkPrimaryKey>;
- * \endcode
- *
- * \code
- * MDT_REFLECTION_MAKE_PRIMARY_KEY_RECORD(
- *   (CableLinkDataStruct),
- *   CableLinkIdRecord,
- *   (startConnectionId),
- *   (endConnectionId)
- * )
- * \endcode
- *
- * .... generates:
- * \code
- * struct CableLinkIdRecord
- * {
- *   qlonglong startConnectionId = qlonglong{};
- *   qlonglong endConnectionId = qlonglong{};
- * };
- * \endcode
- *
- * ... or:
- * \code
- * struct CableLinkIdRecord
- * {
- *   qlonglong & startConnectionId()
- *   {
- *     return boost::get<0>(_internalVector);
- *   }
- *
- *   qlonglong & endConnectionId()
- *   {
- *     return boost::get<1>(_internalVector);
- *   }
- *
- *   boost::fusion::vector<qlonglong, qlonglong> _internalVector;
- * };
- * \endcode
- *
- * ... or:
- * \code
- * using CableLinkIdRecord = boost::fusion::vector<qlonglong, qlonglong>;
- * \endcode
- *  .. bof! (tags..)
- *
- * \todo See Mdt::Entity::valueAt()
- *   If the final result depends on QVariant,
- *   better use std::array<QVariant, N> for eterogenious PKR..
- *
- * \todo problems:
- *  - Be able to iterate over the pk record
- *  - map between a reflected struct (PersonDataStruct) and its pk members
- *  - get the type infos about a member of pk record with its associated struct definition
- *  - See what BOOST_FUSION_ASSOC_STRUCT() can provide  <- Nothing ! Just a pointer to a reflected data struct..
- *
- * \code
- * struct LinkIdRecordDataStruct
- * {
- *   qlonglong endConnectionId = 0;
- *   qlonglong startConnectionId = 0;
- * };
- *
- * MDT_REFLECT_STRUCT(
- *   (LinkIdRecordDataStruct),
- *   LinkIdRecord,
- *   (endConnectionId),
- *   (startConnectionId)
- * )
- * \endcode
- *
- *  For example, get the link from a repository by id:
- * \code
- * class LinkRepository
- * {
- *  public:
- *
- *   // Here, LinkId is a domain object
- *   Mdt::Expected<Link> getLink(LinkId id) const;
- * };
- * \endcode
- *
- * \code
- * // Methods are omitted here
- * class LinkId
- * {
- *   qlonglong mStartConnectionId = 0;
- *   qlonglong mEndConnectionId = 0;
- * };
- * \endcode
- *
- * \code
- * using LinkIdData = std::array<qlonglong, 2>;
- * \endcode
- *
+ * Creating a domain object:
  * \code
  * // Some methods are omitted here
- * class LinkId
+ * class CableLinkId
  * {
  *  public:
  *
  *   qlonglong startConnectionId() const
  *   {
- *     return mData[0];
+ *     return mRecord.value<CableLinkDef::startConnectionId>();
  *   }
  *
  *   qlonglong endConnectionId() const
  *   {
- *     return mData[1];
+ *     return mRecord.value<CableLinkDef::endConnectionId>();
+ *   }
+ *
+ *   const CableLinkIdRecord & record() const
+ *   {
+ *     return mRecord;
+ *   }
+ *
+ *   static CableLinkId fromRecord(const CableLinkIdRecord & record)
+ *   {
+ *     return CableLinkId(record);
  *   }
  *
  *  private:
  *
- *   LinkIdData mData;
+ *   CableLinkId(const CableLinkIdRecord & record)
+ *    : mRecord(record)
+ *   {
+ *   }
+ *
+ *   CableLinkIdRecord mRecord;
  * };
  * \endcode
  *
+ * A example of a repository implementation using multi a field primary key is done in the SQL library.
+ *
+ * \sa \ref libs_Sql
  *
  * \section Attributes
  *
