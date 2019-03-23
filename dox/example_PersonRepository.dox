@@ -19,7 +19,11 @@
  **
  ****************************************************************************/
 
-/*! \page example_Repository Repository example
+/*! \page example_PersonRepository Person repository example
+ *
+ * \todo Primary key
+ * \todo Unique constraint
+ * \todo SQL schema
  *
  * This example shows how a repository could be implemented.
  *

@@ -21,5 +21,7 @@
 
 /*! \page examples_page Examples
  *
- * \ref example_Repository
+ * \ref example_PersonRepository
+ *
+ * \ref example_CableLinkRepository
  */

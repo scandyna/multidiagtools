@@ -1,0 +1,317 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
+ **
+ ** This file is part of Mdt library.
+ **
+ ** Mdt is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** Mdt is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+
+/*! \page example_CableLinkRepository Cable link repository example
+ *
+ * This example is like the %Person repository example,
+ *  but shows how a multi-field id can be used.
+ *
+ * \sa \ref example_PersonRepository
+ *
+ * \section domain_model Domain model
+ *
+ * In the domain model we want as less dependencies as possible.
+ *
+ * The following libraries will be used:
+ *  - Mdt::Expected
+ *  - \ref libs_Reflection
+ *
+ * \subsection cableLink_entity CableLink entity
+ *
+ * Because reflection is needed, the domain entity, %CableLink,
+ *  will be implemented in several parts.
+ *
+ * At first, a data struct is created, which also receives some attributes:
+ * \code
+ * #include <Mdt/Reflection/ReflectStruc.h>
+ * #include <Mdt/Reflection/PrimaryKey.h>
+ * #include <QString>
+ *
+ * struct CableLinkDataStruct
+ * {
+ *   qlonlong startConnectionId = 0;
+ *   qlonlong endConnectionId = 0;
+ *   QString identification;
+ * };
+ *
+ * MDT_REFLECT_STRUCT(
+ *   (CableLinkDataStruct),
+ *   CableLink,
+ *   (startConnectionId),
+ *   (endConnectionId),
+ *   (identification, FieldFlag::IsRequired, FieldMaxLength(100))
+ * )
+ *
+ * using CableLinkPrimaryKey = Mdt::Reflection::PrimaryKey<CableLinkDef::startConnectionId, CableLinkDef::endConnectionId>;
+ * \endcode
+ *
+ * A strong id can be created for the entity:
+ * \code
+ * #include "CableLinkDataStruct.h"
+ * #include <Mdt/Reflection/PrimaryKeyRecord.h>
+ *
+ * class CableLinkId
+ * {
+ *   using CableLinkIdRecord = Mdt::Reflection::PrimaryKeyRecord<CableLinkPrimaryKey>;
+ *
+ *  public:
+ *
+ *   CableLinkId(qlonlong startConnectionId, qlonlong endConnectionId)
+ *   {
+ *     mRecord.setValue<CableLinkDef::startConnectionId>(startConnectionId);
+ *     mRecord.setValue<CableLinkDef::endConnectionId>(endConnectionId);
+ *   }
+ *
+ *   qlonlong startConnectionId() const
+ *   {
+ *     return mRecord.value<CableLinkDef::startConnectionId>();
+ *   }
+ *
+ *   qlonlong endConnectionId() const;
+ *   {
+ *     return mRecord.value<CableLinkDef::endConnectionId>();
+ *   }
+ *
+ *   // Some other usefull methods ..
+ *
+ *  private:
+ *
+ *   CableLinkId(const CableLinkIdRecord & record)
+ *    : mRecord(record)
+ *   {
+ *   }
+ *
+ *   friend
+ *   CableLinkId cableLinkIdFromRecord(const CableLinkIdRecord & record);
+ *
+ *   friend
+ *   const CableLinkIdRecord & cableLinkIdPrivateConstRecord(const CableLinkId & id);
+ *
+ *   friend
+ *   CableLinkIdRecord & cableLinkIdPrivateRecord(CableLinkId & id);
+ *
+ *   CableLinkIdRecord mRecord;
+ * };
+ * \endcode
+ *
+ * The %CableLinkId encapsulates a record using reflection,
+ *  which will be useful later in the repository implementation.
+ *  The friend access functions will be discussed soon.
+ *
+ * Here is the declaration of the %CableLink domain class:
+ * \code
+ * #include "CableLinkId.h"
+ * #include "CableLinkDataStruct.h"
+ * #include <QString>
+ *
+ * class CableLink
+ * {
+ *  public:
+ *
+ *   CableLink(const CableLinkId & id, const QString & identification);
+ *   qlonlong startConnectionId() const;
+ *   qlonlong endConnectionId() const;
+ *   QString identification() const;
+ *   // Some other usefull methods ..
+ *
+ *  private:
+ *
+ *   CableLink(const CableLinkDataStruct & data);
+ *
+ *   friend
+ *   CableLink cableLinkFromDataStruct(const CableLinkDataStruct & data);
+ *
+ *   friend
+ *   const CableLinkDataStruct & cableLinkPrivateConstDataStruct(const CableLink & cableLink);
+ *
+ *   friend
+ *   CableLinkDataStruct & cableLinkPrivateDataStruct(CableLink & cableLink);
+ *
+ *   CableLinkDataStruct mDataStruct;
+ * };
+ * \endcode
+ *
+ * The internal data struct is not exposed in the domain model,
+ *  but it will be required later to implement a repository.
+ *  This is done using friend access functions.
+ *
+ * In some private header, we could define those access functions:
+ * \code
+ * // CableLink_p.h
+ * #include "CableLinkId.h"
+ * #include "CableLink.h"
+ *
+ * inline
+ * CableLinkId cableLinkIdFromRecord(const CableLinkIdRecord & record)
+ * {
+ *   return CableLinkId(record);
+ * }
+ *
+ * inline
+ * const CableLinkIdRecord & cableLinkIdPrivateConstRecord(const CableLinkId & id)
+ * {
+ *   return id.mRecord;
+ * }
+ *
+ * inline
+ * CableLinkIdRecord & cableLinkIdPrivateRecord(CableLinkId & id)
+ * {
+ *   return id.mRecord;
+ * }
+ *
+ * inline
+ * CableLink cableLinkFromDataStruct(const CableLinkDataStruct & data)
+ * {
+ *   CableLink Person(data);
+ * }
+ *
+ * inline
+ * const CableLinkDataStruct & cableLinkPrivateConstDataStruct(const CableLink & cableLink)
+ * {
+ *   return cableLink.mDataStruct;
+ * }
+ *
+ * inline
+ * CableLinkDataStruct & cableLinkPrivateDataStruct(CableLink & cableLink)
+ * {
+ *   return cableLink.mDataStruct;
+ * }
+ * \endcode
+ *
+ * \sa \ref libs_Reflection
+ *
+ * \subsection repository_interface Repository interface
+ *
+ * In the domain model, a repository interface is created,
+ *  which has as less dependencies as possible.
+ *
+ * Here is a example of a repository interface declaration:
+ * \code
+ * #include "CableLink.h"
+ * #include <Mdt/Expected.h>
+ *
+ * class CableLinkRepository
+ * {
+ *  public:
+ *
+ *   virtual Mdt::Expected<CableLinkId> add(const CableLink & link) = 0;
+ *   virtual Mdt::Expected<CableLink> get(CableLinkId id) const = 0;
+ *   virtual bool update(const CableLink & link) = 0;
+ *   virtual bool remove(CableLinkId id) = 0;
+ *   virtual bool removeAll() = 0;
+ * };
+ * \endcode
+ *
+ * \section sql_cableLink_repository SQL implementation of CableLink repository
+ *
+ * In this repository implementation, the following libraries will be used:
+ *  - \ref libs_Sql
+ *
+ * Here is a example of a repository declaration:
+ * \code
+ * #include "CableLinkRepository.h"
+ * #include "CableLinkDataStruct.h"
+ * #include <Mdt/Expected.h>
+ * #include <Mdt/Sql/ReflectionStorageTable.h>
+ *
+ * class SqlCableLinkRepository : public CableLinkRepository
+ * {
+ *  public:
+ *
+ *   SqlCableLinkRepository(const QSqlDatabase & db);
+ *   Mdt::Expected<CableLinkId> add(const CableLink & link) override;
+ *   Mdt::Expected<CableLink> get(CableLinkId id) const override;
+ *   bool update(const CableLink & link) override;
+ *   bool remove(CableLinkId id) override;
+ *   bool removeAll() override;
+ *
+ *  private:
+ *
+ *   Mdt::Sql::ReflectionStorageTable<CableLinkDef, CableLinkPrimaryKey, CableLinkIdRecord> mTable;
+ * };
+ * \endcode
+ *
+ * The implementation could look like:
+ * \code
+ * #include "SqlCableLinkRepository.h"
+ * #include "CableLink_p.h"
+ *
+ * SqlCableLinkRepository::SqlCableLinkRepository(const QSqlDatabase & db)
+ *  : mTable(db)
+ * {
+ * }
+ *
+ * Mdt::Expected<CableLinkId> SqlCableLinkRepository::add(const CableLink & link)
+ * {
+ *   const auto id = mTable.add( cableLinkPrivateConstDataStruct(link) );
+ *   if(!id){
+ *     // Maybe generate a more domain specific error message here
+ *     return id.error();
+ *   }
+ *   return cableLinkIdFromRecord(*id);
+ * }
+ *
+ * Mdt::Expected<CableLink> SqlCableLinkRepository::get(CableLinkId id) const
+ * {
+ *   const auto linkData = mTable.get( cableLinkIdPrivateConstRecord(id) );
+ *   if(!linkData){
+ *     // Maybe generate a more domain specific error message here
+ *     return linkData.error();
+ *   }
+ *   return cableLinkFromDataStruct(*linkData);
+ * }
+ *
+ * bool SqlCableLinkRepository::update(const CableLink & link)
+ * {
+ *   bool ok = mTable.update( cableLinkPrivateConstDataStruct(person) );
+ *   if(!ok){
+ *     // Maybe generate a more domain specific error message here
+ *     setLastError(mTable.lastError());
+ *     return false;
+ *   }
+ *   return true;
+ * }
+ *
+ * bool SqlCableLinkRepository::remove(CableLinkId id)
+ * {
+ *   bool ok = mTable.remove( cableLinkIdPrivateConstRecord(id) );
+ *   if(!ok){
+ *     // Maybe generate a more domain specific error message here
+ *     setLastError(mTable.lastError());
+ *     return false;
+ *   }
+ *   return true;
+ * }
+ *
+ * bool SqlCableLinkRepository::removeAll()
+ * {
+ *   bool ok = mTable.removeAll();
+ *   if(!ok){
+ *     // Maybe generate a more domain specific error message here
+ *     setLastError(mTable.lastError());
+ *     return false;
+ *   }
+ *   return true;
+ * }
+ * \endcode
+ *
+ * \sa Mdt::Sql::ReflectionStorageTable
+ */
