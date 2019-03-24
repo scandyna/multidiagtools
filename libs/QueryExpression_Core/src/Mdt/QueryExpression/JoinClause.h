@@ -61,11 +61,11 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Move construct a join clause from \a other
      */
-    JoinClause(JoinClause && other) noexcept = default;
+    JoinClause(JoinClause && other) = default;
 
     /*! \brief Move assign \a other to this join clause
      */
-    JoinClause & operator=(JoinClause && other) noexcept = default;
+    JoinClause & operator=(JoinClause && other) = default;
 
     /*! \brief Get join operator
      */
