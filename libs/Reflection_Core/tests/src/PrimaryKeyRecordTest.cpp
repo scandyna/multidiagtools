@@ -118,6 +118,9 @@ MDT_REFLECT_STRUCT(
   (str_C_id)
 )
 
+using PkStrA = PrimaryKey<PkTestDef::str_A_id>;
+using PkStrARecord = PrimaryKeyRecord<PkStrA>;
+
 /*
  * Functors
  */
@@ -171,6 +174,10 @@ void PrimaryKeyRecordTest::primaryKeyRecordTest()
   QCOMPARE(pkr1.variantValue<CableLinkDef::endConnectionId>(), QVariant(12));
   QCOMPARE(pkr1.value<CableLinkDef::startConnectionId>(), 11);
   QCOMPARE(pkr1.value<CableLinkDef::endConnectionId>(), 12);
+
+  PkStrARecord pkra;
+  pkra.setValue<PkTestDef::str_A_id>(QLatin1String("a1"));
+  QCOMPARE(pkra.value<PkTestDef::str_A_id>(), QLatin1String("a1"));
 }
 
 void PrimaryKeyRecordTest::primaryKeyRecordFromStructTest()

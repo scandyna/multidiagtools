@@ -26,6 +26,8 @@
 #include "TypeTraits/PrimaryKeyRecordTag.h"
 #include "TypeTraits/IsPrimaryKeyClass.h"
 #include "TypeTraits/IsField.h"
+#include <QLatin1String>
+#include <QString>
 #include <QVariant>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/contains.hpp>
@@ -124,6 +126,18 @@ namespace Mdt{ namespace Reflection{
       Q_ASSERT(fieldIndex < fieldCount());
 
       mRecord[fieldIndex].setValue(v);
+    }
+
+    /*! \brief Set the latin 1 string value at \a fieldIndex
+     *
+     * \pre \a fieldIndex must be in valid range ( 0 <= \a fieldIndex < fieldCount() )
+     */
+    void setValueAt(int fieldIndex, const QLatin1String & s)
+    {
+      Q_ASSERT(fieldIndex >= 0);
+      Q_ASSERT(fieldIndex < fieldCount());
+
+      mRecord[fieldIndex] = s;
     }
 
     /*! \brief Get the variant value at \a fieldIndex
