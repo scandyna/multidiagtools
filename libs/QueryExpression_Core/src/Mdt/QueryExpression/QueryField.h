@@ -69,7 +69,7 @@ namespace Mdt{ namespace QueryExpression{
 
     /*! \brief Move construct a query field from \a other
      */
-    QueryField(QueryField && other) noexcept = default;
+    QueryField(QueryField && other) = default;
 
     /*! \brief Move assign \a other to this query field
      */
