@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -30,7 +30,8 @@ namespace Mdt{
     NoError,              /*!< No error */
     UnknownError,         /*!< Unknown error */
     ConstraintError,      /*!< Some constraint error */
-    UniqueConstraintError /*!< A unique constraint failed */
+    UniqueConstraintError,/*!< A unique constraint failed */
+    NotFound              /*!< The requested element was not found */
   };
 
 } // namespace Mdt{
