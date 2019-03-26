@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -411,6 +411,20 @@ namespace Mdt{
   #endif // #ifndef QT_NO_DEBUG
 
       return static_cast<const ErrorPrivate<T>*>(pvShared.constData())->error;
+    }
+
+    /*! \brief Check if this error \a err
+     *
+     * Returns true if \a err is of the same type and value as the one this error contains,
+     *  otherwise false.
+     */
+    template<typename T>
+    bool isError(const T & err) const noexcept
+    {
+      if(!isErrorType<T>()){
+        return false;
+      }
+      return (err == error<T>());
     }
 
     /*! \brief Update error text

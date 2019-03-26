@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -554,6 +554,9 @@ void ErrorTest::userDefinedErrorTest()
   QVERIFY(!error.isErrorType<float>());
   QVERIFY(!error.isErrorType<QString>());
   QCOMPARE(error.error<int>(), 2);
+  QVERIFY(error.isError(2));
+  QVERIFY(!error.isError(1));
+  QVERIFY(!error.isError(2.0));
 
   error = mdtErrorNewT(Mdt::ErrorCode::ConstraintError, "", Mdt::Error::Critical, "");
   QVERIFY(error.isErrorType<Mdt::ErrorCode>());
@@ -561,12 +564,16 @@ void ErrorTest::userDefinedErrorTest()
   QVERIFY(!error.isErrorType<float>());
   QVERIFY(!error.isErrorType<QString>());
   QCOMPARE(error.error<Mdt::ErrorCode>(), Mdt::ErrorCode::ConstraintError);
+  QVERIFY(error.isError(Mdt::ErrorCode::ConstraintError));
+  QVERIFY(!error.isError(Mdt::ErrorCode::NotFound));
 
   Mdt::Error nullError;
   QVERIFY(!nullError.isErrorType<Mdt::ErrorCode>());
   QVERIFY(!nullError.isErrorType<int>());
   QVERIFY(!nullError.isErrorType<float>());
   QVERIFY(!nullError.isErrorType<QString>());
+  QVERIFY(!nullError.isError(1));
+  QVERIFY(!nullError.isError(Mdt::ErrorCode::ConstraintError));
 }
 
 void ErrorTest::errorLoggerConsoleBackendTest()
