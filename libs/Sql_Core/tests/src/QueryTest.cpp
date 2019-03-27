@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "QueryTest.h"
 #include "Mdt/Sql/Schema/Driver.h"
-// #include "Mdt/Sql/Query.h"
 #include "Mdt/Sql/InsertStatement.h"
 #include "Mdt/Sql/InsertQuery.h"
 #include "Mdt/Sql/UpdateStatement.h"
@@ -36,8 +35,6 @@
 #include "Schema/Address.h"
 #include <QSqlQuery>
 #include <QSqlError>
-
-// #include <QDebug>
 
 using Mdt::Sql::FieldName;
 

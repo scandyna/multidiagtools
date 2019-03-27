@@ -63,25 +63,6 @@ bool DeleteQuery::exec()
     return false;
   }
 
-//   if(!query.prepare( mStatement.toPrepareStatementSql(constDatabase()) )){
-//     QString msg = tr("Preparing query to delete in '%1' failed.").arg(mStatement.tableName());
-//     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-//     error.stackError(mdtErrorFromQSqlQueryQ(query, this));
-//     setLastError(error);
-//     return false;
-//   }
-//   const auto conditionsValues = mStatement.toConditionsValueList();
-//   for(const auto & value : conditionsValues){
-//     query.addBindValue(value);
-//   }
-//   if(!query.exec()){
-//     QString msg = tr("Executing query to delete in '%1' failed.").arg(mStatement.tableName());
-//     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-//     error.stackError(mdtErrorFromQSqlQueryQ(query, this));
-//     setLastError(error);
-//     return false;
-//   }
-
   return true;
 }
 

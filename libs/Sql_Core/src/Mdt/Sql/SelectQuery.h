@@ -28,8 +28,6 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
-// #include "SelectStatement.h"
-
 namespace Mdt{ namespace Sql{
 
   /*! \brief Select data from a database

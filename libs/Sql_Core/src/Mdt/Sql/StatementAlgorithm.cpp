@@ -21,13 +21,11 @@
 #include "StatementAlgorithm.h"
 #include "QueryEntity.h"
 #include "Mdt/QueryExpression/ExpressionTree.h"
-// #include "Mdt/Algorithm.h"
 #include <QStringBuilder>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QSqlField>
 #include <QSqlDriver>
-// #include <boost/variant.hpp>
 
 namespace Mdt{ namespace Sql{
 
