@@ -228,17 +228,23 @@ SQL: %2</source>
     <name>Mdt::Sql::SelectQuery</name>
     <message>
         <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="49"/>
-        <source>Executing query to select from &apos;%1&apos; failed.</source>
+        <source>Executing query to select from &apos;%1&apos; failed.
+SQL:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="69"/>
-        <source>Fetching a single record from &apos;%1&apos; failed because no record is available.</source>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="70"/>
+        <source>Fetching a single record from &apos;%1&apos; failed because no record is available.
+SQL:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="79"/>
-        <source>Fetching a single record from &apos;%1&apos; failed because more than 1 record is available.</source>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="81"/>
+        <source>Fetching a single record from &apos;%1&apos; failed because more than 1 record is available.
+SQL:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -246,11 +252,6 @@ SQL: %2</source>
     <name>Mdt::Sql::UpdateQuery</name>
     <message>
         <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="66"/>
-        <source>Preparing query to update &apos;%1&apos; failed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="82"/>
         <source>Executing query to update &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>

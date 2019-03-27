@@ -24,6 +24,8 @@
 #include "FieldName.h"
 #include "PrimaryKeyRecord.h"
 #include "FieldNameValueMap.h"
+#include "Mdt/QueryExpression/FilterExpression.h"
+#include "Mdt/QueryExpression/TypeTraits/FilterExpression.h"
 #include "MdtSql_CoreExport.h"
 #include <QString>
 #include <QStringList>
@@ -64,6 +66,30 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Set the conditions for this update statement
      *
+     * \pre \a filter must be a filter expression
+     */
+    template<typename Expr>
+    void setConditions(const Expr & filter)
+    {
+      static_assert(Mdt::QueryExpression::TypeTraits::isFilterExpression<Expr>() ,
+                    "filter must be a valid filter expression");
+
+      mConditionsFilter.setFilter(filter);
+    }
+
+    /*! \brief Set the conditions for this update statement
+     *
+     * \pre \a filter must not be null
+     */
+    void setConditionsFilterExpression(const Mdt::QueryExpression::FilterExpression & filter)
+    {
+      Q_ASSERT(!filter.isNull());
+
+      mConditionsFilter = filter;
+    }
+
+    /*! \brief Set the conditions for this update statement
+     *
      * \pre \a primaryKeyRecord must not be null
      */
     void setConditions(const PrimaryKeyRecord & primaryKeyRecord);
@@ -72,21 +98,21 @@ namespace Mdt{ namespace Sql{
      */
     void clear();
 
-    /*! \brief Get a SQL UPDATE statement for prepared query
+    /*! \brief Get the SQL string from this statement
      *
      * Will generate SQL of the form:
      * \code
      * UPDATE Person
-     * SET FirstName = ?, LastName = ?
-     * WHERE Person.Id_PK = ?
+     * SET FirstName = "Some name", LastName = "Some last name"
+     * WHERE Person.Id_PK = 21
      * \endcode
      *
-     * This can be used with QSqlQuery
+     * The returned string can be executed from QSqlQuery
      *
-     * \sa UpdateQuery
      * \pre \a db must be valid (must have a driver loaded)
+     * \sa UpdateQuery
      */
-    QString toPrepareStatementSql(const QSqlDatabase & db) const;
+    QString toSql(const QSqlDatabase & db) const;
 
     /*! \brief Get a list of field names this statement is containing
      *
@@ -108,28 +134,18 @@ namespace Mdt{ namespace Sql{
       return mFieldValueMap.toValueList();
     }
 
-    /*! \brief Get a list of field names for the conditions this statement is containing
+    /*! \brief Access internal filter expression
      */
-    QStringList toConditionsFieldNameList() const
+    const Mdt::QueryExpression::FilterExpression & internalConditionsFilterExpression() const noexcept
     {
-      return mPkrConditions.toFieldNameList();
-    }
-
-    /*! \brief Get a list of values for the conditions this statement is containing
-     */
-    QVariantList toConditionsValueList() const
-    {
-      return mPkrConditions.toValueList();
+      return mConditionsFilter;
     }
 
    private:
 
-    static QString escapeFieldName(const QString & fieldName, const QSqlDatabase & db);
-    static QString escapeTableName(const QString & tableName, const QSqlDatabase & db);
-
     QString mTableName;
     FieldNameValueMap mFieldValueMap;
-    PrimaryKeyRecord mPkrConditions;
+    Mdt::QueryExpression::FilterExpression mConditionsFilter;
   };
 
 }} // namespace Mdt{ namespace Sql{

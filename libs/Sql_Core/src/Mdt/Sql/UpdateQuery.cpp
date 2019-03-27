@@ -62,23 +62,7 @@ bool UpdateQuery::exec()
 {
   QSqlQuery query(database());
 
-  if(!query.prepare( mStatement.toPrepareStatementSql(constDatabase()) )){
-    QString msg = tr("Preparing query to update '%1' failed.").arg(mStatement.tableName());
-    const Mdt::ErrorCode code = Mdt::Sql::Error::errorCodeFromQSqlError(query.lastError(), query.driver());
-    auto error = mdtErrorNewTQ(code, msg, Mdt::Error::Critical, this);
-    error.stackError(mdtErrorFromQSqlQueryQ(query, this));
-    setLastError(error);
-    return false;
-  }
-  const auto values = mStatement.toValueList();
-  for(const auto & value : values){
-    query.addBindValue(value);
-  }
-  const auto conditionsValues = mStatement.toConditionsValueList();
-  for(const auto & value : conditionsValues){
-    query.addBindValue(value);
-  }
-  if(!query.exec()){
+  if(!query.exec( mStatement.toSql(constDatabase()) )){
     QString msg = tr("Executing query to update '%1' failed.").arg(mStatement.tableName());
     const Mdt::ErrorCode code = Mdt::Sql::Error::errorCodeFromQSqlError(query.lastError(), query.driver());
     auto error = mdtErrorNewTQ(code, msg, Mdt::Error::Critical, this);

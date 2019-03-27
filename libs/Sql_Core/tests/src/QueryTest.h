@@ -38,8 +38,8 @@ class QueryTest : public TestBase
   void insertQueryErrorTest();
 
   void updateStatementTest();
+  void updateStatementFilterExpressionTest();
   void updateStatementPrimaryKeyConditionsTest();
-  void updateStatementToConditionsValueListTest();
   void updateQueryTest();
   void updateQueryErrorTest();
 

@@ -72,6 +72,17 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Set the conditions for this delete statement
      *
+     * \pre \a filter must not be null
+     */
+    void setConditionsFilterExpression(const Mdt::QueryExpression::FilterExpression & filter)
+    {
+      Q_ASSERT(!filter.isNull());
+
+      mConditionsFilter = filter;
+    }
+
+    /*! \brief Set the conditions for this delete statement
+     *
      * \pre \a primaryKeyRecord must not be null
      */
     void setConditions(const PrimaryKeyRecord & primaryKeyRecord);

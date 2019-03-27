@@ -46,7 +46,8 @@ bool SelectQuery::execStatement(const Mdt::QueryExpression::SelectStatement & st
 
   const QString sql = selectStatementToSql(mStatement, maxRows, constDatabase());
   if(!mQuery.exec(sql)){
-    QString msg = tr("Executing query to select from '%1' failed.").arg(mStatement.entity().name());
+    QString msg = tr("Executing query to select from '%1' failed.\nSQL:\n%2")
+                  .arg(mStatement.entity().name(), sql);
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     error.stackError(mdtErrorFromQSqlQueryQ(mQuery, this));
     setLastError(error);
@@ -66,18 +67,21 @@ QSqlRecord SelectQuery::fetchSingleRecord()
   QSqlRecord record;
 
   if(!mQuery.first()){
-    QString msg = tr("Fetching a single record from '%1' failed because no record is available.").arg(mStatement.entity().name());
-    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    QString msg = tr("Fetching a single record from '%1' failed because no record is available.\nSQL:\n%2")
+                  .arg(mStatement.entity().name(), mQuery.lastQuery());
+    auto error = mdtErrorNewTQ(Mdt::ErrorCode::NotFound, msg, Mdt::Error::Warning, this);
     if(mQuery.lastError().isValid()){
       error.stackError(mdtErrorFromQSqlQueryQ(mQuery, this));
-      setLastError(error);
     }
+    setLastError(error);
     return QSqlRecord();
   }
   record = mQuery.record();
   if(mQuery.next()){
-    QString msg = tr("Fetching a single record from '%1' failed because more than 1 record is available.").arg(mStatement.entity().name());
-    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    QString msg = tr("Fetching a single record from '%1' failed because more than 1 record is available.\nSQL:\n%2")
+                  .arg(mStatement.entity().name(), mQuery.lastQuery());
+    auto error = mdtErrorNewTQ(Mdt::ErrorCode::UnknownError, msg, Mdt::Error::Critical, this);
+    setLastError(error);
     return QSqlRecord();
   }
 

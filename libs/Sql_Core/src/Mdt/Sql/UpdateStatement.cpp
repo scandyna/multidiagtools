@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "UpdateStatement.h"
+#include "StatementAlgorithm.h"
+#include "QueryExpressionSqlTransform.h"
 #include <QLatin1String>
 #include <QLatin1Char>
 #include <QStringBuilder>
@@ -45,57 +47,33 @@ void UpdateStatement::setConditions(const PrimaryKeyRecord& primaryKeyRecord)
 {
   Q_ASSERT(!primaryKeyRecord.isNull());
 
-  mPkrConditions = primaryKeyRecord;
+  mConditionsFilter = filterExpressionFromPrimaryKeyRecord(primaryKeyRecord);
 }
 
 void UpdateStatement::clear()
 {
   mTableName.clear();
   mFieldValueMap.clear();
-  mPkrConditions = PrimaryKeyRecord();
+  mConditionsFilter.clear();
 }
 
-QString UpdateStatement::toPrepareStatementSql(const QSqlDatabase & db) const
+QString UpdateStatement::toSql(const QSqlDatabase & db) const
 {
   Q_ASSERT(db.isValid());
 
-  QStringList fieldNames;
-
   QString sql = QLatin1String("UPDATE ") % escapeTableName(mTableName, db) \
               % QLatin1String("\nSET ");
-  fieldNames = mFieldValueMap.toFieldNameList();
-  for(int i = 0; i < fieldNames.size(); ++i){
-    sql += escapeFieldName( fieldNames.at(i), db ) % QLatin1String("=?");
-    if(i < (fieldNames.size()-1)){
-      sql += QLatin1Char(',');
-    }
+  const int n = mFieldValueMap.size();
+  Q_ASSERT(n > 0);
+  sql += escapeFieldName( mFieldValueMap.fieldNameAt(0), db ) % QLatin1Char('=') % valueToSql( mFieldValueMap.valueAt(0), db );
+  for(int i=1; i<n; ++i){
+    sql += QLatin1Char(',') % escapeFieldName( mFieldValueMap.fieldNameAt(i), db ) % QLatin1Char('=') % valueToSql( mFieldValueMap.valueAt(i), db );
   }
-  if(!mPkrConditions.isNull()){
-    sql += QLatin1String("\nWHERE ");
-    fieldNames = mPkrConditions.toFieldNameList();
-    for(int i = 0; i < fieldNames.size(); ++i){
-      if(i > 0){
-        sql += QLatin1String(" AND ");
-      }
-      sql += escapeFieldName( fieldNames.at(i), db ) % QLatin1String("=?");
-    }
+  if(!mConditionsFilter.isNull()){
+    sql += QLatin1String("\nWHERE ") % filterExpressionToSql(mConditionsFilter, db);
   }
 
   return sql;
-}
-
-QString UpdateStatement::escapeFieldName(const QString& fieldName, const QSqlDatabase& db)
-{
-  Q_ASSERT(db.driver() != nullptr);
-
-  return db.driver()->escapeIdentifier(fieldName, QSqlDriver::FieldName);
-}
-
-QString UpdateStatement::escapeTableName(const QString& tableName, const QSqlDatabase& db)
-{
-  Q_ASSERT(db.driver() != nullptr);
-
-  return db.driver()->escapeIdentifier(tableName, QSqlDriver::TableName);
 }
 
 }} // namespace Mdt{ namespace Sql{

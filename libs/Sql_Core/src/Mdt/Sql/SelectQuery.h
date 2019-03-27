@@ -137,11 +137,26 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Retrieves a single record in the result
      *
-     * If no record is avaliable, or more than 1 record is avalable,
-     *  this method store a error and returns a empty record.
+     * If no record is available,
+     *  this method stores a error containing Mdt::ErrorCode::NotFound and returns a empty record.
+     *
+     * If more than 1 record is available,
+     *  this method stores a error and returns a empty record.
      *
      * \warning After a call to this method,
      *   this query no longer refers to the expected record.
+     *
+     * Example of usage:
+     * \code
+     * const QSqlRecord record = query.fetchSingleRecord();
+     * if(record.isEmpty()){
+     *   if(query.lastError().isError(Mdt::ErrorCode::NotFound)){
+     *     // No record available
+     *   }else{
+     *     // More than one record available
+     *   }
+     * }
+     * \endcode
      */
     QSqlRecord fetchSingleRecord();
 

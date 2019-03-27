@@ -198,9 +198,9 @@ void QueryTest::updateStatementTest()
   statement.addValue(FieldName("Name"), "Name 111");
   statement.setConditions( buildPrimaryKeyRecord(1) );
   expectedSql = "UPDATE \"Client_tbl\"\n"\
-                "SET \"Name\"=?\n"
-                "WHERE \"Id_PK\"=?";
-  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+                "SET \"Name\"='Name 111'\n"
+                "WHERE \"Id_PK\"=1";
+  QCOMPARE(statement.toSql(db), expectedSql);
   /*
    * Check basic API - many values
    */
@@ -210,9 +210,9 @@ void QueryTest::updateStatementTest()
   statement.addValue(FieldName("LastName"), "L");
   statement.setConditions( buildPrimaryKeyRecord(1) );
   expectedSql = "UPDATE \"Client_tbl\"\n"\
-                "SET \"FirstName\"=?,\"LastName\"=?\n"
-                "WHERE \"Id_PK\"=?";
-  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+                "SET \"FirstName\"='F',\"LastName\"='L'\n"
+                "WHERE \"Id_PK\"=1";
+  QCOMPARE(statement.toSql(db), expectedSql);
   /*
    * Basic API - no condition
    */
@@ -220,8 +220,28 @@ void QueryTest::updateStatementTest()
   statement.setTableName("Client_tbl");
   statement.addValue(FieldName("Name"), "Name 111");
   expectedSql = "UPDATE \"Client_tbl\"\n"\
-                "SET \"Name\"=?";
-  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+                "SET \"Name\"='Name 111'";
+  QCOMPARE(statement.toSql(db), expectedSql);
+}
+
+void QueryTest::updateStatementFilterExpressionTest()
+{
+  using Mdt::QueryExpression::QueryField;
+
+  Mdt::Sql::UpdateStatement statement;
+  QString expectedSql;
+  const auto db = database();
+
+  QueryField id("Id_PK");
+
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("FirstName"), "F");
+  statement.addValue(FieldName("LastName"), "L");
+  statement.setConditions( id == 25 );
+  expectedSql = "UPDATE \"Client_tbl\"\n"\
+                "SET \"FirstName\"='F',\"LastName\"='L'\n"
+                "WHERE \"Id_PK\"=25";
+  QCOMPARE(statement.toSql(db), expectedSql);
 }
 
 void QueryTest::updateStatementPrimaryKeyConditionsTest()
@@ -238,9 +258,9 @@ void QueryTest::updateStatementPrimaryKeyConditionsTest()
   statement.addValue(FieldName("Name"), "Name 111");
   statement.setConditions( buildPrimaryKeyRecord(1) );
   expectedSql = "UPDATE \"Client_tbl\"\n"\
-                "SET \"Name\"=?\n"
-                "WHERE \"Id_PK\"=?";
-  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
+                "SET \"Name\"='Name 111'\n"
+                "WHERE \"Id_PK\"=1";
+  QCOMPARE(statement.toSql(db), expectedSql);
   /*
    * 2 fields PK
    */
@@ -249,28 +269,9 @@ void QueryTest::updateStatementPrimaryKeyConditionsTest()
   statement.addValue(FieldName("Identification"), "1234");
   statement.setConditions( buildPrimaryKeyRecord(1, 2) );
   expectedSql = "UPDATE \"Link_tbl\"\n"\
-                "SET \"Identification\"=?\n"
-                "WHERE \"IdA_PK\"=? AND \"IdB_PK\"=?";
-  QCOMPARE(statement.toPrepareStatementSql(db), expectedSql);
-}
-
-void QueryTest::updateStatementToConditionsValueListTest()
-{
-  Mdt::Sql::UpdateStatement statement;
-
-  /*
-   * 1 field PK
-   */
-  statement.clear();
-  statement.setTableName("Client_tbl");
-  statement.addValue(FieldName("Name"), "Name 111");
-  statement.setConditions( buildPrimaryKeyRecord(1) );
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
-  /*
-   * 2 fields PK
-   */
-  statement.setConditions( buildPrimaryKeyRecord(2,1) );
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({2,1}));
+                "SET \"Identification\"='1234'\n"
+                "WHERE (\"IdA_PK\"=1)AND(\"IdB_PK\"=2)";
+  QCOMPARE(statement.toSql(db), expectedSql);
 }
 
 void QueryTest::updateQueryTest()
@@ -501,12 +502,22 @@ void QueryTest::selectQueryTest()
   QVERIFY(query.execStatement(statement));
   record = query.fetchSingleRecord();
   QVERIFY(record.isEmpty());
+  QVERIFY(!query.lastError().isNull());
+  QVERIFY(!query.lastError().isError(Mdt::ErrorCode::NotFound));
+
   statement.setFilter(clientId == 2);
   QVERIFY(query.execStatement(statement));
   record = query.fetchSingleRecord();
   QVERIFY(!record.isEmpty());
   QCOMPARE(record.value(0), QVariant(2));
   QCOMPARE(record.value(1), QVariant("Name 2"));
+
+  statement.setFilter(clientId == 55);
+  QVERIFY(query.execStatement(statement));
+  record = query.fetchSingleRecord();
+  QVERIFY(record.isEmpty());
+  QVERIFY(!query.lastError().isNull());
+  QVERIFY(query.lastError().isError(Mdt::ErrorCode::NotFound));
 }
 
 /*
