@@ -129,7 +129,7 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a name must not be null
      * \pre \a alias must not be empty
      */
-    [[deprecaed]]
+    [[deprecated]]
     void setEntityName(const EntityName & name, const QString & alias)
     {
     }
@@ -144,7 +144,7 @@ namespace Mdt{ namespace QueryExpression{
      *
      * \pre \a entity must not be null
      */
-    [[deprecaed]]
+    [[deprecated]]
     void setEntity(const SelectEntity & entity)
     {
     }
@@ -176,7 +176,7 @@ namespace Mdt{ namespace QueryExpression{
      *
      * \pre \a entity must not be null
      */
-    [[deprecaed]]
+    [[deprecated]]
     void addSelectAllFields(const SelectEntity & entity)
     {
     }
@@ -192,7 +192,7 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a fieldName must not be null
      * \pre \a fieldAlias must not be empty
      */
-    [[deprecaed]]
+    [[deprecated]]
     void addField(const FieldName & fieldName, const QString & fieldAlias)
     {
     }
@@ -207,7 +207,7 @@ namespace Mdt{ namespace QueryExpression{
      *
      * \todo Preconditions ?
      */
-    [[deprecaed]]
+    [[deprecated]]
     void addField(const SelectField & field)
     {
     }
@@ -224,7 +224,7 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a entity must not be null
      * \pre \a fieldName must not be null
      */
-    [[deprecaed]]
+    [[deprecated]]
     void addField(const SelectEntity & entity, const FieldName & fieldName, const QString & fieldAlias = QString())
     {
     }
@@ -250,7 +250,7 @@ namespace Mdt{ namespace QueryExpression{
      *
      * If the requested field was not found, -1 is returned.
      */
-    [[deprecaed]]
+    [[deprecated]]
     int fieldIndex(const SelectField & field) const
     {
       return mFieldList.fieldIndex(field);
@@ -286,7 +286,7 @@ namespace Mdt{ namespace QueryExpression{
      * \pre \a entity must not be null
      */
     template<typename JoinExpr>
-    [[deprecaed]]
+    [[deprecated]]
     void joinEntity(const SelectEntity & entity, const JoinExpr & join)
     {
       Q_ASSERT(!entity.isNull());
