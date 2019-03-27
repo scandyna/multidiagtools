@@ -3,6 +3,7 @@
 set(SOURCE_FILES
   Mdt/QueryExpression/ReflectionQueryField.cpp
   Mdt/QueryExpression/ReflectionSelectStatement.cpp
+  Mdt/QueryExpression/ReflectionPrimaryKeyRecordAlgorithm.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)

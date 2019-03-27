@@ -270,7 +270,6 @@ namespace Mdt{ namespace QueryExpression{
      */
     void addAllFields()
     {
-//       Impl::AddFieldToReflectionSelectStatement< ReflectionSelectStatement > f(*this);
       Impl::AddFieldToReflectionSelectStatement< decltype(*this) > f(*this);
       Mdt::Reflection::forEachFieldInStructDef<StructDef>(f);
     }
@@ -445,7 +444,6 @@ namespace Mdt{ namespace QueryExpression{
     {
       return Mdt::Reflection::fieldNameQString<Field>();
     }
-
 
   };
 

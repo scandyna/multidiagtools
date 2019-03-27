@@ -29,3 +29,4 @@ endfunction()
 
 addQueryExpression_ReflectionTest("QueryFieldTest")
 addQueryExpression_ReflectionTest("SelectStatementTest")
+addQueryExpression_ReflectionTest("PrimaryKeyAlgorithmTest")
