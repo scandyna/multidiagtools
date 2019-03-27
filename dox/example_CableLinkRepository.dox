@@ -41,7 +41,7 @@
  *
  * At first, a data struct is created, which also receives some attributes:
  * \code
- * #include <Mdt/Reflection/ReflectStruc.h>
+ * #include <Mdt/Reflection/ReflectStruct.h>
  * #include <Mdt/Reflection/PrimaryKey.h>
  * #include <QString>
  *
