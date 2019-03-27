@@ -19,22 +19,23 @@
  **
  ****************************************************************************/
 #include "QueryStatementTest.h"
-// #include "Mdt/Expected.h"
-// #include "Mdt/Sql/InsertQuery.h"
-#include "Mdt/Sql/PrimaryKeyRecord.h"
+#include "Mdt/Sql/ReflectionDeleteStatement.h"
 #include "Mdt/Sql/Reflection/InsertStatement.h"
 #include "Mdt/Sql/Reflection/DeleteStatement.h"
 #include "Mdt/Sql/Reflection/UpdateStatement.h"
-#include "Mdt/Sql/Reflection/PrimaryKeyRecordAlgorithm.h"
 #include "Mdt/Reflection/ReflectStruct.h"
 #include "Mdt/Reflection/AutoIncrementIdPrimaryKey.h"
 #include "Mdt/Reflection/PrimaryKey.h"
+#include "Mdt/Reflection/PrimaryKeyRecord.h"
+#include "Mdt/Reflection/PrimaryKeyRecordAlgorithm.h"
+#include "Mdt/QueryExpression/FilterExpression.h"
+#include "Mdt/QueryExpression/Debug/ExpressionTreeToString.h"
 #include <QString>
 #include <QLatin1String>
+#include <QLatin1Char>
 #include <type_traits>
 
 using namespace Mdt::Reflection;
-// using Mdt::Sql::Schema::FieldType;
 
 /*
  * Person struct
@@ -56,51 +57,15 @@ MDT_REFLECT_STRUCT(
 )
 
 /*
- * Entities
- */
-/*
-struct TestCaseDataStruct
-{
-  qlonglong id = 0;
-  QString name;
-  double qty = 1.0;
-};
-
-MDT_REFLECT_STRUCT(
-  (TestCaseDataStruct),
-  TestCase,
-  (id),
-  (name, FieldFlag::IsRequired, FieldMaxLength(100)),
-  (qty, FieldFlag::HasDefaultValue)
-)
-
-struct MyStruct
-{
-  int i = 0;
-};
-Q_DECLARE_METATYPE(MyStruct)
-
-struct FieldTypeTestStruct
-{
-  int int_type;
-  QString QString_type;
-  MyStruct MyStruct_type;
-};
-
-MDT_REFLECT_STRUCT(
-  (FieldTypeTestStruct),
-  FieldTypeTest,
-  (int_type),
-  (QString_type),
-  (MyStruct_type)
-)
-*/
-
-/*
  * Helpers
  */
 
+QString toInfixExpressionString(const Mdt::QueryExpression::FilterExpression & filter)
+{
+  Q_ASSERT(!filter.isNull());
 
+  return Mdt::QueryExpression::Debug::filterExpressionToInfixString(filter);
+}
 
 /*
  * Tests
@@ -153,23 +118,33 @@ void QueryStatementTest::deleteStatementFromReflectedPrimaryKeyTest()
   using Pk = PrimaryKey<PersonDef::id>;
   using Pk2 = PrimaryKey<PersonDef::firstName, PersonDef::lastName>;
 
-  auto pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<AutoIncIdPk>({1});
-  auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedByPrimaryKey<AutoIncIdPk>(pkr);
-  QCOMPARE(statement.tableName(), QLatin1String("Person"));
-  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
+  using AutoIncIdPkRecord = PrimaryKeyRecord<AutoIncIdPk>;
+  using PkRecord = PrimaryKeyRecord<Pk>;
+  using PkRecord2 = PrimaryKeyRecord<Pk2>;
 
-  pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<Pk>({1});
-  statement = Mdt::Sql::Reflection::deleteStatementFromReflectedByPrimaryKey<Pk>(pkr);
-  QCOMPARE(statement.tableName(), QLatin1String("Person"));
-  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
+  QString expectedExpression;
 
-  pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<Pk2>({QLatin1String("a1"),QLatin1String("a2")});
-  statement = Mdt::Sql::Reflection::deleteStatementFromReflectedByPrimaryKey<Pk2>(pkr);
+  AutoIncIdPkRecord aipkr;
+  aipkr.setValue<PersonDef::id>(1);
+  auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedByPrimaryKey(aipkr);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
-  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({QLatin1String("a1"),QLatin1String("a2")}));
+  expectedExpression = QLatin1String("Person.id==1");
+  QCOMPARE(toInfixExpressionString(statement.internalConditionsFilterExpression()), expectedExpression);
+
+  PkRecord pkr;
+  pkr.setValue<PersonDef::id>(1);
+  statement = Mdt::Sql::Reflection::deleteStatementFromReflectedByPrimaryKey(pkr);
+  QCOMPARE(statement.tableName(), QLatin1String("Person"));
+  expectedExpression = QLatin1String("Person.id==1");
+  QCOMPARE(toInfixExpressionString(statement.internalConditionsFilterExpression()), expectedExpression);
+
+  PkRecord2 pkr2;
+  pkr2.setValue<PersonDef::firstName>(QLatin1String("a1"));
+  pkr2.setValue<PersonDef::lastName>(QLatin1String("a2"));
+  statement = Mdt::Sql::Reflection::deleteStatementFromReflectedByPrimaryKey(pkr2);
+  QCOMPARE(statement.tableName(), QLatin1String("Person"));
+  expectedExpression = QLatin1String("(Person.firstName==a1)&&(Person.lastName==a2)");
+  QCOMPARE(toInfixExpressionString(statement.internalConditionsFilterExpression()), expectedExpression);
 }
 
 void QueryStatementTest::deleteStatementFromReflectedByIdTest()
@@ -177,15 +152,24 @@ void QueryStatementTest::deleteStatementFromReflectedByIdTest()
   using AutoIncIdPk = AutoIncrementIdPrimaryKey<PersonDef::id>;
   using Pk = PrimaryKey<PersonDef::id>;
 
+  QString expectedExpression;
+
   auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedById<AutoIncIdPk>(1);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
-  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
+  expectedExpression = QLatin1String("Person.id==1");
+  QCOMPARE(toInfixExpressionString(statement.internalConditionsFilterExpression()), expectedExpression);
 
   statement = Mdt::Sql::Reflection::deleteStatementFromReflectedById<Pk>(2);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
-  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({2}));
+  expectedExpression = QLatin1String("Person.id==2");
+  QCOMPARE(toInfixExpressionString(statement.internalConditionsFilterExpression()), expectedExpression);
+}
+
+void QueryStatementTest::deleteAllStatementFromReflectedTest()
+{
+  auto statement = Mdt::Sql::Reflection::deleteAllStatementFromReflected<PersonDef>();
+  QCOMPARE(statement.tableName(), QLatin1String("Person"));
+  QVERIFY(statement.internalConditionsFilterExpression().isNull());
 }
 
 void QueryStatementTest::updateStatementFromReflectedByPrimaryKeyTest()
@@ -194,35 +178,44 @@ void QueryStatementTest::updateStatementFromReflectedByPrimaryKeyTest()
   using Pk = PrimaryKey<PersonDef::id>;
   using Pk2 = PrimaryKey<PersonDef::firstName, PersonDef::lastName>;
 
+  using AutoIncIdPkRecord = PrimaryKeyRecord<AutoIncIdPk>;
+  using PkRecord = PrimaryKeyRecord<Pk>;
+  using PkRecord2 = PrimaryKeyRecord<Pk2>;
+
+  QString expectedExpression;
   PersonDataStruct person;
 
   person.id = 1;
   person.firstName = QString::fromLocal8Bit("fN");
   person.lastName = QString::fromLocal8Bit("lN");
 
-  auto pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<AutoIncIdPk>({1});
-  auto statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey<AutoIncIdPk>(person, pkr);
+  AutoIncIdPkRecord aipkr;
+  aipkr.setValue<PersonDef::id>(1);
+  auto statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey(person, aipkr);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
   QCOMPARE(statement.toValueList(), QVariantList({QLatin1String("fN"),QLatin1String("lN")}));
-  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
+  expectedExpression = QLatin1String("Person.id==1");
+  QCOMPARE(toInfixExpressionString(statement.internalConditionsFilterExpression()), expectedExpression);
 
-  pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<Pk>({1});
-  statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey<Pk>(person, pkr);
+  PkRecord pkr;
+  pkr.setValue<PersonDef::id>(1);
+  statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey(person, pkr);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
   QCOMPARE(statement.toValueList(), QVariantList({QLatin1String("fN"),QLatin1String("lN")}));
-  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
+  expectedExpression = QLatin1String("Person.id==1");
+  QCOMPARE(toInfixExpressionString(statement.internalConditionsFilterExpression()), expectedExpression);
 
-  pkr = Mdt::Sql::Reflection::primaryKeyRecordFromValues<Pk2>({QLatin1String("a1"),QLatin1String("a2")});
-  statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey<Pk2>(person, pkr);
+  PkRecord2 pkr2;
+  pkr2.setValue<PersonDef::firstName>(QLatin1String("a1"));
+  pkr2.setValue<PersonDef::lastName>(QLatin1String("a2"));
+  statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey(person, pkr2);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("id")}));
   QCOMPARE(statement.toValueList(), QVariantList({1}));
-  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({QLatin1String("a1"),QLatin1String("a2")}));
+  expectedExpression = QLatin1String("(Person.firstName==a1)&&(Person.lastName==a2)");
+  QCOMPARE(toInfixExpressionString(statement.internalConditionsFilterExpression()), expectedExpression);
 }
 
 void QueryStatementTest::updateStatementFromReflectedTest()
@@ -230,6 +223,7 @@ void QueryStatementTest::updateStatementFromReflectedTest()
   using AutoIncIdPk = AutoIncrementIdPrimaryKey<PersonDef::id>;
   using Pk2 = PrimaryKey<PersonDef::firstName, PersonDef::lastName>;
 
+  QString expectedExpression;
   PersonDataStruct person;
 
   person.id = 1;
@@ -240,15 +234,15 @@ void QueryStatementTest::updateStatementFromReflectedTest()
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
   QCOMPARE(statement.toValueList(), QVariantList({QLatin1String("fN"),QLatin1String("lN")}));
-  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("id")}));
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({1}));
+  expectedExpression = QLatin1String("Person.id==1");
+  QCOMPARE(toInfixExpressionString(statement.internalConditionsFilterExpression()), expectedExpression);
 
   statement = Mdt::Sql::Reflection::updateStatementFromReflected<Pk2>(person);
   QCOMPARE(statement.tableName(), QLatin1String("Person"));
   QCOMPARE(statement.toFieldNameList(), QStringList({QLatin1String("id")}));
   QCOMPARE(statement.toValueList(), QVariantList({1}));
-  QCOMPARE(statement.toConditionsFieldNameList(), QStringList({QLatin1String("firstName"),QLatin1String("lastName")}));
-  QCOMPARE(statement.toConditionsValueList(), QVariantList({QLatin1String("fN"),QLatin1String("lN")}));
+  expectedExpression = QLatin1String("(Person.firstName==fN)&&(Person.lastName==lN)");
+  QCOMPARE(toInfixExpressionString(statement.internalConditionsFilterExpression()), expectedExpression);
 }
 
 /*

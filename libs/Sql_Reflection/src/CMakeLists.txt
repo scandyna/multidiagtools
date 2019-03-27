@@ -7,10 +7,14 @@ set(SOURCE_FILES
   Mdt/Sql/Schema/Reflection/UniqueIndexAlgorithm.cpp
   Mdt/Sql/Schema/Reflection/ForeignKeyAlgorithm.cpp
   Mdt/Sql/Schema/Reflection.cpp
+  Mdt/Sql/ReflectionDeleteStatement.cpp
   Mdt/Sql/Reflection/PrimaryKeyRecordAlgorithm.cpp
   Mdt/Sql/Reflection/InsertStatement.cpp
   Mdt/Sql/Reflection/DeleteStatement.cpp
   Mdt/Sql/Reflection/UpdateStatement.cpp
+  Mdt/Sql/ReflectionStorageTableBase.cpp
+  Mdt/Sql/ReflectionStorageTable.cpp
+  Mdt/Sql/ReflectionStorageTableWithId.cpp
 )
 
 find_package(Qt5 COMPONENTS Sql)
@@ -19,7 +23,7 @@ mdt_add_library(
   NAME Sql_Reflection
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Reflection_Core Sql_Core Qt5::Sql
+  LINK_DEPENDENCIES Reflection_Core QueryExpression_Reflection Sql_Core Qt5::Sql
 )
 mdt_set_library_description(
   NAME Sql_Reflection

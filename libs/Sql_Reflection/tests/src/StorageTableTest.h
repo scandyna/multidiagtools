@@ -20,18 +20,20 @@
  ****************************************************************************/
 #include "TestBase.h"
 
-class QueryStatementTest : public QObject
+class StorageTableTest : public TestBase
 {
  Q_OBJECT
 
  private slots:
 
-  void insertStatementFromReflectedTest();
+  void initTestCase();
+  void cleanupTestCase();
 
-  void deleteStatementFromReflectedPrimaryKeyTest();
-  void deleteStatementFromReflectedByIdTest();
-  void deleteAllStatementFromReflectedTest();
+  void tableWithIdConstructTest();
 
-  void updateStatementFromReflectedByPrimaryKeyTest();
-  void updateStatementFromReflectedTest();
+  void tableWithIdTest();
+
+ private:
+
+  void createDatabaseSchema();
 };

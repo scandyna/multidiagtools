@@ -18,17 +18,17 @@
  ** along with Mdt.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_REFLECTION_DELETE_STATEMENT_H
-#define MDT_SQL_REFLECTION_DELETE_STATEMENT_H
+#ifndef MDT_SQL_REFLECTION_DELETE_STATEMENT_FUNCTIONS_H
+#define MDT_SQL_REFLECTION_DELETE_STATEMENT_FUNCTIONS_H
 
-#include "PrimaryKeyRecordAlgorithm.h"
+#include "Mdt/Sql/DeleteStatement.h"
 #include "Mdt/Reflection/StructAlgorithm.h"
+#include "Mdt/Reflection/PrimaryKeyAlgorithm.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDefAssociatedWithReflectedStruct.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
-#include "Mdt/Sql/DeleteStatement.h"
-#include "Mdt/Sql/PrimaryKeyRecord.h"
-#include "Mdt/Sql/FieldName.h"
+#include "Mdt/Reflection/TypeTraits/IsPrimaryKeyRecord.h"
+#include "Mdt/QueryExpression/ReflectionPrimaryKeyRecordAlgorithm.h"
 #include <QLatin1String>
 #include <type_traits>
 
@@ -38,7 +38,13 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
    *
    * Create a SQL delete statement:
    * \code
-   * const auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedPrimaryKey<PersonPrimaryKey>(personPkRecord);
+   * using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef::id>;
+   * using PersonPrimaryKeyRecord = Mdt::Reflection::PrimaryKeyRecord<PersonPrimaryKey>;
+   *
+   * PersonPrimaryKeyRecord personPkRecord;
+   * personPkRecord.setValue<PersonDef::id>(5);
+   *
+   * const auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedPrimaryKey(personPkRecord);
    * \endcode
    * This statement can be used with a SQL delete query:
    * \code
@@ -49,25 +55,26 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
    * }
    * \endcode
    *
+   * \pre \a PrimaryKeyRecord must be a Mdt::Reflection::PrimaryKeyRecord for a reflected struct
+   *
    * \pre \a PrimaryKey must be primary key class for a reflected struct
    * \pre \a pkRecord must contain the same fields than defined in \a PrimaryKey, and in the same order
    *
    * \sa Mdt::Sql::DeleteStatement
    * \sa Mdt::Sql::DeleteQuery
    */
-  template<typename PrimaryKey>
+  template<typename PrimaryKeyRecord>
   DeleteStatement deleteStatementFromReflectedByPrimaryKey(const PrimaryKeyRecord & pkRecord)
   {
-    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<PrimaryKey>::value,
-                   "PrimaryKey must be a primary key class for a reflected struct" );
-    Q_ASSERT( primaryKeyRecordHasCorrectFieldNameList<PrimaryKey>(pkRecord) );
+    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyRecord<PrimaryKeyRecord>::value,
+                   "PrimaryKeyRecord must be a Mdt::Reflection::PrimaryKeyRecord for the reflected struct \a Struct ( \a data )" );
 
-    using struct_def = typename PrimaryKey::struct_def;
+    using primary_key = typename PrimaryKeyRecord::primary_key;
 
     DeleteStatement statement;
 
-    statement.setTableName( QLatin1String(Mdt::Reflection::nameFromStructDef<struct_def>()) );
-    statement.setConditions(pkRecord);
+    statement.setTableName( Mdt::Reflection::nameFromPrimaryKeyQString<primary_key>() );
+    statement.setConditionsFilterExpression( Mdt::QueryExpression::filterExpressionFromPrimaryKeyRecord(pkRecord) );
 
     return statement;
   }
@@ -105,13 +112,47 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
                    "id must be a integral type" );
 
 
-    const auto pkRecord = primaryKeyRecordFromValues<PrimaryKey>({id});
-    Q_ASSERT( primaryKeyRecordHasCorrectFieldNameList<PrimaryKey>(pkRecord) );
+    DeleteStatement statement;
 
-    return deleteStatementFromReflectedByPrimaryKey<PrimaryKey>(pkRecord);
+    statement.setTableName( Mdt::Reflection::nameFromPrimaryKeyQString<PrimaryKey>() );
+    statement.setConditionsFilterExpression( Mdt::QueryExpression::filterExpressionFromIdPrimaryKeyValue<PrimaryKey>(id) );
+
+    return statement;
+  }
+
+  /*! \brief Get a delete all statement from a reflected struct
+   *
+   * Create a SQL delete statement:
+   * \code
+   * const auto statement = Mdt::Sql::Reflection::deleteAllStatementFromReflected<PersonDef>();
+   * \endcode
+   * This statement can be used with a SQL delete query:
+   * \code
+   * Mdt::Sql::DeleteQuery query(dbConnection);
+   *
+   * if(!query.execStatement(statement)){
+   *   // Error handling
+   * }
+   * \endcode
+   *
+   * \pre \a StructDef must be a struct definition assiocated with a reflected struct
+   *
+   * \sa Mdt::Sql::DeleteStatement
+   * \sa Mdt::Sql::DeleteQuery
+   */
+  template<typename StructDef>
+  DeleteStatement deleteAllStatementFromReflected()
+  {
+    static_assert( Mdt::Reflection::TypeTraits::IsStructDef<StructDef>::value,
+                   "StructDef must be a struct definition assiocated with a reflected struct" );
+
+    DeleteStatement statement;
+
+    statement.setTableName( Mdt::Reflection::nameFromStructDefQString<StructDef>() );
+
+    return statement;
   }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Reflection{
 
-
-#endif // #ifndef MDT_SQL_REFLECTION_DELETE_STATEMENT_H
+#endif // #ifndef MDT_SQL_REFLECTION_DELETE_STATEMENT_FUNCTIONS_H

@@ -93,7 +93,7 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
 
         Q_ASSERT(mIndex < mValues.count());
 
-        mPkr.addValue( FieldName(QString::fromLatin1(Mdt::Reflection::fieldName<Field>())), mValues.at(mIndex) );
+        mPkr.addValue( FieldName(Mdt::Reflection::fieldNameQString<Field>()), mValues.at(mIndex) );
         ++mIndex;
       }
 
@@ -143,7 +143,7 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
       {
         using Mdt::Sql::FieldName;
 
-        mPkr.addValue( FieldName(QString::fromLatin1(Mdt::Reflection::fieldName<Field>())), value );
+        mPkr.addValue( FieldName(Mdt::Reflection::fieldNameQString<Field>()), value );
       }
 
      private:

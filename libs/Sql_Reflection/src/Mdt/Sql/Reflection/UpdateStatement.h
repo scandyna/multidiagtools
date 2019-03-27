@@ -21,15 +21,16 @@
 #ifndef MDT_SQL_REFLECTION_UPDATE_STATEMENT_H
 #define MDT_SQL_REFLECTION_UPDATE_STATEMENT_H
 
-#include "PrimaryKeyRecordAlgorithm.h"
+#include "Mdt/Sql/UpdateStatement.h"
+#include "Mdt/Sql/FieldName.h"
 #include "Mdt/Reflection/StructAlgorithm.h"
-#include "Mdt/Reflection/PrimaryKeyAlgorithm.h"
+#include "Mdt/Reflection/PrimaryKeyRecord.h"
+#include "Mdt/Reflection/PrimaryKeyRecordAlgorithm.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDefAssociatedWithReflectedStruct.h"
 #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
-#include "Mdt/Sql/UpdateStatement.h"
-#include "Mdt/Sql/PrimaryKeyRecord.h"
-#include "Mdt/Sql/FieldName.h"
+#include "Mdt/Reflection/TypeTraits/IsPrimaryKeyRecord.h"
+#include "Mdt/QueryExpression/ReflectionPrimaryKeyRecordAlgorithm.h"
 #include <QLatin1String>
 
 namespace Mdt{ namespace Sql{ namespace Reflection{
@@ -52,7 +53,7 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
         using Mdt::Sql::FieldName;
 
         if( mustAddValueToStatement<typename FieldValuePair::first_type>() ){
-          mStatement.addValue( FieldName(QLatin1String(Mdt::Reflection::fieldName<typename FieldValuePair::first_type>())), p.second );
+          mStatement.addValue( FieldName(Mdt::Reflection::fieldNameQString<typename FieldValuePair::first_type>()), p.second );
         }
       }
 
@@ -73,7 +74,7 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
    *
    * Create a SQL update statement:
    * \code
-   * const auto statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey<PersonPrimaryKey>(personData, personPkRecord);
+   * const auto statement = Mdt::Sql::Reflection::updateStatementFromReflectedByPrimaryKey(personData, personPkRecord);
    * \endcode
    * This statement can be used with a SQL update query:
    * \code
@@ -84,30 +85,29 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
    * }
    * \endcode
    *
-   * \pre \a PrimaryKey must be primary key class for ther reflected struct \a Struct ( \a data )
-   * \pre \a pkRecord must contain the same fields than defined in \a PrimaryKey, and in the same order
+   * \pre \a PrimaryKeyRecord must be a Mdt::Reflection::PrimaryKeyRecord for the reflected struct \a Struct ( \a data )
    *
    * \sa updateStatementFromReflected()
    * \sa Mdt::Sql::UpdateStatement
    * \sa Mdt::Sql::UpdateQuery
    */
-  template<typename PrimaryKey, typename Struct>
+  template<typename Struct, typename PrimaryKeyRecord>
   UpdateStatement updateStatementFromReflectedByPrimaryKey(const Struct & data, const PrimaryKeyRecord & pkRecord)
   {
-    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyClass<PrimaryKey>::value,
-                   "PrimaryKey must be a primary key class for a reflected struct" );
-    Q_ASSERT( primaryKeyRecordHasCorrectFieldNameList<PrimaryKey>(pkRecord) );
+    static_assert( Mdt::Reflection::TypeTraits::IsPrimaryKeyRecord<PrimaryKeyRecord>::value,
+                   "PrimaryKeyRecord must be a Mdt::Reflection::PrimaryKeyRecord for the reflected struct \a Struct ( \a data )" );
 
-    using struct_def = typename PrimaryKey::struct_def;
+    using primary_key = typename PrimaryKeyRecord::primary_key;
+    using struct_def = typename primary_key::struct_def;
     static_assert( Mdt::Reflection::TypeTraits::IsStructDefAssociatedWithReflectedStruct<struct_def, Struct>::value ,
-                   "PrimaryKey must be associated with given data of type Struct" );
+                   "PrimaryKeyRecord must be associated with given data of type Struct" );
 
     UpdateStatement statement;
-    Impl::AddValueToUpdateStatement<PrimaryKey> f(statement);
+    Impl::AddValueToUpdateStatement<primary_key> f(statement);
 
-    statement.setTableName( QLatin1String(Mdt::Reflection::nameFromStructDef<struct_def>()) );
+    statement.setTableName( Mdt::Reflection::nameFromStructDefQString<struct_def>() );
     Mdt::Reflection::forEachFieldValuePairInStruct(data, f);
-    statement.setConditions(pkRecord);
+    statement.setConditionsFilterExpression( Mdt::QueryExpression::filterExpressionFromPrimaryKeyRecord(pkRecord) );
 
     return statement;
   }
@@ -143,12 +143,13 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
     static_assert( Mdt::Reflection::TypeTraits::IsStructDefAssociatedWithReflectedStruct<struct_def, Struct>::value ,
                    "PrimaryKey must be associated with given data of type Struct" );
 
-    const auto pkr = primaryKeyRecordFromReflected<PrimaryKey>(data);
+    using primary_key_record = Mdt::Reflection::PrimaryKeyRecord<PrimaryKey>;
 
-    return updateStatementFromReflectedByPrimaryKey<PrimaryKey>(data, pkr);
+    const auto pkr = Mdt::Reflection::primaryKeyRecordFromStruct<primary_key_record>(data);
+
+    return updateStatementFromReflectedByPrimaryKey(data, pkr);
   }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Reflection{
-
 
 #endif // #ifndef MDT_SQL_REFLECTION_UPDATE_STATEMENT_H

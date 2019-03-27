@@ -51,7 +51,7 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
         using Mdt::Sql::FieldName;
 
         if( mustAddValueToStatement<typename FieldValuePair::first_type>(p.second) ){
-          mStatement.addValue( FieldName(QLatin1String(Mdt::Reflection::fieldName<typename FieldValuePair::first_type>())), p.second );
+          mStatement.addValue( FieldName(Mdt::Reflection::fieldNameQString<typename FieldValuePair::first_type>()), p.second );
         }
       }
 
@@ -109,7 +109,7 @@ namespace Mdt{ namespace Sql{ namespace Reflection{
     InsertStatement statement;
     Impl::AddValueToInsertStatement<PrimaryKey> f(statement);
 
-    statement.setTableName( QLatin1String(Mdt::Reflection::nameFromStructDef<struct_def>()) );
+    statement.setTableName( Mdt::Reflection::nameFromStructDefQString<struct_def>() );
     Mdt::Reflection::forEachFieldValuePairInStruct(data, f);
 
     return statement;
