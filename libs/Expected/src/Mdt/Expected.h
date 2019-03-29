@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -51,11 +51,37 @@ namespace Mdt{
    * Using all together could be:
    * \code
    * const auto x = readValue("/path/to/x.csv");
-   * if(!x){
-   *   // Error handling
+   * if(x){
+   *   handleError(x.error());
    *   return -1;
    * }
    * const auto y = compute(*x);
+   * \endcode
+   *
+   * Consider a function that writes a complete set of data or fails:
+   * \code
+   * Mdt::ExpectedResult writeAll(const QString & filePath, const QVariantList & data)
+   * {
+   *   QFile file(filePath);
+   *
+   *   if(!file.open()){
+   *     // Generate a error regarding QFile's error
+   *     auto error = ...
+   *     return error;
+   *   }
+   *   // The same applies for the rest of the code
+   *
+   *   // Happy end
+   *   return Mdt::ExpectedResultOk();
+   * }
+   * \endcode
+   *
+   * The usage could be:
+   * \code
+   * const auto result = writeAll("/path/to/x.csv","1,2,3");
+   * if(!result){
+   *   handleError(result.error());
+   * }
    * \endcode
    *
    * \tparam T Type of value
@@ -351,6 +377,22 @@ namespace Mdt{
       Mdt::Error mError;
     };
   };
+
+  /*! \brief Value for ExpectedResult
+   *
+   * \sa Mdt::Expected
+   */
+  struct ExpectedResultOk
+  {
+  };
+
+  /*! \brief Replacement for a boolean return value
+   *
+   * Represents either a successfull result or a error.
+   *
+   * \sa Mdt::Expected
+   */
+  using ExpectedResult = Expected<ExpectedResultOk>;
 
 } // namespace Mdt{
 

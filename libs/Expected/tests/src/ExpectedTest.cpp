@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -343,6 +343,19 @@ void ExpectedTest::dereferenceQStringTest()
   QVERIFY(ces);
   QCOMPARE(*ces, QString("CA"));
   QCOMPARE(ces->length(), 2);
+}
+
+void ExpectedTest::expectedResultTest()
+{
+  Mdt::ExpectedResult nullResult;
+  QVERIFY(!nullResult);
+
+  const Mdt::ExpectedResult resultOk = Mdt::ExpectedResultOk();
+  QVERIFY(resultOk);
+
+  const Mdt::ExpectedResult resultNok = mdtErrorNew("Nok", Mdt::Error::Critical, "ExpectedTest");
+  QVERIFY(!resultNok);
+  QCOMPARE(resultNok.error().text(), QLatin1String("Nok"));
 }
 
 /*
