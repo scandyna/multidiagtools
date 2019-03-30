@@ -21,7 +21,7 @@
 
 /*! \page libs_Error Error passing and logging
  *
- * %Mdt prvides (and uses) Mdt::Error to return informations
+ * %Mdt provides (and uses) Mdt::Error to return informations
  *  after a method failed.
  *
  * Logging errors is also supported.
