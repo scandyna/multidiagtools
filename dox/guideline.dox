@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -37,22 +37,13 @@
  * When a function fails, it should be possible to get the reason why it failed.
  *  This is done by using the Mdt::Error class.
  *
- * Functionnal classes should store a Mdt::Error as member
- *  and provide lastError() function.
- *  Their member functions should follow these rules:
- *   - If the function can fail, but returns no data,
- *      it should return a bool and store the error in lastError.
- *   - If the function can fail, and returns data,
- *      it should return a mdtExpected.
- *      For coherence reason, the error should also be stored in lastError.
- *   - If the function can fail, and it is static,
- *      it should return a Mdt::Expected.
+ * A function, or a class memeber method, should follow these rules:
+ *  - If it can fail, but returns not data, it should be return a Mdt::ExpectedResult
+ *  - If it can fail and returns data, it should return a Mdt::Expected
  *
- * Value classes should not have functions that can fail,
+ * Value classes should not have methods that can fail,
  *  because they do not, for example, read files.
- *  If it occurs that function can fail, they should follow these rules:
- *   - If the function can fail,
- *      it should return a Mdt::Expected.
+ *  If it occurs that member methods of such class can fail, they should follow the same above rules.
  *
  * \section error_handlig Error handling
  *
