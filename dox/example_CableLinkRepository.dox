@@ -214,9 +214,9 @@
  *
  *   virtual Mdt::Expected<CableLinkId> add(const CableLink & link) = 0;
  *   virtual Mdt::Expected<CableLink> get(CableLinkId id) const = 0;
- *   virtual bool update(const CableLink & link) = 0;
- *   virtual bool remove(CableLinkId id) = 0;
- *   virtual bool removeAll() = 0;
+ *   virtual Mdt::ExpectedResult update(const CableLink & link) = 0;
+ *   virtual Mdt::ExpectedResult remove(CableLinkId id) = 0;
+ *   virtual Mdt::ExpectedResult removeAll() = 0;
  * };
  * \endcode
  *
@@ -239,9 +239,9 @@
  *   SqlCableLinkRepository(const QSqlDatabase & db);
  *   Mdt::Expected<CableLinkId> add(const CableLink & link) override;
  *   Mdt::Expected<CableLink> get(CableLinkId id) const override;
- *   bool update(const CableLink & link) override;
- *   bool remove(CableLinkId id) override;
- *   bool removeAll() override;
+ *   Mdt::ExpectedResult update(const CableLink & link) override;
+ *   Mdt::ExpectedResult remove(CableLinkId id) override;
+ *   Mdt::ExpectedResult removeAll() override;
  *
  *  private:
  *
@@ -279,37 +279,31 @@
  *   return cableLinkFromDataStruct(*linkData);
  * }
  *
- * bool SqlCableLinkRepository::update(const CableLink & link)
+ * Mdt::ExpectedResult SqlCableLinkRepository::update(const CableLink & link)
  * {
- *   bool ok = mTable.update( cableLinkPrivateConstDataStruct(person) );
- *   if(!ok){
+ *   bool auto result = mTable.update( cableLinkPrivateConstDataStruct(person) );
+ *   if(!result){
  *     // Maybe generate a more domain specific error message here
- *     setLastError(mTable.lastError());
- *     return false;
  *   }
- *   return true;
+ *   return result;
  * }
  *
- * bool SqlCableLinkRepository::remove(CableLinkId id)
+ * Mdt::ExpectedResult SqlCableLinkRepository::remove(CableLinkId id)
  * {
- *   bool ok = mTable.remove( cableLinkIdPrivateConstRecord(id) );
- *   if(!ok){
+ *   bool auto result = mTable.remove( cableLinkIdPrivateConstRecord(id) );
+ *   if(!result){
  *     // Maybe generate a more domain specific error message here
- *     setLastError(mTable.lastError());
- *     return false;
  *   }
- *   return true;
+ *   return result;
  * }
  *
- * bool SqlCableLinkRepository::removeAll()
+ * Mdt::ExpectedResult SqlCableLinkRepository::removeAll()
  * {
- *   bool ok = mTable.removeAll();
- *   if(!ok){
+ *   bool auto result = mTable.removeAll();
+ *   if(!result){
  *     // Maybe generate a more domain specific error message here
- *     setLastError(mTable.lastError());
- *     return false;
  *   }
- *   return true;
+ *   return result;
  * }
  * \endcode
  *
