@@ -19,6 +19,9 @@
  **
  ****************************************************************************/
 #include "WaitBenchmark.h"
+#include "TestTask.h"
+#include "Mdt/Async/WaitDonePredicate.h"
+#include "Mdt/Async/Wait.h"
 #include <QTimer>
 
 /*
@@ -95,6 +98,22 @@ void WaitBenchmark::qTimerObjectSingleShot()
     timer.start(0);
     QTRY_VERIFY(t.hasTimedOut());
   }
+}
+
+void WaitBenchmark::wait()
+{
+  using namespace std::chrono_literals;
+  using Mdt::Async::WaitDonePredicate;
+
+  TestTask task;
+  WaitDonePredicate pred;
+  connect(&task, &TestTask::done, &pred, &WaitDonePredicate::setDone);
+
+  QBENCHMARK{
+    task.setDoneIn(0ms);
+    QVERIFY( Mdt::Async::wait(pred, 5s) );
+  }
+  QVERIFY(!pred.hasTimedOut());
 }
 
 /*

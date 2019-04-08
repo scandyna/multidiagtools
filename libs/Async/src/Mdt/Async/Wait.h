@@ -77,7 +77,7 @@ namespace Mdt{ namespace Async{
    * }
    * \endcode
    */
-  bool MDT_ASYNC_EXPORT wait(const WaitDonePredicate & pred, std::chrono::milliseconds timeout);
+  bool MDT_ASYNC_EXPORT wait(WaitDonePredicate & pred, std::chrono::milliseconds timeout);
 
 }} // namespace Mdt{ namespace Async{
 

@@ -18,15 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TestBase.h"
+#ifndef TEST_TASK_H
+#define TEST_TASK_H
 
-class WaitTest : public QObject
+#include <QTimer>
+#include <QObject>
+#include <chrono>
+
+class TestTask : public QObject
 {
- Q_OBJECT
+  Q_OBJECT
 
- private slots:
+ public:
 
-  void waitPredicateTest();
+  TestTask(QObject *parent = nullptr);
 
-  void waitTest();
+  void setDoneIn(std::chrono::milliseconds t);
+
+ signals:
+
+  void done();
+
+ private:
+
+  QTimer mTimer;
 };
+
+#endif // #ifndef TEST_TASK_H

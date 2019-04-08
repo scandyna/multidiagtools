@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "WaitTest.h"
+#include "TestTask.h"
 #include "Mdt/Async/Wait.h"
 #include "Mdt/Async/WaitDonePredicate.h"
 
@@ -42,8 +43,6 @@ void WaitTest::waitPredicateTest()
   QVERIFY(pred1.isFinished());
   QVERIFY(!pred1.hasTimedOut());
 
-//   pred1.startTimeoutTimer(0ms);
-//   pred1.start(0ms);
   pred1.reset(0ms);
   QTRY_VERIFY(pred1.isFinished());
   QVERIFY(pred1.hasTimedOut());
@@ -52,8 +51,6 @@ void WaitTest::waitPredicateTest()
   QVERIFY(!pred2.isFinished());
   QVERIFY(!pred2.hasTimedOut());
 
-//   pred2.startTimeoutTimer(0ms);
-//   pred2.start(0ms);
   pred2.reset(0ms);
   QTRY_VERIFY(pred2.isFinished());
   QVERIFY(pred2.hasTimedOut());
@@ -66,7 +63,6 @@ void WaitTest::waitPredicateTest()
    * Re-use: predicate can be hold by the user
    */
 
-//   pred2.start(5000ms);
   pred2.reset(5000ms);
   QVERIFY(!pred2.isFinished());
   QVERIFY(!pred2.hasTimedOut());
@@ -75,12 +71,36 @@ void WaitTest::waitPredicateTest()
   QVERIFY(pred2.isFinished());
   QVERIFY(!pred2.hasTimedOut());
 
-//   pred2.start(200ms);
   pred2.reset(200ms);
   QVERIFY(!pred2.isFinished());
   QVERIFY(!pred2.hasTimedOut());
   QTRY_VERIFY(pred2.isFinished());
   QVERIFY(pred2.hasTimedOut());
+}
+
+void WaitTest::waitTest()
+{
+  using namespace std::chrono_literals;
+  using Mdt::Async::WaitDonePredicate;
+
+  TestTask task;
+  WaitDonePredicate pred;
+  connect(&task, &TestTask::done, &pred, &WaitDonePredicate::setDone);
+
+  task.setDoneIn(0ms);
+  QVERIFY( Mdt::Async::wait(pred, 5s) );
+  QVERIFY(pred.isFinished());
+  QVERIFY(!pred.hasTimedOut());
+
+  task.setDoneIn(50ms);
+  QVERIFY( Mdt::Async::wait(pred, 5s) );
+  QVERIFY(pred.isFinished());
+  QVERIFY(!pred.hasTimedOut());
+
+  task.setDoneIn(5s);
+  QVERIFY( !Mdt::Async::wait(pred, 0ms) );
+  QVERIFY(pred.isFinished());
+  QVERIFY(pred.hasTimedOut());
 }
 
 /*

@@ -7,6 +7,7 @@ find_package(Qt5 COMPONENTS Test)
 
 set(SOURCE_FILES
     src/TestBase.cpp
+    src/TestTask.cpp
 )
 
 add_library(mdtAsyncTest SHARED ${SOURCE_FILES})

@@ -19,6 +19,19 @@
  **
  ****************************************************************************/
 #include "Wait.h"
+#include <QCoreApplication>
+#include <QEventLoop>
 
 namespace Mdt{ namespace Async{
+
+bool wait(WaitDonePredicate & pred, std::chrono::milliseconds timeout)
+{
+  pred.reset(timeout);
+  while(!pred.isFinished()){
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
+
+  return !pred.hasTimedOut();
+}
+
 }} // namespace Mdt{ namespace Async{

@@ -23,6 +23,7 @@
 
 #include "MdtAsyncExport.h"
 #include <QObject>
+#include <QTimer>
 #include <chrono>
 
 namespace Mdt{ namespace Async{
@@ -40,25 +41,17 @@ namespace Mdt{ namespace Async{
     WaitDonePredicate(QObject *parent = nullptr)
      : QObject(parent)
     {
+      mTimeoutTimer.setSingleShot(true);
+      connect(&mTimeoutTimer, &QTimer::timeout, this, &WaitDonePredicate::setTimedOut);
     }
 
     /*! \brief Reset done state and start the timeout timer
      */
     void reset(std::chrono::milliseconds timeout)
     {
-    }
-
-    void start(std::chrono::milliseconds timeout)
-    {
-    }
-
-    /*! \brief Start the timeout timer
-     *
-     * \todo should be start(), or restart(),
-     *  and should reset states ( reset() ? )
-     */
-    void startTimeoutTimer(std::chrono::milliseconds t)
-    {
+      mDone = false;
+      mTimedOut = false;
+      mTimeoutTimer.start(timeout);
     }
 
     /*! \brief Check if this wait predicate is finished
@@ -69,7 +62,7 @@ namespace Mdt{ namespace Async{
      */
     bool isFinished() const noexcept
     {
-      return mDone;
+      return mDone || mTimedOut;
     }
 
     bool hasTimedOut() const noexcept
@@ -96,14 +89,19 @@ namespace Mdt{ namespace Async{
      */
     virtual void setDone()
     {
+      mDone = true;
     }
 
    private:
 
-    void setTimedOut();
+    void setTimedOut()
+    {
+      mTimedOut = true;
+    }
 
     bool mDone = false;
     bool mTimedOut = false;
+    QTimer mTimeoutTimer;
   };
 
 }} // namespace Mdt{ namespace Async{
