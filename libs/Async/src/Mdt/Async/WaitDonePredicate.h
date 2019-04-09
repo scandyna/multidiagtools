@@ -46,9 +46,13 @@ namespace Mdt{ namespace Async{
     }
 
     /*! \brief Reset done state and start the timeout timer
+     *
+     * \pre \a timeout must b >= 0ms
      */
     void reset(std::chrono::milliseconds timeout)
     {
+      Q_ASSERT(timeout >= std::chrono::milliseconds(0));
+
       mDone = false;
       mTimedOut = false;
       mTimeoutTimer.start(timeout);

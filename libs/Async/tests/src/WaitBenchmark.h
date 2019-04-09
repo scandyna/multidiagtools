@@ -31,5 +31,7 @@ class WaitBenchmark : public QObject
   void qTimerStaticSingleShot();
   void qTimerObjectSingleShot();
 
+  void constructPredicate();
+
   void wait();
 };

@@ -50,8 +50,6 @@ namespace Mdt{ namespace Async{
    *  One solution is to only use Mdt::Sql::AsyncQuery and Mdt::Async::wait() to provide blocking behaviour.
    *  For a example, see Mdt::Sql::ReflectionAsyncStorageTableWithId .
    *
-   * \todo Document duration usage
-   *
    * Following code is a example of usage:
    * \code
    * using namespace std::chrono_literals;
@@ -76,6 +74,8 @@ namespace Mdt{ namespace Async{
    *   window.handleError(error);
    * }
    * \endcode
+   *
+   * \pre \a timeout must b >= 0ms
    */
   bool MDT_ASYNC_EXPORT wait(WaitDonePredicate & pred, std::chrono::milliseconds timeout);
 

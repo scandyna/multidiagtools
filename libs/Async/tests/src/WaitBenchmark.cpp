@@ -100,6 +100,13 @@ void WaitBenchmark::qTimerObjectSingleShot()
   }
 }
 
+void WaitBenchmark::constructPredicate()
+{
+  QBENCHMARK{
+    Mdt::Async::WaitDonePredicate pred;
+  }
+}
+
 void WaitBenchmark::wait()
 {
   using namespace std::chrono_literals;

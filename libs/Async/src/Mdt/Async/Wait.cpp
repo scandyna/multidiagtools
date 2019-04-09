@@ -26,6 +26,8 @@ namespace Mdt{ namespace Async{
 
 bool wait(WaitDonePredicate & pred, std::chrono::milliseconds timeout)
 {
+  Q_ASSERT(timeout >= std::chrono::milliseconds(0));
+
   pred.reset(timeout);
   while(!pred.isFinished()){
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
