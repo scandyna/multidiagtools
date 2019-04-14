@@ -18,16 +18,4 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TestBase.h"
-
-class WaitTest : public QObject
-{
- Q_OBJECT
-
- private slots:
-
-  void waitPredicateTest();
-  void waitPredicateWithErrorTest();
-
-  void waitTest();
-};
+#include "WaitDonePredicateWithError.h"

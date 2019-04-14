@@ -22,6 +22,7 @@
 #include "TestTask.h"
 #include "Mdt/Async/Wait.h"
 #include "Mdt/Async/WaitDonePredicate.h"
+#include "Mdt/Async/WaitDonePredicateWithError.h"
 
 /*
  * Tests
@@ -76,6 +77,36 @@ void WaitTest::waitPredicateTest()
   QVERIFY(!pred2.hasTimedOut());
   QTRY_VERIFY(pred2.isFinished());
   QVERIFY(pred2.hasTimedOut());
+}
+
+void WaitTest::waitPredicateWithErrorTest()
+{
+  using namespace std::chrono_literals;
+
+  Mdt::Async::WaitDonePredicateWithError pred1;
+  QVERIFY(!pred1.isFinished());
+  QVERIFY(!pred1.hasError());
+  QVERIFY(!pred1.hasTimedOut());
+
+  pred1.setDone();
+  QVERIFY(pred1.isFinished());
+  QVERIFY(!pred1.hasError());
+  QVERIFY(!pred1.hasTimedOut());
+
+  pred1.reset(5s);
+  QVERIFY(!pred1.isFinished());
+  QVERIFY(!pred1.hasError());
+  QVERIFY(!pred1.hasTimedOut());
+
+  pred1.setErrorOccured();
+  QVERIFY(pred1.isFinished());
+  QVERIFY(pred1.hasError());
+  QVERIFY(!pred1.hasTimedOut());
+
+  pred1.reset(0ms);
+  QTRY_VERIFY(pred1.isFinished());
+  QVERIFY(!pred1.hasError());
+  QVERIFY(pred1.hasTimedOut());
 }
 
 void WaitTest::waitTest()

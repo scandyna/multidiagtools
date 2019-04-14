@@ -2,6 +2,7 @@
 # List of source files
 set(SOURCE_FILES
   Mdt/Async/WaitDonePredicate.cpp
+  Mdt/Async/WaitDonePredicateWithError.cpp
   Mdt/Async/Wait.cpp
 )
 

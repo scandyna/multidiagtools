@@ -53,6 +53,7 @@ namespace Mdt{ namespace Async{
     {
       Q_ASSERT(timeout >= std::chrono::milliseconds(0));
 
+      resetPredicateStates();
       mDone = false;
       mTimedOut = false;
       mTimeoutTimer.start(timeout);
@@ -74,7 +75,7 @@ namespace Mdt{ namespace Async{
       return mTimedOut;
     }
 
-   public slots:
+   public Q_SLOTS:
 
     /*! \brief Set this wait predicate done
      *
@@ -83,10 +84,10 @@ namespace Mdt{ namespace Async{
      * For other use cases, for example having to wait for multiple objects,
      *  this method can be reimplemented:
      * \code
-     * void MyWaitPredicate::setDone()
+     * void MyWaitPredicate::setDone() override
      * {
-     *   if(allMyObjectDones()){
-     *     AbstractWaitDonePredicate::setDone();
+     *   if(allMyObjectsDone()){
+     *     WaitDonePredicate::setDone();
      *   }
      * }
      * \endcode
@@ -94,6 +95,17 @@ namespace Mdt{ namespace Async{
     virtual void setDone()
     {
       mDone = true;
+    }
+
+   protected:
+
+    /*! \brief Reset the predicate states
+     *
+     * This method is called by reset().
+     *  It can be re-implemented in subclass if required.
+     */
+    virtual void resetPredicateStates()
+    {
     }
 
    private:
