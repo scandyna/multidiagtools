@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,11 +29,22 @@ using namespace Mdt::Sql;
  * Tests
  */
 
+void ConnectionParametersTest::defaultParametersTest()
+{
+  SQLiteConnectionParameters parameters;
+
+  QVERIFY(parameters.databaseFile().isEmpty());
+  QCOMPARE(parameters.openMode(), SQLiteOpenMode::ReadWrite);
+}
+
 void ConnectionParametersTest::sqliteParametersTest()
 {
   SQLiteConnectionParameters sqliteParameters;
 
   sqliteParameters.setDatabaseFile("/some/path/to/db.sql");
+  QCOMPARE(sqliteParameters.databaseFile(), QLatin1String("/some/path/to/db.sql"));
+  sqliteParameters.setOpenMode(SQLiteOpenMode::ReadOnly);
+  QCOMPARE(sqliteParameters.openMode(), SQLiteOpenMode::ReadOnly);
   const auto parameters = sqliteParameters.toConnectionParameters();
   QCOMPARE(parameters.driverName(), QString("MDTQSQLITE"));
   QCOMPARE(parameters.databaseName(), QString("/some/path/to/db.sql"));

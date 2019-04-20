@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_SQLITE_CONNECTION_PARAMETERS_H
 #define MDT_SQL_SQLITE_CONNECTION_PARAMETERS_H
 
+#include "SQLiteOpenMode.h"
 #include "Mdt/Sql/ConnectionParameters.h"
 #include "MdtSql_Core_SQLiteExport.h"
 #include <QString>
@@ -57,6 +58,29 @@ namespace Mdt{ namespace Sql{
      */
     void setDatabaseFile(const QString & path);
 
+    /*! \brief Get path to the SQLite database file
+     */
+    QString databaseFile() const
+    {
+      return mFilePath;
+    }
+
+    /*! \brief Set database file open mode
+     *
+     * The default open mode is read / write
+     */
+    void setOpenMode(SQLiteOpenMode mode) noexcept
+    {
+      mOpenMode = mode;
+    }
+
+    /*! \brief Get database file open mode
+     */
+    SQLiteOpenMode openMode() const noexcept
+    {
+      return mOpenMode;
+    }
+
     /*! \brief Get a connection parameters from this
      */
     ConnectionParameters toConnectionParameters() const;
@@ -64,6 +88,7 @@ namespace Mdt{ namespace Sql{
    private:
 
     QString mFilePath;
+    SQLiteOpenMode mOpenMode = SQLiteOpenMode::ReadWrite;
   };
 
 }} // namespace Mdt{ namespace Sql{

@@ -1,8 +1,9 @@
 
 # List of source files
 set(SOURCE_FILES
-   Mdt/Sql/SQLiteConnectionParameters.cpp
-   Mdt/Sql/SQLiteDatabase.cpp
+  Mdt/Sql/SQLiteOpenMode.cpp
+  Mdt/Sql/SQLiteConnectionParameters.cpp
+  Mdt/Sql/SQLiteDatabase.cpp
 )
 
 find_package(Qt5 COMPONENTS Sql)

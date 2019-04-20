@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,10 +19,15 @@
  **
  ****************************************************************************/
 #include "SQLiteDatabase.h"
+#include "Mdt/ErrorCode.h"
 #include "Mdt/Sql/Error.h"
 #include <QLatin1String>
+#include <QLatin1Char>
+#include <QStringList>
+#include <QCoreApplication>
 #include <QFileInfo>
 #include <QDir>
+#include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QVariant>
@@ -30,7 +35,8 @@
 namespace Mdt{ namespace Sql{
 
 SQLiteDatabase::SQLiteDatabase(const QString & connectionName, QObject *parent)
- : QObject(parent)
+ : QObject(parent),
+   mConnection(Connection(connectionName))
 {
   mDatabase = QSqlDatabase::database(connectionName, false);
   if( !hasSQLiteDriverLoaded(mDatabase) ){
@@ -40,6 +46,106 @@ SQLiteDatabase::SQLiteDatabase(const QString & connectionName, QObject *parent)
       mDatabase = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), connectionName);
     }
   }
+}
+
+SQLiteDatabase::SQLiteDatabase(const Connection & connection, const SQLiteConnectionParameters & parameters, QObject *parent)
+ : QObject(parent),
+   mConnection(connection),
+   mParameters(parameters)
+{
+  Q_ASSERT(mConnection.database().isValid());
+  Q_ASSERT(hasSQLiteDriverLoaded(mConnection.database()));
+}
+
+Mdt::ExpectedResult SQLiteDatabase::createNew()
+{
+  QFileInfo fi(mParameters.databaseFile());
+
+  if(fi.isDir()){
+    const auto msg = tr("Create a new SQLite database failed because file path refers to a directory.\nFile path: '%1'")
+                     .arg( fi.absoluteFilePath() );
+    const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    return error;
+  }
+  if(fi.exists()){
+    const auto msg = tr("Create a new SQLite database failed because file named '%1' allready exists.\nDirectory: '%2'")
+                     .arg( fi.fileName(), fi.absoluteDir().path() );
+    const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    return error;
+  }
+  if(mParameters.openMode() == SQLiteOpenMode::ReadOnly){
+    mParameters.setOpenMode(SQLiteOpenMode::ReadWrite);
+    const auto result = open();
+    mParameters.setOpenMode(SQLiteOpenMode::ReadOnly);
+    mConnection.database().close();
+    if(!result){
+      return result;
+    }
+  }
+
+  return open();
+}
+
+Mdt::ExpectedResult SQLiteDatabase::openExisting()
+{
+  QFileInfo fi(mParameters.databaseFile());
+
+  if(!fi.exists()){
+    const auto msg = tr("Open SQLite database failed because file named '%1' does not exist.\nDirectory: '%2'")
+                     .arg( fi.fileName(), fi.absoluteDir().path() );
+    const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    return error;
+  }
+  if(fi.isDir()){
+    const auto msg = tr("Open SQLite database failed because file path refers to a directory.\nFile path: '%1'")
+                     .arg( fi.absoluteFilePath() );
+    const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    return error;
+  }
+
+  return open();
+}
+
+Mdt::ExpectedResult SQLiteDatabase::open()
+{
+  QSqlDatabase db = mConnection.database();
+
+  db.close();
+  setConnectOptions(mParameters.openMode());
+  db.setDatabaseName(mParameters.databaseFile());
+  if(!db.open()){
+    const QFileInfo fi(mParameters.databaseFile());
+    const auto msg = tr("Open SQLite database file '%1' failed.\nDirectory: '%2'")
+                     .arg( fi.fileName(), fi.absoluteDir().path() );
+    auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    error.stackError( mdtErrorFromQSqlDatabaseQ(db, this) );
+    return error;
+  }
+  if(!isSQLiteDatabaseOpen()){
+    db.close();
+    const QFileInfo fi(mParameters.databaseFile());
+    const auto msg = tr("Open SQLite database failed because file named '%1' is not a SQLite database (or it is encrypted).\nDirectory: '%2'")
+                     .arg( fi.fileName(), fi.absoluteDir().path() );
+    const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
+    return error;
+  }
+  /// \todo Enable FK support
+
+  return Mdt::ExpectedResultOk();
+}
+
+bool SQLiteDatabase::isSQLiteDatabaseOpen()
+{
+  QSqlDatabase db = mConnection.database();
+
+  if(!db.isOpen()){
+    return false;
+  }
+  if(getSchemaVersion(db)){
+    return true;
+  }
+
+  return false;
 }
 
 bool SQLiteDatabase::createNew(const QString& dbFilePath)
@@ -107,7 +213,7 @@ bool SQLiteDatabase::openExisting(const QString & dbFilePath, SQLiteDatabase::Op
     setLastError(error);
     return false;
   }
-  const auto schemaVersion = getSchemaVersion();
+  const auto schemaVersion = getSchemaVersion(mDatabase);
   if(!schemaVersion){
     mDatabase.close();
     const auto msg = tr("Open SQLite database failed because file named '%1' is not a SQLite database (or it is encrypted).\nDirectory: '%2'")
@@ -123,6 +229,26 @@ bool SQLiteDatabase::openExisting(const QString & dbFilePath, SQLiteDatabase::Op
   return true;
 }
 
+Mdt::Expected<Connection> SQLiteDatabase::addConnection()
+{
+  const auto connectionName = Connection::generateConnectionName( QSqlDatabase::connectionNames() );
+  QSqlDatabase db;
+
+  if( QSqlDatabase::isDriverAvailable(QLatin1String("MDTQSQLITE")) ){
+    db = QSqlDatabase::addDatabase(QLatin1String("MDTQSQLITE"), connectionName);
+  }else{
+    db = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), connectionName);
+  }
+  if(!db.isValid()){
+    const auto msg = tr("Could not load a SQLite driver. Searched in:\n%1")
+                     .arg( QCoreApplication::libraryPaths().join(QLatin1Char('\n')) );
+    const auto error = mdtErrorNewT(Mdt::ErrorCode::DriverNotFound, msg, Mdt::Error::Critical, "SQLiteDatabase");
+    return error;
+  }
+
+  return Connection(connectionName);
+}
+
 bool SQLiteDatabase::isSQLiteDriver(const QString & driverName) noexcept
 {
   return (driverName == QLatin1String("QSQLITE")) || (driverName == QLatin1String("MDTQSQLITE"));
@@ -133,11 +259,12 @@ bool SQLiteDatabase::hasSQLiteDriverLoaded(const QSqlDatabase& db) noexcept
   return db.isValid() && isSQLiteDriver(db.driverName());
 }
 
-Expected<qlonglong> SQLiteDatabase::getSchemaVersion()
+Mdt::Expected<qlonglong> SQLiteDatabase::getSchemaVersion(const QSqlDatabase & db)
 {
-  Q_ASSERT(mDatabase.isOpen());
+  Q_ASSERT(hasSQLiteDriverLoaded(db));
+  Q_ASSERT(db.isOpen());
 
-  QSqlQuery query(mDatabase);
+  QSqlQuery query(db);
   if(!query.exec(QLatin1String("PRAGMA schema_version"))){
     const auto msg = tr("Get schema version failed.");
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
@@ -180,6 +307,20 @@ void SQLiteDatabase::setConnectOptions(SQLiteDatabase::OpenMode openMode)
     mDatabase.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES;QSQLITE_OPEN_READONLY"));
   }else{
     mDatabase.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES"));
+  }
+}
+
+void SQLiteDatabase::setConnectOptions(SQLiteOpenMode openMode)
+{
+  QSqlDatabase db = mConnection.database();
+
+  Q_ASSERT(hasSQLiteDriverLoaded(db));
+  Q_ASSERT(!db.isOpen());
+
+  if(openMode == SQLiteOpenMode::ReadOnly){
+    db.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES;QSQLITE_OPEN_READONLY"));
+  }else{
+    db.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES"));
   }
 }
 

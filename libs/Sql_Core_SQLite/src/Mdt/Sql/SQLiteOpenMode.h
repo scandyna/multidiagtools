@@ -18,38 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SQLITE_DATABASE_TEST_H
-#define SQLITE_DATABASE_TEST_H
+#ifndef MDT_SQL_SQLITE_OPEN_MODE_H
+#define MDT_SQL_SQLITE_OPEN_MODE_H
 
-#include "TestBase.h"
-#include <QSqlDatabase>
+namespace Mdt{ namespace Sql{
 
-class SQLiteDatabaseTest : public QObject
-{
- Q_OBJECT
+  /*! \brief Open mode for a SQLite database
+   */
+  enum class SQLiteOpenMode
+  {
+    ReadOnly, /*!< Read only mode */
+    ReadWrite /*!< Read and write mode */
+  };
 
- private slots:
+}} // namespace Mdt{ namespace Sql{
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void isSQLIteDriverTest();
-  void addConnection();
-  void construct();
-  void constructTestOLD();
-  void openTest();
-  void isSQLiteDatabaseOpenTest();
-  void createNewTest();
-  void createNewTestOLD();
-  void openExistingTest();
-  void openExistingTestOLD();
-  void checkForeignKeySupportEnabled();
-
- private:
-
-  bool writeTextFile(const QString & path, const QString & text);
-  QString readTextFile(const QString & path);
-  bool createSimpleTable(const QSqlDatabase & dbConnection);
-};
-
-#endif // #ifndef SQLITE_DATABASE_TEST_H
+#endif // #ifndef MDT_SQL_SQLITE_OPEN_MODE_H
