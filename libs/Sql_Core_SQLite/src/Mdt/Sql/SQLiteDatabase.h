@@ -73,19 +73,6 @@ namespace Mdt{ namespace Sql{
 
    public:
 
-    /*! \brief Open mode
-     */
-    enum OpenMode
-    {
-      ReadOnly, /*!< Read only mode */
-      ReadWrite /*!< Read and write mode */
-    };
-
-    /*! \brief Construct a SQLite database connection
-     */
-    [[deprecated]]
-    SQLiteDatabase(const QString & connectionName = QLatin1String("qt_sql_default_connection"), QObject *parent = nullptr);
-
     /*! \brief Construct a SQLite database connection
      *
      * \pre \a connection must refer to a valid database connection handle,
@@ -148,30 +135,6 @@ namespace Mdt{ namespace Sql{
      */
     bool isSQLiteDatabaseOpen();
 
-    /*! \brief Open a existing database file
-     */
-    [[deprecated]]
-    bool openExisting(const QString & dbFilePath, OpenMode openMode = ReadWrite);
-
-    /*! \brief Create a new database file
-     */
-    [[deprecated]]
-    bool createNew(const QString & dbFilePath);
-
-    /*! \brief Get the database connection
-     */
-    QSqlDatabase database() const
-    {
-      return mDatabase;
-    }
-
-    /*! \brief Get last error
-     */
-    Mdt::Error lastError() const
-    {
-      return mLastError;
-    }
-
     /*! \brief Add a connection to a SQLite database
      *
      * Returns a valid connection if a SQLite driver could be loaded,
@@ -187,16 +150,12 @@ namespace Mdt{ namespace Sql{
 
     static bool hasSQLiteDriverLoaded(const QSqlDatabase & db) noexcept;
     Mdt::Expected<qlonglong> getSchemaVersion(const QSqlDatabase & db);
-    bool enableForeignKeySupport();
-    void setConnectOptions(OpenMode openMode);
+    Mdt::ExpectedResult enableForeignKeySupport(const QSqlDatabase & db);
     void setConnectOptions(SQLiteOpenMode openMode);
-    void setLastError(const Mdt::Error & error);
+//     void setLastError(const Mdt::Error & error);
 
     Connection mConnection;
     SQLiteConnectionParameters mParameters;
-
-    QSqlDatabase mDatabase;
-    Mdt::Error mLastError;
   };
 
 }} // namespace Mdt{ namespace Sql{

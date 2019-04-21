@@ -81,27 +81,6 @@ void SQLiteDatabaseTest::addConnection()
   Connection::remove(*connection);
 }
 
-void SQLiteDatabaseTest::construct()
-{
-  QFAIL("Not complete");
-}
-
-void SQLiteDatabaseTest::constructTestOLD()
-{
-  SQLiteDatabase sqliteDb;
-  auto dbConnection = sqliteDb.database();
-  QVERIFY(dbConnection.isValid());
-  QVERIFY(SQLiteDatabase::isSQLiteDriver(dbConnection.driverName()));
-  QVERIFY(!dbConnection.isOpen());
-
-  SQLiteDatabase sqliteDbA("connection-A");
-  dbConnection = sqliteDbA.database();
-  QVERIFY(dbConnection.isValid());
-  QVERIFY(SQLiteDatabase::isSQLiteDriver(dbConnection.driverName()));
-  QCOMPARE(dbConnection.connectionName(), QString("connection-A"));
-  QVERIFY(!dbConnection.isOpen());
-}
-
 void SQLiteDatabaseTest::openTest()
 {
   SQLiteConnectionParameters parameters;
@@ -367,56 +346,6 @@ void SQLiteDatabaseTest::createNewTest()
   Connection::remove(*connection);
 }
 
-void SQLiteDatabaseTest::createNewTestOLD()
-{
-  QTemporaryDir dir;
-  QVERIFY(dir.isValid());
-  SQLiteDatabase sqliteDb;
-  QString filePath;
-  /*
-   * File does not exist
-   */
-  filePath = dir.path() + "/dbA.sqlite";
-  QVERIFY(!QFileInfo::exists(filePath));
-  QVERIFY(sqliteDb.createNew(filePath));
-  QVERIFY(QFileInfo::exists(filePath));
-  auto dbConnection = sqliteDb.database();
-  QVERIFY(dbConnection.isOpen());
-  QVERIFY(!dbConnection.isOpenError());
-  QVERIFY(databaseUsesExtendedErrorCodes(dbConnection));
-  QVERIFY(createSimpleTable(dbConnection));
-  /*
-   * Path is a directory
-   * (also checks that SQLiteDatabase closes before try to open)
-   */
-  filePath = dir.path();
-  QVERIFY(!sqliteDb.createNew(filePath));
-  dbConnection = sqliteDb.database();
-  QVERIFY(!dbConnection.isOpen());
-  /*
-   * A file already exists
-   */
-  filePath = dir.path() + "/document.txt";
-  QVERIFY(writeTextFile(filePath, "ABCD"));
-  QVERIFY(!sqliteDb.createNew(filePath));
-  dbConnection = sqliteDb.database();
-  QVERIFY(!dbConnection.isOpen());
-  // Check that the file was not touched
-  QCOMPARE(readTextFile(filePath), QString("ABCD"));
-  /*
-   * Create a new database again
-   */
-  filePath = dir.path() + "/dbB.sqlite";
-  QVERIFY(!QFileInfo::exists(filePath));
-  QVERIFY(sqliteDb.createNew(filePath));
-  QVERIFY(QFileInfo::exists(filePath));
-  dbConnection = sqliteDb.database();
-  QVERIFY(dbConnection.isOpen());
-  QVERIFY(!dbConnection.isOpenError());
-  QVERIFY(databaseUsesExtendedErrorCodes(dbConnection));
-  QVERIFY(createSimpleTable(dbConnection));
-}
-
 void SQLiteDatabaseTest::openExistingTest()
 {
   SQLiteConnectionParameters parameters;
@@ -500,68 +429,23 @@ void SQLiteDatabaseTest::openExistingTest()
   Connection::remove(*connection);
 }
 
-void SQLiteDatabaseTest::openExistingTestOLD()
-{
-  QTemporaryDir dir;
-  QVERIFY(dir.isValid());
-  SQLiteDatabase sqliteDb;
-  QString filePath;
-  /*
-   * Open a valid existing SQLite database, read only
-   */
-  filePath = dir.path() + "/validRoDb.sqlite";
-  QVERIFY(sqliteDb.createNew(filePath));
-  QVERIFY(sqliteDb.openExisting(filePath, SQLiteDatabase::ReadOnly));
-  auto dbConnection = sqliteDb.database();
-  QVERIFY(dbConnection.isOpen());
-  QVERIFY(!dbConnection.isOpenError());
-  QVERIFY(databaseUsesExtendedErrorCodes(dbConnection));
-  QVERIFY(!createSimpleTable(dbConnection));
-  /*
-   * Open a valid existing SQLite database
-   */
-  filePath = dir.path() + "/validDb.sqlite";
-  QVERIFY(sqliteDb.createNew(filePath));
-  QVERIFY(sqliteDb.openExisting(filePath));
-  dbConnection = sqliteDb.database();
-  QVERIFY(dbConnection.isOpen());
-  QVERIFY(!dbConnection.isOpenError());
-  QVERIFY(databaseUsesExtendedErrorCodes(dbConnection));
-  QVERIFY(createSimpleTable(dbConnection));
-  /*
-   * Try to open a non existing file
-   * (also checks that SQLiteDatabase closes before try to open)
-   */
-  filePath = dir.path() + "nonExisting.sqlite";
-  QVERIFY(!QFileInfo::exists(filePath));
-  QVERIFY(!sqliteDb.openExisting(filePath));
-  QVERIFY(!QFileInfo::exists(filePath));
-  dbConnection = sqliteDb.database();
-  QVERIFY(!dbConnection.isOpen());
-  /*
-   * Try to open a file that is not a SQLite database
-   */
-  filePath = dir.path() + "/document.txt";
-  QVERIFY(writeTextFile(filePath, "ABCD"));
-  QVERIFY(!sqliteDb.openExisting(filePath));
-  dbConnection = sqliteDb.database();
-  QVERIFY(!dbConnection.isOpen());
-  // Check that the file was not touched
-  QCOMPARE(readTextFile(filePath), QString("ABCD"));
-}
-
 void SQLiteDatabaseTest::checkForeignKeySupportEnabled()
 {
+  SQLiteConnectionParameters parameters;
+  const auto connection = SQLiteDatabase::addConnection();
+  QVERIFY(connection);
   QTemporaryDir dir;
   QVERIFY(dir.isValid());
   const QString dbPath = QDir::cleanPath(dir.path() + "/test.sqlite");
 
+  parameters.setDatabaseFile(dbPath);
+  SQLiteDatabase sqliteDb(*connection, parameters);
+  QVERIFY(sqliteDb.createNew());
+
   {
-    SQLiteDatabase sqliteDb;
-    QVERIFY(sqliteDb.createNew(dbPath));
-    const auto dbConnection = sqliteDb.database();
-    QVERIFY(dbConnection.isOpen());
-    QSqlQuery query(dbConnection);
+    QSqlDatabase db = connection->database();
+    QVERIFY(db.isOpen());
+    QSqlQuery query(db);
 
     const QString createPersonTableSql
       = "CREATE TABLE Person(\n"\
@@ -582,17 +466,20 @@ void SQLiteDatabaseTest::checkForeignKeySupportEnabled()
     QVERIFY(!query.exec("INSERT INTO Address (Id_PK, Person_Id_FK) VALUES (12,2)"));
   }
 
+  Connection::close(*connection);
+  QVERIFY(sqliteDb.openExisting());
+
   {
-    SQLiteDatabase sqliteDb;
-    QVERIFY(sqliteDb.openExisting(dbPath));
-    const auto dbConnection = sqliteDb.database();
-    QVERIFY(dbConnection.isOpen());
-    QSqlQuery query(dbConnection);
+    QSqlDatabase db = connection->database();
+    QVERIFY(db.isOpen());
+    QSqlQuery query(db);
 
     QVERIFY(query.exec("INSERT INTO Person (Id_PK) VALUES (5)"));
     QVERIFY(query.exec("INSERT INTO Address (Id_PK, Person_Id_FK) VALUES (15,5)"));
     QVERIFY(!query.exec("INSERT INTO Address (Id_PK, Person_Id_FK) VALUES (16,6)"));
   }
+
+  Connection::remove(*connection);
 }
 
 /*

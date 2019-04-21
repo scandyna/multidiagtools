@@ -35,14 +35,10 @@ class SQLiteDatabaseTest : public QObject
 
   void isSQLIteDriverTest();
   void addConnection();
-  void construct();
-  void constructTestOLD();
   void openTest();
   void isSQLiteDatabaseOpenTest();
   void createNewTest();
-  void createNewTestOLD();
   void openExistingTest();
-  void openExistingTestOLD();
   void checkForeignKeySupportEnabled();
 
  private:
