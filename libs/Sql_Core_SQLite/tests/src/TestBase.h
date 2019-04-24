@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,13 +21,15 @@
 #ifndef MDT_SQL_TEST_BASE_H
 #define MDT_SQL_TEST_BASE_H
 
-#include "Mdt/Sql/ConnectionParameters.h"
+#include "Mdt/Sql/SQLiteConnectionParameters.h"
+#include "Mdt/Sql/Connection.h"
 #include "Mdt/CoreApplication.h"
 #include <QTemporaryFile>
 #include <QSqlDatabase>
 #include <QObject>
 #include <QtTest/QtTest>
 #include <Qt>
+#include <QString>
 
 class TestBase : public QObject
 {
@@ -35,15 +37,31 @@ class TestBase : public QObject
 
  protected:
 
+  bool initDatabaseTemporaryFile();
   bool initDatabaseSqlite();
-  QSqlDatabase database() const;
-  Mdt::Sql::ConnectionParameters connectionParameters() const;
+
+  Mdt::Sql::SQLiteConnectionParameters connectionParameters() const
+  {
+    return mConnectionParameters;
+  }
+
+  Mdt::Sql::Connection connection() const
+  {
+    Q_ASSERT(!mConnectionName.isEmpty());
+    return Mdt::Sql::Connection(mConnectionName);
+  }
+
+  QSqlDatabase database() const
+  {
+    Q_ASSERT(!mConnectionName.isEmpty());
+    return connection().database();
+  }
 
  private:
 
   QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase mDatabase;
-  Mdt::Sql::ConnectionParameters mConnectionParameters;
+  Mdt::Sql::SQLiteConnectionParameters mConnectionParameters;
+  QString mConnectionName;
 };
 
 #endif // #ifndef MDT_SQL_TEST_BASE_H

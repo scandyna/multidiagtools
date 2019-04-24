@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,51 +19,46 @@
  **
  ****************************************************************************/
 #include "TestBase.h"
-#include "Mdt/Sql/SQLiteConnectionParameters.h"
+#include "Mdt/Sql/SQLiteDatabase.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/InsertQuery.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
 
-using Mdt::Sql::SQLiteConnectionParameters;
+using namespace Mdt::Sql;
 
-bool TestBase::initDatabaseSqlite()
+bool TestBase::initDatabaseTemporaryFile()
 {
-  SQLiteConnectionParameters parameters;
-
-  // Create a database
   if(!mTempFile.open()){
     qWarning() << "Could not open file " << mTempFile.fileName();
     return false;
   }
   mTempFile.close();
-  parameters.setDatabaseFile(mTempFile.fileName());
-  mConnectionParameters = parameters.toConnectionParameters();
-
-  // Get database instance
-  qDebug() << "Add MDTQSQLITE database...";
-  mDatabase = QSqlDatabase::addDatabase("MDTQSQLITE");
-  if(!mDatabase.isValid()){
-    qWarning() << "MDTQSQLITE driver is not available";
-    return false;
-  }
-  mDatabase.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES"));
-  mConnectionParameters.setupDatabase(mDatabase);
-  if(!mDatabase.open()){
-    qWarning() << "Could not open database, error: " << mDatabase.lastError();
-    return false;
-  }
+  mConnectionParameters.setDatabaseFile(mTempFile.fileName());
 
   return true;
 }
 
-QSqlDatabase TestBase::database() const
+bool TestBase::initDatabaseSqlite()
 {
-  return mDatabase;
-}
+  const auto connection = SQLiteDatabase::addConnection();
+  if(!connection){
+    qWarning() << "Could not add a connection to as SQLite database: " << connection.error().text();
+    return false;
+  }
+  mConnectionName = connection->name();
 
-Mdt::Sql::ConnectionParameters TestBase::connectionParameters() const
-{
-  return mConnectionParameters;
+  if(!initDatabaseTemporaryFile()){
+    return false;
+  }
+
+  SQLiteDatabase db(*connection, mConnectionParameters);
+  const auto result = db.open();
+  if(!result){
+    qWarning() << "Could not open database, error: " << result.error().text();
+    return false;
+  }
+
+  return true;
 }
