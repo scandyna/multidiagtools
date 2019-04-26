@@ -33,6 +33,27 @@ namespace Mdt{ namespace Sql{
 
   /*! \brief Delete data in a database table
    *
+   * The typical usage looks like:
+   * \code
+   * #include <Mdt/Sql/DeleteQuery.h>
+   *
+   * using namespace Mdt::Sql;
+   *
+   * QueryField id("Id_PK");
+   *
+   * DeleteStatement statement;
+   * statement.setTableName("Person_tbl");
+   * statement.setConditions( id == 21 );
+   *
+   * Connection connection = ...
+   * // Setup connection and open database
+   *
+   * DeleteQuery query(connection);
+   * if(!query.execStatement(statement)){
+   *   // Error handling. query.lastError() constains a error description.
+   * }
+   * \endcode
+   *
    * Usage with basic type checking:
    * \code
    * using namespace Mdt::Sql;

@@ -38,6 +38,18 @@ namespace Mdt{ namespace Sql{
 
   /*! \brief Representation of a SQL DELETE statement
    *
+   * \code
+   * #include <Mdt/Sql/DeleteStatement.h>
+   *
+   * using namespace Mdt::Sql;
+   *
+   * QueryField id("Id_PK");
+   *
+   * DeleteStatement statement;
+   * statement.setTableName("Person_tbl");
+   * statement.setConditions( id == 21 );
+   * \endcode
+   *
    * \sa DeleteQuery
    */
   class MDT_SQL_CORE_EXPORT DeleteStatement
