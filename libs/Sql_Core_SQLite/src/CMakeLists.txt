@@ -4,6 +4,8 @@ set(SOURCE_FILES
   Mdt/Sql/SQLiteOpenMode.cpp
   Mdt/Sql/SQLiteConnectionParameters.cpp
   Mdt/Sql/SQLiteDatabase.cpp
+  Mdt/Sql/SQLiteAsyncQueryThreadWorker.cpp
+  Mdt/Sql/SQLiteAsyncQueryConnection.cpp
 )
 
 find_package(Qt5 COMPONENTS Sql)

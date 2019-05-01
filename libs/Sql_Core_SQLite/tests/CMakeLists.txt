@@ -31,3 +31,4 @@ target_include_directories(mdtSql_Core_SQLite_ErrorDriverSQLiteTest PRIVATE "${S
 
 addSqlCoreSQLiteTest("ConnectionParametersTest")
 addSqlCoreSQLiteTest("SQLiteDatabaseTest")
+addSqlCoreSQLiteTest("AsyncQueryTest")
