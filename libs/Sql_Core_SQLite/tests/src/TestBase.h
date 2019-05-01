@@ -31,14 +31,27 @@
 #include <Qt>
 #include <QString>
 
+struct Client
+{
+  int id = 0;
+  QString name;
+};
+
 class TestBase : public QObject
 {
  Q_OBJECT
+
+ public:
+
+  ~TestBase();
 
  protected:
 
   bool initDatabaseTemporaryFile();
   bool initDatabaseSqlite();
+
+  bool openDatabaseIfNot();
+  void closeDatabase();
 
   Mdt::Sql::SQLiteConnectionParameters connectionParameters() const
   {
@@ -56,6 +69,18 @@ class TestBase : public QObject
     Q_ASSERT(!mConnectionName.isEmpty());
     return connection().database();
   }
+
+  bool isDatabaseOpen() const
+  {
+    if(mConnectionName.isEmpty()){
+      return false;
+    }
+    return database().isOpen();
+  }
+
+  bool createClientTable();
+  Client getClient(int id);
+  bool cleanupClientTable();
 
  private:
 
