@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,48 +26,86 @@
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/InsertQuery.h"
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QSqlError>
 #include <QDebug>
 
 using Mdt::Sql::SQLiteConnectionParameters;
 using Mdt::Sql::SQLiteDatabase;
 
-bool TestBase::initDatabaseSqlite()
+TestBase::TestBase()
+ : QObject()
 {
-  SQLiteConnectionParameters parameters;
+}
 
-  // Create a database
+TestBase::~TestBase()
+{
+  closeDatabase();
+}
+
+bool TestBase::initDatabaseTemporaryFile()
+{
   if(!mTempFile.open()){
     qWarning() << "Could not open file " << mTempFile.fileName();
     return false;
   }
   mTempFile.close();
-  parameters.setDatabaseFile(mTempFile.fileName());
-  mConnectionParameters = parameters.toConnectionParameters();
-
-  SQLiteDatabase sqliteDb;
-  if( !sqliteDb.openExisting(mConnectionParameters.databaseName()) ){
-    qWarning() << "Could not open database, error: " << sqliteDb.lastError().text();
-    return false;
-  }
-  mDatabase = sqliteDb.database();
+  mConnectionParameters.setDatabaseFile(mTempFile.fileName());
 
   return true;
 }
 
-QSqlDatabase TestBase::database() const
+bool TestBase::initDatabaseSqlite()
 {
-  return mDatabase;
+  const auto connection = SQLiteDatabase::addConnection();
+  if(!connection){
+    qWarning() << "Could not add a connection to as SQLite database: " << connection.error().text();
+    return false;
+  }
+  mConnectionName = connection->name();
+
+  if(!initDatabaseTemporaryFile()){
+    return false;
+  }
+
+  SQLiteDatabase db(*connection, mConnectionParameters);
+  const auto result = db.open();
+  if(!result){
+    qWarning() << "Could not open database, error: " << result.error().text();
+    return false;
+  }
+
+  return true;
 }
 
-Mdt::Sql::ConnectionParameters TestBase::connectionParameters() const
+bool TestBase::openDatabaseIfNot()
 {
-  return mConnectionParameters;
+  if(mConnectionName.isEmpty()){
+    return initDatabaseSqlite();
+  }
+
+  SQLiteDatabase db(connection(), mConnectionParameters);
+  const auto result = db.open();
+  if(!result){
+    qWarning() << "Could not open database, error: " << result.error().text();
+    return false;
+  }
+
+  return true;
+}
+
+void TestBase::closeDatabase()
+{
+  if(!mConnectionName.isEmpty()){
+    Mdt::Sql::Connection::close(connection());
+  }
 }
 
 bool TestBase::createClientTable()
 {
-  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Q_ASSERT(isDatabaseOpen());
+
+  Mdt::Sql::Schema::Driver driver(database());
   Q_ASSERT(driver.isValid());
 
   if(!driver.createTable( Schema::Client() )){
@@ -80,8 +118,10 @@ bool TestBase::createClientTable()
 
 bool TestBase::insertClient(int id, const QString& name)
 {
+  Q_ASSERT(isDatabaseOpen());
+
   Schema::Client client;
-  Mdt::Sql::InsertQuery query(mDatabase);
+  Mdt::Sql::InsertQuery query(database());
   query.setTable(client);
   query.addValue(client.Id_PK(), id);
   query.addValue(client.Name(), name);
@@ -92,9 +132,34 @@ bool TestBase::insertClient(int id, const QString& name)
   return true;
 }
 
+Client TestBase::getClient(int id)
+{
+  Q_ASSERT(isDatabaseOpen());
+
+  Client client;
+  QSqlQuery query(database());
+
+  const QString sql = "SELECT Id_PK, Name FROM Client_tbl WHERE Id_PK=" + QString::number(id);
+  if(!query.exec(sql)){
+    qWarning() << "Get client with id " << id << " failed: " << query.lastError().text();
+    return client;
+  }
+  if(!query.next()){
+    qWarning() << "Get client with id " << id << " failed (not found)";
+    return client;
+  }
+  Q_ASSERT(query.record().count() == 2);
+  client.id = query.value(0).toInt();
+  client.name = query.value(1).toString();
+
+  return client;
+}
+
 bool TestBase::cleanupClientTable()
 {
-  QSqlQuery query(mDatabase);
+  Q_ASSERT(isDatabaseOpen());
+
+  QSqlQuery query(database());
   if(!query.exec("DELETE FROM Client_tbl")){
     qWarning() << "Cleanup Client_tbl failed: " << query.lastError().text();
     return false;
@@ -104,7 +169,9 @@ bool TestBase::cleanupClientTable()
 
 bool TestBase::createTestSchema()
 {
-  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Q_ASSERT(isDatabaseOpen());
+
+  Mdt::Sql::Schema::Driver driver(database());
   Q_ASSERT(driver.isValid());
 
   if(!driver.createSchema(Schema::TestSchema())){
