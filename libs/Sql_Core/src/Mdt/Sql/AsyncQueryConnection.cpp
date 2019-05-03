@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "AsyncQueryConnection.h"
-#include "AsyncQueryThreadWorker.h"
+#include "AbstractAsyncQueryThreadWorker.h"
 #include "Mdt/Container/VariantRecord.h"
 #include <QMetaType>
 
@@ -30,52 +30,18 @@ AsyncQueryConnection::AsyncQueryConnection(QObject *parent)
 {
   // qRegisterMetaType<T>() can be called multiple time
   qRegisterMetaType<Mdt::Container::VariantRecord>();
+
+  connect(&mImpl, &AsyncQueryConnectionImpl::closed, this, &AsyncQueryConnection::closed);
 }
 
-AsyncQueryConnection::~AsyncQueryConnection()
+void AsyncQueryConnection::submitClose()
 {
-  mThread.quit();
-  mThread.wait();
+  mImpl.submitClose();
 }
 
-bool AsyncQueryConnection::setup(const ConnectionParameters & parameters)
+void AsyncQueryConnection::close()
 {
-  return setup( parameters, new AsyncQueryThreadWorker );
-}
-
-bool AsyncQueryConnection::setup(const ConnectionParameters& parameters, AsyncQueryThreadWorker* worker)
-{
-  Q_ASSERT(worker != nullptr);
-
-  mThread.quit();
-  mThread.wait();
-
-  worker->moveToThread(&mThread);
-  connect(&mThread, &QThread::finished, worker, &QObject::deleteLater);
-  if(!worker->setup(parameters)){
-    mSetupError = worker->setupError();
-    delete worker;
-    return false;
-  }
-  connect(this, &AsyncQueryConnection::queryRequested, worker, &AsyncQueryThreadWorker::processQuery);
-  connect(worker, &AsyncQueryThreadWorker::newRecordAvailable, this, &AsyncQueryConnection::newRecordAvailable);
-  connect(worker, &AsyncQueryThreadWorker::errorOccured, this, &AsyncQueryConnection::errorOccured);
-  mThread.start();
-
-  return true;
-}
-
-std::unique_ptr<AsyncQuery> AsyncQueryConnection::createQuery()
-{
-  ++mQueryInstanceId;
-
-  auto query = std::make_unique<AsyncQuery>(mQueryInstanceId);
-
-  connect(query.get(), &AsyncQuery::queryRequested, this, &AsyncQueryConnection::queryRequested);
-  connect(this, &AsyncQueryConnection::newRecordAvailable, query.get(), &AsyncQuery::setNewRecordAvailable);
-  connect(this, &AsyncQueryConnection::errorOccured, query.get(), &AsyncQuery::setErrorOccured);
-
-  return query;
+  mImpl.close();
 }
 
 }} // namespace Mdt{ namespace Sql{

@@ -100,6 +100,11 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Get the SQL string from this statement
      *
+     * \todo Using prepared queries seems to be a obtimisation for some DBMS
+     *    Check if it could be interresting to go back to this mechanism
+     *   Note that this is possibly a gain to add multiple records..
+     *   And, maybe check about features of driver at runtime ??
+     *
      * Will generate SQL of the form:
      * \code
      * UPDATE Person

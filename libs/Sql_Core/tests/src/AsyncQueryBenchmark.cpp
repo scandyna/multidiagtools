@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "AsyncQueryBenchmark.h"
-#include "Mdt/Sql/AsyncQuery.h"
+///#include "Mdt/Sql/AsyncQuery.h"
 #include "Mdt/Sql/AsyncQueryConnection.h"
 #include "Mdt/Container/VariantRecord.h"
 #include <QSqlQuery>
@@ -42,10 +42,10 @@ void AsyncQueryBenchmark::cleanupTestCase()
  * Helpers
  */
 
-void setupReceiver(AsyncTestQueryReceiver & receiver, const std::unique_ptr<AsyncQuery> & query)
-{
-  QObject::connect(query.get(), &AsyncQuery::newRecordAvailable, &receiver, &AsyncTestQueryReceiver::storeNewRecord);
-}
+// void setupReceiver(AsyncTestQueryReceiver & receiver, const std::unique_ptr<AsyncQuery> & query)
+// {
+//   QObject::connect(query.get(), &AsyncQuery::newRecordAvailable, &receiver, &AsyncTestQueryReceiver::storeNewRecord);
+// }
 
 /*
  * Benchmarks
@@ -77,6 +77,7 @@ void AsyncQueryBenchmark::selectQuery()
   QCOMPARE(result[1].value(1), QVariant("B"));
 }
 
+/**
 void AsyncQueryBenchmark::asyncSelectQuery()
 {
   QVERIFY(cleanupClientTable());
@@ -106,6 +107,7 @@ void AsyncQueryBenchmark::asyncSelectQuery()
   QCOMPARE(record.value(0), QVariant(2));
   QCOMPARE(record.value(1), QVariant("B"));
 }
+*/
 
 /*
  * Main

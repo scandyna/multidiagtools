@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -34,9 +34,19 @@ class AsyncTestQueryReceiver : public QObject
 
  public:
 
-  bool hasResult() const
+  bool hasRecords() const
   {
     return recordCount() > 0;
+  }
+
+  bool hasLastInsertId() const
+  {
+    return !mLastInsertId.isNull();
+  }
+
+  bool hasResult() const
+  {
+    return hasRecords() || hasLastInsertId();
   }
 
   int recordCount() const
@@ -52,18 +62,26 @@ class AsyncTestQueryReceiver : public QObject
     return mRecordList[index];
   }
 
+  QVariant lastInsertId() const
+  {
+    return mLastInsertId;
+  }
+
   void clear()
   {
     mRecordList.clear();
+    mLastInsertId.clear();
   }
 
  public slots:
 
   void storeNewRecord(const Mdt::Container::VariantRecord & record);
+  void setLastInsertId(const QVariant & id);
 
  private:
 
   std::vector<Mdt::Container::VariantRecord> mRecordList;
+  QVariant mLastInsertId;
 };
 
 #endif // #ifndef MDT_SQL_ASYNC_TEST_QUERY_RECEIVER_H

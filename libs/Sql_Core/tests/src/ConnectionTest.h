@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,35 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AsyncQuery.h"
+#include "TestBase.h"
 
-using Mdt::Container::VariantRecord;
-
-namespace Mdt{ namespace Sql{
-
-AsyncQuery::AsyncQuery(int instanceId, QObject* parent)
- : QObject(parent),
-   mInstanceId(instanceId)
+class ConnectionTest : public QObject
 {
-}
+ Q_OBJECT
 
-void AsyncQuery::submitQuery(const QVariant & query)
-{
-  emit queryRequested(query, mInstanceId);
-}
+ private slots:
 
-void AsyncQuery::setNewRecordAvailable(const VariantRecord & record, int instanceId)
-{
-  if(instanceId == mInstanceId){
-    emit newRecordAvailable(record);
-  }
-}
+  void constructAndGetTest();
 
-void AsyncQuery::setErrorOccured(const Mdt::Error & error, int instanceId)
-{
-  if(instanceId == mInstanceId){
-    emit errorOccured(error);
-  }
-}
+  void generateConnectionNameTest();
+  void generateConnectionNameTest_data();
 
-}} // namespace Mdt{ namespace Sql{
+  void addOpenCloseRemoveTest();
+};

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -34,7 +34,7 @@ class AsyncQueryBenchmark : public TestBase
   void cleanupTestCase();
 
   void selectQuery();
-  void asyncSelectQuery();
+  ///void asyncSelectQuery();
 };
 
 #endif // #ifndef MDT_SQL_ASYNC_QUERY_BENCHMARK_H

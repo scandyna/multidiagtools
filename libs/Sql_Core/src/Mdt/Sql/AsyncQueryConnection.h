@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,21 +21,22 @@
 #ifndef MDT_SQL_ASYNC_QUERY_CONNECTION_H
 #define MDT_SQL_ASYNC_QUERY_CONNECTION_H
 
-#include "AsyncQuery.h"
+#include "AsyncQueryConnectionImpl.h"
 #include "ConnectionParameters.h"
 #include "Mdt/Error.h"
+#include "Mdt/Expected.h"
 #include "MdtSql_CoreExport.h"
 #include <QObject>
-#include <QThread>
 #include <QString>
 #include <QVariant>
 #include <memory>
+#include <type_traits>
 
 namespace Mdt{ namespace Sql{
 
-  class AsyncQueryThreadWorker;
+  class AbstractAsyncQueryThreadWorker;
 
-  /*! \brief Connection to a database for async queries
+  /*! \brief %Connection to a database for async queries
    *
    * The main goal is to have one thread for one database connection.
    *  The database connection will be established in the thread
@@ -52,9 +53,10 @@ namespace Mdt{ namespace Sql{
    * SQLiteConnectionParameters parameters;
    * parameters.setDatabaseFile("/path/to/dbFile.sql");
    *
-   * AsyncQueryConnection connection;
-   * if(!connection.setup(parameters.toConnectionParameters())){
-   *   // error handling, use setupError() to get informations about the error
+   * auto connection = std::make_shared<SQLiteAsyncQueryConnection>();
+   * const auto result = connection->open(parameters);
+   * if(!result){
+   *   handleError(result.error());
    * }
    * \endcode
    *
@@ -65,11 +67,11 @@ namespace Mdt{ namespace Sql{
    * SQLiteConnectionParameters parameters;
    * parameters.setDatabaseFile("/path/to/dbFile.sql");
    *
-   * AsyncQueryConnection connection1;
-   * AsyncQueryConnection connection2;
+   * auto connection1 = std::make_shared<SQLiteAsyncQueryConnection>();
+   * auto connection2 = std::make_shared<SQLiteAsyncQueryConnection>();
    *
-   * connection1.setup(parameters.toConnectionParameters());
-   * connection2.setup(parameters.toConnectionParameters());
+   * connection1->open(parameters);
+   * connection2->open(parameters);
    * \endcode
    * Here, connection1 and connection2 will reference the same SQLite database file.
    *  This file will also be accessed by 2 concurrent threads.
@@ -81,63 +83,110 @@ namespace Mdt{ namespace Sql{
   {
    Q_OBJECT
 
+   friend class AsyncQueryBase;
+
    public:
 
     /*! \brief Create a async query connection
-     *
-     * \sa setup()
      */
     explicit AsyncQueryConnection(QObject *parent = nullptr);
 
-    /*! \brief Stop the query thread and free resources
-     */
-    ~AsyncQueryConnection();
+    AsyncQueryConnection(const AsyncQueryConnection &) = delete;
+    AsyncQueryConnection & operator=(const AsyncQueryConnection &) = delete;
+    AsyncQueryConnection(AsyncQueryConnection &&) = delete;
+    AsyncQueryConnection & operator=(AsyncQueryConnection &&) = delete;
 
-    /*! \brief Setup this connection
+    /*! \brief Tell the query thread to close the database handle
      *
-     * \note If setup was previously done,
-     *   the thread will be stopped, without waiting that running queries are all processed.
-     */
-    bool setup(const ConnectionParameters & parameters);
-
-    /*! \brief Setup this connection
+     * The query thread will close the database handle
+     *  using QSqlDatabase::close().
      *
-     * This overload permit to pass a custom worker.
-     *  This connection will take ownership of \a worker and delete it at apropriate time.
-     * \note \a worker will be moved to a separate thread, so it should not be accessed anymore.
+     * The database connection will then be removed
+     *  using QSqlDatabase::removeDatabase().
+     *
+     * Finally, the query thread will be stopped
+     *  using QThread::quit().
+     *
+     * Once done, the closed() signal is emitted.
+     *
+     * \sa close()
      */
-    bool setup(const ConnectionParameters & parameters, AsyncQueryThreadWorker *worker);
+    void submitClose();
 
-    /*! \brief Get setup error
+    /*! \brief Close the database handle
+     *
+     * \sa submitClose()
      */
-    Mdt::Error setupError() const
+    void close();
+
+  Q_SIGNALS:
+
+    /*! \brief Emitted when the database handle have been closed
+     */
+    void closed();
+
+   protected:
+
+    /*! \brief Set a thread worker for this connection
+     *
+     * This method will first move \a worker to a separate thread,
+     *  do the necessary signal/slot connections,
+     *  then start the thread.
+     *
+     * Once the thread started, \a openFunc is called.
+     *
+     * \code
+     * void SQLiteAsyncQueryConnection::submitOpenExisting(const SQLiteConnectionParameters & parameters)
+     * {
+     *   close();
+     *
+     *   auto *worker = new SQLiteAsyncQueryThreadWorker(parameters);
+     *
+     *   setThreadWorker(worker, &SQLiteAsyncQueryThreadWorker::processOpenExisting);
+     *   // Starting from here, do not call any non thread safe method on worker.
+     *   // The lifetime from worker is also now handled by the separate thread
+     * }
+     * \endcode
+     *
+     * \pre This connection must be closed before
+     */
+    template<typename Worker, typename OpenFunc>
+    void setThreadWorker(Worker *worker, OpenFunc openFunc)
     {
-      return mSetupError;
+      static_assert( std::is_base_of<AbstractAsyncQueryThreadWorker, Worker>::value, "Worker must be a subclass of AbstractAsyncQueryThreadWorker" );
+      Q_ASSERT(worker != nullptr);
+
+      mImpl.setThreadWorker(worker, openFunc);
     }
 
-    /*! \brief Create a query
+    /*! \brief Wait until the database is open for this connection
      */
-    std::unique_ptr<AsyncQuery> createQuery();
-
-  signals:
-
-    /*! \internal Forwards the request comming from AsyncQuery to the thread worker
-     */
-    void queryRequested(const QVariant & query, int instanceId);
-
-    /*! \brief Emitted whenever a new record is available
-     */
-    void newRecordAvailable(const Mdt::Container::VariantRecord & record, int instanceId);
-
-    /*! \brief Emitted whenever a error occured
-     */
-    void errorOccured(const Mdt::Error & error, int instanceId);
+    Mdt::ExpectedResult waitOpen()
+    {
+      return mImpl.waitOpen();
+    }
 
    private:
 
-    int mQueryInstanceId = 0;
-    QThread mThread;
-    Mdt::Error mSetupError;
+    /*! \brief Get a pointer to the connection implementation
+     *
+     * The returned pointer should only be used to make signal/slot connections.
+     */
+    AsyncQueryConnectionImpl *impl()
+    {
+      return &mImpl;
+    }
+
+    /*! \brief Get a pointer to the connection implementation
+     *
+     * The returned pointer should only be used to make signal/slot connections.
+     */
+    const AsyncQueryConnectionImpl *constImpl() const
+    {
+      return &mImpl;
+    }
+
+    AsyncQueryConnectionImpl mImpl;
   };
 
 }} // namespace Mdt{ namespace Sql{

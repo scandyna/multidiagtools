@@ -21,7 +21,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtsqlcoretest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtsqlcoretest Sql_Core Sql_Core_SQLite Entity_Core Entity_Sql Application_Core Qt5::Test)
+target_link_libraries(mdtsqlcoretest Sql_Core Sql_Core_SQLite Entity_Core Application_Core Qt5::Test)
 
 #================= SQL test plugins ====================
 
@@ -100,6 +100,7 @@ addSqlCoreTest("ExpressionTest")
 addSqlCoreTest("StatementAlgorithmTest")
 addSqlCoreTest("SelectStatementTest")
 addSqlCoreTest("ConnectionParametersTest")
+addSqlCoreTest("ConnectionTest")
 addSqlCoreTest("QueryExpressionSqlTransformTest")
 addSqlCoreTest("QueryExpressionSqlTransformBenchmark")
 addSqlCoreTest("QueryTest")

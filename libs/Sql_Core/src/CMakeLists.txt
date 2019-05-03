@@ -49,10 +49,13 @@ set(SOURCE_FILES
     Mdt/Sql/SelectStatement.cpp
     Mdt/Sql/SelectStatementSqlTransform.cpp
     Mdt/Sql/ConnectionParameters.cpp
+    Mdt/Sql/Connection.cpp
     Mdt/Sql/SelectQuery.cpp
-    Mdt/Sql/AsyncQuery.cpp
+    Mdt/Sql/AsyncQueryBase.cpp
+    Mdt/Sql/AsyncQueryConnectionImpl.cpp
     Mdt/Sql/AsyncQueryConnection.cpp
-    Mdt/Sql/AsyncQueryThreadWorker.cpp
+    Mdt/Sql/AbstractAsyncQueryThreadWorker.cpp
+    Mdt/Sql/AsyncInsertQuery.cpp
     Mdt/Sql/Schema/Driver.cpp
     Mdt/Sql/Schema/DriverImplementationInterface.cpp
     Mdt/Sql/Schema/DriverSQLite.cpp
@@ -88,7 +91,7 @@ mdt_add_library(
   NAME Sql_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Expected LibraryInfo_Core Error_Core Algorithm Container QueryExpression_Core Qt5::Sql FilterExpression # TODO remove FilterExpression once possible
+  LINK_DEPENDENCIES Expected LibraryInfo_Core Error_Core Algorithm Container QueryExpression_Core Async Qt5::Sql FilterExpression # TODO remove FilterExpression once possible
 )
 mdt_set_library_description(
   NAME Sql_Core

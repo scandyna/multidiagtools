@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -33,15 +33,15 @@ class AsyncQueryTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void generateConnectionNameTest();
-  void generateConnectionNameTest_data();
+  /// void connectionSetupFailTest();
 
-  void connectionSetupTest();
-  void connectionSetupFailTest();
+  /// void simpleSelectTest();
+  /// void twoQueriesSelectTest();
 
-  void createQueryTest();
-  void simpleSelectTest();
-  void twoQueriesSelectTest();
+  void insertAsync();
+  void insertSync();
+  void insertError();
+  void insertMultipleQueries();
 };
 
 #endif // #ifndef MDT_SQL_ASYNC_QUERY_TEST_H

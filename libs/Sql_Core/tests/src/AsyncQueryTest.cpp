@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,18 +19,35 @@
  **
  ****************************************************************************/
 #include "AsyncQueryTest.h"
-#include "Mdt/Sql/AsyncQuery.h"
 #include "Mdt/Sql/AsyncQueryConnection.h"
-#include "Mdt/Sql/AsyncQueryThreadWorker.h"
+#include <Mdt/Sql/SQLiteAsyncQueryConnection.h>
+#include "Mdt/Sql/AsyncInsertQuery.h"
+#include "Mdt/ErrorCode.h"
+#include <memory>
 
 // #include <QDebug>
 
 using namespace Mdt::Sql;
 
+/*
+ * We assume that SQLite is compiled thread safe
+ * (Compile SQLite without threads upport is optionnal: https://www.sqlite.org/threadsafe.html)
+ *
+ * The same database file will be accessed by 2 threads:
+ *  - Main thread ( initDatabaseSqlite(), cleanupClientTable(), ... )
+ *  - Separate thread ( initDatabaseSqliteAsync(), asyncQueryConnection(), ... )
+ *
+ * This way the tests have less code.
+ * If this should cause problems,
+ * the tests should be updated to open/close the 2 connections
+ */
+
 void AsyncQueryTest::initTestCase()
 {
+  QVERIFY(initDatabaseTemporaryFile());
   QVERIFY(initDatabaseSqlite());
   QVERIFY(createClientTable());
+  QVERIFY(initDatabaseSqliteAsync());
 }
 
 void AsyncQueryTest::cleanupTestCase()
@@ -41,65 +58,16 @@ void AsyncQueryTest::cleanupTestCase()
  * Helpers
  */
 
-void setupReceiver(AsyncTestQueryReceiver & receiver, const std::unique_ptr<AsyncQuery> & query)
+void setupReceiver(AsyncTestQueryReceiver & receiver, AsyncInsertQuery & query)
 {
-  QObject::connect(query.get(), &AsyncQuery::newRecordAvailable, &receiver, &AsyncTestQueryReceiver::storeNewRecord);
+  QObject::connect(&query, &AsyncInsertQuery::newIdInserted, &receiver, &AsyncTestQueryReceiver::setLastInsertId);
 }
 
 /*
  * Tests/
  */
 
-void AsyncQueryTest::generateConnectionNameTest()
-{
-  QFETCH(QStringList, existingNames);
-  QFETCH(QString, expectedName);
-
-  QCOMPARE(AsyncQueryThreadWorker::generateConnectionName(existingNames), expectedName);
-}
-
-void AsyncQueryTest::generateConnectionNameTest_data()
-{
-  QTest::addColumn<QStringList>("existingNames");
-  QTest::addColumn<QString>("expectedName");
-
-  QTest::newRow("1") << QStringList{}
-                    << "MdtAsyncQueryConnection_1";
-
-  QTest::newRow("1") << QStringList{"a"}
-                    << "MdtAsyncQueryConnection_1";
-
-  QTest::newRow("2") << QStringList{"MdtAsyncQueryConnection_1"}
-                    << "MdtAsyncQueryConnection_2";
-
-  QTest::newRow("3") << QStringList{"MdtAsyncQueryConnection_1","MdtAsyncQueryConnection_2"}
-                    << "MdtAsyncQueryConnection_3";
-}
-
-void AsyncQueryTest::connectionSetupTest()
-{
-  QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_1"));
-  QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_2"));
-  QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_3"));
-
-  AsyncQueryConnection cnn1;
-  QVERIFY(cnn1.setup(connectionParameters()));
-  QVERIFY(QSqlDatabase::contains("MdtAsyncQueryConnection_1"));
-  QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_2"));
-  QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_3"));
-
-  AsyncQueryConnection cnn2;
-  QVERIFY(cnn2.setup(connectionParameters()));
-  QVERIFY(QSqlDatabase::contains("MdtAsyncQueryConnection_1"));
-  QVERIFY(QSqlDatabase::contains("MdtAsyncQueryConnection_2"));
-  QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_3"));
-
-  QVERIFY(cnn2.setup(connectionParameters()));
-  QVERIFY(QSqlDatabase::contains("MdtAsyncQueryConnection_1"));
-  QVERIFY(QSqlDatabase::contains("MdtAsyncQueryConnection_2"));
-  QVERIFY(!QSqlDatabase::contains("MdtAsyncQueryConnection_3"));
-}
-
+/**
 void AsyncQueryTest::connectionSetupFailTest()
 {
   ConnectionParameters wrongDriverParameters("SOME_NON_AVAILABLE_DRIVER");
@@ -109,19 +77,9 @@ void AsyncQueryTest::connectionSetupFailTest()
   QVERIFY(!cnn.setup(wrongDriverParameters));
   QVERIFY(!cnn.setupError().isNull());
 }
+*/
 
-void AsyncQueryTest::createQueryTest()
-{
-  AsyncQueryConnection cnn;
-  QVERIFY(cnn.setup(connectionParameters()));
-
-  auto query1 = cnn.createQuery();
-  QCOMPARE(query1->instanceId(), 1);
-
-  auto query2 = cnn.createQuery();
-  QCOMPARE(query2->instanceId(), 2);
-}
-
+/**
 void AsyncQueryTest::simpleSelectTest()
 {
   const int timeout = 1000;
@@ -155,17 +113,19 @@ void AsyncQueryTest::simpleSelectTest()
   QCOMPARE(record.value(0), QVariant(2));
   QCOMPARE(record.value(1), QVariant("B"));
 }
+*/
 
+/**
 void AsyncQueryTest::twoQueriesSelectTest()
 {
   const int timeout = 1000;
 
-  AsyncQueryConnection cnn;
-  QVERIFY(cnn.setup(connectionParameters()));
-  auto query1 = cnn.createQuery();
+  auto cnn = std::make_shared<AsyncQueryConnection>();
+  QVERIFY(cnn->setup(connectionParameters()));
+  auto query1 = cnn->createQuery();
   AsyncTestQueryReceiver receiver1;
   setupReceiver(receiver1, query1);
-  auto query2 = cnn.createQuery();
+  auto query2 = cnn->createQuery();
   AsyncTestQueryReceiver receiver2;
   setupReceiver(receiver2, query2);
 
@@ -189,6 +149,114 @@ void AsyncQueryTest::twoQueriesSelectTest()
   QCOMPARE(record.columnCount(), 2);
   QCOMPARE(record.value(0), QVariant(2));
   QCOMPARE(record.value(1), QVariant("B"));
+}
+*/
+
+void AsyncQueryTest::insertAsync()
+{
+  QVERIFY(cleanupClientTable());
+
+  Client client;
+  InsertStatement statement;
+  AsyncInsertQuery query(asyncQueryConnection());
+  AsyncTestQueryReceiver receiver;
+  setupReceiver(receiver, query);
+
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Id_PK"), 1);
+  statement.addValue(FieldName("Name"), "Name 1");
+  query.submitStatement(statement);
+  QTRY_VERIFY(receiver.hasLastInsertId());
+  QCOMPARE(receiver.lastInsertId(), QVariant(1));
+
+  statement.clear();
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Name"), "Name 2");
+  receiver.clear();
+  query.submitStatement(statement);
+  QTRY_VERIFY(receiver.hasLastInsertId());
+  client = getClient(receiver.lastInsertId().toInt());
+  QCOMPARE(client.name, QLatin1String("Name 2"));
+}
+
+void AsyncQueryTest::insertSync()
+{
+  QVERIFY(cleanupClientTable());
+
+  Client client;
+  Mdt::Expected<QVariant> id;
+  InsertStatement statement;
+  AsyncInsertQuery query(asyncQueryConnection());
+
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Id_PK"), 1);
+  statement.addValue(FieldName("Name"), "Name 1");
+  id = query.execStatement(statement);
+  QVERIFY(id);
+  QCOMPARE(*id, QVariant(1));
+  client = getClient(id->toInt());
+  QCOMPARE(client.name, QLatin1String("Name 1"));
+
+  statement.clear();
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Name"), "Name 2");
+  id = query.execStatement(statement);
+  QVERIFY(id);
+  client = getClient(id->toInt());
+  QCOMPARE(client.name, QLatin1String("Name 2"));
+}
+
+void AsyncQueryTest::insertError()
+{
+  QVERIFY(cleanupClientTable());
+
+  Client client;
+  Mdt::Expected<QVariant> id;
+  InsertStatement statement;
+  AsyncInsertQuery query(asyncQueryConnection());
+
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Id_PK"), 1);
+  statement.addValue(FieldName("Name"), "Name 1");
+  id = query.execStatement(statement);
+  QVERIFY(id);
+  QCOMPARE(*id, QVariant(1));
+
+  // Unique constraint error
+  id = query.execStatement(statement);
+  QVERIFY(!id);
+  QVERIFY(id.error().isError(Mdt::ErrorCode::UniqueConstraintError));
+}
+
+void AsyncQueryTest::insertMultipleQueries()
+{
+  QVERIFY(cleanupClientTable());
+
+  Client client;
+  InsertStatement statement;
+  AsyncInsertQuery query1(asyncQueryConnection());
+  AsyncTestQueryReceiver receiver1;
+  setupReceiver(receiver1, query1);
+  AsyncInsertQuery query2(asyncQueryConnection());
+  AsyncTestQueryReceiver receiver2;
+  setupReceiver(receiver2, query2);
+
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Id_PK"), 1);
+  statement.addValue(FieldName("Name"), "Name 1");
+  query1.submitStatement(statement);
+
+  statement.clear();
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Id_PK"), 2);
+  statement.addValue(FieldName("Name"), "Name 2");
+  query2.submitStatement(statement);
+
+  QTRY_VERIFY(receiver1.hasLastInsertId());
+  QCOMPARE(receiver1.lastInsertId(), QVariant(1));
+
+  QTRY_VERIFY(receiver2.hasLastInsertId());
+  QCOMPARE(receiver2.lastInsertId(), QVariant(2));
 }
 
 /*

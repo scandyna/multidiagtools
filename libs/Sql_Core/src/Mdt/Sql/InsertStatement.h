@@ -29,6 +29,7 @@
 #include <QVariant>
 #include <QVariantList>
 #include <QSqlDatabase>
+#include <QMetaType>
 
 namespace Mdt{ namespace Sql{
 
@@ -39,6 +40,26 @@ namespace Mdt{ namespace Sql{
   class MDT_SQL_CORE_EXPORT InsertStatement
   {
    public:
+
+    /*! \brief Construct a empty statement
+     */
+    InsertStatement() = default;
+
+    /*! \brief Copy construct a statement from \a other
+     */
+    InsertStatement(const InsertStatement & other) = default;
+
+    /*! \brief Copy assign \a other to this statement
+     */
+    InsertStatement & operator=(const InsertStatement & other) = default;
+
+    /*! \brief Move construct a statement from \a other
+     */
+    InsertStatement(InsertStatement && other) = default;
+
+    /*! \brief Move assign \a other to this statement
+     */
+    InsertStatement & operator=(InsertStatement && other) = default;
 
     /*! \brief Set table name
      *
@@ -80,6 +101,11 @@ namespace Mdt{ namespace Sql{
      *
      * This can be used with QSqlQuery
      *
+     * \todo Using prepared queries seems to be a obtimisation for some DBMS
+     *    It should maybe not be removed
+     *    Note that this is possibly a gain to add multiple records..
+     *    And, maybe check about features of driver at runtime ??
+     *
      * \sa InsertQuery
      * \pre \a db must be valid (must have a driver loaded)
      */
@@ -115,5 +141,6 @@ namespace Mdt{ namespace Sql{
   };
 
 }} // namespace Mdt{ namespace Sql{
+Q_DECLARE_METATYPE(Mdt::Sql::InsertStatement)
 
 #endif // #ifndef MDT_SQL_INSERT_STATEMENT_H

@@ -18,14 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AsyncTestQueryReceiver.h"
+#include "Connection.h"
+#include <QStringBuilder>
+#include <QLatin1Char>
 
-void AsyncTestQueryReceiver::storeNewRecord(const Mdt::Container::VariantRecord& record)
+namespace Mdt{ namespace Sql{
+
+QString Connection::generateConnectionName(const QStringList& existingNames, const QString& namePrefix)
 {
-  mRecordList.push_back(record);
+  QString name;
+  int n = 0;
+
+  do{
+    ++n;
+    name = namePrefix % QLatin1Char('_') % QString::number(n);
+  }while(existingNames.contains(name));
+
+  return name;
 }
 
-void AsyncTestQueryReceiver::setLastInsertId(const QVariant& id)
-{
-  mLastInsertId = id;
-}
+}} // namespace Mdt{ namespace Sql{
