@@ -91,8 +91,7 @@ bool TestBase::openDatabaseIfNot()
 void TestBase::closeDatabase()
 {
   if(!mConnectionName.isEmpty()){
-    QSqlDatabase db = database();
-    db.close();
+    Mdt::Sql::Connection::close(connection());
   }
 }
 

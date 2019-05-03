@@ -25,6 +25,7 @@
 #include "Mdt/Sql/AbstractAsyncQueryThreadWorker.h"
 #include "Mdt/Expected.h"
 #include "MdtSql_Core_SQLiteExport.h"
+#include <QString>
 
 namespace Mdt{ namespace Sql{
 
@@ -38,7 +39,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Constructor
      */
-    SQLiteAsyncQueryThreadWorker(const SQLiteConnectionParameters & parameters);
+    SQLiteAsyncQueryThreadWorker(const SQLiteConnectionParameters & parameters, const QString & connectionNamePrefix = QString());
 
     /*! \brief Open a database file
      *
@@ -57,6 +58,7 @@ namespace Mdt{ namespace Sql{
    private:
 
     SQLiteConnectionParameters mParameters;
+    QString mConnectionNamePrefix;
   };
 
 }} // namespace Mdt{ namespace Sql{

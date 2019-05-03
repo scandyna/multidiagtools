@@ -28,18 +28,18 @@ SQLiteAsyncQueryConnection::SQLiteAsyncQueryConnection(QObject *parent)
 {
 }
 
-void SQLiteAsyncQueryConnection::submitOpen(const SQLiteConnectionParameters & parameters)
+void SQLiteAsyncQueryConnection::submitOpen(const SQLiteConnectionParameters & parameters, const QString & connectionNamePrefix)
 {
   close();
 
-  auto *worker = new SQLiteAsyncQueryThreadWorker(parameters);
+  auto *worker = new SQLiteAsyncQueryThreadWorker(parameters, connectionNamePrefix);
 
   setThreadWorker(worker, &SQLiteAsyncQueryThreadWorker::processOpen);
 }
 
-Mdt::ExpectedResult SQLiteAsyncQueryConnection::open(const SQLiteConnectionParameters & parameters)
+Mdt::ExpectedResult SQLiteAsyncQueryConnection::open(const SQLiteConnectionParameters & parameters, const QString & connectionNamePrefix)
 {
-  submitOpen(parameters);
+  submitOpen(parameters, connectionNamePrefix);
 
   return waitOpen();
 }

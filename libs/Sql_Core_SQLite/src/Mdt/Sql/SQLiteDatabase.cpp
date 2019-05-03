@@ -137,9 +137,9 @@ bool SQLiteDatabase::isSQLiteDatabaseOpen()
   return false;
 }
 
-Mdt::Expected<Connection> SQLiteDatabase::addConnection()
+Mdt::Expected<Connection> SQLiteDatabase::addConnection(const QString & connectionNamePrefix)
 {
-  const auto connectionName = Connection::generateConnectionName( QSqlDatabase::connectionNames() );
+  const auto connectionName = Connection::generateConnectionName( QSqlDatabase::connectionNames(), connectionNamePrefix );
   QSqlDatabase db;
 
   if( QSqlDatabase::isDriverAvailable(QLatin1String("MDTQSQLITE")) ){

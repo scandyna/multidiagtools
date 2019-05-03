@@ -140,7 +140,7 @@ namespace Mdt{ namespace Sql{
      * Returns a valid connection if a SQLite driver could be loaded,
      *  otherwise a error of type Mdt::ErrorCode::DriverNotFound .
      */
-    static Mdt::Expected<Connection> addConnection();
+    static Mdt::Expected<Connection> addConnection(const QString & connectionNamePrefix = QString());
 
     /*! \brief Check if \a driverName is the name of a SQLite driver
      */

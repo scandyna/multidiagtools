@@ -60,7 +60,7 @@ namespace Mdt{ namespace Sql{
      *
      * \sa close()
      */
-    void submitOpen(const SQLiteConnectionParameters & parameters);
+    void submitOpen(const SQLiteConnectionParameters & parameters, const QString & connectionNamePrefix = QString());
 
     /*! \brief Open a database for this connection
      *
@@ -69,7 +69,7 @@ namespace Mdt{ namespace Sql{
      *
      * \sa close()
      */
-    Mdt::ExpectedResult open(const SQLiteConnectionParameters & parameters);
+    Mdt::ExpectedResult open(const SQLiteConnectionParameters & parameters, const QString & connectionNamePrefix = QString());
   };
 
 }} // namespace Mdt{ namespace Sql{

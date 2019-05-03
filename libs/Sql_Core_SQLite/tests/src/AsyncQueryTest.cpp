@@ -25,7 +25,7 @@
 #include "Mdt/Sql/InsertStatement.h"
 #include <memory>
 
-// #include <QDebug>
+#include <QDebug>
 
 using namespace Mdt::Sql;
 
@@ -74,6 +74,48 @@ void AsyncQueryTest::connectionOpenCloseTest()
     QVERIFY(connection2->open(connectionParameters()));
   }
   QCOMPARE(QSqlDatabase::connectionNames().count(), initialConnectionCount);
+}
+
+void AsyncQueryTest::connectionOpenConnectionNameTest()
+{
+  const QString namePrefix = "AsyncConnection";
+
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_1"));
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_2"));
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_3"));
+
+  SQLiteAsyncQueryConnection connection1;
+  QVERIFY(connection1.open(connectionParameters(), namePrefix));
+  QVERIFY(QSqlDatabase::contains("AsyncConnection_1"));
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_2"));
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_3"));
+
+  SQLiteAsyncQueryConnection connection2;
+  QVERIFY(connection2.open(connectionParameters(), namePrefix));
+  QVERIFY(QSqlDatabase::contains("AsyncConnection_1"));
+  QVERIFY(QSqlDatabase::contains("AsyncConnection_2"));
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_3"));
+
+  SQLiteAsyncQueryConnection connection3;
+  QVERIFY(connection3.open(connectionParameters(), namePrefix));
+  QVERIFY(QSqlDatabase::contains("AsyncConnection_1"));
+  QVERIFY(QSqlDatabase::contains("AsyncConnection_2"));
+  QVERIFY(QSqlDatabase::contains("AsyncConnection_3"));
+
+  connection1.close();
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_1"));
+  QVERIFY(QSqlDatabase::contains("AsyncConnection_2"));
+  QVERIFY(QSqlDatabase::contains("AsyncConnection_3"));
+
+  connection2.close();
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_1"));
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_2"));
+  QVERIFY(QSqlDatabase::contains("AsyncConnection_3"));
+
+  connection3.close();
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_1"));
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_2"));
+  QVERIFY(!QSqlDatabase::contains("AsyncConnection_3"));
 }
 
 void AsyncQueryTest::connectionUsageTest()

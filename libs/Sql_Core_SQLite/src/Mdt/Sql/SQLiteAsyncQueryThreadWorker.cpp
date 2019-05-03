@@ -21,11 +21,14 @@
 #include "SQLiteAsyncQueryThreadWorker.h"
 #include "SQLiteDatabase.h"
 
+// #include <QDebug>
+
 namespace Mdt{ namespace Sql{
 
-SQLiteAsyncQueryThreadWorker::SQLiteAsyncQueryThreadWorker(const SQLiteConnectionParameters & parameters)
+SQLiteAsyncQueryThreadWorker::SQLiteAsyncQueryThreadWorker(const SQLiteConnectionParameters & parameters, const QString & connectionNamePrefix)
  : AbstractAsyncQueryThreadWorker(),
-   mParameters(parameters)
+   mParameters(parameters),
+   mConnectionNamePrefix(connectionNamePrefix)
 {
 }
 
@@ -33,7 +36,7 @@ Mdt::ExpectedResult SQLiteAsyncQueryThreadWorker::open()
 {
   close();
 
-  const auto connection = SQLiteDatabase::addConnection();
+  const auto connection = SQLiteDatabase::addConnection(mConnectionNamePrefix);
   if(!connection){
     return connection.error();
   }
