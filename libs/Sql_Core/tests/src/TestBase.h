@@ -21,10 +21,9 @@
 #ifndef MDT_SQL_TEST_BASE_H
 #define MDT_SQL_TEST_BASE_H
 
-#include "Mdt/Sql/ConnectionParameters.h"
-
 #include "Mdt/Sql/SQLiteConnectionParameters.h"
 #include "Mdt/Sql/Connection.h"
+#include "Mdt/Sql/AsyncQueryConnection.h"
 #include "Mdt/CoreApplication.h"
 #include <QTemporaryFile>
 #include <QSqlDatabase>
@@ -51,6 +50,12 @@ class TestBase : public QObject
  protected:
 
   bool initDatabaseTemporaryFile();
+
+  Mdt::Sql::SQLiteConnectionParameters sqliteConnectionParameters() const
+  {
+    return mConnectionParameters;
+  }
+
   bool initDatabaseSqlite();
 
   bool openDatabaseIfNot();
@@ -76,9 +81,16 @@ class TestBase : public QObject
     return database().isOpen();
   }
 
-  Mdt::Sql::SQLiteConnectionParameters sqliteConnectionParameters() const
+  bool initDatabaseSqliteAsync();
+
+  bool openDatabaseAsyncIfNot();
+  void closeDatabaseAsync();
+
+  std::shared_ptr<Mdt::Sql::AsyncQueryConnection> asyncQueryConnection()
   {
-    return mConnectionParameters;
+    Q_ASSERT(mAsyncQueryConnection.get() != nullptr);
+
+    return mAsyncQueryConnection;
   }
 
   /// bool initDatabaseSqliteAsync();
@@ -92,9 +104,10 @@ class TestBase : public QObject
 
  private:
 
-  QString mConnectionName;
-  Mdt::Sql::SQLiteConnectionParameters mConnectionParameters;
   QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
+  Mdt::Sql::SQLiteConnectionParameters mConnectionParameters;
+  QString mConnectionName;
+  std::shared_ptr<Mdt::Sql::AsyncQueryConnection> mAsyncQueryConnection;
 };
 
 #endif // #ifndef MDT_SQL_TEST_BASE_H

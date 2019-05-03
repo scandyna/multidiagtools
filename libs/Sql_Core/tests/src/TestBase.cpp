@@ -23,6 +23,7 @@
 #include "Schema/Client.h"
 #include "Mdt/Sql/SQLiteConnectionParameters.h"
 #include "Mdt/Sql/SQLiteDatabase.h"
+#include "Mdt/Sql/SQLiteAsyncQueryConnection.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/InsertQuery.h"
 #include <QSqlQuery>
@@ -32,6 +33,7 @@
 
 using Mdt::Sql::SQLiteConnectionParameters;
 using Mdt::Sql::SQLiteDatabase;
+using Mdt::Sql::SQLiteAsyncQueryConnection;
 
 TestBase::TestBase()
  : QObject()
@@ -98,6 +100,40 @@ void TestBase::closeDatabase()
 {
   if(!mConnectionName.isEmpty()){
     Mdt::Sql::Connection::close(connection());
+  }
+}
+
+bool TestBase::initDatabaseSqliteAsync()
+{
+  if(!initDatabaseTemporaryFile()){
+    return false;
+  }
+
+  auto connection = std::make_shared<SQLiteAsyncQueryConnection>();
+  const auto result = connection->open(mConnectionParameters);
+  if(!result){
+    qWarning() << "Could not open database, error: " << result.error().text();
+    return false;
+  }
+  mAsyncQueryConnection = connection;
+
+  return true;
+}
+
+bool TestBase::openDatabaseAsyncIfNot()
+{
+  if(!mAsyncQueryConnection){
+    return initDatabaseSqliteAsync();
+  }
+
+  return true;
+}
+
+void TestBase::closeDatabaseAsync()
+{
+  if(mAsyncQueryConnection){
+    mAsyncQueryConnection->close();
+    mAsyncQueryConnection.reset();
   }
 }
 
