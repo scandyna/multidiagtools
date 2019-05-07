@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -231,6 +231,30 @@ void AlgorithmBenchmark::hasDuplicatesBenchmark_data()
 
   QTest::newRow("{a,b,c,A,B,C}|ci") << QStringList{"a","b","c","A","B","C"}
                                     << Qt::CaseInsensitive << hasDuplicates;
+}
+
+void AlgorithmBenchmark::findLastConsecutiveIntegralValueBenchmark()
+{
+  using namespace Mdt::Algorithm;
+
+  QFETCH(QVector<int>, inVector);
+  QFETCH(int, expectedIndex);
+
+  QVector<int>::const_iterator it;
+
+  QBENCHMARK{
+    it = findLastConsecutiveIntegralValue(inVector.cbegin(), inVector.cend());
+  }
+  QVERIFY( it == std::next(inVector.cbegin(), expectedIndex) );
+}
+
+void AlgorithmBenchmark::findLastConsecutiveIntegralValueBenchmark_data()
+{
+  QTest::addColumn< QVector<int> >("inVector");
+  QTest::addColumn<int>("expectedIndex");
+
+  QTest::newRow("1,2") << QVector<int>{1,2} << 1;
+  QTest::newRow("1,2,3,4,5,8") << QVector<int>{1,2,3,4,5,8} << 4;
 }
 
 /*

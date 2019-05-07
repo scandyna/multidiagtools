@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,9 +28,10 @@
 #include <QVector>
 #include <QList>
 #include <vector>
+#include <iterator>
 #include <cmath>
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Algorithm = Mdt::Algorithm;
 
@@ -447,6 +448,34 @@ void AlgorithmTest::forEachAdjacentPairStringTest_data()
   QTest::newRow("A,B") << QStringList{"A","B"} << QStringList{"AB"};
   QTest::newRow("A,B,C") << QStringList{"A","B","C"} << QStringList{"AB","BC"};
 }
+
+void AlgorithmTest::findLastConsecutiveIntegralValueTest()
+{
+  using namespace Mdt::Algorithm;
+
+  QFETCH(QVector<int>, inVector);
+  QFETCH(int, expectedIndex);
+
+  const auto it = findLastConsecutiveIntegralValue(inVector.cbegin(), inVector.cend());
+  QVERIFY( it == std::next(inVector.cbegin(), expectedIndex) );
+}
+
+void AlgorithmTest::findLastConsecutiveIntegralValueTest_data()
+{
+  QTest::addColumn< QVector<int> >("inVector");
+  QTest::addColumn<int>("expectedIndex");
+
+  QTest::newRow("") << QVector<int>{} << 0;
+  QTest::newRow("1") << QVector<int>{1} << 0;
+  QTest::newRow("1,2") << QVector<int>{1,2} << 1;
+  QTest::newRow("1,3") << QVector<int>{1,3} << 0;
+  QTest::newRow("1,2,3") << QVector<int>{1,2,3} << 2;
+  QTest::newRow("1,2,4") << QVector<int>{1,2,4} << 1;
+  QTest::newRow("1,3,5") << QVector<int>{1,3,5} << 0;
+  QTest::newRow("1,3,4,5") << QVector<int>{1,3,4,5} << 0;
+  QTest::newRow("1,2,4,5,7,8") << QVector<int>{1,2,4,5,7,8} << 1;
+}
+
 
 QStringList AlgorithmTest::generateStringList(int size)
 {

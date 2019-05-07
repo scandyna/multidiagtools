@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -61,6 +61,9 @@ class AlgorithmTest : public QObject
   void forEachAdjacentPairIntTest_data();
   void forEachAdjacentPairStringTest();
   void forEachAdjacentPairStringTest_data();
+
+  void findLastConsecutiveIntegralValueTest();
+  void findLastConsecutiveIntegralValueTest_data();
 
  private:
 

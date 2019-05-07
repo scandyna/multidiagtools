@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -54,6 +54,9 @@ class AlgorithmBenchmark : public QObject
 
   void hasDuplicatesBenchmark();
   void hasDuplicatesBenchmark_data();
+
+  void findLastConsecutiveIntegralValueBenchmark();
+  void findLastConsecutiveIntegralValueBenchmark_data();
 
  private:
 

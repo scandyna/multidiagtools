@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -262,7 +262,7 @@ namespace Algorithm{
    * The iterator types are mutable, f may modify the elements of the range trough the dereferenced iterator.
    *  If f returns a result, the result is ignored.
    *
-   * \tparam ForwardIt Type of a iterator that meets the requirement of [ForwardIterator](http://en.cppreference.com/w/cpp/concept/ForwardIterator).
+   * \tparam ForwardIt Type of a iterator that meets the requirement of [ForwardIterator](https://en.cppreference.com/w/cpp/named_req/ForwardIterator).
    * \tparam BinaryFunction A function object with a signature equivalent to:
    *          \code
    *          void f(const Type & a, const Type & b);
@@ -294,6 +294,53 @@ namespace Algorithm{
         ++trailer;
       }
     }
+  }
+
+  /*! \brief Returns the last element that is consecutive in the range [\a first, \a last)
+   *
+   * \tparam ForwardIt Type of a iterator that meets the requirement of [ForwardIterator](https://en.cppreference.com/w/cpp/named_req/ForwardIterator).
+   *
+   * \pre The value type of \a ForwardIt must be a integral type
+   * \pre The range [\a first, \a last) must be sorted
+   *
+   * Example:
+   * \code
+   * std::vector<int> v0{};
+   * std::vector<int> v1{1};
+   * std::vector<int> v2{1,2};
+   * std::vector<int> v3{1,2,3,5};
+   * std::vector<int> v4{1,3,4,5};
+   *
+   * const auto it0 = Mdt::Algorithm::findLastConsecutiveIntegralValue(v0.cbegin(), v0.cend());
+   * // it0 == v0.cend()
+   *
+   * const auto it1 = Mdt::Algorithm::findLastConsecutiveIntegralValue(v1.cbegin(), v1.cend());
+   * // *it1 == 1
+   *
+   * const auto it2 = Mdt::Algorithm::findLastConsecutiveIntegralValue(v2.cbegin(), v2.cend());
+   * // *it2 == 2
+   *
+   * const auto it3 = Mdt::Algorithm::findLastConsecutiveIntegralValue(v3.cbegin(), v3.cend());
+   * // *it3 == 3
+   *
+   * const auto it4 = Mdt::Algorithm::findLastConsecutiveIntegralValue(v4.cbegin(), v4.cend());
+   * // *it4 == 1
+   * \endcode
+   */
+  template<typename ForwardIt>
+  ForwardIt findLastConsecutiveIntegralValue(ForwardIt first, ForwardIt last)
+  {
+    using value_type = typename std::iterator_traits<ForwardIt>::value_type;
+
+    static_assert( std::is_integral<value_type>::value,
+                   "The values in the range must be of integral type" );
+    Q_ASSERT(std::is_sorted(first, last));
+
+    const auto isConsecutive = [](value_type a, value_type b){
+      return (b-a) == 1;
+    };
+
+    return std::mismatch(first, last, first+1, last, isConsecutive).first;
   }
 
 }} // namespace Mdt{ namespace Algorithm{
