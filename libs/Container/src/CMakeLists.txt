@@ -15,6 +15,7 @@ set(SOURCE_FILES
   Mdt/Container/TableCacheTaskMap.cpp
   Mdt/Container/TableCache.cpp
   Mdt/Container/VariantRecord.cpp
+  Mdt/Container/IdPool.cpp
 )
 
 find_package(Qt5 COMPONENTS Core)
@@ -33,7 +34,7 @@ mdt_add_library(
   NAME Container
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES IndexRange Assert Qt5::Core
+  LINK_DEPENDENCIES IndexRange Assert Algorithm Qt5::Core
 )
 target_compile_definitions(Container PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 
