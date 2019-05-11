@@ -33,6 +33,7 @@
 #include <QVariant>
 #include <QVariantList>
 #include <QSqlDatabase>
+#include <QMetaType>
 
 namespace Mdt{ namespace Sql{
 
@@ -131,5 +132,6 @@ namespace Mdt{ namespace Sql{
   };
 
 }} // namespace Mdt{ namespace Sql{
+Q_DECLARE_METATYPE(Mdt::Sql::DeleteStatement)
 
 #endif // #ifndef MDT_SQL_DELETE_STATEMENT_H
