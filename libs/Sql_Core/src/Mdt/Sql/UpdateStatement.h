@@ -22,6 +22,8 @@
 #define MDT_SQL_UPDATE_STATEMENT_H
 
 #include "FieldName.h"
+#include "QueryEntity.h"
+#include "QueryField.h"
 #include "PrimaryKeyRecord.h"
 #include "FieldNameValueMap.h"
 #include "Mdt/QueryExpression/FilterExpression.h"
@@ -37,6 +39,19 @@
 namespace Mdt{ namespace Sql{
 
   /*! \brief Representation of a SQL UPDATE statement
+   *
+   * \code
+   * #include <Mdt/Sql/UpdateStatement.h>
+   *
+   * using namespace Mdt::Sql;
+   *
+   * QueryField id("Id_PK");
+   *
+   * UpdateStatement statement;
+   * statement.setTableName("Person_tbl");
+   * statement.addValue(FieldName("Name"), "Some name");
+   * statement.setConditions(id == 2);
+   * \endcode
    *
    * \sa UpdateQuery
    */
