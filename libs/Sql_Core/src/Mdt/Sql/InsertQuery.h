@@ -25,6 +25,7 @@
 #include "InsertStatement.h"
 #include "FieldName.h"
 #include "Mdt/Error.h"
+#include "MdtSql_CoreExport.h"
 #include <QString>
 #include <QStringList>
 #include <QVector>
@@ -77,7 +78,7 @@ namespace Mdt{ namespace Sql{
    * }
    * \endcode
    */
-  class InsertQuery : public AbstractQuery
+  class MDT_SQL_CORE_EXPORT InsertQuery : public AbstractQuery
   {
    Q_OBJECT
 
