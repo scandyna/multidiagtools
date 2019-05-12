@@ -36,6 +36,7 @@
 #include "FilterExpression.h"
 #include "TypeTraits/JoinConstraintExpression.h"
 #include "MdtQueryExpression_CoreExport.h"
+#include <QMetaType>
 #include <QString>
 
 namespace Mdt{ namespace QueryExpression{
@@ -375,5 +376,6 @@ namespace Mdt{ namespace QueryExpression{
   };
 
 }} // namespace Mdt{ namespace QueryExpression{
+Q_DECLARE_METATYPE(Mdt::QueryExpression::SelectStatement)
 
 #endif // #ifndef MDT_QUERY_EXPRESSION_SELECT_STATEMENT_H
