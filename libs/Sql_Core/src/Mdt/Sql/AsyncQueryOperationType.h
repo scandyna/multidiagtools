@@ -18,26 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AsyncTestQueryReceiver.h"
+#ifndef MDT_SQL_ASYNC_QUERY_OPERATION_TYPE_H
+#define MDT_SQL_ASYNC_QUERY_OPERATION_TYPE_H
 
-void AsyncTestQueryReceiver::setQueryDone()
-{
-  mQueryDone = true;
-}
+#include <QMetaType>
 
-void AsyncTestQueryReceiver::setLastError(const Mdt::Error & error)
-{
-  Q_ASSERT(!error.isNull());
+namespace Mdt{ namespace Sql{
 
-  mLastError = error;
-}
+  /*! \internal
+   */
+  enum class AsyncQueryOperationType
+  {
+    IntermediateOperation,
+    FinalOperation
+  };
 
-void AsyncTestQueryReceiver::storeNewRecord(const Mdt::Container::VariantRecord& record)
-{
-  mRecordList.push_back(record);
-}
+}} // namespace Mdt{ namespace Sql{
+Q_DECLARE_METATYPE(Mdt::Sql::AsyncQueryOperationType)
 
-void AsyncTestQueryReceiver::setLastInsertId(const QVariant& id)
-{
-  mLastInsertId = id;
-}
+#endif // #ifndef MDT_SQL_ASYNC_QUERY_OPERATION_TYPE_H

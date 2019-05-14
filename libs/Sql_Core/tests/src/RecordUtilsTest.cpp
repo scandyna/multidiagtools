@@ -20,43 +20,9 @@
  ****************************************************************************/
 #include "RecordUtilsTest.h"
 #include "Mdt/Sql/RecordUtils.h"
-#include <QSqlField>
-#include <QString>
-#include <QLatin1String>
 
 using namespace Mdt::Sql;
 using Mdt::Container::VariantRecord;
-
-/*
- * Helpers
- */
-
-QSqlField sqlFieldFromVariantValue(int index, const QVariant & value)
-{
-  Q_ASSERT(index >= 0);
-
-  QSqlField field;
-
-  const QString fieldName = QLatin1String("field_") + QString::number(index);
-  field.setName(fieldName);
-  field.setType(value.type());
-  field.setValue(value);
-
-  return field;
-}
-
-QSqlRecord sqlRecordFromVariantRecord(const VariantRecord & record)
-{
-  QSqlRecord sqlRecord;
-
-  const int n = record.columnCount();
-  for(int col = 0; col < n; ++col){
-    sqlRecord.append( sqlFieldFromVariantValue(col, record.value(col)) );
-  }
-
-  return sqlRecord;
-}
-
 
 /*
  * Tests

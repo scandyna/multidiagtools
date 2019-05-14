@@ -22,6 +22,7 @@
 #define MDT_SQL_ASYNC_QUERY_BASE_H
 
 #include "AsyncQueryConnection.h"
+#include "AsyncQueryOperationType.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include "Mdt/Async/WaitDonePredicateWithError.h"
@@ -46,6 +47,10 @@ namespace Mdt{ namespace Sql{
      */
     explicit AsyncQueryBase(const std::shared_ptr<AsyncQueryConnection> & connection, QObject *parent = nullptr);
 
+    /*! \brief Destructor
+     */
+    ~AsyncQueryBase();
+
     AsyncQueryBase(const AsyncQueryBase &) = delete;
     AsyncQueryBase & operator=(const AsyncQueryBase &) = delete;
     AsyncQueryBase(AsyncQueryBase &&) = delete;
@@ -61,7 +66,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Emitted once the query was done successfully
      */
-    void done();
+    void doneSuccessfully();
 
     /*! \brief Emitted when an error occurred
      */
@@ -96,13 +101,13 @@ namespace Mdt{ namespace Sql{
      *
      * \todo On timeout, the query should be cancelled, this is not solved...
      */
-    Mdt::ExpectedResult waitFinished();
+    Mdt::ExpectedResult waitOperationFinished();
 
    private Q_SLOTS:
 
     /*! \brief Set done
      */
-    void setDone(int instanceId);
+    void setOperationDone(AsyncQueryOperationType operationType, int instanceId);
 
     /*! \brief Set error
      */

@@ -167,6 +167,15 @@ namespace Mdt{ namespace Sql{
       return mQuery.value(fieldIndex);
     }
 
+    /*! \brief Returns the current record
+     *
+     * This is a call to QSqlQuery::record()
+     */
+    QSqlRecord record() const
+    {
+      return mQuery.record();
+    }
+
    private:
 
     QSqlQuery mQuery;

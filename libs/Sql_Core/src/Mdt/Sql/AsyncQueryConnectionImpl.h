@@ -22,10 +22,14 @@
 #define MDT_SQL_ASYNC_QUERY_CONNECTION_IMPL_H
 
 #include "AbstractAsyncQueryThreadWorker.h"
+#include "AsyncQueryOperationType.h"
 #include "InsertStatement.h"
+#include "UpdateStatement.h"
+#include "DeleteStatement.h"
+#include "Mdt/QueryExpression/SelectStatement.h"
 #include "Mdt/Container/VariantRecord.h"
+#include "Mdt/Container/IdPool.h"
 #include "Mdt/Error.h"
-// #include "Mdt/Async/WaitDonePredicate.h"
 #include "Mdt/Async/WaitDonePredicateWithError.h"
 #include "MdtSql_CoreExport.h"
 #include <QObject>
@@ -53,11 +57,16 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Get the next instance id
      */
-    int nextInstanceId() noexcept
+    int getNextAvailableInstanceId()
     {
-      ++mQueryInstanceId;
+      return mIdPool.getNextAvailableId();
+    }
 
-      return mQueryInstanceId;
+    /*! \brief Release a instance id
+     */
+    void releaseInstanceId(int iid)
+    {
+      mIdPool.releaseId(iid);
     }
 
     template<typename Worker, typename OpenFunc>
@@ -71,10 +80,16 @@ namespace Mdt{ namespace Sql{
       connect(&mThread, &QThread::started, worker, openFunc);
       connect(worker, &Worker::openDone, this, &AsyncQueryConnectionImpl::setOpenDone);
       connect(worker, &Worker::openErrorOccured, this, &AsyncQueryConnectionImpl::setOpenError);
-      connect(worker, &Worker::queryDone, this, &AsyncQueryConnectionImpl::queryDone);
+      connect(worker, &Worker::queryOperationDone, this, &AsyncQueryConnectionImpl::queryOperationDone);
       connect(worker, &Worker::queryErrorOccured, this, &AsyncQueryConnectionImpl::queryErrorOccured);
       connect(this, &AsyncQueryConnectionImpl::insertStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processInsertStatement);
       connect(worker, &AbstractAsyncQueryThreadWorker::newIdInserted, this, &AsyncQueryConnectionImpl::newIdInserted);
+      connect(this, &AsyncQueryConnectionImpl::selectStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processSelectStatement);
+      connect(this, &AsyncQueryConnectionImpl::selectQueryFetchNextSubmitted, worker, &AbstractAsyncQueryThreadWorker::processSelectQueryFetchNext);
+      connect(worker, &Worker::newRecordAvailable, this, &AsyncQueryConnectionImpl::newRecordAvailable);
+      connect(worker, &Worker::selectQueryFetchNextDone, this, &AsyncQueryConnectionImpl::selectQueryFetchNextDone);
+      connect(this, &AsyncQueryConnectionImpl::updateStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processUpdateStatement);
+      connect(this, &AsyncQueryConnectionImpl::deleteStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processDeleteStatement);
 
       mThread.start();
     }
@@ -86,6 +101,22 @@ namespace Mdt{ namespace Sql{
     /*! \brief Submit a insert statement
      */
     void submitInsertStatement(const InsertStatement & statement, int instanceId);
+
+    /*! \brief Submit a select statement
+     */
+    void submitSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
+
+    /*! \brief Submit to fetch new record
+     */
+    void submitSelectQueryFetchNext(int instanceId);
+
+    /*! \brief Submit a update statement
+     */
+    void submitUpdateStatement(const UpdateStatement & statement, int instanceId);
+
+    /*! \brief Submit a delete statement
+     */
+    void submitDeleteStatement(const DeleteStatement & statement, int instanceId);
 
     /*! \brief Begin close the database handle
      */
@@ -107,6 +138,22 @@ namespace Mdt{ namespace Sql{
      */
     void insertStatementSubmitted(const Mdt::Sql::InsertStatement & statement, int instanceId);
 
+    /*! \brief Forwards the statement comming from the query to the thread worker
+     */
+    void selectStatementSubmitted(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
+
+    /*! \brief Forward the request from the query to the thread worker
+     */
+    void selectQueryFetchNextSubmitted(int instanceId);
+
+    /*! \brief Forwards the statement comming from the query to the thread worker
+     */
+    void updateStatementSubmitted(const Mdt::Sql::UpdateStatement & statement, int instanceId);
+
+    /*! \brief Forwards the statement comming from the query to the thread worker
+     */
+    void deleteStatementSubmitted(const Mdt::Sql::DeleteStatement & statement, int instanceId);
+
     /*! \brief Emitted when a new ID have been inserted
      */
     void newIdInserted(const QVariant & id, int instanceId);
@@ -115,9 +162,13 @@ namespace Mdt{ namespace Sql{
      */
     void newRecordAvailable(const Mdt::Container::VariantRecord & record, int instanceId);
 
-    /*! \brief Emitted whenever a query is done
+    /*! \brief Emitted whenever fetching a new record is done
      */
-    void queryDone(int instanceId);
+    void selectQueryFetchNextDone(bool result, int instanceId);
+
+    /*! \brief Emitted whenever a query operation is done
+     */
+    void queryOperationDone(Mdt::Sql::AsyncQueryOperationType operationType, int instanceId);
 
     /*! \brief Emitted whenever a query error occured
      */
@@ -129,11 +180,10 @@ namespace Mdt{ namespace Sql{
 
    private:
 
-    int mQueryInstanceId = 0;
+    Mdt::Container::IdPool<int> mIdPool;
     QThread mThread;
     Mdt::Async::WaitDonePredicateWithError mWaitOpenPredicate;
     Mdt::Error mLastOpenError;
-//     Mdt::Async::WaitDonePredicate mWaitClosedPredicate;
   };
 
 }} // namespace Mdt{ namespace Sql{

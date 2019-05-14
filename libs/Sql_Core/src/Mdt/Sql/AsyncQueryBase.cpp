@@ -34,9 +34,16 @@ AsyncQueryBase::AsyncQueryBase(const std::shared_ptr<AsyncQueryConnection> & con
   auto *cnnImpl = connectionImpl();
   Q_ASSERT(cnnImpl != nullptr);
 
-  mInstanceId = cnnImpl->nextInstanceId();
-  connect(cnnImpl, &AsyncQueryConnectionImpl::queryDone, this, &AsyncQueryBase::setDone);
+  mInstanceId = cnnImpl->getNextAvailableInstanceId();
+  connect(cnnImpl, &AsyncQueryConnectionImpl::queryOperationDone, this, &AsyncQueryBase::setOperationDone);
   connect(cnnImpl, &AsyncQueryConnectionImpl::queryErrorOccured, this, &AsyncQueryBase::setError);
+}
+
+AsyncQueryBase::~AsyncQueryBase()
+{
+  Q_ASSERT(connectionImpl() != nullptr);
+
+  connectionImpl()->releaseInstanceId(mInstanceId);
 }
 
 void AsyncQueryBase::setWaitTimeout(std::chrono::milliseconds timeout)
@@ -46,7 +53,7 @@ void AsyncQueryBase::setWaitTimeout(std::chrono::milliseconds timeout)
   mWaitTimeout = timeout;
 }
 
-Mdt::ExpectedResult AsyncQueryBase::waitFinished()
+Mdt::ExpectedResult AsyncQueryBase::waitOperationFinished()
 {
   if( !Mdt::Async::wait(mWaitPredicate, mWaitTimeout) ){
     const QString msg = tr("Query timed out");
@@ -62,11 +69,13 @@ Mdt::ExpectedResult AsyncQueryBase::waitFinished()
   return Mdt::ExpectedResultOk();
 }
 
-void AsyncQueryBase::setDone(int instanceId)
+void AsyncQueryBase::setOperationDone(AsyncQueryOperationType operationType, int instanceId)
 {
   if(instanceId == mInstanceId){
     mWaitPredicate.setDone();
-    emit done();
+    if(operationType == AsyncQueryOperationType::FinalOperation){
+     emit doneSuccessfully();
+    }
   }
 }
 

@@ -18,6 +18,7 @@ set(SOURCE_FILES
     Mdt/Sql/FieldAlias.cpp
     Mdt/Sql/QueryEntity.cpp
     Mdt/Sql/QueryField.cpp
+    Mdt/Sql/RecordUtils.cpp
     Mdt/Sql/AbstractQuery.cpp
     Mdt/Sql/InsertStatement.cpp
     Mdt/Sql/InsertQuery.cpp
@@ -56,6 +57,9 @@ set(SOURCE_FILES
     Mdt/Sql/AsyncQueryConnection.cpp
     Mdt/Sql/AbstractAsyncQueryThreadWorker.cpp
     Mdt/Sql/AsyncInsertQuery.cpp
+    Mdt/Sql/AsyncSelectQuery.cpp
+    Mdt/Sql/AsyncUpdateQuery.cpp
+    Mdt/Sql/AsyncDeleteQuery.cpp
     Mdt/Sql/Schema/Driver.cpp
     Mdt/Sql/Schema/DriverImplementationInterface.cpp
     Mdt/Sql/Schema/DriverSQLite.cpp

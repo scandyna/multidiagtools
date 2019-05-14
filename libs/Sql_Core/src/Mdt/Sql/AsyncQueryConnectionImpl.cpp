@@ -30,12 +30,13 @@ namespace Mdt{ namespace Sql{
 AsyncQueryConnectionImpl::AsyncQueryConnectionImpl(QObject* parent)
  : QObject(parent)
 {
-//   using Mdt::Async::WaitDonePredicate;
-
   // qRegisterMetaType<T>() can be called multiple time
   qRegisterMetaType<InsertStatement>();
-
-//   connect(&mThread, &QThread::finished, &mWaitClosedPredicate, &WaitDonePredicate::setDone);
+  qRegisterMetaType<UpdateStatement>();
+  qRegisterMetaType<DeleteStatement>();
+  qRegisterMetaType<Mdt::QueryExpression::SelectStatement>();
+  qRegisterMetaType<Mdt::Container::VariantRecord>();
+  qRegisterMetaType<AsyncQueryOperationType>();
 }
 
 AsyncQueryConnectionImpl::~AsyncQueryConnectionImpl()
@@ -63,6 +64,26 @@ Mdt::ExpectedResult AsyncQueryConnectionImpl::waitOpen()
 void AsyncQueryConnectionImpl::submitInsertStatement(const InsertStatement & statement, int instanceId)
 {
   emit insertStatementSubmitted(statement, instanceId);
+}
+
+void AsyncQueryConnectionImpl::submitSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords)
+{
+  emit selectStatementSubmitted(statement, instanceId, fetchRecords);
+}
+
+void AsyncQueryConnectionImpl::submitSelectQueryFetchNext(int instanceId)
+{
+  emit selectQueryFetchNextSubmitted(instanceId);
+}
+
+void AsyncQueryConnectionImpl::submitUpdateStatement(const UpdateStatement & statement, int instanceId)
+{
+  emit updateStatementSubmitted(statement, instanceId);
+}
+
+void AsyncQueryConnectionImpl::submitDeleteStatement(const DeleteStatement & statement, int instanceId)
+{
+  emit deleteStatementSubmitted(statement, instanceId);
 }
 
 void AsyncQueryConnectionImpl::submitClose()

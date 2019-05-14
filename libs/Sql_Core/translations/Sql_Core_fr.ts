@@ -4,7 +4,7 @@
 <context>
     <name>Mdt::Sql::AsyncQueryBase</name>
     <message>
-        <location filename="../src/Mdt/Sql/AsyncQueryBase.cpp" line="52"/>
+        <location filename="../src/Mdt/Sql/AsyncQueryBase.cpp" line="59"/>
         <source>Query timed out</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,7 +12,7 @@
 <context>
     <name>Mdt::Sql::AsyncQueryConnectionImpl</name>
     <message>
-        <location filename="../src/Mdt/Sql/AsyncQueryConnectionImpl.cpp" line="51"/>
+        <location filename="../src/Mdt/Sql/AsyncQueryConnectionImpl.cpp" line="56"/>
         <source>Wait connection open timed out</source>
         <translation type="unfinished"></translation>
     </message>
@@ -220,21 +220,21 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::SelectQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="49"/>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="50"/>
         <source>Executing query to select from &apos;%1&apos; failed.
 SQL:
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="70"/>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="71"/>
         <source>Fetching a single record from &apos;%1&apos; failed because no record is available.
 SQL:
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="81"/>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="82"/>
         <source>Fetching a single record from &apos;%1&apos; failed because more than 1 record is available.
 SQL:
 %2</source>

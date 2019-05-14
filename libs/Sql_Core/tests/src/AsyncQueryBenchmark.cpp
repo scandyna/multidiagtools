@@ -21,8 +21,14 @@
 #include "AsyncQueryBenchmark.h"
 ///#include "Mdt/Sql/AsyncQuery.h"
 #include "Mdt/Sql/AsyncQueryConnection.h"
+#include "Mdt/Sql/SelectQuery.h"
+#include "Mdt/Sql/AsyncSelectQuery.h"
+#include "Mdt/Sql/RecordUtils.h"
+#include "Mdt/Sql/QueryExpressionSqlTransform.h"
 #include "Mdt/Container/VariantRecord.h"
+#include <QMetaMethod>
 #include <QSqlQuery>
+#include <QVector>
 #include <vector>
 
 using namespace Mdt::Sql;
@@ -30,12 +36,20 @@ using Mdt::Container::VariantRecord;
 
 void AsyncQueryBenchmark::initTestCase()
 {
+//   qRegisterMetaType<Client>();
+
   QVERIFY(initDatabaseSqlite());
   QVERIFY(createClientTable());
+  QVERIFY(initDatabaseSqliteAsync());
 }
 
 void AsyncQueryBenchmark::cleanupTestCase()
 {
+}
+
+void AsyncQueryBenchmark::cleanup()
+{
+  QVERIFY(cleanupClientTable());
 }
 
 /*
@@ -51,63 +65,151 @@ void AsyncQueryBenchmark::cleanupTestCase()
  * Benchmarks
  */
 
-void AsyncQueryBenchmark::selectQuery()
+void AsyncQueryBenchmark::variantRecordFromSqlRecordBenchmark()
 {
-  QVERIFY(cleanupClientTable());
-  QVERIFY(insertClient(1, "A"));
-  QVERIFY(insertClient(2, "B"));
+  using Mdt::Container::VariantRecord;
 
+  const QSqlRecord sqlRecord = sqlRecordFromVariantRecord({"A",1,"Name A"});
+  VariantRecord record;
+
+  QBENCHMARK{
+    record = variantRecordFromSqlRecord(sqlRecord);
+  }
+
+  QCOMPARE(record.columnCount(), sqlRecord.count());
+}
+
+void AsyncQueryBenchmark::isSignalConnectedBenchmark()
+{
+  bool isConnected = true;
+
+  QBENCHMARK{
+    static const QMetaMethod testSignalMethod = QMetaMethod::fromSignal(&AsyncQueryBenchmark::testSignal);
+    isConnected = isSignalConnected(testSignalMethod);
+  }
+
+  QVERIFY(!isConnected);
+}
+
+void AsyncQueryBenchmark::selectQSqlQueryBenchmark()
+{
+  QFETCH(int, recordCount);
+  QSqlDatabase db = database();
+  const auto statement = selectAllClientStatement();
   VariantRecord record(2);
   std::vector<VariantRecord> result;
-  QSqlQuery query(database());
+  result.reserve(recordCount);
+  QSqlQuery query(db);
+  query.setForwardOnly(true);
+
+  QVERIFY(insertCountClients(recordCount));
 
   QBENCHMARK{
     result.clear();
-    QVERIFY(query.exec("SELECT Id_PK, Name FROM Client_tbl"));
+    const QString sql = selectStatementToSql(statement, 0, db);
+    QVERIFY(query.exec(sql));
     while(query.next()){
       record.setValue(0, query.value(0));
       record.setValue(1, query.value(1));
       result.push_back(record);
     }
   }
-  QCOMPARE(result.size(), 2ul);
-  QCOMPARE(result[0].value(0), QVariant(1));
-  QCOMPARE(result[0].value(1), QVariant("A"));
-  QCOMPARE(result[1].value(0), QVariant(2));
-  QCOMPARE(result[1].value(1), QVariant("B"));
+  QCOMPARE((int)result.size(), recordCount);
 }
 
-/**
-void AsyncQueryBenchmark::asyncSelectQuery()
+void AsyncQueryBenchmark::selectQSqlQueryBenchmark_data()
 {
-  QVERIFY(cleanupClientTable());
-  QVERIFY(insertClient(1, "A"));
-  QVERIFY(insertClient(2, "B"));
+  prepareSelectBenchmarkData();
+}
 
-  AsyncQueryConnection cnn;
-  QVERIFY(cnn.setup(connectionParameters()));
+void AsyncQueryBenchmark::selectSqlQueryBenchmark()
+{
+  QFETCH(int, recordCount);
+  const auto statement = selectAllClientStatement();
+  VariantRecord record(2);
+  std::vector<VariantRecord> result;
+  result.reserve(recordCount);
+  SelectQuery query(database());
 
-  AsyncTestQueryReceiver receiver;
-  auto query = cnn.createQuery();
-  setupReceiver(receiver, query);
+  QVERIFY(insertCountClients(recordCount));
+
   QBENCHMARK{
-    receiver.clear();
-    query->submitQuery("SELECT Id_PK, Name FROM Client_tbl");
-    while(receiver.recordCount() < 2)
-    {
-      QCoreApplication::processEvents();
+    result.clear();
+    QVERIFY(query.execStatement(statement));
+    while(query.next()){
+      record.setValue(0, query.value(0));
+      record.setValue(1, query.value(1));
+      result.push_back(record);
     }
   }
-  auto record = receiver.recordAt(0);
-  QCOMPARE(record.columnCount(), 2);
-  QCOMPARE(record.value(0), QVariant(1));
-  QCOMPARE(record.value(1), QVariant("A"));
-  record = receiver.recordAt(1);
-  QCOMPARE(record.columnCount(), 2);
-  QCOMPARE(record.value(0), QVariant(2));
-  QCOMPARE(record.value(1), QVariant("B"));
+  QCOMPARE((int)result.size(), recordCount);
 }
-*/
+
+void AsyncQueryBenchmark::selectSqlQueryBenchmark_data()
+{
+  prepareSelectBenchmarkData();
+}
+
+void AsyncQueryBenchmark::selectAsyncSqlQuerySyncUsageBenchmark()
+{
+  QFETCH(int, recordCount);
+  const auto statement = selectAllClientStatement();
+  VariantRecord record(2);
+  std::vector<VariantRecord> result;
+  result.reserve(recordCount);
+  AsyncSelectQuery query(asyncQueryConnection());
+
+  QVERIFY(insertCountClients(recordCount));
+
+  QBENCHMARK{
+    result.clear();
+    QVERIFY(query.execStatement(statement));
+    while(query.next()){
+      record.setValue(0, query.value(0));
+      record.setValue(1, query.value(1));
+      result.push_back(record);
+    }
+  }
+  QCOMPARE((int)result.size(), recordCount);
+}
+
+void AsyncQueryBenchmark::selectAsyncSqlQuerySyncUsageBenchmark_data()
+{
+  prepareSelectBenchmarkData();
+}
+
+void AsyncQueryBenchmark::prepareSelectBenchmarkData()
+{
+  QTest::addColumn<int>("recordCount");
+
+  QTest::newRow("1") << 1;
+  QTest::newRow("10") << 10;
+}
+
+bool AsyncQueryBenchmark::insertCountClients(int n)
+{
+  Q_ASSERT(n > 0);
+
+  for(int i = 1; i <= n; ++i){
+    const QString name = QLatin1String("Name ") + QString::number(i);
+    if(!insertClient(i, name)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+Mdt::QueryExpression::SelectStatement AsyncQueryBenchmark::selectAllClientStatement() const
+{
+  Mdt::QueryExpression::SelectStatement statement;
+
+  statement.setEntityName("Client_tbl");
+  statement.addField("Id_PK");
+  statement.addField("Name");
+
+  return statement;
+}
 
 /*
  * Main

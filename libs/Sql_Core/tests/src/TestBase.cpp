@@ -27,13 +27,15 @@
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/InsertQuery.h"
 #include <QSqlQuery>
-#include <QSqlRecord>
 #include <QSqlError>
+#include <QString>
+#include <QLatin1String>
 #include <QDebug>
 
 using Mdt::Sql::SQLiteConnectionParameters;
 using Mdt::Sql::SQLiteDatabase;
 using Mdt::Sql::SQLiteAsyncQueryConnection;
+using Mdt::Container::VariantRecord;
 
 TestBase::TestBase()
  : QObject()
@@ -168,6 +170,25 @@ bool TestBase::insertClient(int id, const QString& name)
   return true;
 }
 
+bool TestBase::clientExists(int id)
+{
+  Q_ASSERT(isDatabaseOpen());
+
+  QSqlQuery query(database());
+
+  const QString sql = "SELECT Id_PK, Name FROM Client_tbl WHERE Id_PK=" + QString::number(id);
+  if(!query.exec(sql)){
+    qWarning() << "Get client with id " << id << " failed: " << query.lastError().text();
+    return false;
+  }
+  if(!query.next()){
+    return false;
+  }
+  Q_ASSERT(query.record().count() == 2);
+
+  return true;
+}
+
 Client TestBase::getClient(int id)
 {
   Q_ASSERT(isDatabaseOpen());
@@ -216,4 +237,34 @@ bool TestBase::createTestSchema()
   }
 
   return true;
+}
+
+/*
+ * Helper plain functions
+ */
+
+QSqlField sqlFieldFromVariantValue(int index, const QVariant & value)
+{
+  Q_ASSERT(index >= 0);
+
+  QSqlField field;
+
+  const QString fieldName = QLatin1String("field_") + QString::number(index);
+  field.setName(fieldName);
+  field.setType(value.type());
+  field.setValue(value);
+
+  return field;
+}
+
+QSqlRecord sqlRecordFromVariantRecord(const VariantRecord & record)
+{
+  QSqlRecord sqlRecord;
+
+  const int n = record.columnCount();
+  for(int col = 0; col < n; ++col){
+    sqlRecord.append( sqlFieldFromVariantValue(col, record.value(col)) );
+  }
+
+  return sqlRecord;
 }

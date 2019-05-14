@@ -18,26 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AsyncTestQueryReceiver.h"
+#include "AsyncUpdateQuery.h"
 
-void AsyncTestQueryReceiver::setQueryDone()
+namespace Mdt{ namespace Sql{
+
+AsyncUpdateQuery::AsyncUpdateQuery(const std::shared_ptr<AsyncQueryConnection> & connection, QObject *parent)
+ : BaseClass(connection, parent)
 {
-  mQueryDone = true;
 }
 
-void AsyncTestQueryReceiver::setLastError(const Mdt::Error & error)
+Mdt::ExpectedResult AsyncUpdateQuery::execStatement(const UpdateStatement & statement)
 {
-  Q_ASSERT(!error.isNull());
+  submitStatement(statement);
 
-  mLastError = error;
+  return waitOperationFinished();
 }
 
-void AsyncTestQueryReceiver::storeNewRecord(const Mdt::Container::VariantRecord& record)
+void AsyncUpdateQuery::submitStatement(const UpdateStatement & statement)
 {
-  mRecordList.push_back(record);
+  connectionImpl()->submitUpdateStatement(statement, instanceId());
 }
 
-void AsyncTestQueryReceiver::setLastInsertId(const QVariant& id)
-{
-  mLastInsertId = id;
-}
+}} // namespace Mdt{ namespace Sql{

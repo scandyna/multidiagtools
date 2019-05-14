@@ -18,42 +18,46 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AsyncInsertQuery.h"
+#ifndef MDT_SQL_ASYNC_UPDATE_QUERY_H
+#define MDT_SQL_ASYNC_UPDATE_QUERY_H
+
+#include "AsyncQueryBase.h"
+#include "UpdateStatement.h"
+#include "AsyncQueryConnection.h"
+#include "Mdt/Expected.h"
+#include "MdtSql_CoreExport.h"
+#include <memory>
 
 namespace Mdt{ namespace Sql{
 
-AsyncInsertQuery::AsyncInsertQuery(const std::shared_ptr<AsyncQueryConnection> & connection, QObject *parent)
- : BaseClass(connection, parent)
-{
-  auto *cnnImpl = connectionImpl();
-  Q_ASSERT(cnnImpl != nullptr);
+  /*! \brief Execute a SQL update query asynchronously
+   */
+  class MDT_SQL_CORE_EXPORT AsyncUpdateQuery : public AsyncQueryBase
+  {
+    Q_OBJECT
 
-  connect(cnnImpl, &AsyncQueryConnectionImpl::newIdInserted, this, &AsyncInsertQuery::setNewInsertedId);
-}
+    using BaseClass = AsyncQueryBase;
 
-void AsyncInsertQuery::submitStatement(const InsertStatement & statement)
-{
-  connectionImpl()->submitInsertStatement(statement, instanceId());
-}
+   public:
 
-Mdt::Expected<QVariant> AsyncInsertQuery::execStatement(const InsertStatement & statement)
-{
-  submitStatement(statement);
+    /*! \brief Constructor
+     *
+     * \pre \a connection must be a valid pointer
+     */
+    explicit AsyncUpdateQuery(const std::shared_ptr<AsyncQueryConnection> & connection, QObject *parent = nullptr);
 
-  const auto result = waitOperationFinished();
-  if(!result){
-    return result.error();
-  }
+    /*! \brief Execute a update statement synchronously
+     */
+    Mdt::ExpectedResult execStatement(const UpdateStatement & statement);
 
-  return mLastInertId;
-}
+   public Q_SLOTS:
 
-void AsyncInsertQuery::setNewInsertedId(const QVariant & id, int iid)
-{
-  if(iid == instanceId()){
-    mLastInertId = id;
-    emit newIdInserted(id);
-  }
-}
+    /*! \brief Submit a update statement to be executed asynchronously
+     */
+    void submitStatement(const UpdateStatement & statement);
+
+  };
 
 }} // namespace Mdt{ namespace Sql{
+
+#endif // #ifndef MDT_SQL_ASYNC_UPDATE_QUERY_H

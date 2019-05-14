@@ -21,17 +21,23 @@
 #ifndef MDT_SQL_ABSTRACT_ASYNC_QUERY_THREAD_WORKER_H
 #define MDT_SQL_ABSTRACT_ASYNC_QUERY_THREAD_WORKER_H
 
+#include "AsyncQueryOperationType.h"
 #include "Connection.h"
 #include "InsertStatement.h"
 #include "UpdateStatement.h"
+#include "DeleteStatement.h"
+#include "Mdt/QueryExpression/SelectStatement.h"
 #include "Mdt/Container/VariantRecord.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include "MdtSql_CoreExport.h"
 #include <QObject>
 #include <QString>
+#include <memory>
 
 namespace Mdt{ namespace Sql{
+
+  class SelectQuery;
 
   /*! \brief Base class to implement a async query thread worker
    */
@@ -88,6 +94,22 @@ namespace Mdt{ namespace Sql{
      */
     void processInsertStatement(const Mdt::Sql::InsertStatement & statement, int instanceId);
 
+    /*! \brief Process a select statement
+     */
+    void processSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
+
+    /*! \brief Process fetch next record
+     */
+    void processSelectQueryFetchNext(int instanceId);
+
+    /*! \brief Process a update statement
+     */
+    void processUpdateStatement(const Mdt::Sql::UpdateStatement & statement, int instanceId);
+
+    /*! \brief Process a delete statement
+     */
+    void processDeleteStatement(const Mdt::Sql::DeleteStatement & statement, int instanceId);
+
    Q_SIGNALS:
 
     /*! \brief Emitted once the database has been open successfully
@@ -106,9 +128,13 @@ namespace Mdt{ namespace Sql{
      */
     void newRecordAvailable(const Mdt::Container::VariantRecord & record, int instanceId);
 
-    /*! \brief Emitted whenever a query is done
+    /*! \brief Emitted whenever fetching a new record is done
      */
-    void queryDone(int instanceId);
+    void selectQueryFetchNextDone(bool result, int instanceId);
+
+    /*! \brief Emitted whenever a query operation is done
+     */
+    void queryOperationDone(Mdt::Sql::AsyncQueryOperationType operationType, int instanceId);
 
     /*! \brief Emitted whenever a query error occured
      */
@@ -122,7 +148,10 @@ namespace Mdt{ namespace Sql{
 
    private:
 
+    void initSelectQueryIfNot();
+
     QString mConnectionName;
+    std::unique_ptr<SelectQuery> mSelectQuery;
   };
 
 }} // namespace Mdt{ namespace Sql{

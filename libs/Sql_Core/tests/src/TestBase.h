@@ -24,10 +24,14 @@
 #include "Mdt/Sql/SQLiteConnectionParameters.h"
 #include "Mdt/Sql/Connection.h"
 #include "Mdt/Sql/AsyncQueryConnection.h"
+#include "Mdt/Container/VariantRecord.h"
 #include "Mdt/CoreApplication.h"
 #include <QTemporaryFile>
 #include <QSqlDatabase>
+#include <QSqlRecord>
+#include <QSqlField>
 #include <QObject>
+#include <QMetaType>
 #include <QtTest/QtTest>
 #include <Qt>
 #include <memory>
@@ -37,6 +41,7 @@ struct Client
   int id = 0;
   QString name;
 };
+Q_DECLARE_METATYPE(Client)
 
 class TestBase : public QObject
 {
@@ -93,10 +98,9 @@ class TestBase : public QObject
     return mAsyncQueryConnection;
   }
 
-  /// bool initDatabaseSqliteAsync();
-
   bool createClientTable();
   bool insertClient(int id, const QString & name);
+  bool clientExists(int id);
   Client getClient(int id);
   bool cleanupClientTable();
 
@@ -109,5 +113,13 @@ class TestBase : public QObject
   QString mConnectionName;
   std::shared_ptr<Mdt::Sql::AsyncQueryConnection> mAsyncQueryConnection;
 };
+
+/*
+ * Helper plain functions
+ */
+
+QSqlField sqlFieldFromVariantValue(int index, const QVariant & value);
+
+QSqlRecord sqlRecordFromVariantRecord(const Mdt::Container::VariantRecord & record);
 
 #endif // #ifndef MDT_SQL_TEST_BASE_H

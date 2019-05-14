@@ -23,18 +23,40 @@
 
 #include "TestBase.h"
 #include "AsyncTestQueryReceiver.h"
+#include "Mdt/QueryExpression/SelectStatement.h"
 
 class AsyncQueryBenchmark : public TestBase
 {
  Q_OBJECT
 
+ signals:
+
+  void testSignal();
+
  private slots:
 
   void initTestCase();
   void cleanupTestCase();
+  void cleanup();
 
-  void selectQuery();
-  ///void asyncSelectQuery();
+  void variantRecordFromSqlRecordBenchmark();
+  void isSignalConnectedBenchmark();
+
+  void selectQSqlQueryBenchmark();
+  void selectQSqlQueryBenchmark_data();
+
+  void selectSqlQueryBenchmark();
+  void selectSqlQueryBenchmark_data();
+
+  void selectAsyncSqlQuerySyncUsageBenchmark();
+  void selectAsyncSqlQuerySyncUsageBenchmark_data();
+
+ private:
+
+  void prepareSelectBenchmarkData();
+  bool insertCountClients(int n);
+  Mdt::QueryExpression::SelectStatement selectAllClientStatement() const;
+
 };
 
 #endif // #ifndef MDT_SQL_ASYNC_QUERY_BENCHMARK_H

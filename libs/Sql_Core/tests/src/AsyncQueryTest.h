@@ -32,16 +32,28 @@ class AsyncQueryTest : public TestBase
 
   void initTestCase();
   void cleanupTestCase();
+  void cleanup();
 
-  /// void connectionSetupFailTest();
+  void connectionIidTest();
 
-  /// void simpleSelectTest();
-  /// void twoQueriesSelectTest();
+  void queryIidTest();
 
   void insertAsync();
   void insertSync();
   void insertError();
   void insertMultipleQueries();
+
+  void updateAsyncTest();
+  void updateSyncTest();
+  void updateMultipleQueriesTest();
+
+  void deleteAsyncTest();
+  void deleteSyncTest();
+  void deleteMultipleQueriesTest();
+
+  void selectAsyncTest();
+  void selectSyncTest();
+  void selectMultipleQueriesTest();
 };
 
 #endif // #ifndef MDT_SQL_ASYNC_QUERY_TEST_H

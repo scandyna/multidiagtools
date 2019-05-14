@@ -22,6 +22,7 @@
 #define MDT_SQL_ASYNC_TEST_QUERY_RECEIVER_H
 
 #include "Mdt/Container/VariantRecord.h"
+#include "Mdt/Error.h"
 #include <QObject>
 #include <vector>
 
@@ -33,6 +34,21 @@ class AsyncTestQueryReceiver : public QObject
  Q_OBJECT
 
  public:
+
+  bool isQueryDone() const
+  {
+    return mQueryDone;
+  }
+
+  bool hasError() const
+  {
+    return !mLastError.isNull();
+  }
+
+  bool isFinished() const
+  {
+    return isQueryDone() || hasError();
+  }
 
   bool hasRecords() const
   {
@@ -69,19 +85,25 @@ class AsyncTestQueryReceiver : public QObject
 
   void clear()
   {
+    mQueryDone = false;
     mRecordList.clear();
     mLastInsertId.clear();
+    mLastError.clear();
   }
 
  public slots:
 
+  void setQueryDone();
+  void setLastError(const Mdt::Error & error);
   void storeNewRecord(const Mdt::Container::VariantRecord & record);
   void setLastInsertId(const QVariant & id);
 
  private:
 
+  bool mQueryDone = false;
   std::vector<Mdt::Container::VariantRecord> mRecordList;
   QVariant mLastInsertId;
+  Mdt::Error mLastError;
 };
 
 #endif // #ifndef MDT_SQL_ASYNC_TEST_QUERY_RECEIVER_H

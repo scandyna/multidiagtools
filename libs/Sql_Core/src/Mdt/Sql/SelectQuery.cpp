@@ -31,6 +31,7 @@ SelectQuery::SelectQuery(const QSqlDatabase& db)
    mQuery(db)
 {
   Q_ASSERT(db.isValid());
+  mQuery.setForwardOnly(true);
 }
 
 SelectQuery::SelectQuery(QObject* parent, const QSqlDatabase& db)
