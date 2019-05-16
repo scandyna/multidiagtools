@@ -32,20 +32,120 @@
  *  For example, we suppose that getting available tables in a database needs to query the database,
  *  the function should be named like SomeObject::getAvailableTables(T db).
  *
- * \section return_value Return value
+ * \section error_handlig Error handling
  *
  * When a function fails, it should be possible to get the reason why it failed.
  *  This is done by using the Mdt::Error class.
  *
- * A function, or a class memeber method, should follow these rules:
- *  - If it can fail, but returns not data, it should be return a Mdt::ExpectedResult
- *  - If it can fail and returns data, it should return a Mdt::Expected
+ * \subsection error_handlig_return_value_context Return value: context
+ *
+ * Take the example of a repository class.
+ *  Some method will return a value, but other not.
+ *
+ * The first example will use Mdt::Expected when a value is returned,
+ *  and Mdt::ExpectedResult if no value is returned:
+ * \code
+ * ProductRepository repository;
+ *
+ * const auto product = repository.get(id);
+ * if(!product){
+ *   // Use product.error()
+ *   return ...
+ * }
+ * doSomeStuff(*product);
+ * if(product->isOutdated()){
+ *   const auto result = repository.remove(*product);
+ *   if(!result){
+ *     // Use result.error()
+ *     return ...
+ *   }
+ * }else{
+ *   const auto result = repository.update(*product);
+ *   if(!result){
+ *     // Use result.error()
+ *     return ...
+ *   }
+ * }
+ * \endcode
+ *
+ * Above code shows that a new variable must be created each time a method (that can fail) is called.
+ *
+ * The next example will use Mdt::Expected when a value is returned,
+ *  and bool + lastError if no value is returned:
+ * \code
+ * ProductRepository repository;
+ *
+ * const auto product = repository.get(id);
+ * if(!product){
+ *   // Use product.error()
+ *   return ...
+ * }
+ * doSomeStuff(*product);
+ * if(product->isOutdated()){
+ *   if( !repository.remove(*product) ){
+ *     // Use repository.lastError()
+ *     return ...
+ *   }
+ * }else{
+ *   if( !repository.update(*product) ){
+ *     // Use repository.lastError()
+ *     return ...
+ *   }
+ * }
+ * \endcode
+ *
+ *
+ * \todo See also about ExpectedOptional
+ *
+ * \subsection error_handlig_return_value_rules Return value: rules
+ *
+ * A class that has some methods that can fail should follow these rules:
+ *  - It should provide a lastError() method
+ *  - It should be implemented using a private setLastError() method.
+ *    This way, it will be easier to change the class if, for example,
+ *    it should send a notification when a error occured.
+ *    It should also be checked that a null error is never set.
+ *  - A method that can fail, but returns no value, should return bool
+ *    and update the last error using setLastError()
+ *  - A method that can fail, and returns a value, should return a Mdt::Expected
+ *    and update the last error using setLastError()
+ *
+ * Example of such class:
+ * \code
+ * class ProductRepository
+ * {
+ *  public:
+ *
+ *   Mdt::Expected<ProductId> add(const Product & product);
+ *   Mdt::Expected<Product> get(ProductId id) const;
+ *   bool update(const Product & product);
+ *   bool remove(ProductId id);
+ *   bool removeAll();
+ *
+ *   Mdt::Error lastError() const
+ *   {
+ *     return mLastError;
+ *   }
+ *
+ *  private:
+ *
+ *   void setLastError(const Mdt::Error & error)
+ *   {
+ *     Q_ASSERT(!error.isNull());
+ *     mLastError = error;
+ *   }
+ *
+ *   mutable Mdt::Error mLastError;
+ * };
+ * \endcode
+ *
+ * Notice that mLastError is declared mutable.
+ *  This lets the %get() method be const.
+ *  The const tells that %get() will not mutate the repository,
+ *  but it does not offer any thread safety at all.
  *
  * Value classes should not have methods that can fail,
  *  because they do not, for example, read files.
- *  If it occurs that member methods of such class can fail, they should follow the same above rules.
- *
- * \section error_handlig Error handling
  *
  * \subsection error_handlig_dialog Dialogs
  *
