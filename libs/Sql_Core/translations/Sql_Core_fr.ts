@@ -12,7 +12,7 @@
 <context>
     <name>Mdt::Sql::AsyncQueryConnectionImpl</name>
     <message>
-        <location filename="../src/Mdt/Sql/AsyncQueryConnectionImpl.cpp" line="56"/>
+        <location filename="../src/Mdt/Sql/AsyncQueryConnectionImpl.cpp" line="52"/>
         <source>Wait connection open timed out</source>
         <translation type="unfinished"></translation>
     </message>

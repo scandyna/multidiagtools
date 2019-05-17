@@ -25,7 +25,6 @@
 #include "AsyncQueryConnection.h"
 #include "Mdt/QueryExpression/SelectStatement.h"
 #include "Mdt/Container/VariantRecord.h"
-#include "Mdt/Expected.h"
 #include "MdtSql_CoreExport.h"
 #include <QVariant>
 
@@ -75,7 +74,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Execute a select statement synchronously
      */
-    Mdt::ExpectedResult execStatement(const Mdt::QueryExpression::SelectStatement & statement);
+    bool execStatement(const Mdt::QueryExpression::SelectStatement & statement);
 
     /*! \brief Check if this query executes in synchronous mode
      *

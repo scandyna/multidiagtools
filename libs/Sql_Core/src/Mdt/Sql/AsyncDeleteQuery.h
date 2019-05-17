@@ -47,7 +47,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Execute a delete statement synchronously
      */
-    Mdt::ExpectedResult execStatement(const DeleteStatement & statement);
+    bool execStatement(const DeleteStatement & statement);
 
    public Q_SLOTS:
 

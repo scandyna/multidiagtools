@@ -179,7 +179,9 @@ void AsyncQueryTest::insertAsync()
   statement.setTableName("Client_tbl");
   statement.addValue(FieldName("Id_PK"), 1);
   statement.addValue(FieldName("Name"), "Name 1");
+  QVERIFY(!query.isSynchronous());
   query.submitStatement(statement);
+  QVERIFY(!query.isSynchronous());
   // Check that newIdInserted() signal is emitted
   QTRY_VERIFY(receiver.hasLastInsertId());
   QCOMPARE(receiver.lastInsertId(), QVariant(1));
@@ -199,25 +201,24 @@ void AsyncQueryTest::insertAsync()
 void AsyncQueryTest::insertSync()
 {
   Client client;
-  Mdt::Expected<QVariant> id;
   InsertStatement statement;
   AsyncInsertQuery query(asyncQueryConnection());
 
   statement.setTableName("Client_tbl");
   statement.addValue(FieldName("Id_PK"), 1);
   statement.addValue(FieldName("Name"), "Name 1");
-  id = query.execStatement(statement);
-  QVERIFY(id);
-  QCOMPARE(*id, QVariant(1));
-  client = getClient(id->toInt());
+  QVERIFY(!query.isSynchronous());
+  QVERIFY(query.execStatement(statement));
+  QVERIFY(query.isSynchronous());
+  QCOMPARE(query.lastInsertId(), QVariant(1));
+  client = getClient(1);
   QCOMPARE(client.name, QLatin1String("Name 1"));
 
   statement.clear();
   statement.setTableName("Client_tbl");
   statement.addValue(FieldName("Name"), "Name 2");
-  id = query.execStatement(statement);
-  QVERIFY(id);
-  client = getClient(id->toInt());
+  QVERIFY(query.execStatement(statement));
+  client = getClient( query.lastInsertId().toInt());
   QCOMPARE(client.name, QLatin1String("Name 2"));
 }
 
@@ -231,14 +232,12 @@ void AsyncQueryTest::insertError()
   statement.setTableName("Client_tbl");
   statement.addValue(FieldName("Id_PK"), 1);
   statement.addValue(FieldName("Name"), "Name 1");
-  id = query.execStatement(statement);
-  QVERIFY(id);
-  QCOMPARE(*id, QVariant(1));
+  QVERIFY(query.execStatement(statement));
+  QCOMPARE(query.lastInsertId(), QVariant(1));
 
   // Unique constraint error
-  id = query.execStatement(statement);
-  QVERIFY(!id);
-  QVERIFY(id.error().isError(Mdt::ErrorCode::UniqueConstraintError));
+  QVERIFY(!query.execStatement(statement));
+  QVERIFY(query.lastError().isError(Mdt::ErrorCode::UniqueConstraintError));
 }
 
 void AsyncQueryTest::insertMultipleQueries()

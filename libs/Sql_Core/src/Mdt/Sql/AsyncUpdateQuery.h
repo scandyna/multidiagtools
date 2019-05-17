@@ -24,7 +24,6 @@
 #include "AsyncQueryBase.h"
 #include "UpdateStatement.h"
 #include "AsyncQueryConnection.h"
-#include "Mdt/Expected.h"
 #include "MdtSql_CoreExport.h"
 #include <memory>
 
@@ -48,14 +47,13 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Execute a update statement synchronously
      */
-    Mdt::ExpectedResult execStatement(const UpdateStatement & statement);
+    bool execStatement(const UpdateStatement & statement);
 
    public Q_SLOTS:
 
     /*! \brief Submit a update statement to be executed asynchronously
      */
     void submitStatement(const UpdateStatement & statement);
-
   };
 
 }} // namespace Mdt{ namespace Sql{

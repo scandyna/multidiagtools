@@ -24,7 +24,6 @@
 #include "AsyncQueryConnection.h"
 #include "AsyncQueryOperationType.h"
 #include "Mdt/Error.h"
-#include "Mdt/Expected.h"
 #include "Mdt/Async/WaitDonePredicateWithError.h"
 #include "MdtSql_CoreExport.h"
 #include <QObject>
@@ -62,6 +61,13 @@ namespace Mdt{ namespace Sql{
      */
     void setWaitTimeout(std::chrono::milliseconds timeout);
 
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
+
    Q_SIGNALS:
 
     /*! \brief Emitted once the query was done successfully
@@ -94,14 +100,14 @@ namespace Mdt{ namespace Sql{
      *
      * This method can be used to implement synchronous methods.
      *
-     * If all goes well, a result is returned.
-     *  If the query sends a error,
-     *  this error is returned.
-     *  On timeout, a error of type Mdt::ErrorCode::TimeoutError will be returned.
+     * Returns true if all goes well, otherwise false.
+     *
+     * If the query sends a error, lastError() will return it.
+     *  On timeout, lastError() will return a error of type Mdt::ErrorCode::TimeoutError.
      *
      * \todo On timeout, the query should be cancelled, this is not solved...
      */
-    Mdt::ExpectedResult waitOperationFinished();
+    bool waitOperationFinished();
 
    private Q_SLOTS:
 
@@ -109,9 +115,9 @@ namespace Mdt{ namespace Sql{
      */
     void setOperationDone(AsyncQueryOperationType operationType, int instanceId);
 
-    /*! \brief Set error
+    /*! \brief Set last error
      */
-    void setError(const Mdt::Error & error, int instanceId);
+    void setLastError(const Mdt::Error & error, int instanceId);
 
    private:
 

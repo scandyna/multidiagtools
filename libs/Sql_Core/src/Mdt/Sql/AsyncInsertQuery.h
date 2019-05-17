@@ -24,7 +24,6 @@
 #include "AsyncQueryBase.h"
 #include "AsyncQueryConnection.h"
 #include "InsertStatement.h"
-#include "Mdt/Expected.h"
 #include "MdtSql_CoreExport.h"
 #include <QVariant>
 
@@ -47,20 +46,39 @@ namespace Mdt{ namespace Sql{
     explicit AsyncInsertQuery(const std::shared_ptr<AsyncQueryConnection> & connection, QObject *parent = nullptr);
 
     /*! \brief Execute a insert statement synchronously
+     */
+    bool execStatement(const InsertStatement & statement);
+
+    /*! \brief Check if this query executes in synchronous mode
      *
-     * On success, the most recent insert ID is returned
+     * A query is synchronous after a successfull call to execStatement().
+     */
+    bool isSynchronous() const noexcept
+    {
+      return mIsSynchronous;
+    }
+
+    /*! \brief Get last insert id
+     *
+     * Returns the most recent insert ID after a successfull call of execStatement()
      *  if the database supports it, otherwise a null QVariant.
      *  Internally, QSqlQuery::lastInsertId() is used.
      *
-     * On error, the error is returned.
+     * \pre This query must be in synchronous mode
+     * \sa isSynchronous()
      */
-    Mdt::Expected<QVariant> execStatement(const InsertStatement & statement);
+    QVariant lastInsertId() const
+    {
+      Q_ASSERT(isSynchronous());
+
+      return mLastInertId;
+    }
 
    public Q_SLOTS:
 
     /*! \brief Submit a insert statement to be executed asynchronously
      *
-     * On success, the newIdInserted() is emitted with the most recent ID
+     * On success, the newIdInserted() signal is emitted with the most recent ID
      *  if the database supports it, otherwise with a null QVariant.
      *  Internally, QSqlQuery::lastInsertId() is used.
      *
@@ -71,6 +89,8 @@ namespace Mdt{ namespace Sql{
    Q_SIGNALS:
 
     /*! \brief Emitted when a new ID have been inserted
+     *
+     * \sa submitStatement()
      */
     void newIdInserted(const QVariant & id);
 
@@ -82,6 +102,7 @@ namespace Mdt{ namespace Sql{
 
    private:
 
+    bool mIsSynchronous = false;
     QVariant mLastInertId;
   };
 

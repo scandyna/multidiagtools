@@ -27,7 +27,7 @@ AsyncDeleteQuery::AsyncDeleteQuery(const std::shared_ptr<AsyncQueryConnection> &
 {
 }
 
-Mdt::ExpectedResult AsyncDeleteQuery::execStatement(const DeleteStatement & statement)
+bool AsyncDeleteQuery::execStatement(const DeleteStatement & statement)
 {
   submitStatement(statement);
 

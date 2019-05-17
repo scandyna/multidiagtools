@@ -27,7 +27,7 @@ AsyncUpdateQuery::AsyncUpdateQuery(const std::shared_ptr<AsyncQueryConnection> &
 {
 }
 
-Mdt::ExpectedResult AsyncUpdateQuery::execStatement(const UpdateStatement & statement)
+bool AsyncUpdateQuery::execStatement(const UpdateStatement & statement)
 {
   submitStatement(statement);
 

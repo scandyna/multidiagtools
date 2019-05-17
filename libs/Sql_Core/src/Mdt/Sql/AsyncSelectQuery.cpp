@@ -33,13 +33,20 @@ AsyncSelectQuery::AsyncSelectQuery(const std::shared_ptr<AsyncQueryConnection> &
   connect(cnnImpl, &AsyncQueryConnectionImpl::selectQueryFetchNextDone, this, &AsyncSelectQuery::onFetchNexDone);
 }
 
-Mdt::ExpectedResult AsyncSelectQuery::execStatement(const Mdt::QueryExpression::SelectStatement & statement)
+bool AsyncSelectQuery::execStatement(const Mdt::QueryExpression::SelectStatement & statement)
 {
+  /*
+   * Make sure that onNewRecordAvailable()
+   * will store the first comming records
+   */
+  mIsSynchronous = true;
   submitStatement(statement, false);
 
   const auto result = waitOperationFinished();
   if(result){
     mIsSynchronous = true;
+  }else{
+    mIsSynchronous = false;
   }
 
   return result;

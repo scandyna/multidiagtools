@@ -33,27 +33,37 @@ AsyncInsertQuery::AsyncInsertQuery(const std::shared_ptr<AsyncQueryConnection> &
 
 void AsyncInsertQuery::submitStatement(const InsertStatement & statement)
 {
+  mIsSynchronous = false;
   connectionImpl()->submitInsertStatement(statement, instanceId());
 }
 
-Mdt::Expected<QVariant> AsyncInsertQuery::execStatement(const InsertStatement & statement)
+bool AsyncInsertQuery::execStatement(const InsertStatement & statement)
 {
-  submitStatement(statement);
+  /*
+   * Make sure that setNewInsertedId()
+   * will store the comming id
+   */
+  mIsSynchronous = true;
+  connectionImpl()->submitInsertStatement(statement, instanceId());
 
   const auto result = waitOperationFinished();
   if(!result){
-    return result.error();
+    mIsSynchronous = false;
+    return false;
   }
 
-  return mLastInertId;
+  return true;
 }
 
 void AsyncInsertQuery::setNewInsertedId(const QVariant & id, int iid)
 {
-  if(iid == instanceId()){
-    mLastInertId = id;
-    emit newIdInserted(id);
+  if(iid != instanceId()){
+    return;
   }
+  if(isSynchronous()){
+    mLastInertId = id;
+  }
+  emit newIdInserted(id);
 }
 
 }} // namespace Mdt{ namespace Sql{
