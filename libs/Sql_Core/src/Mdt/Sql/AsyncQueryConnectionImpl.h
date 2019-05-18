@@ -85,9 +85,8 @@ namespace Mdt{ namespace Sql{
       connect(this, &AsyncQueryConnectionImpl::insertStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processInsertStatement);
       connect(worker, &AbstractAsyncQueryThreadWorker::newIdInserted, this, &AsyncQueryConnectionImpl::newIdInserted);
       connect(this, &AsyncQueryConnectionImpl::selectStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processSelectStatement);
-      connect(this, &AsyncQueryConnectionImpl::selectQueryFetchNextSubmitted, worker, &AbstractAsyncQueryThreadWorker::processSelectQueryFetchNext);
+      connect(this, &AsyncQueryConnectionImpl::selectQueryFetchNextRecordsSubmitted, worker, &AbstractAsyncQueryThreadWorker::processSelectQueryFetchNextRecords);
       connect(worker, &Worker::newRecordAvailable, this, &AsyncQueryConnectionImpl::newRecordAvailable);
-      connect(worker, &Worker::selectQueryFetchNextDone, this, &AsyncQueryConnectionImpl::selectQueryFetchNextDone);
       connect(this, &AsyncQueryConnectionImpl::updateStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processUpdateStatement);
       connect(this, &AsyncQueryConnectionImpl::deleteStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processDeleteStatement);
 
@@ -106,9 +105,9 @@ namespace Mdt{ namespace Sql{
      */
     void submitSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
 
-    /*! \brief Submit to fetch new record
+    /*! \brief Submit to fetch new records
      */
-    void submitSelectQueryFetchNext(int instanceId);
+    void submitSelectQueryFetchNextRecords(int maxRecords, int instanceId);
 
     /*! \brief Submit a update statement
      */
@@ -144,7 +143,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Forward the request from the query to the thread worker
      */
-    void selectQueryFetchNextSubmitted(int instanceId);
+    void selectQueryFetchNextRecordsSubmitted(int maxRecords, int instanceId);
 
     /*! \brief Forwards the statement comming from the query to the thread worker
      */
@@ -161,10 +160,6 @@ namespace Mdt{ namespace Sql{
     /*! \brief Emitted whenever a new record is available
      */
     void newRecordAvailable(const Mdt::Container::VariantRecord & record, int instanceId);
-
-    /*! \brief Emitted whenever fetching a new record is done
-     */
-    void selectQueryFetchNextDone(bool result, int instanceId);
 
     /*! \brief Emitted whenever a query operation is done
      */

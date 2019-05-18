@@ -98,19 +98,25 @@ void AbstractAsyncQueryThreadWorker::processSelectStatement(const Mdt::QueryExpr
   emit queryOperationDone(AsyncQueryOperationType::FinalOperation, instanceId);
 }
 
-void AbstractAsyncQueryThreadWorker::processSelectQueryFetchNext(int instanceId)
+void AbstractAsyncQueryThreadWorker::processSelectQueryFetchNextRecords(int maxRecords,  int instanceId)
 {
-  Q_ASSERT(mSelectQuery.get() != nullptr);
-
-  const bool result = mSelectQuery->next();
-  emit selectQueryFetchNextDone(result, instanceId);
-  if(result){
-    emit newRecordAvailable(  variantRecordFromSqlRecord(mSelectQuery->record()), instanceId );
-    emit queryOperationDone(AsyncQueryOperationType::IntermediateOperation, instanceId);
-  }else{
-    mSelectQuery.reset();
+  if(!mSelectQuery){
     emit queryOperationDone(AsyncQueryOperationType::FinalOperation, instanceId);
+    return;
   }
+
+  bool isFinished = true;
+
+  for(int rec = 0; rec < maxRecords; ++rec){
+    isFinished = !mSelectQuery->next();
+    if(isFinished){
+      mSelectQuery.reset();
+      emit queryOperationDone(AsyncQueryOperationType::FinalOperation, instanceId);
+      return;
+    }
+    emit newRecordAvailable(  variantRecordFromSqlRecord(mSelectQuery->record()), instanceId );
+  }
+  emit queryOperationDone(AsyncQueryOperationType::IntermediateOperation, instanceId);
 }
 
 void AbstractAsyncQueryThreadWorker::processUpdateStatement(const Mdt::Sql::UpdateStatement & statement, int instanceId)

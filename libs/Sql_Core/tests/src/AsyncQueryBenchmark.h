@@ -48,8 +48,11 @@ class AsyncQueryBenchmark : public TestBase
   void selectSqlQueryBenchmark();
   void selectSqlQueryBenchmark_data();
 
-  void selectAsyncSqlQuerySyncUsageBenchmark();
-  void selectAsyncSqlQuerySyncUsageBenchmark_data();
+  void selectAsyncSqlQuerySyncUsageNextBenchmark();
+  void selectAsyncSqlQuerySyncUsageNextBenchmark_data();
+
+  void selectAsyncSqlQuerySyncUsageFetchRecordsBenchmark();
+  void selectAsyncSqlQuerySyncUsageFetchRecordsBenchmark_data();
 
  private:
 

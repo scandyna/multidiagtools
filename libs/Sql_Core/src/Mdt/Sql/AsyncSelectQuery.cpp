@@ -30,7 +30,6 @@ AsyncSelectQuery::AsyncSelectQuery(const std::shared_ptr<AsyncQueryConnection> &
   Q_ASSERT(cnnImpl != nullptr);
 
   connect(cnnImpl, &AsyncQueryConnectionImpl::newRecordAvailable, this, &AsyncSelectQuery::onNewRecordAvailable);
-  connect(cnnImpl, &AsyncQueryConnectionImpl::selectQueryFetchNextDone, this, &AsyncSelectQuery::onFetchNexDone);
 }
 
 bool AsyncSelectQuery::execStatement(const Mdt::QueryExpression::SelectStatement & statement)
@@ -56,17 +55,27 @@ bool AsyncSelectQuery::next()
 {
   Q_ASSERT(isSynchronous());
 
-  connectionImpl()->submitSelectQueryFetchNext(instanceId());
+  return fetchRecords(1);
+}
+
+bool AsyncSelectQuery::fetchRecords(int maxRecords)
+{
+  Q_ASSERT(maxRecords > 0);
+  Q_ASSERT(isSynchronous());
+
+  mCurrentRecords.clear();
+  connectionImpl()->submitSelectQueryFetchNextRecords(maxRecords, instanceId());
   if(!waitOperationFinished()){
     return false;
   }
 
-  return mFetchNextResult;
+  return fetchedRecordCount() > 0;
 }
 
 void AsyncSelectQuery::submitStatement(const Mdt::QueryExpression::SelectStatement & statement)
 {
   mIsSynchronous = false;
+  mCurrentRecords.clear();
   submitStatement(statement, true);
 }
 
@@ -77,17 +86,10 @@ void AsyncSelectQuery::onNewRecordAvailable(const Mdt::Container::VariantRecord 
   }
 
   if(isSynchronous()){
-    mCurrentRecord = record;
+    mCurrentRecords.push_back(record);
   }
 
   emit newRecordAvailable(record);
-}
-
-void AsyncSelectQuery::onFetchNexDone(bool result, int iid)
-{
-  if(iid == instanceId()){
-    mFetchNextResult = result;
-  }
 }
 
 void AsyncSelectQuery::submitStatement(const Mdt::QueryExpression::SelectStatement & statement, bool fetchRecords)

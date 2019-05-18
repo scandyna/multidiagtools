@@ -486,6 +486,15 @@ void AsyncQueryTest::selectSyncTest()
   QCOMPARE(query.value(0).toInt(), 2);
   QCOMPARE(query.value(1).toString(), QLatin1String("Name 2"));
   QVERIFY(!query.next());
+
+  QVERIFY(query.execStatement(statement));
+  QVERIFY(query.isSynchronous());
+  QVERIFY(query.fetchRecords());
+  QCOMPARE(query.fetchedRecordCount(), 2);
+  QCOMPARE(query.record(0).value(1).toString(), QLatin1String("Name 1"));
+  QCOMPARE(query.record(1).value(1).toString(), QLatin1String("Name 2"));
+  QVERIFY(!query.fetchRecords());
+  QCOMPARE(query.fetchedRecordCount(), 0);
 }
 
 void AsyncQueryTest::selectMultipleQueriesTest()

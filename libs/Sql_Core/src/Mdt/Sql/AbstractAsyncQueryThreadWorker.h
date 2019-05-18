@@ -98,9 +98,9 @@ namespace Mdt{ namespace Sql{
      */
     void processSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
 
-    /*! \brief Process fetch next record
+    /*! \brief Process fetch next records
      */
-    void processSelectQueryFetchNext(int instanceId);
+    void processSelectQueryFetchNextRecords(int maxRecords,  int instanceId);
 
     /*! \brief Process a update statement
      */
@@ -127,10 +127,6 @@ namespace Mdt{ namespace Sql{
     /*! \brief Emitted whenever a new record is available
      */
     void newRecordAvailable(const Mdt::Container::VariantRecord & record, int instanceId);
-
-    /*! \brief Emitted whenever fetching a new record is done
-     */
-    void selectQueryFetchNextDone(bool result, int instanceId);
 
     /*! \brief Emitted whenever a query operation is done
      */

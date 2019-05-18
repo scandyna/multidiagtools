@@ -28,6 +28,8 @@
 #include "MdtSql_CoreExport.h"
 #include <QVariant>
 
+#include <vector>
+
 namespace Mdt{ namespace Sql{
 
   /*! \brief Execute a select query asynchronously
@@ -55,6 +57,16 @@ namespace Mdt{ namespace Sql{
    *
    * while(query.next()){
    *   const QString name = query.value(1).toString();
+   * }
+   * \endcode
+   *
+   * Above code will introduce latency at each call of next().
+   *  A better solution is to use fetchRecords():
+   * \code
+   * while(query.fetchRecords()){
+   *   for(int rec = 0; rec < query.fetchedRecordCount(); ++rec){
+   *     const QString name = query.record(rec).value(1).toString();
+   *   }
    * }
    * \endcode
    */
@@ -95,8 +107,9 @@ namespace Mdt{ namespace Sql{
     int fieldCount() const
     {
       Q_ASSERT(isSynchronous());
+      Q_ASSERT(mCurrentRecords.size() == 1);
 
-      return mCurrentRecord.columnCount();
+      return mCurrentRecords[0].columnCount();
     }
 
     /*! \brief Retrieves the next record in the result, if available, and positions the query on the retrieved record
@@ -118,8 +131,44 @@ namespace Mdt{ namespace Sql{
     QVariant value(int fieldIndex) const
     {
       Q_ASSERT(isSynchronous());
+      Q_ASSERT(mCurrentRecords.size() == 1);
 
-      return mCurrentRecord.value(fieldIndex);
+      return mCurrentRecords[0].value(fieldIndex);
+    }
+
+    /*! \brief Retrieves the next records in the result, if available
+     *
+     * \pre \a maxRecords must be > 0
+     * \pre This query must be in synchronous mode
+     * \sa isSynchronous()
+     */
+    bool fetchRecords(int maxRecords = 100);
+
+    /*! \brief Get the count of records retrieved from the result
+     *
+     * \pre This query must be in synchronous mode
+     * \sa isSynchronous()
+     */
+    int fetchedRecordCount() const noexcept
+    {
+      Q_ASSERT(isSynchronous());
+
+      return mCurrentRecords.size();
+    }
+
+    /*! \brief Get a record from the ones retrieved from the result
+     *
+     * \pre \a row must be in valid range ( 0 <= \a row < fetchedRecordCount() )
+     * \pre This query must be in synchronous mode
+     * \sa isSynchronous()
+     */
+    Mdt::Container::VariantRecord record(int row) const
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < fetchedRecordCount());
+      Q_ASSERT(isSynchronous());
+
+      return mCurrentRecords[row];
     }
 
    public Q_SLOTS:
@@ -142,16 +191,13 @@ namespace Mdt{ namespace Sql{
    private Q_SLOTS:
 
     void onNewRecordAvailable(const Mdt::Container::VariantRecord & record, int iid);
-    void onFetchNexDone(bool result, int iid);
 
    private:
 
     void submitStatement(const Mdt::QueryExpression::SelectStatement & statement, bool fetchRecords);
-    void submitFetchNext();
 
     bool mIsSynchronous = false;
-    bool mFetchNextResult = false;
-    Mdt::Container::VariantRecord mCurrentRecord;
+    std::vector<Mdt::Container::VariantRecord> mCurrentRecords;
   };
 
 }} // namespace Mdt{ namespace Sql{

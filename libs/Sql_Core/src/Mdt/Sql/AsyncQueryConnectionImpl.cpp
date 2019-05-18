@@ -71,9 +71,9 @@ void AsyncQueryConnectionImpl::submitSelectStatement(const Mdt::QueryExpression:
   emit selectStatementSubmitted(statement, instanceId, fetchRecords);
 }
 
-void AsyncQueryConnectionImpl::submitSelectQueryFetchNext(int instanceId)
+void AsyncQueryConnectionImpl::submitSelectQueryFetchNextRecords(int maxRecords, int instanceId)
 {
-  emit selectQueryFetchNextSubmitted(instanceId);
+  emit selectQueryFetchNextRecordsSubmitted(maxRecords, instanceId);
 }
 
 void AsyncQueryConnectionImpl::submitUpdateStatement(const UpdateStatement & statement, int instanceId)

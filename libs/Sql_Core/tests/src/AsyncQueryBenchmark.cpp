@@ -150,7 +150,7 @@ void AsyncQueryBenchmark::selectSqlQueryBenchmark_data()
   prepareSelectBenchmarkData();
 }
 
-void AsyncQueryBenchmark::selectAsyncSqlQuerySyncUsageBenchmark()
+void AsyncQueryBenchmark::selectAsyncSqlQuerySyncUsageNextBenchmark()
 {
   QFETCH(int, recordCount);
   const auto statement = selectAllClientStatement();
@@ -173,7 +173,35 @@ void AsyncQueryBenchmark::selectAsyncSqlQuerySyncUsageBenchmark()
   QCOMPARE((int)result.size(), recordCount);
 }
 
-void AsyncQueryBenchmark::selectAsyncSqlQuerySyncUsageBenchmark_data()
+void AsyncQueryBenchmark::selectAsyncSqlQuerySyncUsageNextBenchmark_data()
+{
+  prepareSelectBenchmarkData();
+}
+
+void AsyncQueryBenchmark::selectAsyncSqlQuerySyncUsageFetchRecordsBenchmark()
+{
+  QFETCH(int, recordCount);
+  const auto statement = selectAllClientStatement();
+  std::vector<VariantRecord> result;
+  result.reserve(recordCount);
+  AsyncSelectQuery query(asyncQueryConnection());
+
+  QVERIFY(insertCountClients(recordCount));
+
+  QBENCHMARK{
+    result.clear();
+    QVERIFY(query.execStatement(statement));
+    while(query.fetchRecords()){
+      const int n = query.fetchedRecordCount();
+      for(int rec = 0; rec < n; ++rec){
+        result.push_back( query.record(rec) );
+      }
+    }
+  }
+  QCOMPARE((int)result.size(), recordCount);
+}
+
+void AsyncQueryBenchmark::selectAsyncSqlQuerySyncUsageFetchRecordsBenchmark_data()
 {
   prepareSelectBenchmarkData();
 }
@@ -184,18 +212,23 @@ void AsyncQueryBenchmark::prepareSelectBenchmarkData()
 
   QTest::newRow("1") << 1;
   QTest::newRow("10") << 10;
+  QTest::newRow("100") << 100;
 }
 
 bool AsyncQueryBenchmark::insertCountClients(int n)
 {
   Q_ASSERT(n > 0);
 
+  QSqlDatabase db = database();
+
+  db.transaction();
   for(int i = 1; i <= n; ++i){
     const QString name = QLatin1String("Name ") + QString::number(i);
     if(!insertClient(i, name)){
       return false;
     }
   }
+  db.commit();
 
   return true;
 }
