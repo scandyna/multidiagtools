@@ -37,7 +37,7 @@ void SQLiteAsyncQueryConnection::submitOpen(const SQLiteConnectionParameters & p
   setThreadWorker(worker, &SQLiteAsyncQueryThreadWorker::processOpen);
 }
 
-Mdt::ExpectedResult SQLiteAsyncQueryConnection::open(const SQLiteConnectionParameters & parameters, const QString & connectionNamePrefix)
+bool SQLiteAsyncQueryConnection::open(const SQLiteConnectionParameters & parameters, const QString & connectionNamePrefix)
 {
   submitOpen(parameters, connectionNamePrefix);
 

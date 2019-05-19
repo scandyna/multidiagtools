@@ -112,9 +112,8 @@ bool TestBase::initDatabaseSqliteAsync()
   }
 
   auto connection = std::make_shared<SQLiteAsyncQueryConnection>();
-  const auto result = connection->open(mConnectionParameters);
-  if(!result){
-    qWarning() << "Could not open database, error: " << result.error().text();
+  if(!connection->open(mConnectionParameters)){
+    qWarning() << "Could not open database, error: " << connection->lastError().text();
     return false;
   }
   mAsyncQueryConnection = connection;

@@ -32,6 +32,7 @@ class AsyncQueryTest : public TestBase
   void threadWorkerOpenCloseTest();
 
   void connectionOpenCloseTest();
+  void connectionOpenErrorTest();
   void connectionOpenConnectionNameTest();
   void connectionUsageTest();
 };

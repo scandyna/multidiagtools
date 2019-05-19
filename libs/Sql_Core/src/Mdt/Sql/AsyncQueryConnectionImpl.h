@@ -95,7 +95,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Wait until the database is open for this connection
      */
-    Mdt::ExpectedResult waitOpen();
+    bool waitOpen();
 
     /*! \brief Submit a insert statement
      */
@@ -124,6 +124,18 @@ namespace Mdt{ namespace Sql{
     /*! \brief Close the database handle
      */
     void close();
+
+    /*! \brief Get last error
+     *
+     * Will only return errors specific to the connection,
+     *  such as open failure.
+     *
+     * Errors specific to a query are not returned here.
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastOpenError;
+    }
 
    public Q_SLOTS:
 

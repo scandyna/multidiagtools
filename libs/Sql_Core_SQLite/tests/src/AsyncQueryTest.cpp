@@ -76,6 +76,17 @@ void AsyncQueryTest::connectionOpenCloseTest()
   QCOMPARE(QSqlDatabase::connectionNames().count(), initialConnectionCount);
 }
 
+void AsyncQueryTest::connectionOpenErrorTest()
+{
+  SQLiteAsyncQueryConnection connection;
+  SQLiteConnectionParameters parameters;
+
+  parameters.setDatabaseFile("/Some/Non/Existing/db");
+  QVERIFY(connection.lastError().isNull());
+  QVERIFY(!connection.open(parameters));
+  QVERIFY(!connection.lastError().isNull());
+}
+
 void AsyncQueryTest::connectionOpenConnectionNameTest()
 {
   const QString namePrefix = "AsyncConnection";

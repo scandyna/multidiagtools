@@ -24,7 +24,6 @@
 #include "AsyncQueryConnectionImpl.h"
 #include "ConnectionParameters.h"
 #include "Mdt/Error.h"
-#include "Mdt/Expected.h"
 #include "MdtSql_CoreExport.h"
 #include <QObject>
 #include <QString>
@@ -54,9 +53,8 @@ namespace Mdt{ namespace Sql{
    * parameters.setDatabaseFile("/path/to/dbFile.sql");
    *
    * auto connection = std::make_shared<SQLiteAsyncQueryConnection>();
-   * const auto result = connection->open(parameters);
-   * if(!result){
-   *   handleError(result.error());
+   * if( !connection->open(parameters) ){
+   *   handleError( connection->lastError() );
    * }
    * \endcode
    *
@@ -119,6 +117,18 @@ namespace Mdt{ namespace Sql{
      */
     void close();
 
+    /*! \brief Get last error
+     *
+     * Will only return errors specific to the connection,
+     *  such as open failure.
+     *
+     * Errors specific to a query are not returned here.
+     */
+    Mdt::Error lastError() const
+    {
+      return mImpl.lastError();
+    }
+
   Q_SIGNALS:
 
     /*! \brief Emitted when the database handle have been closed
@@ -161,7 +171,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Wait until the database is open for this connection
      */
-    Mdt::ExpectedResult waitOpen()
+    bool waitOpen()
     {
       return mImpl.waitOpen();
     }

@@ -23,7 +23,6 @@
 
 #include "SQLiteConnectionParameters.h"
 #include "Mdt/Sql/AsyncQueryConnection.h"
-#include "Mdt/Expected.h"
 #include "MdtSql_Core_SQLiteExport.h"
 
 namespace Mdt{ namespace Sql{
@@ -37,9 +36,8 @@ namespace Mdt{ namespace Sql{
    * parameters.setDatabaseFile("/path/to/dbFile.sql");
    *
    * auto connection = std::make_shared<SQLiteAsyncQueryConnection>();
-   * const auto result = connection->open(parameters);
-   * if(!result){
-   *   handleError(result.error());
+   * if( !connection->open(parameters) ){
+   *   handleError( connection->lastError() );
    * }
    * \endcode
    */
@@ -69,7 +67,7 @@ namespace Mdt{ namespace Sql{
      *
      * \sa close()
      */
-    Mdt::ExpectedResult open(const SQLiteConnectionParameters & parameters, const QString & connectionNamePrefix = QString());
+    bool open(const SQLiteConnectionParameters & parameters, const QString & connectionNamePrefix = QString());
   };
 
 }} // namespace Mdt{ namespace Sql{

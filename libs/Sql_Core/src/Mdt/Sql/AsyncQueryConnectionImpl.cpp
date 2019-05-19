@@ -44,21 +44,21 @@ AsyncQueryConnectionImpl::~AsyncQueryConnectionImpl()
   close();
 }
 
-Mdt::ExpectedResult AsyncQueryConnectionImpl::waitOpen()
+bool AsyncQueryConnectionImpl::waitOpen()
 {
   using namespace std::chrono_literals;
 
   if( !Mdt::Async::wait(mWaitOpenPredicate, 5000ms) ){
     const QString msg = tr("Wait connection open timed out");
     mLastOpenError = mdtErrorNewTQ(Mdt::ErrorCode::TimeoutError, msg, Mdt::Error::Critical, this);
-    return mLastOpenError;
+    return false;
   }
 
   if(mWaitOpenPredicate.hasError()){
-    return mLastOpenError;
+    return false;
   }
 
-  return Mdt::ExpectedResultOk();
+  return true;
 }
 
 void AsyncQueryConnectionImpl::submitInsertStatement(const InsertStatement & statement, int instanceId)
@@ -104,6 +104,8 @@ void AsyncQueryConnectionImpl::setOpenDone()
 
 void AsyncQueryConnectionImpl::setOpenError(const Mdt::Error & error)
 {
+  Q_ASSERT(!error.isNull());
+
   mLastOpenError = error;
   mWaitOpenPredicate.setErrorOccured();
 }
