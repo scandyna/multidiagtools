@@ -25,6 +25,7 @@
 #include "Mdt/Sql/ConnectionParameters.h"
 #include "MdtSql_Core_SQLiteExport.h"
 #include <QString>
+#include <chrono>
 
 namespace Mdt{ namespace Sql{
 
@@ -81,6 +82,26 @@ namespace Mdt{ namespace Sql{
       return mOpenMode;
     }
 
+    /*! \brief Set busy timeout
+     *
+     * The default timeout 5s
+     *
+     * Setting this timeout to 0 will disable the timeout.
+     *
+     * \sa [SQLite Busy Timeout](https://www.sqlite.org/c3ref/busy_timeout.html)
+     */
+    void setBusyTimeout(std::chrono::milliseconds t)
+    {
+      mBusyTimeout = t;
+    }
+
+    /*! \brief Get busy timeout
+     */
+    std::chrono::milliseconds busyTimeout() const noexcept
+    {
+      return mBusyTimeout;
+    }
+
     /*! \brief Get a connection parameters from this
      */
     ConnectionParameters toConnectionParameters() const;
@@ -89,6 +110,7 @@ namespace Mdt{ namespace Sql{
 
     QString mFilePath;
     SQLiteOpenMode mOpenMode = SQLiteOpenMode::ReadWrite;
+    std::chrono::milliseconds mBusyTimeout = std::chrono::milliseconds(5000);
   };
 
 }} // namespace Mdt{ namespace Sql{

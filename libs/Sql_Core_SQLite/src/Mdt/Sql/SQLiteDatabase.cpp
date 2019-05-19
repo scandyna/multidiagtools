@@ -220,11 +220,16 @@ void SQLiteDatabase::setConnectOptions(SQLiteOpenMode openMode)
   Q_ASSERT(hasSQLiteDriverLoaded(db));
   Q_ASSERT(!db.isOpen());
 
+  QString connectOptions = QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES");
+
+  const int busyTimeout = mParameters.busyTimeout().count();
+  connectOptions.append( QLatin1String(";QSQLITE_BUSY_TIMEOUT=") + QString::number(busyTimeout) );
+
   if(openMode == SQLiteOpenMode::ReadOnly){
-    db.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES;QSQLITE_OPEN_READONLY"));
-  }else{
-    db.setConnectOptions(QLatin1String("QSQLITE_USE_EXTENDED_RESULT_CODES"));
+    connectOptions.append( QLatin1String(";QSQLITE_OPEN_READONLY") );
   }
+
+  db.setConnectOptions(connectOptions);
 }
 
 
