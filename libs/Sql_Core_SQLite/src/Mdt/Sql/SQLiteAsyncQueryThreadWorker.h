@@ -23,7 +23,9 @@
 
 #include "SQLiteConnectionParameters.h"
 #include "Mdt/Sql/AbstractAsyncQueryThreadWorker.h"
-#include "Mdt/Expected.h"
+
+//#include "Mdt/Expected.h"
+
 #include "MdtSql_Core_SQLiteExport.h"
 #include <QString>
 
@@ -45,7 +47,7 @@ namespace Mdt{ namespace Sql{
      *
      * \sa SQLiteDatabase::open()
      */
-    Mdt::ExpectedResult open();
+    bool open();
 
    public slots:
 

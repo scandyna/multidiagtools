@@ -52,10 +52,8 @@ namespace Mdt{ namespace Sql{
    * parameters.setDatabaseFile("/path/to/db.sqlite");
    *
    * SQLiteDatabase sqliteDb(*connection, parameters);
-   * if(!sqliteDb.openExisting(){
-   *   if(!sqliteDb.createNewAndOpen()){
-   *     // Error handling
-   *   }
+   * if(!sqliteDb.open()){
+   *   // Error hanlding, use sqliteDb.lastError()
    * }
    *
    * QSqlDatabase dbConnection = connection.database();
@@ -88,9 +86,9 @@ namespace Mdt{ namespace Sql{
      *  - does not refer to a directory
      *
      * If one the checks fails, or a other error occures,
-     *  a error will be returned.
+     *  false will be returned.
      */
-    Mdt::ExpectedResult createNew();
+    bool createNew();
 
     /*! \brief Open a existing database file
      *
@@ -100,10 +98,10 @@ namespace Mdt{ namespace Sql{
      *  - is a SQLite database
      *
      * If one the checks fails, or a other error occures,
-     *  a error will be returned.
+     *  false will be returned.
      *
      */
-    Mdt::ExpectedResult openExisting();
+    bool openExisting();
 
     /*! \brief Open a database file
      *
@@ -124,7 +122,7 @@ namespace Mdt{ namespace Sql{
      * \sa createNew()
      * \sa openExisting()
      */
-    Mdt::ExpectedResult open();
+    bool open();
 
     /*! \brief Check if the connection this database handle refers to has a SQLite database open
      *
@@ -134,6 +132,13 @@ namespace Mdt{ namespace Sql{
      *  otherwise false.
      */
     bool isSQLiteDatabaseOpen();
+
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
 
     /*! \brief Add a connection to a SQLite database
      *
@@ -150,12 +155,13 @@ namespace Mdt{ namespace Sql{
 
     static bool hasSQLiteDriverLoaded(const QSqlDatabase & db) noexcept;
     Mdt::Expected<qlonglong> getSchemaVersion(const QSqlDatabase & db);
-    Mdt::ExpectedResult enableForeignKeySupport(const QSqlDatabase & db);
+    bool enableForeignKeySupport(const QSqlDatabase & db);
     void setConnectOptions(SQLiteOpenMode openMode);
-//     void setLastError(const Mdt::Error & error);
+    void setLastError(const Mdt::Error & error);
 
     Connection mConnection;
     SQLiteConnectionParameters mParameters;
+    Mdt::Error mLastError;
   };
 
 }} // namespace Mdt{ namespace Sql{

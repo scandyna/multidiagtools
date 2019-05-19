@@ -43,7 +43,7 @@ SQLiteDatabase::SQLiteDatabase(const Connection & connection, const SQLiteConnec
   Q_ASSERT(hasSQLiteDriverLoaded(mConnection.database()));
 }
 
-Mdt::ExpectedResult SQLiteDatabase::createNew()
+bool SQLiteDatabase::createNew()
 {
   QFileInfo fi(mParameters.databaseFile());
 
@@ -51,13 +51,15 @@ Mdt::ExpectedResult SQLiteDatabase::createNew()
     const auto msg = tr("Create a new SQLite database failed because file path refers to a directory.\nFile path: '%1'")
                      .arg( fi.absoluteFilePath() );
     const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    return error;
+    setLastError(error);
+    return false;
   }
   if(fi.exists()){
     const auto msg = tr("Create a new SQLite database failed because file named '%1' allready exists.\nDirectory: '%2'")
                      .arg( fi.fileName(), fi.absoluteDir().path() );
     const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    return error;
+    setLastError(error);
+    return false;
   }
   if(mParameters.openMode() == SQLiteOpenMode::ReadOnly){
     mParameters.setOpenMode(SQLiteOpenMode::ReadWrite);
@@ -65,14 +67,14 @@ Mdt::ExpectedResult SQLiteDatabase::createNew()
     mParameters.setOpenMode(SQLiteOpenMode::ReadOnly);
     mConnection.database().close();
     if(!result){
-      return result;
+      return false;
     }
   }
 
   return open();
 }
 
-Mdt::ExpectedResult SQLiteDatabase::openExisting()
+bool SQLiteDatabase::openExisting()
 {
   QFileInfo fi(mParameters.databaseFile());
 
@@ -80,19 +82,21 @@ Mdt::ExpectedResult SQLiteDatabase::openExisting()
     const auto msg = tr("Open SQLite database failed because file named '%1' does not exist.\nDirectory: '%2'")
                      .arg( fi.fileName(), fi.absoluteDir().path() );
     const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    return error;
+    setLastError(error);
+    return false;
   }
   if(fi.isDir()){
     const auto msg = tr("Open SQLite database failed because file path refers to a directory.\nFile path: '%1'")
                      .arg( fi.absoluteFilePath() );
     const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    return error;
+    setLastError(error);
+    return false;
   }
 
   return open();
 }
 
-Mdt::ExpectedResult SQLiteDatabase::open()
+bool SQLiteDatabase::open()
 {
   QSqlDatabase db = mConnection.database();
 
@@ -105,7 +109,8 @@ Mdt::ExpectedResult SQLiteDatabase::open()
                      .arg( fi.fileName(), fi.absoluteDir().path() );
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     error.stackError( mdtErrorFromQSqlDatabaseQ(db, this) );
-    return error;
+    setLastError(error);
+    return false;
   }
   if(!isSQLiteDatabaseOpen()){
     db.close();
@@ -113,14 +118,14 @@ Mdt::ExpectedResult SQLiteDatabase::open()
     const auto msg = tr("Open SQLite database failed because file named '%1' is not a SQLite database (or it is encrypted).\nDirectory: '%2'")
                      .arg( fi.fileName(), fi.absoluteDir().path() );
     const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-    return error;
+    setLastError(error);
+    return false;
   }
-  const auto result = enableForeignKeySupport(db);
-  if(!result){
-    return result;
+  if(!enableForeignKeySupport(db)){
+    return false;
   }
 
-  return Mdt::ExpectedResultOk();
+  return true;
 }
 
 bool SQLiteDatabase::isSQLiteDatabaseOpen()
@@ -177,13 +182,13 @@ Mdt::Expected<qlonglong> SQLiteDatabase::getSchemaVersion(const QSqlDatabase & d
     const auto msg = tr("Get schema version failed.");
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     error.stackError( mdtErrorFromQSqlQueryQ(query, this) );
-//     setLastError(error);
+    setLastError(error);
     return error;
   }
   if(!query.next()){
     const auto msg = tr("Get schema version failed: query returned no result.");
     const auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
-//     setLastError(error);
+    setLastError(error);
     return error;
   }
   Q_ASSERT(query.record().count() > 0);
@@ -191,7 +196,7 @@ Mdt::Expected<qlonglong> SQLiteDatabase::getSchemaVersion(const QSqlDatabase & d
   return query.value(0).toLongLong();
 }
 
-Mdt::ExpectedResult SQLiteDatabase::enableForeignKeySupport(const QSqlDatabase & db)
+bool SQLiteDatabase::enableForeignKeySupport(const QSqlDatabase & db)
 {
   Q_ASSERT(hasSQLiteDriverLoaded(db));
   Q_ASSERT(db.isOpen());
@@ -201,10 +206,11 @@ Mdt::ExpectedResult SQLiteDatabase::enableForeignKeySupport(const QSqlDatabase &
     const auto msg = tr("Enabling foreign keys support failed.");
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     error.stackError( mdtErrorFromQSqlQueryQ(query, this) );
-    return error;
+    setLastError(error);
+    return false;
   }
 
-  return Mdt::ExpectedResultOk();
+  return true;
 }
 
 void SQLiteDatabase::setConnectOptions(SQLiteOpenMode openMode)
@@ -221,13 +227,12 @@ void SQLiteDatabase::setConnectOptions(SQLiteOpenMode openMode)
   }
 }
 
-/*
+
 void SQLiteDatabase::setLastError(const Mdt::Error & error)
 {
   Q_ASSERT(!error.isNull());
 
   mLastError = error;
 }
-*/
 
 }} // namespace Mdt{ namespace Sql{

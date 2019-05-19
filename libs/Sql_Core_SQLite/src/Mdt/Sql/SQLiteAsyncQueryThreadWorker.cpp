@@ -32,29 +32,30 @@ SQLiteAsyncQueryThreadWorker::SQLiteAsyncQueryThreadWorker(const SQLiteConnectio
 {
 }
 
-Mdt::ExpectedResult SQLiteAsyncQueryThreadWorker::open()
+bool SQLiteAsyncQueryThreadWorker::open()
 {
   close();
 
   const auto connection = SQLiteDatabase::addConnection(mConnectionNamePrefix);
   if(!connection){
-    return connection.error();
+    emit openErrorOccured(connection.error());
+    return false;
   }
   setConnection(*connection);
 
   SQLiteDatabase db(*connection, mParameters);
+  if(!db.open()){
+    emit openErrorOccured(db.lastError());
+    return false;
+  }
+  emit openDone();
 
-  return db.open();
+  return true;
 }
 
 void SQLiteAsyncQueryThreadWorker::processOpen()
 {
-  const auto result = open();
-  if(result){
-    emit openDone();
-  }else{
-    emit openErrorOccured(result.error());
-  }
+  open();
 }
 
 }} // namespace Mdt{ namespace Sql{
