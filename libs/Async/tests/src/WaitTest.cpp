@@ -77,6 +77,17 @@ void WaitTest::waitPredicateTest()
   QVERIFY(!pred2.hasTimedOut());
   QTRY_VERIFY(pred2.isFinished());
   QVERIFY(pred2.hasTimedOut());
+
+  /*
+   * Reset without timeout
+   */
+
+  pred2.reset();
+  QVERIFY(!pred2.isFinished());
+  QVERIFY(!pred2.hasTimedOut());
+  QTest::qWait(500);
+  QVERIFY(!pred2.isFinished());
+  QVERIFY(!pred2.hasTimedOut());
 }
 
 void WaitTest::waitPredicateWithErrorTest()
@@ -132,6 +143,11 @@ void WaitTest::waitTest()
   QVERIFY( !Mdt::Async::wait(pred, 0ms) );
   QVERIFY(pred.isFinished());
   QVERIFY(pred.hasTimedOut());
+
+  task.setDoneIn(50ms);
+  Mdt::Async::wait(pred);
+  QVERIFY(pred.isFinished());
+  QVERIFY(!pred.hasTimedOut());
 }
 
 /*

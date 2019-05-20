@@ -79,6 +79,13 @@ namespace Mdt{ namespace Async{
    */
   bool MDT_ASYNC_EXPORT wait(WaitDonePredicate & pred, std::chrono::milliseconds timeout);
 
+  /*! \brief Wait until a operation is done without breaking the Qt event loop of the caller
+   *
+   * This function is similar to wait(WaitDonePredicate &, std::chrono::milliseconds),
+   *  but does never timeout.
+   */
+  void MDT_ASYNC_EXPORT wait(WaitDonePredicate & pred);
+
 }} // namespace Mdt{ namespace Async{
 
 #endif // MDT_ASYNC_WAIT_H

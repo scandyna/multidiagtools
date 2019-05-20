@@ -45,7 +45,16 @@ namespace Mdt{ namespace Async{
       connect(&mTimeoutTimer, &QTimer::timeout, this, &WaitDonePredicate::setTimedOut);
     }
 
-    /*! \brief Reset done state and start the timeout timer
+    /*! \brief Reset predicate states
+     */
+    void reset()
+    {
+      resetPredicateStates();
+      mDone = false;
+      mTimedOut = false;
+    }
+
+    /*! \brief Reset predicate states and start the timeout timer
      *
      * \pre \a timeout must b >= 0ms
      */
@@ -53,9 +62,7 @@ namespace Mdt{ namespace Async{
     {
       Q_ASSERT(timeout >= std::chrono::milliseconds(0));
 
-      resetPredicateStates();
-      mDone = false;
-      mTimedOut = false;
+      reset();
       mTimeoutTimer.start(timeout);
     }
 
@@ -94,6 +101,7 @@ namespace Mdt{ namespace Async{
      */
     virtual void setDone()
     {
+      mTimeoutTimer.stop();
       mDone = true;
     }
 

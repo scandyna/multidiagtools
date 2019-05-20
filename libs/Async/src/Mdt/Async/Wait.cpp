@@ -36,4 +36,12 @@ bool wait(WaitDonePredicate & pred, std::chrono::milliseconds timeout)
   return !pred.hasTimedOut();
 }
 
+void wait(WaitDonePredicate & pred)
+{
+  pred.reset();
+  while(!pred.isFinished()){
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
+}
+
 }} // namespace Mdt{ namespace Async{
