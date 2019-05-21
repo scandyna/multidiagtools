@@ -73,9 +73,8 @@ bool TestBase::initDatabaseSqlite()
   }
 
   SQLiteDatabase db(*connection, mConnectionParameters);
-  const auto result = db.open();
-  if(!result){
-    qWarning() << "Could not open database, error: " << result.error().text();
+  if(!db.open()){
+    qWarning() << "Could not open database, error: " << db.lastError().text();
     return false;
   }
 
@@ -89,9 +88,8 @@ bool TestBase::openDatabaseIfNot()
   }
 
   SQLiteDatabase db(connection(), mConnectionParameters);
-  const auto result = db.open();
-  if(!result){
-    qWarning() << "Could not open database, error: " << result.error().text();
+  if(!db.open()){
+    qWarning() << "Could not open database, error: " << db.lastError().text();
     return false;
   }
 

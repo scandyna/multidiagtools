@@ -28,8 +28,6 @@
 #include <QFile>
 #include <QSqlQuery>
 
-#include <QDebug>
-
 using namespace Mdt::Sql;
 
 void SQLiteDatabaseTest::initTestCase()

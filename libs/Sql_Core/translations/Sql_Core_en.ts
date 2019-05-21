@@ -2,14 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
-    <name>Mdt::Sql::AsyncQueryBase</name>
-    <message>
-        <location filename="../src/Mdt/Sql/AsyncQueryBase.cpp" line="59"/>
-        <source>Query timed out</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Mdt::Sql::AsyncQueryConnectionImpl</name>
     <message>
         <location filename="../src/Mdt/Sql/AsyncQueryConnectionImpl.cpp" line="52"/>

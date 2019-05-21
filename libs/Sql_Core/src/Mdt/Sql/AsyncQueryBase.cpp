@@ -46,22 +46,10 @@ AsyncQueryBase::~AsyncQueryBase()
   connectionImpl()->releaseInstanceId(mInstanceId);
 }
 
-void AsyncQueryBase::setWaitTimeout(std::chrono::milliseconds timeout)
-{
-  Q_ASSERT(timeout >= std::chrono::milliseconds(0));
-
-  mWaitTimeout = timeout;
-}
-
 bool AsyncQueryBase::waitOperationFinished()
 {
-  if( !Mdt::Async::wait(mWaitPredicate, mWaitTimeout) ){
-    const QString msg = tr("Query timed out");
-    auto error = mdtErrorNewTQ(Mdt::ErrorCode::TimeoutError, msg, Mdt::Error::Critical, this);
-    /// \todo Should cancel the query..
-    setLastError(error, instanceId());
-    return false;
-  }
+  Mdt::Async::wait(mWaitPredicate);
+
   if(mWaitPredicate.hasError()){
     Q_ASSERT(!mLastError.isNull());
     return false;

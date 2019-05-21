@@ -28,7 +28,6 @@
 #include "MdtSql_CoreExport.h"
 #include <QObject>
 #include <memory>
-#include <chrono>
 
 namespace Mdt{ namespace Sql{
 
@@ -54,12 +53,6 @@ namespace Mdt{ namespace Sql{
     AsyncQueryBase & operator=(const AsyncQueryBase &) = delete;
     AsyncQueryBase(AsyncQueryBase &&) = delete;
     AsyncQueryBase & operator=(AsyncQueryBase &&) = delete;
-
-    /*! \brief Set the wait timeout
-     *
-     * \pre \a timeout must be >= 0
-     */
-    void setWaitTimeout(std::chrono::milliseconds timeout);
 
     /*! \brief Get last error
      */
@@ -122,7 +115,6 @@ namespace Mdt{ namespace Sql{
    private:
 
     int mInstanceId;
-    std::chrono::milliseconds mWaitTimeout = std::chrono::milliseconds(5000);
     std::shared_ptr<AsyncQueryConnection> mConnection;
     Mdt::Async::WaitDonePredicateWithError mWaitPredicate;
     Mdt::Error mLastError;
