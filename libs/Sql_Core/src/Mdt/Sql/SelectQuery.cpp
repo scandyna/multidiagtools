@@ -26,26 +26,18 @@
 
 namespace Mdt{ namespace Sql{
 
-SelectQuery::SelectQuery(const QSqlDatabase& db)
- : AbstractQuery(db),
-   mQuery(db)
+SelectQuery::SelectQuery(const Connection & connection, QObject *parent)
+ : AbstractQuery(connection, parent),
+   mQuery( connection.database() )
 {
-  Q_ASSERT(db.isValid());
   mQuery.setForwardOnly(true);
-}
-
-SelectQuery::SelectQuery(QObject* parent, const QSqlDatabase& db)
- : AbstractQuery(parent, db),
-   mQuery(db)
-{
-  Q_ASSERT(db.isValid());
 }
 
 bool SelectQuery::execStatement(const Mdt::QueryExpression::SelectStatement & statement, int maxRows)
 {
   mStatement = statement;
 
-  const QString sql = selectStatementToSql(mStatement, maxRows, constDatabase());
+  const QString sql = selectStatementToSql(mStatement, maxRows, database());
   if(!mQuery.exec(sql)){
     QString msg = tr("Executing query to select from '%1' failed.\nSQL:\n%2")
                   .arg(mStatement.entity().name(), sql);

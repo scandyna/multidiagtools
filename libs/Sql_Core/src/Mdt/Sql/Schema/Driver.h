@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,6 +26,7 @@
 #include "FieldTypeList.h"
 #include "PrimaryKeyContainer.h"
 // #include "ForeignFieldList.h"
+#include "../Connection.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include <QSqlDriver>
@@ -59,23 +60,21 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   class TablePopulationTemplate;
 
   /*! \brief SQL Schema driver
-   *
-   * Driver 
    */
   class Driver
   {
    public:
 
-    /*! \brief Create a driver based on QSqlDatabase object
+    /*! \brief Create a driver based on the database referenced by \a connection
      *
      * The mapping is done by typeFromDbmsType()
-     *  If db has a driver that is not supported,
+     *  If \a connection refers to a database handle that has a driver that is not supported,
      *  isValid() will return false and lastError()
      *  also contains a description.
      *
-     * \pre db must be valid (must have a driver loaded)
+     * \pre \a connection must refer to a valid database handle
      */
-    Driver(const QSqlDatabase & db);
+    explicit Driver(const Connection & connection);
 
     /*! \brief Destructor
      */

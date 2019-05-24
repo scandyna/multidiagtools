@@ -12,7 +12,7 @@
 <context>
     <name>Mdt::Sql::DeleteQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="59"/>
+        <location filename="../src/Mdt/Sql/DeleteQuery.cpp" line="58"/>
         <source>Executing query to delete in &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -98,7 +98,7 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::Schema::Driver</name>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/Driver.cpp" line="51"/>
+        <location filename="../src/Mdt/Sql/Schema/Driver.cpp" line="53"/>
         <source>Database engine with Qt driver name &apos;%1&apos; is not supported. Database connection name: &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -127,22 +127,22 @@ SQL: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="391"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="392"/>
         <source>Creating view &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="409"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="411"/>
         <source>Removing view &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="445"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="447"/>
         <source>Creating trigger &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="463"/>
+        <location filename="../src/Mdt/Sql/Schema/DriverImplementationInterface.cpp" line="465"/>
         <source>Removing trigger &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -212,21 +212,21 @@ SQL: %2</source>
 <context>
     <name>Mdt::Sql::SelectQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="50"/>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="42"/>
         <source>Executing query to select from &apos;%1&apos; failed.
 SQL:
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="71"/>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="63"/>
         <source>Fetching a single record from &apos;%1&apos; failed because no record is available.
 SQL:
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="82"/>
+        <location filename="../src/Mdt/Sql/SelectQuery.cpp" line="74"/>
         <source>Fetching a single record from &apos;%1&apos; failed because more than 1 record is available.
 SQL:
 %2</source>
@@ -236,7 +236,7 @@ SQL:
 <context>
     <name>Mdt::Sql::UpdateQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="66"/>
+        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="65"/>
         <source>Executing query to update &apos;%1&apos; failed.</source>
         <translation type="unfinished"></translation>
     </message>

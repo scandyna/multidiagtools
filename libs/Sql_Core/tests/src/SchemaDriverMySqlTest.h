@@ -22,10 +22,35 @@
 #define MDT_SQL_SCHEMA_DRIVER_MYSQL_TEST_H
 
 #include "TestBase.h"
+#include "Mdt/Sql/Connection.h"
 
 class SchemaDriverMySqlTest : public QObject
 {
  Q_OBJECT
+
+ private:
+
+  bool initDatabaseMySql();
+
+  Mdt::Sql::Connection connection() const
+  {
+    Q_ASSERT(!mConnectionName.isEmpty());
+    return Mdt::Sql::Connection(mConnectionName);
+  }
+
+  QSqlDatabase database() const
+  {
+    Q_ASSERT(!mConnectionName.isEmpty());
+    return connection().database();
+  }
+
+  bool isDatabaseOpen() const
+  {
+    if(mConnectionName.isEmpty()){
+      return false;
+    }
+    return database().isOpen();
+  }
 
  private slots:
 
@@ -51,7 +76,7 @@ class SchemaDriverMySqlTest : public QObject
 
  private:
 
-  QSqlDatabase mDatabase;
+  QString mConnectionName;
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_DRIVER_MYSQL_TEST_H

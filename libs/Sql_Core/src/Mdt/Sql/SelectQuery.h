@@ -36,6 +36,7 @@ namespace Mdt{ namespace Sql{
    * \code
    * #include <Mdt/QueryExpression/SelectStatement.h>
    * #include <Mdt/Sql/SelectQuery.h>
+   * #include <Mdt/Sql/Connection.h>
    *
    * using namespace Mdt::QueryExpression;
    *
@@ -44,8 +45,8 @@ namespace Mdt{ namespace Sql{
    * stm.addField("id");
    * stm.addField("name");
    *
-   * QSqlDatabase db;  // See Qt documentation to setup db
-   * Mdt::Sql::SelectQuery query(db);
+   * Mdt::Sql::Connection connection = ... // See Mdt::Sql::Connection to setup db handle and get a connection to it
+   * Mdt::Sql::SelectQuery query(connection);
    *
    * if(!query.execStatement(stm)){
    *   // Error handling. query.lastError() constains a error description.
@@ -60,6 +61,7 @@ namespace Mdt{ namespace Sql{
    * \code
    * #include <Mdt/QueryExpression/SelectStatement.h>
    * #include <Mdt/Sql/SelectQuery.h>
+   * #include <Mdt/Sql/Connection.h>
    *
    * using namespace Mdt::QueryExpression;
    *
@@ -71,8 +73,8 @@ namespace Mdt{ namespace Sql{
    * stm.addField("name");
    * stm.setFilter(id == 25);
    *
-   * QSqlDatabase db;  // See Qt documentation to setup db
-   * Mdt::Sql::SelectQuery query(db);
+   * Mdt::Sql::Connection connection = ... // See Mdt::Sql::Connection to setup db handle and get a connection to it
+   * Mdt::Sql::SelectQuery query(connection);
    *
    * if(!query.execStatement(stm)){
    *   // Error handling. query.lastError() constains a error description.
@@ -90,8 +92,6 @@ namespace Mdt{ namespace Sql{
    *  If SelectStatement can not handle some query, and a raw SQL string must be executed,
    *  consider using QSqlQuery directly.
    *
-   * \todo Set forward only by default
-   *
    * \sa Mdt::QueryExpression::SelectStatement
    */
   class MDT_SQL_CORE_EXPORT SelectQuery : public AbstractQuery
@@ -100,17 +100,9 @@ namespace Mdt{ namespace Sql{
 
    public:
 
-    /*! \brief Construct a select query that acts on db
-     *
-     * \pre \a db must be valid (must have a driver loaded)
+    /*! \brief Construct a select query that acts on connection
      */
-    SelectQuery(const QSqlDatabase & db);
-
-    /*! \brief Construct a select query that acts on db
-     *
-     * \pre \a db must be valid (must have a driver loaded)
-     */
-    SelectQuery(QObject *parent, const QSqlDatabase & db);
+    explicit SelectQuery(const Connection & connection, QObject *parent = nullptr);
 
     /*! \brief Execute a select statement
      *

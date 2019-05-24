@@ -66,7 +66,7 @@ void AbstractAsyncQueryThreadWorker::close()
 
 void AbstractAsyncQueryThreadWorker::processInsertStatement(const Mdt::Sql::InsertStatement & statement, int instanceId)
 {
-  InsertQuery query(connection().database());
+  InsertQuery query(connection());
 
   if(!query.execStatement(statement)){
     emit queryErrorOccured(query.lastError(), instanceId);
@@ -121,7 +121,7 @@ void AbstractAsyncQueryThreadWorker::processSelectQueryFetchNextRecords(int maxR
 
 void AbstractAsyncQueryThreadWorker::processUpdateStatement(const Mdt::Sql::UpdateStatement & statement, int instanceId)
 {
-  UpdateQuery query(connection().database());
+  UpdateQuery query(connection());
 
   if(!query.execStatement(statement)){
     emit queryErrorOccured(query.lastError(), instanceId);
@@ -132,7 +132,7 @@ void AbstractAsyncQueryThreadWorker::processUpdateStatement(const Mdt::Sql::Upda
 
 void AbstractAsyncQueryThreadWorker::processDeleteStatement(const Mdt::Sql::DeleteStatement & statement, int instanceId)
 {
-  DeleteQuery query(connection().database());
+  DeleteQuery query(connection());
 
   if(!query.execStatement(statement)){
     emit queryErrorOccured(query.lastError(), instanceId);
@@ -148,7 +148,9 @@ void AbstractAsyncQueryThreadWorker::setConnection(const Connection & connection
 
 void AbstractAsyncQueryThreadWorker::initSelectQueryIfNot()
 {
-  mSelectQuery = std::make_unique<SelectQuery>( connection().database() );
+  if(!mSelectQuery){
+    mSelectQuery = std::make_unique<SelectQuery>( connection() );
+  }
 }
 
 }} // namespace Mdt{ namespace Sql{

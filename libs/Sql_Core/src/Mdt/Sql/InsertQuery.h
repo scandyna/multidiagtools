@@ -31,7 +31,6 @@
 #include <QVector>
 #include <QVariant>
 #include <QSqlQuery>
-#include <QSqlDatabase>
 
 namespace Mdt{ namespace Sql{
 
@@ -53,7 +52,7 @@ namespace Mdt{ namespace Sql{
    * using Mdt::Sql::InsertQuery;
    * using Mdt::Sql::FieldName;
    *
-   * InsertQuery query(db);
+   * InsertQuery query(connection);
    * query.setTableName("Client_tbl");
    * query.addValue(FieldName("Name"), "Name 1");
    * query.addValue(FieldName("Remark"), "Remarks 1");
@@ -68,7 +67,7 @@ namespace Mdt{ namespace Sql{
    * using Mdt::Sql::InsertQuery;
    *
    * MySchema::Client client;
-   * InsertQuery query(db);
+   * InsertQuery query(connection);
    *
    * query.setTable(client);
    * query.addValue(client.Name(), "Name 1");
@@ -77,6 +76,8 @@ namespace Mdt{ namespace Sql{
    *   // Error handling. query.lastError() constains a error description.
    * }
    * \endcode
+   *
+   * \todo document that a instance of QSqlQuery is hold + its database instance
    */
   class MDT_SQL_CORE_EXPORT InsertQuery : public AbstractQuery
   {
@@ -84,11 +85,9 @@ namespace Mdt{ namespace Sql{
 
    public:
 
-    /*! \brief Construct a insert query that acts on db
-     *
-     * \pre db must be valid (must have a driver loaded)
+    /*! \brief Construct a insert query that acts on connection
      */
-    InsertQuery(const QSqlDatabase & db);
+    explicit InsertQuery(const Connection & connection, QObject *parent = nullptr);
 
     /*! \brief Set table name
      */

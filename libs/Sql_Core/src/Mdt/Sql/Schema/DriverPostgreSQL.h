@@ -35,7 +35,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Constructor
      */
-    DriverPostgreSQL(const QSqlDatabase & db);
+    explicit DriverPostgreSQL(const Connection & connection);
 
     /*! \brief Get driver type
      */

@@ -32,8 +32,8 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-DriverPostgreSQL::DriverPostgreSQL(const QSqlDatabase& db)
- : DriverImplementationInterface(db)
+DriverPostgreSQL::DriverPostgreSQL(const Connection & connection)
+ : DriverImplementationInterface(connection)
 {
   Q_ASSERT(qsqlDriver()->dbmsType() == QSqlDriver::PostgreSQL);
 }

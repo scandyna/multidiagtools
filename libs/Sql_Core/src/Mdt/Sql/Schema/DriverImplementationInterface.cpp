@@ -312,7 +312,7 @@ QString DriverImplementationInterface::getSqlToDropTable(const Table& table) con
 
 bool DriverImplementationInterface::createTable(const Table & table)
 {
-  QSqlQuery query(mDatabase);
+  QSqlQuery query(database());
   const QString tableName = table.tableName();
   const auto indexList = table.indexList();
   const auto fkList = table.foreignKeyList();
@@ -365,7 +365,7 @@ bool DriverImplementationInterface::dropTable(const Table& table)
    * Note: we assume that DBMS will automatically drop indexes related to table.
    *       SQLite tells it explicitly in the documentation.
    */
-  QSqlQuery query(mDatabase);
+  QSqlQuery query(database());
   QString sql;
 
   sql = getSqlToDropTable(table);
@@ -383,10 +383,11 @@ bool DriverImplementationInterface::dropTable(const Table& table)
 
 bool DriverImplementationInterface::createView(const View & view)
 {
-  QSqlQuery query(mDatabase);
+  QSqlDatabase db = database();
+  QSqlQuery query(db);
   QString sql;
 
-  sql = ViewSqlTransform::getSqlToCreateView(view, mDatabase);
+  sql = ViewSqlTransform::getSqlToCreateView(view, db);
   if(!query.exec(sql)){
     QString msg = tr("Creating view '%1' failed.").arg(view.name());
     auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
@@ -401,10 +402,11 @@ bool DriverImplementationInterface::createView(const View & view)
 
 bool DriverImplementationInterface::dropView(const View & view)
 {
-  QSqlQuery query(mDatabase);
+  QSqlDatabase db = database();
+  QSqlQuery query(db);
   QString sql;
 
-  sql = ViewSqlTransform::getSqlToDropView(view, mDatabase);
+  sql = ViewSqlTransform::getSqlToDropView(view, db);
   if(!query.exec(sql)){
     QString msg = tr("Removing view '%1' failed.").arg(view.name());
     auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
@@ -437,7 +439,7 @@ QString DriverImplementationInterface::getSqlToCreateTrigger(const Trigger& trig
 
 bool DriverImplementationInterface::createTrigger(const Trigger& trigger)
 {
-  QSqlQuery query(mDatabase);
+  QSqlQuery query(database());
   QString sql;
 
   sql = getSqlToCreateTrigger(trigger);
@@ -455,7 +457,7 @@ bool DriverImplementationInterface::createTrigger(const Trigger& trigger)
 
 bool DriverImplementationInterface::dropTrigger(const Trigger& trigger)
 {
-  QSqlQuery query(mDatabase);
+  QSqlQuery query(database());
   QString sql;
 
   sql = getSqlToDropTrigger(trigger);
@@ -482,7 +484,7 @@ QString DriverImplementationInterface::getSqlToDropTrigger(const Trigger& trigge
 
 bool DriverImplementationInterface::populateTable(const TablePopulation & tp)
 {
-  InsertQuery query(database());
+  InsertQuery query(mConnection);
   const int rowCount = tp.rowCount();
   const int columnCount = tp.fieldcount();
 
@@ -508,7 +510,7 @@ bool DriverImplementationInterface::createSchema(const Schema & schema)
   const auto triggerList = schema.triggerList();
   const auto tablePopulationList = schema.tablePopulationList();
 
-  /// \todo use transactions !
+  /// \todo use transactions ! - No, should be used outside
 
   // Create tables
   for(const auto & table : tableList){
@@ -547,7 +549,7 @@ bool DriverImplementationInterface::dropSchema(const Schema & schema)
   const auto tableList = schema.tableList();
   const auto viewList = schema.viewList();
 
-  /// \todo use transactions !
+  /// \todo use transactions ! - No, should be used outside
 
   // Drop views
   for(const auto & view : viewList){

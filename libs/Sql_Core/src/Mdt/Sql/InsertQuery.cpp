@@ -27,9 +27,9 @@
 
 namespace Mdt{ namespace Sql{
 
-InsertQuery::InsertQuery(const QSqlDatabase & db)
- : AbstractQuery(db),
-   mQuery(db)
+InsertQuery::InsertQuery(const Connection & connection, QObject *parent)
+ : AbstractQuery(connection, parent),
+   mQuery( connection.database() )
 {
 }
 
@@ -76,7 +76,7 @@ bool InsertQuery::execStatement(const InsertStatement & statement)
 
 bool InsertQuery::exec()
 {
-  const QString sql = mStatement.toPrepareStatementSql(constDatabase());
+  const QString sql = mStatement.toPrepareStatementSql(database());
 
   if(!mQuery.prepare(sql)){
     QString msg = tr("Preparing query for insertion into '%1' failed.\nSQL: %2")
@@ -107,6 +107,7 @@ bool InsertQuery::exec()
 void InsertQuery::clear()
 {
   mStatement.clear();
+  mQuery.clear();
 }
 
 }} // namespace Mdt{ namespace Sql{

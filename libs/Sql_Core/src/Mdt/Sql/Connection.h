@@ -151,6 +151,18 @@ namespace Mdt{ namespace Sql{
       return mName;
     }
 
+    /*! \brief Check if this connection refers to a valid database handle
+     *
+     * This is equivalent to:
+     * \code
+     * connection.database().isValid();
+     * \endcode
+     */
+    bool isValid() const
+    {
+      return database().isValid();
+    }
+
     /*! \brief Ge the database connection called by the name of this connection
      *
      * This is equivalent to:

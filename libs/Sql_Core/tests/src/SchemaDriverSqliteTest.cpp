@@ -58,12 +58,10 @@ void SchemaDriverSqliteTest::driverInstanceTest()
   using Mdt::Sql::Schema::Driver;
   using Mdt::Sql::Schema::DriverType;
 
-  auto db = database();
   /*
    * Create a SQLite driver
    */
-  QVERIFY(db.isValid());
-  Driver driver(db);
+  Driver driver(connection());
   QVERIFY(driver.isValid());
   QVERIFY(driver.type() == DriverType::SQLite);
 }
@@ -74,7 +72,7 @@ void SchemaDriverSqliteTest::availableFieldTypeTest()
 
   using Mdt::Sql::Schema::FieldType;
 
-  Mdt::Sql::Schema::Driver driver(database());
+  Mdt::Sql::Schema::Driver driver(connection());
   QVERIFY(driver.isValid());
   auto list = driver.getAvailableFieldTypeList();
 
@@ -93,7 +91,7 @@ void SchemaDriverSqliteTest::fieldTypeNameTest()
 {
   using namespace Mdt::Sql::Schema;
 
-  DriverSQLite driver(database());
+  DriverSQLite driver(connection());
 
   QCOMPARE(driver.fieldTypeName(FieldType::UnknownType), QString());
   QCOMPARE(driver.fieldTypeName(FieldType::Boolean), QString("BOOLEAN"));
@@ -115,7 +113,7 @@ void SchemaDriverSqliteTest::fieldTypeFromStringTest()
 {
   using Mdt::Sql::Schema::FieldType;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
 
   QVERIFY(driver.fieldTypeFromString("BOOLEAN") == FieldType::Boolean);
   QVERIFY(driver.fieldTypeFromString("boolean") == FieldType::Boolean);
@@ -145,7 +143,7 @@ void SchemaDriverSqliteTest::fieldTypeFromStringTest()
 
 void SchemaDriverSqliteTest::fieldLengthFromStringTest()
 {
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
 
   QCOMPARE(driver.fieldLengthFromString("INTEGER"), -1);
   QCOMPARE(driver.fieldLengthFromString("VARCHAR"), -1);
@@ -162,7 +160,7 @@ void SchemaDriverSqliteTest::databaseDefaultCharsetTest()
 {
   using Mdt::Sql::Schema::Charset;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
   Charset cs;
 
   /*
@@ -176,7 +174,7 @@ void SchemaDriverSqliteTest::collationDefinitionTest()
 {
   using Mdt::Sql::Schema::Collation;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
   Collation collation;
 
   /*
@@ -214,7 +212,7 @@ void SchemaDriverSqliteTest::fieldDefinitionTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::Field;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
   QString expectedSql;
   Field field;
 
@@ -339,7 +337,7 @@ void SchemaDriverSqliteTest::autoIncrementPrimaryKeyDefinitionTest()
 {
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
   QString expectedSql;
   AutoIncrementPrimaryKey pk;
 
@@ -357,7 +355,7 @@ void SchemaDriverSqliteTest::primaryKeyDefinitionTest()
   using Sql::Schema::FieldType;
   using Sql::Schema::Field;
 
-  Sql::Schema::DriverSQLite driver(database());
+  Sql::Schema::DriverSQLite driver(connection());
   QString expectedSql;
   PrimaryKey pk;
   Field Id_A_PK, Id_B_PK;
@@ -396,7 +394,7 @@ void SchemaDriverSqliteTest::indexDefinitionTest()
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::Table;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
   QString expectedSql;
   Field Id_A, Id_B;
   Index index;
@@ -464,7 +462,7 @@ void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
   using Sql::Schema::ForeignField;
   using Sql::Schema::ForeignFieldList;
 
-  Sql::Schema::DriverSQLite driver(database());
+  Sql::Schema::DriverSQLite driver(connection());
   QString expectedSql;
   Schema::Client client;
   Schema::Address address;
@@ -543,7 +541,7 @@ void SchemaDriverSqliteTest::tableDefinitionNoPkTest()
 {
   using namespace Sql::Schema;
 
-  DriverSQLite driver(database());
+  DriverSQLite driver(connection());
   QString expectedSql;
   /*
    * Setup fields
@@ -598,7 +596,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   using Sql::Schema::ForeignKeyAction;
   using Sql::Schema::ForeignKeySettings;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
   QString expectedSql;
   Table table;
 
@@ -891,7 +889,7 @@ void SchemaDriverSqliteTest::simpleCreateAndDropTableTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::ForeignKey;
 
-  Mdt::Sql::Schema::Driver driver(database());
+  Mdt::Sql::Schema::Driver driver(connection());
   QVERIFY(driver.isValid());
   Schema::Client client_tbl;
 
@@ -916,7 +914,7 @@ void SchemaDriverSqliteTest::createTableWithUnsignedIntegralFieldTest()
 {
   using namespace Mdt::Sql::Schema;
 
-  Mdt::Sql::Schema::Driver driver(database());
+  Mdt::Sql::Schema::Driver driver(connection());
   QVERIFY(driver.isValid());
 
   Field uintField;
@@ -946,7 +944,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   using Mdt::Sql::Schema::PrimaryKeyType;
   using Mdt::Sql::Schema::CaseSensitivity;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
   Field field;
   FieldList fieldList;
 
@@ -1039,7 +1037,7 @@ void SchemaDriverSqliteTest::reverseIndexListTest()
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::IndexList;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
   Field field;
   FieldList fieldList;
   IndexList indexList;
@@ -1123,7 +1121,7 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   using Sql::Schema::PrimaryKeyContainer;
 
 //   Sql::Schema::DriverSQLite driver(database());
-  Sql::Schema::Driver driver(database());
+  Sql::Schema::Driver driver(connection());
   Table table;
   Mdt::Expected<PrimaryKeyContainer> ret;
   PrimaryKeyContainer pk;
@@ -1252,7 +1250,7 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   using Sql::Schema::ForeignKeyList;
 
 //   Mdt::Sql::Schema::DriverSQLite driver(database());
-  Mdt::Sql::Schema::Driver driver(database());
+  Mdt::Sql::Schema::Driver driver(connection());
   Table table;
   ForeignKey fk;
   Mdt::Expected<ForeignKeyList> ret;
@@ -1425,7 +1423,7 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
 
 void SchemaDriverSqliteTest::simpleCreateAndDropViewTest()
 {
-  Mdt::Sql::Schema::Driver driver(database());
+  Mdt::Sql::Schema::Driver driver(connection());
   QVERIFY(driver.isValid());
   Schema::ClientAdrressView view;
   Schema::Client client;
@@ -1454,7 +1452,7 @@ void SchemaDriverSqliteTest::triggerDefinitionTest()
 {
   using Mdt::Sql::Schema::Trigger;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
   QString expectedSql;
   Trigger trigger;
 
@@ -1483,7 +1481,7 @@ void SchemaDriverSqliteTest::simpleTriggerCreateDropTest()
 {
   using Mdt::Sql::Schema::Trigger;
 
-  Mdt::Sql::Schema::DriverSQLite driver(database());
+  Mdt::Sql::Schema::DriverSQLite driver(connection());
   Trigger trigger;
   Schema::Client client;
   QSqlQuery query(database());
@@ -1529,7 +1527,7 @@ void SchemaDriverSqliteTest::tablePopulationTest()
 {
   using Sql::Schema::TablePopulation;
 
-  Sql::Schema::Driver driver(database());
+  Sql::Schema::Driver driver(connection());
   Schema::Client client;
   Schema::ClientPopulation tp;
   QSqlQuery query(database());
@@ -1566,7 +1564,7 @@ void SchemaDriverSqliteTest::tablePopulationTest()
 
 void SchemaDriverSqliteTest::simpleCreateAndDropSchemaTest()
 {
-  Mdt::Sql::Schema::Driver driver(database());
+  Mdt::Sql::Schema::Driver driver(connection());
   QVERIFY(driver.isValid());
   Schema::TestSchema schema;
 

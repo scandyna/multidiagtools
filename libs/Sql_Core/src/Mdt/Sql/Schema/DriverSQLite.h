@@ -35,7 +35,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Constructor
      */
-    DriverSQLite(const QSqlDatabase & db);
+    explicit DriverSQLite(const Connection & connection);
 
     /*! \brief Get driver type
      */

@@ -24,10 +24,9 @@
 
 namespace Mdt{ namespace Sql{
 
-UpdateQuery::UpdateQuery(const QSqlDatabase& db)
- : AbstractQuery(db)
+UpdateQuery::UpdateQuery(const Connection & connection, QObject *parent)
+ : AbstractQuery(connection, parent)
 {
-  Q_ASSERT(db.isValid());
 }
 
 void UpdateQuery::setTableName(const QString& name)
@@ -62,7 +61,7 @@ bool UpdateQuery::exec()
 {
   QSqlQuery query(database());
 
-  if(!query.exec( mStatement.toSql(constDatabase()) )){
+  if(!query.exec( mStatement.toSql(database()) )){
     QString msg = tr("Executing query to update '%1' failed.").arg(mStatement.tableName());
     const Mdt::ErrorCode code = Mdt::Sql::Error::errorCodeFromQSqlError(query.lastError(), query.driver());
     auto error = mdtErrorNewTQ(code, msg, Mdt::Error::Critical, this);

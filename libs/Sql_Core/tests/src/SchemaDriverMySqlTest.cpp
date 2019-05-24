@@ -24,12 +24,14 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QString>
+#include <QLatin1String>
 
 #include <QDebug>
 
 using namespace Mdt::Sql::Schema;
 
-void SchemaDriverMySqlTest::initTestCase()
+bool SchemaDriverMySqlTest::initDatabaseMySql()
 {
   /*
    * Some tests needs a connection
@@ -40,29 +42,43 @@ void SchemaDriverMySqlTest::initTestCase()
   const QString pwd = "TestPassword";
   const QString dbName = "test";
 
-  // Get database instance
-  mDatabase = QSqlDatabase::addDatabase("QMYSQL");
-  if(!mDatabase.isValid()){
-    QSKIP("QMYSQL driver is not available - Skip all tests");  // Will also skip all tests
+  mConnectionName = Mdt::Sql::Connection::generateConnectionName( QSqlDatabase::connectionNames(), QLatin1String("MySql") );
+  auto db = QSqlDatabase::addDatabase("QMYSQL", mConnectionName);
+  if(!db.isValid()){
+    qWarning() << "QMYSQL driver is not available";
+    mConnectionName.clear();
+    return false;
   }
-  // Connect to test database
-  mDatabase.setHostName(host);
-  mDatabase.setUserName(user);
-  mDatabase.setPassword(pwd);
-  mDatabase.setDatabaseName(dbName);
-  if(!mDatabase.open()){
-    qWarning() << "Could not open database. Make shure that test database is created with correct login as defined in initTestCase()";
-    qWarning() << "Reported error: " << mDatabase.lastError().text();
-  }
+
   /*
    * Because some tests can be executed without a open connection to the server,
    * we not fail here if database could not be open.
    */
-  if(mDatabase.isOpen()){
-    QSqlQuery query(mDatabase);
-    // Define database default charset (is important for some tests)
-    QVERIFY(query.exec("ALTER DATABASE `" + dbName + "` CHARACTER SET 'utf8'"));
+
+  db.setHostName(host);
+  db.setUserName(user);
+  db.setPassword(pwd);
+  db.setDatabaseName(dbName);
+  if(!db.open()){
+    qWarning() << "Could not open database. Make shure that test database is created with correct login as defined in initDatabaseMySql()";
+    qWarning() << "Reported error: " << db.lastError().text();
   }
+
+  if(db.isOpen()){
+    QSqlQuery query(db);
+    // Define database default charset (is important for some tests)
+    if( !query.exec("ALTER DATABASE `" + dbName + "` CHARACTER SET 'utf8'") ){
+      qWarning() << "Executing query to set character set to utf8 failed";
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void SchemaDriverMySqlTest::initTestCase()
+{
+  QVERIFY(initDatabaseMySql());
 }
 
 void SchemaDriverMySqlTest::cleanupTestCase()
@@ -79,19 +95,17 @@ void SchemaDriverMySqlTest::driverInstanceTest()
   using Mdt::Sql::Schema::Driver;
   using Mdt::Sql::Schema::DriverType;
 
-  auto db = mDatabase;
   /*
    * Create a SQLite driver
    */
-  QVERIFY(db.isValid());
-  Driver driver(db);
+  Driver driver(connection());
   QVERIFY(driver.isValid());
   QVERIFY(driver.type() == DriverType::MySQL);
 }
 
 void SchemaDriverMySqlTest::availableFieldTypeTest()
 {
-  DriverMySql driver(mDatabase);
+  DriverMySql driver(connection());
   auto list = driver.getAvailableFieldTypeList();
 
   QCOMPARE(list.size(), 8);
@@ -107,7 +121,7 @@ void SchemaDriverMySqlTest::availableFieldTypeTest()
 
 void SchemaDriverMySqlTest::fieldTypeNameTest()
 {
-  DriverMySql driver(mDatabase);
+  DriverMySql driver(connection());
 
   QCOMPARE(driver.fieldTypeName(FieldType::UnknownType), QString());
   QCOMPARE(driver.fieldTypeName(FieldType::Boolean), QString("BOOLEAN"));
@@ -127,7 +141,7 @@ void SchemaDriverMySqlTest::fieldTypeNameTest()
 
 void SchemaDriverMySqlTest::fieldTypeFromStringTest()
 {
-  DriverMySql driver(mDatabase);
+  DriverMySql driver(connection());
 
   QVERIFY(driver.fieldTypeFromString("BOOLEAN") == FieldType::Boolean);
   QVERIFY(driver.fieldTypeFromString("boolean") == FieldType::Boolean);
@@ -198,7 +212,7 @@ void SchemaDriverMySqlTest::fieldTypeFromStringTest()
 
 void SchemaDriverMySqlTest::fieldLengthFromStringTest()
 {
-  DriverMySql driver(mDatabase);
+  DriverMySql driver(connection());
 
   QCOMPARE(driver.fieldLengthFromString("INTEGER"), -1);
   QCOMPARE(driver.fieldLengthFromString("VARCHAR"), -1);
@@ -215,7 +229,7 @@ void SchemaDriverMySqlTest::fieldLengthFromStringTest()
 
 void SchemaDriverMySqlTest::databaseDefaultCharsetTest()
 {
-  DriverMySql driver(mDatabase);
+  DriverMySql driver(connection());
   Charset cs;
 
   /*
@@ -227,7 +241,7 @@ void SchemaDriverMySqlTest::databaseDefaultCharsetTest()
 
 void SchemaDriverMySqlTest::collationDefinitionTest()
 {
-  DriverMySql driver(mDatabase);
+  DriverMySql driver(connection());
   Collation collation;
 
   /*
@@ -267,7 +281,7 @@ void SchemaDriverMySqlTest::collationDefinitionTest()
 
 void SchemaDriverMySqlTest::fieldDefinitionTest()
 {
-  DriverMySql driver(mDatabase);
+  DriverMySql driver(connection());
   QString expectedSql;
   Field field;
 
@@ -392,7 +406,7 @@ void SchemaDriverMySqlTest::fieldDefinitionTest()
 
 void SchemaDriverMySqlTest::autoIncrementPrimaryKeyDefinitionTest()
 {
-  DriverMySql driver(mDatabase);
+  DriverMySql driver(connection());
   QString expectedSql;
   AutoIncrementPrimaryKey pk;
 
@@ -412,7 +426,7 @@ void SchemaDriverMySqlTest::autoIncrementPrimaryKeyDefinitionTest()
 
 void SchemaDriverMySqlTest::singleFieldPrimaryKeyDefinitionTest()
 {
-  DriverMySql driver(mDatabase);
+  DriverMySql driver(connection());
   QString expectedSql;
   PrimaryKey pk;
   Field Id_A_PK, Id_B_PK;
@@ -457,10 +471,10 @@ void SchemaDriverMySqlTest::indexDefinitionTest()
 
 void SchemaDriverMySqlTest::createAndDropTableTest()
 {
-  if(!mDatabase.isOpen()){
+  if(!isDatabaseOpen()){
     QSKIP("Not connected to server");
   }
-  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Mdt::Sql::Schema::Driver driver(connection());
   QVERIFY(driver.isValid());
 
   Table table;
@@ -478,11 +492,11 @@ void SchemaDriverMySqlTest::createAndDropTableTest()
   field.setUnsigned(true);
   table.addField(field);
 
-  QVERIFY(!mDatabase.tables().contains(table.tableName()));
+  QVERIFY(!database().tables().contains(table.tableName()));
   QVERIFY(driver.createTable(table));
-  QVERIFY(mDatabase.tables().contains(table.tableName()));
+  QVERIFY(database().tables().contains(table.tableName()));
   QVERIFY(driver.dropTable(table));
-  QVERIFY(!mDatabase.tables().contains(table.tableName()));
+  QVERIFY(!database().tables().contains(table.tableName()));
 }
 
 /*

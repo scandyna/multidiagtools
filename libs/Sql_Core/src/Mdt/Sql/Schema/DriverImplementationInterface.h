@@ -41,6 +41,7 @@
 #include "TablePopulation.h"
 #include "Trigger.h"
 #include "Schema.h"
+#include "../Connection.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include <QSqlDatabase>
@@ -58,10 +59,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Constructor
      */
-    DriverImplementationInterface(const QSqlDatabase & db)
-     : mDatabase(db)
+    explicit DriverImplementationInterface(const Connection & connection)
+     : mConnection(connection)
     {
-      Q_ASSERT(mDatabase.isValid());
+      Q_ASSERT(mConnection.isValid());
     }
 
     /*! \brief Get QSqlDriver instance
@@ -70,8 +71,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QSqlDriver *qsqlDriver() const
     {
-      Q_ASSERT(mDatabase.driver() != nullptr);
-      return mDatabase.driver();
+      Q_ASSERT(database().driver() != nullptr);
+      return database().driver();
     }
 
     /*! \brief Get driver type
@@ -275,9 +276,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Access database object
      */
-    const QSqlDatabase & database() const
+    QSqlDatabase database() const
     {
-      return mDatabase;
+      return mConnection.database();
     }
 
     /*! \brief Call QObject::tr()
@@ -286,7 +287,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
    private:
 
-    QSqlDatabase mDatabase;
+    Connection mConnection;
     mutable Mdt::Error mLastError;
   };
 

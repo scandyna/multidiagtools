@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_ABSTRACT_QUERY_H
 #define MDT_SQL_ABSTRACT_QUERY_H
 
+#include "Connection.h"
 #include "Mdt/Error.h"
 #include "MdtSql_CoreExport.h"
 #include <QObject>
@@ -34,17 +35,9 @@ namespace Mdt{ namespace Sql{
   {
    public:
 
-    /*! \brief Construct a query that acts on db
-     *
-     * \pre \a db must be valid (must have a driver loaded)
+    /*! \brief Construct a query that acts on a connection
      */
-    AbstractQuery(const QSqlDatabase & db);
-
-    /*! \brief Construct a query that acts on db
-     *
-     * \pre \a db must be valid (must have a driver loaded)
-     */
-    AbstractQuery(QObject *parent, const QSqlDatabase & db);
+    explicit AbstractQuery(const Connection & connection, QObject *parent);
 
     /*! \brief Get last error
      *
@@ -58,18 +51,11 @@ namespace Mdt{ namespace Sql{
 
    protected:
 
-    /*! \brief Access database
+    /*! \brief Get a database handle
      */
-    QSqlDatabase & database()
+    QSqlDatabase database() const
     {
-      return mDatabase;
-    }
-
-    /*! \brief Access database
-     */
-    const QSqlDatabase & constDatabase() const
-    {
-      return mDatabase;
+      return mConnection.database();
     }
 
     /*! \brief Set last error
@@ -81,7 +67,7 @@ namespace Mdt{ namespace Sql{
 
    private:
 
-    QSqlDatabase mDatabase;
+    Connection mConnection;
     Mdt::Error mLastError;
   };
 

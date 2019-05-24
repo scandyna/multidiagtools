@@ -140,7 +140,7 @@ bool TestBase::createClientTable()
 {
   Q_ASSERT(isDatabaseOpen());
 
-  Mdt::Sql::Schema::Driver driver(database());
+  Mdt::Sql::Schema::Driver driver(connection());
   Q_ASSERT(driver.isValid());
 
   if(!driver.createTable( Schema::Client() )){
@@ -156,7 +156,7 @@ bool TestBase::insertClient(int id, const QString& name)
   Q_ASSERT(isDatabaseOpen());
 
   Schema::Client client;
-  Mdt::Sql::InsertQuery query(database());
+  Mdt::Sql::InsertQuery query(connection());
   query.setTable(client);
   query.addValue(client.Id_PK(), id);
   query.addValue(client.Name(), name);
@@ -225,7 +225,7 @@ bool TestBase::createTestSchema()
 {
   Q_ASSERT(isDatabaseOpen());
 
-  Mdt::Sql::Schema::Driver driver(database());
+  Mdt::Sql::Schema::Driver driver(connection());
   Q_ASSERT(driver.isValid());
 
   if(!driver.createSchema(Schema::TestSchema())){

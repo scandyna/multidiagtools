@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -27,15 +27,17 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-Driver::Driver(const QSqlDatabase & db)
+Driver::Driver(const Connection & connection)
 {
+  const QSqlDatabase db = connection.database();
+
   Q_ASSERT(db.isValid());
   Q_ASSERT(db.driver() != nullptr);
 
   auto type = typeFromDbmsType(db.driver()->dbmsType());
   switch(type){
     case DriverType::SQLite:
-      mImpl = std::make_unique<DriverSQLite>(db);
+      mImpl = std::make_unique<DriverSQLite>(connection);
       break;
     case DriverType::MySQL:
 //       mImpl = std::make_unique<DriverMySql>(db);

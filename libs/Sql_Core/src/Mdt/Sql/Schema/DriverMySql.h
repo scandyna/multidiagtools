@@ -35,7 +35,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Constructor
      */
-    DriverMySql(const QSqlDatabase & db);
+    explicit DriverMySql(const Connection & connection);
 
     /*! \brief Get driver type
      */

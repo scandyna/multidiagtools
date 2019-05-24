@@ -129,7 +129,7 @@ void AsyncQueryBenchmark::selectSqlQueryBenchmark()
   VariantRecord record(2);
   std::vector<VariantRecord> result;
   result.reserve(recordCount);
-  SelectQuery query(database());
+  SelectQuery query(connection());
 
   QVERIFY(insertCountClients(recordCount));
 

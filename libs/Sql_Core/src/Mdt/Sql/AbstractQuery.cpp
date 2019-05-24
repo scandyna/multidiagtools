@@ -23,18 +23,10 @@
 
 namespace Mdt{ namespace Sql{
 
-AbstractQuery::AbstractQuery(const QSqlDatabase& db)
- : QObject(nullptr),
-   mDatabase(db)
-{
-  Q_ASSERT(mDatabase.isValid());
-}
-
-AbstractQuery::AbstractQuery(QObject* parent, const QSqlDatabase& db)
+AbstractQuery::AbstractQuery(const Connection & connection, QObject *parent)
  : QObject(parent),
-   mDatabase(db)
+   mConnection(connection)
 {
-  Q_ASSERT(mDatabase.isValid());
 }
 
 void AbstractQuery::setLastError(const Error & error)

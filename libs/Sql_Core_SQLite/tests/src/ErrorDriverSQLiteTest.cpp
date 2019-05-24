@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -96,7 +96,7 @@ bool ErrorDriverSQLiteTest::createPersonTable()
 
 bool ErrorDriverSQLiteTest::addPerson(int id, const QString& name)
 {
-  InsertQuery query(database());
+  InsertQuery query(connection());
 
   query.setTableName("Person");
   query.addValue(FieldName("id"), id);
@@ -111,7 +111,7 @@ bool ErrorDriverSQLiteTest::addPerson(int id, const QString& name)
 
 bool ErrorDriverSQLiteTest::clearPersonTable()
 {
-  DeleteQuery query(database());
+  DeleteQuery query(connection());
 
   query.setTableName("Person");
   if(!query.exec()){

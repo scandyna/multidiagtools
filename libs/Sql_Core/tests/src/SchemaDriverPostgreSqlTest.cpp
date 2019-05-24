@@ -25,12 +25,13 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QLatin1String>
 
 #include <QDebug>
 
 using namespace Mdt::Sql::Schema;
 
-void SchemaDriverPostgreSqlTest::initTestCase()
+bool SchemaDriverPostgreSqlTest::initDatabasePostgreSql()
 {
   /*
    * Some tests needs a connection
@@ -44,39 +45,51 @@ void SchemaDriverPostgreSqlTest::initTestCase()
   const QString pwd = "TestPassword";
   const QString dbName = "testdb";
 
-  // Get database instance
-  mDatabase = QSqlDatabase::addDatabase("QPSQL");
-  if(!mDatabase.isValid()){
-    QSKIP("QPSQL driver is not available - Skip all tests");  // Will also skip all tests
+  mConnectionName = Mdt::Sql::Connection::generateConnectionName( QSqlDatabase::connectionNames(), QLatin1String("MySql") );
+  auto db = QSqlDatabase::addDatabase("QPSQL", mConnectionName);
+  if(!db.isValid()){
+    qWarning() << "QPSQL driver is not available";
+    mConnectionName.clear();
+    return false;
   }
-  // Connect to test database
-  mDatabase.setHostName(host);
-  mDatabase.setUserName(user);
-  mDatabase.setPassword(pwd);
-  mDatabase.setDatabaseName(dbName);
-  if(!mDatabase.open()){
-    qWarning() << "Could not open database. Make shure that test database is created with correct login as defined in initTestCase()";
-    qWarning() << "Reported error: " << mDatabase.lastError().text();
-  }
+
   /*
    * Because some tests can be executed without a open connection to the server,
    * we not fail here if database could not be open.
    */
+
+  db.setHostName(host);
+  db.setUserName(user);
+  db.setPassword(pwd);
+  db.setDatabaseName(dbName);
+  if(!db.open()){
+    qWarning() << "Could not open database. Make shure that test database is created with correct login as defined in initDatabasePostgreSql()";
+    qWarning() << "Reported error: " << db.lastError().text();
+  }
+
+  return false;
+}
+
+void SchemaDriverPostgreSqlTest::initTestCase()
+{
+  QVERIFY(initDatabasePostgreSql());
 }
 
 void SchemaDriverPostgreSqlTest::cleanupTestCase()
 {
+  /// \todo DROP all tables, etc...
 }
 
 void SchemaDriverPostgreSqlTest::sandbox()
 {
-  mDatabase.setHostName("localhost");
-  mDatabase.setUserName("postgres");
-  mDatabase.setPassword("12345678");
-  mDatabase.setDatabaseName("sandbox");
-  QVERIFY(mDatabase.open());
+  auto db = database();
+  db.setHostName("localhost");
+  db.setUserName("postgres");
+  db.setPassword("12345678");
+  db.setDatabaseName("sandbox");
+  QVERIFY(db.open());
   
-  qDebug() << "Tables: " << mDatabase.tables(QSql::AllTables);
+  qDebug() << "Tables: " << db.tables(QSql::AllTables);
 }
 
 /*
@@ -88,19 +101,17 @@ void SchemaDriverPostgreSqlTest::driverInstanceTest()
   using Mdt::Sql::Schema::Driver;
   using Mdt::Sql::Schema::DriverType;
 
-  auto db = mDatabase;
   /*
    * Create a SQLite driver
    */
-  QVERIFY(db.isValid());
-  Driver driver(db);
+  Driver driver(connection());
   QVERIFY(driver.isValid());
   QVERIFY(driver.type() == DriverType::PostgreSQL);
 }
 
 void SchemaDriverPostgreSqlTest::availableFieldTypeTest()
 {
-  DriverPostgreSQL driver(mDatabase);
+  DriverPostgreSQL driver(connection());
   auto list = driver.getAvailableFieldTypeList();
 
   QCOMPARE(list.size(), 8);
@@ -116,7 +127,7 @@ void SchemaDriverPostgreSqlTest::availableFieldTypeTest()
 
 void SchemaDriverPostgreSqlTest::fieldTypeNameTest()
 {
-  DriverPostgreSQL driver(mDatabase);
+  DriverPostgreSQL driver(connection());
 
   QCOMPARE(driver.fieldTypeName(FieldType::UnknownType), QString());
   QCOMPARE(driver.fieldTypeName(FieldType::Boolean), QString("BOOLEAN"));
@@ -136,7 +147,7 @@ void SchemaDriverPostgreSqlTest::fieldTypeNameTest()
 
 void SchemaDriverPostgreSqlTest::fieldTypeFromStringTest()
 {
-  DriverPostgreSQL driver(mDatabase);
+  DriverPostgreSQL driver(connection());
 
   QVERIFY(driver.fieldTypeFromString("BOOLEAN") == FieldType::Boolean);
   QVERIFY(driver.fieldTypeFromString("boolean") == FieldType::Boolean);
@@ -193,7 +204,7 @@ void SchemaDriverPostgreSqlTest::fieldTypeFromStringTest()
 
 void SchemaDriverPostgreSqlTest::fieldLengthFromStringTest()
 {
-  DriverPostgreSQL driver(mDatabase);
+  DriverPostgreSQL driver(connection());
 
 
   QFAIL("Not complete");
@@ -204,7 +215,7 @@ void SchemaDriverPostgreSqlTest::databaseDefaultCharsetTest()
 {
   using Mdt::Sql::Schema::Charset;
 
-  Mdt::Sql::Schema::DriverPostgreSQL driver(mDatabase);
+  Mdt::Sql::Schema::DriverPostgreSQL driver(connection());
   Charset cs;
 
   /*
@@ -218,7 +229,7 @@ void SchemaDriverPostgreSqlTest::collationDefinitionTest()
 {
   using Mdt::Sql::Schema::Collation;
 
-  Mdt::Sql::Schema::DriverPostgreSQL driver(mDatabase);
+  Mdt::Sql::Schema::DriverPostgreSQL driver(connection());
   Collation collation;
 
   /*
@@ -257,7 +268,7 @@ void SchemaDriverPostgreSqlTest::fieldDefinitionTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::Field;
 
-  Mdt::Sql::Schema::DriverPostgreSQL driver(mDatabase);
+  Mdt::Sql::Schema::DriverPostgreSQL driver(connection());
   QString expectedSql;
   Field field;
 
@@ -266,7 +277,7 @@ void SchemaDriverPostgreSqlTest::fieldDefinitionTest()
 
 void SchemaDriverPostgreSqlTest::autoIncrementPrimaryKeyDefinitionTest()
 {
-  DriverPostgreSQL driver(mDatabase);
+  DriverPostgreSQL driver(connection());
   QString expectedSql;
   AutoIncrementPrimaryKey pk;
 
@@ -290,7 +301,7 @@ void SchemaDriverPostgreSqlTest::singleFieldPrimaryKeyDefinitionTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::Field;
 
-  Mdt::Sql::Schema::DriverPostgreSQL driver(mDatabase);
+  Mdt::Sql::Schema::DriverPostgreSQL driver(connection());
   QString expectedSql;
   PrimaryKey pk;
   Field Id_A_PK, Id_B_PK;
@@ -333,15 +344,15 @@ void SchemaDriverPostgreSqlTest::indexDefinitionTest()
 
 void SchemaDriverPostgreSqlTest::createTableTest()
 {
-  if(!mDatabase.isOpen()){
+  if(!isDatabaseOpen()){
     QSKIP("Not connected to server");
   }
-  Mdt::Sql::Schema::Driver driver(mDatabase);
+  Mdt::Sql::Schema::Driver driver(connection());
   QVERIFY(driver.isValid());
 
   QVERIFY(dropTable("Client_tbl"));
 
-  QSqlQuery q(mDatabase);
+  QSqlQuery q(database());
   if(!q.exec("CREATE TABLE Client_tbl (Id_PK INTEGER NOT NULL PRIMARY Key)")){
     qDebug() << q.lastError().text();
   }
@@ -358,7 +369,7 @@ void SchemaDriverPostgreSqlTest::createTableTest()
 
 bool SchemaDriverPostgreSqlTest::dropTable(const QString& tableName)
 {
-  QSqlQuery query(mDatabase);
+  QSqlQuery query(database());
 
   if(!query.exec("DROP TABLE IF EXISTS " + tableName + "")){
     qWarning() << query.lastError().text();

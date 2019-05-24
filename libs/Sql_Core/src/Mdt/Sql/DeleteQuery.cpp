@@ -24,10 +24,9 @@
 
 namespace Mdt{ namespace Sql{
 
-DeleteQuery::DeleteQuery(const QSqlDatabase& db)
- : AbstractQuery(db)
+DeleteQuery::DeleteQuery(const Connection & connection, QObject *parent)
+ : AbstractQuery(connection, parent)
 {
-  Q_ASSERT(db.isValid());
 }
 
 void DeleteQuery::setTableName(const QString& name)
@@ -55,7 +54,7 @@ bool DeleteQuery::exec()
 {
   QSqlQuery query(database());
 
-  if(!query.exec( mStatement.toSql(constDatabase()) )){
+  if(!query.exec( mStatement.toSql(database()) )){
     QString msg = tr("Executing query to delete in '%1' failed.").arg(mStatement.tableName());
     auto error = mdtErrorNewQ(msg, Mdt::Error::Critical, this);
     error.stackError(mdtErrorFromQSqlQueryQ(query, this));

@@ -61,7 +61,7 @@ namespace Mdt{ namespace Sql{
    * PrimaryKeyRecord primaryKeyRecord;
    * primaryKeyRecord.addValue(FieldName("Id_PK"), 25);
    *
-   * DeleteQuery query(db);
+   * DeleteQuery query(connection);
    * query.setTableName("Client_tbl");
    * query.setConditions(primaryKeyRecord);
    * if(!query.exec()){
@@ -78,11 +78,9 @@ namespace Mdt{ namespace Sql{
 
    public:
 
-    /*! \brief Construct a update query that acts on db
-     *
-     * \pre \a db must be valid (must have a driver loaded)
+    /*! \brief Construct a select query that acts on connection
      */
-    DeleteQuery(const QSqlDatabase & db);
+    explicit DeleteQuery(const Connection & connection, QObject *parent = nullptr);
 
     /*! \brief Set table name
      *

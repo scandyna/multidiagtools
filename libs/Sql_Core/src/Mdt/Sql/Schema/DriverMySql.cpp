@@ -32,8 +32,8 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-DriverMySql::DriverMySql(const QSqlDatabase& db)
- : DriverImplementationInterface(db)
+DriverMySql::DriverMySql(const Connection & connection)
+ : DriverImplementationInterface(connection)
 {
   Q_ASSERT(qsqlDriver()->dbmsType() == QSqlDriver::MySqlServer);
 }

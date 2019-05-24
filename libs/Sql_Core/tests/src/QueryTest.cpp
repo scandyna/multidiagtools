@@ -85,7 +85,7 @@ void QueryTest::insertStatementTest()
 
 void QueryTest::insertQueryTest()
 {
-  Mdt::Sql::InsertQuery query(database());
+  Mdt::Sql::InsertQuery query(connection());
   Schema::Client client;
   QString expectedSql;
 
@@ -168,7 +168,7 @@ void QueryTest::insertQueryErrorTest()
 {
   QVERIFY(cleanupClientTable());
 
-  Mdt::Sql::InsertQuery query(database());
+  Mdt::Sql::InsertQuery query(connection());
 
   query.setTableName("Client_tbl");
   query.addValue(FieldName("Id_PK"), 1);
@@ -273,7 +273,7 @@ void QueryTest::updateStatementPrimaryKeyConditionsTest()
 
 void QueryTest::updateQueryTest()
 {
-  Mdt::Sql::UpdateQuery query(database());
+  Mdt::Sql::UpdateQuery query(connection());
 
   QVERIFY(cleanupClientTable());
   QVERIFY(insertClient(1, "Name 1"));
@@ -322,7 +322,7 @@ void QueryTest::updateQueryErrorTest()
   QVERIFY(insertClient(1, "Name 1"));
   QVERIFY(insertClient(2, "Name 2"));
 
-  Mdt::Sql::UpdateQuery query(database());
+  Mdt::Sql::UpdateQuery query(connection());
   query.setTableName("Client_tbl");
   query.addValue(FieldName("Id_PK"), 1);
   query.addValue(FieldName("Name"), "Name 1");
@@ -400,7 +400,7 @@ void QueryTest::deleteStatementPrimaryKeyConditionsTest()
 
 void QueryTest::deleteQueryTest()
 {
-  Mdt::Sql::DeleteQuery query(database());
+  Mdt::Sql::DeleteQuery query(connection());
 
   QVERIFY(cleanupClientTable());
   QVERIFY(insertClient(1, "Name 1"));
@@ -462,7 +462,7 @@ void QueryTest::selectQueryTest()
 {
   using namespace Mdt::QueryExpression;
 
-  Mdt::Sql::SelectQuery query(database());
+  Mdt::Sql::SelectQuery query(connection());
 
   QVERIFY(cleanupClientTable());
   QVERIFY(insertClient(1, "Name 1"));

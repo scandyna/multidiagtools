@@ -109,7 +109,7 @@ bool TestBase::createClientTable()
   client.setAutoIncrementPrimaryKey("Id_PK");
   client.addField(Name);
 
-  Driver driver(database());
+  Driver driver(connection());
   if(!driver.createTable(client)){
     qWarning() << "Could not create table '" << client.tableName() << "': " << driver.lastError().text();
     return false;
@@ -134,7 +134,7 @@ Client TestBase::getClient(int id)
   stm.addField("name");
   stm.setFilter(id_Pk == id);
 
-  SelectQuery query(database());
+  SelectQuery query(connection());
   if(!query.execStatement(stm)){
     qWarning() << "Could not get client for id '" << id << "': " << query.lastError().text();
     return client;
@@ -159,7 +159,7 @@ bool TestBase::cleanupClientTable()
   DeleteStatement statement;
   statement.setTableName("Client_tbl");
 
-  DeleteQuery query(database());
+  DeleteQuery query(connection());
   if(!query.execStatement(statement)){
     qWarning() << "Could not cleanup client table: " << query.lastError().text();
     return false;

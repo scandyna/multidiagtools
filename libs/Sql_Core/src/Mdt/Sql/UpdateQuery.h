@@ -40,7 +40,7 @@ namespace Mdt{ namespace Sql{
    * PrimaryKeyRecord primaryKeyRecord;
    * primaryKeyRecord.addValue(FieldName("Id_PK"), 25);
    *
-   * UpdateQuery query(db);
+   * UpdateQuery query(connection);
    * query.setTableName("Client_tbl");
    * query.addValue(FieldName("Name"), "Name 1");
    * query.addValue(FieldName("Remark"), "Remarks 1");
@@ -59,11 +59,9 @@ namespace Mdt{ namespace Sql{
 
    public:
 
-    /*! \brief Construct a update query that acts on db
-     *
-     * \pre \a db must be valid (must have a driver loaded)
+    /*! \brief Construct a select query that acts on connection
      */
-    UpdateQuery(const QSqlDatabase & db);
+    explicit UpdateQuery(const Connection & connection, QObject *parent = nullptr);
 
     /*! \brief Set table name
      *
