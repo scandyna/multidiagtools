@@ -49,6 +49,9 @@ TestBase::~TestBase()
 
 bool TestBase::initDatabaseTemporaryFile()
 {
+  if(!mConnectionParameters.databaseFile().isEmpty()){
+    return true;
+  }
   if(!mTempFile.open()){
     qWarning() << "Could not open file " << mTempFile.fileName();
     return false;

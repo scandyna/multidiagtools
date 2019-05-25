@@ -35,7 +35,7 @@ using namespace Mdt::Sql;
 
 /*
  * We assume that SQLite is compiled thread safe
- * (Compile SQLite without threads upport is optionnal: https://www.sqlite.org/threadsafe.html)
+ * (Compile SQLite without threads support is optionnal: https://www.sqlite.org/threadsafe.html)
  *
  * The same database file will be accessed by 2 threads:
  *  - Main thread ( initDatabaseSqlite(), cleanupClientTable(), ... )
