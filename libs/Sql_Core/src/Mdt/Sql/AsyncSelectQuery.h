@@ -177,7 +177,6 @@ namespace Mdt{ namespace Sql{
      *
      * Once the query executed the statement, the records will be fetched.
      *
-     * \sa newSqlRecordAvailable()
      * \sa newRecordAvailable()
      */
     void submitStatement(const Mdt::QueryExpression::SelectStatement & statement);
