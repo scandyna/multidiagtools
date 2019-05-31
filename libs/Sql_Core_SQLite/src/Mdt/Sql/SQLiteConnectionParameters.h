@@ -37,7 +37,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Construct empty parameters
      */
-    SQLiteConnectionParameters() noexcept = default;
+    SQLiteConnectionParameters() = default;
 
     /*! \brief Copy construct parametrs from \a other
      */
