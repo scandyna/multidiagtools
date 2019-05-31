@@ -181,6 +181,18 @@ namespace Mdt{ namespace Sql{
      */
     void submitStatement(const Mdt::QueryExpression::SelectStatement & statement);
 
+    /*! \brief Submit a select statement to get a single record asynchronously
+     *
+     * If no error occures, and the result returns exactly 1 record,
+     *  newRecordAvailable() is emitted.
+     *
+     * If the result returns no record,
+     *  errorOccured() is emitted with a error containing Mdt::ErrorCode::NotFound.
+     *
+     * For any other cases, errorOccured() is emitted with the error.
+     */
+    void submitGetSingleRecordStatement(const Mdt::QueryExpression::SelectStatement & statement);
+
    Q_SIGNALS:
 
     /*! \brief Emitted whenever a new record is available

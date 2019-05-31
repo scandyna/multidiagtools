@@ -45,6 +45,11 @@ class AsyncTestQueryReceiver : public QObject
     return !mLastError.isNull();
   }
 
+  Mdt::Error lastError() const
+  {
+    return mLastError;
+  }
+
   bool isFinished() const
   {
     return isQueryDone() || hasError();

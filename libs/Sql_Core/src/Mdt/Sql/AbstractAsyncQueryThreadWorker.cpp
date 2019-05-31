@@ -98,6 +98,26 @@ void AbstractAsyncQueryThreadWorker::processSelectStatement(const Mdt::QueryExpr
   emit queryOperationDone(AsyncQueryOperationType::FinalOperation, instanceId);
 }
 
+void AbstractAsyncQueryThreadWorker::processGetSingleRecordSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId)
+{
+  initSelectQueryIfNot();
+
+  if(!mSelectQuery->execStatement(statement)){
+    emit queryErrorOccured(mSelectQuery->lastError(), instanceId);
+    return;
+  }
+  const auto sqlRecord = mSelectQuery->fetchSingleRecord();
+  if(sqlRecord.isEmpty()){
+    const auto error = mSelectQuery->lastError();
+    mSelectQuery.reset();
+    emit queryErrorOccured(error, instanceId);
+    return;
+  }
+  emit newRecordAvailable( variantRecordFromSqlRecord(sqlRecord), instanceId );
+  mSelectQuery.reset();
+  emit queryOperationDone(AsyncQueryOperationType::FinalOperation, instanceId);
+}
+
 void AbstractAsyncQueryThreadWorker::processSelectQueryFetchNextRecords(int maxRecords,  int instanceId)
 {
   if(!mSelectQuery){

@@ -84,8 +84,12 @@ namespace Mdt{ namespace Sql{
       connect(worker, &Worker::queryErrorOccured, this, &AsyncQueryConnectionImpl::queryErrorOccured);
       connect(this, &AsyncQueryConnectionImpl::insertStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processInsertStatement);
       connect(worker, &AbstractAsyncQueryThreadWorker::newIdInserted, this, &AsyncQueryConnectionImpl::newIdInserted);
-      connect(this, &AsyncQueryConnectionImpl::selectStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processSelectStatement);
-      connect(this, &AsyncQueryConnectionImpl::selectQueryFetchNextRecordsSubmitted, worker, &AbstractAsyncQueryThreadWorker::processSelectQueryFetchNextRecords);
+      connect(this, &AsyncQueryConnectionImpl::selectStatementSubmitted,
+              worker, &AbstractAsyncQueryThreadWorker::processSelectStatement);
+      connect(this, &AsyncQueryConnectionImpl::getSingleRecordSelectStatementSubmitted,
+              worker, &AbstractAsyncQueryThreadWorker::processGetSingleRecordSelectStatement);
+      connect(this, &AsyncQueryConnectionImpl::selectQueryFetchNextRecordsSubmitted,
+              worker, &AbstractAsyncQueryThreadWorker::processSelectQueryFetchNextRecords);
       connect(worker, &Worker::newRecordAvailable, this, &AsyncQueryConnectionImpl::newRecordAvailable);
       connect(this, &AsyncQueryConnectionImpl::updateStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processUpdateStatement);
       connect(this, &AsyncQueryConnectionImpl::deleteStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processDeleteStatement);
@@ -104,6 +108,10 @@ namespace Mdt{ namespace Sql{
     /*! \brief Submit a select statement
      */
     void submitSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
+
+    /*! \brief Submit a select statement
+     */
+    void submitGetSingleRecordSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId);
 
     /*! \brief Submit to fetch new records
      */
@@ -152,6 +160,10 @@ namespace Mdt{ namespace Sql{
     /*! \brief Forwards the statement comming from the query to the thread worker
      */
     void selectStatementSubmitted(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
+
+    /*! \brief Forwards the statement comming from the query to the thread worker
+     */
+    void getSingleRecordSelectStatementSubmitted(const Mdt::QueryExpression::SelectStatement & statement, int instanceId);
 
     /*! \brief Forward the request from the query to the thread worker
      */

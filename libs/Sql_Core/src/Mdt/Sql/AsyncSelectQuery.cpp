@@ -79,6 +79,13 @@ void AsyncSelectQuery::submitStatement(const Mdt::QueryExpression::SelectStateme
   submitStatement(statement, true);
 }
 
+void AsyncSelectQuery::submitGetSingleRecordStatement(const Mdt::QueryExpression::SelectStatement & statement)
+{
+  mIsSynchronous = false;
+  mCurrentRecords.clear();
+  connectionImpl()->submitGetSingleRecordSelectStatement(statement, instanceId());
+}
+
 void AsyncSelectQuery::onNewRecordAvailable(const Mdt::Container::VariantRecord & record, int iid)
 {
   if(iid != instanceId()){

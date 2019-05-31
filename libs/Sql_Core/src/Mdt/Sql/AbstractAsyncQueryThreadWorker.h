@@ -98,6 +98,10 @@ namespace Mdt{ namespace Sql{
      */
     void processSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
 
+    /*! \brief Process a select statement
+     */
+    void processGetSingleRecordSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId);
+
     /*! \brief Process fetch next records
      */
     void processSelectQueryFetchNextRecords(int maxRecords,  int instanceId);

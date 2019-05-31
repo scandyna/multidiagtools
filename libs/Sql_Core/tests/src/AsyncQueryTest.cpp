@@ -459,6 +459,40 @@ void AsyncQueryTest::selectAsyncTest()
   QCOMPARE(receiver.recordAt(0).value(1), QVariant("Name 1"));
 }
 
+void AsyncQueryTest::selectAsyncSingleRecordTest()
+{
+  using Mdt::QueryExpression::SelectStatement;
+
+  QueryField id("Id_PK");
+  SelectStatement statement;
+  AsyncSelectQuery query(asyncQueryConnection());
+  AsyncTestQueryReceiver receiver;
+  setupReceiver(receiver, query);
+
+  QVERIFY(insertClient(1, "Name 1"));
+  QVERIFY(insertClient(2, "Name 2"));
+
+  statement.setEntityName("Client_tbl");
+  statement.addField(id);
+  statement.addField("Name");
+
+  statement.setFilter(id == 1);
+  query.submitGetSingleRecordStatement(statement);
+  QVERIFY(!query.isSynchronous());
+  QTRY_VERIFY(receiver.isFinished());
+  QVERIFY(receiver.isQueryDone());
+  QCOMPARE(receiver.recordCount(), 1);
+  QCOMPARE(receiver.recordAt(0).value(0), QVariant(1));
+  QCOMPARE(receiver.recordAt(0).value(1), QVariant("Name 1"));
+
+  receiver.clear();
+  statement.setFilter(id == 5);
+  query.submitGetSingleRecordStatement(statement);
+  QTRY_VERIFY(receiver.isFinished());
+  QVERIFY(receiver.lastError().isError(Mdt::ErrorCode::NotFound));
+  QCOMPARE(receiver.recordCount(), 0);
+}
+
 void AsyncQueryTest::selectSyncTest()
 {
   using Mdt::QueryExpression::SelectStatement;

@@ -52,6 +52,7 @@ class AsyncQueryTest : public TestBase
   void deleteMultipleQueriesTest();
 
   void selectAsyncTest();
+  void selectAsyncSingleRecordTest();
   void selectSyncTest();
   void selectMultipleQueriesTest();
 };
