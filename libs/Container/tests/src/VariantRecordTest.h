@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -30,6 +30,7 @@ class VariantRecordTest : public QObject
  private slots:
 
   void constructTest();
+  void clearTest();
 };
 
 #endif // #ifndef MDT_TEST_MAIN_H

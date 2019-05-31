@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -39,6 +39,14 @@ void VariantRecordTest::constructTest()
   QCOMPARE(record2.columnCount(), 2);
   QCOMPARE(record2.value(0), QVariant(1));
   QCOMPARE(record2.value(1), QVariant("A"));
+}
+
+void VariantRecordTest::clearTest()
+{
+  VariantRecord record{1, "A"};
+
+  record.clear();
+  QCOMPARE(record.columnCount(), 0);
 }
 
 /*

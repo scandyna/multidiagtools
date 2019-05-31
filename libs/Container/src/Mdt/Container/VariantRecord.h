@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -98,6 +98,13 @@ namespace Mdt{ namespace Container{
       Q_ASSERT(column < columnCount());
 
       mRecord[column] = value;
+    }
+
+    /*! \brief Clear this record
+     */
+    void clear()
+    {
+      mRecord.clear();
     }
 
    private:
