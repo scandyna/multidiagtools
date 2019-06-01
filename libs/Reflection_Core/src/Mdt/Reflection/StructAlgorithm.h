@@ -55,6 +55,16 @@ namespace Mdt{ namespace Reflection{
     return QString::fromLatin1( nameFromStructDef<StructDef>() );
   }
 
+  /*! \brief Get the count of reflected fields of a reflected struct
+   *
+   * \pre \a Strcut must have been reflected with MDT_REFLECT_STRUCT()
+   */
+  template<typename Struct>
+  static constexpr int reflectedFieldCountFromStruct() noexcept
+  {
+    return boost::fusion::result_of::size<Struct>::type::value;
+  }
+
   /*! \brief Get the count of reflected fields of a reflected struct from struct def
    *
    * \pre \a StructDef must be a struct definition assiocated with a reflected struct

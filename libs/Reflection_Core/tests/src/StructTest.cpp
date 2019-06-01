@@ -20,8 +20,10 @@
  ****************************************************************************/
 #include "StructTest.h"
 #include "Mdt/Reflection/StructAlgorithm.h"
+#include "Mdt/Reflection/StructRecordAlgorithm.h"
 #include "Mdt/Reflection/FieldAlgorithm.h"
 #include "Mdt/Reflection/ReflectStruct.h"
+#include "Mdt/Container/VariantRecord.h"
 #include <QString>
 #include <QLatin1String>
 #include <QStringList>
@@ -29,6 +31,7 @@
 #include <QVariantList>
 
 using namespace Mdt::Reflection;
+using Mdt::Container::VariantRecord;
 
 /*
  * Person struct
@@ -136,6 +139,10 @@ void StructTest::nameTest()
 
 void StructTest::fieldCountTest()
 {
+  QCOMPARE(reflectedFieldCountFromStruct<Fc1DataStruct>(), 1);
+  QCOMPARE(reflectedFieldCountFromStruct<Fc2DataStruct>(), 2);
+  QCOMPARE(reflectedFieldCountFromStruct<Fc3DataStruct>(), 3);
+
   QCOMPARE(reflectedFieldCountFromStructDef<Fc1Def>(), 1);
   QCOMPARE(reflectedFieldCountFromStructDef<Fc2Def>(), 2);
   QCOMPARE(reflectedFieldCountFromStructDef<Fc3Def>(), 3);
@@ -285,6 +292,15 @@ void StructTest::forEachFieldInStructDefTest()
   fieldNameList.clear();
   forEachFieldInStructDef<AddressDef>(f);
   QCOMPARE(fieldNameList, QStringList({QLatin1String("Address.id"),QLatin1String("Address.street"),QLatin1String("Address.personId")}));
+}
+
+void StructTest::structFromVariantRecordTest()
+{
+  VariantRecord addressRecord{11,QLatin1String("S11"),1};
+  const auto address = structFromVariantRecord<AddressDataStruct>(addressRecord);
+  QCOMPARE(address.id, 11);
+  QCOMPARE(address.street, QLatin1String("S11"));
+  QCOMPARE(address.personId, 1);
 }
 
 /*

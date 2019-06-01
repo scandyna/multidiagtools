@@ -23,6 +23,7 @@ set(SOURCE_FILES
   Mdt/Reflection/FieldAttributes.cpp
   Mdt/Reflection/FieldAlgorithm.cpp
   Mdt/Reflection/StructAlgorithm.cpp
+  Mdt/Reflection/StructRecordAlgorithm.cpp
   Mdt/Reflection/PrimaryKey.cpp
   Mdt/Reflection/IdPrimaryKey.cpp
   Mdt/Reflection/AutoIncrementIdPrimaryKey.cpp
@@ -51,7 +52,7 @@ mdt_add_library(
   NAME Reflection_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Assert Qt5::Core
+  LINK_DEPENDENCIES Assert Container Qt5::Core
 )
 mdt_set_library_description(
   NAME Reflection_Core
