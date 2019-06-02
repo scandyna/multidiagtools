@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -219,7 +219,7 @@ namespace Mdt{ namespace Container{
   template<typename Container, typename T>
   void appendToContainer(Container & container, const T & value)
   {
-    insertToContainer(container, containerSize(container), 1, value);
+    container.push_back(value);
   }
 
   /*! \brief Insert \a value to the beginning of \a container

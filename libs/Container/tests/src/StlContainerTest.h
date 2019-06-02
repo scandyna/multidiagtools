@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -46,7 +46,7 @@ class StlContainerTest : public TestBase
   void callInsertTest();
   void callEraseTest();
 
-  void insertToContainerTest();
+  void appendPrependInsertToContainerTest();
   void removeFromContainerTest();
 };
 

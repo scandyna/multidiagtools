@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "StlContainerTest.h"
 #include "Mdt/Container/StlContainer.h"
+#include "Mdt/Container/Vector.h"
 #include <QVariantList>
 #include <QList>
 #include <QStringList>
@@ -239,7 +240,7 @@ void StlContainerTest::callEraseTest()
 }
 
 template<typename Container>
-void insertToContainerTestImpl()
+void appendPrependInsertToContainerTestImpl()
 {
   /*
    * Initial state
@@ -286,12 +287,13 @@ void insertToContainerTestImpl()
   QCOMPARE(constValueAtIndex(container, 3), 1);
 }
 
-void StlContainerTest::insertToContainerTest()
+void StlContainerTest::appendPrependInsertToContainerTest()
 {
-  insertToContainerTestImpl< std::vector<int> >();
-  insertToContainerTestImpl< QList<int> >();
-  insertToContainerTestImpl< QVector<int> >();
-  insertToContainerTestImpl< std::list<int> >();
+  appendPrependInsertToContainerTestImpl< std::vector<int> >();
+  appendPrependInsertToContainerTestImpl< Mdt::Container::Vector<int> >();
+  appendPrependInsertToContainerTestImpl< QList<int> >();
+  appendPrependInsertToContainerTestImpl< QVector<int> >();
+  appendPrependInsertToContainerTestImpl< std::list<int> >();
 }
 
 template<typename Container>
