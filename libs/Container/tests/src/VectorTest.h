@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -33,6 +33,7 @@ class VectorTest : public QObject
   void initializerList();
   void findTest();
   void addTest();
+  void insertTest();
 };
 
 #endif // #ifndef MDT_TEST_MAIN

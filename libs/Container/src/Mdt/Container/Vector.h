@@ -188,6 +188,19 @@ namespace Mdt{ namespace Container{
       mVector.emplace_back(args...);
     }
 
+    /*! \brief Insert \a count copies of \a value before \a pos
+     *
+     * Returns a iterator pointing to the first element inserted, or pos if count==0.
+     *
+     * \pre \a count must be >= 0
+     */
+    iterator insert(const_iterator pos, int count, const T & value)
+    {
+      Q_ASSERT(count >= 0);
+
+      return mVector.insert(pos, count, value);
+    }
+
     /*! \brief Get a iterator to the first element of this container
      */
     iterator begin() noexcept

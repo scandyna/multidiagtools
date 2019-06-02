@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -95,6 +95,17 @@ void VectorTest::addTest()
   QCOMPARE(vi.at(2), 3);
   QCOMPARE(vi.at(3), 4);
   QCOMPARE(vi.at(4), 5);
+}
+
+void VectorTest::insertTest()
+{
+  Vector<int> vi;
+
+  const auto it = vi.insert(vi.cend(), 2, 11);
+  QCOMPARE(vi.size(), 2);
+  QCOMPARE(vi.at(0), 11);
+  QCOMPARE(vi.at(1), 11);
+  QCOMPARE(*it, 11);
 }
 
 /*
