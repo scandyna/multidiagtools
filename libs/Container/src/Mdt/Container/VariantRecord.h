@@ -76,6 +76,13 @@ namespace Mdt{ namespace Container{
       return mRecord.size();
     }
 
+    /*! \brief Check if this record is empty
+     */
+    bool isEmpty() const noexcept
+    {
+      return mRecord.empty();
+    }
+
     /*! \brief Get \a value at \a column
      *
      * \pre \a column must be in valid range ( 0 <= \a column < columnCount() ).

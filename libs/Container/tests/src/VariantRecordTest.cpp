@@ -30,9 +30,11 @@ void VariantRecordTest::constructTest()
 {
   VariantRecord record0;
   QCOMPARE(record0.columnCount(), 0);
+  QVERIFY(record0.isEmpty());
 
   VariantRecord record1(1);
   QCOMPARE(record1.columnCount(), 1);
+  QVERIFY(!record1.isEmpty());
   QVERIFY(record1.value(0).isNull());
 
   VariantRecord record2{1, "A"};
