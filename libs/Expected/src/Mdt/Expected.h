@@ -51,7 +51,7 @@ namespace Mdt{
    * Using all together could be:
    * \code
    * const auto x = readValue("/path/to/x.csv");
-   * if(x){
+   * if(!x){
    *   handleError(x.error());
    *   return -1;
    * }
