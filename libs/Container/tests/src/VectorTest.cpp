@@ -78,6 +78,14 @@ void VectorTest::findTest()
   QCOMPARE(*vsIt, std::string("B"));
 }
 
+void VectorTest::clearTest()
+{
+  Vector<int> vi{1,2,3};
+
+  vi.clear();
+  QVERIFY(vi.isEmpty());
+}
+
 void VectorTest::addTest()
 {
   Vector<int> vi;

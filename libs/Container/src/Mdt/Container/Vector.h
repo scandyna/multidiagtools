@@ -152,6 +152,13 @@ namespace Mdt{ namespace Container{
       return mVector[index];
     }
 
+    /*! \brief Erases all elements from the container
+     */
+    void clear() noexcept
+    {
+      mVector.clear();
+    }
+
     /*! \brief Add a element at the end of this vector
      */
     void append(const T & value)

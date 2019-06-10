@@ -32,6 +32,7 @@ class VectorTest : public QObject
   void constructAndGet();
   void initializerList();
   void findTest();
+  void clearTest();
   void addTest();
   void insertTest();
 };
