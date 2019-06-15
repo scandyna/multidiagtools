@@ -23,11 +23,11 @@
 
 #include "AsyncQueryBase.h"
 #include "AsyncQueryConnection.h"
+#include "AsyncSelectQueryRecordFetching.h"
 #include "Mdt/QueryExpression/SelectStatement.h"
 #include "Mdt/Container/VariantRecord.h"
 #include "MdtSql_CoreExport.h"
 #include <QVariant>
-
 #include <vector>
 
 namespace Mdt{ namespace Sql{
@@ -43,16 +43,16 @@ namespace Mdt{ namespace Sql{
    * connect(&query, &AsyncSelectQuery::newRecordAvailable, &model, &MyTableModel::appendRecord);
    * view.setModel(&model);
    *
-   * query.submitStatement(statement);
+   * query.submitStatementAndFetchAll(statement);
    * \endcode
    *
    * Example for a synchronous usage:
    * \code
    * AsyncSelectQuery query(connection);
    *
-   * const auto result = query.execStatement(statement);
-   * if(!result){
+   * if( !query.execStatement(statement) ){
    *   // Error handling
+   *   return ...
    * }
    *
    * while(query.next()){
@@ -171,6 +171,34 @@ namespace Mdt{ namespace Sql{
       return mCurrentRecords[row];
     }
 
+    /*! \brief Retrieves a single record in the result
+     *
+     * If no record is available,
+     *  this method stores a error containing Mdt::ErrorCode::NotFound and returns a empty record.
+     *
+     * If more than 1 record is available,
+     *  this method stores a error and returns a empty record.
+     *
+     * \warning After a call to this method,
+     *   this query no longer refers to the expected record.
+     *
+     * Example of usage:
+     * \code
+     * const auto record = query.fetchSingleRecord();
+     * if(record.isEmpty()){
+     *   if(query.lastError().isError(Mdt::ErrorCode::NotFound)){
+     *     // No record available
+     *   }else{
+     *     // More than one record available
+     *   }
+     * }
+     * \endcode
+     *
+     * \pre This query must be in synchronous mode
+     * \sa isSynchronous()
+     */
+     Mdt::Container::VariantRecord fetchSingleRecord();
+
    public Q_SLOTS:
 
     /*! \brief Submit a select statement to be executed asynchronously
@@ -179,7 +207,7 @@ namespace Mdt{ namespace Sql{
      *
      * \sa newRecordAvailable()
      */
-    void submitStatement(const Mdt::QueryExpression::SelectStatement & statement);
+    void submitStatementAndFetchAll(const Mdt::QueryExpression::SelectStatement & statement);
 
     /*! \brief Submit a select statement to get a single record asynchronously
      *
@@ -205,7 +233,7 @@ namespace Mdt{ namespace Sql{
 
    private:
 
-    void submitStatement(const Mdt::QueryExpression::SelectStatement & statement, bool fetchRecords);
+    void submitStatement(const Mdt::QueryExpression::SelectStatement & statement, AsyncSelectQueryRecordFetching recordFetching);
 
     bool mIsSynchronous = false;
     std::vector<Mdt::Container::VariantRecord> mCurrentRecords;

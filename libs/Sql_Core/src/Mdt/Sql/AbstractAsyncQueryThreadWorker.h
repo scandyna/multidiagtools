@@ -24,6 +24,7 @@
 #include "AsyncQueryOperationType.h"
 #include "Connection.h"
 #include "InsertStatement.h"
+#include "AsyncSelectQueryRecordFetching.h"
 #include "UpdateStatement.h"
 #include "DeleteStatement.h"
 #include "Mdt/QueryExpression/SelectStatement.h"
@@ -37,7 +38,7 @@
 
 namespace Mdt{ namespace Sql{
 
-  class SelectQuery;
+  class AsyncSelectQueryThreadWorker;
 
   /*! \brief Base class to implement a async query thread worker
    */
@@ -96,11 +97,12 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Process a select statement
      */
-    void processSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
+    void processSelectStatement(const Mdt::QueryExpression::SelectStatement & statement,
+                                Mdt::Sql::AsyncSelectQueryRecordFetching recordFetching, int instanceId);
 
-    /*! \brief Process a select statement
+    /*! \brief Process fetch a single record
      */
-    void processGetSingleRecordSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId);
+    void processSelectQueryFetchSingleRecord(int instanceId);
 
     /*! \brief Process fetch next records
      */
@@ -148,10 +150,10 @@ namespace Mdt{ namespace Sql{
 
    private:
 
-    void initSelectQueryIfNot();
+    void initSelectQueryThreadWorker();
 
     QString mConnectionName;
-    std::unique_ptr<SelectQuery> mSelectQuery;
+    std::unique_ptr<AsyncSelectQueryThreadWorker> mSelectQueryThreadWorker;
   };
 
 }} // namespace Mdt{ namespace Sql{

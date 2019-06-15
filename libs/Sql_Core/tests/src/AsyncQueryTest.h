@@ -51,10 +51,19 @@ class AsyncQueryTest : public TestBase
   void deleteSyncTest();
   void deleteMultipleQueriesTest();
 
+  void selectThreadWorkerFetchAllTest();
+  void selectThreadWorkerFetchSingleRecordTest();
+  void selectThreadWorkerFetchSingleRecordMultipleQueriesTest();
+  void selectThreadWorkerFetchNextRecordsTest();
+  void selectThreadWorkerFetchNextRecordsMultipleQueriesTest();
+
   void selectAsyncTest();
   void selectAsyncSingleRecordTest();
   void selectSyncTest();
+  void selectSyncSingleRecordTest();
   void selectMultipleQueriesTest();
+  void selectSyncSingleRecordMultipleQueriesTest();
+  void selectSyncMultipleQueriesTest();
 };
 
 #endif // #ifndef MDT_SQL_ASYNC_QUERY_TEST_H

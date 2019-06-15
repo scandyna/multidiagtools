@@ -21,13 +21,9 @@
 #include "AbstractAsyncQueryThreadWorker.h"
 #include "Error.h"
 #include "InsertQuery.h"
-#include "SelectQuery.h"
+#include "AsyncSelectQueryThreadWorker.h"
 #include "UpdateQuery.h"
 #include "DeleteQuery.h"
-#include "RecordUtils.h"
-#include <QSqlRecord>
-
-// #include <QDebug>
 
 namespace Mdt{ namespace Sql{
 
@@ -38,7 +34,6 @@ AbstractAsyncQueryThreadWorker::AbstractAsyncQueryThreadWorker()
 
 AbstractAsyncQueryThreadWorker::~AbstractAsyncQueryThreadWorker()
 {
-  mSelectQuery.reset();
   close();
 }
 
@@ -60,6 +55,7 @@ void AbstractAsyncQueryThreadWorker::close()
   if(mConnectionName.isEmpty()){
     return;
   }
+  mSelectQueryThreadWorker.reset();
   Connection::close(connection());
   Connection::remove(connection());
 }
@@ -79,64 +75,26 @@ void AbstractAsyncQueryThreadWorker::processInsertStatement(const Mdt::Sql::Inse
   emit queryOperationDone(AsyncQueryOperationType::FinalOperation, instanceId);
 }
 
-void AbstractAsyncQueryThreadWorker::processSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords)
+void AbstractAsyncQueryThreadWorker::processSelectStatement(const Mdt::QueryExpression::SelectStatement & statement,
+                                                            Mdt::Sql::AsyncSelectQueryRecordFetching recordFetching, int instanceId)
 {
-  initSelectQueryIfNot();
+  Q_ASSERT(mSelectQueryThreadWorker.get() != nullptr);
 
-  if(!mSelectQuery->execStatement(statement)){
-    emit queryErrorOccured(mSelectQuery->lastError(), instanceId);
-    return;
-  }
-  if(!fetchRecords){
-    emit queryOperationDone(AsyncQueryOperationType::IntermediateOperation, instanceId);
-    return;
-  }
-  while(mSelectQuery->next()){
-    emit newRecordAvailable(  variantRecordFromSqlRecord(mSelectQuery->record()), instanceId );
-  }
-  mSelectQuery.reset();
-  emit queryOperationDone(AsyncQueryOperationType::FinalOperation, instanceId);
+  mSelectQueryThreadWorker->processStatement(statement, recordFetching, instanceId);
 }
 
-void AbstractAsyncQueryThreadWorker::processGetSingleRecordSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId)
+void AbstractAsyncQueryThreadWorker::processSelectQueryFetchSingleRecord(int instanceId)
 {
-  initSelectQueryIfNot();
+  Q_ASSERT(mSelectQueryThreadWorker.get() != nullptr);
 
-  if(!mSelectQuery->execStatement(statement)){
-    emit queryErrorOccured(mSelectQuery->lastError(), instanceId);
-    return;
-  }
-  const auto sqlRecord = mSelectQuery->fetchSingleRecord();
-  if(sqlRecord.isEmpty()){
-    const auto error = mSelectQuery->lastError();
-    mSelectQuery.reset();
-    emit queryErrorOccured(error, instanceId);
-    return;
-  }
-  emit newRecordAvailable( variantRecordFromSqlRecord(sqlRecord), instanceId );
-  mSelectQuery.reset();
-  emit queryOperationDone(AsyncQueryOperationType::FinalOperation, instanceId);
+  mSelectQueryThreadWorker->processFetchSingleRecord(instanceId);
 }
 
 void AbstractAsyncQueryThreadWorker::processSelectQueryFetchNextRecords(int maxRecords,  int instanceId)
 {
-  if(!mSelectQuery){
-    emit queryOperationDone(AsyncQueryOperationType::FinalOperation, instanceId);
-    return;
-  }
+  Q_ASSERT(mSelectQueryThreadWorker.get() != nullptr);
 
-  bool isFinished = true;
-
-  for(int rec = 0; rec < maxRecords; ++rec){
-    isFinished = !mSelectQuery->next();
-    if(isFinished){
-      mSelectQuery.reset();
-      emit queryOperationDone(AsyncQueryOperationType::FinalOperation, instanceId);
-      return;
-    }
-    emit newRecordAvailable(  variantRecordFromSqlRecord(mSelectQuery->record()), instanceId );
-  }
-  emit queryOperationDone(AsyncQueryOperationType::IntermediateOperation, instanceId);
+  mSelectQueryThreadWorker->processFetchNextRecords(maxRecords, instanceId);
 }
 
 void AbstractAsyncQueryThreadWorker::processUpdateStatement(const Mdt::Sql::UpdateStatement & statement, int instanceId)
@@ -164,13 +122,20 @@ void AbstractAsyncQueryThreadWorker::processDeleteStatement(const Mdt::Sql::Dele
 void AbstractAsyncQueryThreadWorker::setConnection(const Connection & connection)
 {
   mConnectionName = connection.name();
+  initSelectQueryThreadWorker();
 }
 
-void AbstractAsyncQueryThreadWorker::initSelectQueryIfNot()
+void AbstractAsyncQueryThreadWorker::initSelectQueryThreadWorker()
 {
-  if(!mSelectQuery){
-    mSelectQuery = std::make_unique<SelectQuery>( connection() );
-  }
+  Q_ASSERT(connection().isValid());
+
+  mSelectQueryThreadWorker = std::make_unique<AsyncSelectQueryThreadWorker>(connection());
+  connect(mSelectQueryThreadWorker.get(), &AsyncSelectQueryThreadWorker::newRecordAvailable,
+          this, &AbstractAsyncQueryThreadWorker::newRecordAvailable);
+  connect(mSelectQueryThreadWorker.get(), &AsyncSelectQueryThreadWorker::operationDone, this,
+          &AbstractAsyncQueryThreadWorker::queryOperationDone);
+  connect(mSelectQueryThreadWorker.get(), &AsyncSelectQueryThreadWorker::errorOccured,
+          this, &AbstractAsyncQueryThreadWorker::queryErrorOccured);
 }
 
 }} // namespace Mdt{ namespace Sql{

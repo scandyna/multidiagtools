@@ -37,6 +37,7 @@ AsyncQueryConnectionImpl::AsyncQueryConnectionImpl(QObject* parent)
   qRegisterMetaType<Mdt::QueryExpression::SelectStatement>();
   qRegisterMetaType<Mdt::Container::VariantRecord>();
   qRegisterMetaType<AsyncQueryOperationType>();
+  qRegisterMetaType<AsyncSelectQueryRecordFetching>();
 }
 
 AsyncQueryConnectionImpl::~AsyncQueryConnectionImpl()
@@ -66,19 +67,20 @@ void AsyncQueryConnectionImpl::submitInsertStatement(const InsertStatement & sta
   emit insertStatementSubmitted(statement, instanceId);
 }
 
-void AsyncQueryConnectionImpl::submitSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords)
+void AsyncQueryConnectionImpl::submitSelectStatement(const Mdt::QueryExpression::SelectStatement & statement,
+                                                     Mdt::Sql::AsyncSelectQueryRecordFetching recordFetching, int instanceId)
 {
-  emit selectStatementSubmitted(statement, instanceId, fetchRecords);
-}
-
-void AsyncQueryConnectionImpl::submitGetSingleRecordSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId)
-{
-  emit getSingleRecordSelectStatementSubmitted(statement, instanceId);
+  emit selectStatementSubmitted(statement, recordFetching, instanceId);
 }
 
 void AsyncQueryConnectionImpl::submitSelectQueryFetchNextRecords(int maxRecords, int instanceId)
 {
   emit selectQueryFetchNextRecordsSubmitted(maxRecords, instanceId);
+}
+
+void AsyncQueryConnectionImpl::submitSelectQueryFetchSingleRecord(int instanceId)
+{
+  emit selectQueryFetchSingleRecordSubmitted(instanceId);
 }
 
 void AsyncQueryConnectionImpl::submitUpdateStatement(const UpdateStatement & statement, int instanceId)

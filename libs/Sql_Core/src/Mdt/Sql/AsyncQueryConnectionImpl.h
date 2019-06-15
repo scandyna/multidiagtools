@@ -23,6 +23,7 @@
 
 #include "AbstractAsyncQueryThreadWorker.h"
 #include "AsyncQueryOperationType.h"
+#include "AsyncSelectQueryRecordFetching.h"
 #include "InsertStatement.h"
 #include "UpdateStatement.h"
 #include "DeleteStatement.h"
@@ -86,10 +87,10 @@ namespace Mdt{ namespace Sql{
       connect(worker, &AbstractAsyncQueryThreadWorker::newIdInserted, this, &AsyncQueryConnectionImpl::newIdInserted);
       connect(this, &AsyncQueryConnectionImpl::selectStatementSubmitted,
               worker, &AbstractAsyncQueryThreadWorker::processSelectStatement);
-      connect(this, &AsyncQueryConnectionImpl::getSingleRecordSelectStatementSubmitted,
-              worker, &AbstractAsyncQueryThreadWorker::processGetSingleRecordSelectStatement);
       connect(this, &AsyncQueryConnectionImpl::selectQueryFetchNextRecordsSubmitted,
               worker, &AbstractAsyncQueryThreadWorker::processSelectQueryFetchNextRecords);
+      connect(this, &AsyncQueryConnectionImpl::selectQueryFetchSingleRecordSubmitted,
+              worker, &AbstractAsyncQueryThreadWorker::processSelectQueryFetchSingleRecord);
       connect(worker, &Worker::newRecordAvailable, this, &AsyncQueryConnectionImpl::newRecordAvailable);
       connect(this, &AsyncQueryConnectionImpl::updateStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processUpdateStatement);
       connect(this, &AsyncQueryConnectionImpl::deleteStatementSubmitted, worker, &AbstractAsyncQueryThreadWorker::processDeleteStatement);
@@ -107,15 +108,16 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Submit a select statement
      */
-    void submitSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
-
-    /*! \brief Submit a select statement
-     */
-    void submitGetSingleRecordSelectStatement(const Mdt::QueryExpression::SelectStatement & statement, int instanceId);
+    void submitSelectStatement(const Mdt::QueryExpression::SelectStatement & statement,
+                               Mdt::Sql::AsyncSelectQueryRecordFetching recordFetching, int instanceId);
 
     /*! \brief Submit to fetch new records
      */
     void submitSelectQueryFetchNextRecords(int maxRecords, int instanceId);
+
+    /*! \brief Submit to fetch a single record
+     */
+    void submitSelectQueryFetchSingleRecord(int instanceId);
 
     /*! \brief Submit a update statement
      */
@@ -159,15 +161,16 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Forwards the statement comming from the query to the thread worker
      */
-    void selectStatementSubmitted(const Mdt::QueryExpression::SelectStatement & statement, int instanceId, bool fetchRecords);
-
-    /*! \brief Forwards the statement comming from the query to the thread worker
-     */
-    void getSingleRecordSelectStatementSubmitted(const Mdt::QueryExpression::SelectStatement & statement, int instanceId);
+    void selectStatementSubmitted(const Mdt::QueryExpression::SelectStatement & statement,
+                                  Mdt::Sql::AsyncSelectQueryRecordFetching recordFetching, int instanceId);
 
     /*! \brief Forward the request from the query to the thread worker
      */
     void selectQueryFetchNextRecordsSubmitted(int maxRecords, int instanceId);
+
+    /*! \brief Forward the request from the query to the thread worker
+     */
+    void selectQueryFetchSingleRecordSubmitted(int instanceId);
 
     /*! \brief Forwards the statement comming from the query to the thread worker
      */

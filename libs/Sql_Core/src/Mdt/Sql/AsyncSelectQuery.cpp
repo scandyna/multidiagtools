@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "AsyncSelectQuery.h"
-#include <QMetaMethod>
 
 namespace Mdt{ namespace Sql{
 
@@ -39,7 +38,7 @@ bool AsyncSelectQuery::execStatement(const Mdt::QueryExpression::SelectStatement
    * will store the first comming records
    */
   mIsSynchronous = true;
-  submitStatement(statement, false);
+  submitStatement(statement, AsyncSelectQueryRecordFetching::FetchNoRecord);
 
   const auto result = waitOperationFinished();
   if(result){
@@ -72,18 +71,32 @@ bool AsyncSelectQuery::fetchRecords(int maxRecords)
   return fetchedRecordCount() > 0;
 }
 
-void AsyncSelectQuery::submitStatement(const Mdt::QueryExpression::SelectStatement & statement)
+Mdt::Container::VariantRecord AsyncSelectQuery::fetchSingleRecord()
+{
+  Q_ASSERT(isSynchronous());
+
+  mCurrentRecords.clear();
+  connectionImpl()->submitSelectQueryFetchSingleRecord(instanceId());
+  if(!waitOperationFinished()){
+    return Mdt::Container::VariantRecord();
+  }
+  Q_ASSERT(mCurrentRecords.size() == 1);
+
+  return mCurrentRecords[0];
+}
+
+void AsyncSelectQuery::submitStatementAndFetchAll(const Mdt::QueryExpression::SelectStatement & statement)
 {
   mIsSynchronous = false;
   mCurrentRecords.clear();
-  submitStatement(statement, true);
+  submitStatement(statement, AsyncSelectQueryRecordFetching::FetchAllRecords);
 }
 
 void AsyncSelectQuery::submitGetSingleRecordStatement(const Mdt::QueryExpression::SelectStatement & statement)
 {
   mIsSynchronous = false;
   mCurrentRecords.clear();
-  connectionImpl()->submitGetSingleRecordSelectStatement(statement, instanceId());
+  submitStatement(statement, AsyncSelectQueryRecordFetching::FetchSingleRecord);
 }
 
 void AsyncSelectQuery::onNewRecordAvailable(const Mdt::Container::VariantRecord & record, int iid)
@@ -99,9 +112,9 @@ void AsyncSelectQuery::onNewRecordAvailable(const Mdt::Container::VariantRecord 
   emit newRecordAvailable(record);
 }
 
-void AsyncSelectQuery::submitStatement(const Mdt::QueryExpression::SelectStatement & statement, bool fetchRecords)
+void AsyncSelectQuery::submitStatement(const Mdt::QueryExpression::SelectStatement & statement, AsyncSelectQueryRecordFetching recordFetching)
 {
-  connectionImpl()->submitSelectStatement(statement, instanceId(), fetchRecords);
+  connectionImpl()->submitSelectStatement(statement, recordFetching, instanceId());
 }
 
 }} // namespace Mdt{ namespace Sql{

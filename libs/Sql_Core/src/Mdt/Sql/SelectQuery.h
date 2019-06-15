@@ -24,6 +24,7 @@
 #include "AbstractQuery.h"
 #include "Mdt/QueryExpression/SelectStatement.h"
 #include "MdtSql_CoreExport.h"
+#include <QString>
 #include <QVariant>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -166,6 +167,24 @@ namespace Mdt{ namespace Sql{
     QSqlRecord record() const
     {
       return mQuery.record();
+    }
+
+    /*! \brief Returns the last query that was successfully executed
+     *
+     * This is a call to QSqlQuery::executedQuery()
+     */
+    QString executedQuery() const
+    {
+      return mQuery.executedQuery();
+    }
+
+    /*! \brief Check if this query is active
+     *
+     * This is a call to QSqlQuery::isActive()
+     */
+    bool isActive() const
+    {
+      return mQuery.isActive();
     }
 
    private:

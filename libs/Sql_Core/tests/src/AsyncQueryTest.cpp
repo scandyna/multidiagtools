@@ -23,9 +23,12 @@
 #include "Mdt/Sql/AsyncQueryConnectionImpl.h"
 #include "Mdt/Sql/SQLiteAsyncQueryConnection.h"
 #include "Mdt/Sql/AsyncInsertQuery.h"
+#include "Mdt/Sql/AsyncSelectQueryThreadWorker.h"
 #include "Mdt/Sql/AsyncSelectQuery.h"
 #include "Mdt/Sql/AsyncUpdateQuery.h"
 #include "Mdt/Sql/AsyncDeleteQuery.h"
+#include "Mdt/Container/VariantRecord.h"
+#include "Mdt/Container/Vector.h"
 #include "Mdt/ErrorCode.h"
 #include <memory>
 
@@ -419,6 +422,303 @@ void AsyncQueryTest::deleteMultipleQueriesTest()
   QVERIFY(clientExists(3));
 }
 
+void AsyncQueryTest::selectThreadWorkerFetchAllTest()
+{
+  using Mdt::Container::VariantRecord;
+
+  QVERIFY(insertClient(11, "Name 11"));
+  QVERIFY(insertClient(12, "Name 12"));
+
+  QueryField id("Id_PK");
+  Mdt::QueryExpression::SelectStatement statement;
+  AsyncSelectQueryThreadWorker tw(connection());
+  Mdt::Container::Vector<VariantRecord> recordList;
+  Mdt::Error error;
+
+  const auto addRecordToList = [&recordList](const VariantRecord & rec, int instanceId){
+    QCOMPARE(instanceId, 1);
+    recordList.append(rec);
+  };
+  connect(&tw, &AsyncSelectQueryThreadWorker::newRecordAvailable, addRecordToList);
+
+  const auto setError = [&error](const Mdt::Error & err, int instanceId){
+    QCOMPARE(instanceId, 1);
+    error = err;
+  };
+  connect(&tw, &AsyncSelectQueryThreadWorker::errorOccured, setError);
+
+  statement.setEntityName("Client_tbl");
+  statement.addField(id);
+  statement.addField("Name");
+
+  tw.processStatement(statement, AsyncSelectQueryRecordFetching::FetchAllRecords, 1);
+  QCOMPARE(recordList.size(), 2);
+  QCOMPARE(recordList.at(0).columnCount(), 2);
+  QCOMPARE(recordList.at(0).value(0).toInt(), 11);
+  QCOMPARE(recordList.at(0).value(1).toString(), QLatin1String("Name 11"));
+  QCOMPARE(recordList.at(1).columnCount(), 2);
+  QCOMPARE(recordList.at(1).value(0).toInt(), 12);
+  QCOMPARE(recordList.at(1).value(1).toString(), QLatin1String("Name 12"));
+  QVERIFY(error.isNull());
+}
+
+void AsyncQueryTest::selectThreadWorkerFetchSingleRecordTest()
+{
+  using Mdt::Container::VariantRecord;
+
+  QVERIFY(insertClient(1, "Name 1"));
+  QVERIFY(insertClient(2, "Name 2"));
+
+  QueryField id("Id_PK");
+  Mdt::QueryExpression::SelectStatement statement;
+  AsyncSelectQueryThreadWorker tw(connection());
+  VariantRecord record;
+  Mdt::Error error;
+
+  const auto setRecord = [&record](const VariantRecord & rec, int instanceId){
+    QCOMPARE(instanceId, 1);
+    record = rec;
+  };
+  connect(&tw, &AsyncSelectQueryThreadWorker::newRecordAvailable, setRecord);
+
+  const auto setError = [&error](const Mdt::Error & err, int instanceId){
+    QCOMPARE(instanceId, 1);
+    error = err;
+  };
+  connect(&tw, &AsyncSelectQueryThreadWorker::errorOccured, setError);
+
+  statement.setEntityName("Client_tbl");
+  statement.addField(id);
+  statement.addField("Name");
+
+  statement.setFilter(id == 2);
+  tw.processStatement(statement, AsyncSelectQueryRecordFetching::FetchNoRecord, 1);
+  QVERIFY(record.isEmpty());
+  QVERIFY(error.isNull());
+  tw.processFetchSingleRecord(1);
+  QCOMPARE(record.columnCount(), 2);
+  QCOMPARE(record.value(0).toInt(), 2);
+  QCOMPARE(record.value(1).toString(), QLatin1String("Name 2"));
+  QVERIFY(error.isNull());
+
+  record.clear();
+  statement.setFilter(id == 15);
+  tw.processStatement(statement, AsyncSelectQueryRecordFetching::FetchNoRecord, 1);
+  tw.processFetchSingleRecord(1);
+  QVERIFY(record.isEmpty());
+  QVERIFY(error.isError(Mdt::ErrorCode::NotFound));
+
+  record.clear();
+  error.clear();
+  statement.setFilter(id == 1);
+  tw.processStatement(statement, AsyncSelectQueryRecordFetching::FetchSingleRecord, 1);
+  QCOMPARE(record.columnCount(), 2);
+  QCOMPARE(record.value(0).toInt(), 1);
+  QCOMPARE(record.value(1).toString(), QLatin1String("Name 1"));
+  QVERIFY(error.isNull());
+}
+
+void AsyncQueryTest::selectThreadWorkerFetchSingleRecordMultipleQueriesTest()
+{
+  using Mdt::Container::VariantRecord;
+
+  QVERIFY(insertClient(11, "Name 11"));
+  QVERIFY(insertClient(12, "Name 12"));
+
+  QueryField id("Id_PK");
+  Mdt::QueryExpression::SelectStatement statement;
+  AsyncSelectQueryThreadWorker tw(connection());
+  VariantRecord record1, record2;
+  Mdt::Error error1, error2;
+
+  const auto setRecord1 = [&record1](const VariantRecord & rec, int instanceId){
+    if(instanceId == 1){
+      record1 = rec;
+    }
+  };
+  const auto setRecord2 = [&record2](const VariantRecord & rec, int instanceId){
+    if(instanceId == 2){
+      record2 = rec;
+    }
+  };
+  connect(&tw, &AsyncSelectQueryThreadWorker::newRecordAvailable, setRecord1);
+  connect(&tw, &AsyncSelectQueryThreadWorker::newRecordAvailable, setRecord2);
+
+  const auto setError1 = [&error1](const Mdt::Error & err, int instanceId){
+    if(instanceId == 1){
+      error1 = err;
+    }
+  };
+  const auto setError2 = [&error2](const Mdt::Error & err, int instanceId){
+    if(instanceId == 2){
+      error2 = err;
+    }
+  };
+  connect(&tw, &AsyncSelectQueryThreadWorker::errorOccured, setError1);
+  connect(&tw, &AsyncSelectQueryThreadWorker::errorOccured, setError2);
+
+  statement.setEntityName("Client_tbl");
+  statement.addField(id);
+  statement.addField("Name");
+
+  statement.setFilter(id == 11);
+  tw.processStatement(statement, AsyncSelectQueryRecordFetching::FetchNoRecord, 1);
+  statement.setFilter(id == 12);
+  tw.processStatement(statement, AsyncSelectQueryRecordFetching::FetchNoRecord, 2);
+  QVERIFY(record1.isEmpty());
+  QVERIFY(record2.isEmpty());
+  QVERIFY(error1.isNull());
+  QVERIFY(error2.isNull());
+
+  tw.processFetchSingleRecord(1);
+  QCOMPARE(record1.columnCount(), 2);
+  QCOMPARE(record1.value(0).toInt(), 11);
+  QCOMPARE(record1.value(1).toString(), QLatin1String("Name 11"));
+  QVERIFY(record2.isEmpty());
+  QVERIFY(error1.isNull());
+  QVERIFY(error2.isNull());
+
+  tw.processFetchSingleRecord(2);
+  QCOMPARE(record1.columnCount(), 2);
+  QCOMPARE(record1.value(0).toInt(), 11);
+  QCOMPARE(record1.value(1).toString(), QLatin1String("Name 11"));
+  QCOMPARE(record2.columnCount(), 2);
+  QCOMPARE(record2.value(0).toInt(), 12);
+  QCOMPARE(record2.value(1).toString(), QLatin1String("Name 12"));
+  QVERIFY(error1.isNull());
+  QVERIFY(error2.isNull());
+}
+
+void AsyncQueryTest::selectThreadWorkerFetchNextRecordsTest()
+{
+  using Mdt::Container::VariantRecord;
+
+  QVERIFY(insertClient(11, "Name 11"));
+  QVERIFY(insertClient(12, "Name 12"));
+  QVERIFY(insertClient(13, "Name 13"));
+
+  QueryField id("Id_PK");
+  Mdt::QueryExpression::SelectStatement statement;
+  AsyncSelectQueryThreadWorker tw(connection());
+  Mdt::Container::Vector<VariantRecord> recordList;
+  Mdt::Error error;
+
+  const auto addRecordToList = [&recordList](const VariantRecord & rec, int instanceId){
+    QCOMPARE(instanceId, 1);
+    recordList.append(rec);
+  };
+  connect(&tw, &AsyncSelectQueryThreadWorker::newRecordAvailable, addRecordToList);
+
+  const auto setError = [&error](const Mdt::Error & err, int instanceId){
+    QCOMPARE(instanceId, 1);
+    error = err;
+  };
+  connect(&tw, &AsyncSelectQueryThreadWorker::errorOccured, setError);
+
+  statement.setEntityName("Client_tbl");
+  statement.addField(id);
+  statement.addField("Name");
+
+  tw.processStatement(statement, AsyncSelectQueryRecordFetching::FetchNoRecord, 1);
+  QVERIFY(recordList.isEmpty());
+  QVERIFY(error.isNull());
+
+  tw.processFetchNextRecords(2, 1);
+  QCOMPARE(recordList.size(), 2);
+
+  tw.processFetchNextRecords(2, 1);
+  QCOMPARE(recordList.size(), 3);
+
+  tw.processFetchNextRecords(2, 1);
+  QCOMPARE(recordList.size(), 3);
+
+  QCOMPARE(recordList.at(0).columnCount(), 2);
+  QCOMPARE(recordList.at(0).value(0).toInt(), 11);
+  QCOMPARE(recordList.at(0).value(1).toString(), QLatin1String("Name 11"));
+  QCOMPARE(recordList.at(1).columnCount(), 2);
+  QCOMPARE(recordList.at(1).value(0).toInt(), 12);
+  QCOMPARE(recordList.at(1).value(1).toString(), QLatin1String("Name 12"));
+  QCOMPARE(recordList.at(2).columnCount(), 2);
+  QCOMPARE(recordList.at(2).value(0).toInt(), 13);
+  QCOMPARE(recordList.at(2).value(1).toString(), QLatin1String("Name 13"));
+  QVERIFY(error.isNull());
+}
+
+void AsyncQueryTest::selectThreadWorkerFetchNextRecordsMultipleQueriesTest()
+{
+  using Mdt::Container::VariantRecord;
+
+  QVERIFY(insertClient(11, "Name 11"));
+  QVERIFY(insertClient(12, "Name 12"));
+
+  QueryField id("Id_PK");
+  Mdt::QueryExpression::SelectStatement statement;
+  AsyncSelectQueryThreadWorker tw(connection());
+  Mdt::Container::Vector<VariantRecord> recordList1, recordList2;
+  Mdt::Error error1, error2;
+
+  const auto addRecordToList1 = [&recordList1](const VariantRecord & rec, int instanceId){
+    if(instanceId == 1){
+      recordList1.append(rec);
+    }
+  };
+  const auto addRecordToList2 = [&recordList2](const VariantRecord & rec, int instanceId){
+    if(instanceId == 2){
+      recordList2.append(rec);
+    }
+  };
+  connect(&tw, &AsyncSelectQueryThreadWorker::newRecordAvailable, addRecordToList1);
+  connect(&tw, &AsyncSelectQueryThreadWorker::newRecordAvailable, addRecordToList2);
+
+  const auto setError1 = [&error1](const Mdt::Error & err, int instanceId){
+    if(instanceId == 1){
+      error1 = err;
+    }
+  };
+  const auto setError2 = [&error2](const Mdt::Error & err, int instanceId){
+    if(instanceId == 2){
+      error2 = err;
+    }
+  };
+  connect(&tw, &AsyncSelectQueryThreadWorker::errorOccured, setError1);
+  connect(&tw, &AsyncSelectQueryThreadWorker::errorOccured, setError2);
+
+  statement.setEntityName("Client_tbl");
+  statement.addField(id);
+  statement.addField("Name");
+
+  tw.processStatement(statement, AsyncSelectQueryRecordFetching::FetchNoRecord, 1);
+
+  statement.setFilter(id == 12);
+  tw.processStatement(statement, AsyncSelectQueryRecordFetching::FetchNoRecord, 2);
+
+  QVERIFY(recordList1.isEmpty());
+  QVERIFY(recordList2.isEmpty());
+  QVERIFY(error1.isNull());
+  QVERIFY(error2.isNull());
+
+  tw.processFetchNextRecords(50, 1);
+  QCOMPARE(recordList1.size(), 2);
+  QCOMPARE(recordList1.at(0).columnCount(), 2);
+  QCOMPARE(recordList1.at(0).value(0).toInt(), 11);
+  QCOMPARE(recordList1.at(0).value(1).toString(), QLatin1String("Name 11"));
+  QCOMPARE(recordList1.at(1).columnCount(), 2);
+  QCOMPARE(recordList1.at(1).value(0).toInt(), 12);
+  QCOMPARE(recordList1.at(1).value(1).toString(), QLatin1String("Name 12"));
+  QVERIFY(recordList2.isEmpty());
+  QVERIFY(error1.isNull());
+  QVERIFY(error2.isNull());
+
+  tw.processFetchNextRecords(50, 2);
+  QCOMPARE(recordList1.size(), 2);
+  QCOMPARE(recordList2.size(), 1);
+  QCOMPARE(recordList2.at(0).columnCount(), 2);
+  QCOMPARE(recordList2.at(0).value(0).toInt(), 12);
+  QCOMPARE(recordList2.at(0).value(1).toString(), QLatin1String("Name 12"));
+  QVERIFY(error1.isNull());
+  QVERIFY(error2.isNull());
+}
+
 void AsyncQueryTest::selectAsyncTest()
 {
   using Mdt::QueryExpression::SelectStatement;
@@ -437,7 +737,7 @@ void AsyncQueryTest::selectAsyncTest()
   statement.addField("Name");
 
   QVERIFY(!query.isSynchronous());
-  query.submitStatement(statement);
+  query.submitStatementAndFetchAll(statement);
   QVERIFY(!query.isSynchronous());
   // Check that doneSuccessfully() signal is emitted
   QTRY_VERIFY(receiver.isFinished());
@@ -451,7 +751,7 @@ void AsyncQueryTest::selectAsyncTest()
 
   receiver.clear();
   statement.setFilter(id == 1);
-  query.submitStatement(statement);
+  query.submitStatementAndFetchAll(statement);
   QTRY_VERIFY(receiver.isFinished());
   QVERIFY(receiver.isQueryDone());
   QCOMPARE(receiver.recordCount(), 1);
@@ -531,6 +831,42 @@ void AsyncQueryTest::selectSyncTest()
   QCOMPARE(query.fetchedRecordCount(), 0);
 }
 
+void AsyncQueryTest::selectSyncSingleRecordTest()
+{
+  using Mdt::QueryExpression::SelectStatement;
+
+  QVERIFY(insertClient(1, "Name 1"));
+  QVERIFY(insertClient(2, "Name 2"));
+
+  QueryField id("Id_PK");
+  SelectStatement statement;
+  AsyncSelectQuery query(asyncQueryConnection());
+  Mdt::Container::VariantRecord record;
+
+  statement.setEntityName("Client_tbl");
+  statement.addField(id);
+  statement.addField("Name");
+
+  QVERIFY(query.execStatement(statement));
+  QVERIFY(query.lastError().isNull());
+  record = query.fetchSingleRecord();
+  QVERIFY(record.isEmpty());
+  QVERIFY(!query.lastError().isNull());
+
+  statement.setFilter(id == 1);
+  QVERIFY(query.execStatement(statement));
+  record = query.fetchSingleRecord();
+  QCOMPARE(record.columnCount(), 2);
+  QCOMPARE(record.value(0).toInt(), 1);
+  QCOMPARE(record.value(1).toString(), QLatin1String("Name 1"));
+
+  statement.setFilter(id == 5);
+  QVERIFY(query.execStatement(statement));
+  record = query.fetchSingleRecord();
+  QVERIFY(record.isEmpty());
+  QVERIFY(query.lastError().isError(Mdt::ErrorCode::NotFound));
+}
+
 void AsyncQueryTest::selectMultipleQueriesTest()
 {
   using Mdt::QueryExpression::SelectStatement;
@@ -552,9 +888,9 @@ void AsyncQueryTest::selectMultipleQueriesTest()
   statement.addField("Name");
 
   statement.setFilter(id == 1);
-  query1.submitStatement(statement);
+  query1.submitStatementAndFetchAll(statement);
   statement.setFilter(id == 2);
-  query2.submitStatement(statement);
+  query2.submitStatementAndFetchAll(statement);
 
   QTRY_VERIFY(receiver1.isFinished());
   QTRY_VERIFY(receiver2.isFinished());
@@ -568,6 +904,81 @@ void AsyncQueryTest::selectMultipleQueriesTest()
   QCOMPARE(receiver2.recordAt(0).value(1), QVariant("Name 2"));
 }
 
+void AsyncQueryTest::selectSyncSingleRecordMultipleQueriesTest()
+{
+  QVERIFY(insertClient(1, "Name 1"));
+  QVERIFY(insertClient(2, "Name 2"));
+  QVERIFY(insertClient(3, "Name 3"));
+
+  QueryField id("Id_PK");
+  Mdt::QueryExpression::SelectStatement statement;
+  AsyncSelectQuery query1(asyncQueryConnection());
+  AsyncSelectQuery query2(asyncQueryConnection());
+  Mdt::Container::VariantRecord record;
+
+  statement.setEntityName("Client_tbl");
+  statement.addField(id);
+  statement.addField("Name");
+
+  statement.setFilter(id == 1);
+  QVERIFY(query1.execStatement(statement));
+
+  statement.setFilter(id == 2);
+  QVERIFY(query2.execStatement(statement));
+
+  record = query1.fetchSingleRecord();
+  QCOMPARE(record.columnCount(), 2);
+  QCOMPARE(record.value(0).toInt(), 1);
+  QCOMPARE(record.value(1).toString(), QLatin1String("Name 1"));
+
+  record = query2.fetchSingleRecord();
+  QCOMPARE(record.columnCount(), 2);
+  QCOMPARE(record.value(0).toInt(), 2);
+  QCOMPARE(record.value(1).toString(), QLatin1String("Name 2"));
+}
+
+void AsyncQueryTest::selectSyncMultipleQueriesTest()
+{
+  using Mdt::QueryExpression::SelectStatement;
+
+  QVERIFY(insertClient(1, "Name 1"));
+  QVERIFY(insertClient(2, "Name 2"));
+  QVERIFY(insertClient(3, "Name 3"));
+  QVERIFY(insertClient(4, "Name 4"));
+  QVERIFY(insertClient(5, "Name 5"));
+
+  QueryField id("Id_PK");
+  SelectStatement statement;
+  AsyncSelectQuery query1(asyncQueryConnection());
+  AsyncSelectQuery query2(asyncQueryConnection());
+
+  statement.setEntityName("Client_tbl");
+  statement.addField(id);
+  statement.addField("Name");
+
+  QVERIFY(query1.execStatement(statement));
+  QVERIFY(query2.execStatement(statement));
+
+  QVERIFY(query1.fetchRecords());
+  QVERIFY(query2.fetchRecords());
+
+  QCOMPARE(query1.fetchedRecordCount(), 5);
+  QCOMPARE(query2.fetchedRecordCount(), 5);
+
+  statement.setFilter(id == 1);
+  QVERIFY(query1.execStatement(statement));
+  statement.setFilter(id == 2);
+  QVERIFY(query2.execStatement(statement));
+
+  QVERIFY(query1.fetchRecords());
+  QVERIFY(query2.fetchRecords());
+
+  QCOMPARE(query1.fetchedRecordCount(), 1);
+  QCOMPARE(query1.record(0).value(0).toInt(), 1);
+
+  QCOMPARE(query2.fetchedRecordCount(), 1);
+  QCOMPARE(query2.record(0).value(0).toInt(), 2);
+}
 
 /*
  * Main

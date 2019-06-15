@@ -56,6 +56,7 @@ set(SOURCE_FILES
     Mdt/Sql/AsyncQueryConnectionImpl.cpp
     Mdt/Sql/AsyncQueryConnection.cpp
     Mdt/Sql/AbstractAsyncQueryThreadWorker.cpp
+    Mdt/Sql/AsyncSelectQueryThreadWorker.cpp
     Mdt/Sql/AsyncInsertQuery.cpp
     Mdt/Sql/AsyncSelectQuery.cpp
     Mdt/Sql/AsyncUpdateQuery.cpp
