@@ -37,6 +37,11 @@ For example, on Ubuntu:
 sudo apt-get install qtbase5-dev qtbase5-dev-tools libqt5gui5 libqt5network5 libqt5sql5 libqt5sql5-mysql libqt5sql5-psql libqt5sql5-sqlite libqt5test5 libqt5widgets5
 ```
 
+For Ubuntu 18.04 some additionnal packages are required:
+```bash
+sudo apt install qttools5-dev qtbase5-private-dev
+```
+
 Optionnally, documentation can also be installed:
 ```bash
 sudo apt-get install qtbase5-doc qtbase5-doc-html qtbase5-examples
