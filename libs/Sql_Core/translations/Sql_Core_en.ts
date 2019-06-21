@@ -236,8 +236,18 @@ SQL:
 <context>
     <name>Mdt::Sql::UpdateQuery</name>
     <message>
-        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="65"/>
+        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="70"/>
         <source>Executing query to update &apos;%1&apos; failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="95"/>
+        <source>Executing query to update &apos;%1&apos; affected no row.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Mdt/Sql/UpdateQuery.cpp" line="109"/>
+        <source>Executing query to update &apos;%1&apos; affected more than one row.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -50,6 +50,11 @@ void UpdateQuery::setConditions(const PrimaryKeyRecord& primaryKeyRecord)
   mStatement.setConditions(primaryKeyRecord);
 }
 
+void UpdateQuery::setAffectedRowsFailureMode(AffectedRowsFailureMode mode)
+{
+  mAffectedRowsFailureMode = mode;
+}
+
 bool UpdateQuery::execStatement(const UpdateStatement & statement)
 {
   mStatement = statement;
@@ -70,6 +75,42 @@ bool UpdateQuery::exec()
     return false;
   }
 
+  const int numRowsAffected = query.numRowsAffected();
+
+  switch(mAffectedRowsFailureMode){
+    case AcceptAnyAffectedRowCount:
+      break;
+    case FailIfNoRowAffected:
+      return checkAtLeastOneRowAffected(numRowsAffected);
+    case FailIfNotExaclyOneRowAffected:
+      return checkExactlyOneRowAffected(numRowsAffected);
+  }
+
+  return true;
+}
+
+bool UpdateQuery::checkAtLeastOneRowAffected(int numRowsAffected)
+{
+  if(numRowsAffected < 1){
+    QString msg = tr("Executing query to update '%1' affected no row.").arg(mStatement.tableName());
+    auto error = mdtErrorNewTQ(Mdt::ErrorCode::NotFound, msg, Mdt::Error::Critical, this);
+    setLastError(error);
+    return false;
+  }
+  return true;
+}
+
+bool UpdateQuery::checkExactlyOneRowAffected(int numRowsAffected)
+{
+  if(!checkAtLeastOneRowAffected(numRowsAffected)){
+    return false;
+  }
+  if(numRowsAffected > 1){
+    QString msg = tr("Executing query to update '%1' affected more than one row.").arg(mStatement.tableName());
+    auto error = mdtErrorNewTQ(Mdt::ErrorCode::UnknownError, msg, Mdt::Error::Critical, this);
+    setLastError(error);
+    return false;
+  }
   return true;
 }
 

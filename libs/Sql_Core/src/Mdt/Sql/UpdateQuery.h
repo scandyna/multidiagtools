@@ -59,6 +59,15 @@ namespace Mdt{ namespace Sql{
 
    public:
 
+    /*! \brief Failure mode for affected row count
+     */
+    enum AffectedRowsFailureMode
+    {
+      AcceptAnyAffectedRowCount,    /*!< This is the default SQL UPDATE behaviour */
+      FailIfNoRowAffected,          /*!< Fail if no row is affecte§d */
+      FailIfNotExaclyOneRowAffected /*!< Fail if not exactly 1 row is affected */
+    };
+
     /*! \brief Construct a select query that acts on connection
      */
     explicit UpdateQuery(const Connection & connection, QObject *parent = nullptr);
@@ -82,6 +91,17 @@ namespace Mdt{ namespace Sql{
      */
     void setConditions(const PrimaryKeyRecord & primaryKeyRecord);
 
+    /*! \brief Set the failure mode regarding affected rows
+     */
+    void setAffectedRowsFailureMode(AffectedRowsFailureMode mode);
+
+    /*! \brief Get the failure mode regarding affected rows
+     */
+    AffectedRowsFailureMode affectedRowsFailureMode() const noexcept
+    {
+      return mAffectedRowsFailureMode;
+    }
+
     /*! \brief Execute a update statement
      */
     bool execStatement(const UpdateStatement & statement);
@@ -92,7 +112,11 @@ namespace Mdt{ namespace Sql{
 
    private:
 
+    bool checkAtLeastOneRowAffected(int numRowsAffected);
+    bool checkExactlyOneRowAffected(int numRowsAffected);
+
     UpdateStatement mStatement;
+    AffectedRowsFailureMode mAffectedRowsFailureMode = AcceptAnyAffectedRowCount;
   };
 
 }} // namespace Mdt{ namespace Sql{

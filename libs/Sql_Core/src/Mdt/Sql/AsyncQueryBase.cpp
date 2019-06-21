@@ -74,8 +74,8 @@ void AsyncQueryBase::setLastError(const Mdt::Error & error, int instanceId)
 
   if(instanceId == mInstanceId){
     mLastError = error;
-    mWaitPredicate.setErrorOccured();
     emit errorOccurred(error);
+    mWaitPredicate.setErrorOccured();
   }
 }
 

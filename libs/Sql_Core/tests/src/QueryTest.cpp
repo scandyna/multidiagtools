@@ -273,7 +273,12 @@ void QueryTest::updateStatementPrimaryKeyConditionsTest()
 
 void QueryTest::updateQueryTest()
 {
-  Mdt::Sql::UpdateQuery query(connection());
+  using Mdt::Sql::UpdateQuery;
+
+  UpdateQuery query(connection());
+  QCOMPARE(query.affectedRowsFailureMode(), UpdateQuery::AcceptAnyAffectedRowCount);
+  query.setAffectedRowsFailureMode(UpdateQuery::FailIfNoRowAffected);
+  QCOMPARE(query.affectedRowsFailureMode(), UpdateQuery::FailIfNoRowAffected);
 
   QVERIFY(cleanupClientTable());
   QVERIFY(insertClient(1, "Name 1"));
@@ -318,17 +323,41 @@ void QueryTest::updateQueryTest()
 
 void QueryTest::updateQueryErrorTest()
 {
+  using namespace Mdt::Sql;
+  using Like = Mdt::QueryExpression::LikeExpression;
+
   QVERIFY(cleanupClientTable());
   QVERIFY(insertClient(1, "Name 1"));
   QVERIFY(insertClient(2, "Name 2"));
 
-  Mdt::Sql::UpdateQuery query(connection());
-  query.setTableName("Client_tbl");
-  query.addValue(FieldName("Id_PK"), 1);
-  query.addValue(FieldName("Name"), "Name 1");
-  query.setConditions( buildPrimaryKeyRecord(2) );
-  QVERIFY(!query.exec());
+  QueryField id("Id_PK");
+  QueryField name("Name");
+  UpdateStatement statement;
+  UpdateQuery query(connection());
+
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Id_PK"), 1);
+  statement.addValue(FieldName("Name"), "Name 1");
+  statement.setConditions( id == 2 );
+  QVERIFY(!query.execStatement(statement));
   QCOMPARE(query.lastError().error<Mdt::ErrorCode>(), Mdt::ErrorCode::UniqueConstraintError);
+
+  statement.setConditions( id == 5 );
+  query.setAffectedRowsFailureMode(UpdateQuery::FailIfNotExaclyOneRowAffected);
+  QVERIFY(!query.execStatement(statement));
+  QCOMPARE(query.lastError().error<Mdt::ErrorCode>(), Mdt::ErrorCode::NotFound);
+  query.setAffectedRowsFailureMode(UpdateQuery::FailIfNoRowAffected);
+  QVERIFY(!query.execStatement(statement));
+  QCOMPARE(query.lastError().error<Mdt::ErrorCode>(), Mdt::ErrorCode::NotFound);
+
+  statement.clear();
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Name"), "Name u");
+  statement.setConditions( name == Like("Name*") );
+  query.setAffectedRowsFailureMode(UpdateQuery::FailIfNotExaclyOneRowAffected);
+  QVERIFY(!query.execStatement(statement));
+  query.setAffectedRowsFailureMode(UpdateQuery::FailIfNoRowAffected);
+  QVERIFY(query.execStatement(statement));
 }
 
 void QueryTest::deleteStatementFilterExpressionTest_1()
