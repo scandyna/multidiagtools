@@ -24,6 +24,7 @@
 #include "AsyncQueryBase.h"
 #include "UpdateStatement.h"
 #include "AsyncQueryConnection.h"
+#include "UpdateQueryAffectedRowsFailureMode.h"
 #include "MdtSql_CoreExport.h"
 #include <memory>
 
@@ -45,6 +46,10 @@ namespace Mdt{ namespace Sql{
      */
     explicit AsyncUpdateQuery(const std::shared_ptr<AsyncQueryConnection> & connection, QObject *parent = nullptr);
 
+    /*! \brief Set the failure mode regarding affected rows
+     */
+    void setAffectedRowsFailureMode(UpdateQueryAffectedRowsFailureMode mode);
+
     /*! \brief Execute a update statement synchronously
      */
     bool execStatement(const UpdateStatement & statement);
@@ -54,6 +59,10 @@ namespace Mdt{ namespace Sql{
     /*! \brief Submit a update statement to be executed asynchronously
      */
     void submitStatement(const UpdateStatement & statement);
+
+   private:
+
+    UpdateQueryAffectedRowsFailureMode mUpdateQueryAffectedRowsFailureMode = UpdateQueryAffectedRowsFailureMode::AcceptAnyAffectedRowCount;
   };
 
 }} // namespace Mdt{ namespace Sql{

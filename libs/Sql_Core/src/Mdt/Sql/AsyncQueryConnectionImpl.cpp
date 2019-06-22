@@ -38,6 +38,7 @@ AsyncQueryConnectionImpl::AsyncQueryConnectionImpl(QObject* parent)
   qRegisterMetaType<Mdt::Container::VariantRecord>();
   qRegisterMetaType<AsyncQueryOperationType>();
   qRegisterMetaType<AsyncSelectQueryRecordFetching>();
+  qRegisterMetaType<UpdateQueryAffectedRowsFailureMode>();
 }
 
 AsyncQueryConnectionImpl::~AsyncQueryConnectionImpl()
@@ -83,9 +84,9 @@ void AsyncQueryConnectionImpl::submitSelectQueryFetchSingleRecord(int instanceId
   emit selectQueryFetchSingleRecordSubmitted(instanceId);
 }
 
-void AsyncQueryConnectionImpl::submitUpdateStatement(const UpdateStatement & statement, int instanceId)
+void AsyncQueryConnectionImpl::submitUpdateStatement(const UpdateStatement & statement, UpdateQueryAffectedRowsFailureMode failureMode, int instanceId)
 {
-  emit updateStatementSubmitted(statement, instanceId);
+  emit updateStatementSubmitted(statement, failureMode, instanceId);
 }
 
 void AsyncQueryConnectionImpl::submitDeleteStatement(const DeleteStatement & statement, int instanceId)

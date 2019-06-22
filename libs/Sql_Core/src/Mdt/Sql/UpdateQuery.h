@@ -25,6 +25,7 @@
 #include "FieldName.h"
 #include "PrimaryKeyRecord.h"
 #include "UpdateStatement.h"
+#include "UpdateQueryAffectedRowsFailureMode.h"
 #include "MdtSql_CoreExport.h"
 #include <QString>
 #include <QVariant>
@@ -59,15 +60,6 @@ namespace Mdt{ namespace Sql{
 
    public:
 
-    /*! \brief Failure mode for affected row count
-     */
-    enum AffectedRowsFailureMode
-    {
-      AcceptAnyAffectedRowCount,    /*!< This is the default SQL UPDATE behaviour */
-      FailIfNoRowAffected,          /*!< Fail if no row is affecte§d */
-      FailIfNotExaclyOneRowAffected /*!< Fail if not exactly 1 row is affected */
-    };
-
     /*! \brief Construct a select query that acts on connection
      */
     explicit UpdateQuery(const Connection & connection, QObject *parent = nullptr);
@@ -93,11 +85,11 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Set the failure mode regarding affected rows
      */
-    void setAffectedRowsFailureMode(AffectedRowsFailureMode mode);
+    void setAffectedRowsFailureMode(UpdateQueryAffectedRowsFailureMode mode);
 
     /*! \brief Get the failure mode regarding affected rows
      */
-    AffectedRowsFailureMode affectedRowsFailureMode() const noexcept
+    UpdateQueryAffectedRowsFailureMode affectedRowsFailureMode() const noexcept
     {
       return mAffectedRowsFailureMode;
     }
@@ -116,7 +108,7 @@ namespace Mdt{ namespace Sql{
     bool checkExactlyOneRowAffected(int numRowsAffected);
 
     UpdateStatement mStatement;
-    AffectedRowsFailureMode mAffectedRowsFailureMode = AcceptAnyAffectedRowCount;
+    UpdateQueryAffectedRowsFailureMode mAffectedRowsFailureMode = UpdateQueryAffectedRowsFailureMode::AcceptAnyAffectedRowCount;
   };
 
 }} // namespace Mdt{ namespace Sql{

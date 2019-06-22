@@ -319,6 +319,24 @@ void AsyncQueryTest::updateSyncTest()
   QCOMPARE(client.name, QLatin1String("Name 2"));
 }
 
+void AsyncQueryTest::updateErrorTest()
+{
+  QueryField id("Id_PK");
+  UpdateStatement statement;
+  AsyncUpdateQuery query(asyncQueryConnection());
+
+  QVERIFY(insertClient(1, "Name 1"));
+  QVERIFY(insertClient(2, "Name 2"));
+
+  query.setAffectedRowsFailureMode(UpdateQueryAffectedRowsFailureMode::FailIfNotExaclyOneRowAffected);
+
+  statement.setTableName("Client_tbl");
+  statement.addValue(FieldName("Name"), "Name 1 U");
+  statement.setConditions(id == 5);
+  QVERIFY(!query.execStatement(statement));
+  QVERIFY(query.lastError().isError(Mdt::ErrorCode::NotFound));
+}
+
 void AsyncQueryTest::updateMultipleQueriesTest()
 {
   Client client;

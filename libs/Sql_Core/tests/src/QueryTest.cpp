@@ -273,12 +273,12 @@ void QueryTest::updateStatementPrimaryKeyConditionsTest()
 
 void QueryTest::updateQueryTest()
 {
-  using Mdt::Sql::UpdateQuery;
+  using namespace Mdt::Sql;
 
   UpdateQuery query(connection());
-  QCOMPARE(query.affectedRowsFailureMode(), UpdateQuery::AcceptAnyAffectedRowCount);
-  query.setAffectedRowsFailureMode(UpdateQuery::FailIfNoRowAffected);
-  QCOMPARE(query.affectedRowsFailureMode(), UpdateQuery::FailIfNoRowAffected);
+  QCOMPARE(query.affectedRowsFailureMode(), UpdateQueryAffectedRowsFailureMode::AcceptAnyAffectedRowCount);
+  query.setAffectedRowsFailureMode(UpdateQueryAffectedRowsFailureMode::FailIfNoRowAffected);
+  QCOMPARE(query.affectedRowsFailureMode(), UpdateQueryAffectedRowsFailureMode::FailIfNoRowAffected);
 
   QVERIFY(cleanupClientTable());
   QVERIFY(insertClient(1, "Name 1"));
@@ -343,10 +343,10 @@ void QueryTest::updateQueryErrorTest()
   QCOMPARE(query.lastError().error<Mdt::ErrorCode>(), Mdt::ErrorCode::UniqueConstraintError);
 
   statement.setConditions( id == 5 );
-  query.setAffectedRowsFailureMode(UpdateQuery::FailIfNotExaclyOneRowAffected);
+  query.setAffectedRowsFailureMode(UpdateQueryAffectedRowsFailureMode::FailIfNotExaclyOneRowAffected);
   QVERIFY(!query.execStatement(statement));
   QCOMPARE(query.lastError().error<Mdt::ErrorCode>(), Mdt::ErrorCode::NotFound);
-  query.setAffectedRowsFailureMode(UpdateQuery::FailIfNoRowAffected);
+  query.setAffectedRowsFailureMode(UpdateQueryAffectedRowsFailureMode::FailIfNoRowAffected);
   QVERIFY(!query.execStatement(statement));
   QCOMPARE(query.lastError().error<Mdt::ErrorCode>(), Mdt::ErrorCode::NotFound);
 
@@ -354,9 +354,9 @@ void QueryTest::updateQueryErrorTest()
   statement.setTableName("Client_tbl");
   statement.addValue(FieldName("Name"), "Name u");
   statement.setConditions( name == Like("Name*") );
-  query.setAffectedRowsFailureMode(UpdateQuery::FailIfNotExaclyOneRowAffected);
+  query.setAffectedRowsFailureMode(UpdateQueryAffectedRowsFailureMode::FailIfNotExaclyOneRowAffected);
   QVERIFY(!query.execStatement(statement));
-  query.setAffectedRowsFailureMode(UpdateQuery::FailIfNoRowAffected);
+  query.setAffectedRowsFailureMode(UpdateQueryAffectedRowsFailureMode::FailIfNoRowAffected);
   QVERIFY(query.execStatement(statement));
 }
 

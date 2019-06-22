@@ -45,6 +45,7 @@ class AsyncQueryTest : public TestBase
 
   void updateAsyncTest();
   void updateSyncTest();
+  void updateErrorTest();
   void updateMultipleQueriesTest();
 
   void deleteAsyncTest();

@@ -24,6 +24,7 @@
 #include "AbstractAsyncQueryThreadWorker.h"
 #include "AsyncQueryOperationType.h"
 #include "AsyncSelectQueryRecordFetching.h"
+#include "UpdateQueryAffectedRowsFailureMode.h"
 #include "InsertStatement.h"
 #include "UpdateStatement.h"
 #include "DeleteStatement.h"
@@ -121,7 +122,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Submit a update statement
      */
-    void submitUpdateStatement(const UpdateStatement & statement, int instanceId);
+    void submitUpdateStatement(const UpdateStatement & statement, UpdateQueryAffectedRowsFailureMode failureMode, int instanceId);
 
     /*! \brief Submit a delete statement
      */
@@ -174,7 +175,8 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Forwards the statement comming from the query to the thread worker
      */
-    void updateStatementSubmitted(const Mdt::Sql::UpdateStatement & statement, int instanceId);
+    void updateStatementSubmitted(const Mdt::Sql::UpdateStatement & statement,
+                                  Mdt::Sql::UpdateQueryAffectedRowsFailureMode failureMode, int instanceId);
 
     /*! \brief Forwards the statement comming from the query to the thread worker
      */

@@ -50,7 +50,7 @@ void UpdateQuery::setConditions(const PrimaryKeyRecord& primaryKeyRecord)
   mStatement.setConditions(primaryKeyRecord);
 }
 
-void UpdateQuery::setAffectedRowsFailureMode(AffectedRowsFailureMode mode)
+void UpdateQuery::setAffectedRowsFailureMode(UpdateQueryAffectedRowsFailureMode mode)
 {
   mAffectedRowsFailureMode = mode;
 }
@@ -78,11 +78,11 @@ bool UpdateQuery::exec()
   const int numRowsAffected = query.numRowsAffected();
 
   switch(mAffectedRowsFailureMode){
-    case AcceptAnyAffectedRowCount:
+    case UpdateQueryAffectedRowsFailureMode::AcceptAnyAffectedRowCount:
       break;
-    case FailIfNoRowAffected:
+    case UpdateQueryAffectedRowsFailureMode::FailIfNoRowAffected:
       return checkAtLeastOneRowAffected(numRowsAffected);
-    case FailIfNotExaclyOneRowAffected:
+    case UpdateQueryAffectedRowsFailureMode::FailIfNotExaclyOneRowAffected:
       return checkExactlyOneRowAffected(numRowsAffected);
   }
 

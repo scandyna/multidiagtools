@@ -97,10 +97,12 @@ void AbstractAsyncQueryThreadWorker::processSelectQueryFetchNextRecords(int maxR
   mSelectQueryThreadWorker->processFetchNextRecords(maxRecords, instanceId);
 }
 
-void AbstractAsyncQueryThreadWorker::processUpdateStatement(const Mdt::Sql::UpdateStatement & statement, int instanceId)
+void AbstractAsyncQueryThreadWorker::processUpdateStatement(const Mdt::Sql::UpdateStatement & statement,
+                                                            Mdt::Sql::UpdateQueryAffectedRowsFailureMode failureMode, int instanceId)
 {
   UpdateQuery query(connection());
 
+  query.setAffectedRowsFailureMode(failureMode);
   if(!query.execStatement(statement)){
     emit queryErrorOccured(query.lastError(), instanceId);
     return;

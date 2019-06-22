@@ -25,6 +25,7 @@
 #include "Connection.h"
 #include "InsertStatement.h"
 #include "AsyncSelectQueryRecordFetching.h"
+#include "UpdateQueryAffectedRowsFailureMode.h"
 #include "UpdateStatement.h"
 #include "DeleteStatement.h"
 #include "Mdt/QueryExpression/SelectStatement.h"
@@ -110,7 +111,8 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Process a update statement
      */
-    void processUpdateStatement(const Mdt::Sql::UpdateStatement & statement, int instanceId);
+    void processUpdateStatement(const Mdt::Sql::UpdateStatement & statement,
+                                Mdt::Sql::UpdateQueryAffectedRowsFailureMode failureMode, int instanceId);
 
     /*! \brief Process a delete statement
      */

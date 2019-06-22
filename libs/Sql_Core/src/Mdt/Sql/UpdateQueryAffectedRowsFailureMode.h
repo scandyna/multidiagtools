@@ -18,30 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AsyncUpdateQuery.h"
+#ifndef MDT_SQL_UPDATE_QUERY_AFFECTED_ROWS_FAILURE_MODE_H
+#define MDT_SQL_UPDATE_QUERY_AFFECTED_ROWS_FAILURE_MODE_H
+
+#include <QMetaType>
 
 namespace Mdt{ namespace Sql{
 
-AsyncUpdateQuery::AsyncUpdateQuery(const std::shared_ptr<AsyncQueryConnection> & connection, QObject *parent)
- : BaseClass(connection, parent)
-{
-}
-
-void AsyncUpdateQuery::setAffectedRowsFailureMode(UpdateQueryAffectedRowsFailureMode mode)
-{
-  mUpdateQueryAffectedRowsFailureMode = mode;
-}
-
-bool AsyncUpdateQuery::execStatement(const UpdateStatement & statement)
-{
-  submitStatement(statement);
-
-  return waitOperationFinished();
-}
-
-void AsyncUpdateQuery::submitStatement(const UpdateStatement & statement)
-{
-  connectionImpl()->submitUpdateStatement(statement, mUpdateQueryAffectedRowsFailureMode, instanceId());
-}
+  /*! \brief Failure mode for affected row count in a update query
+   */
+  enum class UpdateQueryAffectedRowsFailureMode
+  {
+    AcceptAnyAffectedRowCount,    /*!< This is the standard SQL UPDATE behaviour */
+    FailIfNoRowAffected,          /*!< Fail if no row is affected */
+    FailIfNotExaclyOneRowAffected /*!< Fail if not exactly 1 row is affected */
+  };
 
 }} // namespace Mdt{ namespace Sql{
+Q_DECLARE_METATYPE(Mdt::Sql::UpdateQueryAffectedRowsFailureMode)
+
+#endif // #ifndef MDT_SQL_UPDATE_QUERY_AFFECTED_ROWS_FAILURE_MODE_H
