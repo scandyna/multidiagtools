@@ -23,11 +23,17 @@
 namespace Mdt{ namespace Railway{ namespace TaskList{
 
 VehicleType::VehicleType::VehicleType(const QString& name, const QString& alias, const QString& manufacturerSerie)
- : mDataStruct(name.trimmed(), alias.trimmed(), manufacturerSerie.trimmed())
+ : mDataStruct{0, name.trimmed(), alias.trimmed(), manufacturerSerie.trimmed()}
 {
   Q_ASSERT(!mDataStruct.name.isEmpty());
   Q_ASSERT(!mDataStruct.alias.isEmpty());
   Q_ASSERT(!mDataStruct.manufacturerSerie.isEmpty());
+}
+
+void VehicleType::setName(const QString & name)
+{
+  mDataStruct.name = name.trimmed();
+  Q_ASSERT(!mDataStruct.name.isEmpty());
 }
 
 }}} // namespace Mdt{ namespace Railway{ namespace TaskList{

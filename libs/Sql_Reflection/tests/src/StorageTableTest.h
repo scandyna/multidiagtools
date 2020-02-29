@@ -28,12 +28,27 @@ class StorageTableTest : public TestBase
 
   void initTestCase();
   void cleanupTestCase();
-
-  void tableWithIdConstructTest();
+  void cleanup();
 
   void tableWithIdTest();
+
+  void asyncTableWithIdAddAsyncTest();
+  void asyncTableWithIdAddTest();
+  void asyncTableWithIdGetAsyncTest();
+  void asyncTableWithIdGetTest();
+  void asyncTableWithIdGetAllAsyncTest();
+  void asyncTableWithIdGetAllTest();
+  void asyncTableWithIdUpdateAsyncTest();
+  void asyncTableWithIdUpdateTest();
+  void asyncTableWithIdRemoveAsyncTest();
+  void asyncTableWithIdRemoveTest();
+  void asyncTableWithIdRemoveAllAsyncTest();
+  void asyncTableWithIdRemoveAllTest();
 
  private:
 
   void createDatabaseSchema();
+
+  bool addPerson(int id, const QString & firstName, const QString & lastName);
+  bool cleanupPersonTable();
 };

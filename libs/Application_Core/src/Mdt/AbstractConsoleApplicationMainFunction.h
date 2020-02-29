@@ -76,7 +76,7 @@ namespace Mdt{
      *  As stated in QCoreApplication documentation,
      *  this method is slow, so the result should be stored
      *  in a variable if accessed many times
-     *  (this is wy it is prefixed with get here)
+     *  (this is why it is prefixed with get here)
      *
      * \pre A instance of a QCoreApplication (or one of its derivate)
      *       must exist.

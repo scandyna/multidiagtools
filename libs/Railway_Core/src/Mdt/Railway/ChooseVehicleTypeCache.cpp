@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -28,20 +28,20 @@ namespace Mdt{ namespace Railway{
 ChooseVehicleTypeCache::ChooseVehicleTypeCache(QObject* parent)
  : AbstractAsyncReadOnlyCache(parent)
 {
-  QueryEntity<Entity::VehicleTypeClassEntity> vehicleTypeClass;
-
-  const auto vehicleTypeId = mSelectStatement.makeSelectField( mSelectStatement.def().id() );
-  const auto vehicleTypeClassId = vehicleTypeClass.makeSelectField( vehicleTypeClass.def().id() );
-//   const auto vehicleTypeClassIdFk = mSelectStatement.makeSelectField( mSelectStatement.def().vehicleTypeClassId() );
-  const auto vehicleTypeName = vehicleTypeClass.makeSelectField( vehicleTypeClass.def().name() );
-  const auto manufacturerSerie = mSelectStatement.makeSelectField( mSelectStatement.def().manufacturerSerie() );
-
-  mSelectStatement.addField( vehicleTypeName );
-  mSelectStatement.addField( manufacturerSerie );
-  mSelectStatement.addField( vehicleTypeId );
-  mSelectStatement.addField( vehicleTypeClassId );
-//   mSelectStatement.joinEntity( vehicleTypeClass, vehicleTypeClassIdFk == vehicleTypeClassId );
-  mSelectStatement.joinEntity<Mdt::Railway::Entity::VehicleTypeClassVehicleTypeRelation>();
+//   QueryEntity<Entity::VehicleTypeClassEntity> vehicleTypeClass;
+// 
+//   const auto vehicleTypeId = mSelectStatement.makeSelectField( mSelectStatement.def().id() );
+//   const auto vehicleTypeClassId = vehicleTypeClass.makeSelectField( vehicleTypeClass.def().id() );
+// //   const auto vehicleTypeClassIdFk = mSelectStatement.makeSelectField( mSelectStatement.def().vehicleTypeClassId() );
+//   const auto vehicleTypeName = vehicleTypeClass.makeSelectField( vehicleTypeClass.def().name() );
+//   const auto manufacturerSerie = mSelectStatement.makeSelectField( mSelectStatement.def().manufacturerSerie() );
+// 
+//   mSelectStatement.addField( vehicleTypeName );
+//   mSelectStatement.addField( manufacturerSerie );
+//   mSelectStatement.addField( vehicleTypeId );
+//   mSelectStatement.addField( vehicleTypeClassId );
+// //   mSelectStatement.joinEntity( vehicleTypeClass, vehicleTypeClassIdFk == vehicleTypeClassId );
+//   mSelectStatement.joinEntity<Mdt::Railway::Entity::VehicleTypeClassVehicleTypeRelation>();
 
 //   mSelectStatement.addField( mSelectStatement.def().id() );
 //   mSelectStatement.addField( mSelectStatement.def().vehicleTypeClassId() );

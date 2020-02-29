@@ -546,6 +546,22 @@ namespace Mdt{
      */
     static Error fromQFileDevice(const QFileDevice & fileDevice, const QString & sourceCodeFile, int line, const QObject * const obj, const QString & functionName);
 
+    /*! \brief Get a new error that contains the user defined error, the level and the error stack from \a other
+     *
+     * \code
+     * void MyClass::setLastErrorFromSqlQuery(const Mdt::Error & queryError)
+     * {
+     *   const QString msg = tr("Could not update a entry in Person table");
+     *
+     *   mLastError = Mdt::Error::newErrorFromOther(queryError);
+     *   mLastError.updateText(msg);
+     *   // Optional: set source
+     *   MDT_ERROR_SET_SRC(mLastError, "MyClass");
+     * }
+     * \endcode
+     */
+    static Error newErrorFromOther(const Error & other);
+
   private:
 
     /*! \brief Init shared part

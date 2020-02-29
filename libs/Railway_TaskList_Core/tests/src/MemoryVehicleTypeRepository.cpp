@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "MemoryVehicleTypeRepository.h"
+#include "Mdt/Railway/TaskList/VehicleType_p.h"
+#include "Mdt/ErrorCode.h"
 
 namespace Mdt{ namespace Railway{ namespace TaskList{
 
@@ -33,17 +35,51 @@ Mdt::Expected<VehicleType> MemoryVehicleTypeRepository::getById(VehicleTypeId id
 {
   Q_ASSERT(!id.isNull());
 
-  return mVehicleTypeTable.getByPrimaryKey(id.value());
+  auto vehicle = mVehicleTypeTable.getByPrimaryKey(id.value());
+  if(!vehicle){
+    return vehicle;
+  }
+  privateVehicleTypeDataStruct(*vehicle).id = id.value();
+
+  return *vehicle;
 }
 
-bool MemoryVehicleTypeRepository::getAllAsync() const
+Mdt::ExpectedResult MemoryVehicleTypeRepository::update(const VehicleType & vehicle)
+{
+  Q_ASSERT(!vehicle.id().isNull());
+
+  if(!mVehicleTypeTable.update(vehicle, vehicle.id().value())){
+    const auto msg = tr("Updating vehicle type with id '' failed bacause it does not exists")
+                     .arg(QString::number(vehicle.id().value()));
+    auto error = mdtErrorNewTQ(Mdt::ErrorCode::NotFound, msg, Mdt::Error::Critical, this);
+    return error;
+  }
+
+  return Mdt::ExpectedResultOk();
+}
+
+Mdt::ExpectedResult MemoryVehicleTypeRepository::remove(VehicleTypeId id)
+{
+  mVehicleTypeTable.remove(id.value());
+
+  return Mdt::ExpectedResultOk();
+}
+
+Mdt::ExpectedResult MemoryVehicleTypeRepository::removeAll()
+{
+  mVehicleTypeTable.removeAll();
+
+  return Mdt::ExpectedResultOk();
+}
+
+Mdt::ExpectedResult MemoryVehicleTypeRepository::getAllAsync() const
 {
   const auto list = mVehicleTypeTable.getAll();
   for(const auto & vehicle : list){
     emit newVehicleTypeFetched(vehicle);
   }
 
-  return true;
+  return Mdt::ExpectedResultOk();
 }
 
 }}} // namespace Mdt{ namespace Railway{ namespace TaskList{

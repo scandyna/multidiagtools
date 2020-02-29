@@ -28,6 +28,12 @@
 namespace Mdt{ namespace Railway{ namespace TaskList{
 
   inline
+  VehicleType vehicleTypeFromDataStruct(const VehicleTypeDataStruct & data)
+  {
+    return VehicleType(data);
+  }
+
+  inline
   const VehicleTypeDataStruct & privateConstVehicleTypeDataStruct(const VehicleType & vehicleType)
   {
     return vehicleType.mDataStruct;

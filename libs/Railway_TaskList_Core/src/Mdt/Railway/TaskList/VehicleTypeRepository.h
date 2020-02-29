@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -51,12 +51,28 @@ namespace Mdt{ namespace Railway{ namespace TaskList{
      */
     virtual Mdt::Expected<VehicleType> getById(VehicleTypeId id) const = 0;
 
+    /*! \brief Update a vehicle type
+     *
+     * \pre \a vehicle must contain a valid id
+     */
+    virtual Mdt::ExpectedResult update(const VehicleType & vehicle) = 0;
+
+    /*! \brief Remove a vehicle type
+     *
+     * \pre \a id must not be null
+     */
+    virtual Mdt::ExpectedResult remove(VehicleTypeId id) = 0;
+
+    /*! \brief Remove all vehicle types
+     */
+    virtual Mdt::ExpectedResult removeAll() = 0;
+
     /*! \brief Fetch all vehicle types in a asynchronous way
      *
      * Each time a vehicle type was fetched,
      *  newVehicleTypeFetched() will be emitted.
      */
-    virtual bool getAllAsync() const = 0;
+    virtual Mdt::ExpectedResult getAllAsync() const = 0;
 
    signals:
 

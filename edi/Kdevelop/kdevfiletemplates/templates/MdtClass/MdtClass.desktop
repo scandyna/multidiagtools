@@ -1,0 +1,18 @@
+[General]
+Name=Mdt Class
+Comment=A C++ class template to create a Mdt Class
+Category=C++/Mdt
+Language=C++
+Type=Class
+Files=Header,Implementation
+
+[Header]
+Name=Header
+File=class.h
+OutputFile={{ name }}.h
+
+[Implementation]
+Name=Implementation
+File=class.cpp
+OutputFile={{ name }}.cpp
+ 

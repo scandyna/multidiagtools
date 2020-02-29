@@ -47,7 +47,7 @@ mdt_add_library(
   NAME Railway_Core
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES ItemModel Qt5::Core Entity_Core Error_Core Expected;
+  LINK_DEPENDENCIES ItemModel Qt5::Core Error_Core Expected QueryExpression_Reflection Entity_Core; # TODO remove Entity_Core when possible
 )
 target_compile_definitions(Railway_Core PRIVATE QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_BYTEARRAY)
 

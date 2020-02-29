@@ -96,13 +96,16 @@ void GetAllVehicleTypesTest::getAllTest()
   VehicleType rbde1("RBDe 560 DO", "DOMINO", "1");
   VehicleType rbde2("RBDe 560 DO", "DOMINO", "2");
   VehicleType rae514("RAe 514", "DTZ", "1");
-  QVERIFY(repository->add(rbde1));
+
+  const auto rbde1Id = repository->add(rbde1);
+  QVERIFY(rbde1Id);
   QVERIFY(repository->add(rbde2));
   QVERIFY(repository->add(rae514));
 
   QCOMPARE(responseHandler.recordCount(), 0);
   QVERIFY(getAllVehicleTypes.execute());
   QCOMPARE(responseHandler.recordCount(), 3);
+  QCOMPARE(responseHandler.recordAt(0).id, rbde1Id->toQVariant());
   QCOMPARE(responseHandler.recordAt(0).name, QVariant("RBDe 560 DO"));
   QCOMPARE(responseHandler.recordAt(0).alias, QVariant("DOMINO"));
   QCOMPARE(responseHandler.recordAt(0).manufacturerSerie, QVariant("1"));

@@ -27,11 +27,13 @@ namespace Mdt{
    */
   enum class ErrorCode
   {
-    NoError,              /*!< No error */
-    UnknownError,         /*!< Unknown error */
-    ConstraintError,      /*!< Some constraint error */
-    UniqueConstraintError,/*!< A unique constraint failed */
-    NotFound              /*!< The requested element was not found */
+    NoError,                /*!< No error */
+    UnknownError,           /*!< Unknown error */
+    ConstraintError,        /*!< Some constraint error */
+    UniqueConstraintError,  /*!< A unique constraint failed */
+    NotFound,               /*!< The requested element was not found */
+    DriverNotFound,         /*!< The requested driver was not found */
+    TimeoutError            /*!< A operation timed out */
   };
 
 } // namespace Mdt{

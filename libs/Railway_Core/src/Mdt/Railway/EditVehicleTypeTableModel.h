@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -29,10 +29,12 @@
 #include "Entity/VehicleType.h"
 #include "Entity/VehicleTypeClass.h"
 #include "Mdt/ItemModel/AbstractEditableCachedTableModel.h"
-#include "Mdt/Entity/EntitySelectStatement.h"
-#include "Mdt/QueryExpression/SelectStatement.h"
+#include "Mdt/QueryExpression/ReflectionSelectStatement.h"
 #include "MdtRailway_CoreExport.h"
 #include <memory>
+
+#include "Mdt/QueryExpression/SelectStatement.h"
+#include "Mdt/Entity/EntitySelectStatement.h"
 
 namespace Mdt{ namespace Railway{
 
@@ -42,18 +44,18 @@ namespace Mdt{ namespace Railway{
 
     ListVehicleTypeToEditSelectStatement()
     {
-      mVehicleTypeId = makeSelectField( def().id() );
-      mManufacturerSerie = makeSelectField( def().manufacturerSerie() );
-      mVehicleTypeName = mVehicleTypeClass.makeSelectField( mVehicleTypeClass.def().name() );
-      mVehicleTypeAlias = mVehicleTypeClass.makeSelectField( mVehicleTypeClass.def().alias() );
-      mVehicleTypeClassId = mVehicleTypeClass.makeSelectField( mVehicleTypeClass.def().id() );
-
-      addField(mVehicleTypeName);
-      addField(mVehicleTypeAlias);
-      addField(mManufacturerSerie);
-      addField(mVehicleTypeId);
-      addField(mVehicleTypeClassId);
-      joinEntity<Mdt::Railway::Entity::VehicleTypeClassVehicleTypeRelation>();
+//       mVehicleTypeId = makeSelectField( def().id() );
+//       mManufacturerSerie = makeSelectField( def().manufacturerSerie() );
+//       mVehicleTypeName = mVehicleTypeClass.makeSelectField( mVehicleTypeClass.def().name() );
+//       mVehicleTypeAlias = mVehicleTypeClass.makeSelectField( mVehicleTypeClass.def().alias() );
+//       mVehicleTypeClassId = mVehicleTypeClass.makeSelectField( mVehicleTypeClass.def().id() );
+// 
+//       addField(mVehicleTypeName);
+//       addField(mVehicleTypeAlias);
+//       addField(mManufacturerSerie);
+//       addField(mVehicleTypeId);
+//       addField(mVehicleTypeClassId);
+//       joinEntity<Mdt::Railway::Entity::VehicleTypeClassVehicleTypeRelation>();
     }
 
     int manufacturerSerieColumn() const
@@ -88,7 +90,7 @@ namespace Mdt{ namespace Railway{
     Mdt::QueryExpression::SelectField mManufacturerSerie;
     Mdt::QueryExpression::SelectField mVehicleTypeClassId;
     Mdt::QueryExpression::SelectField mVehicleTypeAlias;
-    Mdt::Entity::QueryEntity<Entity::VehicleTypeClassEntity> mVehicleTypeClass;
+//     Mdt::Entity::QueryEntity<Entity::VehicleTypeClassEntity> mVehicleTypeClass;
   };
 
   /*! \brief Cached table model to edit vehicle types

@@ -3,6 +3,8 @@ Windows: [![Build Status](https://ci.appveyor.com/api/projects/status/aov9mxmr5n
 
 # About Mdt
 
+TODO / NOTE : name: Multipurpose Development tools
+
 Mdt is set of libraries, based on [Qt5](https://www.qt.io/),
 that should help (in some future) interacting with some common instruments.
 

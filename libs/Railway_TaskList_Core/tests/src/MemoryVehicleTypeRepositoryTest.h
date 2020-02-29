@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,8 +31,9 @@ class MemoryVehicleTypeRepositoryTest : public QObject
 
   void initTestCase();
 
-  void addGetTest();
+  void addGetUpdateRemoveTest();
   void getAllAsyncTest();
+  void getAllAsyncTest_data();
 };
 
 #endif // #ifndef RW_TEST_MAIN_H

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -34,22 +34,29 @@ namespace Mdt{ namespace Railway{ namespace TaskList{
   {
    public:
 
-    /*! \brief Add a vehicle type
+    /*! \override
      */
     Mdt::Expected<VehicleTypeId> add(const VehicleType & vehicle) override;
 
-    /*! \brief Get a vehicle type by its id
-     *
-     * \pre \a id must not be null
+    /*! \override
      */
     Mdt::Expected<VehicleType> getById(VehicleTypeId id) const override;
 
-    /*! \brief Fetch all vehicle types in a asynchronous way
-     *
-     * Each time a vehicle type was fetched,
-     *  newVehicleTypeFetched() will be emitted.
+    /*! \override
      */
-    bool getAllAsync() const override;
+    Mdt::ExpectedResult update(const VehicleType & vehicle) override;
+
+    /*! \override
+     */
+    Mdt::ExpectedResult remove(VehicleTypeId id) override;
+
+    /*! \override
+     */
+    Mdt::ExpectedResult removeAll() override;
+
+    /*! \override
+     */
+    Mdt::ExpectedResult getAllAsync() const override;
 
    private:
 

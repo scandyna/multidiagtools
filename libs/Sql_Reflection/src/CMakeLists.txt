@@ -15,6 +15,7 @@ set(SOURCE_FILES
   Mdt/Sql/ReflectionStorageTableBase.cpp
   Mdt/Sql/ReflectionStorageTable.cpp
   Mdt/Sql/ReflectionStorageTableWithId.cpp
+  Mdt/Sql/ReflectionAsyncStorageTableWithId.cpp
 )
 
 find_package(Qt5 COMPONENTS Sql)
@@ -23,7 +24,7 @@ mdt_add_library(
   NAME Sql_Reflection
   SOURCE_FILES ${SOURCE_FILES}
   HEADERS_DIRECTORY .
-  LINK_DEPENDENCIES Reflection_Core QueryExpression_Reflection Sql_Core Qt5::Sql
+  LINK_DEPENDENCIES Reflection_Core QueryExpression_Reflection Sql_Core Async Qt5::Sql
 )
 mdt_set_library_description(
   NAME Sql_Reflection

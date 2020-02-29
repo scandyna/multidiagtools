@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,36 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_MAIN_H
-#define MDT_TEST_MAIN_H
+#include "VehicleTypeRepositoryResponseHandler.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace Railway{ namespace TaskList{ namespace TestLib{
 
-class SqlTransformTest : public TestBase
+void VehicleTypeRepositoryResponseHandler::connectRepository(VehicleTypeRepository & repository)
 {
- Q_OBJECT
+  connectEmitter(repository, &VehicleTypeRepository::newVehicleTypeFetched);
+}
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void selectFieldDeclarationToSqlTest();
-  void selectFieldListDeclarationToSqlTest();
-  void selectFieldConditionUsageToSqlTest();
-  void selectFromEntityToSqlTest();
-  void operatorToSqlTest();
-  void likeExpressionToSqlTest();
-  void likeExpressionToSqlTest_data();
-  void joinConstraintExpressionToSqlTest();
-  void joinOperatorToSqlTest();
-  void joinClauseToSqlTest();
-  void joinClauseListToSqlTest();
-  void filterExpressionToSqlTest();
-  void selectStatementToSqlLimitSyntaxTest();
-  void selectStatementToSqlTopSyntaxTest();
-  void selectStatementToSqlTest();
-  void selectStatementWithJoinToSqlTest();
-};
-
-#endif // #ifndef MDT_TEST_MAIN_H
+}}}} // namespace Mdt{ namespace Railway{ namespace TaskList{ namespace TestLib{

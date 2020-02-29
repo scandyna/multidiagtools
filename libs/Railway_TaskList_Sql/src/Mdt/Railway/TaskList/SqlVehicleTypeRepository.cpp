@@ -22,36 +22,88 @@
 #include "Mdt/Railway/TaskList/VehicleTypeDataStruct.h"
 #include "Mdt/Railway/TaskList/VehicleType_p.h"
 #include "Mdt/Sql/InsertQuery.h"
-#include "Mdt/Sql/Reflection/InsertStatement.h"
+#include "Mdt/Sql/SelectQuery.h"
+// #include "Mdt/Sql/Reflection/InsertStatement.h"
+// #include "Mdt/QueryExpression/ReflectionSelectStatement.h"
+
+using namespace Mdt::QueryExpression;
 
 namespace Mdt{ namespace Railway{ namespace TaskList{
 
-void SqlVehicleTypeRepository::setDatabase(const QSqlDatabase & db)
+SqlVehicleTypeRepository::SqlVehicleTypeRepository(const QSqlDatabase & db, QObject *parent)
+ : VehicleTypeRepository(parent),
+   mTable(db)
 {
   Q_ASSERT(db.isValid());
-
-  mDatabase = db;
 }
+
+// void SqlVehicleTypeRepository::setDatabase(const QSqlDatabase & db)
+// {
+//   Q_ASSERT(db.isValid());
+// 
+//   mDatabase = db;
+// }
 
 Mdt::Expected<VehicleTypeId> SqlVehicleTypeRepository::add(const VehicleType & vehicle)
 {
-  const auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<VehicleTypePrimaryKey>( privateConstVehicleTypeDataStruct(vehicle) );
-  Mdt::Sql::InsertQuery query(mDatabase);
-
-  if(!query.execStatement(statement)){
-    return query.lastError(); /// \todo Maybe a better error message should be generated here
+  const auto id = mTable.add( privateConstVehicleTypeDataStruct(vehicle) );
+  if(!id){
+    /// \todo Generate a more domain specific error message here
+    return id.error();
   }
 
-  return VehicleTypeId::fromQVariant(query.lastInsertId());
+  return VehicleTypeId(*id);
 }
 
 Mdt::Expected<VehicleType> SqlVehicleTypeRepository::getById(VehicleTypeId id) const
 {
   Q_ASSERT(!id.isNull());
 
+  const auto vehicleTypeData = mTable.get( id.value() );
+  if(!vehicleTypeData){
+    /// \todo Generate a more domain specific error message here
+    return vehicleTypeData.error();
+  }
+
+  return vehicleTypeFromDataStruct(*vehicleTypeData);
 }
 
-bool SqlVehicleTypeRepository::getAllAsync() const
+Mdt::ExpectedResult SqlVehicleTypeRepository::update(const VehicleType & vehicle)
+{
+  const auto & data = privateConstVehicleTypeDataStruct(vehicle);
+  Q_ASSERT(data.id > 0);
+
+  const auto result = mTable.update(data);
+  if(!result){
+    /// \todo Generate a more domain specific error message here
+  }
+
+  return result;
+}
+
+Mdt::ExpectedResult SqlVehicleTypeRepository::remove(VehicleTypeId id)
+{
+  Q_ASSERT(!id.isNull());
+
+  const auto result = mTable.remove( id.value() );
+  if(!result){
+    /// \todo Generate a more domain specific error message here
+  }
+
+  return result;
+}
+
+Mdt::ExpectedResult SqlVehicleTypeRepository::removeAll()
+{
+  const auto result = mTable.removeAll();
+  if(!result){
+    /// \todo Generate a more domain specific error message here
+  }
+
+  return result;
+}
+
+Mdt::ExpectedResult SqlVehicleTypeRepository::getAllAsync() const
 {
 }
 

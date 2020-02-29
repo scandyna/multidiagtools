@@ -19,3 +19,20 @@
  **
  ****************************************************************************/
 #include "ReflectionStorageTableBase.h"
+
+namespace Mdt{ namespace Sql{
+
+ReflectionStorageTableBase::ReflectionStorageTableBase(const Connection & connection)
+ : mConnectionName(connection.name())
+{
+  Q_ASSERT(connection.isValid());
+}
+
+void ReflectionStorageTableBase::setLastError(const Mdt::Error & error) const
+{
+  Q_ASSERT(!error.isNull());
+
+  mLastError = error;
+}
+
+}} // namespace Mdt{ namespace Sql{

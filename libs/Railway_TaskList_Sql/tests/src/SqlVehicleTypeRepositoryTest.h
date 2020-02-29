@@ -31,8 +31,11 @@ class SqlVehicleTypeRepositoryTest : public TestBase
 
   void initTestCase();
 
-  void addGetTest();
+  void sandbox();
+
+  void addGetUpdateRemoveTest();
   void getAllAsyncTest();
+  void getAllAsyncTest_data();
 };
 
 #endif // #ifndef RW_TEST_MAIN_H

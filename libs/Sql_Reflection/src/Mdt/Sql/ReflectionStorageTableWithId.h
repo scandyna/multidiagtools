@@ -21,8 +21,7 @@
 #ifndef MDT_SQL_REFLECTION_STORAGE_TABLE_WITH_ID_H
 #define MDT_SQL_REFLECTION_STORAGE_TABLE_WITH_ID_H
 
-// #include "Mdt/Sql/DeleteStatement.h"
-// // #include "PrimaryKeyRecordAlgorithm.h"
+#include "ReflectionStorageTableBase.h"
 #include "Mdt/Sql/Reflection/InsertStatement.h"
 #include "Mdt/Sql/Reflection/UpdateStatement.h"
 #include "Mdt/Sql/Reflection/DeleteStatement.h"
@@ -36,25 +35,18 @@
 #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
 #include "Mdt/Reflection/TypeTraits/IsIdPrimaryKeyClass.h"
 #include "Mdt/Reflection/TypeTraits/IsStructDefAssociatedWithReflectedStruct.h"
-// #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
-// #include "Mdt/Sql/DeleteStatement.h"
-// #include "Mdt/Sql/PrimaryKeyRecord.h"
-// #include "Mdt/Sql/FieldName.h"
 #include "Mdt/Expected.h"
 #include "Mdt/ErrorCode.h"
 #include <QCoreApplication>
-#include <QSqlDatabase>
 #include <QString>
 #include <QVariant>
 #include <QSqlRecord>
-// #include <QLatin1String>
-// #include <type_traits>
 
 namespace Mdt{ namespace Sql{
 
   namespace Impl{
 
-    /*! \brief Internal
+    /*! \internal
      */
     class SetQSqlRecordValuesToStruct
     {
@@ -86,9 +78,13 @@ namespace Mdt{ namespace Sql{
    * \pre \a StructDef must be a struct definition assiocated with a reflected struct
    * \pre \a PrimaryKey must be a id primary key class
    * \pre \a Id must be a type supported by QVariant
+   *
+   * \sa ReflectionAsyncStorageTableWithId
+   * 
+   * \todo create a alias for Struct !
    */
   template<typename StructDef, typename PrimaryKey, typename Id>
-  class ReflectionStorageTableWithId
+  class ReflectionStorageTableWithId : public ReflectionStorageTableBase
   {
     static_assert( Mdt::Reflection::TypeTraits::IsStructDef<StructDef>::value,
                    "StructDef must be a struct definition assiocated with a reflected struct" );
@@ -101,12 +97,11 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Construct a storage table
      *
-     * \pre \a db must be valid (must have a driver loaded)
+     * \pre \a connection must refer to a valid database handle
      */
-    ReflectionStorageTableWithId(const QSqlDatabase & db)
-     : mDatabase(db)
+    ReflectionStorageTableWithId(const Connection & connection)
+     : ReflectionStorageTableBase(connection)
     {
-      Q_ASSERT(db.isValid());
     }
 
     /*! \brief Add a record to the database table
@@ -125,11 +120,12 @@ namespace Mdt{ namespace Sql{
                      "record must be a instance of a reflected struct associated with \a StructDef" );
 
       const auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<PrimaryKey>(record);
-      Mdt::Sql::InsertQuery query(mDatabase);
+      Mdt::Sql::InsertQuery query(connection());
       if(!query.execStatement(statement)){
         const QString msg = tr("Could not insert a record into table '%1'").arg(tableName());
         auto error = mdtErrorNew(msg, Mdt::Error::Critical, "ReflectionStorageTableWithId");
         error.stackError(query.lastError());
+        setLastError(error);
         return error;
       }
 
@@ -167,11 +163,12 @@ namespace Mdt{ namespace Sql{
       statement.setFilterExpression( Mdt::QueryExpression::filterExpressionFromIdPrimaryKeyValue<PrimaryKey>(id) );
       statement.addAllFields();
 
-      Mdt::Sql::SelectQuery query(mDatabase);
+      Mdt::Sql::SelectQuery query(connection());
       if(!query.execStatement(statement)){
         const QString msg = tr("Could not get a record from table '%1'").arg(tableName());
         auto error = mdtErrorNew(msg, Mdt::Error::Critical, "ReflectionStorageTableWithId");
         error.stackError(query.lastError());
+        setLastError(error);
         return error;
       }
 
@@ -181,11 +178,13 @@ namespace Mdt{ namespace Sql{
           const QString msg = tr("Could not get a record with id '%1' from table '%2'")
                               .arg(QString::number(id), tableName());
           auto error = mdtErrorNewT(Mdt::ErrorCode::NotFound, msg, Mdt::Error::Warning, "ReflectionStorageTableWithId");
+          setLastError(error);
           return error;
         }
         const QString msg = tr("Could not get a record from table '%1'").arg(tableName());
         auto error = mdtErrorNew(msg, Mdt::Error::Critical, "ReflectionStorageTableWithId");
         error.stackError(query.lastError());
+        setLastError(error);
         return error;
       }
 
@@ -201,55 +200,58 @@ namespace Mdt{ namespace Sql{
      * \pre \a record must be a instance of a reflected struct associated with \a StructDef
      */
     template<typename Struct>
-    Mdt::ExpectedResult update(const Struct & record)
+    bool update(const Struct & record)
     {
       static_assert( Mdt::Reflection::TypeTraits::IsStructDefAssociatedWithReflectedStruct<StructDef, Struct>::value,
                      "record must be a instance of a reflected struct associated with \a StructDef" );
 
       const auto statement = Mdt::Sql::Reflection::updateStatementFromReflected<PrimaryKey>(record);
-      Mdt::Sql::UpdateQuery query(mDatabase);
+      Mdt::Sql::UpdateQuery query(connection());
       if(!query.execStatement(statement)){
         const QString msg = tr("Could not update a record in table '%1'").arg(tableName());
         auto error = mdtErrorNew(msg, Mdt::Error::Critical, "ReflectionStorageTableWithId");
         error.stackError(query.lastError());
-        return error;
+        setLastError(error);
+        return false;
       }
 
-      return Mdt::ExpectedResultOk();
+      return true;
     }
 
     /*! \brief Remove a record from the database table
      */
-    Mdt::ExpectedResult remove(Id id)
+    bool remove(Id id)
     {
       const auto statement = Mdt::Sql::Reflection::deleteStatementFromReflectedById<PrimaryKey>(id);
-      Mdt::Sql::DeleteQuery query(mDatabase);
+      Mdt::Sql::DeleteQuery query(connection());
       if(!query.execStatement(statement)){
         const QString msg = tr("Could not remove the record with id '%1' from table '%2'")
                             .arg(QString::number(id), tableName());
         auto error = mdtErrorNew(msg, Mdt::Error::Critical, "ReflectionStorageTableWithId");
         error.stackError(query.lastError());
-        return error;
+        setLastError(error);
+        return false;
       }
 
-      return Mdt::ExpectedResultOk();
+      return true;
     }
 
     /*! \brief Remove all record from the database table
      */
-    Mdt::ExpectedResult removeAll()
+    bool removeAll()
     {
       const auto statement = Mdt::Sql::Reflection::deleteAllStatementFromReflected<StructDef>();
-      Mdt::Sql::DeleteQuery query(mDatabase);
+      Mdt::Sql::DeleteQuery query(connection());
       if(!query.execStatement(statement)){
         const QString msg = tr("Could not remove all records from table '%1'")
                             .arg(tableName());
         auto error = mdtErrorNew(msg, Mdt::Error::Critical, "ReflectionStorageTableWithId");
         error.stackError(query.lastError());
-        return error;
+        setLastError(error);
+        return false;
       }
 
-      return Mdt::ExpectedResultOk();
+      return true;
     }
 
    private:
@@ -259,7 +261,6 @@ namespace Mdt{ namespace Sql{
       return Mdt::Reflection::nameFromStructDefQString<StructDef>();
     }
 
-    QSqlDatabase mDatabase;
   };
 
 }} // namespace Mdt{ namespace Sql{

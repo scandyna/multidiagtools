@@ -21,6 +21,7 @@
 #include "TestBase.h"
 #include "Mdt/Sql/SQLiteConnectionParameters.h"
 #include "Mdt/Sql/SQLiteDatabase.h"
+#include "Mdt/Sql/SQLiteAsyncQueryConnection.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/InsertQuery.h"
 #include <QSqlQuery>
@@ -29,9 +30,44 @@
 
 using Mdt::Sql::SQLiteConnectionParameters;
 using Mdt::Sql::SQLiteDatabase;
+using Mdt::Sql::SQLiteAsyncQueryConnection;
+
+bool TestBase::initDatabaseTemporaryFile()
+{
+  if(!mConnectionParameters.databaseFile().isEmpty()){
+    return true;
+  }
+  if(!mTempFile.open()){
+    qWarning() << "Could not open file " << mTempFile.fileName();
+    return false;
+  }
+  mTempFile.close();
+  mConnectionParameters.setDatabaseFile(mTempFile.fileName());
+
+  return true;
+}
 
 bool TestBase::initDatabaseSqlite()
 {
+  const auto connection = SQLiteDatabase::addConnection();
+  if(!connection){
+    qWarning() << "Could not add a connection to as SQLite database: " << connection.error().text();
+    return false;
+  }
+  mConnectionName = connection->name();
+
+  if(!initDatabaseTemporaryFile()){
+    return false;
+  }
+
+  SQLiteDatabase db(*connection, mConnectionParameters);
+  if(!db.open()){
+    qWarning() << "Could not open database, error: " << db.lastError().text();
+    return false;
+  }
+
+  return true;
+/*
   SQLiteConnectionParameters parameters;
 
   // Create a database
@@ -50,15 +86,31 @@ bool TestBase::initDatabaseSqlite()
   }
   mDatabase = sqliteDb.database();
 
+  return true;*/
+}
+
+bool TestBase::initDatabaseSqliteAsync()
+{
+  if(!initDatabaseTemporaryFile()){
+    return false;
+  }
+
+  auto connection = std::make_shared<SQLiteAsyncQueryConnection>();
+  if(!connection->open(mConnectionParameters)){
+    qWarning() << "Could not open database, error: " << connection->lastError().text();
+    return false;
+  }
+  mAsyncQueryConnection = connection;
+
   return true;
 }
 
-QSqlDatabase TestBase::database() const
-{
-  return mDatabase;
-}
+// QSqlDatabase TestBase::database() const
+// {
+//   return mDatabase;
+// }
 
-Mdt::Sql::ConnectionParameters TestBase::connectionParameters() const
-{
-  return mConnectionParameters;
-}
+// Mdt::Sql::ConnectionParameters TestBase::connectionParameters() const
+// {
+//   return mConnectionParameters;
+// }

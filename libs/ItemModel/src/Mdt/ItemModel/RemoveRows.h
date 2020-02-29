@@ -23,7 +23,10 @@
 
 #include "RowRange.h"
 #include "RowSelection.h"
+#include "AbstractEditableCachedTableModel.h"
+
 #include "AbstractCachedTableModel.h"
+
 #include "MdtItemModelExport.h"
 #include <QAbstractItemModel>
 #include <QItemSelectionModel>
@@ -57,6 +60,29 @@ namespace Mdt{ namespace ItemModel{
    * \pre \a rowRange must be valid
    * \pre \a rowRange must be a valid range in \a model ( rowRange.lastRow() < model->rowCount() ).
    */
+  void MDT_ITEMMODEL_EXPORT cancelRemoveRows(AbstractEditableCachedTableModel *model, const RowRange & rowRange);
+
+  /*! \brief Cancel the removal of rows defined in \a selection from \a model
+   *
+   * \pre \a selection must not be empty
+   * \pre \a selection must have valid ranges for \a model ( for each range: range.firstRow() >= 0 AND range.lastRow() < model->rowCount() )
+   */
+  void MDT_ITEMMODEL_EXPORT cancelRemoveRows(AbstractEditableCachedTableModel *model, const RowSelection & selection);
+
+  /*! \brief Cacncel the removal of the selected rows in \a selectionModel from \a model
+   *
+   * Will take in account each selected row for all columns in \a selectionModel
+   *  ( it does not call QItemSelectionModel::selectedRows(int column) ).
+   *  To know how the row selection is made, see RowSelection .
+   */
+  void MDT_ITEMMODEL_EXPORT cancelRemoveRows(AbstractEditableCachedTableModel *model, const QItemSelectionModel * selectionModel);
+
+  /*! \brief Cancel the removal of rows defined in \a rowRange from \a model
+   *
+   * \pre \a rowRange must be valid
+   * \pre \a rowRange must be a valid range in \a model ( rowRange.lastRow() < model->rowCount() ).
+   */
+  [[deprecated]]
   void MDT_ITEMMODEL_EXPORT cancelRemoveRows(AbstractCachedTableModel *model, const RowRange & rowRange);
 
   /*! \brief Cancel the removal of rows defined in \a selection from \a model
@@ -64,6 +90,7 @@ namespace Mdt{ namespace ItemModel{
    * \pre \a selection must not be empty
    * \pre \a selection must have valid ranges for \a model ( for each range: range.firstRow() >= 0 AND range.lastRow() < model->rowCount() )
    */
+  [[deprecated]]
   void MDT_ITEMMODEL_EXPORT cancelRemoveRows(AbstractCachedTableModel *model, const RowSelection & selection);
 
   /*! \brief Cacncel the removal of the selected rows in \a selectionModel from \a model
@@ -72,6 +99,7 @@ namespace Mdt{ namespace ItemModel{
    *  ( it does not call QItemSelectionModel::selectedRows(int column) ).
    *  To know how the row selection is made, see RowSelection .
    */
+  [[deprecated]]
   void MDT_ITEMMODEL_EXPORT cancelRemoveRows(AbstractCachedTableModel *model, const QItemSelectionModel * selectionModel);
 
 }} // namespace Mdt{ namespace ItemModel{

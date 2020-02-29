@@ -82,8 +82,11 @@ function(mdt_add_library)
   set(headers_dir ${VAR_HEADERS_DIRECTORY})
   set(link_deps ${VAR_LINK_DEPENDENCIES})
   # Commands to build the library
+  # TODO add_library(${PROJECT_NAME]::${target_name} ALIAS ${target_name} ...) ? or not ...
   add_library(${target_name} SHARED ${source_files})
+  # TODO Should use PRIVATE
   target_link_libraries(${target_name} ${link_deps})
+  # TODO is BUILD_INTERFACE redundant to what CMake can handle ?
   target_include_directories(${target_name} PUBLIC
                             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${headers_dir}>
                             $<INSTALL_INTERFACE:include/${PROJECT_NAME}/${target_name}>
@@ -113,26 +116,30 @@ function(mdt_add_library)
   )
   # For unix, create a separate component with debug symbols
   # (This has sense only for system wide installation with DEB, RPM, ..)
-  if( UNIX AND (NOT CMAKE_INSTALL_PREFIX) OR ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr") )
-    set(lib_so_name ${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}${CMAKE_SHARED_LIBRARY_SUFFIX}.${library_version})
-    set(lib_debug_name ${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}.debug)
-    add_custom_command(TARGET ${target_name}
-                       POST_BUILD
-                       COMMAND objcopy --only-keep-debug ${lib_so_name} ${lib_debug_name}
-                       COMMAND strip --strip-debug --strip-unneeded ${lib_so_name}
-                       COMMAND objcopy --add-gnu-debuglink=${lib_debug_name} ${lib_so_name}
-    )
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_debug_name}"
-            DESTINATION "lib/debug/${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}"
-            PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ
-            COMPONENT ${target_name}-dbg
-    )
-    mdt_cpack_add_library_component(
-      COMPONENT ${target_name}-dbg
-      EXPLICIT_DEPEND_COMPONENTS ${target_name}
-    )
-  endif()
+  # TODO This is specific to Linux system wide installation.
+  # It sould be put to a specific module.
+  # Also, to build the name, query the target to find its location (it can change)
+#   if( UNIX AND (NOT CMAKE_INSTALL_PREFIX) OR ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr") )
+#     set(lib_so_name ${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}${CMAKE_SHARED_LIBRARY_SUFFIX}.${library_version})
+#     set(lib_debug_name ${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}.debug)
+#     add_custom_command(TARGET ${target_name}
+#                        POST_BUILD
+#                        COMMAND objcopy --only-keep-debug ${lib_so_name} ${lib_debug_name}
+#                        COMMAND strip --strip-debug --strip-unneeded ${lib_so_name}
+#                        COMMAND objcopy --add-gnu-debuglink=${lib_debug_name} ${lib_so_name}
+#     )
+#     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_debug_name}"
+#             DESTINATION "lib/debug/${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}"
+#             PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ
+#             COMPONENT ${target_name}-dbg
+#     )
+#     mdt_cpack_add_library_component(
+#       COMPONENT ${target_name}-dbg
+#       EXPLICIT_DEPEND_COMPONENTS ${target_name}
+#     )
+#   endif()
   # Commands to install the library
+  # TODO See INCLUDES
   install(TARGETS ${target_name}
           EXPORT ${library_name}Targets
           LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT ${target_name}

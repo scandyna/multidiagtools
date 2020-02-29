@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "RemoveRowsTest.h"
+#include "PersonTableModel.h"
 #include "Mdt/ItemModel/RemoveRows.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include "Mdt/ItemModel/AbstractCachedTableModel.h"
@@ -269,85 +270,183 @@ void RemoveRowsTest::removeRowsSelectionModelTableTest()
   QCOMPARE(model.rowCount(), 0);
 }
 
+// void RemoveRowsTest::cancelRemoveRowsRangeTest()
+// {
+//   CachedTableModel model;
+//   QItemSelectionModel selectionModel(&model);
+//   RowRange r;
+// 
+//   model.populate({{1,"A"},{2,"B"},{3,"C"},{4,"D"},{5,"E"}});
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+// 
+//   r.setFirstRow(0);
+//   r.setLastRow(4);
+//   QVERIFY( removeRows(&model, r) );
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+// 
+//   r.setFirstRow(0);
+//   r.setLastRow(0);
+//   cancelRemoveRows(&model, r);
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+// 
+//   r.setFirstRow(2);
+//   r.setLastRow(3);
+//   cancelRemoveRows(&model, r);
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+// 
+//   r.setFirstRow(4);
+//   r.setLastRow(4);
+//   cancelRemoveRows(&model, r);
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+// }
+
 void RemoveRowsTest::cancelRemoveRowsRangeTest()
 {
-  CachedTableModel model;
+  EditPersonTableModel model;
   QItemSelectionModel selectionModel(&model);
   RowRange r;
 
-  model.populate({{1,"A"},{2,"B"},{3,"C"},{4,"D"},{5,"E"}});
+  populatePersonStorage(model, {{1,"A"},{2,"B"},{3,"C"},{4,"D"},{5,"E"}});
+  QVERIFY(model.fetchAll());
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant(4));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant(5));
 
   r.setFirstRow(0);
   r.setLastRow(4);
   QVERIFY( removeRows(&model, r) );
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant("x"));
 
   r.setFirstRow(0);
   r.setLastRow(0);
   cancelRemoveRows(&model, r);
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant("x"));
 
   r.setFirstRow(2);
   r.setLastRow(3);
   cancelRemoveRows(&model, r);
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant(4));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant("x"));
 
   r.setFirstRow(4);
   r.setLastRow(4);
   cancelRemoveRows(&model, r);
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant(4));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant(5));
 }
+
+// void RemoveRowsTest::cancelRemoveRowsSelectionTest()
+// {
+//   CachedTableModel model;
+//   QItemSelectionModel selectionModel(&model);
+//   RowSelection s;
+//   RowRange r;
+// 
+//   model.populate({{1,"A"},{2,"B"},{3,"C"},{4,"D"},{5,"E"}});
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+// 
+//   r.setFirstRow(0);
+//   r.setLastRow(4);
+//   QVERIFY( removeRows(&model, r) );
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+// 
+//   s.clear();
+//   r.setFirstRow(0);
+//   r.setLastRow(1);
+//   s.appendRange(r);
+//   r.setFirstRow(3);
+//   r.setLastRow(4);
+//   s.appendRange(r);
+//   cancelRemoveRows(&model, s);
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+// }
 
 void RemoveRowsTest::cancelRemoveRowsSelectionTest()
 {
-  CachedTableModel model;
+  EditPersonTableModel model;
   QItemSelectionModel selectionModel(&model);
   RowSelection s;
   RowRange r;
 
-  model.populate({{1,"A"},{2,"B"},{3,"C"},{4,"D"},{5,"E"}});
+  populatePersonStorage(model, {{1,"A"},{2,"B"},{3,"C"},{4,"D"},{5,"E"}});
+  QVERIFY(model.fetchAll());
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant(4));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant(5));
 
   r.setFirstRow(0);
   r.setLastRow(4);
   QVERIFY( removeRows(&model, r) );
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant("x"));
 
   s.clear();
   r.setFirstRow(0);
@@ -358,25 +457,114 @@ void RemoveRowsTest::cancelRemoveRowsSelectionTest()
   s.appendRange(r);
   cancelRemoveRows(&model, s);
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant(4));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant(5));
 }
+
+// void RemoveRowsTest::cancelRemoveRowsSelectionModelTest()
+// {
+//   CachedTableModel model;
+//   QItemSelectionModel selectionModel(&model);
+// 
+//   model.populate({{1,"A"},{2,"B"},{3,"C"},{4,"D"},{5,"E"}});
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+// 
+//   selectionModel.clear();
+//   selectionModel.select( model.index(0, 0), QItemSelectionModel::Select );
+//   selectionModel.select( model.index(1, 0), QItemSelectionModel::Select );
+//   selectionModel.select( model.index(2, 0), QItemSelectionModel::Select );
+//   selectionModel.select( model.index(3, 0), QItemSelectionModel::Select );
+//   selectionModel.select( model.index(4, 0), QItemSelectionModel::Select );
+//   QVERIFY( removeRows(&model, &selectionModel) );
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+// 
+//   /*
+//    * A empty selection must be accepted and do nothing.
+//    */
+//   selectionModel.clear();
+//   cancelRemoveRows(&model, &selectionModel);
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+// 
+//   /*
+//    * ---
+//    * |S|
+//    * ---
+//    * | |
+//    * ---
+//    * | |
+//    * ---
+//    * | |
+//    * ---
+//    * | |
+//    * ---
+//    */
+//   selectionModel.clear();
+//   selectionModel.select( model.index(0, 0), QItemSelectionModel::Select );
+//   cancelRemoveRows(&model, &selectionModel);
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+// 
+//   /*
+//    * ---
+//    * |S|
+//    * ---
+//    * | |
+//    * ---
+//    * |S|
+//    * ---
+//    * | |
+//    * ---
+//    * |S|
+//    * ---
+//    */
+//   selectionModel.clear();
+//   selectionModel.select( model.index(0, 0), QItemSelectionModel::Select );
+//   selectionModel.select( model.index(2, 0), QItemSelectionModel::Select );
+//   selectionModel.select( model.index(4, 0), QItemSelectionModel::Select );
+//   cancelRemoveRows(&model, &selectionModel);
+//   QCOMPARE(model.rowCount(), 5);
+//   QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
+//   QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
+//   QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+// }
 
 void RemoveRowsTest::cancelRemoveRowsSelectionModelTest()
 {
-  CachedTableModel model;
+  EditPersonTableModel model;
   QItemSelectionModel selectionModel(&model);
 
-  model.populate({{1,"A"},{2,"B"},{3,"C"},{4,"D"},{5,"E"}});
+  populatePersonStorage(model, {{1,"A"},{2,"B"},{3,"C"},{4,"D"},{5,"E"}});
+  QVERIFY(model.fetchAll());
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant(2));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant(4));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant(5));
 
   selectionModel.clear();
   selectionModel.select( model.index(0, 0), QItemSelectionModel::Select );
@@ -386,11 +574,11 @@ void RemoveRowsTest::cancelRemoveRowsSelectionModelTest()
   selectionModel.select( model.index(4, 0), QItemSelectionModel::Select );
   QVERIFY( removeRows(&model, &selectionModel) );
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant("x"));
 
   /*
    * A empty selection must be accepted and do nothing.
@@ -398,11 +586,11 @@ void RemoveRowsTest::cancelRemoveRowsSelectionModelTest()
   selectionModel.clear();
   cancelRemoveRows(&model, &selectionModel);
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant("x"));
 
   /*
    * ---
@@ -421,11 +609,11 @@ void RemoveRowsTest::cancelRemoveRowsSelectionModelTest()
   selectionModel.select( model.index(0, 0), QItemSelectionModel::Select );
   cancelRemoveRows(&model, &selectionModel);
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::Delete);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant("x"));
 
   /*
    * ---
@@ -446,11 +634,11 @@ void RemoveRowsTest::cancelRemoveRowsSelectionModelTest()
   selectionModel.select( model.index(4, 0), QItemSelectionModel::Select );
   cancelRemoveRows(&model, &selectionModel);
   QCOMPARE(model.rowCount(), 5);
-  QCOMPARE(model.operationAtRow(0), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(1), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(2), TableCacheOperation::None);
-  QCOMPARE(model.operationAtRow(3), TableCacheOperation::Delete);
-  QCOMPARE(model.operationAtRow(4), TableCacheOperation::None);
+  QCOMPARE(model.headerData(0, Qt::Vertical), QVariant(1));
+  QCOMPARE(model.headerData(1, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(2, Qt::Vertical), QVariant(3));
+  QCOMPARE(model.headerData(3, Qt::Vertical), QVariant("x"));
+  QCOMPARE(model.headerData(4, Qt::Vertical), QVariant(5));
 }
 
 /*

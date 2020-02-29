@@ -28,7 +28,6 @@ endfunction()
 
 #================= Tests ====================
 
-addQueryExpression_SqlTest("SqlTransformTest")
 addQueryExpression_SqlTest("SelectQueryTest")
 addQueryExpression_SqlTest("CachedSelectQueryTest")
 addQueryExpression_SqlTest("AsyncSelectQueryTest")

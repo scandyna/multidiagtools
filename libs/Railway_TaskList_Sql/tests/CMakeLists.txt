@@ -12,7 +12,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtRailway_TaskList_SqlTest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtRailway_TaskList_SqlTest Railway_TaskList_Sql Application_Core TestLib_Core Sql_Core_SQLite Qt5::Test)
+target_link_libraries(mdtRailway_TaskList_SqlTest Railway_TaskList_Sql Application_Core Railway_TaskList_TestLib TestLib_Core Sql_Core_SQLite Qt5::Test)
 
 #=============== Helper functions ===========
 

@@ -12,7 +12,7 @@ set(SOURCE_FILES
 )
 
 add_library(mdtRailway_TaskList_CoreTest SHARED ${SOURCE_FILES})
-target_link_libraries(mdtRailway_TaskList_CoreTest Railway_TaskList_Core MemoryStore Application_Core TestLib_Core Qt5::Test)
+target_link_libraries(mdtRailway_TaskList_CoreTest Railway_TaskList_Core Railway_TaskList_TestLib MemoryStore Application_Core TestLib_Core Qt5::Test)
 
 #=============== Helper functions ===========
 

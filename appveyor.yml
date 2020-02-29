@@ -41,7 +41,7 @@ artifacts:
 deploy:
   provider: GitHub
   auth_token:
-    secure: YnLpfRJ3an3UULcagmbxw9gqAquwEqJZ2Vj/glhhG0bC4VOzSTMsSyxnP9dR7Z2I
+    secure: YnLpfRJ3an3UULcagmbxw9gqAquwEqJZ2Vj/glhhG0bC4VOzSTMsSyxnP9dR7Z2I # TODO Secure ??
   description: "Mdt release"
   artifact: MdtZipDistribution
   on:

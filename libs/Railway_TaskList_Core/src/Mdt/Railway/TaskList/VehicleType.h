@@ -21,6 +21,7 @@
 #ifndef MDT_RAILWAY_TASK_LIST_VEHICLE_TYPE_H
 #define MDT_RAILWAY_TASK_LIST_VEHICLE_TYPE_H
 
+#include "Mdt/Railway/VehicleTypeId.h"
 #include "VehicleTypeDataStruct.h"
 #include "MdtRailway_TaskList_CoreExport.h"
 #include <QString>
@@ -41,6 +42,19 @@ namespace Mdt{ namespace Railway{ namespace TaskList{
      */
     explicit VehicleType(const QString & name, const QString & alias, const QString & manufacturerSerie);
 
+    /*! \brief Get id
+     */
+    VehicleTypeId id() const noexcept
+    {
+      return VehicleTypeId(mDataStruct.id);
+    }
+
+    /*! \brief Set name
+     *
+     * \pre \a name must not be empty
+     */
+    void setName(const QString & name);
+
     /*! \brief Get name
      */
     QString name() const
@@ -48,7 +62,29 @@ namespace Mdt{ namespace Railway{ namespace TaskList{
       return mDataStruct.name;
     }
 
+    /*! \brief Get alias
+     */
+    QString alias() const
+    {
+      return mDataStruct.alias;
+    }
+
+    /*! \brief Get manufacturer serie
+     */
+    QString manufacturerSerie() const
+    {
+      return mDataStruct.manufacturerSerie;
+    }
+
    private:
+
+    VehicleType(const VehicleTypeDataStruct & data)
+     : mDataStruct(data)
+    {
+    }
+
+    friend
+    VehicleType vehicleTypeFromDataStruct(const VehicleTypeDataStruct & data);
 
     friend
     const VehicleTypeDataStruct & privateConstVehicleTypeDataStruct(const VehicleType & vehicleType);

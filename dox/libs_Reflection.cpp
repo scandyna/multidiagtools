@@ -491,13 +491,13 @@
  * #include <Mdt/Sql/Schema/Reflection.h>
  * #include <Mdt/Sql/Schema/ForeignKeySettings.h"
  * #include <Mdt/Sql/Schema/Driver.h>
- * #include <QSqlDatabase>
+ * #include <Mdt/Sql/Connection.h>
  *
  * using PersonPrimaryKey = Mdt::Reflection::PrimaryKey<PersonDef::id>;
  * using AddressPrimaryKey = Mdt::Reflection::PrimaryKey<AddressDef::id>;
  * using PersonAddressRelation = Mdt::Reflection::Relation<PersonPrimaryKey, AddressDef::personId>;
  *
- * bool createSqlSchema(const QSqlDatabase & dbConnection)
+ * bool createSqlSchema(const Mdt::Sql::Connection & dbConnection)
  * {
  *   using Mdt::Sql::Schema::ForeignKeyAction;
  *
@@ -550,7 +550,7 @@
  * #include <Mdt/Sql/InsertQuery.h>
  * #include <Mdt/Sql/Reflection/InsertStatement.h>
  *
- * Mdt::Expected<PersonId> addPerson(const PersonDataStruct & person, const QSqlDatabase & dbConnection)
+ * Mdt::Expected<PersonId> addPerson(const PersonDataStruct & person, const Mdt::Sql::Connection & dbConnection)
  * {
  *   const auto statement = Mdt::Sql::Reflection::insertStatementFromReflected<PersonPrimaryKey>(person);
  *   Mdt::Sql::InsertQuery query(dbConnection);
@@ -572,7 +572,7 @@
  * #include <Mdt/Sql/UpdateQuery.h>
  * #include <Mdt/Sql/Reflection/UpdateStatement.h>
  *
- * bool updatePerson(const PersonDataStruct & person, const QSqlDatabase & dbConnection)
+ * bool updatePerson(const PersonDataStruct & person, const Mdt::Sql::Connection & dbConnection)
  * {
  *   const auto statement = Mdt::Sql::Reflection::updateStatementFromReflected<PersonPrimaryKey>(person);
  *   Mdt::Sql::UpdateQuery query(dbConnection);
@@ -674,4 +674,7 @@
  * - [Boost Hana](http://www.boost.org/doc/libs/1_66_0/libs/hana/doc/html/index.html)
  * - [iguana](https://github.com/qicosmos/iguana)
  * - Probably many more
+ *
+ * Other libraries can provide some reflection using Qt:
+ * - [QtOrm](https://github.com/dpurgin/qtorm)
  */

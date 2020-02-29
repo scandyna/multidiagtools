@@ -58,10 +58,10 @@ enable_testing()
 # Compiler options
 #################################################################################################################################################
 
-# TODO Should look at PIE (Position Independ Code). Security and other..
+# TODO Should look at PIE (Position Independ Code). Security and other.. See set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # C++ standard
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 # Build C++ flags adding those set in cache file
 set(CMAKE_CXX_FLAGS "${MDT_CXX_FLAGS_TO_PREPEND} ${CMAKE_CXX_FLAGS} ${MDT_CXX_FLAGS_TO_APPEND}")
 
@@ -136,6 +136,7 @@ add_subdirectory(libs/Algorithm)
 add_subdirectory(libs/IndexRange)
 add_subdirectory(libs/Container)
 add_subdirectory(libs/Expected)
+add_subdirectory(libs/Async)
 add_subdirectory(libs/FilterExpression)
 add_subdirectory(libs/Numeric)
 add_subdirectory(libs/PlainText_Core)
@@ -162,8 +163,9 @@ add_subdirectory(libs/Entity_Widgets)
 add_subdirectory(libs/Railway_Core)
 add_subdirectory(libs/Railway_Sql)
 add_subdirectory(libs/Railway_Widgets)
-add_subdirectory(libs/Railway_QtQuick)
+# add_subdirectory(libs/Railway_QtQuick)
 add_subdirectory(libs/Railway_TaskList_Core)
+add_subdirectory(libs/Railway_TaskList_TestLib)
 add_subdirectory(libs/Railway_TaskList_Sql)
 add_subdirectory(libs/Railway_TaskList_Widgets)
 add_subdirectory(libs/MemoryStore)
@@ -363,7 +365,7 @@ message("COMPILE_ARCHITECTURE: ${COMPILE_ARCHITECTURE}")
 
 # Get Qt5 version
 # After success, find_package() wil define Qt5_VERSION, Qt5_VERSION_MAJOR, etc..
-find_package(Qt5 COMPONENTS Core)
+# find_package(Qt5 COMPONENTS Core)
 
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
   message("DEBUG build")

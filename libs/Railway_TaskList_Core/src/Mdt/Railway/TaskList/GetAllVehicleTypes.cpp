@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of Mdt library.
  **
@@ -40,7 +40,10 @@ void GetAllVehicleTypes::onNewVehicleTypeFetched(const VehicleType & vehicle)
 {
   GetAllVehicleTypesRecord record;
 
+  record.id = vehicle.id().toQVariant();
   record.name = vehicle.name();
+  record.alias = vehicle.alias();
+  record.manufacturerSerie = vehicle.manufacturerSerie();
 
   emit newRecordFetched(record);
 }

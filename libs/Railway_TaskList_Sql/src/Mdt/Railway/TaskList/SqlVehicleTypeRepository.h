@@ -23,6 +23,8 @@
 
 #include "Mdt/Railway/TaskList/VehicleTypeRepository.h"
 #include "Mdt/Railway/TaskList/VehicleType.h"
+#include "Mdt/Railway/TaskList/VehicleTypeDataStruct.h"
+#include "Mdt/Sql/ReflectionStorageTableWithId.h"
 #include "MdtRailway_TaskList_SqlExport.h"
 #include <QSqlDatabase>
 
@@ -32,13 +34,21 @@ namespace Mdt{ namespace Railway{ namespace TaskList{
    */
   class MDT_RAILWAY_TASKLIST_SQL_EXPORT SqlVehicleTypeRepository : public Mdt::Railway::TaskList::VehicleTypeRepository
   {
+    Q_OBJECT
+
    public:
 
-    /*! \brief Set database connection
+    /*! \brief Construct a vehicle type repository
      *
      * \pre \a db must be valid (must have a driver loaded)
      */
-    void setDatabase(const QSqlDatabase & db);
+    SqlVehicleTypeRepository(const QSqlDatabase & db, QObject *parent = nullptr);
+
+//     /*! \brief Set database connection
+//      *
+//      * \pre \a db must be valid (must have a driver loaded)
+//      */
+//     void setDatabase(const QSqlDatabase & db);
 
     /*! \brief Add a vehicle type
      */
@@ -50,16 +60,32 @@ namespace Mdt{ namespace Railway{ namespace TaskList{
      */
     Mdt::Expected<VehicleType> getById(VehicleTypeId id) const override;
 
+    /*! \override
+     */
+    Mdt::ExpectedResult update(const VehicleType & vehicle) override;
+
+    /*! \override
+     */
+    Mdt::ExpectedResult remove(VehicleTypeId id) override;
+
+    /*! \override
+     */
+    Mdt::ExpectedResult removeAll() override;
+
     /*! \brief Fetch all vehicle types in a asynchronous way
      *
      * Each time a vehicle type was fetched,
      *  newVehicleTypeFetched() will be emitted.
      */
-    bool getAllAsync() const override;
+    Mdt::ExpectedResult getAllAsync() const override;
 
+    /*! \brief
+     */
+    
    private:
 
-    QSqlDatabase mDatabase;
+    Mdt::Sql::ReflectionStorageTableWithId<VehicleTypeDef, VehicleTypePrimaryKey, VehicleTypeId::value_type> mTable;
+//     QSqlDatabase mDatabase;
   };
 
 }}} // namespace Mdt{ namespace Railway{ namespace TaskList{

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -158,7 +158,7 @@ QString fieldConditionUsageToSql(const EntityAndField & field, const QSqlDatabas
   return sql;
 }
 
-QString selectFromEntityToSql(const SelectEntity& entity, const QSqlDatabase& db)
+QString selectFromEntityToSql(const QueryEntity & entity, const QSqlDatabase& db)
 {
   Q_ASSERT(db.isValid());
 

@@ -30,6 +30,7 @@ namespace Mdt{ namespace Railway{ namespace TaskList{
    */
   struct MDT_RAILWAY_TASKLIST_CORE_EXPORT GetAllVehicleTypesRecord
   {
+    QVariant id;
     QVariant name;
     QVariant alias;
     QVariant manufacturerSerie;

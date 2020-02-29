@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2018 Philippe Steinmann.
+ ** Copyright (C) 2011-2019 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -67,6 +67,22 @@ namespace Mdt{ namespace ItemModel{
    *   bool fetchRecords(int count) override;
    * };
    * \endcode
+   *
+   * \todo Review design.
+   *    See remarks in fromBackendAppendRecord()
+   *    See also QSqlQueryModel, which uses QSqlQuery,
+   *    which seems to have a cache allready.
+   *    The cache should be in the backend, not in the item model..
+   *    Once the backen has done the slow work,
+   *    it should be aware to not sen to much signals..
+   *    See also if fetchAll() should not just call fetchMore()
+   *    Be consistant with Qt API..
+   *    Note also that a stack overflow can occur in qued signal/slot
+   *    NOTE: before getting to one more complex stuff, create a stress test !
+   *          (one thread producing data)
+   *          (also, some tests only model, other with a widget view open)
+   *          -> test can be simple, only producing VariantRecord, no repository or other needed..
+   *          Also, displaying more than 10'000 rows seems really useless..
    */
   class MDT_ITEMMODEL_EXPORT AbstractReadOnlyCachedTableModel : public QAbstractTableModel
   {
@@ -150,6 +166,10 @@ namespace Mdt{ namespace ItemModel{
    public slots:
 
     /*! \brief Append a record comming from backend to the cache of this model
+     *
+     * \todo Calling fetchAll() and call this slot for each row is dangerous.
+     *    If the thread is fast, it will spam for each new record,
+     *    and the event stack can overflow !
      *
      * \pre rowCount() must be < cachedRowCountLimit()
      *   \todo Full cache must no longer be a precondition.

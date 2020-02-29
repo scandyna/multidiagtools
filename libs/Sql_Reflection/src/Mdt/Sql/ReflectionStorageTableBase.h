@@ -21,23 +21,52 @@
 #ifndef MDT_SQL_REFLECTION_STORAGE_TABLE_BASE_H
 #define MDT_SQL_REFLECTION_STORAGE_TABLE_BASE_H
 
-// #include "Mdt/Sql/DeleteStatement.h"
-// // #include "PrimaryKeyRecordAlgorithm.h"
-// #include "Mdt/Reflection/StructAlgorithm.h"
-// #include "Mdt/Reflection/TypeTraits/IsStructDef.h"
-// #include "Mdt/Reflection/TypeTraits/IsStructDefAssociatedWithReflectedStruct.h"
-// #include "Mdt/Reflection/TypeTraits/IsPrimaryKeyClass.h"
-// #include "Mdt/Sql/DeleteStatement.h"
-// #include "Mdt/Sql/PrimaryKeyRecord.h"
-// #include "Mdt/Sql/FieldName.h"
+#include "Mdt/Sql/Connection.h"
+#include "Mdt/Error.h"
+#include "MdtSql_ReflectionExport.h"
 #include <QString>
-// #include <QLatin1String>
-// #include <type_traits>
 
 namespace Mdt{ namespace Sql{
 
-  /*! \brief
+  /*! \brief Base class to create a storage table using reflection
    */
+  class MDT_SQL_REFLECTION_EXPORT ReflectionStorageTableBase
+  {
+   public:
+
+    /*! \brief Construct a storage table
+     *
+     * \pre \a connection must refer to a valid database handle
+     */
+    ReflectionStorageTableBase(const Connection & connection);
+
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
+
+   protected:
+
+    /*! \brief Get the connection this table uses
+     */
+    Connection connection() const
+    {
+      return Connection(mConnectionName);
+    }
+
+    /*! \brief Set last error
+     *
+     * \pre \a error must not be null
+     */
+    void setLastError(const Mdt::Error & error) const;
+
+   private:
+
+    QString mConnectionName;
+    mutable Mdt::Error mLastError;
+  };
 
 }} // namespace Mdt{ namespace Sql{
 

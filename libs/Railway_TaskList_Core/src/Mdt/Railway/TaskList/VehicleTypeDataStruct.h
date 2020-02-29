@@ -30,14 +30,14 @@ namespace Mdt{ namespace Railway{ namespace TaskList{
 
   struct MDT_RAILWAY_TASKLIST_CORE_EXPORT VehicleTypeDataStruct
   {
-    VehicleTypeDataStruct() = default;
-
-    VehicleTypeDataStruct(const QString & name, const QString & alias, const QString & serie)
-     : name(name),
-       alias(alias),
-       manufacturerSerie(serie)
-    {
-    }
+//     VehicleTypeDataStruct() = default;
+// 
+//     VehicleTypeDataStruct(const QString & name, const QString & alias, const QString & serie)
+//      : name(name),
+//        alias(alias),
+//        manufacturerSerie(serie)
+//     {
+//     }
 
     qlonglong id = 0;
     QString name;

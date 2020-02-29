@@ -27,6 +27,10 @@
  *  the function name should be directly similar to the propoerty name.
  *  Example: SomeObject::isNull() .
  *
+ * \todo Should be: is If a member function needs some processing before returning the requested value, it should be named explicitly if possible.
+ *    For example, on conversion, toSomeString() .
+ *    If no such name can be found, prefix get..
+ *
  *  If a member function needs some processing before returning the requested value,
  *  it should be prefixed get.
  *  For example, we suppose that getting available tables in a database needs to query the database,
@@ -129,7 +133,7 @@
  *
  *  private:
  *
- *   void setLastError(const Mdt::Error & error)
+ *   void setLastError(const Mdt::Error & error) const
  *   {
  *     Q_ASSERT(!error.isNull());
  *     mLastError = error;
@@ -143,6 +147,10 @@
  *  This lets the %get() method be const.
  *  The const tells that %get() will not mutate the repository,
  *  but it does not offer any thread safety at all.
+ *
+ * A plain function, or a static member method, that can fail,
+ *  should return Mdt::Expected if it returns some data,
+ *  otherwise Mdt::ExpectedResult.
  *
  * Value classes should not have methods that can fail,
  *  because they do not, for example, read files.

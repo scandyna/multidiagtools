@@ -12,6 +12,10 @@ set(SOURCE_FILES
 add_library(mdtSql_ReflectionTest SHARED ${SOURCE_FILES})
 target_link_libraries(mdtSql_ReflectionTest Sql_Reflection Sql_Core Sql_Core_SQLite Application_Core Qt5::Test)
 
+# TODO Sandbox
+target_compile_options(mdtSql_ReflectionTest PRIVATE "-fno-omit-frame-pointer")
+
+
 #=============== Helper functions ===========
 
 function(addSql_ReflectionTest testName)
@@ -36,3 +40,4 @@ addSql_ReflectionTest("ReflectionTest")
 addSql_ReflectionTest("PrimaryKeyRecordAlgorithmTest")
 addSql_ReflectionTest("QueryStatementTest")
 addSql_ReflectionTest("StorageTableTest")
+addSql_ReflectionTest("StorageTableBenchmark")
